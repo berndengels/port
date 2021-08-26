@@ -2,12 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Redirect;
+use Inertia\Inertia;
+use App\Models\Caravan;
 use App\Models\CaravanDates;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\URL;
+use App\Http\Requests\CaravanDatesRequest;
 
 class CaravanDatesController extends Controller
 {
+    private $caravans;
+
+    public function __construct()
+    {
+        $this->caravans = Caravan::orderBy('carnumber')->get();
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +26,22 @@ class CaravanDatesController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('CaravanDates/index', [
+            'data' => CaravanDates::with('caravan')->orderBy('from','DESC')->get()->map(function ($item) {
+                return [
+                    'id'        => $item->id,
+                    'carnumber' => $item->caravan->carnumber ?? null,
+                    'carlength' => $item->caravan->carlength ?? null,
+                    'from'      => $item->from,
+                    'until'     => $item->until,
+                    'persons'   => $item->persons,
+                    'price'     => $item->price,
+                    'show_url'  => URL::route('caravanDates.show', ['caravanDates' => $item]),
+                    'edit_url'  => URL::route('caravanDates.edit', ['caravanDates' => $item]),
+                ];
+            }),
+            'create_url' => URL::route('caravanDates.create'),
+        ]);
     }
 
     /**
@@ -25,7 +51,7 @@ class CaravanDatesController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('CaravanDates/create', ['caravans' => $this->caravans]);
     }
 
     /**
@@ -34,9 +60,10 @@ class CaravanDatesController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(CaravanDatesRequest $request)
     {
-        //
+        CaravanDates::create($request->validated());
+        return Redirect::route('caravanDates.index');
     }
 
     /**
@@ -47,7 +74,7 @@ class CaravanDatesController extends Controller
      */
     public function show(CaravanDates $caravanDates)
     {
-        //
+        return Inertia::render('CaravanDates/show', compact('caravanDates'));
     }
 
     /**
@@ -58,7 +85,8 @@ class CaravanDatesController extends Controller
      */
     public function edit(CaravanDates $caravanDates)
     {
-        //
+        $caravans = $this->caravans;
+        return Inertia::render('CaravanDates/edit', compact('caravanDates','caravans'));
     }
 
     /**
@@ -68,9 +96,10 @@ class CaravanDatesController extends Controller
      * @param CaravanDates $caravanDates
      * @return Response
      */
-    public function update(Request $request, CaravanDates $caravanDates)
+    public function update(CaravanDatesRequest $request, CaravanDates $caravanDates)
     {
-        //
+        $caravanDates->update($request->validated());
+        return Redirect::route('caravanDates.index');
     }
 
     /**
@@ -81,6 +110,7 @@ class CaravanDatesController extends Controller
      */
     public function destroy(CaravanDates $caravanDates)
     {
-        //
+        $caravanDates->delete();
+        return Redirect::route('caravanDates.index');
     }
 }
