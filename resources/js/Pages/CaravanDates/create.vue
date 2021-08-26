@@ -3,6 +3,7 @@
         <form @submit.prevent>
             <ValidationErrors />
             <jet-input type="hidden" v-model="form.caravan_id" />
+            <jet-input type="hidden" v-model="form.prices" />
             <div>
                 <jet-label for="carnumber" value="Autokennzeichen" />
                 <Autocomplete
@@ -83,7 +84,7 @@ export default {
     data() {
         return {
             form: this.$inertia.form({
-//                _method: 'POST',
+                _method: 'POST',
                 caravan_id: null,
                 carnumber: null,
                 carlength: null,
@@ -92,21 +93,24 @@ export default {
                 until: null,
                 electric: true,
                 price: null,
+                prices: null,
             }),
         }
     },
 
     methods: {
         store() {
-            this.form.post(route('caravanDates.create'), {
+            this.form.post(route('caravanDates.store'), {
                 errorBag: 'storeCaravanDates',
                 preserveScroll: true,
                 onSuccess: (resp) => {},
+                onError: err => alert(err),
             });
         },
         onSelect(target) {
             let caravan = this.caravans.filter(i => i.carnumber === target.innerText).shift()
             if(caravan) {
+                this.form.caravan_id = caravan.id
                 this.form.carnumber = caravan.carnumber
                 this.form.carlength = caravan.carlength
             }
@@ -118,6 +122,8 @@ export default {
             if(this.form.from && this.form.until && this.form.persons) {
                 axios.post(apiURL+"/caravan/price/calculate", this.form).then(resp => {
                     console.info(resp.data);
+                    this.form.price = resp.data.total
+                    this.form.prices = JSON.stringify(resp.data.prices)
                 })
                     .catch(err => console.error(err))
                 ;

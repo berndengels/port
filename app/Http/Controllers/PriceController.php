@@ -23,19 +23,19 @@ class PriceController extends Controller
      */
     public function calculate(Request $request)
     {
-        $length     = $request->post('length');
+        $carlength  = $request->post('carlength');
         $from       = $request->post('from');
         $until      = $request->post('until');
         $persons    = (int) $request->post('persons');
         $electric   = (bool) $request->post('electric');
 
-        $response = ['price'    => null];
+        $response = null;
 
-        if($from && $until && $length && $persons) {
+        if($from && $until && $carlength && $persons) {
             $from   = new Carbon($from, config('app.timezone'));
             $until  = new Carbon($until, config('app.timezone'));
 
-            $response = ['price' => $this->calculator->getPrice($from, $until, $persons, $electric)];
+            $response = $this->calculator->getPrice($from, $until, $carlength, $persons, $electric);
         }
         return response()->json($response);
     }

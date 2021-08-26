@@ -1,61 +1,83 @@
 <template>
     <div>
-        <form @submit.prevent>
-            <ValidationErrors />
+        <MyForm :data="form" @submit.prevent>
+            <jet-input type="hidden" v-model="form.caravan_id" />
+            <jet-input type="hidden" v-model="form.prices" />
             <div>
                 <jet-label for="carnumber" value="Autokennzeichen" />
-                <jet-input id="carnumber" type="text" class="mt-1 block w-full" v-model="form.carnumber" required autofocus autocomplete="carnumber" />
-                <div>
-                    <Autocomplete
-                        :results="caravans"
-                        :displayItem="item.carnumber"
-                        @onSelect="select"
-                        @input="form.carnumber"
-                    ></Autocomplete>
-                </div>
+                <Autocomplete
+                    :data="caravans"
+                    :form="form"
+                    v-model="form.carnumber"
+                    name="carnumber"
+                    key="id"
+                    @onSelect="onSelect"
+                />
             </div>
             <div>
                 <jet-label for="carlength" value="Länge" />
-                <jet-input id="carlength" type="text" class="mt-1 block w-full" v-model="form.carlength" required autofocus autocomplete="carnumber" />
+                <jet-input id="carlength" type="text" class="mt-1 block" v-model="form.carlength" required autofocus autocomplete="carlength" />
             </div>
             <div>
                 <jet-label for="persons" value="Personen" />
-                <jet-input id="persons" type="text" class="mt-1 block w-full" v-model="form.persons" required autofocus autocomplete="persons" />
+                <jet-input id="persons" type="text" class="mt-1 block" v-model="form.persons" required autofocus autocomplete="persons"
+                           @change="change"
+                />
             </div>
             <div>
+                <jet-label for="electric" value="Strom-Anschluss" />
+                <jet-input id="electric" type="checkbox" class="mt-1 block" v-model="form.electric" required autofocus
+                           :checked="this.form.electric"
+                           @change="change"
+                />
+            </div>
+            <!--div>
                 <jet-label for="from" value="Von" />
-                <jet-input id="from" type="date" class="mt-1 block w-full" v-model="form.from" required autofocus autocomplete="from" />
-            </div>
-            <div>
+                <jet-input id="from" type="date" class="mt-1 block" v-model="form.from" required autofocus autocomplete="from"
+                           @change="change"
+                />
+            </div-->
+            <DateInput name="from" label="Von" />
+            <!--div>
                 <jet-label for="until" value="Bis" />
-                <jet-input id="until" type="date" class="mt-1 block w-full" v-model="form.until" required autofocus autocomplete="until" />
-            </div>
+                <jet-input id="until" type="date" class="mt-1 block" v-model="form.until" required autofocus autocomplete="until"
+                           @change="change"
+                />
+            </div-->
+            <DateInput name="until" label="Von" />
             <div>
                 <jet-label for="price" value="Preis in €" />
-                <jet-input id="price" type="text" class="mt-1 block w-full" v-model="form.price" required autofocus autocomplete="price" />
+                <jet-input id="price" type="text" class="mt-1 block" v-model="form.price" required autofocus autocomplete="price" />
             </div>
             <div>
-                <jet-button @click="update" />
+                <jet-button @click="update">Speichen</jet-button>
             </div>
-        </form>
+        </MyForm>
     </div>
 </template>
 
 <script>
 import JetButton from '@/Jetstream/Button.vue'
 import JetFormSection from '@/Jetstream/FormSection.vue'
+import JetInput from '@/Jetstream/Input.vue'
 import JetInputError from '@/Jetstream/InputError.vue'
 import JetLabel from '@/Jetstream/Label.vue'
-import JetInput from '@/Jetstream/Input.vue'
 import JetActionMessage from '@/Jetstream/ActionMessage.vue'
-import ValidationErrors from "../../Jetstream/ValidationErrors";
-import Autocomplete from 'vue3-autocomplete'
-// Optional: Import default CSS
-import 'vue3-autocomplete/dist/vue3-autocomplete.css'
+import ValidationErrors from "@/Jetstream/ValidationErrors";
+import Autocomplete from '@/Components/Form/Autocomplete'
+import Input from "../../Jetstream/Input";
+import MyForm from "../../Components/Form/MyForm";
+import DateInput from "../../Components/Form/DateInput";
+import axios from 'axios';
+
+const apiURL = 'http://port.test';
 
 export default {
     name: "edit",
     components: {
+        MyForm,
+        DateInput,
+        Input,
         ValidationErrors,
         JetActionMessage,
         JetButton,
@@ -65,17 +87,20 @@ export default {
         JetLabel,
         Autocomplete,
     },
-    props: ['caravanDates','caravans'],
+    props: ['caravans','caravanDate'],
     data() {
         return {
             form: this.$inertia.form({
                 _method: 'PUT',
-                carnumber: this.caravanDates.caravan.carnumber,
-                carlength: this.caravanDates.caravan.carlength,
-                persons: this.caravanDates.persons,
-                from: this.caravanDates.from,
-                until: this.caravanDates.until,
-                price: this.caravanDates.price,
+                caravan_id: this.caravanDate.caravan_id,
+                carnumber: this.caravanDate.caravan.carnumber,
+                carlength: this.caravanDate.caravan.carlength,
+                persons: this.caravanDate.persons,
+                from: moment(this.caravanDate.from).format('YYYY-MM-DD'),
+                until: moment(this.caravanDate.until).format('YYYY-MM-DD'),
+                electric: this.caravanDate.electric,
+                price: this.caravanDate.price,
+                prices: this.caravanDate.prices,
             }),
         }
     },
@@ -86,13 +111,30 @@ export default {
                 errorBag: 'updateCaravanDates',
                 preserveScroll: true,
                 onSuccess: (resp) => {},
+                onError: err => alert(err),
             });
         },
-        select(item) {
-            console.info(item);
+        onSelect(target) {
+            let caravan = this.caravans.filter(i => i.carnumber === target.innerText).shift()
+            if(caravan) {
+                this.form.caravan_id = caravan.id
+                this.form.carnumber = caravan.carnumber
+                this.form.carlength = caravan.carlength
+            }
         },
-        change(item) {
-            console.info(item);
+        onInput() {
+            return this.caravans
+        },
+        change() {
+            if(this.form.from && this.form.until && this.form.persons) {
+                axios.post(apiURL+"/caravan/price/calculate", this.form).then(resp => {
+                    console.info(resp.data);
+                    this.form.price = resp.data.total
+                    this.form.prices = JSON.stringify(resp.data.prices)
+                })
+                    .catch(err => console.error(err))
+                ;
+            }
         }
     }
 }

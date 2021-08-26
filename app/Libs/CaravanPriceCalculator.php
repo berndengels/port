@@ -5,12 +5,10 @@ use Carbon\Carbon;
 
 class CaravanPriceCalculator extends PriceCalculator
 {
-    public function getPrice(Carbon $from, Carbon $until, $length, int $person = 1, bool $electric = false) {
-//        $days = $from->diffInDays($until);
+    public function getPrice(Carbon $from, Carbon $until, int $length, int $persons = 1, bool $electric = false) {
+        $countDays = $from->diffInDays($until);
 
-//        $price                  = 0;
-        $days[]                 = $from->copy();
-        $current                = $from;
+        $total                  = 0;
         $configSaisonFromMonth  = config('port.dates.saison.fromMonth');
         $configSaisonUntilMonth = config('port.dates.saison.untilMonth');
 
@@ -22,25 +20,42 @@ class CaravanPriceCalculator extends PriceCalculator
         } else {
             $configLength = config('port.prices.caravan.length.long');
         }
+        $days       = [];
+        $current    = $from->copy();
+        $i = 0;
 
-        while ($current->lte($until)) {
-            $price = $configPersonsPrice;
+        while ($i <= $countDays) {
+            if(0 === $i) {
+                $day = $current;
+            } else {
+                $day = $current->addDay();
+            }
+            $sumPersonsPrice = $configPersonsPrice * $persons;
+            $price = $configPersonsPrice * $persons;
             if($electric) {
                 $price += $configElectricPrice;
             }
-            $month = $from->month;
-            if($month >= $configSaisonFromMonth && $month <= $configSaisonUntilMonth) {
-                $price += $configLength->saison->per_day;
+            if($day->month >= $configSaisonFromMonth && $day->month <= $configSaisonUntilMonth) {
+                $carPricePerDay = $configLength['saison']['per_day'];
             } else {
-                $price += $configLength->default->per_day;
+                $carPricePerDay = $configLength['default']['per_day'];
             }
-            $day = $current->addDay();
-            $days[$day->format('y-m-d')] = [
-                'day' => $day,
-                'price' => $price
-
+            $price += $carPricePerDay;
+            $total += $price;
+            $days[$day->format('Y-m-d')] = [
+                'date'              => $day->format('d.m.Y'),
+                'persons'           => $persons,
+                'price_per_person'  => $configPersonsPrice,
+                'sum_person_price'  => $sumPersonsPrice,
+                'electric_per_day'  => $electric ? $configElectricPrice : 0,
+                'is_saison'         => (int) ($day->month >= $configSaisonFromMonth && $day->month <= $configSaisonUntilMonth),
+                'car_length'        => $length,
+                'car_price_per_day' => $carPricePerDay,
+                'sum_price'         => $price,
             ];
+            $i++;
         }
-        return config('port');
+
+        return ['total' => $total, 'prices' => $days];
     }
 }

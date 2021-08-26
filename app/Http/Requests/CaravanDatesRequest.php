@@ -29,12 +29,15 @@ class CaravanDatesRequest extends FormRequest
     public function rules()
     {
         return [
-            'caravan_id' => 'required',
+            'carnumber' => 'required',
+            'carlength' => 'required',
             'from'      => 'required',
             'until'     => 'required',
-            'persons'   => 'required|number',
-            'price'     => 'required|number',
+            'persons'   => 'required',
+            'price'     => 'required',
+            'caravan_id' => '',
             'electric'  => '',
+            'prices'    => '',
         ];
     }
 }

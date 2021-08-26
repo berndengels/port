@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use App\Models\Caravan;
 use App\Models\CaravanDates;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\CaravanDatesRequest;
 
 class CaravanDatesController extends Controller
@@ -36,8 +36,10 @@ class CaravanDatesController extends Controller
                     'until'     => $item->until,
                     'persons'   => $item->persons,
                     'price'     => $item->price,
-                    'show_url'  => URL::route('caravanDates.show', ['caravanDates' => $item]),
-                    'edit_url'  => URL::route('caravanDates.edit', ['caravanDates' => $item]),
+                    'prices'    => $item->prices,
+                    'days'      => $item->days,
+                    'show_url'  => URL::route('caravanDates.show', ['caravanDate' => $item]),
+                    'edit_url'  => URL::route('caravanDates.edit', ['caravanDate' => $item]),
                 ];
             }),
             'create_url' => URL::route('caravanDates.create'),
@@ -62,55 +64,62 @@ class CaravanDatesController extends Controller
      */
     public function store(CaravanDatesRequest $request)
     {
-        CaravanDates::create($request->validated());
+        $caravanId = $request->post('caravan_id');
+        $validated = collect($request->validated());
+
+        $caravan = $caravanId > 0 ? Caravan::find($caravanId) : new Caravan();
+        $caravan->dates()->create($validated->except(['carnumber','carlength'])->toArray());
+//        CaravanDates::create($validated->except(['carnumber','carlength']))->caravan;
+
         return Redirect::route('caravanDates.index');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param CaravanDates $caravanDates
+     * @param CaravanDates $caravanDate
      * @return Response
      */
-    public function show(CaravanDates $caravanDates)
+    public function show(CaravanDates $caravanDate)
     {
-        return Inertia::render('CaravanDates/show', compact('caravanDates'));
+        return Inertia::render('CaravanDates/show', compact('caravanDate'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param CaravanDates $caravanDates
+     * @param CaravanDates $caravanDate
      * @return Response
      */
-    public function edit(CaravanDates $caravanDates)
+    public function edit(CaravanDates $caravanDate)
     {
         $caravans = $this->caravans;
-        return Inertia::render('CaravanDates/edit', compact('caravanDates','caravans'));
+        $caravanDate->load('caravan');
+        return Inertia::render('CaravanDates/edit', compact('caravanDate','caravans'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param CaravanDates $caravanDates
+     * @param CaravanDates $caravanDate
      * @return Response
      */
-    public function update(CaravanDatesRequest $request, CaravanDates $caravanDates)
+    public function update(CaravanDatesRequest $request, CaravanDates $caravanDate)
     {
-        $caravanDates->update($request->validated());
+        $caravanDate->update($request->validated());
         return Redirect::route('caravanDates.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param CaravanDates $caravanDates
+     * @param CaravanDates $caravanDate
      * @return Response
      */
-    public function destroy(CaravanDates $caravanDates)
+    public function destroy(CaravanDates $caravanDate)
     {
-        $caravanDates->delete();
+        $caravanDate->delete();
         return Redirect::route('caravanDates.index');
     }
 }

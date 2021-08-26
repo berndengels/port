@@ -39,11 +39,16 @@ class CaravanDates extends Model
     protected $guarded = [];
     protected $dates = ['from','until'];
     protected $dateFormat = 'Y-m-d';
+    protected $appends = ['days'];
 
     public $timestamps = false;
 
     public function caravan()
     {
         return $this->belongsTo(Caravan::class);
+    }
+
+    public function getDaysAttribute() {
+        return $this->from->diffInDays($this->until);
     }
 }
