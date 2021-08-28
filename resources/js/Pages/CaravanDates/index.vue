@@ -1,8 +1,15 @@
 <template>
-    <AppLayout title="Wohnwagen Dates">
+    <DefaultLayout title="Wohnwagen Dates">
         <nav-link :href="create_url" class="ml-2 my-2">
             Neueintrag
         </nav-link>
+
+        <MyForm :data="dateFilter" css="flex-inline" @submit.prevent>
+            <SelectYear name="year" label="Jahr" :options="years" @selectYear="onSelectYear" />
+            <SelectMonth v-if="selectedYear" name="month" label="Monat" :options="months" @selectMonth="onSelectMonth"
+                css="ml-3"
+            />
+        </MyForm>
 
         <table v-if="data && data.length > 0" class="table">
             <tr>
@@ -14,7 +21,7 @@
                 <th>Preis €</th>
                 <th colspan="2"></th>
             </tr>
-            <tr v-for="item in data" :key="item.id">
+            <tr v-for="item in caravanDates" :key="item.id">
                 <td><NavLink :href="item.show_url">{{ item.carnumber }}</NavLink></td>
                 <td>{{ item.carlength }}</td>
                 <td>{{ formatDate(item.from) }}</td>
@@ -30,7 +37,7 @@
             </tr>
         </table>
         <h3 v-else>Keine Daten vorhanden</h3>
-    </AppLayout>
+    </DefaultLayout>
 </template>
 
 <script>
@@ -38,13 +45,19 @@ import ResponsiveNavLink from '@/Jetstream/ResponsiveNavLink'
 import { Inertia } from '@inertiajs/inertia'
 import Button from "../../Jetstream/Button";
 import NavLink from "../../Jetstream/NavLink";
-import AppLayout from "../../Layouts/AppLayout";
 import DateFormat from "../../Mixins/DateFormat";
+import DefaultLayout from "../../Layouts/DefaultLayout";
+import MyForm from "../../Components/Form/MyForm";
+import SelectYear from "../../Components/Form/SelectYear";
+import SelectMonth from "../../Components/Form/SelectMonth";
 
 export default {
     name: "index",
     components: {
-        AppLayout,
+        SelectYear,
+        SelectMonth,
+        MyForm,
+        DefaultLayout,
         NavLink,
         Button,
         ResponsiveNavLink,
@@ -52,17 +65,34 @@ export default {
     mixins: [DateFormat],
     props: {
         data: Array,
+        years: Array,
+        monthsByYear: Array,
         create_url: String,
     },
     data() {
         return {
-            selected: null
+            caravanDates: this.data,
+            selected: null,
+            selectedYear: null,
+            selectedMonth: null,
+            dateFilter: this.$inertia.form({
+                year: null,
+                month: null,
+            }),
         }
     },
     computed: {
+        years() {
+            return this.years;
+        },
+        months() {
+            if(this.selectedYear) {
+                return this.monthsByYear[this.selectedYear];
+            }
+        },
         priceTotel() {
             var total = 0;
-            for(let i of this.data) {
+            for(let i of this.caravanDates) {
                 total += i.price
             }
             return total
@@ -72,9 +102,30 @@ export default {
         onSelect(item) {
             this.selected = item
         },
+        onSelectYear(year) {
+            this.selectedYear = ("" !== year) ? parseInt(year) : null;
+            this.caravanDates = this.data.filter(item => {
+                if(dayjs(item.from).year() === this.selectedYear) {
+                    return item
+                }
+            });
+        },
+        onSelectMonth(month) {
+            this.selectedMonth = ("" !== month) ? parseInt(month) : null;
+            this.caravanDates = this.data.filter(item => {
+                if (dayjs(item.from).year() === this.selectedYear && dayjs(item.from).month() === this.selectedMonth) {
+                    return item
+                }
+            });
+        },
         remove(item) {
             if(confirm('Datensatz (ID: ' + item.id + ') wirklich löschen?')) {
-                Inertia.delete('caravanDates/' + item.id, item)
+//                Inertia.delete('caravanDates/' + item.id, item)
+                Inertia.delete(route('caravanDates.destroy', item), {
+                    onSuccess: (resp) => {
+                        this.caravanDates = this.caravanDates.filter(i => i !== item)
+                    }
+                })
             }
         }
     }

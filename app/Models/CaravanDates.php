@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
 
 /**
  * App\Models\CaravanDates
@@ -35,6 +36,7 @@ use Illuminate\Support\Carbon;
  * @property-read mixed $days
  * @method static Builder|CaravanDates whereElectric($value)
  * @method static Builder|CaravanDates wherePrices($value)
+ * @method static Builder|CaravanDates getMonthsByYears($from = null, $until = null)
  */
 class CaravanDates extends Model
 {
@@ -54,6 +56,39 @@ class CaravanDates extends Model
     }
 
     public function getDaysAttribute() {
-        return $this->from->diffInDays($this->until);
+        if($this->from && $this->until) {
+            return $this->from->diffInDays($this->until);
+        }
+        return null;
+    }
+
+    /**
+     * Scope a query to get.
+     *
+     * @param Builder $query
+     * @return array
+     */
+    public function scopeGetMonthsByYears($query, $from = null, $until = null) {
+        $query->selectRaw("DISTINCT MONTH(`from`) month, DATE_FORMAT(`from`, '%M', 'de_DE') monthname, YEAR(`from`) year");
+
+        if($from) {
+            $query->whereDate('from','>=', $from);
+        }
+        if($until) {
+            $query->whereDate('until','<=', $until);
+        }
+        $data = $query
+            ->orderBy('year')
+            ->orderBy('month')
+            ->get()
+        ;
+        $result = [];
+        foreach($data as $date) {
+            $result[$date->year][] = [
+                'month'     => $date->month,
+                'monthname' => $date->monthname,
+            ];
+        }
+        return $result;
     }
 }

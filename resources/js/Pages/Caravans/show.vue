@@ -1,14 +1,14 @@
 <template>
-    <AppLayout title="Wohnwagen">
+    <DefaultLayout title="Wohnwagen">
 
-    </AppLayout>
+    </DefaultLayout>
 </template>
 
 <script>
-import AppLayout from "../../Layouts/AppLayout";
+import DefaultLayout from "../../Layouts/DefaultLayout";
 export default {
     name: "show",
-    components: {AppLayout}
+    components: {DefaultLayout}
 }
 </script>
 

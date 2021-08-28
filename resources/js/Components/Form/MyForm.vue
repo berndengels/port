@@ -1,5 +1,5 @@
 <template>
-    <form class="block w-3/4 justify-center" :data="data">
+    <form :class="css" :data="data">
         <slot />
     </form>
 </template>
@@ -11,6 +11,10 @@ export default {
         data: {
             type: Object,
             default: null,
+        },
+        css: {
+            type: String,
+            default: "block w-3/4 justify-center",
         },
     }
 }

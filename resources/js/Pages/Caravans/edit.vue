@@ -1,5 +1,5 @@
 <template>
-    <AppLayout title="Wohnwagen">
+    <DefaultLayout title="Wohnwagen">
         <form @submit.prevent>
             <ValidationErrors />
             <div>
@@ -14,7 +14,7 @@
                 <jet-button @click="update">Speichern</jet-button>
             </div>
         </form>
-    </AppLayout>
+    </DefaultLayout>
 </template>
 
 <script>
@@ -24,16 +24,16 @@ import JetInput from '@/Jetstream/Input.vue'
 import JetInputError from '@/Jetstream/InputError.vue'
 import JetLabel from '@/Jetstream/Label.vue'
 import JetActionMessage from '@/Jetstream/ActionMessage.vue'
-import AppLayout from "../../Layouts/AppLayout";
 import FormSection from "../../Jetstream/FormSection";
 import ValidationErrors from "../../Jetstream/ValidationErrors";
+import DefaultLayout from "../../Layouts/DefaultLayout";
 
 export default {
     name: "edit",
     components: {
+        DefaultLayout,
         ValidationErrors,
         FormSection,
-        AppLayout,
         JetActionMessage,
         JetButton,
         JetFormSection,

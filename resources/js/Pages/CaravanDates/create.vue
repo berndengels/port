@@ -1,5 +1,5 @@
 <template>
-    <AppLayout title="Wohnmobil anlegen">
+    <DefaultLayout title="Wohnmobil anlegen">
         <MyForm :data="form" @submit.prevent>
             <input type="hidden" v-model="form.caravan_id" />
             <input type="hidden" v-model="form.prices" />
@@ -22,7 +22,7 @@
                 <Button @click="store" css="btn-save">Speichen</Button>
             </div>
         </MyForm>
-    </AppLayout>
+    </DefaultLayout>
 </template>
 
 <script>
@@ -34,14 +34,14 @@ import Button from "../../Components/Form/Button";
 import Checkbox from "../../Components/Form/Checkbox";
 import axios from 'axios';
 import DateFormat from "../../Mixins/DateFormat";
-import AppLayout from "../../Layouts/AppLayout";
+import DefaultLayout from "../../Layouts/DefaultLayout";
 
-const apiURL = 'http://port.test';
+const apiURL = process.env.MIX_API_URL;
 
 export default {
     name: "create",
     components: {
-        AppLayout,
+        DefaultLayout,
         Checkbox,
         Button,
         MyForm,

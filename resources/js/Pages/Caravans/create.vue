@@ -1,5 +1,5 @@
 <template>
-    <AppLayout title="Wohnwagen">
+    <DefaultLayout title="Wohnwagen">
         <form @submit.prevent>
             <div>
                 <jet-label for="carnumber" value="Autokennzeichen" />
@@ -15,7 +15,7 @@
                 <jet-button @click.prevent="store" />
             </div>
         </form>
-    </AppLayout>
+    </DefaultLayout>
 </template>
 
 <script>
@@ -25,12 +25,12 @@ import JetInput from '@/Jetstream/Input.vue'
 import JetInputError from '@/Jetstream/InputError.vue'
 import JetLabel from '@/Jetstream/Label.vue'
 import JetActionMessage from '@/Jetstream/ActionMessage.vue'
-import AppLayout from "../../Layouts/AppLayout";
+import DefaultLayout from "../../Layouts/DefaultLayout";
 
 export default {
     name: "create",
     components: {
-        AppLayout,
+        DefaultLayout,
         JetActionMessage,
         JetButton,
         JetFormSection,

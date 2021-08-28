@@ -17,8 +17,8 @@
 </template>
 
 <script>
-    import AppLayout from '@/Layouts/AppLayout.vue'
-    import Welcome from '@/Jetstream/Welcome.vue'
+    import AppLayout from '@/Layouts/AppLayout'
+    import Welcome from '@/Pages/Welcome'
 
     export default {
         components: {

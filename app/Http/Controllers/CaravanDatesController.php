@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Rules\DatesIntervalUnique;
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 use Inertia\Inertia;
 use App\Models\Caravan;
 use App\Models\CaravanDates;
@@ -17,12 +18,14 @@ use Illuminate\Validation\Validator;
 class CaravanDatesController extends Controller
 {
     private $caravans;
-    private $dates;
+    private $years;
+    private $monthsByYear;
 
     public function __construct()
     {
         $this->caravans = Caravan::orderBy('carnumber')->get();
-//        $this->dates = CaravanDates::all();
+        $this->monthsByYear = CaravanDates::getMonthsByYears();
+        $this->years = array_keys($this->monthsByYear);
     }
 
     /**
@@ -33,21 +36,26 @@ class CaravanDatesController extends Controller
     public function index()
     {
         return Inertia::render('CaravanDates/index', [
-            'data' => CaravanDates::with('caravan')->orderBy('from','DESC')->get()->map(function ($item) {
-                return [
-                    'id'        => $item->id,
-                    'carnumber' => $item->caravan->carnumber ?? null,
-                    'carlength' => $item->caravan->carlength ?? null,
-                    'from'      => $item->from,
-                    'until'     => $item->until,
-                    'persons'   => $item->persons,
-                    'price'     => $item->price,
-                    'prices'    => $item->prices,
-                    'days'      => $item->days,
-                    'show_url'  => URL::route('caravanDates.show', ['caravanDate' => $item]),
-                    'edit_url'  => URL::route('caravanDates.edit', ['caravanDate' => $item]),
-                ];
-            }),
+            'years'         => $this->years,
+            'monthsByYear'  => $this->monthsByYear,
+            'data'          => CaravanDates::with('caravan')
+                ->orderBy('from','DESC')
+                ->get()
+                ->map(function ($item) {
+                    return [
+                        'id'        => $item->id,
+                        'carnumber' => $item->caravan->carnumber ?? null,
+                        'carlength' => $item->caravan->carlength ?? null,
+                        'from'      => $item->from,
+                        'until'     => $item->until,
+                        'persons'   => $item->persons,
+                        'price'     => $item->price,
+                        'prices'    => $item->prices,
+                        'days'      => $item->days,
+                        'show_url'  => URL::route('caravanDates.show', ['caravanDate' => $item]),
+                        'edit_url'  => URL::route('caravanDates.edit', ['caravanDate' => $item]),
+                    ];
+                }),
             'create_url' => URL::route('caravanDates.create'),
         ]);
     }

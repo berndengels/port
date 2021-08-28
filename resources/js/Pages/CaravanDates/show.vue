@@ -1,30 +1,34 @@
 <template>
-    <AppLayout :title="'Wohnmobil ' + caravanDate.caravan.carnumber">
+    <DefaultLayout :title="'Wohnmobil ' + caravanDate.caravan.carnumber">
         <NavLink :href="route('caravanDates.index')">zurück</NavLink>
         <table class="table">
             <tr>
-                <th>Kennzeichen</th>
+                <th class="text-right">Kennzeichen</th>
                 <td>{{ caravanDate.caravan.carnumber }}</td>
             </tr>
             <tr>
-                <th>Länge in Meter</th>
-                <td>{{ caravanDate.caravan.carlength }}</td>
+                <th class="text-right">Wagenlänge</th>
+                <td>{{ caravanDate.caravan.carlength }} m</td>
             </tr>
             <tr>
-                <th>Personen</th>
+                <th class="text-right">Personen</th>
                 <td>{{ caravanDate.persons }}</td>
             </tr>
             <tr>
-                <th>Strom-Anschluß</th>
+                <th class="text-right">Strom-Anschluß</th>
                 <td>{{ caravanDate.electric ? 'JA' : 'Nein'}}</td>
             </tr>
             <tr>
-                <th>Von</th>
+                <th class="text-right">Von</th>
                 <td>{{ formatDate(caravanDate.from) }}</td>
             </tr>
             <tr>
-                <th>Bis</th>
+                <th class="text-right">Bis</th>
                 <td>{{ formatDate(caravanDate.until) }}</td>
+            </tr>
+            <tr>
+                <th class="text-right">Anzahl Tage</th>
+                <td>{{ countDays( caravanDate.from, caravanDate.until) }}</td>
             </tr>
             <tr>
                 <td colspan="2">
@@ -32,18 +36,18 @@
                 </td>
             </tr>
         </table>
-    </AppLayout>
+    </DefaultLayout>
 </template>
 
 <script>
-import AppLayout from "../../Layouts/AppLayout";
 import CaravanPriceCalculation from "../../Components/CaravanPriceCalculation";
 import NavLink from "../../Jetstream/NavLink";
 import DateFormat from "../../Mixins/DateFormat";
+import DefaultLayout from "../../Layouts/DefaultLayout";
 
 export default {
     name: "show",
-    components: {NavLink, CaravanPriceCalculation, AppLayout},
+    components: {DefaultLayout, NavLink, CaravanPriceCalculation},
     props: ['caravanDate'],
     mixins: [DateFormat],
 }

@@ -1,5 +1,5 @@
 <template>
-    <AppLayout title="Wohnwagen">
+    <DefaultLayout title="Wohnwagen">
         <nav-link :href="create_url" class="ml-2 my-2">
             neuen Wohnwagen eintragen
         </nav-link>
@@ -14,7 +14,7 @@
             </tr>
         </table>
         <h3 v-else>Keine Daten vorhanden</h3>
-    </AppLayout>
+    </DefaultLayout>
 </template>
 
 <script>
@@ -22,12 +22,12 @@ import ResponsiveNavLink from '@/Jetstream/ResponsiveNavLink'
 import { Inertia } from '@inertiajs/inertia'
 import Button from "../../Jetstream/Button";
 import NavLink from "../../Jetstream/NavLink";
-import AppLayout from "../../Layouts/AppLayout";
+import DefaultLayout from "../../Layouts/DefaultLayout";
 
 export default {
     name: "index",
     components: {
-        AppLayout,
+        DefaultLayout,
         NavLink,
         Button,
         ResponsiveNavLink,
