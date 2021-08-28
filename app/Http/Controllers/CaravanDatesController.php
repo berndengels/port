@@ -33,26 +33,6 @@ class CaravanDatesController extends Controller
         return Inertia::render('CaravanDates/index', [
             'years'         => $this->years,
             'monthsByYear'  => $this->monthsByYear,
-/*
-            'data'          => CaravanDates::with('caravan')
-                ->orderBy('from','DESC')
-                ->get()
-                ->map(function ($item) {
-                    return [
-                        'id'        => $item->id,
-                        'carnumber' => $item->caravan->carnumber ?? null,
-                        'carlength' => $item->caravan->carlength ?? null,
-                        'from'      => $item->from,
-                        'until'     => $item->until,
-                        'persons'   => $item->persons,
-                        'price'     => $item->price,
-                        'prices'    => $item->prices,
-                        'days'      => $item->days,
-                        'show_url'  => URL::route('caravanDates.show', ['caravanDate' => $item]),
-                        'edit_url'  => URL::route('caravanDates.edit', ['caravanDate' => $item]),
-                    ];
-                }),
-*/
             'create_url' => URL::route('caravanDates.create'),
         ]);
     }
@@ -75,12 +55,11 @@ class CaravanDatesController extends Controller
      */
     public function store(CaravanDatesRequest $request)
     {
-        $carnumber = $request->post('carnumber');
-        $caravan = Caravan::whereCarnumber($carnumber)->first() ?? new Caravan();
-        $validated = collect($request->validated());
+        $carnumber  = $request->post('carnumber');
+        $caravan    = Caravan::whereCarnumber($carnumber)->first() ?? new Caravan();
+        $validated  = collect($request->validated());
 
         $caravan->fill($validated->only(['carnumber','carlength'])->toArray())->save();
-
         $caravan->dates()->create($validated->except(['carnumber','carlength'])->toArray());
 
         return Redirect::route('caravanDates.index');
