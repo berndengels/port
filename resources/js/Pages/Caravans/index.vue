@@ -5,10 +5,14 @@
         </nav-link>
 
         <table v-if="data && data.length > 0">
+            <tr>
+                <th>Kennzeichen</th>
+                <th>Länge</th>
+                <th colspan="2"><br></th>
+            </tr>
             <tr v-for="item in data" :key="item.id">
-                <td>{{ item.id }}</td>
                 <td>{{ item.carnumber }}</td>
-                <td>{{ item.carlength }}</td>
+                <td>{{ item.carlength }} m</td>
                 <td><NavLink :href="item.edit_url">Edit</NavLink></td>
                 <td><Button @click="remove(item)">Löschen</Button></td>
             </tr>

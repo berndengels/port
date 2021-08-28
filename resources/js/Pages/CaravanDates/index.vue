@@ -113,7 +113,11 @@ export default {
         onSelectMonth(month) {
             this.selectedMonth = ("" !== month) ? parseInt(month) : null;
             this.caravanDates = this.data.filter(item => {
-                if (dayjs(item.from).year() === this.selectedYear && dayjs(item.from).month() === this.selectedMonth) {
+                let fromMonth = parseInt(dayjs(item.from).month()) + 1,
+                    fromYear = parseInt(dayjs(item.from).year());
+
+                if (fromYear == this.selectedYear && fromMonth == this.selectedMonth) {
+                    console.info("year: "+this.selectedYear+" => " + fromYear + "; month: " + this.selectedMonth + " => " + fromMonth)
                     return item
                 }
             });
