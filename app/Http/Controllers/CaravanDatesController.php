@@ -2,12 +2,32 @@
 
 namespace App\Http\Controllers;
 
+use App\Rules\DatesIntervalUnique;
+use Carbon\Carbon;
+use Illuminate\Support\Collection;
+use Inertia\Inertia;
+use App\Models\Caravan;
 use App\Models\CaravanDates;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Redirect;
+use App\Http\Requests\CaravanDatesRequest;
+use Illuminate\Validation\Validator;
 
 class CaravanDatesController extends Controller
 {
+    private $caravans;
+    private $years;
+    private $monthsByYear;
+
+    public function __construct()
+    {
+        $this->caravans = Caravan::orderBy('carnumber')->get();
+        $this->monthsByYear = CaravanDates::getMonthsByYears();
+        $this->years = array_keys($this->monthsByYear);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +35,29 @@ class CaravanDatesController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('CaravanDates/index', [
+            'years'         => $this->years,
+            'monthsByYear'  => $this->monthsByYear,
+            'data'          => CaravanDates::with('caravan')
+                ->orderBy('from','DESC')
+                ->get()
+                ->map(function ($item) {
+                    return [
+                        'id'        => $item->id,
+                        'carnumber' => $item->caravan->carnumber ?? null,
+                        'carlength' => $item->caravan->carlength ?? null,
+                        'from'      => $item->from,
+                        'until'     => $item->until,
+                        'persons'   => $item->persons,
+                        'price'     => $item->price,
+                        'prices'    => $item->prices,
+                        'days'      => $item->days,
+                        'show_url'  => URL::route('caravanDates.show', ['caravanDate' => $item]),
+                        'edit_url'  => URL::route('caravanDates.edit', ['caravanDate' => $item]),
+                    ];
+                }),
+            'create_url' => URL::route('caravanDates.create'),
+        ]);
     }
 
     /**
@@ -25,7 +67,7 @@ class CaravanDatesController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('CaravanDates/create', ['caravans' => $this->caravans]);
     }
 
     /**
@@ -34,53 +76,72 @@ class CaravanDatesController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(CaravanDatesRequest $request)
     {
-        //
+        $carnumber = $request->post('carnumber');
+        $caravan = Caravan::whereCarnumber($carnumber)->first() ?? new Caravan();
+        $validated = collect($request->validated());
+
+        $caravan->fill($validated->only(['carnumber','carlength'])->toArray())->save();
+
+        $caravan->dates()->create($validated->except(['carnumber','carlength'])->toArray());
+
+        return Redirect::route('caravanDates.index');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param CaravanDates $caravanDates
+     * @param CaravanDates $caravanDate
      * @return Response
      */
-    public function show(CaravanDates $caravanDates)
+    public function show(CaravanDates $caravanDate)
     {
-        //
+        $caravanDate->load('caravan');
+        return Inertia::render('CaravanDates/show', compact('caravanDate'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param CaravanDates $caravanDates
+     * @param CaravanDates $caravanDate
      * @return Response
      */
-    public function edit(CaravanDates $caravanDates)
+    public function edit(CaravanDates $caravanDate)
     {
-        //
+        $caravans = $this->caravans;
+        $caravanDate->load('caravan');
+        return Inertia::render('CaravanDates/edit', compact('caravanDate','caravans'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
-     * @param CaravanDates $caravanDates
+     * @param CaravanDatesRequest $request
+     * @param CaravanDates $caravanDate
      * @return Response
      */
-    public function update(Request $request, CaravanDates $caravanDates)
+    public function update(CaravanDatesRequest $request, CaravanDates $caravanDate)
     {
-        //
+        $validated = collect($request->validated());
+        $validatedCaravan = $validated->only(['carnumber','carlength'])->toArray();
+
+        $validatedCaravanDates = $validated->except(['carnumber','carlength'])->toArray();
+        $caravanDate->caravan()->update($validatedCaravan);
+        $caravanDate->update($validatedCaravanDates);
+
+        return Redirect::route('caravanDates.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param CaravanDates $caravanDates
+     * @param CaravanDates $caravanDate
      * @return Response
      */
-    public function destroy(CaravanDates $caravanDates)
+    public function destroy(CaravanDates $caravanDate)
     {
-        //
+        $caravanDate->delete();
+        return Redirect::route('caravanDates.index');
     }
 }

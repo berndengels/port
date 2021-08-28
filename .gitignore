@@ -3,6 +3,8 @@
 /public/js
 /public/css
 /public/storage
+/public/js
+/public/css
 /storage/*.key
 /vendor
 .env
@@ -15,3 +17,6 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
+/_ide_helper.php
+/.phpstorm.meta.php
+/perms

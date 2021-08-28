@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Caravan;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+use App\Models\Caravan;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\URL;
+use App\Http\Requests\CaravanRequest;
+use Illuminate\Support\Facades\Redirect;
 
 class CaravanController extends Controller
 {
@@ -15,7 +19,18 @@ class CaravanController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('Caravans/index', [
+            'data' => Caravan::orderBy('carnumber')->get()->map(function ($item) {
+                return [
+                    'id'        => $item->id,
+                    'carnumber' => $item->carnumber,
+                    'carlength' => $item->carlength,
+                    'show_url'  => URL::route('caravans.show', ['caravan' => $item]),
+                    'edit_url'  => URL::route('caravans.edit', ['caravan' => $item]),
+                ];
+            }),
+            'create_url' => URL::route('caravans.create'),
+        ]);
     }
 
     /**
@@ -25,7 +40,7 @@ class CaravanController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Caravans/create');
     }
 
     /**
@@ -34,9 +49,10 @@ class CaravanController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(CaravanRequest $request)
     {
-        //
+        Caravan::create($request->validated());
+        return Redirect::route('caravans.index');
     }
 
     /**
@@ -47,7 +63,7 @@ class CaravanController extends Controller
      */
     public function show(Caravan $caravan)
     {
-        //
+        return Inertia::render('Caravans/show', compact('caravan'));
     }
 
     /**
@@ -58,19 +74,20 @@ class CaravanController extends Controller
      */
     public function edit(Caravan $caravan)
     {
-        //
+        return Inertia::render('Caravans/edit', compact('caravan'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
+     * @param CaravanRequest $request
      * @param Caravan $caravan
      * @return Response
      */
-    public function update(Request $request, Caravan $caravan)
+    public function update(CaravanRequest $request, Caravan $caravan)
     {
-        //
+        $caravan->update($request->validated());
+        return Redirect::route('caravans.index');
     }
 
     /**
@@ -81,6 +98,7 @@ class CaravanController extends Controller
      */
     public function destroy(Caravan $caravan)
     {
-        //
+        $caravan->delete();
+        return Redirect::route('caravans.index');
     }
 }

@@ -1,8 +1,11 @@
 <?php
 
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Application;
+use App\Http\Controllers\CaravanController;
+use App\Http\Controllers\CaravanDatesController;
+use App\Http\Controllers\PriceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,7 +17,7 @@ use Inertia\Inertia;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+/*
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
@@ -23,7 +26,20 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
-
+*/
+/*
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->name('dashboard');
+*/
+Route::get('/', function () {
+    return Inertia::render('Dashboard');
+})->name('dashboard');
+
+Route::group([
+    'middleware' => ['auth', 'verified'],
+],function () {
+    Route::resource('caravans', CaravanController::class);
+    Route::resource('caravanDates', CaravanDatesController::class);
+    Route::post('caravan/price/calculate', [PriceController::class, 'calculate'])->name('caravan.price.calculate');
+});

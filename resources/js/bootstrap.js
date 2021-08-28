@@ -1,4 +1,9 @@
 window._ = require('lodash');
+//window.moment = require('moment');
+//window.moment.locale('de');
+window.dayjs = require('dayjs');
+import 'dayjs/locale/de'
+window.dayjs.locale('de');
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
