@@ -61,7 +61,6 @@ class Kernel extends HttpKernel
             VerifyCsrfToken::class,
             SubstituteBindings::class,
             HandleInertiaRequests::class,
-            HandleInertiaRequests::class,
         ],
 
         'api' => [

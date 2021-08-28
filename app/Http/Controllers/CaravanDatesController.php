@@ -1,10 +1,6 @@
 <?php
-
 namespace App\Http\Controllers;
 
-use App\Rules\DatesIntervalUnique;
-use Carbon\Carbon;
-use Illuminate\Support\Collection;
 use Inertia\Inertia;
 use App\Models\Caravan;
 use App\Models\CaravanDates;
@@ -13,7 +9,6 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\CaravanDatesRequest;
-use Illuminate\Validation\Validator;
 
 class CaravanDatesController extends Controller
 {
@@ -38,6 +33,7 @@ class CaravanDatesController extends Controller
         return Inertia::render('CaravanDates/index', [
             'years'         => $this->years,
             'monthsByYear'  => $this->monthsByYear,
+/*
             'data'          => CaravanDates::with('caravan')
                 ->orderBy('from','DESC')
                 ->get()
@@ -56,6 +52,7 @@ class CaravanDatesController extends Controller
                         'edit_url'  => URL::route('caravanDates.edit', ['caravanDate' => $item]),
                     ];
                 }),
+*/
             'create_url' => URL::route('caravanDates.create'),
         ]);
     }

@@ -2,7 +2,9 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\CaravanDates;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\URL;
 use Inertia\Middleware;
 
 class HandleInertiaRequests extends Middleware
@@ -37,7 +39,28 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request)
     {
         return array_merge(parent::share($request), [
-            //
+            'caravan' => [
+                'dates' => [
+                    'list' => function () {
+                        return CaravanDates::pageList()->get()
+                            ->map(function ($item) {
+                                return [
+                                    'id'        => $item->id,
+                                    'carnumber' => $item->caravan->carnumber ?? null,
+                                    'carlength' => $item->caravan->carlength ?? null,
+                                    'from'      => $item->from,
+                                    'until'     => $item->until,
+                                    'persons'   => $item->persons,
+                                    'price'     => $item->price,
+                                    'prices'    => $item->prices,
+                                    'days'      => $item->days,
+                                    'show_url'  => URL::route('caravanDates.show', ['caravanDate' => $item]),
+                                    'edit_url'  => URL::route('caravanDates.edit', ['caravanDate' => $item]),
+                                ];
+                            });
+                    },
+                ],
+            ],
         ]);
     }
 }

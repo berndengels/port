@@ -18,7 +18,7 @@
             <DateInput name="from" label="Von" required @change="change" />
             <DateInput name="until" label="Von" required @change="change" />
             <Input name="price" label="Preis" required />
-            <Button @click="update" css="btn-save">Speichen</Button>
+            <Button @click="update" btnCss="btn btn-save">Speichen</Button>
         </MyForm>
     </DefaultLayout>
 </template>

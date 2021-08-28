@@ -68,7 +68,7 @@ class CaravanDates extends Model
      * @param Builder $query
      * @return array
      */
-    public function scopeGetMonthsByYears($query, $from = null, $until = null) {
+    public function scopeGetMonthsByYears(Builder $query, $from = null, $until = null) {
         $query->selectRaw("DISTINCT MONTH(`from`) month, DATE_FORMAT(`from`, '%M', 'de_DE') monthname, YEAR(`from`) year");
 
         if($from) {
@@ -90,5 +90,15 @@ class CaravanDates extends Model
             ];
         }
         return $result;
+    }
+
+    /**
+     * Scope a query to get.
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopePageList(Builder $query) {
+        return $query->with('caravan')->orderBy('from','DESC');
     }
 }

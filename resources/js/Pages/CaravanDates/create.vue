@@ -19,7 +19,7 @@
             <DateInput name="until" label="Bis" required @change="change" />
             <Input name="price" label="Preis" />
             <div>
-                <Button @click="store" css="btn-save">Speichen</Button>
+                <Button @click="store" btnCss="btn btn-save">Speichen</Button>
             </div>
         </MyForm>
     </DefaultLayout>

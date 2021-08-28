@@ -9,9 +9,10 @@
             <SelectMonth v-if="selectedYear" name="month" label="Monat" :options="months" @selectMonth="onSelectMonth"
                 css="ml-3"
             />
+            <Button @click="reset" css="inline w-1/6 ml-3" btnCss="btn btn-second">Reset</Button>
         </MyForm>
 
-        <table v-if="data && data.length > 0" class="table">
+        <table v-if="caravanDates.length > 0" class="table">
             <tr>
                 <th>Kennzeichen</th>
                 <th>Länge</th>
@@ -32,8 +33,8 @@
                 <td><Button @click="remove(item)">Löschen</Button></td>
             </tr>
             <tr>
-                <th>Preis Tota €:</th>
-                <td colspan="8">{{ priceTotel }}</td>
+                <th>Preis Total</th>
+                <td colspan="8">{{ priceTotel }} €</td>
             </tr>
         </table>
         <h3 v-else>Keine Daten vorhanden</h3>
@@ -43,7 +44,7 @@
 <script>
 import ResponsiveNavLink from '@/Jetstream/ResponsiveNavLink'
 import { Inertia } from '@inertiajs/inertia'
-import Button from "../../Jetstream/Button";
+import Button from "../../Components/Form/Button";
 import NavLink from "../../Jetstream/NavLink";
 import DateFormat from "../../Mixins/DateFormat";
 import DefaultLayout from "../../Layouts/DefaultLayout";
@@ -64,14 +65,13 @@ export default {
     },
     mixins: [DateFormat],
     props: {
-        data: Array,
         years: Array,
         monthsByYear: Array,
         create_url: String,
     },
     data() {
         return {
-            caravanDates: this.data,
+            caravanDates: this.$page.props.caravan.dates.list ?? [],
             selected: null,
             selectedYear: null,
             selectedMonth: null,
@@ -99,28 +99,35 @@ export default {
         }
     },
     methods: {
-        onSelect(item) {
-            this.selected = item
+        reset() {
+            this.caravanDates = this.$page.props.caravan.dates.list
+            this.dateFilter.reset()
+//            this.dateFilter.year = null
+//            this.dateFilter.month = null
         },
         onSelectYear(year) {
             this.selectedYear = ("" !== year) ? parseInt(year) : null;
-            this.caravanDates = this.data.filter(item => {
-                if(dayjs(item.from).year() === this.selectedYear) {
-                    return item
-                }
-            });
+            if(this.selectedYear) {
+                this.caravanDates = this.$page.props.caravan.dates.list.filter(item => {
+                    if(dayjs(item.from).year() === this.selectedYear) {
+                        return item
+                    }
+                });
+            }
         },
         onSelectMonth(month) {
             this.selectedMonth = ("" !== month) ? parseInt(month) : null;
-            this.caravanDates = this.data.filter(item => {
-                let fromMonth = parseInt(dayjs(item.from).month()) + 1,
-                    fromYear = parseInt(dayjs(item.from).year());
+            if(this.selectedMonth) {
+                this.caravanDates = this.$page.props.caravan.dates.list.filter(item => {
+                    let fromMonth = parseInt(dayjs(item.from).month()) + 1,
+                        fromYear = parseInt(dayjs(item.from).year());
 
-                if (fromYear == this.selectedYear && fromMonth == this.selectedMonth) {
-                    console.info("year: "+this.selectedYear+" => " + fromYear + "; month: " + this.selectedMonth + " => " + fromMonth)
-                    return item
-                }
-            });
+                    if (fromYear == this.selectedYear && fromMonth == this.selectedMonth) {
+                        console.info("year: "+this.selectedYear+" => " + fromYear + "; month: " + this.selectedMonth + " => " + fromMonth)
+                        return item
+                    }
+                });
+            }
         },
         remove(item) {
             if(confirm('Datensatz (ID: ' + item.id + ') wirklich löschen?')) {
