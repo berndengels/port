@@ -57,6 +57,10 @@ use Laravel\Sanctum\PersonalAccessToken;
  * @method static Builder|User whereTwoFactorSecret($value)
  * @method static Builder|User whereUpdatedAt($value)
  * @mixin Eloquent
+ * @property int|null $current_team_id
+ * @property string|null $profile_photo_path
+ * @method static Builder|User whereCurrentTeamId($value)
+ * @method static Builder|User whereProfilePhotoPath($value)
  */
 class User extends Authenticatable
 {

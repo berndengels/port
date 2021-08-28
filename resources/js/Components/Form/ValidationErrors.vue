@@ -12,7 +12,7 @@
 export default {
     computed: {
         errors() {
-            return this.$page.props.errors
+            return (this.$page.props.errors !== undefined) ? this.$page.props.errors : [];
         },
         hasErrors() {
             return Object.keys(this.errors).length > 0;

@@ -2,21 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use App\Rules\DatesIntervalUnique;
+use Carbon\Carbon;
 use Inertia\Inertia;
 use App\Models\Caravan;
 use App\Models\CaravanDates;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\CaravanDatesRequest;
+use Illuminate\Validation\Validator;
 
 class CaravanDatesController extends Controller
 {
     private $caravans;
+    private $dates;
 
     public function __construct()
     {
         $this->caravans = Caravan::orderBy('carnumber')->get();
+//        $this->dates = CaravanDates::all();
     }
 
     /**
@@ -64,12 +70,13 @@ class CaravanDatesController extends Controller
      */
     public function store(CaravanDatesRequest $request)
     {
-        $caravanId = $request->post('caravan_id');
+        $carnumber = $request->post('carnumber');
+        $caravan = Caravan::whereCarnumber($carnumber)->first() ?? new Caravan();
         $validated = collect($request->validated());
 
-        $caravan = $caravanId > 0 ? Caravan::find($caravanId) : new Caravan();
+        $caravan->fill($validated->only(['carnumber','carlength'])->toArray())->save();
+
         $caravan->dates()->create($validated->except(['carnumber','carlength'])->toArray());
-//        CaravanDates::create($validated->except(['carnumber','carlength']))->caravan;
 
         return Redirect::route('caravanDates.index');
     }
@@ -82,6 +89,7 @@ class CaravanDatesController extends Controller
      */
     public function show(CaravanDates $caravanDate)
     {
+        $caravanDate->load('caravan');
         return Inertia::render('CaravanDates/show', compact('caravanDate'));
     }
 
@@ -101,13 +109,19 @@ class CaravanDatesController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
+     * @param CaravanDatesRequest $request
      * @param CaravanDates $caravanDate
      * @return Response
      */
     public function update(CaravanDatesRequest $request, CaravanDates $caravanDate)
     {
-        $caravanDate->update($request->validated());
+        $validated = collect($request->validated());
+        $validatedCaravan = $validated->only(['carnumber','carlength'])->toArray();
+
+        $validatedCaravanDates = $validated->except(['carnumber','carlength'])->toArray();
+        $caravanDate->caravan()->update($validatedCaravan);
+        $caravanDate->update($validatedCaravanDates);
+
         return Redirect::route('caravanDates.index');
     }
 

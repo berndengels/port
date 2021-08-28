@@ -1,12 +1,13 @@
 <template>
-    <div class="block my-2">
+    <div class="md:flex md:items-center mb-6">
         <div class="md:w-1/3"></div>
         <div class="md:w-2/3">
             <button
+                id="btn"
                 :type="type"
                 :class="css"
-                class="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded"
-            >{{ label }}</button>
+                class="rounded"
+            ><slot /></button>
         </div>
     </div>
 </template>

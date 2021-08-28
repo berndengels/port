@@ -1,73 +1,37 @@
 <template>
-    <div>
+    <AppLayout title="Wohnmobil bearbeiten">
         <MyForm :data="form" @submit.prevent>
-            <jet-input type="hidden" v-model="form.caravan_id" />
-            <jet-input type="hidden" v-model="form.prices" />
-            <div>
-                <jet-label for="carnumber" value="Autokennzeichen" />
-                <Autocomplete
-                    :data="caravans"
-                    :form="form"
-                    v-model="form.carnumber"
-                    name="carnumber"
-                    key="id"
-                    @onSelect="onSelect"
-                />
-            </div>
-            <div>
-                <jet-label for="carlength" value="Länge" />
-                <jet-input id="carlength" type="text" class="mt-1 block" v-model="form.carlength" required autofocus autocomplete="carlength" />
-            </div>
-            <div>
-                <jet-label for="persons" value="Personen" />
-                <jet-input id="persons" type="text" class="mt-1 block" v-model="form.persons" required autofocus autocomplete="persons"
-                           @change="change"
-                />
-            </div>
-            <div>
-                <jet-label for="electric" value="Strom-Anschluss" />
-                <jet-input id="electric" type="checkbox" class="mt-1 block" v-model="form.electric" required autofocus
-                           :checked="this.form.electric"
-                           @change="change"
-                />
-            </div>
-            <!--div>
-                <jet-label for="from" value="Von" />
-                <jet-input id="from" type="date" class="mt-1 block" v-model="form.from" required autofocus autocomplete="from"
-                           @change="change"
-                />
-            </div-->
-            <DateInput name="from" label="Von" />
-            <!--div>
-                <jet-label for="until" value="Bis" />
-                <jet-input id="until" type="date" class="mt-1 block" v-model="form.until" required autofocus autocomplete="until"
-                           @change="change"
-                />
-            </div-->
-            <DateInput name="until" label="Von" />
-            <div>
-                <jet-label for="price" value="Preis in €" />
-                <jet-input id="price" type="text" class="mt-1 block" v-model="form.price" required autofocus autocomplete="price" />
-            </div>
-            <div>
-                <jet-button @click="update">Speichen</jet-button>
-            </div>
+            <input type="hidden" v-model="form.caravan_id" />
+            <input type="hidden" v-model="form.prices" />
+            <Autocomplete
+                :data="caravans"
+                name="carnumber"
+                label="Autokennzeichen"
+                key="id"
+                @onSelect="onSelect"
+                required
+                autocomplete="off"
+            />
+            <Input name="carlength" type="number" label="Länge Wohnmobil" required />
+            <Input name="persons" type="number" label="Anzahl Personen" required @change="change" />
+            <Checkbox name="electric" label="Strom-Anschluss" @change="change" />
+            <DateInput name="from" label="Von" required @change="change" />
+            <DateInput name="until" label="Von" required @change="change" />
+            <Input name="price" label="Preis" required />
+            <Button @click="update" css="btn-save">Speichen</Button>
         </MyForm>
-    </div>
+    </AppLayout>
 </template>
 
 <script>
-import JetButton from '@/Jetstream/Button.vue'
-import JetFormSection from '@/Jetstream/FormSection.vue'
-import JetInput from '@/Jetstream/Input.vue'
-import JetInputError from '@/Jetstream/InputError.vue'
-import JetLabel from '@/Jetstream/Label.vue'
-import JetActionMessage from '@/Jetstream/ActionMessage.vue'
-import ValidationErrors from "@/Jetstream/ValidationErrors";
 import Autocomplete from '@/Components/Form/Autocomplete'
-import Input from "../../Jetstream/Input";
 import MyForm from "../../Components/Form/MyForm";
 import DateInput from "../../Components/Form/DateInput";
+import Input from "../../Components/Form/Input";
+import Button from "../../Components/Form/Button";
+import Checkbox from "../../Components/Form/Checkbox";
+import DateFormat from "../../Mixins/DateFormat";
+import AppLayout from "../../Layouts/AppLayout";
 import axios from 'axios';
 
 const apiURL = 'http://port.test';
@@ -75,30 +39,29 @@ const apiURL = 'http://port.test';
 export default {
     name: "edit",
     components: {
+        AppLayout,
+        Checkbox,
+        Button,
         MyForm,
         DateInput,
         Input,
-        ValidationErrors,
-        JetActionMessage,
-        JetButton,
-        JetFormSection,
-        JetInput,
-        JetInputError,
-        JetLabel,
         Autocomplete,
     },
     props: ['caravans','caravanDate'],
+    mixins: [DateFormat],
+
     data() {
         return {
             form: this.$inertia.form({
-                _method: 'PUT',
+//                _method: 'PUT',
+                id: this.caravanDate.id,
                 caravan_id: this.caravanDate.caravan_id,
                 carnumber: this.caravanDate.caravan.carnumber,
                 carlength: this.caravanDate.caravan.carlength,
                 persons: this.caravanDate.persons,
-                from: moment(this.caravanDate.from).format('YYYY-MM-DD'),
-                until: moment(this.caravanDate.until).format('YYYY-MM-DD'),
-                electric: this.caravanDate.electric,
+                from: this.formatDateInput(this.caravanDate.from),
+                until: this.formatDateInput(this.caravanDate.until),
+                electric: !!this.caravanDate.electric,
                 price: this.caravanDate.price,
                 prices: this.caravanDate.prices,
             }),
@@ -107,31 +70,38 @@ export default {
 
     methods: {
         update() {
-            this.form.put(route('caravanDates.update'), {
-                errorBag: 'updateCaravanDates',
-                preserveScroll: true,
-                onSuccess: (resp) => {},
-                onError: err => alert(err),
-            });
+            try {
+                this.form.put(route('caravanDates.update', this.form), {
+                    preserveScroll: true,
+//                errorBag: 'errors',
+//                onSuccess: (resp) => {},
+                    onError: (err) => {
+                        console.info('error')
+                        console.info(err)
+                    }
+                });
+            } catch(err) {
+                console.info('error')
+                console.info(err)
+            }
         },
-        onSelect(target) {
-            let caravan = this.caravans.filter(i => i.carnumber === target.innerText).shift()
+        onSelect(e) {
+            let caravan = this.caravans.filter(i => i.carnumber === e.target.innerText).shift()
             if(caravan) {
                 this.form.caravan_id = caravan.id
                 this.form.carnumber = caravan.carnumber
                 this.form.carlength = caravan.carlength
+                console.info(caravan)
             }
-        },
-        onInput() {
-            return this.caravans
         },
         change() {
             if(this.form.from && this.form.until && this.form.persons) {
-                axios.post(apiURL+"/caravan/price/calculate", this.form).then(resp => {
-                    console.info(resp.data);
-                    this.form.price = resp.data.total
-                    this.form.prices = JSON.stringify(resp.data.prices)
-                })
+                axios.post(apiURL+"/caravan/price/calculate", this.form)
+                    .then(resp => {
+                        console.info(resp.data);
+                        this.form.price = resp.data.total
+                        this.form.prices = JSON.stringify(resp.data.prices)
+                    })
                     .catch(err => console.error(err))
                 ;
             }

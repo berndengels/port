@@ -30,6 +30,11 @@ use Illuminate\Support\Carbon;
  * @method static Builder|CaravanDates wherePrice($value)
  * @method static Builder|CaravanDates whereUntil($value)
  * @mixin Eloquent
+ * @property int|null $electric
+ * @property string $prices
+ * @property-read mixed $days
+ * @method static Builder|CaravanDates whereElectric($value)
+ * @method static Builder|CaravanDates wherePrices($value)
  */
 class CaravanDates extends Model
 {

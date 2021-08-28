@@ -9,6 +9,7 @@
                 v-model="$parent.$props.data[name]"
                 class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                 :style="css"
+                :required="required"
             />
             <ValidationFieldErrors :field="name" />
         </div>
@@ -34,6 +35,10 @@ export default {
             default: null,
         },
         css: String,
+        required: {
+            type: Boolean,
+            default: false,
+        },
     },
 }
 </script>

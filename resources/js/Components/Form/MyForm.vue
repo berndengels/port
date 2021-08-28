@@ -1,5 +1,5 @@
 <template>
-    <form class="w-full" :data="data">
+    <form class="block w-3/4 justify-center" :data="data">
         <slot />
     </form>
 </template>

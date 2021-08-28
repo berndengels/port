@@ -14,10 +14,10 @@ export default {
     },
     computed: {
         error() {
-            return this.$page.props.errors[this.field]
+            return (undefined !== this.$page.props.errors && undefined !== this.$page.props.errors[this.field]) ? this.$page.props.errors[this.field] : null
         },
         hasErrors() {
-            return this.error !== undefined;
+            return !!this.error;
         },
     }
 }

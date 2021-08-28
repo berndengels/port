@@ -6,6 +6,10 @@
                 :type="type"
                 :id="name"
                 :name="name"
+                :required="required"
+                :autofocus="autofocus"
+                :autocomplete="autocomplete"
+                :aria-autocomplete="autocomplete"
                 v-model="$parent.$props.data[name]"
                 class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
             />
@@ -21,11 +25,6 @@ import ValidationFieldErrors from "@/Components/Form/ValidationFieldErrors";
 export default {
     name: "Input",
     components: {ValidationFieldErrors, Label },
-    data() {
-        return {
-            data: this.$parent.$props.data[this.name] ?? null,
-        }
-    },
     props: {
         name: String,
         label: {
@@ -36,7 +35,19 @@ export default {
         type: {
             type: String,
             default: 'text',
-        }
+        },
+        required: {
+            type: Boolean,
+            default: false,
+        },
+        autofocus: {
+            type: Boolean,
+            default: false,
+        },
+        autocomplete: {
+            type: String,
+            default: "off",
+        },
     }
 }
 </script>
