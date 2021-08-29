@@ -7,7 +7,7 @@
                     <table class="table">
                         <tr v-for="(item, key) in parsedPriceData(price)" :key="key">
                             <th class="text-right">{{ key }}</th>
-                            <td>{{ item }}</td>
+                            <td v-html="item"></td>
                         </tr>
                     </table>
                 </td>

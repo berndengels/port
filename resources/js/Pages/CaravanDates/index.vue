@@ -24,7 +24,7 @@
             </tr>
             <tr v-for="item in caravanDates" :key="item.id">
                 <td><NavLink :href="item.show_url">{{ item.carnumber }}</NavLink></td>
-                <td>{{ item.carlength }}</td>
+                <td>{{ item.carlength }} m</td>
                 <td>{{ formatDate(item.from) }}</td>
                 <td>{{ formatDate(item.until) }}</td>
                 <td>{{ item.days }}</td>

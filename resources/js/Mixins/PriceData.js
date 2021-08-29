@@ -30,7 +30,7 @@ const PriceData = {
                         items["Wohnwagenpreis pro Tag"] = data[key] + " €"
                         break
                     case 'sum_price':
-                        items["Preissumme pro Tag"] = data[key] + " €"
+                        items["Preissumme pro Tag"] = "<b class='text-red-500'>"+ data[key] + " €</b>"
                         break
                     default:
                         items[key] = data[key]
