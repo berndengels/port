@@ -18,7 +18,7 @@ class CaravanDatesController extends Controller
 
     public function __construct()
     {
-        $this->caravans = Caravan::orderBy('carnumber')->get();
+        $this->caravans = Caravan::whereHas('dates')->orderBy('carnumber')->get();
         $this->monthsByYear = CaravanDates::getMonthsByYears();
         $this->years = array_keys($this->monthsByYear);
     }
@@ -33,7 +33,8 @@ class CaravanDatesController extends Controller
         return Inertia::render('CaravanDates/index', [
             'years'         => $this->years,
             'monthsByYear'  => $this->monthsByYear,
-            'create_url' => URL::route('caravanDates.create'),
+            'create_url'    => URL::route('caravanDates.create'),
+            'caravans'      => $this->caravans,
         ]);
     }
 

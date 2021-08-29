@@ -46,9 +46,10 @@ class HandleInertiaRequests extends Middleware
                             ->map(function ($item) {
                                 return [
                                     'id'        => $item->id,
-                                    'carnumber' => $item->caravan->carnumber ?? null,
-                                    'carlength' => $item->caravan->carlength ?? null,
-                                    'email'     => $item->caravan->email ?? null,
+                                    'caravan_id' => $item->caravan_id,
+                                    'carnumber' => $item->caravan->carnumber,
+                                    'carlength' => $item->caravan->carlength,
+                                    'email'     => $item->caravan->email,
                                     'from'      => $item->from,
                                     'until'     => $item->until,
                                     'persons'   => $item->persons,

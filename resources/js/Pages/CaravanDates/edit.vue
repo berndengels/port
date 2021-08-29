@@ -35,8 +35,6 @@ import AppLayout from "../../Layouts/AppLayout";
 import axios from 'axios';
 import DefaultLayout from "../../Layouts/DefaultLayout";
 
-const apiURL = process.env.MIX_API_URL;
-
 export default {
     name: "edit",
     components: {
@@ -97,7 +95,7 @@ export default {
         },
         change() {
             if(this.form.from && this.form.until && this.form.persons) {
-                axios.post(apiURL+"/caravan/price/calculate", this.form)
+                axios.post(route("caravan.price.calculate"), this.form)
                     .then(resp => {
                         console.info(resp.data);
                         this.form.price = resp.data.total

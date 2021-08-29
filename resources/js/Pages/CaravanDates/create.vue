@@ -37,8 +37,6 @@ import axios from 'axios';
 import DateFormat from "../../Mixins/DateFormat";
 import DefaultLayout from "../../Layouts/DefaultLayout";
 
-const apiURL = process.env.MIX_API_URL;
-
 export default {
     name: "create",
     components: {
@@ -98,7 +96,7 @@ export default {
         },
         change() {
             if(this.form.from && this.form.until && this.form.persons) {
-                axios.post(apiURL+"/caravan/price/calculate", this.form)
+                axios.post(route("caravan.price.calculate"), this.form)
                     .then(resp => {
                         console.info(resp.data);
                         this.form.price = resp.data.total

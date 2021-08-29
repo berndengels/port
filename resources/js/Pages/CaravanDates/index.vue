@@ -4,10 +4,17 @@
             Neueintrag
         </nav-link>
 
-        <MyForm :data="dateFilter" css="flex-inline" @submit.prevent>
-            <SelectYear name="year" label="Jahr" :options="years" @selectYear="onSelectYear" />
-            <SelectMonth v-if="selectedYear" name="month" label="Monat" :options="months" @selectMonth="onSelectMonth"
+        <MyForm :data="filter" css="flex-inline" @submit.prevent>
+            <SelectYear name="year" label="Jahr" :options="years"
+                @selectYear="onSelectYear"
+            />
+            <SelectMonth v-if="selectedYear" name="month" label="Monat" :options="months"
+                @selectMonth="onSelectMonth"
                 css="ml-3"
+            />
+            <SelectFilter name="carnumber" label="Kennzeichen" keyName="id" field="carnumber"
+                :options="caravans"
+                @selectedCarnumber="onSelectCaravan"
             />
             <Button @click="reset" css="inline w-1/6 ml-3" btnCss="btn btn-second">Reset</Button>
         </MyForm>
@@ -51,10 +58,12 @@ import DefaultLayout from "../../Layouts/DefaultLayout";
 import MyForm from "../../Components/Form/MyForm";
 import SelectYear from "../../Components/Form/SelectYear";
 import SelectMonth from "../../Components/Form/SelectMonth";
+import SelectFilter from "../../Components/Form/SelectFilter";
 
 export default {
     name: "index",
     components: {
+        SelectFilter,
         SelectYear,
         SelectMonth,
         MyForm,
@@ -65,6 +74,7 @@ export default {
     },
     mixins: [DateFormat],
     props: {
+        caravans: Array,
         years: Array,
         monthsByYear: Array,
         create_url: String,
@@ -75,7 +85,8 @@ export default {
             selected: null,
             selectedYear: null,
             selectedMonth: null,
-            dateFilter: this.$inertia.form({
+            selectedCaravan: null,
+            filter: this.$inertia.form({
                 year: null,
                 month: null,
             }),
@@ -101,9 +112,18 @@ export default {
     methods: {
         reset() {
             this.caravanDates = this.$page.props.caravan.dates.list
-            this.dateFilter.reset()
-//            this.dateFilter.year = null
-//            this.dateFilter.month = null
+            this.filter.reset()
+        },
+        onSelectCaravan(id) {
+            this.selectedCaravan = ("" !== id) ? parseInt(id) : null;
+            if(this.selectedCaravan) {
+                this.caravanDates = this.$page.props.caravan.dates.list.filter(item => {
+                    console.info(this.selectedCaravan + ": " + item.caravan_id)
+                    if(item.caravan_id == this.selectedCaravan) {
+                        return item
+                    }
+                });
+            }
         },
         onSelectYear(year) {
             this.selectedYear = ("" !== year) ? parseInt(year) : null;

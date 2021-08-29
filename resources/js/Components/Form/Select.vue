@@ -17,7 +17,7 @@
                     {{ val }}
                 </option>
             </select>
-            <ValidationFieldErrors :field="name" />
+            <ValidationFieldErrors :field="name" v-if="handleErrors" />
         </div>
     </div>
 </template>
@@ -43,6 +43,10 @@ export default {
         },
         css: String,
         required: {
+            type: Boolean,
+            default: false,
+        },
+        handleErrors: {
             type: Boolean,
             default: false,
         },
