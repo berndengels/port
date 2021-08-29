@@ -62,7 +62,8 @@ class CaravanDatesController extends Controller
         $caravan->fill($validated->only(['carnumber','carlength'])->toArray())->save();
         $caravan->dates()->create($validated->except(['carnumber','carlength'])->toArray());
 
-        return Redirect::route('caravanDates.index');
+//        return Redirect::route('caravanDates.index');
+        return Redirect::back();
     }
 
     /**

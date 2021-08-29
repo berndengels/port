@@ -73,7 +73,12 @@ export default {
             this.form.post(route('caravanDates.store'), {
                 errorBag: 'storeCaravanDates',
                 preserveScroll: true,
-                onSuccess: (resp) => {},
+                onSuccess: (resp) => {
+                    this.$inertia.visit(route('caravanDates.index'),{
+                        method: 'get',
+                        only: ['caravan.dates.list']
+                    })
+                },
                 onError: err => console.error(err),
             });
         },

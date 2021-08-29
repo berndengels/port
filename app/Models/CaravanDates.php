@@ -99,6 +99,6 @@ class CaravanDates extends Model
      * @return Builder
      */
     public function scopePageList(Builder $query) {
-        return $query->with('caravan')->orderBy('from','DESC');
+        return $query->with('caravan')->orderBy('id','DESC');
     }
 }
