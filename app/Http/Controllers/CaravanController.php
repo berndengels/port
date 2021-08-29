@@ -25,6 +25,7 @@ class CaravanController extends Controller
                     'id'        => $item->id,
                     'carnumber' => $item->carnumber,
                     'carlength' => $item->carlength,
+                    'email'     => $item->email,
                     'show_url'  => URL::route('caravans.show', ['caravan' => $item]),
                     'edit_url'  => URL::route('caravans.edit', ['caravan' => $item]),
                 ];

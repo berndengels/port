@@ -20,14 +20,14 @@ main {
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
     -webkit-justify-content: start;
-    -ms-flex-pack: start;
-    justify-content: start;
+    -ms-flex-pack: flex-start;
+    justify-content: flex-start;
     -webkit-align-content: space-between;
     -ms-flex-line-pack: justify;
-    align-content: start;
-    -webkit-align-items: start;
-    -ms-flex-align: start;
-    align-items: start;
+    align-content: flex-start;
+    -webkit-align-items: flex-start;
+    -ms-flex-align: flex-start;
+    align-items: flex-start;
 }
 .flex-item {
     width: auto;

@@ -31,6 +31,17 @@ class CaravanRequest extends FormRequest
         return [
             'carnumber' => !$this->id ? 'required|unique:caravans,carnumber' : 'required',
             'carlength' => 'required|digits_between:1,2',
+            'email'     => 'nullable|email',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'carnumber.required'   => 'Bitte das Auto-Kennzeichen angeben!',
+            'carlength.required'   => 'Bitte die Länge des Fahrzeugs angeben!',
+            'carlength.numeric'    => 'Die Länge des Fahrzeugs muß als ganze Zahl angegeben werden!',
+            'email.email'          => 'Bitte eine korrekte oder keine Email-Adresse angeben.',
         ];
     }
 }

@@ -13,6 +13,7 @@
                 autocomplete="off"
             />
             <Input name="carlength" type="number" label="Länge Wohnmobil" required />
+            <Input name="email" type="email" label="Email" />
             <Input name="persons" type="number" label="Anzahl Personen" required @change="change" />
             <Checkbox name="electric" label="Strom-Anschluss" @change="change" />
             <DateInput name="from" label="Von" required  @change="change" />
@@ -58,6 +59,7 @@ export default {
                 caravan_id: null,
                 carnumber: null,
                 carlength: null,
+                email: null,
                 persons: 2,
                 from: this.formatDateInput((new Date().toDateString())),
                 until: null,
@@ -88,6 +90,7 @@ export default {
                 this.form.caravan_id = caravan.id
                 this.form.carnumber = caravan.carnumber
                 this.form.carlength = caravan.carlength
+                this.form.email = caravan.email
             }
         },
         onInput() {

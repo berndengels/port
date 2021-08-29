@@ -48,6 +48,7 @@ class HandleInertiaRequests extends Middleware
                                     'id'        => $item->id,
                                     'carnumber' => $item->caravan->carnumber ?? null,
                                     'carlength' => $item->caravan->carlength ?? null,
+                                    'email'     => $item->caravan->email ?? null,
                                     'from'      => $item->from,
                                     'until'     => $item->until,
                                     'persons'   => $item->persons,

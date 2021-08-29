@@ -47,6 +47,7 @@ class CaravanDatesRequest extends FormRequest
                 'date',
                 !$this->id ? new DatesIntervalUnique($caravan) : null,
             ],
+            'email'     => 'nullable|email',
             'persons'   => 'required|numeric',
             'price'     => 'required|numeric',
             'caravan_id' => '',
@@ -58,16 +59,17 @@ class CaravanDatesRequest extends FormRequest
     public function messages()
     {
         return [
-            'carnumber.required'   => 'Bitte das Auto-Kennzeichen angeben!',
-            'carlength.required'   => 'Bitte die Länge des Fahrzeugs angeben!',
-            'carlength.numeric'    => 'Die Länge des Fahrzeugs muß als ganze Zahl angegeben werden!',
-            'from.date' => 'Das Anreise-Datum muß als Datum angegeben werden.',
-            'until.date' => 'Das Abreise-Datum muß als Datum angegeben werden.',
+            'carnumber.required'    => 'Bitte das Auto-Kennzeichen angeben!',
+            'carlength.required'    => 'Bitte die Länge des Fahrzeugs angeben!',
+            'carlength.numeric'     => 'Die Länge des Fahrzeugs muß als ganze Zahl angegeben werden!',
+            'from.date'             => 'Das Anreise-Datum muß als Datum angegeben werden.',
+            'until.date'            => 'Das Abreise-Datum muß als Datum angegeben werden.',
 //            'until.after:from' => 'Das Anreise-Datum liegt vor einem vorhandenen Abreise-Datum',
-            'persons.required' => 'Bitte die Anzahl der Personen angeben',
-            'persons.numeric' => 'Die Anzahl der Personen muß eine ganza Zahl sein',
-            'price.required' => 'Bitte einen Preis angeben',
-            'price.numeric' => 'Der Preis muß eine ganze Zahl sein',
+            'persons.required'      => 'Bitte die Anzahl der Personen angeben',
+            'persons.numeric'       => 'Die Anzahl der Personen muß eine ganza Zahl sein',
+            'price.required'        => 'Bitte einen Preis angeben',
+            'price.numeric'         => 'Der Preis muß eine ganze Zahl sein',
+            'email.email'           => 'Bitte eine korrekte oder keine Email-Adresse angeben.',
         ];
     }
 }
