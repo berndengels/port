@@ -3,13 +3,12 @@
         <div class="flex-container">
             <div class="flex-item">
                 <h5>Wohnwagen zur Zeit: {{currentCaravans.length}}</h5>
-                <ul v-if="currentCaravans.length > 0">
-                    <li v-for="car in currentCaravans" :key="car.id">{{ car.carnumber }}</li>
-                </ul>
+                <div v-if="currentCaravans.length > 0" class="flex-container">
+                    <div v-for="car in currentCaravans" :key="car.id" class="flex flex-wrap flex-shrink-0 carnumber">
+                        {{ car.carnumber }}
+                    </div>
+                </div>
             </div>
-            <!--div class="flex-item">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Explanetur igitur. Consequentia exquirere, quoad sit id, quod volumus, effectum. Duo Reges: constructio interrete.</p>
-            </div-->
         </div>
     </DefaultLayout>
 </template>

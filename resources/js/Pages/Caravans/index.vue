@@ -4,45 +4,82 @@
             neuen Wohnwagen eintragen
         </nav-link>
 
-        <table v-if="data && data.length > 0">
-            <tr>
-                <th>Kennzeichen</th>
-                <th>Länge</th>
-                <th colspan="2"><br></th>
-            </tr>
-            <tr v-for="item in data" :key="item.id">
-                <td>{{ item.carnumber }}</td>
-                <td>{{ item.carlength }} m</td>
-                <td><NavLink :href="item.edit_url">Edit</NavLink></td>
-                <td><Button @click="remove(item)">Löschen</Button></td>
-            </tr>
-        </table>
+        <MyForm :data="filter" css="flex-inline" @submit.prevent>
+            <SelectFilter name="caravan" label="Kennzeichen" keyName="id" field="carnumber"
+                  :options="data"
+                  @selectedCaravan="onSelectCaravan"
+            />
+            <Button @click="reset" css="inline w-1/6 ml-3" btnCss="btn btn-second">Reset</Button>
+        </MyForm>
+
+        <div v-if="caravans.length > 0">
+            <table class="table">
+                <tr>
+                    <th>Kennzeichen</th>
+                    <th>Länge</th>
+                    <th>Email</th>
+                    <th colspan="2"><br></th>
+                </tr>
+                <tr v-for="item in caravans" :key="item.id">
+                    <td>{{ item.carnumber }}</td>
+                    <td>{{ item.carlength }} m</td>
+                    <td><a v-if="item.email" :href="'mailto:' + item.email" target="_blank">{{ item.email }}</a><br v-else></td>
+                    <td><NavLink :href="route('caravans.edit', item)">Edit</NavLink></td>
+                    <td><Button @click="remove(item)">Löschen</Button></td>
+                </tr>
+            </table>
+            <!--Pagination class="mt-6" :links="data.links" /-->
+        </div>
         <h3 v-else>Keine Daten vorhanden</h3>
     </DefaultLayout>
 </template>
 
 <script>
-import ResponsiveNavLink from '@/Jetstream/ResponsiveNavLink'
 import { Inertia } from '@inertiajs/inertia'
 import Button from "../../Jetstream/Button";
 import NavLink from "../../Jetstream/NavLink";
 import DefaultLayout from "../../Layouts/DefaultLayout";
+import SelectFilter from "../../Components/Form/SelectFilter";
+import MyForm from "../../Components/Form/MyForm";
+import Pagination from "../../Components/Pagination";
 
 export default {
     name: "index",
     components: {
+        Pagination,
+        MyForm,
+        SelectFilter,
         DefaultLayout,
         NavLink,
         Button,
-        ResponsiveNavLink,
     },
     props: {
-        data: Array,
+        data: Object,
         create_url: String,
     },
+    data() {
+        return {
+            caravans: this.data ?? [],
+            selectedCaravan: null,
+            filter: this.$inertia.form({
+                caravan: null,
+            }),
+        }
+    },
     methods: {
-        edit(item) {
-
+        reset() {
+            this.caravans = this.data
+            this.filter.reset()
+        },
+        onSelectCaravan(id) {
+            this.selectedCaravan = ("" !== id) ? parseInt(id) : null;
+            if(this.selectedCaravan) {
+                this.caravans = this.data.filter(item => {
+                    if(item.id == this.selectedCaravan) {
+                        return item
+                    }
+                });
+            }
         },
         remove(item) {
             if(confirm('Datensatz (ID: ' + item.id + ') wirklich löschen?')) {
@@ -50,7 +87,6 @@ export default {
             }
         }
     }
-
 }
 </script>
 

@@ -24,7 +24,7 @@ import ValidationFieldErrors from "@/Components/Form/ValidationFieldErrors";
 
 export default {
     name: "Input",
-    components: {ValidationFieldErrors, Label },
+    components: {ValidationFieldErrors, Label},
     props: {
         name: String,
         label: {

@@ -50,6 +50,12 @@ class CaravanDates extends Model
 
     public $timestamps = false;
 
+    protected $casts = [
+        'persons'   => 'integer',
+        'price'     => 'integer',
+//        'prices'     => 'Object',
+    ];
+
     public function caravan()
     {
         return $this->belongsTo(Caravan::class);

@@ -1,45 +1,27 @@
 <template>
     <DefaultLayout title="Wohnwagen">
-        <form @submit.prevent>
-            <ValidationErrors />
-            <div>
-                <jet-label for="carnumber" value="Autokennzeichen" />
-                <jet-input id="carnumber" type="text" class="mt-1 block w-full" v-model="form.carnumber" required autofocus autocomplete="carnumber" />
-            </div>
-            <div>
-                <jet-label for="carlength" value="Länge" />
-                <jet-input id="carlength" type="text" class="mt-1 block w-full" v-model="form.carlength" required autofocus autocomplete="carnumber" />
-            </div>
-            <div>
-                <jet-button @click="update">Speichern</jet-button>
-            </div>
-        </form>
+        <MyForm :data="form" @submit.prevent>
+            <Input name="carnumber" label="Autokennzeichen" required="true" />
+            <Input type="number" name="carlength" label="Länge" required="true" />
+            <Input type="email" name="email" label="Email" />
+            <Button @click.prevent="update" btnCss="btn btn-save">Speichern</Button>
+        </MyForm>
     </DefaultLayout>
 </template>
 
 <script>
-import JetButton from '@/Jetstream/Button.vue'
-import JetFormSection from '@/Jetstream/FormSection.vue'
-import JetInput from '@/Jetstream/Input.vue'
-import JetInputError from '@/Jetstream/InputError.vue'
-import JetLabel from '@/Jetstream/Label.vue'
-import JetActionMessage from '@/Jetstream/ActionMessage.vue'
-import FormSection from "../../Jetstream/FormSection";
-import ValidationErrors from "../../Jetstream/ValidationErrors";
 import DefaultLayout from "../../Layouts/DefaultLayout";
+import MyForm from "../../Components/Form/MyForm";
+import Input from "../../Components/Form/Input";
+import Button from "../../Jetstream/Button";
 
 export default {
     name: "edit",
     components: {
+        Button,
+        Input,
+        MyForm,
         DefaultLayout,
-        ValidationErrors,
-        FormSection,
-        JetActionMessage,
-        JetButton,
-        JetFormSection,
-        JetInput,
-        JetInputError,
-        JetLabel,
     },
     props: ['caravan'],
     data() {
@@ -49,6 +31,7 @@ export default {
                 id: this.caravan.id,
                 carnumber: this.caravan.carnumber,
                 carlength: this.caravan.carlength,
+                email: this.caravan.email,
             }),
         }
     },
@@ -56,7 +39,6 @@ export default {
     methods: {
         update() {
             this.form.put(route('caravans.update', this.form), {
-                errorBag: 'updateCaravan',
                 preserveScroll: true,
                 onSuccess: (resp) => {},
             });

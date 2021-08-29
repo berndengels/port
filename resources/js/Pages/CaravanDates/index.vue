@@ -12,9 +12,9 @@
                 @selectMonth="onSelectMonth"
                 css="ml-3"
             />
-            <SelectFilter name="carnumber" label="Kennzeichen" keyName="id" field="carnumber"
+            <SelectFilter name="caravan" label="Kennzeichen" keyName="id" field="carnumber"
                 :options="caravans"
-                @selectedCarnumber="onSelectCaravan"
+                @selectedCaravan="onSelectCaravan"
             />
             <Button @click="reset" css="inline w-1/6 ml-3" btnCss="btn btn-second">Reset</Button>
         </MyForm>
@@ -89,6 +89,7 @@ export default {
             filter: this.$inertia.form({
                 year: null,
                 month: null,
+                caravan: null,
             }),
         }
     },
@@ -118,7 +119,6 @@ export default {
             this.selectedCaravan = ("" !== id) ? parseInt(id) : null;
             if(this.selectedCaravan) {
                 this.caravanDates = this.$page.props.caravan.dates.list.filter(item => {
-                    console.info(this.selectedCaravan + ": " + item.caravan_id)
                     if(item.caravan_id == this.selectedCaravan) {
                         return item
                     }
@@ -143,7 +143,6 @@ export default {
                         fromYear = parseInt(dayjs(item.from).year());
 
                     if (fromYear == this.selectedYear && fromMonth == this.selectedMonth) {
-                        console.info("year: "+this.selectedYear+" => " + fromYear + "; month: " + this.selectedMonth + " => " + fromMonth)
                         return item
                     }
                 });

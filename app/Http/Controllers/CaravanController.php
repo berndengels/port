@@ -19,18 +19,11 @@ class CaravanController extends Controller
      */
     public function index()
     {
+//        $caravans = Caravan::orderBy('carnumber')->paginate(3);
+        $caravans = Caravan::orderBy('carnumber')->get();
         return Inertia::render('Caravans/index', [
-            'data' => Caravan::orderBy('carnumber')->get()->map(function ($item) {
-                return [
-                    'id'        => $item->id,
-                    'carnumber' => $item->carnumber,
-                    'carlength' => $item->carlength,
-                    'email'     => $item->email,
-                    'show_url'  => URL::route('caravans.show', ['caravan' => $item]),
-                    'edit_url'  => URL::route('caravans.edit', ['caravan' => $item]),
-                ];
-            }),
-            'create_url' => URL::route('caravans.create'),
+            'data'          => $caravans,
+            'create_url'    => URL::route('caravans.create'),
         ]);
     }
 

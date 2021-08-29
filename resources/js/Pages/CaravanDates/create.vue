@@ -71,7 +71,6 @@ export default {
     methods: {
         store() {
             this.form.post(route('caravanDates.store'), {
-                errorBag: 'storeCaravanDates',
                 preserveScroll: true,
                 onSuccess: (resp) => {
                     this.$inertia.visit(route('caravanDates.index'),{
@@ -79,7 +78,7 @@ export default {
                         only: ['caravan.dates.list']
                     })
                 },
-                onError: err => console.error(err),
+//                onError: err => console.error(err),
             });
         },
         onSelect(e) {
@@ -98,7 +97,6 @@ export default {
             if(this.form.from && this.form.until && this.form.persons) {
                 axios.post(route("caravan.price.calculate"), this.form)
                     .then(resp => {
-                        console.info(resp.data);
                         this.form.price = resp.data.total
                         this.form.prices = JSON.stringify(resp.data.prices)
                     })

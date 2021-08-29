@@ -60,8 +60,8 @@ class CaravanDatesController extends Controller
         $caravan    = Caravan::whereCarnumber($carnumber)->first() ?? new Caravan();
         $validated  = collect($request->validated());
 
-        $caravan->fill($validated->only(['carnumber','carlength'])->toArray())->save();
-        $caravan->dates()->create($validated->except(['carnumber','carlength'])->toArray());
+        $caravan->fill($validated->only(['carnumber','carlength','email'])->toArray())->save();
+        $caravan->dates()->create($validated->except(['carnumber','carlength','email'])->toArray());
 
         return Redirect::back();
     }
@@ -101,9 +101,9 @@ class CaravanDatesController extends Controller
     public function update(CaravanDatesRequest $request, CaravanDates $caravanDate)
     {
         $validated = collect($request->validated());
-        $validatedCaravan = $validated->only(['carnumber','carlength'])->toArray();
+        $validatedCaravan = $validated->only(['carnumber','carlength','email'])->toArray();
+        $validatedCaravanDates = $validated->except(['carnumber','carlength','email'])->toArray();
 
-        $validatedCaravanDates = $validated->except(['carnumber','carlength'])->toArray();
         $caravanDate->caravan()->update($validatedCaravan);
         $caravanDate->update($validatedCaravanDates);
 

@@ -34,21 +34,25 @@ class CaravanDatesRequest extends FormRequest
     {
         $carnumber = request('carnumber');
         $carlength = request('carlength');
+        $email     = request('email');
         $caravan = Caravan::whereCarnumber($carnumber)->first() ?? new Caravan();
         $caravan->carnumber = $carnumber;
         $caravan->carlength = $carlength;
+        if($email) {
+            $caravan->email = $email;
+        }
         $caravan->save();
 
         return [
             'carnumber' => 'required',
-            'carlength' => 'required|numeric',
+            'carlength' => ['required','regex:/^[1-9]+$/i'],
             'from'      => 'date',
             'until'     => [
                 'date',
                 !$this->id ? new DatesIntervalUnique($caravan) : null,
             ],
-            'email'     => 'nullable|email',
-            'persons'   => 'required|numeric',
+            'email'     => 'email|nullable',
+            'persons'   => ['required','regex:/^[1-9]+$/i'],
             'price'     => 'required|numeric',
             'caravan_id' => '',
             'electric'  => '',
@@ -61,14 +65,14 @@ class CaravanDatesRequest extends FormRequest
         return [
             'carnumber.required'    => 'Bitte das Auto-Kennzeichen angeben!',
             'carlength.required'    => 'Bitte die Länge des Fahrzeugs angeben!',
-            'carlength.numeric'     => 'Die Länge des Fahrzeugs muß als ganze Zahl angegeben werden!',
+            'carlength.regex'       => 'Die Länge des Fahrzeugs muß als ganze Zahl angegeben werden!',
             'from.date'             => 'Das Anreise-Datum muß als Datum angegeben werden.',
             'until.date'            => 'Das Abreise-Datum muß als Datum angegeben werden.',
 //            'until.after:from' => 'Das Anreise-Datum liegt vor einem vorhandenen Abreise-Datum',
-            'persons.required'      => 'Bitte die Anzahl der Personen angeben',
-            'persons.numeric'       => 'Die Anzahl der Personen muß eine ganza Zahl sein',
-            'price.required'        => 'Bitte einen Preis angeben',
-            'price.numeric'         => 'Der Preis muß eine ganze Zahl sein',
+            'persons.required'      => 'Bitte die Anzahl der Personen angeben.',
+            'persons.regex'         => 'Die Anzahl der Personen muß eine ganza Zahl sein.',
+            'price.required'        => 'Bitte einen Preis angeben.',
+            'price.numeric'         => 'Der Preis muß eine ganze Zahl sein.',
             'email.email'           => 'Bitte eine korrekte oder keine Email-Adresse angeben.',
         ];
     }

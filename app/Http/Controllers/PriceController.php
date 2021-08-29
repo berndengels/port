@@ -3,18 +3,11 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use App\Libs\CaravanPriceCalculator;
 use Illuminate\Http\Response;
+use App\Libs\CaravanPriceCalculator;
 
 class PriceController extends Controller
 {
-    private $calculator;
-
-    public function __construct()
-    {
-        $this->calculator = new CaravanPriceCalculator();
-    }
-
     /**
      * Calculate price.
      *
@@ -35,7 +28,7 @@ class PriceController extends Controller
             $from   = new Carbon($from, config('app.timezone'));
             $until  = new Carbon($until, config('app.timezone'));
 
-            $response = $this->calculator->getPrice($from, $until, $carlength, $persons, $electric);
+            $response =  CaravanPriceCalculator::getPrice($from, $until, $carlength, $persons, $electric);
         }
         return response()->json($response);
     }

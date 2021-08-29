@@ -31,6 +31,7 @@ main {
 }
 .flex-item {
     width: auto;
+    max-width: 30rem;
     min-width: 15rem;
     height: auto;
     min-height: 10rem;
@@ -48,8 +49,9 @@ main {
     margin: 1.0rem;
     background-color: #fff;
     color: #666;
-    background-color: #fff;
+    background-color: #eee;
     border-radius: 0.5rem;
+    opacity: 0.7;
 }
 td, th {
     padding: 0 0.4rem;
@@ -67,6 +69,17 @@ td, th {
 }
 .btn-second {
     color: #fff;
-    background-color: #a0aec0;
+    _background-color: rgba(200,200,200, 0.7);
+    background-color: #eee;
 }
-
+.carnumber {
+    margin: 0.3rem;
+    padding: 0 0.3rem;
+    color: #000;
+    font-family: "Arial";
+    _font-weight: bold;
+    border: 0.1rem solid #000;
+    border-radius: 0.2rem;
+    opacity: 1;
+    background-color: rgba(255,255,255, 1);
+}

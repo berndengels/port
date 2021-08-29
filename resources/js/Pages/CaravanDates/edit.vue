@@ -13,6 +13,7 @@
                 autocomplete="off"
             />
             <Input name="carlength" type="number" label="Länge Wohnmobil" required />
+            <Input type="email" name="email" label="Email" />
             <Input name="persons" type="number" label="Anzahl Personen" required @change="change" />
             <Checkbox name="electric" label="Strom-Anschluss" @change="change" />
             <DateInput name="from" label="Von" required @change="change" />
@@ -56,6 +57,7 @@ export default {
                 id: this.caravanDate.id,
                 caravan_id: this.caravanDate.caravan_id,
                 carnumber: this.caravanDate.caravan.carnumber,
+                email: this.caravanDate.caravan.email,
                 carlength: this.caravanDate.caravan.carlength,
                 persons: this.caravanDate.persons,
                 from: this.formatDateInput(this.caravanDate.from),
@@ -72,12 +74,6 @@ export default {
             try {
                 this.form.put(route('caravanDates.update', this.form), {
                     preserveScroll: true,
-//                errorBag: 'errors',
-//                onSuccess: (resp) => {},
-                    onError: (err) => {
-                        console.info('error')
-                        console.info(err)
-                    }
                 });
             } catch(err) {
                 console.info('error')
@@ -90,14 +86,13 @@ export default {
                 this.form.caravan_id = caravan.id
                 this.form.carnumber = caravan.carnumber
                 this.form.carlength = caravan.carlength
-                console.info(caravan)
+                this.form.email = caravan.email
             }
         },
         change() {
             if(this.form.from && this.form.until && this.form.persons) {
                 axios.post(route("caravan.price.calculate"), this.form)
                     .then(resp => {
-                        console.info(resp.data);
                         this.form.price = resp.data.total
                         this.form.prices = JSON.stringify(resp.data.prices)
                     })
