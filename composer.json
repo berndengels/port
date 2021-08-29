@@ -68,7 +68,7 @@
         }
     },
     "config": {
-        "platform-check": false,
+        "platform-check": true,
         "optimize-autoloader": true,
         "preferred-install": "dist",
         "sort-packages": true
