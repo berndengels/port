@@ -17,7 +17,6 @@
         </div>
 
         <div class="w-full mx-auto mt-0">
-            <img src="/img/nebel_steg.jpg" alt="Hafen" title="Hafen"/>
         </div>
 
     </DefaultLayout>
