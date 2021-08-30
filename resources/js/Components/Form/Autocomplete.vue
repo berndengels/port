@@ -43,8 +43,12 @@ export default {
     },
     methods: {
         onInput(e) {
-            this.items = this.data.filter(item => item[this.name].indexOf(e.target.value.toUpperCase()) === 0);
-            this.elAutoselect.style.display = "block"
+            if(e.target.value.length > 0) {
+                this.items = this.data.filter(item => item[this.name].indexOf(e.target.value.toUpperCase()) === 0);
+                this.elAutoselect.style.display = "block"
+            } else {
+                this.elAutoselect.style.display = "none"
+            }
         },
         select(e) {
             this.$emit('onSelect', e)
