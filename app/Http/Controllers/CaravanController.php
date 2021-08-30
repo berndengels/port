@@ -19,7 +19,6 @@ class CaravanController extends Controller
      */
     public function index()
     {
-        phpinfo();
 //        $caravans = Caravan::orderBy('carnumber')->paginate(3);
         $caravans = Caravan::orderBy('carnumber')->get();
         return Inertia::render('Caravans/index', [

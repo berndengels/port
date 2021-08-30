@@ -1,8 +1,25 @@
 <template>
     <DefaultLayout title="Wohnwagen Dates">
-        <MyLink :href="create_url" icon="far fa-plus-square" ctrClass="ml-2 my-2 p-5 no-hide-text" title="neue Caravan Ankunft eintragen">
-            Neueintrag
-        </MyLink>
+        <div class="flex">
+            <div class="flex-inline">
+                <MyLink :href="create_url"
+                        icon="far fa-plus-square"
+                        ctrClass="ml-2 my-2 p-5 no-hide-text"
+                        title="neue Caravan Ankunft eintragen">
+                    Neueintrag
+                </MyLink>
+            </div>
+            <div class="flex-inline -align-right">
+                <MyLink :href="'/caravan/price/excel/' + currentFrom"
+                        icon="far fa-file-excel"
+                        ctrClass="ml-2 my-2 p-5 no-hide-text"
+                        no-inertia="true"
+                        target="_blank"
+                        title="neue Caravan Ankunft eintragen">
+                    Excel Download
+                </MyLink>
+            </div>
+        </div>
 
         <MyForm :data="filter" css="flex-inline" @submit.prevent>
             <SelectFilter name="caravan" label="Kennzeichen" keyName="id" field="carnumber"
@@ -111,6 +128,15 @@ export default {
         this.onSelectMonth(currentMonth)
     },
     computed: {
+        currentFrom() {
+            if(this.selectedMonth) {
+                return this.selectedYear + "-" + this.selectedMonth + "-01"
+            } else if (this.selectedYear) {
+                return this.selectedYear + "-01-01"
+            } else {
+                return ''
+            }
+        },
         years() {
             return this.years;
         },

@@ -43,6 +43,6 @@ Route::group([
     Route::resource('caravanDates', CaravanDatesController::class);
 
     Route::post('caravan/price/calculate', [PriceController::class, 'calculate'])->name('caravan.price.calculate');
-    Route::get('caravan/price/excel/{from}/{until}', [PriceController::class, 'excel'])->name('caravan.price.excel');
-    Route::get('caravan/price/pdf/{from}/{until}', [PriceController::class, 'pdf'])->name('caravan.price.pdf');
+    Route::get('caravan/price/excel/{from?}', [PriceController::class, 'excel'])->name('caravan.price.excel');
+    Route::get('caravan/price/pdf/{from?}', [PriceController::class, 'pdf'])->name('caravan.price.pdf');
 });

@@ -1,11 +1,14 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Exports\CaravanDatesExport;
 use App\Models\CaravanDates;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Libs\CaravanPriceCalculator;
+//use Maatwebsite\Excel\Facades\Excel;
+use Excel;
 
 class PriceController extends Controller
 {
@@ -36,24 +39,19 @@ class PriceController extends Controller
 
     public function getBilling(CarabanDates $caravanDate)
     {
-
     }
 
-    public function exel(Carbon $from, Carbon $until)
+    public function excel($from = null)
     {
-        $data = CaravanDates::with('caravan')
-            ->whereBetween('from', [$from, $until])
-            ->whereDate('until','<=', $until)
-            ->orderBy('from')
-            ->get()
-        ;
+        $now = Carbon::now()->format('Ymd-Hi');
+        $export = new CaravanDatesExport($from);
+        return Excel::download($export, $now.'_caravan_dates.xlsx');
     }
 
-    public function pdf(Carbon $from, Carbon $until)
+    public function pdf(Carbon $from)
     {
         $data = CaravanDates::with('caravan')
-            ->whereBetween('from', [$from, $until])
-            ->whereDate('until','<=', $until)
+            ->whereDate('from','>=', $from)
             ->orderBy('from')
             ->get()
         ;

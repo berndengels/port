@@ -12,7 +12,6 @@
             Link,
         },
         props: ['href', 'active'],
-
         computed: {
             classes() {
                 return this.active

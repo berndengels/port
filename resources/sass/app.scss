@@ -4,27 +4,34 @@
 @import '~@fortawesome/fontawesome-free/scss/brands';
 @import "~include-media";
 
-.btn {
-    span {
-        display: none;
-        @include media('>tablet') {
-            display: inline;
-            margin-left: 0.5rem;
+.btn-wrapper {
+    &.bg-red {
+        .btn {
+            background-color: #c00;
         }
     }
-    &.no-hide-text {
+    .btn {
         span {
-            display: inline;
-            margin-left: 0.5rem;
+            display: none;
+            @include media('>tablet') {
+                display: inline;
+                margin-left: 0.5rem;
+            }
         }
-    }
-    &:hover {
-        span {
-            color: #fff;
+        &.no-hide-text {
+            span {
+                display: inline;
+                margin-left: 0.5rem;
+            }
         }
-        i {
-            color: #fff;
+        &:hover {
+            span {
+                color: #fff;
+            }
+            i {
+                color: #fff;
+            }
+            background-color: #c00;
         }
-        background-color: #c00;
     }
 }

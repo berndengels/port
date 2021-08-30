@@ -22,12 +22,17 @@
                                 <jet-nav-link :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </jet-nav-link>
-                                <jet-nav-link :href="route('caravans.index')" :active="route().current('caravans.index')">
-                                    Wohnmobile
-                                </jet-nav-link>
-                                <jet-nav-link :href="route('caravanDates.index')" :active="route().current('caravanDates.index')">
-                                    CaravansDates
-                                </jet-nav-link>
+                                <MyLink :href="route('caravans.index')" class="mt-5"
+                                        :active="route().current('caravans.index')"
+                                        icon="fas fa-caravan" ctrClass="btn" title="Caravans">
+                                    Caravans
+                                </MyLink>
+                                <MyLink :href="route('caravanDates.index')" class="mt-5"
+                                        :active="route().current('caravanDates.index')"
+                                        icon="fas fa-concierge-bell" ctrClass="btn" title="Caravan Rezeption">
+                                    Caravan Rezeption
+                                </MyLink>
+
                             </div>
                         </div>
 
@@ -244,6 +249,7 @@
     import JetDropdownLink from '@/Jetstream/DropdownLink.vue'
     import JetNavLink from '@/Jetstream/NavLink.vue'
     import JetResponsiveNavLink from '@/Jetstream/ResponsiveNavLink.vue'
+    import MyLink from "../Components/Form/MyLink";
     import { Head, Link } from '@inertiajs/inertia-vue3';
 
     export default {
@@ -261,6 +267,7 @@
             JetNavLink,
             JetResponsiveNavLink,
             Link,
+            MyLink
         },
 
         data() {
