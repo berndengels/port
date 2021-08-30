@@ -4,7 +4,7 @@
             Neueintrag
         </MyLink>
 
-        <MyForm :data="filter" css="flex-inline" @submit.prevent>
+        <MyForm v-if="data.length > 0" :data="filter" css="flex-inline" @submit.prevent>
             <SelectFilter name="caravan" label="Kennzeichen" keyName="id" field="carnumber"
                   :options="data"
                   @selectedCaravan="onSelectCaravan"

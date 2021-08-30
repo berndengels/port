@@ -9,7 +9,7 @@
                     Neueintrag
                 </MyLink>
             </div>
-            <div class="flex-inline -align-right">
+            <div v-if="caravanDates.length > 0" class="flex-inline -align-right">
                 <MyLink :href="'/caravan/price/excel/' + currentFrom"
                         icon="far fa-file-excel"
                         ctrClass="ml-2 my-2 p-5 no-hide-text"
@@ -22,14 +22,14 @@
         </div>
 
         <MyForm :data="filter" css="flex-inline" @submit.prevent>
-            <SelectFilter name="caravan" label="Kennzeichen" keyName="id" field="carnumber"
+            <SelectFilter v-if="caravans.length > 0" name="caravan" label="Kennzeichen" keyName="id" field="carnumber"
                 :options="caravans"
                 @selectedCaravan="onSelectCaravan"
             />
-            <SelectYear name="year" label="Jahr" :options="years" :default="selectedYear"
+            <SelectYear v-if="years.length > 0" name="year" label="Jahr" :options="years" :default="selectedYear"
                 @selectYear="onSelectYear"
             />
-            <SelectMonth v-if="selectedYear" name="month" label="Monat" :options="months"
+            <SelectMonth v-if="selectedYear && months.length > 0" name="month" label="Monat" :options="months"
                 @selectMonth="onSelectMonth"
                 css="ml-3"
             />
