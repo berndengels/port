@@ -1,7 +1,7 @@
 <template>
     <DefaultLayout :title="'Wohnmobil ' + caravanDate.caravan.carnumber">
         <NavLink :href="route('caravanDates.index')">zurück</NavLink>
-        <table class="table">
+        <table class="table w-full">
             <tr>
                 <th class="text-right">Kennzeichen</th>
                 <td>{{ caravanDate.caravan.carnumber }}</td>

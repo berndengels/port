@@ -5,16 +5,16 @@
         </nav-link>
 
         <MyForm :data="filter" css="flex-inline" @submit.prevent>
-            <SelectYear name="year" label="Jahr" :options="years"
+            <SelectFilter name="caravan" label="Kennzeichen" keyName="id" field="carnumber"
+                :options="caravans"
+                @selectedCaravan="onSelectCaravan"
+            />
+            <SelectYear name="year" label="Jahr" :options="years" :default="selectedYear"
                 @selectYear="onSelectYear"
             />
             <SelectMonth v-if="selectedYear" name="month" label="Monat" :options="months"
                 @selectMonth="onSelectMonth"
                 css="ml-3"
-            />
-            <SelectFilter name="caravan" label="Kennzeichen" keyName="id" field="carnumber"
-                :options="caravans"
-                @selectedCaravan="onSelectCaravan"
             />
             <Button @click="reset" css="inline w-1/6 ml-3" btnCss="btn btn-second">Reset</Button>
         </MyForm>
@@ -60,6 +60,9 @@ import SelectYear from "../../Components/Form/SelectYear";
 import SelectMonth from "../../Components/Form/SelectMonth";
 import SelectFilter from "../../Components/Form/SelectFilter";
 
+const currentYear = dayjs().year(),
+    currentMonth = dayjs().month() + 1;
+
 export default {
     name: "index",
     components: {
@@ -83,15 +86,19 @@ export default {
         return {
             caravanDates: this.$page.props.caravan.dates.list ?? [],
             selected: null,
-            selectedYear: null,
-            selectedMonth: null,
+            selectedYear: currentYear,
+            selectedMonth: currentMonth,
             selectedCaravan: null,
             filter: this.$inertia.form({
-                year: null,
-                month: null,
+                year: currentYear,
+                month: currentMonth,
                 caravan: null,
             }),
         }
+    },
+    created() {
+        this.onSelectYear(currentYear)
+        this.onSelectMonth(currentMonth)
     },
     computed: {
         years() {
@@ -112,6 +119,8 @@ export default {
     },
     methods: {
         reset() {
+            this.selectedYear = null
+            this.selectedMonth = null
             this.caravanDates = this.$page.props.caravan.dates.list
             this.filter.reset()
         },
