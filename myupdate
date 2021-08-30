@@ -1,4 +1,4 @@
 #!/bin/bash
-
+git reset
 git pull
 npm run prod
