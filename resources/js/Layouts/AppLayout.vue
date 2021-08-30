@@ -22,12 +22,12 @@
                                 <jet-nav-link :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </jet-nav-link>
-                                <MyLink :href="route('caravans.index')" class="mt-5"
+                                <MyLink :href="route('caravans.index')" class="mt-1"
                                         :active="route().current('caravans.index')"
                                         icon="fas fa-caravan" ctrClass="btn" title="Caravans">
                                     Caravans
                                 </MyLink>
-                                <MyLink :href="route('caravanDates.index')" class="mt-5"
+                                <MyLink :href="route('caravanDates.index')" class="mt-1"
                                         :active="route().current('caravanDates.index')"
                                         icon="fas fa-concierge-bell" ctrClass="btn" title="Caravan Rezeption">
                                     Caravan Rezeption

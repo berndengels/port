@@ -2,6 +2,11 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+nav {
+    background-color: #fff;
+    min-height: 75px;
+}
+
 main {
     background-image: url(/img/nebel_steg.jpg);
     background-repeat: no-repeat;
