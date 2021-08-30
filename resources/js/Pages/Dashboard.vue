@@ -2,8 +2,10 @@
     <DefaultLayout fullscreen="true">
         <div class="flex-container">
             <div class="flex-item">
-                <h5>Wohnwagen zur Zeit: {{currentCaravans.length}}</h5>
-                <div v-if="currentCaravans.length > 0" class="flex-container">
+                <h5 v-if="0 === countCurrentCaravans">zur Zeit sind keine Wohnmobile hier</h5>
+                <h5 v-else-if="1 === countCurrentCaravans">zur Zeit ist 1 Wohnmobil hier</h5>
+                <h5 v-else>zur Zeit sind {{countCurrentCaravans}} Wohnmobile hier</h5>
+                <div v-if="countCurrentCaravans > 0" class="flex-container">
                     <div v-for="car in currentCaravans" :key="car.id" class="flex flex-wrap flex-shrink-0 carnumber">
                         {{ car.carnumber }}
                     </div>
@@ -31,6 +33,9 @@
         computed: {
             currentCaravans() {
                 return this.caravans.filter(car => dayjs().isBetween(car.from, car.until, null, '[]'))
+            },
+            countCurrentCaravans() {
+                return this.currentCaravans.length
             }
         }
     }

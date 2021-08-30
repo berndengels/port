@@ -7,6 +7,7 @@ main {
     background-repeat: no-repeat;
     background-size: cover;
     margin-top: -0.8rem;
+    background-position: 0 -100px;
 }
 .flex-container {
     margin-top: 1.0rem;
@@ -30,9 +31,10 @@ main {
     align-items: flex-start;
 }
 .flex-item {
+    color: #000;
     width: auto;
     max-width: 30rem;
-    min-width: 15rem;
+    min-width: 20rem;
     height: auto;
     min-height: 10rem;
     clear: left;
