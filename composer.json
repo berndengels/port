@@ -19,6 +19,7 @@
         "laravel/sanctum": "^2.6",
         "laravel/tinker": "^2.5",
         "maatwebsite/excel": "^3.1",
+        "phpoffice/phpspreadsheet": "^1.18",
         "spatie/db-dumper": "^3.0",
         "spatie/laravel-db-snapshots": "^2.0",
         "spatie/laravel-permission": "^4.3",
