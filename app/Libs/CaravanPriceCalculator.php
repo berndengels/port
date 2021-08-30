@@ -9,17 +9,17 @@ class CaravanPriceCalculator extends PriceCalculator
         $countDays = $from->diffInDays($until);
 
         $total                  = 0;
-        $configSaisonFromMonth  = config('port.dates.saison.fromMonth');
-        $configSaisonUntilMonth = config('port.dates.saison.untilMonth');
-        $configPersonsPrice     = config('port.prices.caravan.persons_per_day');
-        $configElectricPrice    = config('port.prices.caravan.electric_per_day');
-        $configDefaultPricePerDay       = config('port.prices.caravan.default_per_day');
-        $configSaisonPricePerDay        = config('port.prices.caravan.saison_per_day');
+        $configSaisonFromMonth      = config('port.dates.saison.fromMonth');
+        $configSaisonUntilMonth     = config('port.dates.saison.untilMonth');
+        $configPersonsPrice         = config('port.prices.caravan.persons_per_day');
+        $configElectricPrice        = config('port.prices.caravan.electric_per_day');
+        $configDefaultPricePerDay   = config('port.prices.caravan.default_per_day');
+        $configSaisonPricePerDay    = config('port.prices.caravan.saison_per_day');
 
-        $configDefaultMinPricePerDay    = config('port.prices.caravan.min_price_default');
-        $configDefaultMaxPricePerDay    = config('port.prices.caravan.max_price_default');
-        $configSaisontMinPricePerDay    = config('port.prices.caravan.min_price_saison');
-        $configSaisonMaxPricePerDay     = config('port.prices.caravan.max_price_saison');
+        $configDefaultMinPricePerDay = config('port.prices.caravan.min_price_default');
+        $configDefaultMaxPricePerDay = config('port.prices.caravan.max_price_default');
+        $configSaisontMinPricePerDay = config('port.prices.caravan.min_price_saison');
+        $configSaisonMaxPricePerDay  = config('port.prices.caravan.max_price_saison');
 
         $days       = [];
         $current    = $from->copy();
