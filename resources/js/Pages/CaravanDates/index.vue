@@ -19,7 +19,7 @@
             <Button @click="reset" css="inline w-1/6 ml-3" btnCss="btn btn-second">Reset</Button>
         </MyForm>
 
-        <table v-if="caravanDates.length > 0" class="table">
+        <table v-if="caravanDates.length > 0" class="table w-full">
             <tr>
                 <th>Kennzeichen</th>
                 <th>Länge</th>
@@ -37,7 +37,7 @@
                 <td>{{ item.days }}</td>
                 <td>{{ item.price }}</td>
                 <td><NavLink :href="item.edit_url">Edit</NavLink></td>
-                <td><Button @click="remove(item)">Löschen</Button></td>
+                <td><Button @click="remove(item)" btnCss="btn btn-red">Löschen</Button></td>
             </tr>
             <tr>
                 <th>Preis Total</th>

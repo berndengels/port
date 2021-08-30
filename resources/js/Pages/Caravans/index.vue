@@ -13,7 +13,7 @@
         </MyForm>
 
         <div v-if="caravans.length > 0">
-            <table class="table">
+            <table class="table w-full">
                 <tr>
                     <th>Kennzeichen</th>
                     <th>Länge</th>
@@ -25,7 +25,7 @@
                     <td>{{ item.carlength }} m</td>
                     <td><a v-if="item.email" :href="'mailto:' + item.email" target="_blank">{{ item.email }}</a><br v-else></td>
                     <td><NavLink :href="route('caravans.edit', item)">Edit</NavLink></td>
-                    <td><Button @click="remove(item)">Löschen</Button></td>
+                    <td><Button @click="remove(item)" btnCss="btn btn-red">Löschen</Button></td>
                 </tr>
             </table>
             <!--Pagination class="mt-6" :links="data.links" /-->
@@ -36,7 +36,7 @@
 
 <script>
 import { Inertia } from '@inertiajs/inertia'
-import Button from "../../Jetstream/Button";
+import Button from "../../Components/Form/Button";
 import NavLink from "../../Jetstream/NavLink";
 import DefaultLayout from "../../Layouts/DefaultLayout";
 import SelectFilter from "../../Components/Form/SelectFilter";
