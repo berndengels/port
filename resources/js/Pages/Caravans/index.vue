@@ -1,8 +1,8 @@
 <template>
     <DefaultLayout title="Wohnwagen">
-        <nav-link :href="create_url" class="ml-2 my-2">
-            neuen Wohnwagen eintragen
-        </nav-link>
+        <MyLink :href="create_url" icon="far fa-plus-square" ctrClass="ml-2 my-2 no-hide-text" title="neuen Caravan eintragen">
+            Neueintrag
+        </MyLink>
 
         <MyForm :data="filter" css="flex-inline" @submit.prevent>
             <SelectFilter name="caravan" label="Kennzeichen" keyName="id" field="carnumber"
@@ -24,8 +24,16 @@
                     <td>{{ item.carnumber }}</td>
                     <td>{{ item.carlength }} m</td>
                     <td><a v-if="item.email" :href="'mailto:' + item.email" target="_blank">{{ item.email }}</a><br v-else></td>
-                    <td><NavLink :href="route('caravans.edit', item)">Edit</NavLink></td>
-                    <td><Button @click="remove(item)" btnCss="btn btn-red">Löschen</Button></td>
+                    <td>
+                        <MyLink :href="route('caravans.edit', item)" icon="fas fa-edit" ctrClass="btn" title="Bearbeiten">
+                            Edit
+                        </MyLink>
+                    </td>
+                    <td>
+                        <MyLink role="button" @click="remove(item)" icon="fas fa-trash-alt" ctrClass="btn-red" title="Löschen">
+                            Löschen
+                        </MyLink>
+                    </td>
                 </tr>
             </table>
             <!--Pagination class="mt-6" :links="data.links" /-->
@@ -42,10 +50,12 @@ import DefaultLayout from "../../Layouts/DefaultLayout";
 import SelectFilter from "../../Components/Form/SelectFilter";
 import MyForm from "../../Components/Form/MyForm";
 import Pagination from "../../Components/Pagination";
+import MyLink from "../../Components/Form/MyLink";
 
 export default {
     name: "index",
     components: {
+        MyLink,
         Pagination,
         MyForm,
         SelectFilter,

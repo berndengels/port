@@ -75,6 +75,8 @@ tr td:last-child { border-bottom-right-radius: 5px; }
 .btn {
     padding: 0.2rem 1.0rem;
     border-radius: 0.3rem;
+    color: #fff;
+    background-color: #6b7280;
     border: none;
 }
 .btn-save {
@@ -84,10 +86,6 @@ tr td:last-child { border-bottom-right-radius: 5px; }
 .btn-red {
     color: #fff;
     background-color: #e53e3e;
-}
-.btn-second {
-    color: #fff;
-    background-color: #666;
 }
 .carnumber {
     margin: 0.3rem;

@@ -32,9 +32,12 @@ class DatesIntervalUnique implements Rule
         $exist  = CaravanDates::whereCaravanId($this->caravan->id)
             ->whereBetween('from', [$from, $value])
             ->orWhereBetween('until', [$from, $value])
-            ->count()
+            ->get()
         ;
-        if($exist > 0) {
+
+//        dd($exist);
+
+        if($exist) {
             return false;
         }
         return true;

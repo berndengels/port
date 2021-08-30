@@ -2,3 +2,29 @@
 @import '~@fortawesome/fontawesome-free/scss/regular';
 @import '~@fortawesome/fontawesome-free/scss/solid';
 @import '~@fortawesome/fontawesome-free/scss/brands';
+@import "~include-media";
+
+.btn {
+    span {
+        display: none;
+        @include media('>tablet') {
+            display: inline;
+            margin-left: 0.5rem;
+        }
+    }
+    &.no-hide-text {
+        span {
+            display: inline;
+            margin-left: 0.5rem;
+        }
+    }
+    &:hover {
+        span {
+            color: #fff;
+        }
+        i {
+            color: #fff;
+        }
+        background-color: #c00;
+    }
+}

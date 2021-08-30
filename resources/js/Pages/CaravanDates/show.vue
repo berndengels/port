@@ -1,6 +1,6 @@
 <template>
     <DefaultLayout :title="'Wohnmobil ' + caravanDate.caravan.carnumber">
-        <NavLink :href="route('caravanDates.index')">zurück</NavLink>
+        <MyLink :href="route('caravanDates.index')" icon="fas fa-backward">zurück</MyLink>
         <table class="table w-full">
             <tr>
                 <th class="text-right">Kennzeichen</th>
@@ -44,10 +44,11 @@ import CaravanPriceCalculation from "../../Components/CaravanPriceCalculation";
 import NavLink from "../../Jetstream/NavLink";
 import DateFormat from "../../Mixins/DateFormat";
 import DefaultLayout from "../../Layouts/DefaultLayout";
+import MyLink from "../../Components/Form/MyLink";
 
 export default {
     name: "show",
-    components: {DefaultLayout, NavLink, CaravanPriceCalculation},
+    components: {MyLink, DefaultLayout, NavLink, CaravanPriceCalculation},
     props: ['caravanDate'],
     mixins: [DateFormat],
 }

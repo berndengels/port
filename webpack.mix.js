@@ -17,6 +17,8 @@ mix.js('resources/js/app.js', 'public/js').vue()
         require('autoprefixer'),
     ])
     .sass('resources/sass/app.scss', 'public/css')
+    .sass('resources/sass/pdf.scss', 'public/css')
+    .copy('node_modules/@fortawesome/fontawesome-free/webfonts', 'public/webfonts')
     .webpackConfig(require('./webpack.config'))
 //    .browserSync({proxy: process.env.MIX_API_URL})
 ;

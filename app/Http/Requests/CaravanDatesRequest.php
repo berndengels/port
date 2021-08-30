@@ -32,6 +32,7 @@ class CaravanDatesRequest extends FormRequest
      */
     public function rules()
     {
+/*
         $carnumber = request('carnumber');
         $carlength = request('carlength');
         $email     = request('email');
@@ -42,15 +43,18 @@ class CaravanDatesRequest extends FormRequest
             $caravan->email = $email;
         }
         $caravan->save();
-
+*/
         return [
             'carnumber' => 'required',
             'carlength' => ['required','regex:/^[1-9]+$/i'],
             'from'      => 'date',
+            'until'     => 'date|after:from',
+/*
             'until'     => [
                 'date',
                 !$this->id ? new DatesIntervalUnique($caravan) : null,
             ],
+*/
             'email'     => 'email|nullable',
             'persons'   => ['required','regex:/^[1-9]+$/i'],
             'price'     => 'required|numeric',
@@ -68,7 +72,7 @@ class CaravanDatesRequest extends FormRequest
             'carlength.regex'       => 'Die Länge des Fahrzeugs muß als ganze Zahl angegeben werden!',
             'from.date'             => 'Das Anreise-Datum muß als Datum angegeben werden.',
             'until.date'            => 'Das Abreise-Datum muß als Datum angegeben werden.',
-//            'until.after:from' => 'Das Anreise-Datum liegt vor einem vorhandenen Abreise-Datum',
+            'until.after'           => 'Das Anreise-Datum liegt vor einem vorhandenen Abreise-Datum',
             'persons.required'      => 'Bitte die Anzahl der Personen angeben.',
             'persons.regex'         => 'Die Anzahl der Personen muß eine ganza Zahl sein.',
             'price.required'        => 'Bitte einen Preis angeben.',

@@ -13,7 +13,7 @@
                 autocomplete="off"
             />
             <Input name="carlength" type="number" label="Länge Wohnmobil" required />
-            <Input name="email" type="email" label="Email" />
+            <Input name="email" type="email" label="Email" autocomplete="email" />
             <Input name="persons" type="number" label="Anzahl Personen" required @change="change" />
             <Checkbox name="electric" label="Strom-Anschluss" @change="change" />
             <DateInput name="from" label="Von" required  @change="change" />
@@ -72,13 +72,14 @@ export default {
         store() {
             this.form.post(route('caravanDates.store'), {
                 preserveScroll: true,
+/*
                 onSuccess: (resp) => {
-                    this.$inertia.visit(route('caravanDates.index'),{
+                    this.$inertia.visit(route('caravanDates.show', resp.id),{
                         method: 'get',
-                        only: ['caravan.dates.list']
+//                        only: ['caravan.dates.list']
                     })
                 },
-//                onError: err => console.error(err),
+*/
             });
         },
         onSelect(e) {

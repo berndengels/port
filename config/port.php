@@ -4,39 +4,20 @@ use Carbon\Carbon;
 return [
     'dates' => [
         'saison' => [
-            'fromMonth'  => Carbon::JUNE,
-            'untilMonth'  => Carbon::SEPTEMBER,
+            'fromMonth'  => env('MONTH_SAISON_START', Carbon::JUNE),
+            'untilMonth'  => env('MONTH_SAISON_END', Carbon::SEPTEMBER),
         ],
     ],
     'prices'    => [
         'caravan' => [
-            'electric_per_day'  => 2,
-            'shortLength' => 9,
-            'longLength' => 10,
-            'length'    => [
-                'short' => [
-                    'default'   => [
-                        'per_day'   => 9,
-                    ],
-                    'saison' => [
-                        'per_day'   => 10,
-                    ],
-                ],
-                'long' => [
-                    'default'   => [
-                        'per_day'   => 12,
-                    ],
-                    'saison' => [
-                        'per_day'   => 15,
-                    ],
-                ],
-            ],
-            'per_persons' => 1,
-        ],
-        'guestBoat' => [
-            'electric_per_day'  => 2,
-        ],
-        'boat' => [
+            'electric_per_day'  => env('CARAVAN_PRICE_ELECTRIC_PER_DAY', 2),
+            'persons_per_day' => env('CARAVAN_PRICE_PERSONS_PER_DAY', 1),
+            'default_per_day'   => json_decode(env('CARAVAN_PRICE_DEFAULT', '{error: "no data"}'), true),
+            'saison_per_day'    => json_decode(env('CARAVAN_PRICE_SAISON', '{error: "no data"}'), true),
+            'min_price_default' => env('', 7),
+            'max_price_default' => env('', 12),
+            'min_price_saison' => env('', 10),
+            'max_price_saison' => env('', 15),
         ],
     ],
 ];

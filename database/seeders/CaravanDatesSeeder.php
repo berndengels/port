@@ -18,7 +18,7 @@ class CaravanDatesSeeder extends Seeder
         Schema::disableForeignKeyConstraints();
         CaravanDates::truncate();
         CaravanDates::factory()
-            ->count(1000)
+            ->count(500)
             ->create()
         ;
     }

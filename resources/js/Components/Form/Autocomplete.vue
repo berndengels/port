@@ -48,6 +48,7 @@ export default {
                 this.elAutoselect.style.display = "block"
             } else {
                 this.elAutoselect.style.display = "none"
+                this.$parent.$props.data.reset()
             }
         },
         select(e) {

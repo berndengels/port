@@ -1,8 +1,8 @@
 <template>
     <DefaultLayout title="Wohnwagen Dates">
-        <nav-link :href="create_url" class="ml-2 my-2">
+        <MyLink :href="create_url" icon="far fa-plus-square" ctrClass="ml-2 my-2 p-5 no-hide-text" title="neue Caravan Ankunft eintragen">
             Neueintrag
-        </nav-link>
+        </MyLink>
 
         <MyForm :data="filter" css="flex-inline" @submit.prevent>
             <SelectFilter name="caravan" label="Kennzeichen" keyName="id" field="carnumber"
@@ -36,8 +36,16 @@
                 <td>{{ formatDate(item.until) }}</td>
                 <td>{{ item.days }}</td>
                 <td>{{ item.price }}</td>
-                <td><NavLink :href="item.edit_url">Edit</NavLink></td>
-                <td><Button @click="remove(item)" btnCss="btn btn-red">Löschen</Button></td>
+                <td>
+                    <MyLink :href="route('caravanDates.edit', item)" icon="fas fa-edit" ctrClass="btn" title="Bearbeiten">
+                        Edit
+                    </MyLink>
+                </td>
+                <td>
+                    <MyLink role="button" @click="remove(item)" icon="fas fa-trash-alt" ctrClass="btn-red" title="Löschen">
+                        Löschen
+                    </MyLink>
+                </td>
             </tr>
             <tr>
                 <th>Preis Total</th>
@@ -59,6 +67,7 @@ import MyForm from "../../Components/Form/MyForm";
 import SelectYear from "../../Components/Form/SelectYear";
 import SelectMonth from "../../Components/Form/SelectMonth";
 import SelectFilter from "../../Components/Form/SelectFilter";
+import MyLink from "../../Components/Form/MyLink";
 
 const currentYear = dayjs().year(),
     currentMonth = dayjs().month() + 1;
@@ -66,6 +75,7 @@ const currentYear = dayjs().year(),
 export default {
     name: "index",
     components: {
+        MyLink,
         SelectFilter,
         SelectYear,
         SelectMonth,

@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Rules\DatesIntervalUnique;
 use Inertia\Inertia;
 use App\Models\Caravan;
 use App\Models\CaravanDates;
@@ -58,12 +59,16 @@ class CaravanDatesController extends Controller
     {
         $carnumber  = $request->post('carnumber');
         $caravan    = Caravan::whereCarnumber($carnumber)->first() ?? new Caravan();
-        $validated  = collect($request->validated());
+        $caravan->fill(collect($request->validated())->only(['carnumber','carlength','email'])->toArray())->save();
 
-        $caravan->fill($validated->only(['carnumber','carlength','email'])->toArray())->save();
-        $caravan->dates()->create($validated->except(['carnumber','carlength','email'])->toArray());
+        $rule = new DatesIntervalUnique($caravan);
+        $request->validate([$rule]);
 
-        return Redirect::back();
+        $validated  = collect($request->validated())->except(['carnumber','carlength','email'])->toArray();
+
+        $caravanDate = $caravan->dates()->create($validated);
+
+        return $this->show($caravanDate);
     }
 
     /**

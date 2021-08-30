@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Database\Factories\CaravanDatesFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -37,6 +38,8 @@ use Illuminate\Support\Collection;
  * @method static Builder|CaravanDates whereElectric($value)
  * @method static Builder|CaravanDates wherePrices($value)
  * @method static Builder|CaravanDates getMonthsByYears($from = null, $until = null)
+ * @method static CaravanDatesFactory factory(...$parameters)
+ * @method static Builder|CaravanDates pageList()
  */
 class CaravanDates extends Model
 {

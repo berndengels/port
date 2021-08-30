@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\CaravanDates;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -31,5 +32,30 @@ class PriceController extends Controller
             $response =  CaravanPriceCalculator::getPrice($from, $until, $carlength, $persons, $electric);
         }
         return response()->json($response);
+    }
+
+    public function getBilling(CarabanDates $caravanDate)
+    {
+
+    }
+
+    public function exel(Carbon $from, Carbon $until)
+    {
+        $data = CaravanDates::with('caravan')
+            ->whereBetween('from', [$from, $until])
+            ->whereDate('until','<=', $until)
+            ->orderBy('from')
+            ->get()
+        ;
+    }
+
+    public function pdf(Carbon $from, Carbon $until)
+    {
+        $data = CaravanDates::with('caravan')
+            ->whereBetween('from', [$from, $until])
+            ->whereDate('until','<=', $until)
+            ->orderBy('from')
+            ->get()
+        ;
     }
 }

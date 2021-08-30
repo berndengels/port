@@ -32,14 +32,17 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->name('dashboard');
 */
-Route::get('/', function () {
-    return Inertia::render('Dashboard');
-})->name('dashboard');
 
 Route::group([
     'middleware' => ['auth', 'verified'],
 ],function () {
+    Route::get('/', function () {
+        return Inertia::render('Dashboard');
+    })->name('dashboard');
     Route::resource('caravans', CaravanController::class);
     Route::resource('caravanDates', CaravanDatesController::class);
+
     Route::post('caravan/price/calculate', [PriceController::class, 'calculate'])->name('caravan.price.calculate');
+    Route::get('caravan/price/excel/{from}/{until}', [PriceController::class, 'excel'])->name('caravan.price.excel');
+    Route::get('caravan/price/pdf/{from}/{until}', [PriceController::class, 'pdf'])->name('caravan.price.pdf');
 });
