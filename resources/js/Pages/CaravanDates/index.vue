@@ -1,5 +1,5 @@
 <template>
-    <DefaultLayout title="Wohnwagen Rezeptions">
+    <DefaultLayout title="Wohnwagen Rezeption">
         <div class="flex">
             <div class="flex-inline">
                 <MyLink :href="create_url"
