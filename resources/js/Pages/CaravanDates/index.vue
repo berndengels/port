@@ -65,8 +65,8 @@
                 </td>
             </tr>
             <tr>
-                <th>Summe Einnahmen</th>
-                <td colspan="8">{{ priceTotel }} €</td>
+                <th class="text-red-500">Summe Einnahmen</th>
+                <th colspan="8" class="text-left text-red-500">{{ priceTotel }} €</th>
             </tr>
         </table>
         <h3 v-else>Keine Daten vorhanden</h3>
