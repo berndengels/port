@@ -17,7 +17,18 @@
             <Input name="persons" type="number" label="Anzahl Personen" required @change="change" />
             <Checkbox name="electric" label="Strom-Anschluss" @change="change" />
             <DateInput name="from" label="Von" required @change="change" />
-            <DateInput name="until" label="Von" required @change="change" />
+            <DateInput name="until" label="Bis" required @change="change" />
+            <div class="md:flex md:items-center mb-6">
+                <div class="md:w-1/3 text-right">
+                    <span>Differenz zum ursprünglicher Preis: </span>
+                </div>
+                <div class="md:w-2/3">
+                    <span class="w-full py-2 px-4 text-gray-700 leading-tight">
+                        {{ diffPrice }}
+                    </span>
+                </div>
+            </div>
+
             <Input name="price" label="Preis" required />
             <Button @click="update" btnCss="btn btn-save">Speichen</Button>
         </MyForm>
@@ -29,16 +40,19 @@ import Autocomplete from '@/Components/Form/Autocomplete'
 import MyForm from "../../Components/Form/MyForm";
 import DateInput from "../../Components/Form/DateInput";
 import Input from "../../Components/Form/Input";
+import Label from "../../Components/Form/Label";
 import Button from "../../Components/Form/Button";
 import Checkbox from "../../Components/Form/Checkbox";
 import DateFormat from "../../Mixins/DateFormat";
 import AppLayout from "../../Layouts/AppLayout";
 import axios from 'axios';
 import DefaultLayout from "../../Layouts/DefaultLayout";
+import ActionMessage from "../../Jetstream/ActionMessage";
 
 export default {
     name: "edit",
     components: {
+        ActionMessage,
         DefaultLayout,
         Checkbox,
         Button,
@@ -66,6 +80,8 @@ export default {
                 price: this.caravanDate.price,
                 prices: this.caravanDate.prices,
             }),
+            initialPrice: parseInt(this.caravanDate.price),
+            diffPrice: 0,
         }
     },
 
@@ -95,6 +111,7 @@ export default {
                     .then(resp => {
                         this.form.price = resp.data.total
                         this.form.prices = JSON.stringify(resp.data.prices)
+                        this.diffPrice = parseInt(this.form.price) - parseInt(this.initialPrice)
                     })
                     .catch(err => console.error(err))
                 ;

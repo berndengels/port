@@ -11,7 +11,10 @@ class CaravanPriceCalculator extends PriceCalculator
         $total = 0;
         $configSaisonFromMonth      = config('port.dates.saison.fromMonth');
         $configSaisonUntilMonth     = config('port.dates.saison.untilMonth');
-        $configPersonsPrice         = config('port.prices.caravan.persons_per_day');
+
+        $configPersonsInclusive     = config('port.prices.caravan.persons_inclusivce');
+        $configPersonsAdditional    = config('port.prices.caravan.persons_additionaL');
+
         $configElectricPrice        = config('port.prices.caravan.electric_per_day');
         $configDefaultPricePerDay   = config('port.prices.caravan.default_per_day');
         $configLengthDefaultRange   = array_keys($configDefaultPricePerDay);
@@ -33,9 +36,13 @@ class CaravanPriceCalculator extends PriceCalculator
             } else {
                 $day = $current->addDay();
             }
+            $sumPersonsPrice = 0;
+            if($persons > $configPersonsInclusive) {
+                $addPersons = $persons - $configPersonsInclusive;
+                $sumPersonsPrice = $configPersonsAdditional * $addPersons;
+            }
+            $price = $sumPersonsPrice;
 
-            $sumPersonsPrice = $configPersonsPrice * $persons;
-            $price = $configPersonsPrice * $persons;
             if($electric) {
                 $price += $configElectricPrice;
             }
@@ -66,7 +73,6 @@ class CaravanPriceCalculator extends PriceCalculator
             $days[$day->format('Y-m-d')] = [
                 'date'              => $day->format('d.m.Y'),
                 'persons'           => $persons,
-                'price_per_person'  => $configPersonsPrice,
                 'sum_person_price'  => $sumPersonsPrice,
                 'electric_per_day'  => $electric ? $configElectricPrice : 0,
                 'is_saison'         => (int) ($day->month >= $configSaisonFromMonth && $day->month <= $configSaisonUntilMonth),

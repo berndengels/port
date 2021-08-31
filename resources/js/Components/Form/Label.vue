@@ -1,5 +1,5 @@
 <template>
-    <div class="md:w-1/3">
+    <div class="md:w-1/3" :class="css">
         <label
             :for="myFor"
             class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
@@ -12,6 +12,7 @@ export default {
     name: "Label",
     props: {
         text: String,
+        css: String,
         myFor: String,
     },
 }
