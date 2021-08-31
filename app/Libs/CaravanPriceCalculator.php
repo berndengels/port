@@ -8,13 +8,15 @@ class CaravanPriceCalculator extends PriceCalculator
     public static function getPrice(Carbon $from, Carbon $until, int $length, int $persons = 1, bool $electric = false) {
         $countDays = $from->diffInDays($until);
 
-        $total                  = 0;
+        $total = 0;
         $configSaisonFromMonth      = config('port.dates.saison.fromMonth');
         $configSaisonUntilMonth     = config('port.dates.saison.untilMonth');
         $configPersonsPrice         = config('port.prices.caravan.persons_per_day');
         $configElectricPrice        = config('port.prices.caravan.electric_per_day');
         $configDefaultPricePerDay   = config('port.prices.caravan.default_per_day');
+        $configLengthDefaultRange   = array_keys($configDefaultPricePerDay);
         $configSaisonPricePerDay    = config('port.prices.caravan.saison_per_day');
+        $configLengthSaisonRange    = array_keys($configSaisonPricePerDay);
 
         $configDefaultMinPricePerDay = config('port.prices.caravan.min_price_default');
         $configDefaultMaxPricePerDay = config('port.prices.caravan.max_price_default');
@@ -24,36 +26,42 @@ class CaravanPriceCalculator extends PriceCalculator
         $days       = [];
         $current    = $from->copy();
         $i = 0;
-
-        while ($i <= $countDays) {
+        $arrPrices = [];
+        while ($i < $countDays) {
             if(0 === $i) {
                 $day = $current;
             } else {
                 $day = $current->addDay();
             }
+
             $sumPersonsPrice = $configPersonsPrice * $persons;
             $price = $configPersonsPrice * $persons;
             if($electric) {
                 $price += $configElectricPrice;
             }
+            // saison
             if($day->month >= $configSaisonFromMonth && $day->month <= $configSaisonUntilMonth) {
-                if($length <= $configSaisontMinPricePerDay) {
+                if(min($configLengthSaisonRange) > $length) {
                     $carPricePerDay = $configSaisontMinPricePerDay;
-                } else if($length > $configSaisonMaxPricePerDay) {
+                } else if(max($configLengthSaisonRange) < $length) {
                     $carPricePerDay = $configSaisonMaxPricePerDay;
                 } else {
                     $carPricePerDay = isset($configSaisonPricePerDay[$length]) ? $configSaisonPricePerDay[$length] : 0;
                 }
-            } else {
-                if($length <= $configDefaultMinPricePerDay) {
+            }
+            // nach oder vor saison
+            else
+            {
+                if(min($configLengthDefaultRange) > $length) {
                     $carPricePerDay = $configDefaultMinPricePerDay;
-                } else if($length > $configDefaultMaxPricePerDay) {
+                } else if(max($configLengthDefaultRange) < $length) {
                     $carPricePerDay = $configDefaultMaxPricePerDay;
                 } else {
                     $carPricePerDay = isset($configDefaultPricePerDay[$length]) ? $configDefaultPricePerDay[$length] : 0;
                 }
             }
             $price += $carPricePerDay;
+
             $total += $price;
             $days[$day->format('Y-m-d')] = [
                 'date'              => $day->format('d.m.Y'),
@@ -66,6 +74,7 @@ class CaravanPriceCalculator extends PriceCalculator
                 'car_price_per_day' => $carPricePerDay,
                 'sum_price'         => $price,
             ];
+
             $i++;
         }
 

@@ -27,7 +27,7 @@
                 <td>{{ formatDate(caravanDate.until) }}</td>
             </tr>
             <tr>
-                <th class="text-right">Anzahl Tage</th>
+                <th class="text-right">Anzahl Übernachtungen</th>
                 <td>{{ countDays( caravanDate.from, caravanDate.until) }}</td>
             </tr>
             <tr>

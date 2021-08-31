@@ -1,5 +1,5 @@
 <template>
-    <DefaultLayout title="Wohnwagen Dates">
+    <DefaultLayout title="Wohnwagen Rezeptions">
         <div class="flex">
             <div class="flex-inline">
                 <MyLink :href="create_url"
@@ -26,14 +26,14 @@
                 :options="caravans"
                 @selectedCaravan="onSelectCaravan"
             />
-            <SelectYear v-if="years.length > 0" name="year" label="Jahr" :options="years" :default="selectedYear"
+            <SelectYear v-if="years && years.length > 0" name="year" label="Jahr" :options="years" :default="selectedYear"
                 @selectYear="onSelectYear"
             />
-            <SelectMonth v-if="selectedYear && months.length > 0" name="month" label="Monat" :options="months"
+            <SelectMonth v-if="selectedYear && months !== undefined && months.length > 0" name="month" label="Monat" :options="months"
                 @selectMonth="onSelectMonth"
                 css="ml-3"
             />
-            <Button @click="reset" css="inline w-1/6 ml-3" btnCss="btn btn-second">Reset</Button>
+            <Button v-if="caravans.length > 0 || years.length || months !== undefined" @click="reset" css="inline w-1/6 ml-3" btnCss="btn btn-second">Reset</Button>
         </MyForm>
 
         <table v-if="caravanDates.length > 0" class="table w-full">
@@ -113,8 +113,8 @@ export default {
         return {
             caravanDates: this.$page.props.caravan.dates.list ?? [],
             selected: null,
-            selectedYear: currentYear,
-            selectedMonth: currentMonth,
+            selectedYear: null,
+            selectedMonth: null,
             selectedCaravan: null,
             filter: this.$inertia.form({
                 year: currentYear,
@@ -124,8 +124,8 @@ export default {
         }
     },
     created() {
-        this.onSelectYear(currentYear)
-        this.onSelectMonth(currentMonth)
+//        this.onSelectYear(currentYear)
+//        this.onSelectMonth(currentMonth)
     },
     computed: {
         currentFrom() {
@@ -138,12 +138,13 @@ export default {
             }
         },
         years() {
-            return this.years;
+            return this.years ?? [];
         },
         months() {
             if(this.selectedYear) {
                 return this.monthsByYear[this.selectedYear];
             }
+            return []
         },
         priceTotel() {
             var total = 0;
@@ -195,7 +196,6 @@ export default {
         },
         remove(item) {
             if(confirm('Datensatz (ID: ' + item.id + ') wirklich löschen?')) {
-//                Inertia.delete('caravanDates/' + item.id, item)
                 Inertia.delete(route('caravanDates.destroy', item), {
                     onSuccess: (resp) => {
                         this.caravanDates = this.caravanDates.filter(i => i !== item)
