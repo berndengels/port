@@ -65,7 +65,7 @@
                 </td>
             </tr>
             <tr>
-                <th>Preis Total</th>
+                <th>Summe Einnahmen</th>
                 <td colspan="8">{{ priceTotel }} €</td>
             </tr>
         </table>
