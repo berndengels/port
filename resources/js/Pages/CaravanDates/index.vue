@@ -22,7 +22,7 @@
         </div>
 
         <MyForm :data="filter" css="flex-inline" @submit.prevent>
-            <SelectFilter v-if="caravans.length > 0" name="caravan" label="Kennzeichen" keyName="id" field="carnumber"
+            <SelectFilter name="caravan" label="Kennzeichen" keyName="id" field="carnumber"
                 :options="caravans"
                 @selectedCaravan="onSelectCaravan"
             />
@@ -33,7 +33,7 @@
                 @selectMonth="onSelectMonth"
                 css="ml-3"
             />
-            <Button v-if="caravans.length > 0 || years.length || months !== undefined" @click="reset" css="inline w-1/6 ml-3" btnCss="btn btn-second">Reset</Button>
+            <Button v-if="caravans.length > 0 || years.length > 0 || months !== undefined" @click="reset" css="inline w-1/6 ml-3" btnCss="btn btn-second">Reset</Button>
         </MyForm>
 
         <table v-if="caravanDates.length > 0" class="table w-full">

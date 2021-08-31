@@ -19,7 +19,7 @@ class CaravanDatesController extends Controller
 
     public function __construct()
     {
-        $this->caravans = Caravan::whereHas('dates')->orderBy('carnumber')->get();
+        $this->caravans = Caravan::orderBy('carnumber')->get();
         $this->monthsByYear = CaravanDates::getMonthsByYears();
         $this->years = array_keys($this->monthsByYear);
     }
@@ -65,7 +65,6 @@ class CaravanDatesController extends Controller
         $request->validate([$rule]);
 
         $validated  = collect($request->validated())->except(['carnumber','carlength','email'])->toArray();
-
         $caravanDate = $caravan->dates()->create($validated);
 
         return $this->show($caravanDate);
