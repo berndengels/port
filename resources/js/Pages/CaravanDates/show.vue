@@ -4,7 +4,7 @@
         <table class="table w-full">
             <tr>
                 <th class="text-right">Kennzeichen</th>
-                <td>{{ caravanDate.caravan.carnumber }}</td>
+                <td @dblclick="ondblclick(caravanDate.caravan)">{{ caravanDate.caravan.carnumber }}</td>
             </tr>
             <tr>
                 <th class="text-right">Wagenlänge</th>
@@ -51,6 +51,18 @@ export default {
     components: {MyLink, DefaultLayout, NavLink, CaravanPriceCalculation},
     props: ['caravanDate'],
     mixins: [DateFormat],
+    methods: {
+        ondblclick(caravan) {
+            axios(route('car.info', caravan))
+                .then(resp => {
+                    if(resp.data.data && !resp.data.error) {
+                        let info = resp.data.data;
+                        alert(info.location + " (" + info.state + ")")
+                    }
+                })
+                .catch(e=>console.error(e));
+        },
+    }
 }
 </script>
 

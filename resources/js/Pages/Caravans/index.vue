@@ -21,7 +21,9 @@
                     <th colspan="2"><br></th>
                 </tr>
                 <tr v-for="item in caravans" :key="item.id">
-                    <td>{{ item.carnumber }}</td>
+                    <td class="has-tooltip" @dblclick="ondblclick(item)">
+                        {{ item.carnumber }}
+                    </td>
                     <td>{{ item.carlength }} m</td>
                     <td><a v-if="item.email" :href="'mailto:' + item.email" target="_blank">{{ item.email }}</a><br v-else></td>
                     <td>
@@ -51,11 +53,13 @@ import SelectFilter from "../../Components/Form/SelectFilter";
 import MyForm from "../../Components/Form/MyForm";
 import Pagination from "../../Components/Pagination";
 import MyLink from "../../Components/Form/MyLink";
+import MyString from "../../Mixins/MyString";
 
 export default {
     name: "index",
     components: {
         MyLink,
+        MyString,
         Pagination,
         MyForm,
         SelectFilter,
@@ -63,6 +67,7 @@ export default {
         NavLink,
         Button,
     },
+    mixins: [MyString],
     props: {
         data: Object,
         create_url: String,
@@ -95,7 +100,17 @@ export default {
             if(confirm('Datensatz (ID: ' + item.id + ') wirklich löschen?')) {
                 Inertia.delete('caravans/' + item.id, item)
             }
-        }
+        },
+        ondblclick(caravan) {
+            axios(route('car.info', caravan))
+                .then(resp => {
+                    if(resp.data.data && !resp.data.error) {
+                        let info = resp.data.data;
+                        alert(info.location + " (" + info.state + ")")
+                    }
+                })
+                .catch(e=>console.error(e));
+        },
     }
 }
 </script>

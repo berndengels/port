@@ -6,7 +6,7 @@ use Illuminate\Foundation\Application;
 use App\Http\Controllers\CaravanController;
 use App\Http\Controllers\CaravanDatesController;
 use App\Http\Controllers\PriceController;
-
+use App\Http\Controllers\CarLicensePlateController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -45,4 +45,6 @@ Route::group([
     Route::post('caravan/price/calculate', [PriceController::class, 'calculate'])->name('caravan.price.calculate');
     Route::get('caravan/price/excel/{from?}', [PriceController::class, 'excel'])->name('caravan.price.excel');
     Route::get('caravan/price/pdf/{from?}', [PriceController::class, 'pdf'])->name('caravan.price.pdf');
+
+    Route::get('car/info/{caravan}', [CarLicensePlateController::class, 'info'])->name('car.info');
 });

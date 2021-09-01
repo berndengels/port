@@ -4,6 +4,16 @@
 @import '~@fortawesome/fontawesome-free/scss/brands';
 @import "~include-media";
 
+.tooltip{
+    visibility: hidden;
+    position: absolute;
+}
+.has-tooltip:hover .tooltip {
+    visibility: visible;
+    z-index: 100;
+}
+@tailwind utilities;
+
 .btn-wrapper {
     &.bg-red {
         .btn {

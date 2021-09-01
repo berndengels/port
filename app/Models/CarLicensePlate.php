@@ -5,16 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Country extends Model
+class CarLicensePlate extends Model
 {
     use HasFactory;
 
-    protected $table = 'countries';
+    protected $table = 'car_license_plates';
     protected $guarded = ['id'];
     public $timestamps = false;
+
 /*
-    public function caravans() {
-        return $this->belongsTo(Caravan::class);
+    public function country()
+    {
+        return $this->belongsTo(Country::class);
     }
 */
 }
