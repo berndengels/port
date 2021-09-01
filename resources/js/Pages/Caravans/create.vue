@@ -1,6 +1,7 @@
 <template>
     <DefaultLayout title="Wohnwagen">
         <MyForm :data="form" @submit.prevent>
+            <Select name="country_id" label="Herkunftsland" :options="countries" />
             <Input name="carnumber" label="Autokennzeichen" required />
             <Input name="carlength" label="Länge" required />
             <Input type="email" name="email" label="Email" />
@@ -14,20 +15,23 @@ import DefaultLayout from "../../Layouts/DefaultLayout";
 import MyForm from "../../Components/Form/MyForm";
 import Input from "../../Components/Form/Input";
 import Button from "../../Jetstream/Button";
+import Select from "../../Components/Form/Select";
 
 export default {
     name: "create",
     components: {
+        Select,
         Button,
         Input,
         MyForm,
         DefaultLayout,
     },
-
+    props: ['countries'],
     data() {
         return {
             form: this.$inertia.form({
                 _method: 'POST',
+                country_id: 55,
                 carnumber: null,
                 carlength: null,
                 email: null,

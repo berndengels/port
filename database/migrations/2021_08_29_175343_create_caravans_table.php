@@ -15,6 +15,7 @@ class CreateCaravansTable extends Migration
     {
         Schema::create('caravans', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedInteger('country_id');
             $table->string('carnumber', 10)->default('')->unique('carnumber');
             $table->unsignedTinyInteger('carlength');
             $table->string('email', 50)->nullable();

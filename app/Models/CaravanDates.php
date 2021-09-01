@@ -46,7 +46,7 @@ class CaravanDates extends Model
     use HasFactory;
 
     protected $table = 'caravan_dates';
-    protected $guarded = [];
+    protected $guarded = ['id'];
     protected $dates = ['from','until'];
     protected $dateFormat = 'Y-m-d';
     protected $appends = ['days'];

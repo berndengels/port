@@ -33,13 +33,19 @@ class Caravan extends Model
     use HasFactory;
 
     protected $table = 'caravans';
-    protected $guarded = [];
+    protected $guarded = ['id'];
     public $timestamps = false;
 
     protected $casts = [
         'carlength' => 'integer',
     ];
+
     public function dates() {
         return $this->hasMany(CaravanDates::class);
+    }
+
+    public function country()
+    {
+        return $this->hasOne(country::class);
     }
 }

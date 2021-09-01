@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\country;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Caravan;
@@ -12,6 +13,18 @@ use Illuminate\Support\Facades\Redirect;
 
 class CaravanController extends Controller
 {
+    private $countries;
+
+    public function __construct()
+    {
+        $this->countries = country::orderBy('de')
+            ->get(['id','de'])
+            ->keyBy('id')
+            ->map
+            ->de
+        ;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -34,7 +47,9 @@ class CaravanController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Caravans/create');
+        return Inertia::render('Caravans/create', [
+            'countries' => $this->countries,
+        ]);
     }
 
     /**
@@ -68,7 +83,8 @@ class CaravanController extends Controller
      */
     public function edit(Caravan $caravan)
     {
-        return Inertia::render('Caravans/edit', compact('caravan'));
+        $countries = $this->countries;
+        return Inertia::render('Caravans/edit', compact('caravan','countries'));
     }
 
     /**

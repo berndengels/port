@@ -29,6 +29,7 @@ class CaravanRequest extends FormRequest
     public function rules()
     {
         return [
+            'country_id' => 'required',
             'carnumber' => !$this->id ? 'required|unique:caravans,carnumber' : 'required',
             'carlength' => ['required','regex:/^[1-9]+$/i'],
             'email'     => 'email|nullable',
@@ -38,6 +39,7 @@ class CaravanRequest extends FormRequest
     public function messages()
     {
         return [
+            'country.required'     => 'Bitte ein Herkunftsland angeben!',
             'carnumber.required'   => 'Bitte das Auto-Kennzeichen angeben!',
             'carlength.required'   => 'Bitte die Länge des Fahrzeugs angeben!',
             'carlength.regex'      => 'Die Länge des Fahrzeugs muß als ganze Zahl angegeben werden!',
