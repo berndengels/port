@@ -3,10 +3,22 @@
 <head>
     <title>≡ Kfz Kennzeichen Liste | Autokennzeichen Deutschland A-Z</title>
     <meta charset="utf-8" data-n-head="ssr">
+    <style>
+        textarea {
+            margin: auto;
+            width: 100%;
+            height: 300px;
+        }
+    </style>
 </head>
 <body>
+<div>
+    <textarea id="sql" colls="40" rows="100">INSERT INTO car_license_plates (country_id,code,location,district,state) VALUES</textarea>
+</div>
 
-<table class="table is-hoverable">
+<hr>
+
+<table class="table" id="tblData">
     <thead>
     <tr>
         <th>Ortskürzel</th>
@@ -4616,5 +4628,12 @@
     </tr>
     </tbody>
 </table>
+<script type="application/javascript">
+    var data=[],row,ta=document.getElementById('sql'),
+        rows = document.querySelectorAll("table tr");
+        rows.shift();
+
+        console.info(rows);
+</script>
 </body>
 </html>
