@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Helper\Fix;
 use App\Models\Country;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\Redirect;
 
 class CaravanController extends Controller
 {
+    use Fix;
     private $countries;
 
     public function __construct()
@@ -32,6 +34,10 @@ class CaravanController extends Controller
      */
     public function index()
     {
+        Caravan::all()->each(function ($c) {
+            $c->carnumber = $this->fixCarNumber($c->carnumber);
+            $c->save();
+        });
 //        $caravans = Caravan::orderBy('carnumber')->paginate(3);
         $caravans = Caravan::orderBy('carnumber')->get();
         return Inertia::render('Caravans/index', [

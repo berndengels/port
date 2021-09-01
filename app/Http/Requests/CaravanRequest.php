@@ -2,10 +2,12 @@
 
 namespace App\Http\Requests;
 
+use App\Http\Requests\Helper\Fix;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CaravanRequest extends FormRequest
 {
+    use Fix;
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -14,6 +16,13 @@ class CaravanRequest extends FormRequest
     public function authorize()
     {
         return auth()->check();
+    }
+
+    public function prepareForValidation()
+    {
+        $this->merge([
+            'carnumber' => $this->fixCarNumber($this->carnumber),
+        ]);
     }
 
     public function validationData()

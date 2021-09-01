@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Http\Requests\Helper\Fix;
 use App\Models\Caravan;
 use App\Models\CaravanDates;
 use App\Rules\DatesIntervalUnique;
@@ -10,6 +11,7 @@ use Illuminate\Support\Facades\Validator;
 
 class CaravanDatesRequest extends FormRequest
 {
+    use Fix;
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -18,6 +20,13 @@ class CaravanDatesRequest extends FormRequest
     public function authorize()
     {
         return auth()->check();
+    }
+
+    public function prepareForValidation()
+    {
+        $this->merge([
+            'carnumber' => $this->fixCarNumber($this->carnumber),
+        ]);
     }
 
     public function validationData()
