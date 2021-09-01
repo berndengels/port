@@ -31,7 +31,7 @@ class CaravanRequest extends FormRequest
         return [
             'country_id' => 'required',
             'carnumber' => !$this->id ? 'required|unique:caravans,carnumber' : 'required',
-            'carlength' => ['required','regex:/^[1-9]+$/i'],
+            'carlength' => ['required','regex:/^[0-9]+$/i'],
             'email'     => 'email|nullable',
         ];
     }
