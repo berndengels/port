@@ -46,7 +46,7 @@ class CaravanDatesRequest extends FormRequest
 */
         return [
             'carnumber' => 'required',
-            'carlength' => ['required','regex:/^[1-9]+$/i'],
+            'carlength' => ['required','regex:/^[0-9]+$/i'],
             'from'      => 'date',
             'until'     => 'date|after:from',
 /*
