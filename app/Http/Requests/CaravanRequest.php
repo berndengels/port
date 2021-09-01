@@ -39,7 +39,7 @@ class CaravanRequest extends FormRequest
     public function messages()
     {
         return [
-            'country.required'     => 'Bitte ein Herkunftsland angeben!',
+            'country_id.required'  => 'Bitte ein Herkunftsland angeben!',
             'carnumber.required'   => 'Bitte das Auto-Kennzeichen angeben!',
             'carlength.required'   => 'Bitte die Länge des Fahrzeugs angeben!',
             'carlength.regex'      => 'Die Länge des Fahrzeugs muß als ganze Zahl angegeben werden!',

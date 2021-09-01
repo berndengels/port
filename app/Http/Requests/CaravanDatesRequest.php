@@ -45,6 +45,7 @@ class CaravanDatesRequest extends FormRequest
         $caravan->save();
 */
         return [
+            'country_id' => 'required',
             'carnumber' => 'required',
             'carlength' => ['required','regex:/^[0-9]+$/i'],
             'from'      => 'date',

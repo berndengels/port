@@ -12,6 +12,7 @@
                 required
                 autocomplete="off"
             />
+            <Select name="country_id" label="Herkunftsland" :options="countries" />
             <Input name="carlength" type="number" label="Länge Wohnmobil" required />
             <Input name="email" type="email" label="Email" autocomplete="email" />
             <Input name="persons" type="number" label="Anzahl Personen" required @change="change" />
@@ -36,10 +37,12 @@ import Checkbox from "../../Components/Form/Checkbox";
 import axios from 'axios';
 import DateFormat from "../../Mixins/DateFormat";
 import DefaultLayout from "../../Layouts/DefaultLayout";
+import Select from "../../Components/Form/Select";
 
 export default {
     name: "create",
     components: {
+        Select,
         DefaultLayout,
         Checkbox,
         Button,
@@ -48,13 +51,14 @@ export default {
         Input,
         Autocomplete,
     },
-    props: ['caravans'],
+    props: ['caravans','countries'],
     mixins: [DateFormat],
     data() {
         return {
             form: this.$inertia.form({
 //                _method: 'POST',
                 caravan_id: null,
+                country_id: 55,
                 carnumber: null,
                 carlength: null,
                 email: null,
@@ -86,6 +90,7 @@ export default {
             let caravan = this.caravans.filter(i => i.carnumber === e.target.innerText).shift()
             if(caravan) {
                 this.form.caravan_id = caravan.id
+                this.form.country_id = caravan.country_id
                 this.form.carnumber = caravan.carnumber
                 this.form.carlength = caravan.carlength
                 this.form.email = caravan.email

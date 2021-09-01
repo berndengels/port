@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\country;
+use App\Models\Country;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\URL;
 use Inertia\Inertia;
 use App\Models\Caravan;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\URL;
 use App\Http\Requests\CaravanRequest;
 use Illuminate\Support\Facades\Redirect;
 
@@ -17,7 +17,7 @@ class CaravanController extends Controller
 
     public function __construct()
     {
-        $this->countries = country::orderBy('de')
+        $this->countries = Country::orderBy('de')
             ->get(['id','de'])
             ->keyBy('id')
             ->map

@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\Country;
 use App\Rules\DatesIntervalUnique;
 use Inertia\Inertia;
 use App\Models\Caravan;
@@ -16,12 +17,19 @@ class CaravanDatesController extends Controller
     private $caravans;
     private $years;
     private $monthsByYear;
+    private $countries;
 
     public function __construct()
     {
         $this->caravans = Caravan::orderBy('carnumber')->get();
         $this->monthsByYear = CaravanDates::getMonthsByYears();
         $this->years = array_keys($this->monthsByYear);
+        $this->countries = Country::orderBy('de')
+            ->get(['id','de'])
+            ->keyBy('id')
+            ->map
+            ->de
+        ;
     }
 
     /**
@@ -46,7 +54,10 @@ class CaravanDatesController extends Controller
      */
     public function create()
     {
-        return Inertia::render('CaravanDates/create', ['caravans' => $this->caravans]);
+        return Inertia::render('CaravanDates/create', [
+            'caravans' => $this->caravans,
+            'countries' => $this->countries,
+        ]);
     }
 
     /**
@@ -59,12 +70,12 @@ class CaravanDatesController extends Controller
     {
         $carnumber  = $request->post('carnumber');
         $caravan    = Caravan::whereCarnumber($carnumber)->first() ?? new Caravan();
-        $caravan->fill(collect($request->validated())->only(['carnumber','carlength','email'])->toArray())->save();
+        $caravan->fill(collect($request->validated())->only(['country_id','carnumber','carlength','email'])->toArray())->save();
 
         $rule = new DatesIntervalUnique($caravan);
         $request->validate([$rule]);
 
-        $validated  = collect($request->validated())->except(['carnumber','carlength','email'])->toArray();
+        $validated  = collect($request->validated())->except(['country_id','carnumber','carlength','email'])->toArray();
         $caravanDate = $caravan->dates()->create($validated);
 
         return $this->show($caravanDate);
@@ -90,9 +101,10 @@ class CaravanDatesController extends Controller
      */
     public function edit(CaravanDates $caravanDate)
     {
+        $countries = $this->countries;
         $caravans = $this->caravans;
         $caravanDate->load('caravan');
-        return Inertia::render('CaravanDates/edit', compact('caravanDate','caravans'));
+        return Inertia::render('CaravanDates/edit', compact('caravanDate','caravans','countries'));
     }
 
     /**

@@ -46,6 +46,6 @@ class Caravan extends Model
 
     public function country()
     {
-        return $this->hasOne(country::class);
+        return $this->hasOne(Country::class);
     }
 }

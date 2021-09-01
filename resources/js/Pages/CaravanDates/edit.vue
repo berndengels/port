@@ -12,6 +12,7 @@
                 required
                 autocomplete="off"
             />
+            <Select name="country_id" label="Herkunftsland" :options="countries" />
             <Input name="carlength" type="number" label="Länge Wohnmobil" required />
             <Input type="email" name="email" label="Email" />
             <Input name="persons" type="number" label="Anzahl Personen" required @change="change" />
@@ -40,19 +41,17 @@ import Autocomplete from '@/Components/Form/Autocomplete'
 import MyForm from "../../Components/Form/MyForm";
 import DateInput from "../../Components/Form/DateInput";
 import Input from "../../Components/Form/Input";
-import Label from "../../Components/Form/Label";
 import Button from "../../Components/Form/Button";
 import Checkbox from "../../Components/Form/Checkbox";
 import DateFormat from "../../Mixins/DateFormat";
-import AppLayout from "../../Layouts/AppLayout";
 import axios from 'axios';
 import DefaultLayout from "../../Layouts/DefaultLayout";
-import ActionMessage from "../../Jetstream/ActionMessage";
+import Select from "../../Components/Form/Select";
 
 export default {
     name: "edit",
     components: {
-        ActionMessage,
+        Select,
         DefaultLayout,
         Checkbox,
         Button,
@@ -61,7 +60,7 @@ export default {
         Input,
         Autocomplete,
     },
-    props: ['caravans','caravanDate'],
+    props: ['caravans','caravanDate','countries'],
     mixins: [DateFormat],
 
     data() {
@@ -70,6 +69,7 @@ export default {
 //                _method: 'PUT',
                 id: this.caravanDate.id,
                 caravan_id: this.caravanDate.caravan_id,
+                country_id: this.caravanDate.caravan.country_id ?? 55,
                 carnumber: this.caravanDate.caravan.carnumber,
                 email: this.caravanDate.caravan.email,
                 carlength: this.caravanDate.caravan.carlength,
@@ -100,6 +100,7 @@ export default {
             let caravan = this.caravans.filter(i => i.carnumber === e.target.innerText).shift()
             if(caravan) {
                 this.form.caravan_id = caravan.id
+                this.form.country_id = caravan.country_id
                 this.form.carnumber = caravan.carnumber
                 this.form.carlength = caravan.carlength
                 this.form.email = caravan.email
