@@ -11,10 +11,11 @@
                 @change="$emit('selected' + ucFirst(name), $event.target.value)"
                 class="inline-flex bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
             >
+                <option v-if="withEmpty" value="">wählen</option>
                 <option
                     v-for="(item, index) in options"
                     :key="index"
-                    :value="keyName ? item[keyName] :  index"
+                    :value="keyName ? item[keyName] :  item"
                 >
                     {{ field ? item[field] : item }}
                 </option>
@@ -56,6 +57,7 @@ export default {
             type: Boolean,
             default: false,
         },
+        withEmpty: Boolean
     }
 }
 </script>

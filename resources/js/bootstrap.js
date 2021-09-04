@@ -4,7 +4,8 @@ window._ = require('lodash');
 window.dayjs = require('dayjs');
 import 'dayjs/locale/de'
 window.dayjs.locale('de');
-
+var isBetween = require('dayjs/plugin/isBetween')
+dayjs.extend(isBetween)
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
  * to our Laravel back-end. This library automatically handles sending the

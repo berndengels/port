@@ -16,7 +16,7 @@ module.exports = {
             fontFamily: {
                 sans: ['Nunito', ...defaultTheme.fontFamily.sans],
             },
-            olors: {
+            colors: {
                 'light-blue': colors.lightBlue,
                 cyan: colors.cyan,
                 lime: colors.lime
@@ -24,5 +24,8 @@ module.exports = {
         },
     },
 
-    plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography')],
+    plugins: [
+      require('@tailwindcss/forms'),
+      require('@tailwindcss/typography'),
+    ],
 };

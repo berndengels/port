@@ -4,7 +4,7 @@
         <table class="table w-full">
             <tr>
                 <th class="text-right">Kennzeichen</th>
-                <td @dblclick="ondblclick(caravanDate.caravan)">{{ caravanDate.caravan.carnumber }}</td>
+                <td><span @dblclick="ondblclick(caravanDate.caravan)" class="carnumber cursor-pointer">{{ caravanDate.caravan.carnumber }}</span></td>
             </tr>
             <tr>
                 <th class="text-right">Wagenlänge</th>

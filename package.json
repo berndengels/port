@@ -41,6 +41,7 @@
         "@inertiajs/inertia-vue3": "^0.5.2",
         "dayjs": "^1.10.6",
         "include-media": "^1.4.10",
+        "leaflet": "^1.7.1",
         "moment": "^2.29.1",
         "momentjs": "^2.0.0",
         "vue-lodash": "^2.1.2"

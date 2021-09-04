@@ -13,6 +13,7 @@
         </MyForm>
 
         <div v-if="caravans.length > 0">
+            <h5>{{ count }} Einträge</h5>
             <table class="table w-full">
                 <tr>
                     <th>Kennzeichen</th>
@@ -21,8 +22,8 @@
                     <th colspan="2"><br></th>
                 </tr>
                 <tr v-for="item in caravans" :key="item.id">
-                    <td class="has-tooltip" @dblclick="ondblclick(item)">
-                        {{ item.carnumber }}
+                    <td class="has-tooltip">
+                        <span  @dblclick="ondblclick(item)" class="carnumber cursor-pointer">{{ item.carnumber }}</span>
                     </td>
                     <td>{{ item.carlength }} m</td>
                     <td><a v-if="item.email" :href="'mailto:' + item.email" target="_blank">{{ item.email }}</a><br v-else></td>
@@ -79,6 +80,11 @@ export default {
             filter: this.$inertia.form({
                 caravan: null,
             }),
+        }
+    },
+    computed: {
+        count() {
+            return this.caravans.length
         }
     },
     methods: {

@@ -93,15 +93,21 @@ tr td:last-child { border-bottom-right-radius: 5px; }
     background-color: #e53e3e;
 }
 .carnumber {
-    margin: 0.3rem;
-    padding: 0 0.3rem;
+    display: inline-block;
+    margin: 0.2rem;
+    min-width: 105px;
+    text-align: center;
     color: #000;
     font-family: "Arial";
-    _font-weight: bold;
     border: 0.1rem solid #000;
     border-radius: 0.2rem;
     opacity: 1;
     background-color: rgba(255,255,255, 1);
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
+}
+.dublicate {
+    color: #fff;
+    background-color: #e53e3e;
 }
 .autocomplete {
 
