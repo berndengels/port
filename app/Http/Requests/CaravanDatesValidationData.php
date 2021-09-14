@@ -1,33 +1,21 @@
 <?php
-
 namespace App\Http\Requests;
 
+use Illuminate\Http\Request;
 use App\Http\Requests\Helper\Fix;
-use App\Models\Caravan;
-use App\Models\CaravanDates;
-use App\Rules\DatesIntervalUnique;
-use Illuminate\Foundation\Http\FormRequest;
 
-class CaravanDatesRequest extends FormRequest
+class CaravanDatesValidationData
 {
     use Fix;
 
-    /**
-     * @var Caravan
-     */
-    protected $caravan;
+    private $request;
 
-    public function prepareForValidation()
-    {
-        $this->merge([
-            'carnumber' => $this->fixCarNumber($this->carnumber),
+    public function __construct(Request $request){
+        $request->merge([
+            'carnumber' => $this->fixCarNumber($request->carnumber),
+            'electric' => !!$request->post('electric') ?? false,
         ]);
-        return $this;
-    }
-
-    public function validationData($keys = null)
-    {
-        return array_merge($this->all($keys), ['electric' => !!$this->post('electric') ?? false]);
+        $this->request = $request;
     }
 
     /**
@@ -41,8 +29,8 @@ class CaravanDatesRequest extends FormRequest
             'country_id' => 'required',
             'carnumber' => 'required',
             'carlength' => ['required','regex:/^[0-9]+$/i'],
-            'from'      => 'date|before:until',
-            'until'     => ['date','after:from'],
+            'from'      => 'exclude_if:until,null|required|date|before:until',
+            'until'     => ['required','date','after:from'],
             'email'     => 'email|nullable',
             'persons'   => ['required','regex:/^[1-9]+$/i'],
             'price'     => 'required|numeric',
@@ -50,10 +38,6 @@ class CaravanDatesRequest extends FormRequest
             'electric'  => '',
             'prices'    => '',
         ];
-
-        if(!$this->id) {
-//            $rules['until'] += [new DatesIntervalUnique($this->caravan)];
-        }
 
         return $rules;
     }
@@ -65,6 +49,7 @@ class CaravanDatesRequest extends FormRequest
             'carlength.required'    => 'Bitte die Länge des Fahrzeugs angeben!',
             'carlength.regex'       => 'Die Länge des Fahrzeugs muß als ganze Zahl angegeben werden!',
             'from.date'             => 'Das Anreise-Datum muß als Datum angegeben werden.',
+            'from.before'           => 'Das Anreise-Datum muß vor dem Abreise Datum liegen.',
             'until.date'            => 'Das Abreise-Datum muß als Datum angegeben werden.',
             'until.after'           => 'Das Anreise-Datum liegt vor einem vorhandenen Abreise-Datum',
             'persons.required'      => 'Bitte die Anzahl der Personen angeben.',
@@ -75,9 +60,11 @@ class CaravanDatesRequest extends FormRequest
         ];
     }
 
-    public function setCaravan(Caravan $caravan)
+    /**
+     * @return Request
+     */
+    public function getRequest(): Request
     {
-        $this->caravan = $caravan;
-        return $this;
+        return $this->request;
     }
 }

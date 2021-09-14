@@ -1,7 +1,7 @@
 <template>
     <DefaultLayout title="Wohnwagen Rezeption">
-        <div class="flex">
-            <div class="flex-inline">
+        <div class="w-full flex">
+            <div class="object-left-top">
                 <MyLink :href="create_url"
                         icon="far fa-plus-square"
                         ctrClass="ml-2 my-2 p-5 no-hide-text"
@@ -9,7 +9,7 @@
                     Neueintrag
                 </MyLink>
             </div>
-            <div v-if="caravanDates.length > 0" class="flex-inline -align-right">
+            <div v-if="caravanDates.length > 0" class="object-right-top">
                 <MyLink :href="'/caravan/price/excel/' + currentFrom"
                         icon="far fa-file-excel"
                         ctrClass="ml-2 my-2 p-5 no-hide-text"
@@ -28,6 +28,7 @@
                 @selectedCaravan="onSelectCaravan"
             />
             <SelectFilter name="dublicate" label="Dublikate"
+                          v-if="dublicates.length > 0"
                           :withEmpty="true"
                           :options="dublicates"
                           @selectedDublicate="onSelectDublicate"

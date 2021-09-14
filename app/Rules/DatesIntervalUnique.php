@@ -4,7 +4,10 @@ namespace App\Rules;
 
 use App\Models\Caravan;
 use App\Models\CaravanDates;
+use Carbon\Carbon;
 use Illuminate\Contracts\Validation\Rule;
+use Illuminate\Support\Facades\DB;
+use phpDocumentor\Reflection\Types\Boolean;
 
 class DatesIntervalUnique implements Rule
 {
@@ -28,16 +31,14 @@ class DatesIntervalUnique implements Rule
      */
     public function passes($attribute, $value)
     {
-        $from   = request('from');
-        $exist  = CaravanDates::whereCaravanId($this->caravan->id)
-            ->whereBetween('from', [$from, $value])
-            ->orWhereBetween('until', [$from, $value])
-            ->get()
-        ;
+        $sql = <<< SQL
+SELECT * FROM `caravan_dates`
+WHERE `caravan_id` = ?
+AND (DATE(?) BETWEEN `from` AND `until` OR DATE(?) BETWEEN `from` AND `until`)
+SQL;
+        $found  = DB::select(DB::raw($sql), [$this->caravan->id, request('from'), $value]);
 
-//        dd($exist);
-
-        if($exist) {
+        if(count($found) > 0) {
             return false;
         }
         return true;

@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Country;
 use App\Rules\DatesIntervalUnique;
+use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 use App\Models\Caravan;
 use App\Models\CaravanDates;
@@ -11,6 +12,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\CaravanDatesRequest;
+use App\Http\Requests\CaravanDatesValidationData;
 
 class CaravanDatesController extends Controller
 {
@@ -66,16 +68,23 @@ class CaravanDatesController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(CaravanDatesRequest $request)
+    public function store(Request $request)
     {
         $carnumber  = $request->post('carnumber');
         $caravan    = Caravan::whereCarnumber($carnumber)->first() ?? new Caravan();
-        $caravan->fill(collect($request->validated())->only(['country_id','carnumber','carlength','email'])->toArray())->save();
+        $validationData = new CaravanDatesValidationData($request, $caravan);
+        $request    = $validationData->getRequest();
 
-        $rule = new DatesIntervalUnique($caravan);
-        $request->validate([$rule]);
+        $rules  = $validationData->rules();
+        $rules['until']  = array_merge($rules['until'], [new DatesIntervalUnique($caravan)]);
 
-        $validated  = collect($request->validated())->except(['country_id','carnumber','carlength','email'])->toArray();
+        $validator  = Validator::make($request->all(), $rules, $validationData->messages());
+        $validator->validate();
+
+        $validated = collect($validator->validated())->only(['country_id','carnumber','carlength','email'])->toArray();
+        $caravan->fill($validated)->save();
+
+        $validated  = collect($validator->validated())->except(['country_id','carnumber','carlength','email'])->toArray();
         $caravanDate = $caravan->dates()->create($validated);
 
         return $this->show($caravanDate);

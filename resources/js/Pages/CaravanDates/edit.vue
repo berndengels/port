@@ -1,5 +1,6 @@
 <template>
     <DefaultLayout title="Wohnmobil bearbeiten">
+        <MyLink :href="route('caravanDates.index')" icon="fas fa-backward">zurück</MyLink>
         <MyForm :data="form" @submit.prevent>
             <input type="hidden" v-model="form.caravan_id" />
             <input type="hidden" v-model="form.prices" />
@@ -47,10 +48,12 @@ import DateFormat from "../../Mixins/DateFormat";
 import axios from 'axios';
 import DefaultLayout from "../../Layouts/DefaultLayout";
 import Select from "../../Components/Form/Select";
+import MyLink from "../../Components/Form/MyLink";
 
 export default {
     name: "edit",
     components: {
+        MyLink,
         Select,
         DefaultLayout,
         Checkbox,

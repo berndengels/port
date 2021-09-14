@@ -1,5 +1,6 @@
 <template>
     <DefaultLayout title="Wohnmobil anlegen">
+        <MyLink :href="route('caravanDates.index')" icon="fas fa-backward">zurück</MyLink>
         <MyForm :data="form" @submit.prevent>
             <input type="hidden" v-model="form.caravan_id" />
             <input type="hidden" v-model="form.prices" />
@@ -38,10 +39,12 @@ import axios from 'axios';
 import DateFormat from "../../Mixins/DateFormat";
 import DefaultLayout from "../../Layouts/DefaultLayout";
 import Select from "../../Components/Form/Select";
+import MyLink from "../../Components/Form/MyLink";
 
 export default {
     name: "create",
     components: {
+        MyLink,
         Select,
         DefaultLayout,
         Checkbox,

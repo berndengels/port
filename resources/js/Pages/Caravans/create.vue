@@ -1,5 +1,6 @@
 <template>
     <DefaultLayout title="Wohnwagen">
+        <MyLink :href="route('caravans.index')" icon="fas fa-backward">zurück</MyLink>
         <MyForm :data="form" @submit.prevent>
             <Select name="country_id" label="Herkunftsland" :options="countries" />
             <Input name="carnumber" label="Autokennzeichen" required />
@@ -16,10 +17,12 @@ import MyForm from "../../Components/Form/MyForm";
 import Input from "../../Components/Form/Input";
 import Button from "../../Jetstream/Button";
 import Select from "../../Components/Form/Select";
+import MyLink from "../../Components/Form/MyLink";
 
 export default {
     name: "create",
     components: {
+        MyLink,
         Select,
         Button,
         Input,
