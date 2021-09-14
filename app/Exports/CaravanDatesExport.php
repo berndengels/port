@@ -8,22 +8,29 @@ use Maatwebsite\Excel\Concerns\FromView;
 
 class CaravanDatesExport implements FromView
 {
-    private $from;
-    private $until;
-    private $data;
+    public $from;
+    public $until;
+    public $data;
+    public $count;
+    public $priceTotal;
 
     public function __construct($from = null, $until = null)
     {
         $this->from     = $from;
         $this->until    = $until;
-        $this->data     = $this->getData($this->from);
+        $this->data     = $this->getData();
+        $this->count    = $this->data->count();
+        $this->priceTotal = $this->data->sum(function ($item){ return $item->price; });
     }
 
-    private function getData($from = null)
+    public function getData()
     {
         $query = CaravanDates::with('caravan');
-        if($from) {
-            $query->whereDate('from','>=', $from);
+        if($this->from) {
+            $query->whereDate('from','>=', $this->from);
+        }
+        if($this->until) {
+            $query->whereDate('until','<=', $this->until);
         }
         $data = $query
             ->orderBy('from')
@@ -34,10 +41,33 @@ class CaravanDatesExport implements FromView
 
     public function view(): View
     {
-        $priceTotal = $this->data->sum(function ($item){ return $item->price; });
         return view('caravanDates.export', [
             'data'          => $this->data,
-            'priceTotal'    => $priceTotal,
+            'priceTotal'    => $this->priceTotal,
         ]);
+    }
+
+    /**
+     * @return mixed|null
+     */
+    public function getFrom()
+    {
+        return $this->from;
+    }
+
+    /**
+     * @return mixed|null
+     */
+    public function getUntil()
+    {
+        return $this->until;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPriceTotal()
+    {
+        return $this->priceTotal;
     }
 }

@@ -1,8 +1,12 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Mail\SendExcel;
+use Excel;
+use App\Exports\CaravanDatesExport;
 use App\Models\Country;
 use App\Rules\DatesIntervalUnique;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 use App\Models\Caravan;
@@ -13,6 +17,7 @@ use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\CaravanDatesRequest;
 use App\Http\Requests\CaravanDatesValidationData;
+use Illuminate\Support\Facades\Mail;
 
 class CaravanDatesController extends Controller
 {
@@ -145,5 +150,20 @@ class CaravanDatesController extends Controller
     {
         $caravanDate->delete();
         return Redirect::route('caravanDates.index');
+    }
+
+    public function sendExcel(Request $request, $from = null, $until = null)
+    {
+        $email      = $request->post('email');
+        $now        = Carbon::now()->format('Ymd-Hi');
+        $fileName   = $now.'_caravan_dates.xls';
+        $fullPath   = storage_path('app/temp/'.$fileName);
+        $export     = new CaravanDatesExport($from, $until);
+
+        if(Excel::store($export, $fullPath)) {
+            $mail       = new SendExcel($email, $export, $fullPath);
+            Mail::to($email)->send($mail);
+        }
+//        unlink($fullPath);
     }
 }

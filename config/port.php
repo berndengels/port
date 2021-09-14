@@ -2,6 +2,9 @@
 use Carbon\Carbon;
 
 return [
+    'mail' => [
+        'from'  => env('MAIL_FROM_ADDRESS', null)
+    ],
     'dates' => [
         'saison' => [
             'fromMonth'     => env('MONTH_SAISON_START', Carbon::JUNE),

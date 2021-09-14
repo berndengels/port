@@ -1,7 +1,7 @@
 <template>
     <DefaultLayout title="Wohnwagen Rezeption">
-        <div class="w-full flex">
-            <div class="object-left-top">
+        <div class="w-full clear-both">
+            <div class="float-left">
                 <MyLink :href="create_url"
                         icon="far fa-plus-square"
                         ctrClass="ml-2 my-2 p-5 no-hide-text"
@@ -9,39 +9,44 @@
                     Neueintrag
                 </MyLink>
             </div>
-            <div v-if="caravanDates.length > 0" class="object-right-top">
+            <div v-if="caravanDates.length > 0" class="float-right">
                 <MyLink :href="'/caravan/price/excel/' + currentFrom"
                         icon="far fa-file-excel"
-                        ctrClass="ml-2 my-2 p-5 no-hide-text"
+                        ctrClass="ml-2 my-2 p-5 no-hide-text inline"
                         no-inertia="true"
                         target="_blank"
                         title="neue Caravan Ankunft eintragen">
                     Excel Download
                 </MyLink>
+                <MyForm v-if="caravanDates.length > 0" :data="frmSendExcel" css="flex-inline" @submit.prevent>
+                    <Input type="email" name="email" v-model="frmSendExcel.email" required="true" placeholder="Email-Adresse" />
+                    <Button @click="sendExcel" btnCss="btn btn-second">Sende Excel</Button>
+                </MyForm>
             </div>
         </div>
-
-        <MyForm :data="filter" css="flex-inline" @submit.prevent>
-            <SelectFilter name="caravan" label="Kennzeichen" keyName="id" field="carnumber"
-                :withEmpty="true"
-                :options="caravans"
-                @selectedCaravan="onSelectCaravan"
-            />
-            <SelectFilter name="dublicate" label="Dublikate"
-                          v-if="dublicates.length > 0"
-                          :withEmpty="true"
-                          :options="dublicates"
-                          @selectedDublicate="onSelectDublicate"
-            />
-            <SelectYear v-if="years && years.length > 0" name="year" label="Jahr" :options="years" :default="selectedYear"
-                @selectYear="onSelectYear"
-            />
-            <SelectMonth v-if="selectedYear && months !== undefined && months.length > 0" name="month" label="Monat" :options="months"
-                @selectMonth="onSelectMonth"
-                css="ml-3"
-            />
-            <Button v-if="caravans.length > 0 || years.length > 0 || months !== undefined" @click="reset" css="inline w-1/6 ml-3" btnCss="btn btn-second">Reset</Button>
-        </MyForm>
+        <div class="w-full clear-both">
+            <MyForm :data="frmFilter" css="flex-inline" @submit.prevent>
+                <SelectFilter name="caravan" label="Kennzeichen" keyName="id" field="carnumber"
+                              :withEmpty="true"
+                              :options="caravans"
+                              @selectedCaravan="onSelectCaravan"
+                />
+                <SelectFilter name="dublicate" label="Dublikate"
+                              v-if="dublicates.length > 0"
+                              :withEmpty="true"
+                              :options="dublicates"
+                              @selectedDublicate="onSelectDublicate"
+                />
+                <SelectYear v-if="years && years.length > 0" name="year" label="Jahr" :options="years" :default="selectedYear"
+                            @selectYear="onSelectYear"
+                />
+                <SelectMonth v-if="selectedYear && months !== undefined && months.length > 0" name="month" label="Monat" :options="months"
+                             @selectMonth="onSelectMonth"
+                             css="ml-3"
+                />
+                <Button v-if="caravans.length > 0 || years.length > 0 || months !== undefined" @click="reset" css="inline w-1/6 ml-3" btnCss="btn btn-second">Reset</Button>
+            </MyForm>
+        </div>
         <h5>{{ count }} Einträge</h5>
         <table v-if="caravanDates.length > 0" class="table w-full">
             <tr>
@@ -92,6 +97,7 @@ import SelectYear from "../../Components/Form/SelectYear";
 import SelectMonth from "../../Components/Form/SelectMonth";
 import SelectFilter from "../../Components/Form/SelectFilter";
 import MyLink from "../../Components/Form/MyLink";
+import Input from "../../Jetstream/Input";
 
 const currentYear = dayjs().year(),
     currentMonth = dayjs().month() + 1;
@@ -99,6 +105,7 @@ const currentYear = dayjs().year(),
 export default {
     name: "index",
     components: {
+        Input,
         MyLink,
         SelectFilter,
         SelectYear,
@@ -124,11 +131,15 @@ export default {
             selectedMonth: null,
             selectedCaravan: null,
             selectedDublicate: null,
-            filter: this.$inertia.form({
+            frmFilter: this.$inertia.form({
                 year: null,
                 month: null,
                 caravan: null,
                 dublicate: null,
+            }),
+            frmSendExcel: this.$inertia.form({
+//                _method: 'POST',
+                email: null,
             }),
         }
     },
@@ -192,10 +203,10 @@ export default {
         reset() {
             this.selectedYear = null
             this.selectedMonth = null
-            this.filter.dublicate = null
+            this.frmFilter.dublicate = null
             this.selectedCaravan = null
             this.caravanDates = this.$page.props.caravan.dates.list
-            this.filter.reset()
+            this.frmFilter.reset()
         },
         onSelectCaravan(id) {
             this.selectedCaravan = ("" !== id) ? parseInt(id) : null;
@@ -239,6 +250,18 @@ export default {
                     }
                 });
             }
+        },
+        sendExcel() {
+            try {
+                console.info(this.frmSendExcel.email)
+                this.frmSendExcel.post(route('caravanDates.sendExcel', this.frmSendExcel), {
+                    preserveScroll: true,
+                });
+            } catch(err) {
+                console.info('error')
+                console.info(err)
+            }
+
         },
         remove(item) {
             if(confirm('Datensatz (ID: ' + item.id + ') wirklich löschen?')) {
