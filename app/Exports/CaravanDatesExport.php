@@ -3,6 +3,7 @@
 namespace App\Exports;
 
 use App\Models\CaravanDates;
+use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 
@@ -14,7 +15,7 @@ class CaravanDatesExport implements FromView
     public $count;
     public $priceTotal;
 
-    public function __construct($from = null, $until = null)
+    public function __construct(Carbon $from = null, Carbon $until = null)
     {
         $this->from     = $from;
         $this->until    = $until;

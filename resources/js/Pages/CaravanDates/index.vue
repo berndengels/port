@@ -20,6 +20,8 @@
                 </MyLink>
                 <MyForm v-if="caravanDates.length > 0" :data="frmSendExcel" css="flex-inline" @submit.prevent>
                     <Input type="email" name="email" v-model="frmSendExcel.email" required="true" placeholder="Email-Adresse" />
+                    <Input type="hidden" name="from" />
+                    <Input type="hidden" name="until" />
                     <Button @click="sendExcel" btnCss="btn btn-second">Sende Excel</Button>
                 </MyForm>
             </div>
@@ -140,6 +142,8 @@ export default {
             frmSendExcel: this.$inertia.form({
 //                _method: 'POST',
                 email: null,
+                from: null,
+                until: null,
             }),
         }
     },
@@ -253,7 +257,7 @@ export default {
         },
         sendExcel() {
             try {
-                console.info(this.frmSendExcel.email)
+                this.frmSendExcel.from = this.currentFrom
                 this.frmSendExcel.post(route('caravanDates.sendExcel', this.frmSendExcel), {
                     preserveScroll: true,
                 });

@@ -158,12 +158,18 @@ class CaravanDatesController extends Controller
         $now        = Carbon::now()->format('Ymd-Hi');
         $fileName   = $now.'_caravan_dates.xls';
         $fullPath   = storage_path('app/temp/'.$fileName);
+        if($from) {
+            $from = Carbon::create($from);
+        }
+        if($until) {
+            $until = Carbon::create($until);
+        }
         $export     = new CaravanDatesExport($from, $until);
 
-        if(Excel::store($export, $fullPath)) {
-            $mail       = new SendExcel($email, $export, $fullPath);
-            Mail::to($email)->send($mail);
+        if(Excel::store($export, $fileName, 'temp')) {
+            Mail::send(new SendExcel($email, $export, $fullPath));
         }
-//        unlink($fullPath);
+        unlink($fullPath);
+        return $this->index();
     }
 }

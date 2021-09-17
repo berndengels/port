@@ -12,9 +12,8 @@ class SendExcel extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $to;
-    public $data;
-    public $file;
+    protected $data;
+    protected $file;
 
     /**
      * Create a new message instance.
@@ -23,7 +22,10 @@ class SendExcel extends Mailable
      */
     public function __construct($to, CaravanDatesExport $export, $file)
     {
-        $this->to = $to;
+        $this->to[] = [
+            'address'   => $to,
+            'name'      => $to,
+        ];
         $this->data = $export;
         $this->file = $file;
     }
@@ -36,10 +38,13 @@ class SendExcel extends Mailable
     public function build()
     {
         return $this
-            ->markdown('email/excel')
+//            ->to($this->to)
+            ->from(config('port.mail.sender.address'), config('port.mail.sender.name'))
             ->attach($this->file)
-            ->from(config('port.email.from'))
             ->subject("Caravan Rezeptions Daten")
+            ->markdown('email.excel', [
+                'data' => $this->data
+            ])
        ;
     }
 }

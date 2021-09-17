@@ -29,24 +29,25 @@ return [
     */
 
     'disks' => [
-
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app'),
         ],
-
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
         ],
-
+        'temp' => [
+            'driver' => 'local',
+            'root' => storage_path('app/temp'),
+//            'visibility' => 'public',
+        ],
         'snapshots' => [
             'driver' => 'local',
             'root' => database_path('dumps'),
         ],
-
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

@@ -1,16 +1,15 @@
 @component('mail::layout')
 @slot('header')
 @component('mail::header', ['url' => config('app.url')])
-<img class="logo" src="data:image/png;base64,{{ $logo }}" width="80" height="80"> {{ config('app.name') }}
 @endcomponent
 @endslot
 
 # Excel-Tabelle Caravan-Rezeption
 @if($data->from)
-- Von: {{ $data->from }}
+- Daten ab: {{ $data->from->format('d.m.Y') }}
 @endif
 @if($data->until)
-- Bis: {{ $data->until }}
+- Daten bis: {{ $data->until->format('d.m.Y') }}
 @endif
 - Anzahl {{ $data->count }}
 - Summe Total: {{ $data->priceTotal }} €
