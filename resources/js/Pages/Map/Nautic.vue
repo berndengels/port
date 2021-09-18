@@ -35,10 +35,13 @@ export default {
 
 <style scoped>
 #map {
+    display: block;
+    float: left;
+    clear: both;
     width: 100%;
     height: 100%;
     min-width: 100%;
-    min-height: ;
+    min-height: 20rem;
     background-color: #eee;
     border: 1px solid #ccc;
 }
