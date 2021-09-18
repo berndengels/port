@@ -16,8 +16,8 @@
 
         <!-- Scripts -->
         @routes
-        <link rel="stylesheet" href="http://webapiv2.navionics.com/dist/webapi/webapi.min.css" >
-        <script type="text/javascript" src="http://webapiv2.navionics.com/dist/webapi/webapi.min.no-dep.js"></script>
+        <link rel="stylesheet" href="https://webapiv2.navionics.com/dist/webapi/webapi.min.css" >
+        <script type="text/javascript" src="https://webapiv2.navionics.com/dist/webapi/webapi.min.no-dep.js"></script>
         <script src="{{ mix('js/app.js') }}" defer></script>
     </head>
     <body class="font-sans antialiased" data-root="http://webapiv2.navionics.com/dist/webapi/images">
