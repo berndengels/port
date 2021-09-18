@@ -12,6 +12,8 @@ use phpDocumentor\Reflection\Types\Boolean;
 class DatesIntervalUnique implements Rule
 {
     private $caravan;
+    private $existing;
+
     /**
      * Create a new rule instance.
      *
@@ -36,9 +38,16 @@ SELECT * FROM `caravan_dates`
 WHERE `caravan_id` = ?
 AND (DATE(?) BETWEEN `from` AND `until` OR DATE(?) BETWEEN `from` AND `until`)
 SQL;
-        $found  = DB::select(DB::raw($sql), [$this->caravan->id, request('from'), $value]);
-
-        if(count($found) > 0) {
+//        $this->existing = DB::select(DB::raw($sql), [$this->caravan->id, request('from'), $value]);
+        $this->existing = CaravanDates::with(['caravan'])
+            ->whereRaw('caravan_id = ? AND (DATE(?) BETWEEN `from` AND `until` OR DATE(?) BETWEEN `from` AND `until`)', [
+                $this->caravan->id,
+                request('from'),
+                $value
+            ])
+            ->get()
+        ;
+        if($this->existing->count() > 0) {
             return false;
         }
         return true;
@@ -51,6 +60,13 @@ SQL;
      */
     public function message()
     {
-        return 'Es existiert schon ein Eintrag, der in diesen Zeitraum fällt.';
+        $msg = $this->existing->map(function($item){
+            $carnumber  = $item->caravan->carnumber;
+            $from       = $item->from->format('d.m.Y');
+            $until      = $item->until->format('d.m.Y');
+            return "<li>$carnumber: $from bis $until</li>";
+        })->toArray();
+        $msg = implode('', $msg);
+        return "Es existiert schon ein Eintrag, der in diesen Zeitraum fällt: <br><ul>$msg</ul>";
     }
 }

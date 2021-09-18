@@ -1,7 +1,7 @@
 <template>
     <div v-if="hasErrors" class="clear-both">
         <div class="font-medium text-red-600">
-            <span class="mt-3 text-sm text-red-600">{{ error }}</span>
+            <span class="mt-3 text-sm text-red-600" v-html="error"></span>
         </div>
     </div>
 </template>

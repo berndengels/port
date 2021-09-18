@@ -27,6 +27,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $email
  * @method static CaravanFactory factory(...$parameters)
  * @method static Builder|Caravan whereEmail($value)
+ * @property int $country_id
+ * @property-read Country $country
+ * @method static Builder|Caravan whereCountryId($value)
  */
 class Caravan extends Model
 {
