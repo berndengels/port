@@ -7,6 +7,7 @@ use App\Exports\CaravanDatesExport;
 use App\Models\Country;
 use App\Rules\DatesIntervalUnique;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 use App\Models\Caravan;
@@ -152,7 +153,7 @@ class CaravanDatesController extends Controller
         return Redirect::route('caravanDates.index');
     }
 
-    public function sendExcel(Request $request, $from = null, $until = null)
+    public function sendExcel(Request $request, $from = null)
     {
         $email      = $request->post('email');
         $now        = Carbon::now()->format('Ymd-Hi');
@@ -161,15 +162,16 @@ class CaravanDatesController extends Controller
         if($from) {
             $from = Carbon::create($from);
         }
-        if($until) {
-            $until = Carbon::create($until);
-        }
-        $export     = new CaravanDatesExport($from, $until);
+        try {
+            $export = new CaravanDatesExport($from);
 
-        if(Excel::store($export, $fileName, 'temp')) {
-            Mail::send(new SendExcel($email, $export, $fullPath));
+            if(Excel::store($export, $fileName, 'temp')) {
+                Mail::send(new SendExcel($email, $export, $fullPath));
+            }
+            unlink($fullPath);
+            return response()->json(['success' => true, 'error' => null]);
+        } catch (Exception $e) {
+            return response()->json(['success' => false, 'error' => $e->getMessage()]);
         }
-        unlink($fullPath);
-        return $this->index();
     }
 }

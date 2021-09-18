@@ -5,11 +5,11 @@
 @endslot
 
 # Excel-Tabelle Caravan-Rezeption
-@if($data->from)
-- Daten ab: {{ $data->from->format('d.m.Y') }}
+@if($data->year)
+- Jahr: {{ $data->year }}
 @endif
-@if($data->until)
-- Daten bis: {{ $data->until->format('d.m.Y') }}
+@if($data->month)
+- Monat: {{ $data->from->monthName }}
 @endif
 - Anzahl {{ $data->count }}
 - Summe Total: {{ $data->priceTotal }} €

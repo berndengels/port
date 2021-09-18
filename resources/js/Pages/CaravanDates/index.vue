@@ -100,6 +100,7 @@ import SelectMonth from "../../Components/Form/SelectMonth";
 import SelectFilter from "../../Components/Form/SelectFilter";
 import MyLink from "../../Components/Form/MyLink";
 import Input from "../../Jetstream/Input";
+import axios from "axios";
 
 const currentYear = dayjs().year(),
     currentMonth = dayjs().month() + 1;
@@ -140,16 +141,10 @@ export default {
                 dublicate: null,
             }),
             frmSendExcel: this.$inertia.form({
-//                _method: 'POST',
                 email: null,
                 from: null,
-                until: null,
             }),
         }
-    },
-    created() {
-//        this.onSelectYear(currentYear)
-//        this.onSelectMonth(currentMonth)
     },
     computed: {
         dublicates() {
@@ -256,16 +251,17 @@ export default {
             }
         },
         sendExcel() {
-            try {
-                this.frmSendExcel.from = this.currentFrom
-                this.frmSendExcel.post(route('caravanDates.sendExcel', this.frmSendExcel), {
-                    preserveScroll: true,
-                });
-            } catch(err) {
-                console.info('error')
-                console.info(err)
-            }
-
+            this.frmSendExcel.from = this.currentFrom
+            axios.post(route('caravanDates.sendExcel', this.frmSendExcel), this.frmSendExcel)
+                .then(resp => {
+                    if(resp.data.success) {
+                        alert('Excel-Tabelle erfolgreich an ' + this.frmSendExcel.email + ' versand.')
+                    } else if(resp.data.error) {
+                        alert('Fehler: ' + resp.data.error)
+                    }
+                })
+                .catch(err => console.error(err))
+            ;
         },
         remove(item) {
             if(confirm('Datensatz (ID: ' + item.id + ') wirklich löschen?')) {

@@ -14,11 +14,18 @@ class CaravanDatesExport implements FromView
     public $data;
     public $count;
     public $priceTotal;
+    public $year;
+    public $month;
 
-    public function __construct(Carbon $from = null, Carbon $until = null)
+    public function __construct(Carbon $from = null)
     {
         $this->from     = $from;
-        $this->until    = $until;
+
+        if($this->from) {
+            $this->year     = $from->year;
+            $this->month    = $from->month;
+        }
+
         $this->data     = $this->getData();
         $this->count    = $this->data->count();
         $this->priceTotal = $this->data->sum(function ($item){ return $item->price; });
@@ -27,12 +34,14 @@ class CaravanDatesExport implements FromView
     public function getData()
     {
         $query = CaravanDates::with('caravan');
-        if($this->from) {
-            $query->whereDate('from','>=', $this->from);
+
+        if($this->year) {
+            $query->whereRaw('YEAR(`from`) = ?', [$this->year]);
+            if($this->month) {
+                $query->whereRaw('MONTH(`from`) = ?', [$this->month]);
+            }
         }
-        if($this->until) {
-            $query->whereDate('until','<=', $this->until);
-        }
+
         $data = $query
             ->orderBy('from')
             ->get()
