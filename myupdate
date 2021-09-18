@@ -1,4 +1,4 @@
 #!/bin/bash
-git reset
-git pull
+git reset origin inertiajs
+git pull origin inertiajs
 npm run prod
