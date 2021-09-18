@@ -1,6 +1,6 @@
 <template>
     <DefaultLayout title="Seekarte">
-        <div id="map"></div>
+        <div class="h-full w-full" id="map"></div>
     </DefaultLayout>
 </template>
 
@@ -37,6 +37,8 @@ export default {
 #map {
     width: 100%;
     height: 100%;
+    min-width: 100%;
+    min-height: ;
     background-color: #eee;
     border: 1px solid #ccc;
 }
