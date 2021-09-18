@@ -4,7 +4,7 @@
             <div class="float-left">
                 <MyLink :href="create_url"
                         icon="far fa-plus-square"
-                        ctrClass="ml-2 my-2 p-5 no-hide-text"
+                        ctrClass="ml-2 my-2 no-hide-text"
                         title="neue Caravan Ankunft eintragen">
                     Neueintrag
                 </MyLink>
@@ -12,7 +12,7 @@
             <div v-if="caravanDates.length > 0" class="float-right">
                 <MyLink :href="'/caravan/price/excel/' + currentFrom"
                         icon="far fa-file-excel"
-                        ctrClass="ml-2 my-2 p-5 no-hide-text inline"
+                        ctrClass="ml-2 my-2 no-hide-text"
                         no-inertia="true"
                         target="_blank"
                         title="neue Caravan Ankunft eintragen">
@@ -20,9 +20,7 @@
                 </MyLink>
                 <MyForm v-if="caravanDates.length > 0" :data="frmSendExcel" css="flex-inline" @submit.prevent>
                     <Input type="email" name="email" v-model="frmSendExcel.email" required="true" placeholder="Email-Adresse" />
-                    <Input type="hidden" name="from" />
-                    <Input type="hidden" name="until" />
-                    <Button @click="sendExcel" btnCss="btn btn-second">Sende Excel</Button>
+                    <Button @click="sendExcel" btnCss="btn btn-second" icon="fas fa-shipping-fast">Sende Excel</Button>
                 </MyForm>
             </div>
         </div>
@@ -46,10 +44,24 @@
                              @selectMonth="onSelectMonth"
                              css="ml-3"
                 />
-                <Button v-if="caravans.length > 0 || years.length > 0 || months !== undefined" @click="reset" css="inline w-1/6 ml-3" btnCss="btn btn-second">Reset</Button>
+                <Button v-if="caravans.length > 0 || years.length > 0 || months !== undefined"
+                        @click="reset"
+                        css="inline w-1/6 ml-3"
+                        btnCss="btn btn-second btn-reset"
+                        icon="fas fa-undo-alt"
+                >Reset</Button>
             </MyForm>
         </div>
-        <h5>{{ count }} Einträge</h5>
+        <h5>{{ total }} Einträge</h5>
+        <VueTailwindPagination
+            v-if="total > perPage"
+            :current="currentPage"
+            :total="total"
+            :per-page="perPage"
+            @page-changed="onPageClick"
+            text-before-input="gehe zu Seite"
+            text-after-input="Los"
+        />
         <table v-if="caravanDates.length > 0" class="table w-full">
             <tr>
                 <th>Kennzeichen</th>
@@ -60,7 +72,7 @@
                 <th>Preis €</th>
                 <th colspan="2"></th>
             </tr>
-            <tr v-for="item in caravanDates" :key="item.id">
+            <tr v-for="item in paginated" :key="item.id">
                 <td><NavLink :href="item.show_url" class="carnumber">{{ item.carnumber }}</NavLink></td>
                 <td>{{ item.carlength }} m</td>
                 <td>{{ formatDate(item.from) }}</td>
@@ -101,6 +113,9 @@ import SelectFilter from "../../Components/Form/SelectFilter";
 import MyLink from "../../Components/Form/MyLink";
 import Input from "../../Jetstream/Input";
 import axios from "axios";
+import MyPagination from "../../Mixins/MyPagination";
+import '@ocrv/vue-tailwind-pagination/styles'
+import VueTailwindPagination from '@ocrv/vue-tailwind-pagination'
 
 const currentYear = dayjs().year(),
     currentMonth = dayjs().month() + 1;
@@ -118,8 +133,9 @@ export default {
         NavLink,
         Button,
         ResponsiveNavLink,
+        VueTailwindPagination,
     },
-    mixins: [DateFormat],
+    mixins: [DateFormat, MyPagination],
     props: {
         caravans: Array,
         years: Array,
@@ -128,7 +144,10 @@ export default {
     },
     data() {
         return {
-            caravanDates: this.$page.props.caravan.dates.list ?? [],
+            currentPage: 1,
+            perPage: 20,
+            paginated: [],
+            caravanDates: this.$page.props.caravan.dates.list,
             selected: null,
             selectedYear: null,
             selectedMonth: null,
@@ -146,6 +165,9 @@ export default {
             }),
         }
     },
+    created() {
+        this.paginated = this.chunks(this.$page.props.caravan.dates.list, this.perPage)[this.currentPage - 1]
+    },
     computed: {
         dublicates() {
             return this.searchDublicates();
@@ -162,6 +184,9 @@ export default {
         count() {
             return this.caravanDates.length
         },
+        total() {
+            return this.$page.props.caravan.dates.list.length
+        },
         years() {
             return this.years ?? [];
         },
@@ -172,7 +197,7 @@ export default {
             return []
         },
         priceTotel() {
-            var total = 0;
+            let total = 0;
             for(let i of this.caravanDates) {
                 total += i.price
             }
@@ -180,6 +205,21 @@ export default {
         },
     },
     methods: {
+        setDataAndPages(data) {
+            this.caravanDates = data
+            if(data.length > this.perPage) {
+                this.paginated = this.chunks(data, this.perPage)[this.currentPage - 1]
+            } else {
+                this.paginated = data
+            }
+        },
+        onPageClick(currentPage){
+            this.currentPage = currentPage
+            let arr = this.chunks(this.$page.props.caravan.dates.list, this.perPage)
+            if(this.currentPage <= arr.length) {
+                this.paginated = arr[this.currentPage - 1]
+            }
+        },
         searchDublicates() {
             let d = [],k,item, items=this.$page.props.caravan.dates.list;
             for(item of items) {
@@ -204,43 +244,47 @@ export default {
             this.selectedMonth = null
             this.frmFilter.dublicate = null
             this.selectedCaravan = null
-            this.caravanDates = this.$page.props.caravan.dates.list
+            this.currentPage = 1
+            this.caravanDates = this.chunks(this.$page.props.caravan.dates.list, this.perPage)[this.currentPage - 1]
             this.frmFilter.reset()
         },
         onSelectCaravan(id) {
             this.selectedCaravan = ("" !== id) ? parseInt(id) : null;
             if(this.selectedCaravan) {
-                this.caravanDates = this.$page.props.caravan.dates.list.filter(item => {
+                let data = this.$page.props.caravan.dates.list.filter(item => {
                     if(item.caravan_id == this.selectedCaravan) {
                         return item
                     }
                 });
+                this.setDataAndPages(data)
             }
         },
         onSelectDublicate(carnumber) {
             if("" !== carnumber) {
                 this.selectedDublicate = carnumber
-                this.caravanDates = this.$page.props.caravan.dates.list.filter(item => {
+                let data = this.$page.props.caravan.dates.list.filter(item => {
                     if(item.carnumber == this.selectedDublicate) {
                         return item
                     }
                 });
+                this.setDataAndPages(data)
             }
         },
         onSelectYear(year) {
             this.selectedYear = ("" !== year) ? parseInt(year) : null;
             if(this.selectedYear) {
-                this.caravanDates = this.$page.props.caravan.dates.list.filter(item => {
+                let data = this.$page.props.caravan.dates.list.filter(item => {
                     if(dayjs(item.from).year() === this.selectedYear) {
                         return item
                     }
                 });
+                this.setDataAndPages(data)
             }
         },
         onSelectMonth(month) {
             this.selectedMonth = ("" !== month) ? parseInt(month) : null;
             if(this.selectedMonth) {
-                this.caravanDates = this.$page.props.caravan.dates.list.filter(item => {
+                let data = this.$page.props.caravan.dates.list.filter(item => {
                     let fromMonth = parseInt(dayjs(item.from).month()) + 1,
                         fromYear = parseInt(dayjs(item.from).year());
 
@@ -248,6 +292,7 @@ export default {
                         return item
                     }
                 });
+                this.setDataAndPages(data)
             }
         },
         sendExcel() {
@@ -267,7 +312,8 @@ export default {
             if(confirm('Datensatz (ID: ' + item.id + ') wirklich löschen?')) {
                 Inertia.delete(route('caravanDates.destroy', item), {
                     onSuccess: (resp) => {
-                        this.caravanDates = this.caravanDates.filter(i => i !== item)
+                        let data = this.caravanDates.filter(i => i !== item)
+                        this.setDataAndPages(data)
                     }
                 })
             }

@@ -3,7 +3,7 @@
         <button
             :class="btnCss"
             class="rounded"
-        ><slot /></button>
+        ><i v-if="icon" :class="icon"></i><slot /></button>
     </div>
 </template>
 
@@ -13,6 +13,7 @@ export default {
     props: {
         css: String,
         btnCss: String,
+        icon: String,
     }
 }
 </script>

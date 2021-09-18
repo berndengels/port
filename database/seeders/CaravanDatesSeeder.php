@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Schema;
 
 class CaravanDatesSeeder extends Seeder
 {
+    private $count = 1500;
     /**
      * Run the database seeds.
      *
@@ -18,7 +19,7 @@ class CaravanDatesSeeder extends Seeder
         Schema::disableForeignKeyConstraints();
         CaravanDates::truncate();
         CaravanDates::factory()
-            ->count(500)
+            ->count($this->count)
             ->create()
         ;
     }

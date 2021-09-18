@@ -22,6 +22,7 @@ class CaravanFactory extends Factory
     public function definition()
     {
         return [
+            'country_id' => 55,
             'carnumber' => $this->generateCarnumber(),
             'carlength' => rand(6, 12),
             'email' => $this->faker->unique()->safeEmail(),

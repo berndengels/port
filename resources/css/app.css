@@ -84,6 +84,10 @@ tr td:last-child { border-bottom-right-radius: 5px; }
     background-color: #6b7280;
     border: none;
 }
+.btn-reset {
+     padding: 0.5rem 0.8rem;
+ }
+
 .btn-save {
     color: #fff;
     background-color: #2563eb;

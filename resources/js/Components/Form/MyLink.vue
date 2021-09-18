@@ -2,7 +2,7 @@
     <div class="btn-wrapper md:flex md:items-center" :class="classes">
         <a v-if="noInertia" :href="href" class="rounded btn" :class="ctrClass" :title="title" :target="_blank">
             <i v-if="icon" :class="icon"></i>
-            <slot />
+            <span><slot /></span>
         </a>
         <NavLink v-if="role === 'button' && !noInertia" class="rounded btn" :class="ctrClass" :title="title">
             <i v-if="icon" :class="icon"></i>

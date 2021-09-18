@@ -9,11 +9,23 @@
                   :options="data"
                   @selectedCaravan="onSelectCaravan"
             />
-            <Button @click="reset" css="inline w-1/6 ml-3" btnCss="btn btn-second">Reset</Button>
+            <Button @click="reset" css="inline w-1/6 ml-3"
+                    btnCss="btn btn-second"
+                    icon="fas fa-undo-alt"
+            >Reset</Button>
         </MyForm>
 
         <div v-if="caravans.length > 0">
-            <h5>{{ count }} Einträge</h5>
+            <h5>{{ total }} Einträge</h5>
+            <VueTailwindPagination
+                v-if="total > perPage"
+                :current="currentPage"
+                :total="total"
+                :per-page="perPage"
+                @page-changed="onPageClick"
+                text-before-input="gehe zu Seite"
+                text-after-input="Los"
+            />
             <table class="table w-full">
                 <tr>
                     <th>Kennzeichen</th>
@@ -39,7 +51,6 @@
                     </td>
                 </tr>
             </table>
-            <!--Pagination class="mt-6" :links="data.links" /-->
         </div>
         <h3 v-else>Keine Daten vorhanden</h3>
     </DefaultLayout>
@@ -52,30 +63,35 @@ import NavLink from "../../Jetstream/NavLink";
 import DefaultLayout from "../../Layouts/DefaultLayout";
 import SelectFilter from "../../Components/Form/SelectFilter";
 import MyForm from "../../Components/Form/MyForm";
-import Pagination from "../../Components/Pagination";
 import MyLink from "../../Components/Form/MyLink";
 import MyString from "../../Mixins/MyString";
+import MyPagination from "../../Mixins/MyPagination";
+import '@ocrv/vue-tailwind-pagination/styles'
+import VueTailwindPagination from '@ocrv/vue-tailwind-pagination'
 
 export default {
     name: "index",
     components: {
         MyLink,
         MyString,
-        Pagination,
+        VueTailwindPagination,
         MyForm,
         SelectFilter,
         DefaultLayout,
         NavLink,
         Button,
     },
-    mixins: [MyString],
+    mixins: [MyString, MyPagination],
     props: {
         data: Object,
         create_url: String,
     },
     data() {
         return {
-            caravans: this.data ?? [],
+            currentPage: 1,
+            perPage: 20,
+            total: this.data.length,
+            caravans: [],
             selectedCaravan: null,
             filter: this.$inertia.form({
                 caravan: null,
@@ -85,12 +101,18 @@ export default {
     computed: {
         count() {
             return this.caravans.length
-        }
+        },
+    },
+    created() {
+        this.caravans = this.chunks(this.data, this.perPage)[this.currentPage - 1]
     },
     methods: {
-        reset() {
-            this.caravans = this.data
-            this.filter.reset()
+        onPageClick(currentPage){
+            this.currentPage = currentPage
+            let arr = this.chunks(this.data, this.perPage)
+            if(this.currentPage <= arr.length) {
+                this.caravans = arr[this.currentPage - 1]
+            }
         },
         onSelectCaravan(id) {
             this.selectedCaravan = ("" !== id) ? parseInt(id) : null;
@@ -101,6 +123,11 @@ export default {
                     }
                 });
             }
+        },
+        reset() {
+            this.filter.reset()
+            this.currentPage = 0
+            this.caravans = this.chunks(this.data, this.perPage)[this.currentPage]
         },
         remove(item) {
             if(confirm('Datensatz (ID: ' + item.id + ') wirklich löschen?')) {

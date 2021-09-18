@@ -21,6 +21,12 @@
         }
     }
     .btn {
+        padding: 0.4rem 1.0rem;
+        &.btn-reset {
+            padding: 2.0rem 1.0rem !important;
+            min-height: 4.0rem !important;
+            color: red;
+        }
         span {
             display: none;
             @include media('>tablet') {
@@ -43,5 +49,16 @@
             }
             background-color: #c00;
         }
+    }
+}
+i {
+    &.fas {
+        margin-right: 0.2rem;
+        &.fa-shipping-fast {
+            margin-right: 0.5rem;
+        }
+    }
+    &.far {
+        margin-right: 0.2rem;
     }
 }
