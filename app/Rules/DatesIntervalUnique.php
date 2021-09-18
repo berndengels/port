@@ -67,6 +67,6 @@ SQL;
             return "<li>$carnumber: $from bis $until</li>";
         })->toArray();
         $msg = implode('', $msg);
-        return "Es existiert schon ein Eintrag, der in diesen Zeitraum fällt: <br><ul>$msg</ul>";
+        return "Es existieren schon ein Einträge für diesen Zeitraum: <br><ul>$msg</ul>";
     }
 }
