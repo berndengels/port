@@ -1,4 +1,5 @@
 <template>
+
     <DefaultLayout fullscreen="true">
         <div class="flex-container">
             <div class="flex-item">
@@ -17,6 +18,7 @@
 
 <script>
     import DefaultLayout from "../Layouts/DefaultLayout";
+
     var isBetween = require('dayjs/plugin/isBetween')
     dayjs.extend(isBetween)
 
@@ -37,7 +39,7 @@
             countCurrentCaravans() {
                 return this.currentCaravans.length
             }
-        }
+        },
     }
 </script>
 

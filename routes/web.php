@@ -6,6 +6,7 @@ use App\Http\Controllers\CaravanController;
 use App\Http\Controllers\CaravanDatesController;
 use App\Http\Controllers\PriceController;
 use App\Http\Controllers\CarLicensePlateController;
+use App\Http\Controllers\MapController;
 /*
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');
@@ -27,4 +28,5 @@ Route::group([
     Route::get('caravan/price/pdf/{from?}', [PriceController::class, 'pdf'])->name('caravan.price.pdf');
 
     Route::get('car/info/{caravan}', [CarLicensePlateController::class, 'info'])->name('car.info');
+    Route::get('map/nautic', [MapController::class, 'nautic'])->name('map.nautic');
 });

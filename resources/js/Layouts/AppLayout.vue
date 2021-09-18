@@ -32,6 +32,13 @@
                                         icon="fas fa-concierge-bell" ctrClass="btn" title="Caravan Rezeption">
                                     Caravan Rezeption
                                 </MyLink>
+                                <MyLink
+                                        icon="fas fa-map-marked-alt"
+                                        :href="route('map.nautic')"
+                                        :active="route().current('map.nautic')"
+                                        ctrClass="btn" title="See-Karte">
+                                    Map
+                                </MyLink>
                             </div>
                         </div>
 
