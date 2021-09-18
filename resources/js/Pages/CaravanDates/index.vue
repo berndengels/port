@@ -49,6 +49,7 @@
                         css="inline w-1/6 ml-3"
                         btnCss="btn btn-second btn-reset"
                         icon="fas fa-undo-alt"
+                        title="Alle Filter zurücksetzen"
                 >Reset</Button>
             </MyForm>
         </div>
