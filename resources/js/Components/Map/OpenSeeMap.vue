@@ -5,7 +5,6 @@
 <script>
 require("leaflet/dist/leaflet")
 require("leaflet-providers")
-//import L from "leaflet-providers"
 
 export default {
     name: "OpenSeeMap",

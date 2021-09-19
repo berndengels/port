@@ -4,7 +4,7 @@
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{title}}</h2>
         </template>
 
-        <div v-if="fullscreen" class="w-full min-h-screen mt-0">
+        <div v-if="fullscreen" class="w-full h-full min-h-screen mt-0 p-0">
             <slot></slot>
         </div>
         <div v-else class="py-3 min-h-screen mt-0">

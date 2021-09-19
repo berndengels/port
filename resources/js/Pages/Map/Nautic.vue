@@ -1,5 +1,5 @@
 <template>
-    <DefaultLayout title="Seekarte">
+    <DefaultLayout fullscreen="true">
         <!--Navionics
             id="map"
             css="h-full w-full map"
@@ -9,7 +9,7 @@
         /-->
         <OpenSeeMap
             id="map"
-            css="map"
+            css="w-full h-full min-h-screen"
             :lat="lat"
             :lng="lng"
             :zoom="zoom"
