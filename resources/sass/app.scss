@@ -3,6 +3,7 @@
 @import '~@fortawesome/fontawesome-free/scss/solid';
 @import '~@fortawesome/fontawesome-free/scss/brands';
 @import "~include-media";
+@import "~leaflet/dist/leaflet.css";
 
 .tooltip{
     visibility: hidden;
@@ -61,4 +62,15 @@ i {
     &.far {
         margin-right: 0.2rem;
     }
+}
+.map {
+    display: block;
+    float: left;
+    clear: both;
+    width: 100%;
+    height: 400px;
+    min-width: 100%;
+    //min-height: 20rem;
+    background-color: #eee;
+    border: 1px solid #ccc;
 }

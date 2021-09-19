@@ -1,6 +1,9 @@
 {
     "/js/app.js": "/js/app.js",
+    "/js/leaflet.js": "/js/leaflet.js",
+    "/js/leaflet-providers.js": "/js/leaflet-providers.js",
     "/css/app.css": "/css/app.css",
+    "/css/leaflet.css": "/css/leaflet.css",
     "/css/pdf.css": "/css/pdf.css",
     "/webfonts/fa-brands-400.eot": "/webfonts/fa-brands-400.eot",
     "/webfonts/fa-brands-400.svg": "/webfonts/fa-brands-400.svg",

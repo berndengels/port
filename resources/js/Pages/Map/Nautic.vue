@@ -1,48 +1,40 @@
 <template>
     <DefaultLayout title="Seekarte">
-        <div class="h-full w-full" id="map"></div>
+        <!--Navionics
+            id="map"
+            css="h-full w-full map"
+            :lat="lat"
+            :lng="lng"
+            :access-token="token"
+        /-->
+        <OpenSeeMap
+            id="map"
+            css="map"
+            :lat="lat"
+            :lng="lng"
+            :zoom="zoom"
+        />
     </DefaultLayout>
 </template>
 
 <script>
 import DefaultLayout from "../../Layouts/DefaultLayout";
+import Navionics from "../../Components/Map/Navionics";
+import OpenSeeMap from "../../Components/Map/OpenSeeMap";
 
 export default {
     name: "Nautic",
-    components: {DefaultLayout},
+    components: {OpenSeeMap, Navionics, DefaultLayout},
     data() {
         return {
-            webapi: null,
-            lat: 54.025155,
-            lng: 13.913493,
+            lat: 54.026379,
+            lng: 13.910093,
+            zoom: 14,
             token: process.env.MIX_NAVIONICS_TOKEN,
-        }
-    },
-    mounted() {
-        this.showMap()
-    },
-    methods: {
-        showMap() {
-            this.webapi = new JNC.Views.BoatingNavionicsMap({
-                tagId: '#map',
-                center: [  this.lat, this.lng ],
-                navKey: this.token
-            });
         }
     }
 }
 </script>
 
 <style scoped>
-#map {
-    display: block;
-    float: left;
-    clear: both;
-    width: 100%;
-    height: 100%;
-    min-width: 100%;
-    min-height: 20rem;
-    background-color: #eee;
-    border: 1px solid #ccc;
-}
 </style>
