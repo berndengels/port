@@ -6,13 +6,14 @@ nav {
     background-color: #fff;
     min-height: 75px;
 }
-
 main {
+}
+.bg-main {
     background-image: url(/img/nebel_steg.jpg);
     background-repeat: no-repeat;
     background-size: cover;
-    margin-top: -0.8rem;
     background-position: 0 -100px;
+    margin-top: -0.8rem;
 }
 .flex-container {
     margin-top: 1.0rem;
@@ -114,5 +115,4 @@ tr td:last-child { border-bottom-right-radius: 5px; }
     background-color: #e53e3e;
 }
 .autocomplete {
-
 }

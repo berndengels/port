@@ -1,7 +1,7 @@
 <template>
 
-    <DefaultLayout fullscreen="true">
-        <div class="flex-container">
+    <DefaultLayout fullscreen="true" main-css="bg-main">
+        <div v-if="$page.props.auth.user" class="flex-container">
             <div class="flex-item">
                 <h5 v-if="0 === countCurrentCaravans">zur Zeit sind keine Wohnmobile hier</h5>
                 <h5 v-else-if="1 === countCurrentCaravans">zur Zeit ist 1 Wohnmobil hier</h5>
@@ -44,10 +44,10 @@
 </script>
 
 <style scoped>
-    ul {
-        list-style: none;
-    }
-    li {
-        list-style: none;
-    }
+ul {
+    list-style: none;
+}
+li {
+    list-style: none;
+}
 </style>

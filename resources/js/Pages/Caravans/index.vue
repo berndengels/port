@@ -19,13 +19,14 @@
         <div v-if="caravans.length > 0">
             <h5>{{ total }} Einträge</h5>
             <VueTailwindPagination
+                class="paginator"
                 v-if="total > perPage"
                 :current="currentPage"
                 :total="total"
                 :per-page="perPage"
-                @page-changed="onPageClick"
                 text-before-input="gehe zu Seite"
                 text-after-input="Los"
+                @page-changed="onPageClick"
             />
             <table class="table w-full">
                 <tr>

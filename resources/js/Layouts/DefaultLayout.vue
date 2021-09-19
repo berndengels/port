@@ -1,5 +1,5 @@
 <template>
-    <AppLayout :title="title">
+    <AppLayout :title="title" :main-css="mainCss">
         <template #header v-if="title">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{title}}</h2>
         </template>
@@ -22,7 +22,7 @@ import AppLayout from "./AppLayout";
 export default {
     name: "DefaultLayout",
     components: {AppLayout},
-    props: ['title','fullscreen'],
+    props: ['title','fullscreen','mainCss'],
 }
 </script>
 

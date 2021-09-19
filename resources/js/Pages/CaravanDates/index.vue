@@ -55,6 +55,7 @@
         </div>
         <h5>{{ total }} Einträge</h5>
         <VueTailwindPagination
+            class="paginator"
             v-if="total > perPage"
             :current="currentPage"
             :total="total"
