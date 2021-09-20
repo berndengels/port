@@ -223,14 +223,14 @@ export default {
             }
         },
         searchDublicates() {
-            let d = [],k,item, items=this.$page.props.caravan.dates.list;
+            let d = [],item, items = this.$page.props.caravan.dates.list;
             for(item of items) {
                 items.forEach(i => {
                     if( item.id !== i.id && item.caravan_id === i.caravan_id
                         &&
-                        (dayjs(item.from).isBetween(i.from, i.until, null, [])
+                        (dayjs(item.from).isBetween(i.from, i.until, null, '[)')
                             ||
-                            dayjs(item.until).isBetween(i.from, i.until, null, [])
+                            dayjs(item.until).isBetween(i.from, i.until, null, '(]')
                         )
                     ) {
                         if(d.indexOf(i.carnumber) === -1) {
@@ -242,13 +242,14 @@ export default {
             return d
         },
         reset() {
+            this.frmFilter.reset()
             this.selectedYear = null
             this.selectedMonth = null
             this.frmFilter.dublicate = null
             this.selectedCaravan = null
             this.currentPage = 1
             this.caravanDates = this.chunks(this.$page.props.caravan.dates.list, this.perPage)[this.currentPage - 1]
-            this.frmFilter.reset()
+            this.paginated = this.caravanDates
         },
         onSelectCaravan(id) {
             this.selectedCaravan = ("" !== id) ? parseInt(id) : null;
