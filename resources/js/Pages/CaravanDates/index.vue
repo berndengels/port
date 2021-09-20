@@ -1,104 +1,106 @@
 <template>
-    <DefaultLayout title="Wohnwagen Rezeption">
-        <div class="w-full clear-both">
-            <div class="float-left">
-                <MyLink :href="create_url"
-                        icon="far fa-plus-square"
-                        ctrClass="ml-2 my-2 no-hide-text"
-                        title="neue Caravan Ankunft eintragen">
-                    Neueintrag
-                </MyLink>
+    <AdminLayout title="Wohnwagen Rezeption">
+        <template #main>
+            <div class="w-full clear-both">
+                <div class="float-left">
+                    <MyLink :href="create_url"
+                            icon="far fa-plus-square"
+                            ctrClass="ml-2 my-2 no-hide-text"
+                            title="neue Caravan Ankunft eintragen">
+                        Neueintrag
+                    </MyLink>
+                </div>
+                <div v-if="caravanDates.length > 0" class="float-right">
+                    <MyLink :href="'/caravan/price/excel/' + currentFrom"
+                            icon="far fa-file-excel"
+                            ctrClass="ml-2 my-2 no-hide-text"
+                            no-inertia="true"
+                            target="_blank"
+                            title="neue Caravan Ankunft eintragen">
+                        Excel Download
+                    </MyLink>
+                    <MyForm v-if="caravanDates.length > 0" :data="frmSendExcel" css="flex-inline" @submit.prevent>
+                        <Input type="email" name="email" v-model="frmSendExcel.email" required="true" placeholder="Email-Adresse" />
+                        <Button @click="sendExcel" btnCss="btn btn-second" icon="fas fa-shipping-fast">Sende Excel</Button>
+                    </MyForm>
+                </div>
             </div>
-            <div v-if="caravanDates.length > 0" class="float-right">
-                <MyLink :href="'/caravan/price/excel/' + currentFrom"
-                        icon="far fa-file-excel"
-                        ctrClass="ml-2 my-2 no-hide-text"
-                        no-inertia="true"
-                        target="_blank"
-                        title="neue Caravan Ankunft eintragen">
-                    Excel Download
-                </MyLink>
-                <MyForm v-if="caravanDates.length > 0" :data="frmSendExcel" css="flex-inline" @submit.prevent>
-                    <Input type="email" name="email" v-model="frmSendExcel.email" required="true" placeholder="Email-Adresse" />
-                    <Button @click="sendExcel" btnCss="btn btn-second" icon="fas fa-shipping-fast">Sende Excel</Button>
+            <div class="w-full clear-both">
+                <MyForm :data="frmFilter" css="flex-inline" @submit.prevent>
+                    <SelectFilter name="caravan" label="Kennzeichen" keyName="id" field="carnumber"
+                                  :withEmpty="true"
+                                  :options="caravans"
+                                  @selectedCaravan="onSelectCaravan"
+                    />
+                    <SelectFilter name="dublicate" label="Dublikate"
+                                  v-if="dublicates.length > 0"
+                                  :withEmpty="true"
+                                  :options="dublicates"
+                                  @selectedDublicate="onSelectDublicate"
+                    />
+                    <SelectYear v-if="years && years.length > 0" name="year" label="Jahr" :options="years" :default="selectedYear"
+                                @selectYear="onSelectYear"
+                    />
+                    <SelectMonth v-if="selectedYear && months !== undefined && months.length > 0" name="month" label="Monat" :options="months"
+                                 @selectMonth="onSelectMonth"
+                                 css="ml-3"
+                    />
+                    <Button v-if="caravans.length > 0 || years.length > 0 || months !== undefined"
+                            @click="reset"
+                            css="inline w-1/6 ml-3"
+                            btnCss="btn btn-second btn-reset"
+                            icon="fas fa-undo-alt"
+                            title="Alle Filter zurücksetzen"
+                    >Reset</Button>
                 </MyForm>
             </div>
-        </div>
-        <div class="w-full clear-both">
-            <MyForm :data="frmFilter" css="flex-inline" @submit.prevent>
-                <SelectFilter name="caravan" label="Kennzeichen" keyName="id" field="carnumber"
-                              :withEmpty="true"
-                              :options="caravans"
-                              @selectedCaravan="onSelectCaravan"
-                />
-                <SelectFilter name="dublicate" label="Dublikate"
-                              v-if="dublicates.length > 0"
-                              :withEmpty="true"
-                              :options="dublicates"
-                              @selectedDublicate="onSelectDublicate"
-                />
-                <SelectYear v-if="years && years.length > 0" name="year" label="Jahr" :options="years" :default="selectedYear"
-                            @selectYear="onSelectYear"
-                />
-                <SelectMonth v-if="selectedYear && months !== undefined && months.length > 0" name="month" label="Monat" :options="months"
-                             @selectMonth="onSelectMonth"
-                             css="ml-3"
-                />
-                <Button v-if="caravans.length > 0 || years.length > 0 || months !== undefined"
-                        @click="reset"
-                        css="inline w-1/6 ml-3"
-                        btnCss="btn btn-second btn-reset"
-                        icon="fas fa-undo-alt"
-                        title="Alle Filter zurücksetzen"
-                >Reset</Button>
-            </MyForm>
-        </div>
-        <h5>{{ total }} Einträge</h5>
-        <VueTailwindPagination
-            class="paginator"
-            v-if="total > perPage"
-            :current="currentPage"
-            :total="total"
-            :per-page="perPage"
-            @page-changed="onPageClick"
-            text-before-input="gehe zu Seite"
-            text-after-input="Los"
-        />
-        <table v-if="caravanDates.length > 0" class="table w-full">
-            <tr>
-                <th>Kennzeichen</th>
-                <th>Länge</th>
-                <th>Von</th>
-                <th>Bis</th>
-                <th>Tage</th>
-                <th>Preis €</th>
-                <th colspan="2"></th>
-            </tr>
-            <tr v-for="item in paginated" :key="item.id">
-                <td><NavLink :href="item.show_url" class="carnumber">{{ item.carnumber }}</NavLink></td>
-                <td>{{ item.carlength }} m</td>
-                <td>{{ formatDate(item.from) }}</td>
-                <td>{{ formatDate(item.until) }}</td>
-                <td>{{ item.days }}</td>
-                <td>{{ item.price }}</td>
-                <td>
-                    <MyLink :href="route('caravanDates.edit', item)" icon="fas fa-edit" ctrClass="btn" title="Bearbeiten">
-                        Edit
-                    </MyLink>
-                </td>
-                <td>
-                    <MyLink role="button" @click="remove(item)" icon="fas fa-trash-alt" ctrClass="btn-red" title="Löschen">
-                        Löschen
-                    </MyLink>
-                </td>
-            </tr>
-            <tr>
-                <th class="text-red-500">Summe Einnahmen</th>
-                <th colspan="8" class="text-left text-red-500">{{ priceTotel }} €</th>
-            </tr>
-        </table>
-        <h3 v-else>Keine Daten vorhanden</h3>
-    </DefaultLayout>
+            <h5>{{ total }} Einträge</h5>
+            <VueTailwindPagination
+                class="paginator"
+                v-if="total > perPage"
+                :current="currentPage"
+                :total="total"
+                :per-page="perPage"
+                @page-changed="onPageClick"
+                text-before-input="gehe zu Seite"
+                text-after-input="Los"
+            />
+            <table v-if="caravanDates.length > 0" class="table w-full">
+                <tr>
+                    <th>Kennzeichen</th>
+                    <th>Länge</th>
+                    <th>Von</th>
+                    <th>Bis</th>
+                    <th>Tage</th>
+                    <th>Preis €</th>
+                    <th colspan="2"></th>
+                </tr>
+                <tr v-for="item in paginated" :key="item.id">
+                    <td><NavLink :href="item.show_url" class="carnumber">{{ item.carnumber }}</NavLink></td>
+                    <td>{{ item.carlength }} m</td>
+                    <td>{{ formatDate(item.from) }}</td>
+                    <td>{{ formatDate(item.until) }}</td>
+                    <td>{{ item.days }}</td>
+                    <td>{{ item.price }}</td>
+                    <td>
+                        <MyLink :href="route('caravanDates.edit', {caravanDate: item, frmFilter: frmFilter})" icon="fas fa-edit" ctrClass="btn" title="Bearbeiten">
+                            Edit
+                        </MyLink>
+                    </td>
+                    <td>
+                        <MyLink role="button" @click="remove(item)" icon="fas fa-trash-alt" ctrClass="btn-red" title="Löschen">
+                            Löschen
+                        </MyLink>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="text-red-500">Summe Einnahmen</th>
+                    <th colspan="8" class="text-left text-red-500">{{ priceTotel }} €</th>
+                </tr>
+            </table>
+            <h3 v-else>Keine Daten vorhanden</h3>
+        </template>
+    </AdminLayout>
 </template>
 
 <script>
@@ -118,6 +120,8 @@ import axios from "axios";
 import MyPagination from "../../Mixins/MyPagination";
 import '@ocrv/vue-tailwind-pagination/styles'
 import VueTailwindPagination from '@ocrv/vue-tailwind-pagination'
+import { useForm } from '@inertiajs/inertia-vue3'
+import AdminLayout from "../../Layouts/AdminLayout";
 
 const currentYear = dayjs().year(),
     currentMonth = dayjs().month() + 1;
@@ -125,6 +129,7 @@ const currentYear = dayjs().year(),
 export default {
     name: "index",
     components: {
+        AdminLayout,
         Input,
         MyLink,
         SelectFilter,
@@ -137,12 +142,14 @@ export default {
         ResponsiveNavLink,
         VueTailwindPagination,
     },
+    remember: ['frmFilter'],
     mixins: [DateFormat, MyPagination],
     props: {
         caravans: Array,
         years: Array,
         monthsByYear: Array,
         create_url: String,
+        filter: Object,
     },
     data() {
         return {
@@ -155,13 +162,13 @@ export default {
             selectedMonth: null,
             selectedCaravan: null,
             selectedDublicate: null,
-            frmFilter: this.$inertia.form({
+            frmFilter: useForm('frmFilterCached', {
                 year: null,
                 month: null,
                 caravan: null,
                 dublicate: null,
             }),
-            frmSendExcel: this.$inertia.form({
+            frmSendExcel: Inertia.form({
                 email: null,
                 from: null,
             }),

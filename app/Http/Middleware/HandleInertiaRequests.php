@@ -43,6 +43,29 @@ class HandleInertiaRequests extends Middleware
                 'user' => auth()->user() ?? null,
                 'role'  => null,
             ],
+            'menu'  => [
+                'admin' => [
+                    'caravans'  => [
+                        'caravans.index'  => [
+                            'text'  => 'Caravans',
+                            'title' => 'Caravans',
+                            'icon'  => 'fas fa-caravan',
+                        ],
+                        'caravanDates.index'  => [
+                            'text'  => 'Caravan Rezeption',
+                            'title' => 'Caravan Rezeption',
+                            'icon'  => 'fas fa-concierge-bell',
+                        ],
+                    ],
+                    'boote' => [],
+                ],
+                'public' => [
+                    'map'   => [
+                        'nautic'    => 'map.nautic',
+                        'street'    => 'map.street',
+                    ],
+                ],
+            ],
             'caravan' => [
                 'dates' => [
                     'list' => function () {

@@ -1,6 +1,4 @@
 window._ = require('lodash');
-//window.moment = require('moment');
-//window.moment.locale('de');
 window.dayjs = require('dayjs');
 import 'dayjs/locale/de'
 window.dayjs.locale('de');

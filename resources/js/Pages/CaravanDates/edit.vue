@@ -63,13 +63,14 @@ export default {
         Input,
         Autocomplete,
     },
-    props: ['caravans','caravanDate','countries'],
+    props: ['caravans','caravanDate','countries','frmFilter'],
     mixins: [DateFormat],
-
+    created() {
+        console.info(this.frmFilter)
+    },
     data() {
         return {
             form: this.$inertia.form({
-//                _method: 'PUT',
                 id: this.caravanDate.id,
                 caravan_id: this.caravanDate.caravan_id,
                 country_id: this.caravanDate.caravan.country_id ?? 55,
@@ -87,7 +88,6 @@ export default {
             diffPrice: 0,
         }
     },
-
     methods: {
         update() {
             try {

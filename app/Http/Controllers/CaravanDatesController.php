@@ -45,7 +45,7 @@ class CaravanDatesController extends Controller
      *
      * @return Response
      */
-    public function index()
+    public function index(Request $request)
     {
         return Inertia::render('CaravanDates/index', [
             'years'         => $this->years,
@@ -119,7 +119,7 @@ class CaravanDatesController extends Controller
         $countries = $this->countries;
         $caravans = $this->caravans;
         $caravanDate->load('caravan');
-        return Inertia::render('CaravanDates/edit', compact('caravanDate','caravans','countries'));
+        return Inertia::render('CaravanDates/edit', compact('caravanDate','caravans', 'countries'));
     }
 
     /**

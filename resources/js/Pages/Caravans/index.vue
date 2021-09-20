@@ -1,61 +1,63 @@
 <template>
-    <DefaultLayout title="Wohnwagen">
-        <MyLink :href="create_url" icon="far fa-plus-square" ctrClass="ml-2 my-2 no-hide-text" title="neuen Caravan eintragen">
-            Neueintrag
-        </MyLink>
+    <AdminLayout title="Wohnwagen">
+        <template #main>
+            <MyLink :href="create_url" icon="far fa-plus-square" ctrClass="ml-2 my-2 no-hide-text" title="neuen Caravan eintragen">
+                Neueintrag
+            </MyLink>
 
-        <MyForm v-if="data.length > 0" :data="filter" css="flex-inline" @submit.prevent>
-            <SelectFilter name="caravan" label="Kennzeichen" keyName="id" field="carnumber"
-                  :options="data"
-                  @selectedCaravan="onSelectCaravan"
-            />
-            <Button @click="reset" css="inline w-1/6 ml-3"
-                    btnCss="btn btn-second"
-                    icon="fas fa-undo-alt"
-                    title="Alle Filter zurücksetzen"
-            >Reset</Button>
-        </MyForm>
+            <MyForm v-if="data.length > 0" :data="filter" css="flex-inline" @submit.prevent>
+                <SelectFilter name="caravan" label="Kennzeichen" keyName="id" field="carnumber"
+                              :options="data"
+                              @selectedCaravan="onSelectCaravan"
+                />
+                <Button @click="reset" css="inline w-1/6 ml-3"
+                        btnCss="btn btn-second"
+                        icon="fas fa-undo-alt"
+                        title="Alle Filter zurücksetzen"
+                >Reset</Button>
+            </MyForm>
 
-        <div v-if="caravans.length > 0">
-            <h5>{{ total }} Einträge</h5>
-            <VueTailwindPagination
-                class="paginator"
-                v-if="total > perPage"
-                :current="currentPage"
-                :total="total"
-                :per-page="perPage"
-                text-before-input="gehe zu Seite"
-                text-after-input="Los"
-                @page-changed="onPageClick"
-            />
-            <table class="table w-full">
-                <tr>
-                    <th>Kennzeichen</th>
-                    <th>Länge</th>
-                    <th>Email</th>
-                    <th colspan="2"><br></th>
-                </tr>
-                <tr v-for="item in caravans" :key="item.id">
-                    <td class="has-tooltip">
-                        <span  @dblclick="ondblclick(item)" class="carnumber cursor-pointer">{{ item.carnumber }}</span>
-                    </td>
-                    <td>{{ item.carlength }} m</td>
-                    <td><a v-if="item.email" :href="'mailto:' + item.email" target="_blank">{{ item.email }}</a><br v-else></td>
-                    <td>
-                        <MyLink :href="route('caravans.edit', item)" icon="fas fa-edit" ctrClass="btn" title="Bearbeiten">
-                            Edit
-                        </MyLink>
-                    </td>
-                    <td>
-                        <MyLink role="button" @click="remove(item)" icon="fas fa-trash-alt" ctrClass="btn-red" title="Löschen">
-                            Löschen
-                        </MyLink>
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <h3 v-else>Keine Daten vorhanden</h3>
-    </DefaultLayout>
+            <div v-if="caravans.length > 0">
+                <h5>{{ total }} Einträge</h5>
+                <VueTailwindPagination
+                    class="paginator"
+                    v-if="total > perPage"
+                    :current="currentPage"
+                    :total="total"
+                    :per-page="perPage"
+                    text-before-input="gehe zu Seite"
+                    text-after-input="Los"
+                    @page-changed="onPageClick"
+                />
+                <table class="table w-full">
+                    <tr>
+                        <th>Kennzeichen</th>
+                        <th class="hidden md:table-cell">Länge</th>
+                        <th class="hidden md:table-cell">Email</th>
+                        <th colspan="2"><br></th>
+                    </tr>
+                    <tr v-for="item in caravans" :key="item.id">
+                        <td class="has-tooltip">
+                            <span  @dblclick="ondblclick(item)" class="carnumber cursor-pointer">{{ item.carnumber }}</span>
+                        </td>
+                        <td class="hidden md:table-cell">{{ item.carlength }} m</td>
+                        <td class="hidden md:table-cell"><a v-if="item.email" :href="'mailto:' + item.email" target="_blank">{{ item.email }}</a><br v-else></td>
+                        <td>
+                            <MyLink :href="route('caravans.edit', item)" icon="fas fa-edit" ctrClass="btn" title="Bearbeiten">
+                                Edit
+                            </MyLink>
+                        </td>
+                        <td>
+                            <MyLink role="button" @click="remove(item)" icon="fas fa-trash-alt" ctrClass="btn-red" title="Löschen">
+                                Löschen
+                            </MyLink>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <h3 v-else>Keine Daten vorhanden</h3>
+        </template>
+    </AdminLayout>
 </template>
 
 <script>
@@ -70,10 +72,12 @@ import MyString from "../../Mixins/MyString";
 import MyPagination from "../../Mixins/MyPagination";
 import '@ocrv/vue-tailwind-pagination/styles'
 import VueTailwindPagination from '@ocrv/vue-tailwind-pagination'
+import AdminLayout from "../../Layouts/AdminLayout";
 
 export default {
     name: "index",
     components: {
+        AdminLayout,
         MyLink,
         MyString,
         VueTailwindPagination,
