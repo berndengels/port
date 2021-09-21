@@ -74,12 +74,8 @@ i {
     display: block;
     float: left;
     clear: both;
-    width: 100%;
-    height: 100%;
-    min-height: 100%;
-    //    height: 400px;
-    min-width: 100%;
-    bottom: 0;
+    width: 400px;
+    height: 400px;
     //    min-height: 20rem;
     background-color: #eee;
     border: 1px solid #ccc;
@@ -232,15 +228,14 @@ i {
         }
         .sidenav__list {
             padding: 0;
-            margin-top: 85px;
+            margin-top: 45px;
             list-style-type: none;
         }
         .sidenav__list-item {
-            padding: 20px 20px 20px 40px;
+            padding: 5px 10px 10px 10px;
             color: #ddd;
         }
         .sidenav__list-item:hover {
-            background-color: rgba(255, 255, 255, 0.2);
             cursor: pointer;
         }
 
@@ -310,6 +305,16 @@ i {
     @include media('<tablet') {
         li {
             margin-right: 0.2rem;
+        }
+    }
+}
+.left-menu {
+    margin-top: 0;
+    padding-top: 0;
+    li {
+        a {
+            display: inline-block;
+            width: 100%;
         }
     }
 }

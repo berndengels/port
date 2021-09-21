@@ -7,6 +7,7 @@ use App\Http\Controllers\PriceController;
 use App\Http\Controllers\CarLicensePlateController;
 use App\Http\Controllers\MapController;
 use App\Http\Controllers\RouteController;
+use App\Http\Controllers\DashboardController;
 
 Auth::routes();
 Route::get('/logout', function () {
@@ -14,9 +15,7 @@ Route::get('/logout', function () {
     return redirect('/');
 })->name('logout');
 
-Route::get('/', function () {
-    return view('admin.dashboard');
-})->name('dashboard');
+Route::get('/', [DashboardController::class, 'show'])->name('dashboard');
 
 Route::group([
     'middleware' => ['auth'],

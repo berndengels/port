@@ -12,18 +12,20 @@ class MenuItem extends Component
     public $name;
     public $icon;
     public $route;
+    public $class;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($name, $item = null, $icon = null, $route = null)
+    public function __construct($name, $item = null, $icon = null, $route = null, $class = null)
     {
         $this->name = $name;
         $this->item = $item;
         $this->icon = $icon;
         $this->route = $route;
+        $this->class = $class;
     }
 
     /**
@@ -38,6 +40,7 @@ class MenuItem extends Component
             'item' => $this->item,
             'icon' => $this->icon,
             'route' => $this->route,
+            'class' => $this->class,
         ]);
     }
 }

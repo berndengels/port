@@ -9,11 +9,10 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
     <!-- Styles -->
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
-    @stack('extra-styles')
+    @stack('styles')
     <!-- Scripts -->
     <script src="{{ mix('js/app.js') }}" defer></script>
-
-    @stack('extra-scripts')
+    @stack('scripts')
 </head>
 <body class="font-sans antialiased" data-root="http://webapiv2.navionics.com/dist/webapi/images">
 
@@ -27,7 +26,14 @@
             <x-header-navigation />
         </div>
         <div class="header__right">
-            Login
+            @auth()
+                <x-form method="post" name="frmLogout" action="{{ route('logout') }}">
+                    @csrf
+                    <span onclick="document.frmLogout.submit()">{{ auth()->user()->name }} Logout</span>
+                </x-form>
+            @else()
+                <a href="{{ route('login') }}">Login</a>
+            @endauth
         </div>
     </header>
 
@@ -50,16 +56,13 @@
 
 @section('inline-scripts')
     <script>
-		//        $(document).ready(function() {
 		const sideNav = document.querySelector('.sidenav');
 		function onMenuIconClick() {
 			addClass(sideNav,'active')
 		}
 		function onCloseIconClick()  {
-			alert('close');
 			removeClass(sideNav,'active')
 		}
-		//        });
     </script>
 @show
 </body>

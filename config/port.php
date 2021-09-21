@@ -8,35 +8,41 @@ return [
                 'Dashboard'   => [
                     'text'  => 'Dashboard',
                     'title' => 'Dashboard',
-                    'icon'  => 'fas fa-caravan',
+                    'icon'  => 'fas fa-home',
                     'route' => 'dashboard',
                 ],
                 'Caravans'   => [
-                    [
-                        'text'  => 'Caravans',
-                        'title' => 'Caravans',
-                        'icon'  => 'fas fa-caravan',
-                        'route' => 'caravans.index',
-                    ],
-                    [
-                        'text'  => 'Caravan Rezeption',
-                        'title' => 'Caravan Rezeption',
-                        'icon'  => 'fas fa-concierge-bell',
-                        'route' => 'caravanDates.index',
+                    'icon'  => 'fas fa-caravan',
+                    'items' => [
+                        [
+                            'text'  => 'Caravans',
+                            'title' => 'Caravans',
+                            'icon'  => 'fas fa-caravan',
+                            'route' => 'caravans.index',
+                        ],
+                        [
+                            'text'  => 'Caravan Rezeption',
+                            'title' => 'Caravan Rezeption',
+                            'icon'  => 'fas fa-concierge-bell',
+                            'route' => 'caravanDates.index',
+                        ],
                     ],
                 ],
                 'Boote'   => [
-                    [
-                        'text'  => 'Dauerlieger',
-                        'title' => 'Dauerlieger',
-                        'icon'  => 'fas fa-caravan',
-                        'route' => 'caravans.index',
-                    ],
-                    [
-                        'text'  => 'Gäste',
-                        'title' => 'Gäste',
-                        'icon'  => 'fas fa-concierge-bell',
-                        'route' => 'caravanDates.index',
+                    'icon'  => 'fas fa-ship',
+                    'items' => [
+                        [
+                            'text'  => 'Caravans',
+                            'title' => 'Caravans',
+                            'icon'  => 'fas fa-caravan',
+                            'route' => 'caravans.index',
+                        ],
+                        [
+                            'text'  => 'Caravan Rezeption',
+                            'title' => 'Caravan Rezeption',
+                            'icon'  => 'fas fa-concierge-bell',
+                            'route' => 'caravanDates.index',
+                        ],
                     ],
                 ],
             ],
@@ -66,5 +72,11 @@ return [
             'min_price_saison'      => env('CARAVAN_MIN_PRICE_SAISON', 10),
             'max_price_saison'      => env('CARAVAN_MAX_PRICE_SAISON', 15),
         ],
+    ],
+    'map'   => [
+        'lat'   => 54.026379,
+        'lng'   => 13.910093,
+        'zoom'  => 12,
+        'token' => env('MIX_NAVIONICS_TOKEN'),
     ],
 ];

@@ -1,10 +1,10 @@
-<div class="mt-5">
-    <ul class="sidenav__list">
+<div class="mt-0 p-0">
+    <ul class="sidenav__list left-menu">
         @foreach($items as $name => $item)
             @if(isset($item['route']))
-                <x-menu-item :name="$name" route="{{ $item['route'] }}" />
+                <x-menu-item :name="$name" route="{{ $item['route'] }}" icon="{{ $item['icon'] }}" class="w-1/6" />
             @else
-                <x-menu-item :name="$name" />
+                <x-menu-item :name="$name" icon="{{ $item['icon'] }}" class="w-1/6" />
             @endif
         @endforeach
     </ul>
