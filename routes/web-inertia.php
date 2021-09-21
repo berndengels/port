@@ -15,11 +15,11 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 })->name('dashboard');
 */
 Route::get('/', function () {
-    return view('admin.dashboard');
+    return Inertia::render('Dashboard');
 })->name('dashboard');
 
 Route::group([
-    'middleware' => ['auth'],
+    'middleware' => ['auth', 'verified'],
 ],function () {
     Route::resource('caravans', CaravanController::class);
     Route::resource('caravanDates', CaravanDatesController::class);

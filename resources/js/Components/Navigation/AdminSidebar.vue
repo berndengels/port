@@ -5,10 +5,10 @@
         </div>
         <ul class="sidenav__list">
             <li class="sidenav__list-item">
-                <MyLink no-inertia="true" @click="setTopMenu('caravans')">Caravans</MyLink>
+                <MyLink :no-inertia="true" @click="setTopMenu('caravans')">Caravans</MyLink>
             </li>
             <li class="sidenav__list-item">
-                <MyLink no-inertia="true" @click="setTopMenu('boote')">Boote</MyLink>
+                <MyLink :no-inertia="true" @click="setTopMenu('boote')">Boote</MyLink>
             </li>
         </ul>
     </aside>
@@ -18,6 +18,8 @@
 import MyLink from "../Form/MyLink";
 import MyCss from "../../Mixins/MyCss";
 import emitter from 'tiny-emitter/instance'
+import axios from "axios";
+import {Inertia} from "@inertiajs/inertia";
 
 export default {
     name: "AdminSidebar",
@@ -28,8 +30,17 @@ export default {
             let sideNav = document.querySelector('.sidenav');
             this.removeClass(sideNav,'active')
         },
-        setTopMenu(route) {
-            emitter.emit('menu', this.$page.props.menu.admin[route])
+        setTopMenu(routeName) {
+            axios.post(route('route.current'), {current: this.$page.props.menu.admin[routeName]})
+                .then(resp => {
+                    document.addEventListener('menu:update', (event, data) => {
+                        data = resp.data
+                        console.log(`Starting a visit to ${event.detail.visit.url}`)
+                    })
+                })
+                .catch(err=>console.error(err))
+            ;
+//            emitter.emit('menu', this.$page.props.menu.admin[routeName])
         }
     }
 }

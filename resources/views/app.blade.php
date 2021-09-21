@@ -15,7 +15,7 @@
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
         <!-- Scripts -->
         @routes
-        <script src="{{ mix('js/app.js') }}" defer></script>
+        <script src="{{ mix('js/app-inertia.js') }}" defer></script>
     </head>
     <body class="font-sans antialiased" data-root="http://webapiv2.navionics.com/dist/webapi/images">
         @inertia

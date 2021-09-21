@@ -1,7 +1,7 @@
 <template>
     <div>
         <ul v-if="menuItems">
-            <li v-for="(item,routeName) of menuItems" :key="routeName">
+            <li v-for="(item,routeName) of $page.props.currentMenu" :key="routeName">
                 <NavLink :href="route(routeName)">
                     <i v-if="item.icon" :class="item.icon"></i>
                     {{ item.text }}
@@ -14,36 +14,21 @@
 
 <script>
 import NavLink from "../../Jetstream/NavLink";
-import emitter from 'tiny-emitter/instance'
 import {Inertia} from "@inertiajs/inertia";
 
 export default {
     name: "Menu",
     components: {NavLink},
-    data() {
-        return {
-            menuItems: [],
-        }
-    },
-    created() {
-        this.initMenu()
-        console.info(this.menuItems)
+    watch: {
+        'menuItems': (newVal, oldVal) => {
+            console.info(newVal)
+        },
     },
     computed: {
-        menuData() {
-            if(this.menuItems.length > 0) {
-                Inertia.remember(this.menuItems,'menu-items')
-            }
+        menuItems() {
+            return this.$page.props.currentMenu
         }
     },
-    methods: {
-        initMenu() {
-            emitter.on('menu', (items) => {
-                this.menuItems = items
-            })
-        }
-    }
-
 }
 </script>
 

@@ -19,16 +19,15 @@
         <i class="fas fa-bars"></i>
     </div>
     <header>
-        <slot name="header"></slot>
     </header>
-    <aside>
 
+    <aside>
     </aside>
+
     <main>
-        <slot name="main"></slot>
+        @yield('main')
     </main>
     <footer>
-        <slot name="footer"></slot>
     </footer>
 </div>
 

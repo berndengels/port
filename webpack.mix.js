@@ -13,6 +13,7 @@ const mix = require('laravel-mix');
 mix
     .vue({version: 3})
     .js('resources/js/app.js', 'public/js')
+    .js('resources/js/app-inertia.js', 'public/js')
     .js('node_modules/leaflet', 'public/js')
     .js('node_modules/leaflet-providers', 'public/js')
     .postCss('resources/css/app.css', 'public/css', [

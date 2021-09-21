@@ -43,6 +43,9 @@ class HandleInertiaRequests extends Middleware
                 'user' => auth()->user() ?? null,
                 'role'  => null,
             ],
+            'currentMenu' => function() use ($request) {
+                return $request->input('current');
+            },
             'menu'  => [
                 'admin' => [
                     'caravans'  => [

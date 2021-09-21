@@ -1,5 +1,6 @@
 {
     "/js/app.js": "/js/app.js",
+    "/js/app-inertia.js": "/js/app-inertia.js",
     "/js/leaflet.js": "/js/leaflet.js",
     "/js/leaflet-providers.js": "/js/leaflet-providers.js",
     "/css/app.css": "/css/app.css",
