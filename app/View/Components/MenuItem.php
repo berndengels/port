@@ -10,15 +10,20 @@ class MenuItem extends Component
 {
     public $item;
     public $name;
+    public $icon;
+    public $route;
+
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($name, $item = null)
+    public function __construct($name, $item = null, $icon = null, $route = null)
     {
         $this->name = $name;
         $this->item = $item;
+        $this->icon = $icon;
+        $this->route = $route;
     }
 
     /**
@@ -31,6 +36,8 @@ class MenuItem extends Component
         return view('components.menu-item', [
             'name' => $this->name,
             'item' => $this->item,
+            'icon' => $this->icon,
+            'route' => $this->route,
         ]);
     }
 }

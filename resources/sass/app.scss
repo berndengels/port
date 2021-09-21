@@ -7,6 +7,7 @@
 @import "~include-media";
 @import "~leaflet/dist/leaflet.css";
 @import 'variables';
+@tailwind utilities;
 
 .tooltip{
     visibility: hidden;
@@ -16,7 +17,6 @@
     visibility: visible;
     z-index: 100;
 }
-@tailwind utilities;
 
 .btn-wrapper {
     &.bg-red {
@@ -24,35 +24,39 @@
             background-color: #c00;
         }
     }
-    .btn {
-        padding: 0.4rem 1.0rem;
-        &.btn-reset {
-            padding: 2.0rem 1.0rem !important;
-            min-height: 4.0rem !important;
-            color: red;
+}
+.btn {
+    cursor: pointer;
+    padding: 0.4rem 1.0rem;
+    &.inline {
+        display: inline-block;
+        clear: none;
+    }
+    &.btn-reset {
+        background-color: grey;
+        color: #fff;
+    }
+    span {
+        display: none;
+        @include media('>tablet') {
+            display: inline;
+            margin-left: 0.5rem;
         }
+    }
+    &.no-hide-text {
         span {
-            display: none;
-            @include media('>tablet') {
-                display: inline;
-                margin-left: 0.5rem;
-            }
+            display: inline;
+            margin-left: 0.5rem;
         }
-        &.no-hide-text {
-            span {
-                display: inline;
-                margin-left: 0.5rem;
-            }
+    }
+    &:hover {
+        span {
+            color: #fff;
         }
-        &:hover {
-            span {
-                color: #fff;
-            }
-            i {
-                color: #fff;
-            }
-            background-color: #c00;
+        i {
+            color: #fff;
         }
+        background-color: #c00;
     }
 }
 i {
@@ -99,7 +103,6 @@ i {
 // ower grid layout
 .grid-container {
     display: grid;
-    //    grid-template-columns: 240px 1fr;
     grid-template-columns: 0 1fr; /* Side nav is hidden on mobile */
     grid-template-rows: 50px 1fr 50px;
     grid-template-areas:
@@ -116,7 +119,7 @@ i {
         align-items: center;
         justify-content: center;
         border-radius: 10%;
-        z-index: 1;
+        z-index: 2;
         cursor: pointer;
         padding: 12px;
         background-color: #DADAE3;
@@ -129,9 +132,14 @@ i {
         background-color: $bgHeader;
         box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.75);
 
+        .header__left {
+            margin-left: 0;
+        }
         /* Make room for the menu icon on mobile */
-        .header__search {
-            margin-left: 42px;
+        @include media('<tablet') {
+            .header__left {
+                margin-left: 2.5rem;
+            }
         }
     }
     .main {
@@ -163,14 +171,6 @@ i {
                 padding: 24px;
                 box-sizing: border-box;
             }
-            /* Medium-sized screen breakpoint (tablet, 1050px) */
-            @include media('<=tablet') {
-                //@media only screen and (min-width: 65.625em) {
-                /* Break out main cards into two columns */
-                .main-cards {
-                    column-count: 2;
-                }
-            }
             /* Force varying heights to simulate dynamic content */
             .card:first-child {
                 height: 485px;
@@ -180,6 +180,14 @@ i {
             }
             .card:nth-child(3) {
                 height: 265px;
+            }
+        }
+        /* Medium-sized screen breakpoint (tablet, 1050px) */
+        @include media('<=tablet') {
+            //@media only screen and (min-width: 65.625em) {
+            /* Break out main cards into two columns */
+            .main-cards {
+                column-count: 2;
             }
         }
     }
@@ -204,7 +212,7 @@ i {
         position: fixed;
         overflow-y: auto;
         box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
-        z-index: 2; /* Needs to sit above the hamburger menu icon */
+        z-index: 2; /* Needs to set above the hamburger menu icon */
         background-color: $bgSideNav;
         transform: translateX(-245px);
         //transition: all .3s ease-in-out;
@@ -275,18 +283,48 @@ i {
         background-color: $bgSideNav;
         padding: 5px 10px;
         border-radius: 5px;
-        margin-right: 2.0rem;
+        margin-right: 0.5rem;
         line-height: 1.0rem;
         list-style: none;
-        i {
-            color: #fff;
-        }
+
         a {
             display: inline-block;
             font-size: 1.0rem;
             line-height: 1.0rem;
-            color: #fff;
             text-decoration: none;
+
+            i {
+                color: #fff;
+            }
+            span {
+                color: #fff;
+                display: inline-block;
+            }
+            @include media('<tablet') {
+                span {
+                    display: none;
+                }
+            }
+        }
+    }
+    @include media('<tablet') {
+        li {
+            margin-right: 0.2rem;
+        }
+    }
+}
+.inline-form {
+    div {
+        display: inline-block;
+        clear: none;
+        label {
+            display: inline-block;
+            clear: none;
+        }
+        input,select {
+            width: 10.0rem;
+            display: inline-block;
+            clear: none;
         }
     }
 }

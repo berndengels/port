@@ -9,20 +9,33 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
     <!-- Styles -->
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+    @stack('extra-styles')
     <!-- Scripts -->
     <script src="{{ mix('js/app.js') }}" defer></script>
+
+    @stack('extra-scripts')
 </head>
 <body class="font-sans antialiased" data-root="http://webapiv2.navionics.com/dist/webapi/images">
 
 <div class="grid-container">
-    <div class="menu-icon" @click="onClick">
+    <div class="menu-icon" onclick="onMenuIconClick()">
         <i class="fas fa-bars"></i>
     </div>
+
     <header class="header">
-        <x-header-navigation />
+        <div class="header__left">
+            <x-header-navigation />
+        </div>
+        <div class="header__right">
+            Login
+        </div>
     </header>
 
     <aside class="sidenav">
+        <div class="sidenav__close-icon" onclick="onCloseIconClick()">
+            <i class="fas fa-times"></i>
+        </div>
+
         <x-admin-main-navigation />
     </aside>
 
@@ -35,5 +48,19 @@
     </footer>
 </div>
 
+@section('inline-scripts')
+    <script>
+		//        $(document).ready(function() {
+		const sideNav = document.querySelector('.sidenav');
+		function onMenuIconClick() {
+			addClass(sideNav,'active')
+		}
+		function onCloseIconClick()  {
+			alert('close');
+			removeClass(sideNav,'active')
+		}
+		//        });
+    </script>
+@show
 </body>
 </html>

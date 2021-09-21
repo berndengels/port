@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Country;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\URL;
 use Inertia\Inertia;
 use App\Models\Caravan;
@@ -14,6 +15,9 @@ use Illuminate\Support\Facades\Redirect;
 class CaravanController extends Controller
 {
     private $countries;
+    /**
+     * @var Collection
+     */
     private $caravanOptions;
 
     public function __construct()
@@ -29,6 +33,7 @@ class CaravanController extends Controller
             ->keyBy('id')
             ->map
             ->carnumber;
+        $this->caravanOptions->prepend('Kennzeichen suchen','');
     }
 
     /**
@@ -38,15 +43,18 @@ class CaravanController extends Controller
      */
     public function index(Request $request)
     {
+        $id = $request->input('caravan');
+
         $query = Caravan::orderBy('carnumber');
-        if($request->input('caravan')) {
-            dd($request->input('caravan'));
+        if($id) {
+            $query->whereId($id);
         }
         $caravans = $query->paginate(20);
 
         return view('admin.caravans.index', [
-            'caravanOptions'    => $this->caravanOptions,
-            'data' => $caravans,
+            'caravanOptions' => $this->caravanOptions,
+            'data'  => $caravans,
+            'id'    => $id,
         ]);
     }
 

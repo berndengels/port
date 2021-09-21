@@ -6,7 +6,7 @@ return [
     'prefix' => '',
 
     /** tailwind | tailwind-2 | bootstrap-4 | bootstrap-5 */
-    'framework' => 'tailwind',
+    'framework' => 'tailwind-2',
 
     'components' => [
         'form' => [

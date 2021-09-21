@@ -2,9 +2,18 @@
 
 @section('main')
     <div>
-        <x-form method="post" name="frmFilter" action="{{ route('caravans.index') }}">
+        <x-form class="inline-form ml-5" method="get" name="frmFilter" action="{{ route('caravans.index') }}">
             @csrf
-            <x-form-select name="caravan" label="Filter" :options="$caravanOptions" @change="document.frmFilter.submit()" />
+            <x-form-select
+                    name="caravan"
+                    class="inline-block"
+                    :options="$caravanOptions"
+                    :default="$id"
+                    placeholder="Filter nach Kennzeichen"
+                    onchange="document.frmFilter.submit()"
+                    floating
+            />
+            <button class="btn btn-reset inline" onclick="document.frmFilter.caravan.value = ''">Reset</button>
         </x-form>
         {{ $data->links() }}
         <table class="table w-full">

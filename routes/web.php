@@ -31,5 +31,5 @@ Route::group([
 
     Route::get('car/info/{caravan}', [CarLicensePlateController::class, 'info'])->name('car.info');
     Route::get('map/nautic', [MapController::class, 'nautic'])->name('map.nautic');
-    Route::get('route/current/{current}', [RouteController::class, 'setCurrentMenu'])->name('route.current');
+    Route::get('route/current', [RouteController::class, 'setCurrentMenu'])->name('route.current');
 });

@@ -1,10 +1,16 @@
 <ul class="top-menu">
-    @foreach($items as $item)
-        <li>
-            @if($item['icon'])
-                <i class="{{ $item['icon'] }}"></i>
-            @endif
-            <a href="{{ route($item['route']) }}">{{ $item['text'] }}</a>
-        </li>
-    @endforeach
+    @if(!isset($items['route']) && count($items) > 0)
+        @foreach($items as $item)
+            <li title="{{ $item['text'] }}" class="ml-3">
+                <a href="{{ route($item['route']) }}">
+                    @if($item['icon'])
+                        <i class="{{ $item['icon'] }}"></i>
+                    @endif
+                    <span class="hidden md:inline-block">
+                        {{ $item['text'] }}
+                    </span>
+                </a>
+            </li>
+        @endforeach
+    @endif
 </ul>

@@ -5,6 +5,12 @@ return [
     'menu'  => [
         'admin' => [
             'items' => [
+                'Dashboard'   => [
+                    'text'  => 'Dashboard',
+                    'title' => 'Dashboard',
+                    'icon'  => 'fas fa-caravan',
+                    'route' => 'dashboard',
+                ],
                 'Caravans'   => [
                     [
                         'text'  => 'Caravans',
@@ -18,7 +24,21 @@ return [
                         'icon'  => 'fas fa-concierge-bell',
                         'route' => 'caravanDates.index',
                     ],
-                ]
+                ],
+                'Boote'   => [
+                    [
+                        'text'  => 'Dauerlieger',
+                        'title' => 'Dauerlieger',
+                        'icon'  => 'fas fa-caravan',
+                        'route' => 'caravans.index',
+                    ],
+                    [
+                        'text'  => 'Gäste',
+                        'title' => 'Gäste',
+                        'icon'  => 'fas fa-concierge-bell',
+                        'route' => 'caravanDates.index',
+                    ],
+                ],
             ],
         ],
     ],
