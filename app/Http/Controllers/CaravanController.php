@@ -30,12 +30,15 @@ class CaravanController extends Controller
      *
      * @return Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $caravans = Caravan::orderBy('carnumber')->get();
-        return Inertia::render('Caravans/index', [
-            'data'          => $caravans,
-            'create_url'    => URL::route('caravans.create'),
+        $query = Caravan::orderBy('carnumber');
+        if($request->post('caravan')) {
+            dd($request->post('caravan'));
+        }
+        $caravans = $query->get();
+        return view('admin.caravans.index', [
+            'data' => $caravans,
         ]);
     }
 
@@ -46,7 +49,7 @@ class CaravanController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Caravans/create', [
+        return view('admin.caravans.create', [
             'countries' => $this->countries,
         ]);
     }

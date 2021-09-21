@@ -1,6 +1,5 @@
 <?php
 
-use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CaravanController;
 use App\Http\Controllers\CaravanDatesController;
@@ -9,11 +8,12 @@ use App\Http\Controllers\CarLicensePlateController;
 use App\Http\Controllers\MapController;
 use App\Http\Controllers\RouteController;
 
-/*
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->name('dashboard');
-*/
+Auth::routes();
+Route::get('/logout', function () {
+    Auth::logout();
+    return redirect('/');
+})->name('logout');
+
 Route::get('/', function () {
     return view('admin.dashboard');
 })->name('dashboard');
