@@ -1,16 +1,16 @@
 @extends('layouts.public')
 
 @section('main')
-<div class="card">
-    <div class="card-header">{{ __('Login') }}</div>
+<div class="main-cards">
+    <div class="main-header">{{ __('Login') }}</div>
 
-    <div class="card-body">
+    <div class="card">
         <x-form method="POST" action="{{ route('login') }}">
             @csrf
-            <x-input name="email" type="email" label="Email" required />
-            <x-input name="password" type="password" label="Passwort" required />
-            <x-checkbox name="remember" type="checkbox" label="Logindaten merken" required />
-            <x-submit value="submit" />
+            <x-form-input name="email" type="email" label="Email" required />
+            <x-form-input name="password" type="password" label="Passwort" required />
+            <x-form-checkbox name="remember" type="checkbox" label="Logindaten merken" required />
+            <x-form-submit value="submit" />
             <div>
                 @if (Route::has('password.request'))
                     <a class="btn btn-link" href="{{ route('password.request') }}">

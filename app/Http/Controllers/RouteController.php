@@ -7,15 +7,13 @@ use Illuminate\Http\Request;
 
 class RouteController extends Controller
 {
-    protected $current;
+    protected $currentName;
+    protected $currentRoutes;
 
-    public function setCurrentMenu(Request $request) {
-/*
-        Inertia::share('currentMenu', function () use ($request) {
-            return $request->post('current');
-        });
-*/
-        Inertia::share('currentMenu', $request->post('current'));
-        return Inertia::getShared('currentMenu');
+    public function setCurrentMenu($current, Request $request) {
+        $this->currentName = $current;
+        $request->session()->put('currentName', $this->currentName);
+        $request->session()->put('currentRoutes', config('port.menu.admin.items.'.$this->currentName));
+        return redirect()->back();
     }
 }

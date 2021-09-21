@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Redirect;
 class CaravanController extends Controller
 {
     private $countries;
+    private $caravanOptions;
 
     public function __construct()
     {
@@ -23,6 +24,11 @@ class CaravanController extends Controller
             ->map
             ->de
         ;
+        $this->caravanOptions = Caravan::orderBy('carnumber')
+            ->get()
+            ->keyBy('id')
+            ->map
+            ->carnumber;
     }
 
     /**
@@ -33,11 +39,13 @@ class CaravanController extends Controller
     public function index(Request $request)
     {
         $query = Caravan::orderBy('carnumber');
-        if($request->post('caravan')) {
-            dd($request->post('caravan'));
+        if($request->input('caravan')) {
+            dd($request->input('caravan'));
         }
-        $caravans = $query->get();
+        $caravans = $query->paginate(20);
+
         return view('admin.caravans.index', [
+            'caravanOptions'    => $this->caravanOptions,
             'data' => $caravans,
         ]);
     }

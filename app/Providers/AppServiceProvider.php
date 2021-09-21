@@ -28,6 +28,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(Kernel $kernel)
     {
         Paginator::useTailwind();
+
         if(env('MIX_APP_MODE') === 'inertia') {
 //            $kernel->prependMiddlewareToGroup('web', HandleInertiaRequests::class);
             $kernel->appendMiddlewareToGroup('web', HandleInertiaRequests::class);

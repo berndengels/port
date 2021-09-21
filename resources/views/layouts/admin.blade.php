@@ -18,16 +18,20 @@
     <div class="menu-icon" @click="onClick">
         <i class="fas fa-bars"></i>
     </div>
-    <header>
+    <header class="header">
+        <x-header-navigation />
     </header>
 
-    <aside>
+    <aside class="sidenav">
+        <x-admin-main-navigation />
     </aside>
 
-    <main>
+    <main class="main">
         @yield('main')
     </main>
-    <footer>
+
+    <footer class="footer">
+        @yield('footer')
     </footer>
 </div>
 

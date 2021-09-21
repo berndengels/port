@@ -2,6 +2,26 @@
 use Carbon\Carbon;
 
 return [
+    'menu'  => [
+        'admin' => [
+            'items' => [
+                'Caravans'   => [
+                    [
+                        'text'  => 'Caravans',
+                        'title' => 'Caravans',
+                        'icon'  => 'fas fa-caravan',
+                        'route' => 'caravans.index',
+                    ],
+                    [
+                        'text'  => 'Caravan Rezeption',
+                        'title' => 'Caravan Rezeption',
+                        'icon'  => 'fas fa-concierge-bell',
+                        'route' => 'caravanDates.index',
+                    ],
+                ]
+            ],
+        ],
+    ],
     'mail' => [
         'sender'  => [
             'address'   => env('MAIL_FROM_ADDRESS', null),

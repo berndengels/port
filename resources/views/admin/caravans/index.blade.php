@@ -2,6 +2,11 @@
 
 @section('main')
     <div>
+        <x-form method="post" name="frmFilter" action="{{ route('caravans.index') }}">
+            @csrf
+            <x-form-select name="caravan" label="Filter" :options="$caravanOptions" @change="document.frmFilter.submit()" />
+        </x-form>
+        {{ $data->links() }}
         <table class="table w-full">
             <tr>
                 <th>Kennzeichen</th>
@@ -29,6 +34,7 @@
                 </tr>
             @endforeach
         </table>
+        {{ $data->links() }}
     </div>
 @endsection
 
