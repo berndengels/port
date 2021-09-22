@@ -1,12 +1,11 @@
 <?php
-
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\Caravan;
 use Illuminate\Http\Request;
 use App\Models\CarLicensePlate;
 
-class CarLicensePlateController extends AdminController
+class AdminCarLicensePlateController extends AdminController
 {
     public function info(Caravan $caravan) {
         //

@@ -1,20 +1,3 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <title>{{ config('app.name', 'Laravel') }}</title>
-    <!-- Fonts -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
-    <!-- Styles -->
-    <link rel="stylesheet" href="{{ mix('css/app.css') }}">
-    @stack('styles')
-    <!-- Scripts -->
-    <script src="{{ mix('js/app.js') }}" defer></script>
-    @stack('scripts')
-</head>
-<body class="font-sans antialiased" data-root="http://webapiv2.navionics.com/dist/webapi/images">
 
 <div class="grid-container">
     <div class="menu-icon" onclick="onMenuIconClick()">
@@ -26,14 +9,10 @@
             <x-header-navigation />
         </div>
         <div class="header__right">
-            @auth()
-                <x-form method="post" name="frmLogout" action="{{ route('logout') }}">
-                    @csrf
-                    <span onclick="document.frmLogout.submit()">{{ auth()->user()->name }} Logout</span>
-                </x-form>
-            @else()
-                <a href="{{ route('login') }}">Login</a>
-            @endauth
+            <x-form method="post" name="frmLogout" action="{{ route('logout') }}">
+                @csrf
+                <span onclick="document.frmLogout.submit()">{{ auth()->user()->name }} Logout</span>
+            </x-form>
         </div>
     </header>
 
@@ -65,5 +44,3 @@
 		}
     </script>
 @show
-</body>
-</html>

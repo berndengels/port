@@ -1,8 +1,19 @@
-@extends('layouts.admin')
+@extends('layouts.main')
 
 @section('main')
     <div>
-        <x-form class="inline-form ml-5" method="get" name="frmFilter" action="{{ route('caravans.index') }}">
+        <div class="index-header mt-3">
+            <div>
+                <x-nav-link
+                        href="{{ route('admin.caravans.create') }}"
+                        class="btn"
+                        icon="far fa-plus-square"
+                        text="Neueintrag"
+                />
+            </div>
+            <div>Rechts</div>
+        </div>
+        <x-form class="inline-form ml-5" method="get" name="frmFilter" action="{{ route('admin.caravans.index') }}">
             @csrf
             <x-form-select
                     name="caravan"
@@ -31,18 +42,18 @@
                     <td class="hidden md:table-cell">{{ $item->carlength }} m</td>
                     <td class="hidden md:table-cell"><a href="mailto:{{ $item->email }}" target="_blank">{{ $item->email }}</a><br v-else></td>
                     <td>
-                        <a href="{{ route('caravans.edit', $item) }}" icon="fas fa-edit" ctrClass="btn" title="Bearbeiten">
-                            Edit
-                        </a>
+                        <x-nav-link href="{{ route('admin.caravans.edit', $item) }}" icon="fas fa-edit" class="btn" title="Bearbeiten">Edit</x-nav-link>
                     </td>
                     <td>
-                        <a role="button" href="{{ route('caravans.destroy', $item) }}" icon="fas fa-trash-alt" title="Löschen">
-                            Löschen
-                        </a>
+                        <x-form action="{{ route('admin.caravans.destroy', ['caravan' => $item]) }}" class="inline-block m-0 p-0">
+                            @method('delete')
+                            <x-form-submit icon="fas fa-trash-alt" class="btn-red">Löschen</x-form-submit>
+                        </x-form>
                     </td>
                 </tr>
             @endforeach
         </table>
+
         {{ $data->links() }}
     </div>
 @endsection

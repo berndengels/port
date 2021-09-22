@@ -9,6 +9,16 @@
 @import 'variables';
 @tailwind utilities;
 
+a {
+    cursor:pointer;
+}
+.blue {
+    color: #009;
+}
+.white {
+    color: #fff;
+}
+
 .tooltip{
     visibility: hidden;
     position: absolute;
@@ -94,6 +104,13 @@ i {
 }
 .font-montserrat {
     font-family: Nunito, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
+}
+
+.index-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
 }
 
 // ower grid layout
@@ -332,4 +349,7 @@ i {
             clear: none;
         }
     }
+}
+nav[role="navigation"] {
+    margin: 0 1.0rem;
 }

@@ -2,12 +2,12 @@
 
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CaravanController;
-use App\Http\Controllers\CaravanDatesController;
-use App\Http\Controllers\PriceController;
-use App\Http\Controllers\CarLicensePlateController;
-use App\Http\Controllers\MapController;
-use App\Http\Controllers\RouteController;
+use App\Http\Controllers\AdminCaravanAdminController;
+use App\Http\Controllers\AdminCaravanDatesController;
+use App\Http\Controllers\AdminPriceController;
+use App\Http\Controllers\AdminCarLicensePlateController;
+use App\Http\Controllers\AdminMapController;
+use App\Http\Controllers\AdminRouteController;
 
 /*
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
@@ -21,15 +21,15 @@ Route::get('/', function () {
 Route::group([
     'middleware' => ['auth', 'verified'],
 ],function () {
-    Route::resource('caravans', CaravanController::class);
-    Route::resource('caravanDates', CaravanDatesController::class);
+    Route::resource('caravans', AdminCaravanAdminController::class);
+    Route::resource('caravanDates', AdminCaravanDatesController::class);
 
-    Route::post('caravanDates/sendExcel/{from?}', [CaravanDatesController::class, 'sendExcel'])->name('caravanDates.sendExcel');
-    Route::post('caravan/price/calculate', [PriceController::class, 'calculate'])->name('caravan.price.calculate');
-    Route::get('caravan/price/excel/{from?}', [PriceController::class, 'excel'])->name('caravan.price.excel');
-    Route::get('caravan/price/pdf/{from?}', [PriceController::class, 'pdf'])->name('caravan.price.pdf');
+    Route::post('caravanDates/sendExcel/{from?}', [AdminCaravanDatesController::class, 'sendExcel'])->name('caravanDates.sendExcel');
+    Route::post('caravan/price/calculate', [AdminPriceController::class, 'calculate'])->name('caravan.price.calculate');
+    Route::get('caravan/price/excel/{from?}', [AdminPriceController::class, 'excel'])->name('caravan.price.excel');
+    Route::get('caravan/price/pdf/{from?}', [AdminPriceController::class, 'pdf'])->name('caravan.price.pdf');
 
-    Route::get('car/info/{caravan}', [CarLicensePlateController::class, 'info'])->name('car.info');
-    Route::get('map/nautic', [MapController::class, 'nautic'])->name('map.nautic');
-    Route::post('route/current', [RouteController::class, 'setCurrentMenu'])->name('route.current');
+    Route::get('car/info/{caravan}', [AdminCarLicensePlateController::class, 'info'])->name('car.info');
+    Route::get('map/nautic', [AdminMapController::class, 'nautic'])->name('map.nautic');
+    Route::post('route/current', [AdminRouteController::class, 'setCurrentMenu'])->name('route.current');
 });

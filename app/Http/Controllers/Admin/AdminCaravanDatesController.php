@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Mail\SendExcel;
 use Excel;
@@ -20,7 +20,7 @@ use App\Http\Requests\CaravanDatesRequest;
 use App\Http\Requests\CaravanDatesValidationData;
 use Illuminate\Support\Facades\Mail;
 
-class CaravanDatesController extends AdminController
+class AdminCaravanDatesController extends AdminController
 {
     private $caravans;
     private $years;

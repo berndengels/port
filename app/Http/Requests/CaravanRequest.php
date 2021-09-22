@@ -8,6 +8,16 @@ use Illuminate\Foundation\Http\FormRequest;
 class CaravanRequest extends FormRequest
 {
     use Fix;
+
+    protected function getId()
+    {
+        $route = $this->route('caravan');
+        if($route) {
+            return $route->id;
+        }
+        return null;
+    }
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -37,12 +47,13 @@ class CaravanRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rule = [
             'country_id' => 'required',
-            'carnumber' => !$this->id ? 'required|unique:caravans,carnumber' : 'required',
+            'carnumber' => !$this->getId() ? 'required|unique:caravans,carnumber' : 'required',
             'carlength' => ['required','regex:/^[0-9]+$/i'],
             'email'     => 'email|nullable',
         ];
+        return $rule;
     }
 
     public function messages()
@@ -50,6 +61,7 @@ class CaravanRequest extends FormRequest
         return [
             'country_id.required'  => 'Bitte ein Herkunftsland angeben!',
             'carnumber.required'   => 'Bitte das Auto-Kennzeichen angeben!',
+            'carnumber.unique'     => 'Ein Fahrzeug mit diesem Kennzeichen wurde bereits eingetragen!',
             'carlength.required'   => 'Bitte die Länge des Fahrzeugs angeben!',
             'carlength.regex'      => 'Die Länge des Fahrzeugs muß als ganze Zahl angegeben werden!',
             'email.email'          => 'Bitte eine korrekte oder gar keine keine Email-Adresse angeben.',

@@ -1,10 +1,13 @@
 <?php
+
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
+use Illuminate\Http\Request;
 
-class RouteController extends Controller
+class AdminRouteController extends AdminController
 {
     protected $route;
     protected $currentName;

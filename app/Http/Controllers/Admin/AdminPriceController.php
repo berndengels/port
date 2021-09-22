@@ -9,7 +9,7 @@ use Illuminate\Http\Response;
 use App\Libs\CaravanPriceCalculator;
 use Excel;
 
-class PriceController extends AdminController
+class AdminPriceController extends AdminController
 {
     /**
      * Calculate price.

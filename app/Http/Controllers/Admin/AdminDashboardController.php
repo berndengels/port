@@ -1,13 +1,12 @@
 <?php
-
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\Caravan;
 use App\Models\CaravanDates;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
-class DashboardController extends AdminController
+class AdminDashboardController extends AdminController
 {
     protected $caravansFromToday;
 

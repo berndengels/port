@@ -1,19 +1,19 @@
 <?php
+namespace App\Http\Controllers\Admin;
 
-namespace App\Http\Controllers;
-
+use App\Models\Caravan;
 use App\Models\Country;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\URL;
-use Inertia\Inertia;
-use App\Models\Caravan;
 use Illuminate\Http\Response;
 use App\Http\Requests\CaravanRequest;
 use Illuminate\Support\Facades\Redirect;
 
-class CaravanController extends AdminController
+class AdminCaravanController extends AdminController
 {
+    /**
+     * @var Collection
+     */
     private $countries;
     /**
      * @var Collection
@@ -79,7 +79,7 @@ class CaravanController extends AdminController
     public function store(CaravanRequest $request)
     {
         Caravan::create($request->validated());
-        return Redirect::route('caravans.index');
+        return Redirect::route('admin.caravans.index');
     }
 
     /**
@@ -90,7 +90,7 @@ class CaravanController extends AdminController
      */
     public function show(Caravan $caravan)
     {
-        return Inertia::render('Caravans/show', compact('caravan'));
+        return view('admin.caravans.show', compact('caravan'));
     }
 
     /**
@@ -102,7 +102,7 @@ class CaravanController extends AdminController
     public function edit(Caravan $caravan)
     {
         $countries = $this->countries;
-        return Inertia::render('Caravans/edit', compact('caravan','countries'));
+        return view('admin.caravans.edit', compact('caravan','countries'));
     }
 
     /**
@@ -115,7 +115,7 @@ class CaravanController extends AdminController
     public function update(CaravanRequest $request, Caravan $caravan)
     {
         $caravan->update($request->validated());
-        return Redirect::route('caravans.index');
+        return Redirect::route('admin.caravans.index');
     }
 
     /**
@@ -127,6 +127,6 @@ class CaravanController extends AdminController
     public function destroy(Caravan $caravan)
     {
         $caravan->delete();
-        return Redirect::route('caravans.index');
+        return Redirect::route('admin.caravans.index');
     }
 }
