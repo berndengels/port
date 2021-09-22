@@ -27,10 +27,9 @@ class AdminPriceController extends AdminController
         $response   = null;
 
         if($from && $until && $carlength && $persons) {
-            $from   = new Carbon($from, config('app.timezone'));
-            $until  = new Carbon($until, config('app.timezone'));
-
-            $response =  CaravanPriceCalculator::getPrice($from, $until, $carlength, $persons, $electric);
+            $from       = new Carbon($from, config('app.timezone'));
+            $until      = new Carbon($until, config('app.timezone'));
+            $response   =  CaravanPriceCalculator::getPrice($from, $until, $carlength, $persons, $electric);
         }
         return response()->json($response);
     }
