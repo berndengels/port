@@ -43,7 +43,7 @@ Route::group([
     Route::get('caravan/price/excel/{from?}', [AdminPriceController::class, 'excel'])->name('caravan.price.excel');
     Route::get('caravan/price/pdf/{from?}', [AdminPriceController::class, 'pdf'])->name('caravan.price.pdf');
 
-    Route::get('car/info/{caravan}', [AdminCarLicensePlateController::class, 'info'])->name('car.info');
+    Route::get('car/info/{caravanId}', [AdminCarLicensePlateController::class, 'info'])->name('car.info');
     Route::get('map/nautic', [AdminMapController::class, 'nautic'])->name('map.nautic');
     Route::get('route/current', [AdminRouteController::class, 'setCurrentMenu'])->name('route.current');
 });

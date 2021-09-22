@@ -58,6 +58,18 @@ class AdminCaravanDatesController extends AdminController
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param CaravanDates $caravanDate
+     * @return Response
+     */
+    public function show(CaravanDates $caravanDate)
+    {
+        $caravanDate->load('caravan');
+        return view('admin.caravanDates.show', compact('caravanDate'));
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return Response
@@ -96,18 +108,6 @@ class AdminCaravanDatesController extends AdminController
         $caravanDate = $caravan->dates()->create($validated);
 
         return $this->show($caravanDate);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param CaravanDates $caravanDate
-     * @return Response
-     */
-    public function show(CaravanDates $caravanDate)
-    {
-        $caravanDate->load('caravan');
-        return view('admin.caravanDates.show', compact('caravanDate'));
     }
 
     /**

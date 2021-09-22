@@ -34,6 +34,17 @@ class AdminCaravanController extends AdminController
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param Caravan $caravan
+     * @return Response
+     */
+    public function show(Caravan $caravan) {
+        // @todo: show caravanDates and price data, sum prices
+        return view('admin.caravans.show', compact('caravan'));
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return Response
@@ -55,17 +66,6 @@ class AdminCaravanController extends AdminController
     {
         Caravan::create($request->validated());
         return Redirect::route('admin.caravans.index');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param Caravan $caravan
-     * @return Response
-     */
-    public function show(Caravan $caravan)
-    {
-        return view('admin.caravans.show', compact('caravan'));
     }
 
     /**

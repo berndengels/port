@@ -39,8 +39,8 @@
             </tr>
             @foreach($data as $item)
                 <tr>
-                    <td class="has-tooltip">
-                        <span onclick="" class="carnumber cursor-pointer">{{ $item->caravan->carnumber }}</span>
+                    <td>
+                        <a class="carnumber cursor-pointer" href="{{ route('admin.caravanDates.show', ['caravanDate' => $item->id]) }}">{{ $item->caravan->carnumber }}</a>
                     </td>
 
                     <td class="hidden md:table-cell">{{ $item->caravan->carlength }} m</td>

@@ -7,8 +7,8 @@ use App\Models\CarLicensePlate;
 
 class AdminCarLicensePlateController extends AdminController
 {
-    public function info(Caravan $caravan) {
-        //
+    public function info(int $caravanId) {
+        $caravan = Caravan::find($caravanId);
         if($caravan->country->code === 'DE' && preg_match("/^[a-z]{1,3}\-/i", $caravan->carnumber)) {
             list($code,) = explode('-', $caravan->carnumber);
             $data = CarLicensePlate::where('code', '=', $code)->get()->first();
