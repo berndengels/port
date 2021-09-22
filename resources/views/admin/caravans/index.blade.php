@@ -11,7 +11,7 @@
                         text="Neueintrag"
                 />
             </div>
-            <div>Rechts</div>
+            <div></div>
         </div>
         <x-form class="inline-form ml-5" method="get" name="frmFilter" action="{{ route('admin.caravans.index') }}">
             @csrf

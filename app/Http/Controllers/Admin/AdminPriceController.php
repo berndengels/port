@@ -1,13 +1,13 @@
 <?php
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Exports\CaravanDatesExport;
-use App\Models\CaravanDates;
+use Excel;
 use Carbon\Carbon;
+use App\Models\CaravanDates;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Libs\CaravanPriceCalculator;
-use Excel;
+use App\Exports\CaravanDatesExport;
 
 class AdminPriceController extends AdminController
 {
@@ -24,8 +24,7 @@ class AdminPriceController extends AdminController
         $until      = $request->post('until');
         $persons    = (int) $request->post('persons');
         $electric   = (bool) $request->post('electric');
-
-        $response = null;
+        $response   = null;
 
         if($from && $until && $carlength && $persons) {
             $from   = new Carbon($from, config('app.timezone'));

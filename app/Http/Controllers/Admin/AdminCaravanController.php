@@ -12,31 +12,6 @@ use Illuminate\Support\Facades\Redirect;
 class AdminCaravanController extends AdminController
 {
     /**
-     * @var Collection
-     */
-    private $countries;
-    /**
-     * @var Collection
-     */
-    private $caravanOptions;
-
-    public function __construct()
-    {
-        $this->countries = Country::orderBy('de')
-            ->get(['id','de'])
-            ->keyBy('id')
-            ->map
-            ->de
-        ;
-        $this->caravanOptions = Caravan::orderBy('carnumber')
-            ->get()
-            ->keyBy('id')
-            ->map
-            ->carnumber;
-        $this->caravanOptions->prepend('Kennzeichen suchen','');
-    }
-
-    /**
      * Display a listing of the resource.
      *
      * @return Response

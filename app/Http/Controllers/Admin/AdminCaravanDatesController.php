@@ -4,17 +4,14 @@ namespace App\Http\Controllers\Admin;
 use App\Mail\SendExcel;
 use Excel;
 use App\Exports\CaravanDatesExport;
-use App\Models\Country;
 use App\Rules\DatesIntervalUnique;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\Validator;
-use Inertia\Inertia;
 use App\Models\Caravan;
 use App\Models\CaravanDates;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\CaravanDatesRequest;
 use App\Http\Requests\CaravanDatesValidationData;
@@ -22,22 +19,14 @@ use Illuminate\Support\Facades\Mail;
 
 class AdminCaravanDatesController extends AdminController
 {
-    private $caravans;
     private $years;
     private $monthsByYear;
-    private $countries;
 
     public function __construct()
     {
-        $this->caravans = Caravan::orderBy('carnumber')->get();
         $this->monthsByYear = CaravanDates::getMonthsByYears();
         $this->years = array_keys($this->monthsByYear);
-        $this->countries = Country::orderBy('de')
-            ->get(['id','de'])
-            ->keyBy('id')
-            ->map
-            ->de
-        ;
+        parent::__construct();
     }
 
     /**
@@ -47,11 +36,24 @@ class AdminCaravanDatesController extends AdminController
      */
     public function index(Request $request)
     {
-        return view('caravanDates.index', [
-            'years'         => $this->years,
-            'monthsByYear'  => $this->monthsByYear,
-            'create_url'    => URL::route('caravanDates.create'),
-            'caravans'      => $this->caravans,
+        $caravanId = $request->input('caravan');
+
+        $query = CaravanDates::with('caravan')
+            ->orderByDesc('from');
+
+        if($caravanId) {
+            $query->whereCaravanId($caravanId);
+        }
+
+        $data = $query->paginate(20);
+
+        return view('admin.caravanDates.index', [
+            'data'              => $data,
+            'years'             => $this->years,
+            'monthsByYear'      => $this->monthsByYear,
+            'caravanOptions'    => $this->caravanOptions,
+            'caravanId'         => $caravanId,
+
         ]);
     }
 
@@ -62,8 +64,8 @@ class AdminCaravanDatesController extends AdminController
      */
     public function create()
     {
-        return Inertia::render('CaravanDates/create', [
-            'caravans' => $this->caravans,
+        return view('admin.caravanDates.create', [
+            'caravanOptions' => $this->caravanOptionsAutocomplete->toJson(),
             'countries' => $this->countries,
         ]);
     }
@@ -105,7 +107,7 @@ class AdminCaravanDatesController extends AdminController
     public function show(CaravanDates $caravanDate)
     {
         $caravanDate->load('caravan');
-        return Inertia::render('CaravanDates/show', compact('caravanDate'));
+        return view('admin.caravanDates.show', compact('caravanDate'));
     }
 
     /**
@@ -117,9 +119,9 @@ class AdminCaravanDatesController extends AdminController
     public function edit(CaravanDates $caravanDate)
     {
         $countries = $this->countries;
-        $caravans = $this->caravans;
+        $caravanOptions = $this->caravanOptions;
         $caravanDate->load('caravan');
-        return view('caravanDates.edit', compact('caravanDate','caravans', 'countries'));
+        return view('admin.caravanDates.edit', compact('caravanDate','caravanOptions', 'countries'));
     }
 
     /**
@@ -138,7 +140,7 @@ class AdminCaravanDatesController extends AdminController
         $caravanDate->caravan()->update($validatedCaravan);
         $caravanDate->update($validatedCaravanDates);
 
-        return Redirect::route('caravanDates.index');
+        return Redirect::route('admin.caravanDates.index');
     }
 
     /**
@@ -150,7 +152,7 @@ class AdminCaravanDatesController extends AdminController
     public function destroy(CaravanDates $caravanDate)
     {
         $caravanDate->delete();
-        return Redirect::route('caravanDates.index');
+        return Redirect::route('admin.caravanDates.index');
     }
 
     public function sendExcel(Request $request, $from = null)

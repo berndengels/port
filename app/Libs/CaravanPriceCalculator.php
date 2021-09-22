@@ -29,7 +29,7 @@ class CaravanPriceCalculator extends PriceCalculator
         $days       = [];
         $current    = $from->copy();
         $i = 0;
-        $arrPrices = [];
+
         while ($i < $countDays) {
             if(0 === $i) {
                 $day = $current;

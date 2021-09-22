@@ -64,6 +64,14 @@ class CaravanDates extends Model
         return $this->belongsTo(Caravan::class);
     }
 
+    public function getValidFromAttribute() {
+        return $this->from->format('Y-m-d');
+    }
+
+    public function getValidUntilAttribute() {
+        return $this->until->format('Y-m-d');
+    }
+
     public function getDaysAttribute() {
         if($this->from && $this->until) {
             return $this->from->diffInDays($this->until);

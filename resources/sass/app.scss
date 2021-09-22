@@ -353,3 +353,15 @@ i {
 nav[role="navigation"] {
     margin: 0 1.0rem;
 }
+.autocomplete {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    li {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        cursor: pointer;
+    }
+}

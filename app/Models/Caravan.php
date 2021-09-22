@@ -37,11 +37,17 @@ class Caravan extends Model
 
     protected $table = 'caravans';
     protected $guarded = ['id'];
+    protected $appends = ['text'];
     public $timestamps = false;
 
     protected $casts = [
         'carlength' => 'integer',
     ];
+
+    public function getTextAttribute()
+    {
+        return $this->carnumber;
+    }
 
     public function dates() {
         return $this->hasMany(CaravanDates::class);
