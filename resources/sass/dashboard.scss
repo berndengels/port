@@ -1,0 +1,50 @@
+.flex-container-dashbord {
+	margin-top: 1.0rem;
+	height: 100vh;
+	display: -ms-inline-flexbox;
+	display: -webkit-inline-flex;
+	display: inline-flex;
+	-webkit-flex-direction: row;
+	-ms-flex-direction: row;
+	flex-direction: row;
+	-webkit-flex-wrap: wrap;
+	-ms-flex-wrap: wrap;
+	flex-wrap: wrap;
+	-webkit-justify-content: start;
+	-ms-flex-pack: flex-start;
+	justify-content: flex-start;
+	-webkit-align-content: space-between;
+	-ms-flex-line-pack: justify;
+	align-content: flex-start;
+	-webkit-align-items: flex-start;
+	-ms-flex-align: flex-start;
+	align-items: flex-start;
+
+	.flex-item-dashbord {
+		width: auto;
+		min-width: 30%;
+		height: auto;
+		min-height: 30%;
+		clear: left;
+		-webkit-order: 0;
+		-ms-flex-order: 0;
+		order: 0;
+		-webkit-flex: 0 1 auto;
+		-ms-flex: 0 1 auto;
+		flex: 0 1 auto;
+		-webkit-align-self: auto;
+		-ms-flex-item-align: auto;
+		align-self: auto;
+		margin: 1.0rem 0 0 1.0rem;
+		background-color: #fff;
+		color: #444;
+		background-color: #eee;
+		border-radius: 0.5rem;
+		opacity: 0.7;
+
+		@include media('<desktop') {
+			width: 93%;
+			margin: 1.0rem 1.0rem 0 1.0rem;
+		}
+	}
+}

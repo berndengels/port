@@ -1,7 +1,7 @@
-<div class="grid-container">
-    <div class="menu-icon" @click="onClick">
+<div class="grid-container public">
+    <!--div class="menu-icon">
         <i class="fas fa-bars"></i>
-    </div>
+    </div-->
     <header class="header">
         <div class="header__left">
             <x-header-navigation />
@@ -11,10 +11,13 @@
         </div>
     </header>
 
-    <aside class="sidenav">
-    </aside>
+    <!--aside class="sidenav">
+        <div class="sidenav__close-icon">
+            <i class="fas fa-times"></i>
+        </div>
+    </aside-->
 
-    <main class="main">
+    <main class="main bg-main">
         @yield('main')
     </main>
 
@@ -22,15 +25,5 @@
     </footer>
 </div>
 
-@section('inline-scripts')
-    <script>
-		const sideNav = document.querySelector('.sidenav');
-		function onMenuIconClick() {
-			addClass(sideNav,'active')
-		}
-		function onCloseIconClick()  {
-			removeClass(sideNav,'active')
-		}
-    </script>
-@show
+@stack('inline-scripts')
 

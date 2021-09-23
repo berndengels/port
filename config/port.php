@@ -32,14 +32,14 @@ return [
                     'icon'  => 'fas fa-ship',
                     'items' => [
                         [
-                            'text'  => 'Caravans',
-                            'title' => 'Caravans',
+                            'text'  => 'Dauerlieger',
+                            'title' => 'Dauerlieger',
                             'icon'  => 'fas fa-caravan',
                             'route' => 'admin.caravans.index',
                         ],
                         [
-                            'text'  => 'Caravan Rezeption',
-                            'title' => 'Caravan Rezeption',
+                            'text'  => 'Gäste',
+                            'title' => 'Gäste',
                             'icon'  => 'fas fa-concierge-bell',
                             'route' => 'admin.caravanDates.index',
                         ],

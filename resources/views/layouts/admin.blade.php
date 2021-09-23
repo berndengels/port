@@ -1,6 +1,6 @@
 
 <div class="grid-container">
-    <div class="menu-icon" onclick="onMenuIconClick()">
+    <div class="menu-icon">
         <i class="fas fa-bars"></i>
     </div>
 
@@ -11,13 +11,13 @@
         <div class="header__right">
             <x-form method="post" name="frmLogout" action="{{ route('logout') }}">
                 @csrf
-                <span onclick="document.frmLogout.submit()">{{ auth()->user()->name }} Logout</span>
+                <span onclick="document.frmLogout.submit()">{{ auth()->user()->name }} <span class="btn ml-2">Logout</span></span>
             </x-form>
         </div>
     </header>
 
     <aside class="sidenav">
-        <div class="sidenav__close-icon" onclick="onCloseIconClick()">
+        <div class="sidenav__close-icon">
             <i class="fas fa-times"></i>
         </div>
 
@@ -33,14 +33,4 @@
     </footer>
 </div>
 
-@section('inline-scripts')
-    <script>
-		const sideNav = document.querySelector('.sidenav');
-		function onMenuIconClick() {
-			addClass(sideNav,'active')
-		}
-		function onCloseIconClick()  {
-			removeClass(sideNav,'active')
-		}
-    </script>
-@show
+@stack('inline-scripts')

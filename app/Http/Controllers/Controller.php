@@ -11,8 +11,13 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    protected $startRouteName = 'public.dashboard';
+
     public function main()
     {
-        return redirect()->route('public.dashboard');
+        if(auth()->check()) {
+            $this->startRouteName = 'admin.dashboard';
+        }
+        return redirect()->route($this->startRouteName);
     }
 }

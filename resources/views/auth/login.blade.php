@@ -1,11 +1,10 @@
 @extends('layouts.main')
 
 @section('main')
-<div class="main-cards">
-    <h3 class="">{{ __('Login') }}</h3>
-
-    <div class="">
-        <x-form method="POST" action="{{ route('login') }}">
+<div class="w-full">
+    <h1 class="m-3 text-4xl">{{ __('Login') }}</h1>
+    <div class="flex w-full justify-center">
+        <x-form class="w-full md:w-1/2 m-3" method="POST" action="{{ route('login') }}">
             <x-form-input name="email" type="email" label="Email" required />
             <x-form-input name="password" type="password" label="Passwort" required />
             <div class="mt-3">
