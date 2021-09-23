@@ -35,7 +35,7 @@
                     <th>Email</th>
                     <th colspan="2"><br></th>
                 </tr>
-                <tr v-for="item in caravans" :key="item.id">
+                <tr v-for="item in paginated" :key="item.id">
                     <td class="has-tooltip">
                         <span  @dblclick="ondblclick(item)" class="carnumber cursor-pointer">{{ item.carnumber }}</span>
                     </td>
@@ -94,6 +94,7 @@ export default {
             perPage: 20,
             total: this.data.length,
             caravans: [],
+            paginated: [],
             selectedCaravan: null,
             filter: this.$inertia.form({
                 caravan: null,
@@ -106,34 +107,52 @@ export default {
         },
     },
     created() {
-        this.caravans = this.chunks(this.data, this.perPage)[this.currentPage - 1]
+        this.caravans = this.data
+        this.paginated = this.chunks(this.data, this.perPage)[this.currentPage - 1]
     },
     methods: {
+        setDataAndPages(data) {
+            this.caravans = data
+            if(data.length > this.perPage) {
+                this.paginated = this.chunks(data, this.perPage)[this.currentPage - 1]
+            } else {
+                this.paginated = data
+            }
+        },
         onPageClick(currentPage){
             this.currentPage = currentPage
             let arr = this.chunks(this.data, this.perPage)
             if(this.currentPage <= arr.length) {
-                this.caravans = arr[this.currentPage - 1]
+                this.paginated = arr[this.currentPage - 1]
             }
         },
         onSelectCaravan(id) {
             this.selectedCaravan = ("" !== id) ? parseInt(id) : null;
             if(this.selectedCaravan) {
-                this.caravans = this.data.filter(item => {
+                let data = this.data.filter(item => {
                     if(item.id == this.selectedCaravan) {
                         return item
                     }
                 });
+                this.setDataAndPages(data)
             }
         },
         reset() {
             this.filter.reset()
+            this.filter.caravan = null
             this.currentPage = 0
-            this.caravans = this.chunks(this.data, this.perPage)[this.currentPage]
+            this.caravans = this.data
+            this.paginated = this.chunks(this.data, this.perPage)[this.currentPage - 1]
         },
         remove(item) {
             if(confirm('Datensatz (ID: ' + item.id + ') wirklich löschen?')) {
-                Inertia.delete('caravans/' + item.id, item)
+                Inertia.delete(route('caravans.destroy', item), {
+                    preserveScroll: true,
+                    onSuccess: (resp) => {
+                        let data = this.data.filter(i => i !== item)
+                        this.setDataAndPages(data)
+                    }
+                })
             }
         },
         ondblclick(caravan) {

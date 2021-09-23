@@ -3,9 +3,9 @@
         <MyLink :href="route('caravans.index')" icon="fas fa-backward">zurück</MyLink>
         <MyForm :data="form" @submit.prevent>
             <Select name="country_id" label="Herkunftsland" :options="countries" />
-            <Input name="carnumber" label="Autokennzeichen" required />
-            <Input name="carlength" label="Länge" required />
-            <Input type="email" name="email" label="Email" />
+            <Input name="carnumber" label="Autokennzeichen" required autocomplete />
+            <Input name="carlength" label="Länge" type="number" required />
+            <Input type="email" name="email" label="Email" autocomplete />
             <Button @click.prevent="store" btnCss="btn btn-save">Speichern</Button>
         </MyForm>
     </DefaultLayout>

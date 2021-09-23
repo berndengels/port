@@ -314,9 +314,11 @@ export default {
         remove(item) {
             if(confirm('Datensatz (ID: ' + item.id + ') wirklich löschen?')) {
                 Inertia.delete(route('caravanDates.destroy', item), {
+                    preserveScroll: true,
                     onSuccess: (resp) => {
                         let data = this.caravanDates.filter(i => i !== item)
                         this.setDataAndPages(data)
+                        this.reset()
                     }
                 })
             }
