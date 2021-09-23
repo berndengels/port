@@ -20,7 +20,6 @@
         <div class="sidenav__close-icon">
             <i class="fas fa-times"></i>
         </div>
-
         <x-admin-main-navigation />
     </aside>
 

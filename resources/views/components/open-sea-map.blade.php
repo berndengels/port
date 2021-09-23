@@ -1,8 +1,7 @@
 
 <div id="map" class="map"></div>
 
-@section('inline-scripts')
-	@parent
+@push('inline-scripts')
 <script>
     var
         lat = {{ $lat }},
@@ -27,12 +26,12 @@
 	}
 	showMap()
 </script>
-@endsection
+@endpush
 
 @push('styles')
-<link rel="stylesheet" href="{{ mix('css/leaflet.css') }}" />
+	<link rel="stylesheet" href="{{ mix('css/leaflet.css') }}" />
 @endpush
 @push('scripts')
-<script type="text/javascript" src="{{ mix('js/leaflet.js') }}"></script>
-<script type="text/javascript" src="{{ mix('js/leaflet-providers.js') }}"></script>
+	<script type="text/javascript" src="{{ mix('js/leaflet.js') }}"></script>
+	<script type="text/javascript" src="{{ mix('js/leaflet-providers.js') }}"></script>
 @endpush

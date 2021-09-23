@@ -32,10 +32,5 @@ class AppServiceProvider extends ServiceProvider
         env('APP_DEBUG_BAR') ? Debugbar::enable() : Debugbar::disable();
         Paginator::useTailwind();
         View::share('routePrefix', auth()->check() ? 'admin' : 'public');
-
-        if(env('MIX_APP_MODE') === 'inertia') {
-//            $kernel->prependMiddlewareToGroup('web', HandleInertiaRequests::class);
-            $kernel->appendMiddlewareToGroup('web', HandleInertiaRequests::class);
-        }
     }
 }

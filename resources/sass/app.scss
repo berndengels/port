@@ -6,8 +6,9 @@
 @import '~@fortawesome/fontawesome-free/scss/brands';
 @import "~include-media";
 @import "~leaflet/dist/leaflet.css";
-@import 'variables';
-@import "dashboard";
+@import 'local/variables';
+@import 'local';
+
 @tailwind utilities;
 
 nav {
@@ -61,7 +62,10 @@ tr td:last-child { border-bottom-right-radius: 5px; }
 .carnumber {
     display: inline-block;
     margin: 0.2rem;
+    width: auto;
+    text-align: center;
     min-width: 105px;
+    max-width: 105px;
     text-align: center;
     color: #000;
     font-family: "Arial";

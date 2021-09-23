@@ -1,6 +1,5 @@
 require('./bootstrap');
 import $ from "jquery";
-//require("./Mixins/MyCss");
 
 $(document).ready(function () {
 	const $sideNav = $('.sidenav');
