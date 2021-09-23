@@ -45,7 +45,7 @@ class AdminController extends BaseController
     public function main()
     {
         if(!auth()->check()) {
-            return redirect()->route('');
+            return redirect()->route('admin.dashboard');
         }
         return view('layouts.main');
     }

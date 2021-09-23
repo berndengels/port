@@ -6,7 +6,7 @@ use App\Models\Caravan;
 use Illuminate\Http\Request;
 use App\Models\CarLicensePlate;
 
-class CarLicensePlateController extends AdminController
+class CarLicensePlateController extends Controller
 {
     public function info(Caravan $caravan) {
         //

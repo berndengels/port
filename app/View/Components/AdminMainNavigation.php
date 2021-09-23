@@ -26,8 +26,6 @@ class AdminMainNavigation extends Component
      */
     public function render()
     {
-        return view('components.admin-main-navigation', [
-            'items' => $this->items,
-        ]);
+        return view('components.admin-main-navigation');
     }
 }

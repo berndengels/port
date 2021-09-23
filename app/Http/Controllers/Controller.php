@@ -13,9 +13,6 @@ class Controller extends BaseController
 
     public function main()
     {
-        if(!auth()->check()) {
-            return redirect()->route('');
-        }
-        return view('layouts.main');
+        return redirect()->route('public.dashboard');
     }
 }

@@ -5,14 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Country;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\URL;
-use Inertia\Inertia;
 use App\Models\Caravan;
 use Illuminate\Http\Response;
 use App\Http\Requests\CaravanRequest;
 use Illuminate\Support\Facades\Redirect;
 
-class CaravanController extends AdminController
+class CaravanController extends Controller
 {
     private $countries;
     /**

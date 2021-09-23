@@ -35,12 +35,6 @@ class MenuItem extends Component
      */
     public function render()
     {
-        return view('components.menu-item', [
-            'name' => $this->name,
-            'item' => $this->item,
-            'icon' => $this->icon,
-            'route' => $this->route,
-            'class' => $this->class,
-        ]);
+        return view('components.menu-item');
     }
 }

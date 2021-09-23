@@ -251,6 +251,12 @@ i {
         .sidenav__list-item {
             padding: 5px 10px 10px 10px;
             color: #ddd;
+            a {
+                &.active {
+                    color: #fff;
+                    background-color: red;
+                }
+            }
         }
         .sidenav__list-item:hover {
             cursor: pointer;

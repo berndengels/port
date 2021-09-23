@@ -20,7 +20,7 @@ use App\Http\Requests\CaravanDatesRequest;
 use App\Http\Requests\CaravanDatesValidationData;
 use Illuminate\Support\Facades\Mail;
 
-class CaravanDatesController extends AdminController
+class CaravanDatesController extends Controller
 {
     private $caravans;
     private $years;

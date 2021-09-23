@@ -10,11 +10,11 @@
             <x-form-input name="email" type="email" label="Email" required />
             <x-form-input name="password" type="password" label="Passwort" required />
             <div class="mt-3">
-                <x-form-checkbox name="remember" type="checkbox" label="Logindaten merken" required>
+                <x-form-checkbox name="remember" type="checkbox" label="Logindaten merken">
                     Logindaten merken
                 </x-form-checkbox>
             </div>
-            <x-form-submit value="submit" class="btn btn-save" icon="fas fa-sign-in-alt">Login</x-form-submit>
+            <x-form-submit value="submit" class="btn btn-save mt-3" icon="fas fa-sign-in-alt">Login</x-form-submit>
             <div class="mt-3">
                 @if (Route::has('password.request'))
                     <a class="btn-link blue" href="{{ route('password.request') }}">

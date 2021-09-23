@@ -27,6 +27,6 @@ class HeaderNavigation extends Component
      */
     public function render()
     {
-        return view('components.header-navigation', ['items' => $this->items]);
+        return view('components.header-navigation');
     }
 }

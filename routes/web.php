@@ -51,7 +51,7 @@ Route::group([
 Route::group([
     'as'  => 'public.',
 ],function () {
-    Route::get('/dashboard', [DashboardController::class, 'show'])->name('dashboard');
+    Route::get('dashboard', [DashboardController::class, 'show'])->name('dashboard');
     Route::resource('caravans', CaravanController::class);
     Route::resource('caravanDates', CaravanDatesController::class);
 
