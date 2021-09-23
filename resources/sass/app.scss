@@ -393,7 +393,9 @@ i {
         margin-right: 0.5rem;
         line-height: 1.0rem;
         list-style: none;
-
+        &.active {
+            background-color: #f00;
+        }
         a {
             display: inline-block;
             font-size: 1.0rem;
