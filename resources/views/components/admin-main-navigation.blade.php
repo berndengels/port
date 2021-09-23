@@ -2,9 +2,9 @@
     <ul class="sidenav__list left-menu">
         @foreach($items as $name => $item)
             @if(isset($item['route']))
-                <x-menu-item :name="$name" route="{{ $item['route'] }}" icon="{{ $item['icon'] }}" />
+                <x-menu-item :name="$name" route="{{ $item['route'] }}" icon="{{ $item['icon'] }}" class="left-nav" />
             @else
-                <x-menu-item :name="$name" icon="{{ $item['icon'] }}" />
+                <x-menu-item :name="$name" icon="{{ $item['icon'] }}" class="left-nav" />
             @endif
         @endforeach
     </ul>

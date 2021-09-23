@@ -2,9 +2,9 @@
 
 @section('main')
 <div class="w-full">
-    <h1 class="m-3 text-4xl">{{ __('Login') }}</h1>
+    <h1 class="sm:mt-5 m-3 text-4xl">{{ __('Login') }}</h1>
     <div class="flex w-full justify-center">
-        <x-form class="w-full md:w-1/2 m-3" method="POST" action="{{ route('login') }}">
+        <x-form class="w-full mx-3 md:w-1/2" method="POST" action="{{ route('login') }}">
             <x-form-input name="email" type="email" label="Email" required />
             <x-form-input name="password" type="password" label="Passwort" required />
             <div class="mt-3">

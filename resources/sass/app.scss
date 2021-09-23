@@ -333,13 +333,21 @@ i {
             padding: 5px 10px 10px 10px;
             color: #ddd;
             a {
+                border: 1px solid #eee;
+                border-radius: 0.5rem;
+                background-color: transparent;
                 &.active {
-                    color: #fff;
-                    background-color: red;
+                    color: $bgSideNav;
+                    background-color: #eee;
                 }
             }
         }
         .sidenav__list-item:hover {
+            a:hover {
+                i,span {
+                    font-weight: bold;
+                }
+            }
             cursor: pointer;
         }
 

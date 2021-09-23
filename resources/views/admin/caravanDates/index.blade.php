@@ -34,7 +34,7 @@
                 <th>Von</th>
                 <th>Bis</th>
                 <th class="hidden md:table-cell">Tage</th>
-                <th>Preis</th>
+                <th class="hidden md:table-cell">Preis</th>
                 <th colspan="2"><br></th>
             </tr>
             @foreach($data as $item)
@@ -47,7 +47,7 @@
                     <td>{{ $item->from->format('d.m.Y') }}</td>
                     <td>{{ $item->until->format('d.m.Y') }}</td>
                     <td class="hidden md:table-cell">{{ $item->days }}</td>
-                    <td>{{ $item->price }} €</td>
+                    <td class="hidden md:table-cell">{{ $item->price }} €</td>
 
                     <td>
                         <x-nav-link href="{{ route('admin.caravanDates.edit', $item) }}" icon="fas fa-edit" class="btn" title="Bearbeiten">Edit</x-nav-link>
