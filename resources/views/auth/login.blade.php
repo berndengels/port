@@ -6,7 +6,6 @@
 
     <div class="">
         <x-form method="POST" action="{{ route('login') }}">
-            @csrf
             <x-form-input name="email" type="email" label="Email" required />
             <x-form-input name="password" type="password" label="Passwort" required />
             <div class="mt-3">
