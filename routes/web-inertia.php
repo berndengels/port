@@ -26,8 +26,8 @@ Route::group([
 
     Route::post('caravanDates/sendExcel/{from?}', [AdminCaravanDatesController::class, 'sendExcel'])->name('caravanDates.sendExcel');
     Route::post('caravan/price/calculate', [AdminPriceController::class, 'calculate'])->name('caravan.price.calculate');
-    Route::get('caravan/price/excel/{from?}', [AdminPriceController::class, 'excel'])->name('caravan.price.excel');
-    Route::get('caravan/price/pdf/{from?}', [AdminPriceController::class, 'pdf'])->name('caravan.price.pdf');
+    Route::get('caravan/price/excel/{year?}/{month?}', [AdminPriceController::class, 'excel'])->name('caravan.price.excel');
+    Route::get('caravan/price/pdf/{year?}/{month?}', [AdminPriceController::class, 'pdf'])->name('caravan.price.pdf');
 
     Route::get('car/info/{caravan}', [AdminCarLicensePlateController::class, 'info'])->name('car.info');
     Route::get('map/nautic', [AdminMapController::class, 'nautic'])->name('map.nautic');
