@@ -163,7 +163,8 @@ export default {
             }),
             frmSendExcel: this.$inertia.form({
                 email: null,
-                from: null,
+                year: null,
+                month: null,
             }),
         }
     },
@@ -173,15 +174,6 @@ export default {
     computed: {
         dublicates() {
             return this.searchDublicates();
-        },
-        currentFrom() {
-            if(this.selectedMonth) {
-                return this.selectedYear + "-" + this.selectedMonth + "-01"
-            } else if (this.selectedYear) {
-                return this.selectedYear + "-01-01"
-            } else {
-                return ''
-            }
         },
         count() {
             return this.caravanDates.length
@@ -299,8 +291,10 @@ export default {
             }
         },
         sendExcel() {
-            this.frmSendExcel.from = this.currentFrom
-            axios.post(route('caravanDates.sendExcel', this.frmSendExcel), this.frmSendExcel)
+            this.frmSendExcel.year  = this.selectedYear
+            this.frmSendExcel.month = this.selectedMonth
+
+            axios.post(route('caravanDates.sendExcel'), this.frmSendExcel)
                 .then(resp => {
                     if(resp.data.success) {
                         alert('Excel-Tabelle erfolgreich an ' + this.frmSendExcel.email + ' versand.')

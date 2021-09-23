@@ -41,19 +41,25 @@ class PriceController extends Controller
     {
     }
 
-    public function excel($from = null)
+    public function excel($year = null, $month = null)
     {
         $now = Carbon::now()->format('Ymd-Hi');
-        $export = new CaravanDatesExport($from);
+        $export = new CaravanDatesExport($year, $month);
         return Excel::download($export, $now.'_caravan_dates.xlsx');
     }
 
-    public function pdf(Carbon $from)
+    public function pdf($year = null, $month = null)
     {
-        $data = CaravanDates::with('caravan')
-            ->whereDate('from','>=', $from)
-            ->orderBy('from')
-            ->get()
-        ;
+        $query = CaravanDates::with('caravan');
+
+        if($year) {
+            $query->whereRaw('YEAR(`from`) = ?', [$year]);
+            if($month) {
+                $query->whereRaw('YEAR(`from`) = ? AND MONTH(`from`) = ?', [$year, $month]);
+            }
+        }
+
+        $data = $query->orderBy('from')->get();
+        // @todo: generate pdf  by html view
     }
 }
