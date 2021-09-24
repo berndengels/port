@@ -164,7 +164,7 @@ class CaravanDatesController extends Controller
         }
         try {
             $export = new CaravanDatesExport($from);
-
+            //@todo: get excel from content, not per file
             if(Excel::store($export, $fileName, 'temp')) {
                 Mail::send(new SendExcel($email, $export, $fullPath));
             }
