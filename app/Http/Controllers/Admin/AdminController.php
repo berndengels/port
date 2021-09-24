@@ -21,7 +21,6 @@ class AdminController extends BaseController
      * @var Collection
      */
     protected $caravanOptions;
-    protected $caravanOptionsJson;
 
     public function __construct()
     {
@@ -40,7 +39,7 @@ class AdminController extends BaseController
             ->map
             ->carnumber;
 
-        $this->caravanOptions->prepend('Kennzeichen suchen','');
+        $this->caravanOptions->prepend('Kennzeichen suchen','')->toArray();
         $this->caravanOptionsAutocomplete = $caravans;
     }
 
