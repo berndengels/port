@@ -1,5 +1,4 @@
 require('./bootstrap');
-import $ from "jquery";
 
 $(document).ready(function () {
 	const $sideNav = $('.sidenav');

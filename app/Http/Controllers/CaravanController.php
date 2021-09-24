@@ -6,6 +6,8 @@ use App\Models\Country;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use App\Models\Caravan;
+use Illuminate\Pipeline\Pipeline;
+use App\Filters\Caravan\CaravanFilter;
 use Illuminate\Http\Response;
 use App\Http\Requests\CaravanRequest;
 use Illuminate\Support\Facades\Redirect;
@@ -44,10 +46,20 @@ class CaravanController extends Controller
         $id = $request->input('caravan');
 
         $query = Caravan::orderBy('carnumber');
+/*
         if($id) {
             $query->whereId($id);
         }
-        $caravans = $query->paginate(20);
+*/
+        $caravans = app(Pipeline::class)
+            ->send($query)
+            ->through([CaravanFilter::class])
+            ->via('apply')
+            ->then(function ($query) {
+                return $query->paginate(20);
+            })
+        ;
+//        $caravans = $query->paginate(20);
 
         return view('admin.caravans.index', [
             'caravanOptions' => $this->caravanOptions,
