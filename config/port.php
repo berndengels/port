@@ -79,4 +79,7 @@ return [
         'zoom'  => 12,
         'token' => env('MIX_NAVIONICS_TOKEN'),
     ],
+    'default'   => [
+        'country_id'    => env('DEFAULT_COUNTRY_ID', 55)
+    ],
 ];

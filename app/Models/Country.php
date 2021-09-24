@@ -1,11 +1,9 @@
 <?php
-
 namespace App\Models;
 
 use Eloquent;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 /**
  * App\Models\Country
@@ -33,8 +31,6 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Country extends Model
 {
-    use HasFactory;
-
     protected $table = 'countries';
     protected $guarded = ['id'];
     public $timestamps = false;

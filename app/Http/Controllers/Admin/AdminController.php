@@ -25,6 +25,7 @@ class AdminController extends BaseController
 
     public function __construct()
     {
+        // @todo: set cache for countries
         $this->countries = Country::orderBy('de')
             ->get(['id','de'])
             ->keyBy('id')
@@ -33,6 +34,7 @@ class AdminController extends BaseController
         ;
         $caravans = Caravan::orderBy('carnumber')->get();
 
+        // @todo: set cache for caravanOptions
         $this->caravanOptions = $caravans
             ->keyBy('id')
             ->map

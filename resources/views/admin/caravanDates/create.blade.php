@@ -15,7 +15,7 @@
 
             <x-form-input id="carnumber" name="carnumber" type="text" label="Kennzeichen" autocomplete="off" required />
             <ul id="caravans" class="hidden w-full autocomplete"></ul>
-            <x-form-select id="country_id" name="country_id" label="Herkunftsland" :options="$countries" :default="55" />
+            <x-form-select id="country_id" name="country_id" label="Herkunftsland" :options="$countries" :default="{{ config('port.default.country_id') }}" />
             <x-form-input id="carlength" name="carlength" label="Länge" required />
             <x-form-input id="email" type="email" name="email" label="Email" />
 

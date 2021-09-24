@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Schema;
 
 class CaravanDatesSeeder extends Seeder
 {
-    private $count = 1500;
+    private $count = 1000;
     /**
      * Run the database seeds.
      *

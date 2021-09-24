@@ -1,13 +1,14 @@
 <?php
+
 namespace Database\Seeders;
 
-use App\Models\Caravan;
+use App\Models\Country;
+use Database\Data\CountryData;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
 
-class CaravanSeeder extends Seeder
+class CountrySeeder extends Seeder
 {
-    private $count = 500;
     /**
      * Run the database seeds.
      *
@@ -16,9 +17,9 @@ class CaravanSeeder extends Seeder
     public function run()
     {
         Schema::disableForeignKeyConstraints();
-        Caravan::truncate();
-        Caravan::factory()
-            ->count($this->count)
-            ->create();
+        Country::truncate();
+        foreach(CountryData::$data as $item) {
+            Country::create($item);
+        }
     }
 }

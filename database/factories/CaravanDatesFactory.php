@@ -31,7 +31,7 @@ class CaravanDatesFactory extends Factory
         $caravans = $this->getCaravans();
         $max = max($caravans->keys()->toArray()) - 1;
         $randomDateEnd = Carbon::today()->addMonths(1)->format('Y-m-d');
-        $from       = $this->randomDate('2016-01-01', $randomDateEnd,'Y-m-d');
+        $from       = $this->randomDate('2020-01-01', $randomDateEnd,'Y-m-d');
         $until      = Carbon::create($from)->addDays(rand(1,7));
         $randIndex  = rand(0, $max);
         $persons    = rand(1, 4);
