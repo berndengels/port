@@ -4,7 +4,6 @@ namespace App\Filters\Caravan;
 
 use Closure;
 use App\Filters\IPipe;
-use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
 
 class CaravanFilter implements IPipe
