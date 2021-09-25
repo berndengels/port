@@ -62,9 +62,8 @@
 <script>
     $(".btn-reset").click( e => {
 		e.preventDefault();
-	    let frm = document.frmFilter;
-		$(frm.caravan).val('')
-	    frm.submit();
+		document.frmFilter.caravan.value = ''
+	    document.frmFilter.submit();
     });
 </script>
 @endpush
