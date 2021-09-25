@@ -13,7 +13,7 @@
             </div>
             <div></div>
         </div>
-        <x-form class="inline-form ml-5" method="get" name="frmFilter" action="{{ route('admin.caravans.index') }}">
+        <x-form class="inline-form ml-5" method="get" id="frmFilter" name="frmFilter" action="{{ route('admin.caravans.index') }}">
             @csrf
             <x-form-select
                     name="caravan"
@@ -24,7 +24,7 @@
                     onchange="document.frmFilter.submit()"
                     floating
             />
-            <button class="btn btn-reset inline" onclick="document.frmFilter.caravan.value = ''">Reset</button>
+            <button class="btn btn-reset inline">Reset</button>
         </x-form>
         {{ $data->links() }}
         <table class="table w-full">
@@ -58,3 +58,13 @@
     </div>
 @endsection
 
+@push('inline-scripts')
+<script>
+    $(".btn-reset").click( e => {
+		e.preventDefault();
+	    let frm = document.frmFilter;
+		$(frm.caravan).val('')
+	    frm.submit();
+    });
+</script>
+@endpush

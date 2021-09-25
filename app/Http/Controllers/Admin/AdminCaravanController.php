@@ -20,27 +20,19 @@ class AdminCaravanController extends AdminController
      */
     public function index(Request $request)
     {
-        $id = $request->input('caravan');
+        $id = $request->post('caravan');
 
         $query = Caravan::orderBy('carnumber');
-/*
+
         if($id) {
             $query->whereId($id);
         }
-        $caravans = $query->paginate(config('port.default.pagination.limit'));
-*/
-        $caravans = app(Pipeline::class)
-            ->send($query)
-            ->through([CaravanFilter::class])
-            ->via('apply')
-            ->then(function ($query) {
-                return $query->paginate(config('port.default.pagination.limit'));
-            })
-        ;
+
+        $data = $query->paginate(config('port.default.pagination.limit'));
 
         return view('admin.caravans.index', [
             'caravanOptions' => $this->caravanOptions,
-            'data'  => $caravans,
+            'data'  => $data,
             'id'    => $id,
         ]);
     }
