@@ -80,6 +80,9 @@ return [
         'token' => env('MIX_NAVIONICS_TOKEN'),
     ],
     'default'   => [
-        'country_id'    => env('DEFAULT_COUNTRY_ID', 55)
+        'country_id'    => env('DEFAULT_COUNTRY_ID', 55),
+        'pagination'    => [
+            'limit' => env('PAGINATIN_LIMIT', 10)
+        ],
     ],
 ];

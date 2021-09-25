@@ -5,14 +5,15 @@ namespace App\Filters\Caravan;
 use Closure;
 use App\Filters\IPipe;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Builder;
 
 class CaravanFilter implements IPipe
 {
-    public function apply($caravans, Closure $next, Request $request)
+    public function apply(Builder $query, Closure $next)
     {
-        if($request->has('caravan')) {
-            $caravans->find($request->input('carnumber'));
+        if(request()->has('caravan')) {
+            $query->whereId(request()->input('caravan'));
         }
-        return $next($caravans);
+        return $next($query);
     }
 }

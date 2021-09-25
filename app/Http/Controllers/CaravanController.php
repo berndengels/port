@@ -46,20 +46,14 @@ class CaravanController extends Controller
         $id = $request->input('caravan');
 
         $query = Caravan::orderBy('carnumber');
-/*
-        if($id) {
-            $query->whereId($id);
-        }
-*/
+
         $caravans = app(Pipeline::class)
             ->send($query)
             ->through([CaravanFilter::class])
             ->via('apply')
             ->then(function ($query) {
-                return $query->paginate(20);
-            })
-        ;
-//        $caravans = $query->paginate(20);
+                return $query->paginate(config('port.default.pagination.limit'));
+            });
 
         return view('admin.caravans.index', [
             'caravanOptions' => $this->caravanOptions,

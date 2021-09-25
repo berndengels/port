@@ -45,7 +45,7 @@ class AdminCaravanDatesController extends AdminController
             $query->whereCaravanId($caravanId);
         }
 
-        $data = $query->paginate(20);
+        $data = $query->paginate(config('port.default.pagination.limit'));
 
         return view('admin.caravanDates.index', [
             'data'              => $data,
