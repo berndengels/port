@@ -7,6 +7,7 @@ use App\Exports\CaravanDatesExport;
 use App\Rules\DatesIntervalUnique;
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Caravan;
 use App\Models\CaravanDates;
@@ -36,24 +37,76 @@ class AdminCaravanDatesController extends AdminController
      */
     public function index(Request $request)
     {
-        $caravanId = $request->input('caravan');
+        $caravanId  = $request->post('caravan');
+        $dublicatéId = $request->post('dublicate');
+        $year       = $request->post('year');
+        $month      = $request->post('month');
 
-        $query = CaravanDates::with('caravan')
-            ->orderByDesc('from');
-
-        if($caravanId) {
-            $query->whereCaravanId($caravanId);
+        if($year || $month) {
+            $caravanId = null;
+            $dublicatéId = null;
         }
 
-        $data = $query->paginate(config('port.default.pagination.limit'));
+        if($dublicatéId || $caravanId) {
+            $year = null;
+            $month = null;
+
+            if($dublicatéId) {
+                $caravanId = $dublicatéId;
+            }
+        }
+
+        /**
+         * @var $query Builder
+         */
+        $query = CaravanDates::with('caravan')
+            ->orderByDesc('from')
+        ;
+        $dublicateOptions = CaravanDates::dublicates()
+            ->get()
+            ->keyBy('caravan_id')
+            ->sortByDesc('anzahl')
+            ->map(function($item) {
+                return "$item->carnumber";
+            })
+            ->prepend('Kennzeichen wählen', '')
+        ;
+
+        $yearOptions = CaravanDates::selectRaw('YEAR(`from`) AS year')
+            ->groupByRaw('year')
+            ->get()
+            ->keyBy('year')
+            ->map
+            ->year
+            ->prepend('Jahr wählen', '')
+        ;
+
+        $monthOptions = CaravanDates::selectRaw('MONTH(`from`) AS number, MONTHNAME(`from`) AS monthname')
+            ->groupByRaw('number')
+            ->get()
+            ->keyBy('number')
+            ->map
+            ->monthname
+            ->prepend('Monat wählen', '')
+        ;
+        $data = $query
+            ->caravanByDates($caravanId)
+            ->fromYearMonth($year, $month)
+            ->paginate(config('port.default.pagination.limit'))
+        ;
 
         return view('admin.caravanDates.index', [
             'data'              => $data,
             'years'             => $this->years,
             'monthsByYear'      => $this->monthsByYear,
             'caravanOptions'    => $this->caravanOptions,
+            'dublicateOptions'  => $dublicateOptions,
+            'yearOptions'       => $yearOptions,
+            'monthOptions'      => $monthOptions,
             'caravanId'         => $caravanId,
-
+            'dublicateId'       => $dublicatéId,
+            'year'              => $year,
+            'month'             => $month,
         ]);
     }
 

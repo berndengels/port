@@ -47,6 +47,7 @@ class CaravanDatesController extends Controller
      */
     public function index(Request $request)
     {
+
         return view('caravanDates.index', [
             'years'         => $this->years,
             'monthsByYear'  => $this->monthsByYear,
@@ -94,18 +95,6 @@ class CaravanDatesController extends Controller
         $caravanDate = $caravan->dates()->create($validated);
 
         return $this->show($caravanDate);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param CaravanDates $caravanDate
-     * @return Response
-     */
-    public function show(CaravanDates $caravanDate)
-    {
-        $caravanDate->load('caravan');
-        return Inertia::render('CaravanDates/show', compact('caravanDate'));
     }
 
     /**

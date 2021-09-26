@@ -2,13 +2,15 @@
 
 namespace App\Models;
 
-use Database\Factories\CaravanDatesFactory;
 use Eloquent;
+use Illuminate\Support\Carbon;
+use App\Models\Filter\CaravanFilter;
+use App\Models\Filter\YearMonthFilter;
+use Database\Factories\CaravanDatesFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Collection;
+use Illuminate\Database\Query\JoinClause;
 
 /**
  * App\Models\CaravanDates
@@ -43,7 +45,7 @@ use Illuminate\Support\Collection;
  */
 class CaravanDates extends Model
 {
-    use HasFactory;
+    use HasFactory, CaravanFilter, YearMonthFilter;
 
     protected $table = 'caravan_dates';
     protected $guarded = ['id'];
@@ -62,6 +64,24 @@ class CaravanDates extends Model
     public function caravan()
     {
         return $this->belongsTo(Caravan::class);
+    }
+
+    public function scopeDublicates(Builder $builder)
+    {
+        $builder->selectRaw('cd.*, c.carnumber, c.carlength, c.email, COUNT(cd.caravan_id) anzahl')
+            ->from($this->table, 'cd')
+            ->join('caravans AS c', 'c.id','=', 'cd.caravan_id')
+            ->join('caravan_dates AS cd2', function (JoinClause $j){
+                return $j
+                    ->whereRaw('cd2.id != cd.id ')
+                    ->whereRaw('cd2.caravan_id = cd.caravan_id')
+                    ->whereRaw('(DATE(cd.from) BETWEEN cd2.from AND cd2.until OR DATE(cd.until) BETWEEN cd2.from AND cd2.until)')
+                    ;
+            })
+            ->groupBy(['cd.caravan_id'])
+            ->having('anzahl','>', 1)
+        ;
+        return $builder;
     }
 
     public function getValidFromAttribute() {

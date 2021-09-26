@@ -43,22 +43,17 @@ class CaravanController extends Controller
      */
     public function index(Request $request)
     {
-        $id = $request->input('caravan');
+        $caravanId = $request->input('caravan');
 
-        $query = Caravan::orderBy('carnumber');
-
-        $caravans = app(Pipeline::class)
-            ->send($query)
-            ->through([CaravanFilter::class])
-            ->via('apply')
-            ->then(function ($query) {
-                return $query->paginate(config('port.default.pagination.limit'));
-            });
+        $data = Caravan::orderBy('carnumber')
+            ->caravan($caravanId)
+            ->paginate(config('port.default.pagination.limit'))
+        ;
 
         return view('admin.caravans.index', [
-            'caravanOptions' => $this->caravanOptions,
-            'data'  => $caravans,
-            'id'    => $id,
+            'caravanOptions'    => $this->caravanOptions,
+            'data'              => $data,
+            'caravanId'         => $caravanId,
         ]);
     }
 

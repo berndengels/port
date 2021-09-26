@@ -34,6 +34,7 @@ class AdminController extends BaseController
             ->keyBy('id')
             ->map
             ->de
+            ->prepend('Land wählen','')
         ;
         $caravans = Caravan::orderBy('carnumber')->get();
 
@@ -41,9 +42,10 @@ class AdminController extends BaseController
         $this->caravanOptions = $caravans
             ->keyBy('id')
             ->map
-            ->carnumber;
+            ->carnumber
+            ->prepend('Kennzeichen wählen','')
+        ;
 
-        $this->caravanOptions->prepend('Kennzeichen suchen','')->toArray();
         $this->caravanOptionsAutocomplete = $caravans;
     }
 

@@ -1,6 +1,7 @@
 <?php
 namespace App\Models;
 
+use App\Models\Filter\CaravanFilter;
 use Eloquent;
 use Database\Factories\CaravanFactory;
 use Illuminate\Database\Eloquent\Builder;
@@ -32,7 +33,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Caravan extends Model
 {
-    use HasFactory;
+    use HasFactory, CaravanFilter;
 
     protected $table = 'caravans';
     protected $guarded = ['id'];

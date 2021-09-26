@@ -24,6 +24,34 @@
                     onchange="document.frmFilter.submit()"
                     floating
             />
+            <x-form-select
+                    name="dublicate"
+                    class="inline-block"
+                    :options="$dublicateOptions"
+                    :default="$dublicateId"
+                    placeholder="Dublicate"
+                    onchange="document.frmFilter.submit()"
+                    floating
+            />
+            <x-form-select
+                    name="year"
+                    class="inline-block"
+                    :options="$yearOptions"
+                    :default="$year"
+                    placeholder="Jahr"
+                    onchange="document.frmFilter.submit()"
+                    floating
+            />
+            <x-form-select
+                    name="month"
+                    class="inline-block"
+                    :options="$monthOptions"
+                    :default="$month"
+                    placeholder="Monat"
+                    onchange="document.frmFilter.submit()"
+                    floating
+            />
+
             <button class="btn btn-reset inline" onclick="document.frmFilter.caravan.value = ''">Reset</button>
         </x-form>
         {{ $data->links() }}
@@ -40,7 +68,9 @@
             @foreach($data as $item)
                 <tr>
                     <td>
-                        <a class="carnumber cursor-pointer" href="{{ route('admin.caravanDates.show', ['caravanDate' => $item->id]) }}">{{ $item->caravan->carnumber }}</a>
+                        <a class="carnumber cursor-pointer" href="{{ route('admin.caravanDates.show', ['caravanDate' => $item]) }}">
+                            {{ $item->caravan->carnumber }}
+                        </a>
                     </td>
 
                     <td class="hidden md:table-cell">{{ $item->caravan->carlength }} m</td>
