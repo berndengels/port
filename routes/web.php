@@ -37,7 +37,7 @@ Route::group([
     Route::resource('caravanDates', AdminCaravanDatesController::class);
 
     Route::post('caravanDates/sendExcel/{from?}', [AdminCaravanDatesController::class, 'sendExcel'])->name('caravanDates.sendExcel');
-    Route::post('caravan/price/calculate', [AdminPriceController::class, 'calculate'])->name('caravan.price.calculate');
+    Route::match(['post','put'],'caravan/price/calculate', [AdminPriceController::class, 'calculate'])->name('caravan.price.calculate');
     Route::get('caravan/price/excel/{year?}/{month?}', [AdminPriceController::class, 'excel'])->name('caravan.price.excel');
     Route::get('caravan/price/pdf/{year?}/{month?}', [AdminPriceController::class, 'pdf'])->name('caravan.price.pdf');
 

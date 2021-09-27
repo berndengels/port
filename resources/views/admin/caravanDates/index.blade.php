@@ -13,48 +13,40 @@
             </div>
             <div></div>
         </div>
-        <x-form class="inline-form ml-5" method="get" name="frmFilter" action="{{ route('admin.caravanDates.index') }}">
-            @csrf
+        <x-form class="inline-form ml-5" method="get" id="frmFilter" name="frmFilter"
+                action="{{ route('admin.caravanDates.index') }}"
+        >
             <x-form-select
                     name="caravan"
-                    class="inline-block"
+                    class="inline-block filter"
                     :options="$caravanOptions"
-                    :default="$caravanId"
-                    placeholder="Filter nach Kennzeichen"
-                    onchange="document.frmFilter.submit()"
+                    :default="$caravan"
                     floating
             />
             <x-form-select
                     name="dublicate"
-                    class="inline-block"
+                    class="inline-block filter"
                     :options="$dublicateOptions"
-                    :default="$dublicateId"
-                    placeholder="Dublicate"
-                    onchange="document.frmFilter.submit()"
+                    :default="$dublicate"
                     floating
             />
             <x-form-select
                     name="year"
-                    class="inline-block"
+                    class="inline-block filter"
                     :options="$yearOptions"
                     :default="$year"
-                    placeholder="Jahr"
-                    onchange="document.frmFilter.submit()"
                     floating
             />
             <x-form-select
                     name="month"
-                    class="inline-block"
+                    class="inline-block filter d-none"
                     :options="$monthOptions"
                     :default="$month"
-                    placeholder="Monat"
-                    onchange="document.frmFilter.submit()"
                     floating
             />
-
-            <button class="btn btn-reset inline" onclick="document.frmFilter.caravan.value = ''">Reset</button>
+            <button class="btn btn-reset inline">Reset</button>
         </x-form>
-        {{ $data->links() }}
+        {{ $data->appends($queryString)->links() }}
         <table class="table w-full">
             <tr>
                 <th>Kennzeichen</th>
@@ -92,6 +84,59 @@
             @endforeach
         </table>
 
-        {{ $data->links() }}
+        {{ $data->appends($queryString)->links() }}
     </div>
 @endsection
+
+@push('inline-scripts')
+    <script>
+	    const frm = document.frmFilter,
+		    filter = (e) => {
+			    e.stopPropagation()
+			    let el = e.target;
+			    console.info(el.name)
+				if('' === el.value && ['year','month'].indexOf(el.name) === -1) {
+					return;
+				}
+				switch (el.name) {
+					case 'caravan':
+						frm.dublicate.value = '';
+						frm.year.value = '';
+						frm.month.value = '';
+						break
+					case 'dublicate':
+						frm.caravan.value = '';
+						frm.year.value = '';
+						frm.month.value = '';
+						break
+					case 'year':
+						if(frm.year.value === '') {
+							frm.month.value = '';
+						}
+						frm.caravan.value = '';
+						frm.dublicate.value = '';
+						$(frm.month).show();
+						break
+					case 'month':
+						frm.caravan.value = '';
+						frm.dublicate.value = '';
+						break
+				}
+				frm.submit()
+            },
+            reset = (e) => {
+			    e.preventDefault()
+                frm.caravan.value = '';
+                frm.dublicate.value = '';
+                frm.year.value = '';
+                frm.month.value = '';
+                $(frm.month).hide();
+				frm.submit()
+            };
+
+		frm.querySelectorAll('.filter').forEach(item => {
+			item.onchange = filter
+        })
+	    frm.querySelector('.btn-reset').onclick = reset
+    </script>
+@endpush

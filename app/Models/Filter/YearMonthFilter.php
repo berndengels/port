@@ -11,7 +11,6 @@ trait YearMonthFilter
             $builder->whereYear('from', $year);
             if($month) {
                 $builder->whereMonth('from', $month);
-//                dd($year, $month);
             }
         }
         return $builder;

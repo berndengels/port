@@ -24,6 +24,3 @@
     <footer class="footer">
     </footer>
 </div>
-
-@stack('inline-scripts')
-

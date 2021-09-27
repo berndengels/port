@@ -37,10 +37,10 @@ class AdminCaravanDatesController extends AdminController
      */
     public function index(Request $request)
     {
-        $caravanId  = $request->post('caravan');
-        $dublicatéId = $request->post('dublicate');
-        $year       = $request->post('year');
-        $month      = $request->post('month');
+        $caravanId  = $request->input('caravan');
+        $dublicatéId = $request->input('dublicate');
+        $year       = $request->input('year');
+        $month      = $request->input('month');
 
         if($year || $month) {
             $caravanId = null;
@@ -50,10 +50,6 @@ class AdminCaravanDatesController extends AdminController
         if($dublicatéId || $caravanId) {
             $year = null;
             $month = null;
-
-            if($dublicatéId) {
-                $caravanId = $dublicatéId;
-            }
         }
 
         /**
@@ -90,10 +86,11 @@ class AdminCaravanDatesController extends AdminController
             ->prepend('Monat wählen', '')
         ;
         $data = $query
-            ->caravanByDates($caravanId)
+            ->caravanByDates($caravanId ?? $dublicatéId)
             ->fromYearMonth($year, $month)
             ->paginate(config('port.default.pagination.limit'))
         ;
+        $queryString = $request->only(['caravan','dublicate','year', 'month']);
 
         return view('admin.caravanDates.index', [
             'data'              => $data,
@@ -103,10 +100,11 @@ class AdminCaravanDatesController extends AdminController
             'dublicateOptions'  => $dublicateOptions,
             'yearOptions'       => $yearOptions,
             'monthOptions'      => $monthOptions,
-            'caravanId'         => $caravanId,
-            'dublicateId'       => $dublicatéId,
+            'caravan'           => $caravanId,
+            'dublicate'         => $dublicatéId,
             'year'              => $year,
             'month'             => $month,
+            'queryString'       => $queryString,
         ]);
     }
 

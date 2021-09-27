@@ -5,7 +5,7 @@
         <x-nav-link :href="route('admin.caravanDates.index')" icon="fas fa-backward" class="btn">zurück</x-nav-link>
         <x-form name="frm" action="{{ route('admin.caravanDates.store') }}" class="w-full lg:w-1/2">
         @method('post')
-            <x-form-input name="prices" type="hidden" label="Kennzeichen" />
+            <x-form-input name="prices" type="hidden" />
 			<x-form-input id="carnumber" name="carnumber" type="text" label="Kennzeichen" autocomplete="off" required />
 			<ul id="caravans" class="hidden w-full autocomplete"></ul>
 			<x-form-select id="country_id" name="country_id" label="Herkunftsland" :options="$countries" default="{{ config('port.default.country_id') }}" />
@@ -26,63 +26,11 @@
 
 @push('inline-scripts')
     <script>
-		const calcUrl		= "{{ route("admin.caravan.price.calculate") }}",
-			caravanOptions 	= {!! $caravanOptions !!},
-		    $elSelect       = $('#caravans'),
-		    $elCarnumber    = $('#carnumber'),
-			$elCarlength    = $('#carlength'),
-			$elCountryId    = $('#country_id'),
-			$elEmail        = $('#email'),
-			caravans        = [],
-            $elObserve      = $('.calc'),
-            caravan = null;
+		const calcUrl = "{{ route("admin.caravan.price.calculate") }}",
+				caravanOptions = {!! $caravanOptions !!};
 
-		var filterd = [];
-		$elCarnumber.keyup(e => {
-			var $el=$(e.target),$li=$('<li>'),i=0,item;
-			$elSelect.empty();
-
-            if($el.val().length > 0) {
-				for(item of caravanOptions) {
-					if(item.carnumber.indexOf($el.val().toUpperCase()) === 0) {
-						caravans[item.id] = item
-						$elSelect.append($($li.clone().attr('data-id', item.id).text(item.carnumber)))
-                        i++
-					}
-                }
-	            if(i > 0) {
-		            $elSelect.removeClass('hidden');
-                } else {
-		            $elSelect.addClass('hidden');
-                }
-            }
-        });
-		$elSelect.click(e => {
-			let $el = $(e.target)
-			let caravan = caravans[$el.data('id')]
-			$elCarnumber.val(caravan.carnumber)
-            $elCarlength.val(caravan.carlength)
-            $elCountryId.val(caravan.country_id)
-            $elEmail.val(caravan.email)
-			$elSelect.addClass('hidden');
-        });
-		$elObserve.change(el => {
-			var frm = document.frm;
-
-			if("" !== frm.from.value && frm.until.value && frm.persons.value && frm.carlength.value) {
-				let formData = new FormData();
-				for(elem of frm.elements) {
-					formData.append(elem.name, elem.value)
-                }
-				formData.set('electric', frm.electric.checked ? 1 : 0)
-				axios.post(calcUrl, formData)
-					.then(resp => {
-						frm.price.value = resp.data.total
-						frm.prices.value = JSON.stringify(resp.data.prices)
-					})
-					.catch(err => console.error(err))
-				;
-            }
-        });
+		$(document).ready(() => {
+			CaravanPrice.calculate(calcUrl, caravanOptions);
+		})
     </script>
 @endpush

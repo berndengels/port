@@ -12,7 +12,13 @@
     @stack('styles')
     <!-- Scripts -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="{{ mix('js/app.js') }}" defer></script>
+
+    @auth()
+        <script src="{{ mix('js/app-admin.js') }}" defer></script>
+    @else
+        <script src="{{ mix('js/app.js') }}" defer></script>
+    @endauth
+
     @stack('scripts')
 </head>
 <body class="font-sans antialiased" data-root="http://webapiv2.navionics.com/dist/webapi/images">
@@ -21,5 +27,8 @@
     @else
         @include('layouts.public')
     @endauth
+
+    @stack('inline-scripts')
+
 </body>
 </html>
