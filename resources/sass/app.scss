@@ -120,7 +120,7 @@ a {
 //        display: none;
         @include media('>tablet') {
             display: inline;
-            margin-left: 0.5rem;
+//            margin-left: 0.5rem;
         }
     }
     &.no-hide-text {
@@ -143,7 +143,7 @@ i {
     &.fas {
         margin-right: 0.2rem;
         &.fa-shipping-fast {
-            margin-right: 0.5rem;
+            margin-right: 0.4rem;
         }
     }
     &.far {
@@ -460,5 +460,50 @@ nav[role="navigation"] {
         padding: 0;
         list-style: none;
         cursor: pointer;
+    }
+}
+.alert {
+    &.alert-block {
+        display: block;
+        width: 100%;
+        height: auto;
+        padding: 1rem 1rem;
+        font-weight: bold;
+        text-align: center;
+
+        &.alert-success {
+            background-color: #0c0;
+            span {
+                color: #fff;
+            }
+        }
+        &.alert-danger {
+            background-color: #f00;
+            span {
+                color: #900;
+            }
+        }
+        &.alert-warning {
+            background-color: #f00;
+            span {
+                color: #080;
+            }
+        }
+        &.alert-info {
+            background-color: #f60;
+            span {
+                color: #fff;
+            }
+        }
+
+        &.close {
+            positiom: absolute;
+            margin: 0.5rem 0.5rem 0 0;
+            color: #000;
+            font-weight: bold;
+            font-size: 1.5rem;
+            reight: 0;
+            top: 0;
+        }
     }
 }

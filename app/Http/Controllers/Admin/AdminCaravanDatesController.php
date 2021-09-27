@@ -231,9 +231,10 @@ class AdminCaravanDatesController extends AdminController
                 Mail::send(new SendExcel($email, $export, $fullPath));
             }
             unlink($fullPath);
-            return response()->json(['success' => true, 'error' => null]);
+//            return response()->json(['success' => true, 'error' => null]);
+            return back()->with(['success' => 'Excel-Datei erfolgreich versand!']);
         } catch (Exception $e) {
-            return response()->json(['success' => false, 'error' => $e->getMessage()]);
+            return back()->withErrors(['error' => 'Excel-Datei konnte nicht versand werden!']);
         }
     }
 }

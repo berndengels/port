@@ -11,17 +11,19 @@
                         text="Neueintrag"
                 />
             </div>
-            @if($caravanDates->count() > 0)
+            @if($data->count() > 0 && $year || $month)
             <div class="float-right">
-                <a :href="route('caravan.price.excel', ['year' => $year, 'month' => $month])"
+                <a href="{{ route('admin.caravan.price.excel', ['year' => $year, 'month' => $month]) }}"
                         class="btn btn-second ml-2 my-2 no-hide-text"
                         target="_blank"
                         title="Excel-Datei runterladen"
                 ><i class="far fa-file-excel"></i>Excel Download</a>
 
-                <x-form method="post" :action="route('caravanDates.sendExcel', ['year' => $year, 'month' => $month])"  css="flex-inline">
+                <x-form method="post" :action="route('admin.caravanDates.sendExcel')" class="flex-inline">
+                    <x-form-input type="hidden" name="year" :bind="$year" />
+                    <x-form-input type="hidden" name="month" :bind="$month" />
                     <x-form-input type="email" name="email" required autocomplete="email" placeholder="Email-Adresse" />
-                    <x-form-input onclick="sendExcel" class="btn btn-second" icon="fas fa-shipping-fast">Sende Excel</x-form-input>
+                    <x-form-submit name="submit" class="btn btn-second" icon="fas fa-shipping-fast">Sende Excel</x-form-submit>
                 </x-form>
             </div>
             @endif
@@ -50,13 +52,15 @@
                     :default="$year"
                     floating
             />
+            @if($year)
             <x-form-select
                     name="month"
-                    class="inline-block filter d-none"
+                    class="inline-block filter"
                     :options="$monthOptions"
                     :default="$month"
                     floating
             />
+            @endif
             <button class="btn btn-reset inline">Reset</button>
         </x-form>
         {{ $data->appends($queryString)->links() }}
@@ -85,12 +89,17 @@
                     <td class="hidden md:table-cell">{{ $item->price }} €</td>
 
                     <td>
-                        <x-nav-link href="{{ route('admin.caravanDates.edit', $item) }}" icon="fas fa-edit" class="btn" title="Bearbeiten">Edit</x-nav-link>
+                        <x-nav-link href="{{ route('admin.caravanDates.edit', $item) }}" icon="fas fa-edit" class="btn" title="Bearbeiten">
+                            <span class="hidden md:visible">Edit</span>
+                        </x-nav-link>
                     </td>
                     <td>
-                        <x-form action="{{ route('admin.caravanDates.destroy', ['caravanDate' => $item]) }}" class="inline-block m-0 p-0">
+                        <x-form action="{{ route('admin.caravanDates.destroy', ['caravanDate' => $item]) }}"
+                                class="inline-block m-0 p-0">
                             @method('delete')
-                            <x-form-submit icon="fas fa-trash-alt" class="btn-red delSoft">Löschen</x-form-submit>
+                            <x-form-submit icon="fas fa-trash-alt" class="btn-red delSoft">
+                                <span class="hidden md:visible">Löschen</span>
+                                </x-form-submit>
                         </x-form>
                     </td>
                 </tr>
@@ -108,7 +117,6 @@
     <script>
 	    const frm = document.frmFilter,
 		    filter = (e) => {
-			    e.stopPropagation()
 			    let el = e.target;
 			    console.info(el.name)
 				if('' === el.value && ['year','month'].indexOf(el.name) === -1) {
@@ -118,20 +126,23 @@
 					case 'caravan':
 						frm.dublicate.value = '';
 						frm.year.value = '';
-						frm.month.value = '';
+						if(frm.month) {
+							frm.month.value = '';
+                        }
 						break
 					case 'dublicate':
 						frm.caravan.value = '';
 						frm.year.value = '';
-						frm.month.value = '';
+						if(frm.month) {
+							frm.month.value = '';
+						}
 						break
 					case 'year':
-						if(frm.year.value === '') {
+						if(frm.year.value === '' && frm.month) {
 							frm.month.value = '';
 						}
 						frm.caravan.value = '';
 						frm.dublicate.value = '';
-						$(frm.month).show();
 						break
 					case 'month':
 						frm.caravan.value = '';

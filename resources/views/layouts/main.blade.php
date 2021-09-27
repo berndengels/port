@@ -22,6 +22,8 @@
     @stack('scripts')
 </head>
 <body class="font-sans antialiased" data-root="http://webapiv2.navionics.com/dist/webapi/images">
+    @include('components.flash-message')
+
     @auth()
         @include('layouts.admin')
     @else

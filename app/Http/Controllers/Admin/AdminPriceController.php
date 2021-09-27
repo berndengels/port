@@ -38,10 +38,10 @@ class AdminPriceController extends AdminController
     {
     }
 
-    public function excel($from = null)
+    public function excel($year = null, $month = nll)
     {
         $now = Carbon::now()->format('Ymd-Hi');
-        $export = new CaravanDatesExport($from);
+        $export = new CaravanDatesExport($year, $month);
         return Excel::download($export, $now.'_caravan_dates.xlsx');
     }
 

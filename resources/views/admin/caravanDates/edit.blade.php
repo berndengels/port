@@ -23,7 +23,7 @@
             <x-form-input name="price" label="Preis" required />
             @endbind
             <div class="mt-2">
-                <x-form-submit class="btn btn-save" icon="fas fa-save">Speichern</x-form-submit>
+                <x-form-submit class="btn btn-save h-10 mt-3 w-full md:w-1/2" icon="fas fa-save">Speichern</x-form-submit>
             </div>
         </x-form>
     </div>
