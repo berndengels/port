@@ -3,7 +3,7 @@
 @section('main')
     <div>
         <div class="index-header mt-3">
-            <div>
+            <div class="float-left">
                 <x-nav-link
                         href="{{ route('admin.caravanDates.create') }}"
                         class="btn"
@@ -11,7 +11,20 @@
                         text="Neueintrag"
                 />
             </div>
-            <div></div>
+            @if($caravanDates->count() > 0)
+            <div class="float-right">
+                <a :href="route('caravan.price.excel', ['year' => $year, 'month' => $month])"
+                        class="btn btn-second ml-2 my-2 no-hide-text"
+                        target="_blank"
+                        title="Excel-Datei runterladen"
+                ><i class="far fa-file-excel"></i>Excel Download</a>
+
+                <x-form method="post" :action="route('caravanDates.sendExcel', ['year' => $year, 'month' => $month])"  css="flex-inline">
+                    <x-form-input type="email" name="email" required autocomplete="email" placeholder="Email-Adresse" />
+                    <x-form-input onclick="sendExcel" class="btn btn-second" icon="fas fa-shipping-fast">Sende Excel</x-form-input>
+                </x-form>
+            </div>
+            @endif
         </div>
         <x-form class="inline-form ml-5" method="get" id="frmFilter" name="frmFilter"
                 action="{{ route('admin.caravanDates.index') }}"

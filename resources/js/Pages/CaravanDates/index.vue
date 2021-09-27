@@ -1,5 +1,5 @@
 <template>
-    <AdminLayout title="Wohnwagen Rezeption">
+    <AdminLayout title="Wohnmobil Rezeption">
         <template #main>
             <div class="w-full clear-both">
                 <div class="float-left">

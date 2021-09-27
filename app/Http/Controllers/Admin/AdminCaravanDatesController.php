@@ -217,17 +217,15 @@ class AdminCaravanDatesController extends AdminController
         return Redirect::route('admin.caravanDates.index');
     }
 
-    public function sendExcel(Request $request, $from = null)
+    public function sendExcel(Request $request, $year = null, $month = null)
     {
         $email      = $request->post('email');
         $now        = Carbon::now()->format('Ymd-Hi');
         $fileName   = $now.'_caravan_dates.xls';
         $fullPath   = storage_path('app/temp/'.$fileName);
-        if($from) {
-            $from = Carbon::create($from);
-        }
+
         try {
-            $export = new CaravanDatesExport($from);
+            $export = new CaravanDatesExport($year, $month);
 
             if(Excel::store($export, $fileName, 'temp')) {
                 Mail::send(new SendExcel($email, $export, $fullPath));

@@ -9,23 +9,16 @@ use Maatwebsite\Excel\Concerns\FromView;
 
 class CaravanDatesExport implements FromView
 {
-    public $from;
-    public $until;
     public $data;
     public $count;
     public $priceTotal;
     public $year;
     public $month;
 
-    public function __construct(Carbon $from = null)
+    public function __construct($year = null, $month = null)
     {
-        $this->from     = $from;
-
-        if($this->from) {
-            $this->year     = $from->year;
-            $this->month    = $from->month;
-        }
-
+        $this->year     = $year;
+        $this->month    = $month;
         $this->data     = $this->getData();
         $this->count    = $this->data->count();
         $this->priceTotal = $this->data->sum(function ($item){ return $item->price; });
@@ -58,19 +51,27 @@ class CaravanDatesExport implements FromView
     }
 
     /**
-     * @return mixed|null
+     * @return int
      */
-    public function getFrom()
+    public function getCount(): int
     {
-        return $this->from;
+        return $this->count;
     }
 
     /**
      * @return mixed|null
      */
-    public function getUntil()
+    public function getYear()
     {
-        return $this->until;
+        return $this->year;
+    }
+
+    /**
+     * @return mixed|null
+     */
+    public function getMonth()
+    {
+        return $this->month;
     }
 
     /**

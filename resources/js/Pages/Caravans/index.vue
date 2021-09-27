@@ -1,5 +1,5 @@
 <template>
-    <AdminLayout title="Wohnwagen">
+    <AdminLayout title="Wohnmobil">
         <template #main>
             <MyLink
                 :href="create_url"

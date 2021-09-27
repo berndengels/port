@@ -5,7 +5,7 @@
 
     @if($caravansFromToday && $caravansFromToday->count() > 0)
     <div class="flex-item-dashboard p-3">
-        <h3>Wohnwagen heute:</h3>
+        <h3>Wohnmobil heute:</h3>
         @foreach($caravansFromToday as $item)
             <div class="carnumber">
                 {{ $item }}
