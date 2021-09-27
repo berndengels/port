@@ -66,7 +66,7 @@ class AdminCaravanDatesController extends AdminController
             ->map(function($item) {
                 return "$item->carnumber";
             })
-            ->prepend('Kennzeichen wählen', '')
+            ->prepend('Dublikat wählen', '')
         ;
 
         $yearOptions = CaravanDates::selectRaw('YEAR(`from`) AS year')

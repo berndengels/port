@@ -19,7 +19,9 @@
 			</div>
 			<x-form-input class="calc" name="persons" label="Anzahl Personen" required />
 			<x-form-input name="price" label="Preis" required />
-            <x-form-submit class="rounded mt-3">Speichern</x-form-submit>
+			<div class="mt-2">
+				<x-form-submit class="btn btn-save" icon="fas fa-save">Speichern</x-form-submit>
+			</div>
         </x-form>
     </div>
 @endsection

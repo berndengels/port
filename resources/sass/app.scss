@@ -117,7 +117,7 @@ a {
         color: #fff;
     }
     span {
-        display: none;
+//        display: none;
         @include media('>tablet') {
             display: inline;
             margin-left: 0.5rem;

@@ -8,7 +8,9 @@
             <x-form-input name="carnumber" label="Autokennzeichen" required />
             <x-form-input name="carlength" label="Länge" required />
             <x-form-input type="email" name="email" label="Email" />
-            <x-form-submit class="rounded">Speichern</x-form-submit>
+            <div class="mt-2">
+                <x-form-submit class="btn btn-save" icon="fas fa-save">Speichern</x-form-submit>
+            </div>
         </x-form>
     </div>
 @endsection
