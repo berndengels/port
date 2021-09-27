@@ -83,6 +83,9 @@
                 </tr>
             @endforeach
         </table>
+        <div class="text-right mr-5 mt-3">
+            <span class="text-red-500 font-extrabold">Summe Einnahmen {{ $priceTotal }} €</span>
+        </div>
 
         {{ $data->appends($queryString)->links() }}
     </div>

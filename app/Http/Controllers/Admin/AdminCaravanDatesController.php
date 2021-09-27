@@ -8,6 +8,7 @@ use App\Rules\DatesIntervalUnique;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Caravan;
 use App\Models\CaravanDates;
@@ -88,18 +89,28 @@ class AdminCaravanDatesController extends AdminController
         $data = $query
             ->caravanByDates($caravanId ?? $dublicatéId)
             ->fromYearMonth($year, $month)
-            ->paginate(config('port.default.pagination.limit'))
         ;
+
+        /**
+         * @var $priceTotal \Illuminate\Database\Eloquent\Collection
+         */
+        $priceTotal = $data->get();
+        $priceTotal = $priceTotal->sum(function ($item) {
+            return $item->price;
+        });
+
+        $paginated = $data->paginate(config('port.default.pagination.limit'));
         $queryString = $request->only(['caravan','dublicate','year', 'month']);
 
         return view('admin.caravanDates.index', [
-            'data'              => $data,
+            'data'              => $paginated,
             'years'             => $this->years,
             'monthsByYear'      => $this->monthsByYear,
             'caravanOptions'    => $this->caravanOptions,
             'dublicateOptions'  => $dublicateOptions,
             'yearOptions'       => $yearOptions,
             'monthOptions'      => $monthOptions,
+            'priceTotal'        => $priceTotal,
             'caravan'           => $caravanId,
             'dublicate'         => $dublicatéId,
             'year'              => $year,
