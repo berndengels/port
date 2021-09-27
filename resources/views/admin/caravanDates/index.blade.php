@@ -77,13 +77,13 @@
                     <td>
                         <x-form action="{{ route('admin.caravanDates.destroy', ['caravanDate' => $item]) }}" class="inline-block m-0 p-0">
                             @method('delete')
-                            <x-form-submit icon="fas fa-trash-alt" class="btn-red">Löschen</x-form-submit>
+                            <x-form-submit icon="fas fa-trash-alt" class="btn-red delSoft">Löschen</x-form-submit>
                         </x-form>
                     </td>
                 </tr>
             @endforeach
         </table>
-        <div class="text-right mr-5 mt-3">
+        <div class="text-center mr-5 mt-3">
             <span class="text-red-500 font-extrabold">Summe Einnahmen {{ $priceTotal }} €</span>
         </div>
 

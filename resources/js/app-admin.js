@@ -4,6 +4,7 @@ window.CaravanPrice = new CaravanPrice
 
 $(document).ready(function () {
 	const $sideNav = $('.sidenav');
+
 	$(".delSoft").click(function () {
 		return confirm("Daten wirklich löschen");
 	});
