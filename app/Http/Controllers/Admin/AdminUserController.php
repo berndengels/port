@@ -3,12 +3,22 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class AdminUserController extends Controller
 {
+    protected $roles;
+    protected $rolesOptions;
+
+    public function __construct()
+    {
+        $this->roles = Role::all();
+        $this->rolesOptions = $this->roles->keyBy('id')->map->name;
+    }
+
     /**
      * Display a listing of the resource.
      *
