@@ -83,8 +83,8 @@
                     </td>
 
                     <td class="hidden md:table-cell">{{ $item->caravan->carlength }} m</td>
-                    <td>{{ $item->from->format('d.m.Y') }}</td>
-                    <td>{{ $item->until->format('d.m.Y') }}</td>
+                    <td>{{ $item->from->format('d.m.y') }}</td>
+                    <td>{{ $item->until->format('d.m.y') }}</td>
                     <td class="hidden md:table-cell">{{ $item->days }}</td>
                     <td class="hidden md:table-cell">{{ $item->price }} €</td>
 
