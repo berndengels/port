@@ -1,11 +1,11 @@
 <?php
-
 namespace App\Models;
 
-use Spatie\Permission\Models\Role as BaseModel;
+use Spatie\Permission\Models\Permission as BaseModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Role extends BaseModel
+class Permission extends BaseModel
 {
     use HasFactory;
+
 }

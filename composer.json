@@ -23,7 +23,7 @@
         "protonemedia/laravel-form-components": "^3.0",
         "spatie/db-dumper": "^3.0",
         "spatie/laravel-db-snapshots": "^2.0",
-        "spatie/laravel-permission": "^4.3",
+        "spatie/laravel-permission": "^5.1",
         "spatie/tax-calculator": "^0.1.2",
         "tightenco/ziggy": "^1.0",
         "umulmrum/holiday": "^0.6.0"

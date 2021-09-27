@@ -21,18 +21,6 @@ class {{ class }} extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \{{ namespacedParentModel }}  ${{ parentModelVariable }}
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request, {{ parentModel }} ${{ parentModelVariable }})
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  \{{ namespacedParentModel }}  ${{ parentModelVariable }}
@@ -40,6 +28,18 @@ class {{ class }} extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show({{ parentModel }} ${{ parentModelVariable }}, {{ model }} ${{ modelVariable }})
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \{{ namespacedParentModel }}  ${{ parentModelVariable }}
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request, {{ parentModel }} ${{ parentModelVariable }})
     {
         //
     }
