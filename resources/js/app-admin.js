@@ -1,5 +1,5 @@
 require('./bootstrap');
-import CaravanPrice from './Libs/caravanPrice'
+import CaravanPrice from './Libs/CaravanPrice'
 window.CaravanPrice = new CaravanPrice
 
 $(document).ready(function () {
