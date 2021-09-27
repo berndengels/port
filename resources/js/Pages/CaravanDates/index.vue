@@ -1,5 +1,5 @@
 <template>
-    <DefaultLayout title="Wohnwagen Rezeption">
+    <DefaultLayout title="Wohnmobil Rezeption">
         <div class="w-full clear-both">
             <div class="float-left">
                 <MyLink :href="create_url"

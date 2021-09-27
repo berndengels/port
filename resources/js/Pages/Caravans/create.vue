@@ -1,5 +1,5 @@
 <template>
-    <DefaultLayout title="Wohnwagen">
+    <DefaultLayout title="Wohnmobil">
         <MyLink :href="route('caravans.index')" icon="fas fa-backward">zurück</MyLink>
         <MyForm :data="form" @submit.prevent>
             <Select name="country_id" label="Herkunftsland" :options="countries" />

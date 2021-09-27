@@ -1,5 +1,5 @@
 <template>
-    <DefaultLayout title="Wohnwagen">
+    <DefaultLayout title="Wohnmobil">
         <MyLink :href="create_url" icon="far fa-plus-square" ctrClass="ml-2 my-2 no-hide-text" title="neuen Caravan eintragen">
             Neueintrag
         </MyLink>

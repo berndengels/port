@@ -15,7 +15,7 @@ const PriceData = {
                         items["Anzahl Personen"] = data[key]
                         break
                     case 'car_length':
-                        items["Wohnwagen Länge"] = data[key] + " m"
+                        items["Wohnmobil Länge"] = data[key] + " m"
                         break
                     case 'price_per_person':
                         items["Preis pro Person"] = data[key] + " €"
