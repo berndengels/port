@@ -1,6 +1,8 @@
 const mix = require('laravel-mix');
 
-mix
+mix.autoload({
+		'jquery': ['jQuery', '$']
+	})
 	.js('resources/js/app.js', 'public/js')
 	.js('resources/js/app-admin.js', 'public/js')
 	.js('node_modules/leaflet', 'public/js')

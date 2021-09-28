@@ -1,15 +1,13 @@
 
-class CaravanPrice {
+class Caravan {
 //	constructor() {};
-	calculate = function(calcUrl, caravanOptions) {
-		const
-			$elSelect       = $('#caravans'),
-			$elCarnumber    = $('#carnumber'),
-			$elCarlength    = $('#carlength'),
-			$elCountryId    = $('#country_id'),
-			$elEmail        = $('#email'),
-			caravans        = [],
-			$elObserve      = $('.calc');
+	autocomplete = (frm, caravanOptions) => {
+		const $elSelect       = $('.autocomplete', frm),
+			$elCarnumber    = $(frm.carnumber),
+			$elCarlength    = $(frm.carlength),
+			$elCountryId    = $(frm.country_id),
+			$elEmail        = $(frm.email),
+			caravans        = [];
 
 		$elCarnumber.keyup(e => {
 			var $el=$(e.target),$li=$('<li>'),i=0,item;
@@ -30,6 +28,7 @@ class CaravanPrice {
 				}
 			}
 		});
+
 		$elSelect.click(e => {
 			let $el = $(e.target)
 			let caravan = caravans[$el.data('id')]
@@ -39,9 +38,12 @@ class CaravanPrice {
 			$elEmail.val(caravan.email)
 			$elSelect.addClass('hidden');
 		});
-		$elObserve.change(el => {
-			var frm = document.frm;
+	};
 
+	calculate = function(frm, calcUrl, caravanOptions) {
+		const $elObserve = $('.calc', frm);
+
+		$elObserve.change(el => {
 			if("" !== frm.from.value && frm.until.value && frm.persons.value && frm.carlength.value) {
 				let formData = new FormData(),elem;
 				console.info(frm.elements)
@@ -60,4 +62,4 @@ class CaravanPrice {
 		});
 	}
 }
-export default CaravanPrice;
+export default Caravan;

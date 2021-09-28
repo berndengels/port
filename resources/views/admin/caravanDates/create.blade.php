@@ -3,7 +3,8 @@
 @section('main')
     <div class="p-6">
         <x-nav-link :href="route('admin.caravanDates.index')" icon="fas fa-backward" class="btn">zurück</x-nav-link>
-        <x-form name="frm" action="{{ route('admin.caravanDates.store') }}" class="w-full lg:w-1/2">
+
+        <x-form id="frm" name="frm" action="{{ route('admin.caravanDates.store') }}" class="w-full lg:w-1/2">
         @method('post')
             <x-form-input name="prices" type="hidden" />
 			<x-form-input id="carnumber" name="carnumber" type="text" label="Kennzeichen" autocomplete="off" required />
@@ -19,7 +20,7 @@
 			</div>
 			<x-form-input class="calc" name="persons" label="Anzahl Personen" required />
 			<x-form-input name="day_price" label="Tages-Preis" />
-			<x-form-input name="price" label="Preis" required />
+			<x-form-input name="price" label="Gesamt-Preis" required />
 			<div class="mt-2">
 				<x-form-submit class="btn btn-save h-10 mt-3 w-full md:w-1/2" icon="fas fa-save">Speichern</x-form-submit>
 			</div>
@@ -33,7 +34,8 @@
 				caravanOptions = {!! $caravanOptions !!};
 
 		$(document).ready(() => {
-			CaravanPrice.calculate(calcUrl, caravanOptions);
+			Caravan.autocomplete(document.frm, caravanOptions);
+			Caravan.calculate(document.frm, calcUrl, caravanOptions);
 		})
     </script>
 @endpush

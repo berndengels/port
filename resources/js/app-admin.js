@@ -1,6 +1,6 @@
 require('./bootstrap');
-import CaravanPrice from './Libs/CaravanPrice'
-window.CaravanPrice = new CaravanPrice
+import Caravan from './Libs/Caravan'
+window.Caravan = new Caravan
 
 $(document).ready(function () {
 	const $sideNav = $('.sidenav');

@@ -56,7 +56,7 @@ class CaravanPriceCalculator extends PriceCalculator
                     $carPricePerDay = isset($configSaisonPricePerDay[$length]) ? $configSaisonPricePerDay[$length] : 0;
                 }
             }
-            // nach oder vor saison
+            // neben saison
             else
             {
                 if(min($configLengthDefaultRange) > $length) {
