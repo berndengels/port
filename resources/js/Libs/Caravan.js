@@ -42,8 +42,7 @@ class Caravan {
 
 	calculate = function(frm, calcUrl, caravanOptions) {
 		const $elObserve = $('.calc', frm);
-
-		$elObserve.change(el => {
+		$elObserve.change(() => {
 			if("" !== frm.from.value && frm.until.value && frm.persons.value && frm.carlength.value) {
 				let formData = new FormData(),elem;
 				console.info(frm.elements)

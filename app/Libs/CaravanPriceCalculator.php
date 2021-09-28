@@ -5,7 +5,7 @@ use Carbon\Carbon;
 
 class CaravanPriceCalculator extends PriceCalculator
 {
-    public static function getPrice(Carbon $from, Carbon $until, int $length, int $persons = 1, bool $electric = false) {
+    public static function getPrice(Carbon $from, Carbon $until, int $length, int $persons = 1, bool $electric = false, int $dayPrice = null) {
         $countDays = $from->diffInDays($until);
 
         $total = 0;
@@ -83,7 +83,6 @@ class CaravanPriceCalculator extends PriceCalculator
 
             $i++;
         }
-
         return ['total' => $total, 'prices' => $days];
     }
 }

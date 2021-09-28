@@ -37,7 +37,11 @@
 			caravanOptions = {!! $caravanOptions !!};
 
 	$(document).ready(() => {
-		Caravan.calculate(document.frm, calcUrl, caravanOptions);
+		if("" === document.frm.day_price.value)  {
+			Caravan.calculate(document.frm, calcUrl, caravanOptions);
+        } else {
+			alert('has day price')
+        }
 	})
 
 </script>

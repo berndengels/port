@@ -102,7 +102,8 @@ class AdminCaravanController extends AdminController
      */
     public function destroy(Caravan $caravan)
     {
+        $carnumber = $caravan->carnumber;
         $caravan->delete();
-        return Redirect::route('admin.caravans.index');
+        return back()->with(['success' => "Caravan $carnumber erfolgreich gelöscht!"]);
     }
 }

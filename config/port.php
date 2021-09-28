@@ -28,6 +28,7 @@ return [
                         ],
                     ],
                 ],
+/*
                 'Boote'   => [
                     'icon'  => 'fas fa-ship',
                     'items' => [
@@ -45,6 +46,7 @@ return [
                         ],
                     ],
                 ],
+*/
             ],
         ],
     ],

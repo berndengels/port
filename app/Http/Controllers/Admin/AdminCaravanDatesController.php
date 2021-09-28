@@ -198,9 +198,13 @@ class AdminCaravanDatesController extends AdminController
         $validated = collect($request->validated());
         $validatedCaravan = $validated->only(['carnumber','carlength','email'])->toArray();
         $validatedCaravanDates = $validated->except(['carnumber','carlength','email'])->toArray();
-
-        $caravanDate->caravan()->update($validatedCaravan);
-        $caravanDate->update($validatedCaravanDates);
+        try {
+            $caravanDate->caravan()->update($validatedCaravan);
+            $caravanDate->update($validatedCaravanDates);
+        } catch(Exception $e) {
+            echo $e->getMessage()."<hr>";
+            dd($validatedCaravan, $validatedCaravanDates);
+        }
 
         return Redirect::route('admin.caravanDates.index');
     }
@@ -213,8 +217,9 @@ class AdminCaravanDatesController extends AdminController
      */
     public function destroy(CaravanDates $caravanDate)
     {
+        $id = $caravanDate->id;
         $caravanDate->delete();
-        return Redirect::route('admin.caravanDates.index');
+        return back()->with(['success' => "Caravan-Eintrag mit ID: $id erfolgreich gelöscht!"]);
     }
 
     public function sendExcel(Request $request, $year = null, $month = null)
