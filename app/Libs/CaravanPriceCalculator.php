@@ -21,10 +21,10 @@ class CaravanPriceCalculator extends PriceCalculator
         $configSaisonPricePerDay    = config('port.prices.caravan.saison_per_day');
         $configLengthSaisonRange    = array_keys($configSaisonPricePerDay);
 
-        $configDefaultMinPricePerDay = config('port.prices.caravan.min_price_default');
-        $configDefaultMaxPricePerDay = config('port.prices.caravan.max_price_default');
-        $configSaisontMinPricePerDay = config('port.prices.caravan.min_price_saison');
-        $configSaisonMaxPricePerDay  = config('port.prices.caravan.max_price_saison');
+        $configDefaultMinPricePerDay = $dayPrice ?? config('port.prices.caravan.min_price_default');
+        $configDefaultMaxPricePerDay = $dayPrice ?? config('port.prices.caravan.max_price_default');
+        $configSaisontMinPricePerDay = $dayPrice ?? config('port.prices.caravan.min_price_saison');
+        $configSaisonMaxPricePerDay  = $dayPrice ?? config('port.prices.caravan.max_price_saison');
 
         $days       = [];
         $current    = $from->copy();
@@ -37,12 +37,13 @@ class CaravanPriceCalculator extends PriceCalculator
                 $day = $current->addDay();
             }
             $sumPersonsPrice = 0;
+            // add price per person exclusive
             if($persons > $configPersonsInclusive) {
                 $addPersons = $persons - $configPersonsInclusive;
                 $sumPersonsPrice = $configPersonsAdditional * $addPersons;
             }
             $price = $sumPersonsPrice;
-
+            // add electric price
             if($electric) {
                 $price += $configElectricPrice;
             }
@@ -67,7 +68,7 @@ class CaravanPriceCalculator extends PriceCalculator
                     $carPricePerDay = isset($configDefaultPricePerDay[$length]) ? $configDefaultPricePerDay[$length] : 0;
                 }
             }
-            $price += $carPricePerDay;
+            $price += $dayPrice ?? $carPricePerDay;
 
             $total += $price;
             $days[$day->format('Y-m-d')] = [
@@ -77,7 +78,7 @@ class CaravanPriceCalculator extends PriceCalculator
                 'electric_per_day'  => $electric ? $configElectricPrice : 0,
                 'is_saison'         => (int) ($day->month >= $configSaisonFromMonth && $day->month <= $configSaisonUntilMonth),
                 'car_length'        => $length,
-                'car_price_per_day' => $carPricePerDay,
+                'car_price_per_day' => $dayPrice ?? $carPricePerDay,
                 'sum_price'         => $price,
             ];
 

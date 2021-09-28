@@ -1,36 +1,26 @@
-@if (session('success'))
-    <div class="alert alert-success alert-block">
-        <strong>{!! session('success') !!}</strong>
-        <button type="button" class="close" data-dismiss="alert">×</button>
-    </div>
-@endif
-@if ($message = Session::get('error'))
-    <div role="alert" class="alert alert-danger alert-block">
-        <strong>{!! $message !!}</strong>
-        <button type="button" class="close" data-dismiss="alert">×</button>
-    </div>
-@endif
-@if ($message = Session::get('warning'))
-    <div role="alert" class="alert alert-warning alert-block">
-        <strong>{!! $message !!}</strong>
-        <button type="button" class="close" data-dismiss="alert">×</button>
-    </div>
-@endif
-@if ($message = Session::get('info'))
-    <div class="alert alert-info alert-block">
-        <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M12.432 0c1.34 0 2.01.912 2.01 1.957 0 1.305-1.164 2.512-2.679 2.512-1.269 0-2.009-.75-1.974-1.99C9.789 1.436 10.67 0 12.432 0zM8.309 20c-1.058 0-1.833-.652-1.093-3.524l1.214-5.092c.211-.814.246-1.141 0-1.141-.317 0-1.689.562-2.502 1.117l-.528-.88c2.572-2.186 5.531-3.467 6.801-3.467 1.057 0 1.233 1.273.705 3.23l-1.391 5.352c-.246.945-.141 1.271.106 1.271.317 0 1.357-.392 2.379-1.207l.6.814C12.098 19.02 9.365 20 8.309 20z"/></svg>
-        <strong>{!! $message !!}</strong>
-        <button type="button" class="close" data-dismiss="alert">×</button>
-    </div>
-@endif
-@if (isset($errors) && $errors->any())
-    <div role="alert" class="alert alert-danger alert-block">
-        <span>Please check the form below for errors</span>
-        <button type="button" class="close" data-dismiss="alert">×</button>
-    </div>
-@endif
+
+<div class="flash-msg text-white px-6 py-4 border-0 rounded content-center text-center relative mb-4 {{ $css }}">
+    <span class="text-xl inline-block align-middle">
+        <i class="{{ $icon }}"></i>
+    </span>
+    <span class="inline-block align-middle ml-1">
+        <b class="capitalize uppercase">{{ $type }}:</b> <span class="ml-2">{{ $text }}</span>
+    </span>
+    <button class="btn-msg-close absolute bg-transparent text-2xl font-semibold leading-none right-0 top-0 mt-4 mr-6 outline-none focus:outline-none">
+        <span>×</span>
+    </button>
+</div>
+
 <script>
-$(document).ready(function (){
-    window.setTimeout(function() {$('.alert-block').fadeOut()}, 3000);
-});
+	const elemFlashMsg = document.querySelector('.flash-msg'),
+        btnClose = elemFlashMsg.querySelector('button.btn-msg-close');
+
+	btnClose.onclick = () => {
+		elemFlashMsg.style.display = 'none';
+    };
+
+    window.setTimeout(function () {
+	    elemFlashMsg.style.display = 'none';
+    }, 3000);
+
 </script>

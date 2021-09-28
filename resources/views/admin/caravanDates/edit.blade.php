@@ -6,7 +6,6 @@
 
         <x-form id="frm" name="frm" action="{{ route('admin.caravanDates.update', ['caravanDate' => $caravanDate->id]) }}" class="w-full lg:w-1/2">
             @method('put')
-			<x-form-input name="prices" type="hidden" />
             @bind($caravanDate->caravan)
             <x-form-input name="carnumber" label="Autokennzeichen" required />
             <x-form-select name="country_id" label="Herkunftsland" :options="$countries" />
@@ -15,13 +14,14 @@
             @endbind
 
             @bind($caravanDate)
+            <x-form-input name="prices" type="hidden" />
             <x-form-input name="from" class="calc" type="date" label="Von" required :bind="false" :default="$caravanDate->validFrom" />
             <x-form-input name="until" class="calc" type="date" label="Bis" required :bind="false" :default="$caravanDate->validUntil" />
             <div class="mt-3">
                 <x-form-checkbox class="calc" name="electric" label="Stromanschluß" />
             </div>
             <x-form-input class="calc" name="persons" type="number" label="Anzahl Personen" required />
-            <x-form-input name="day_price" type="number" label="Tages-Preis" />
+            <x-form-input class="calc" name="day_price" type="number" label="Tages-Preis" />
             <x-form-input name="price" type="number" label="Gesamt-Preis" required />
             @endbind
             <div class="mt-2">
@@ -37,13 +37,8 @@
 			caravanOptions = {!! $caravanOptions !!};
 
 	$(document).ready(() => {
-		if("" === document.frm.day_price.value)  {
-			Caravan.calculate(document.frm, calcUrl, caravanOptions);
-        } else {
-			alert('has day price')
-        }
-	})
-
+		Caravan.calculate(document.frm, calcUrl, caravanOptions);
+	});
 </script>
 @endpush
 

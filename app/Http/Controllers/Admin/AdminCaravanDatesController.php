@@ -169,6 +169,7 @@ class AdminCaravanDatesController extends AdminController
         $validated  = collect($validator->validated())->except(['country_id','carnumber','carlength','email'])->toArray();
         $caravanDate = $caravan->dates()->create($validated);
 
+//        return back()->with(['success' => "Caravan-Eintrag mit ID: $caravanDate->id erfolgreich angelegt"]);
         return $this->show($caravanDate);
     }
 
@@ -201,12 +202,10 @@ class AdminCaravanDatesController extends AdminController
         try {
             $caravanDate->caravan()->update($validatedCaravan);
             $caravanDate->update($validatedCaravanDates);
+            return back()->with(['success' => "Caravan-Eintrag mit ID: $caravanDate->id erfolgreich geändert"]);
         } catch(Exception $e) {
-            echo $e->getMessage()."<hr>";
-            dd($validatedCaravan, $validatedCaravanDates);
+            return back()->with(['error' => $e->getMessage()]);
         }
-
-        return Redirect::route('admin.caravanDates.index');
     }
 
     /**

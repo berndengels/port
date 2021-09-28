@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
     @stack('styles')
     <!-- Scripts -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!--script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script-->
 
     @auth()
         <script src="{{ mix('js/app-admin.js') }}"></script>
@@ -22,7 +22,8 @@
     @stack('scripts')
 </head>
 <body class="font-sans antialiased" data-root="http://webapiv2.navionics.com/dist/webapi/images">
-    @include('components.flash-message')
+
+    <x-flash-message />
 
     @auth()
         @include('layouts.admin')

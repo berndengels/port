@@ -1,4 +1,8 @@
-<div class="flex items-center justify-between">
+<div class="items-center justify-between {{ $attributes['inline'] ? 'inline-flex' : 'mt-6 flex' }}"
+    {!! $attributes->merge([
+       'inline' => isset($attributes['inline']) ? true : false,
+   ]) !!}
+>
     <button {!! $attributes->merge([
 //        'class' => 'bg-blue-500 hover:bg-blue-700 text-white font-bold focus:outline-none focus:shadow-outline',
         'class' => 'btn rounded py-0.5 px-3',

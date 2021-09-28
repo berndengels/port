@@ -7,14 +7,14 @@ mix.autoload({
 	.js('resources/js/app-admin.js', 'public/js')
 	.js('node_modules/leaflet', 'public/js')
 	.js('node_modules/leaflet-providers', 'public/js')
+	.css('node_modules/leaflet/dist/leaflet.css', 'public/css')
+	.sass('resources/sass/app.scss', 'public/css')
+	.sass('resources/sass/pdf.scss', 'public/css')
 	.postCss('resources/css/app.css', 'public/css', [
 		require('postcss-import'),
 		require('tailwindcss'),
 		require('autoprefixer'),
 	])
-	.css('node_modules/leaflet/dist/leaflet.css', 'public/css')
-	.sass('resources/sass/app.scss', 'public/css')
-	.sass('resources/sass/pdf.scss', 'public/css')
 	.copy('node_modules/@fortawesome/fontawesome-free/webfonts', 'public/webfonts')
 	.webpackConfig(require('./webpack.config'))
 ;

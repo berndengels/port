@@ -41,9 +41,11 @@ class Caravan {
 	};
 
 	calculate = function(frm, calcUrl, caravanOptions) {
-		const $elObserve = $('.calc', frm);
+		const $elObserve = $('.calc', frm),
+			$dayPrice = $(frm.day_price);
+
 		$elObserve.change(() => {
-			if("" !== frm.from.value && frm.until.value && frm.persons.value && frm.carlength.value) {
+			if(frm.from.value && frm.until.value && frm.persons.value && frm.carlength.value) {
 				let formData = new FormData(),elem;
 				console.info(frm.elements)
 				for(elem of frm.elements) {

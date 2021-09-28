@@ -24,12 +24,13 @@ class AdminPriceController extends AdminController
         $until      = $request->post('until');
         $persons    = (int) $request->post('persons');
         $electric   = (bool) $request->post('electric');
+        $dayPrice   = (int) $request->post('day_price');
         $response   = null;
 
         if($from && $until && $carlength && $persons) {
             $from       = new Carbon($from, config('app.timezone'));
             $until      = new Carbon($until, config('app.timezone'));
-            $response   = CaravanPriceCalculator::getPrice($from, $until, $carlength, $persons, $electric);
+            $response   = CaravanPriceCalculator::getPrice($from, $until, $carlength, $persons, $electric, $dayPrice);
         }
         return response()->json($response);
     }
