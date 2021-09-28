@@ -19,7 +19,7 @@
 				<x-form-checkbox class="calc" name="electric" label="Stromanschluß" />
 			</div>
 			<x-form-input class="calc" name="persons" label="Anzahl Personen" required />
-			<x-form-input class="calc" name="day_price" label="Tages-Preis" />
+			<x-form-input class="calc" name="day_price" label="eigener Tages-Preis" />
 			<x-form-input name="price" label="Gesamt-Preis" required />
 			<div class="mt-2">
 				<x-form-submit class="btn btn-save h-10 mt-3 w-full md:w-1/2" icon="fas fa-save">Speichern</x-form-submit>
