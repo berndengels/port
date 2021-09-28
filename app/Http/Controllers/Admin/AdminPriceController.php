@@ -24,7 +24,7 @@ class AdminPriceController extends AdminController
         $until      = $request->post('until');
         $persons    = (int) $request->post('persons');
         $electric   = (bool) $request->post('electric');
-        $dayPrice   = (int) $request->post('day_price');
+        $dayPrice   = !empty($request->post('day_price')) ? (int) $request->post('day_price') : null;
         $response   = null;
 
         if($from && $until && $carlength && $persons) {
