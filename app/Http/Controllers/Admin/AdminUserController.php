@@ -51,7 +51,6 @@ class AdminUserController extends AdminController
     {
         try {
             User::create($request->validated())->syncRoles($request->validated()['roles']);
-
             return redirect()->route('admin.users.index')->with('success', 'User erfogreich angelegt!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
