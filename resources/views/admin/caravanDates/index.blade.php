@@ -95,10 +95,12 @@
                     </td>
                     <td>
                         <x-form action="{{ route('admin.caravanDates.destroy', ['caravanDate' => $item]) }}"
-                                class="inline-block m-0 p-0">
+                                class="m-0 p-0">
                             @method('delete')
-                            <x-form-submit icon="fas fa-trash-alt" class="btn-red delSoft">
-                                <span class="hidden md:visible">Löschen</span>
+                            <x-form-submit icon="fas fa-trash-alt" inline class="mt-0 btn-red delSoft">
+                                <span class="hidden md:visible">
+                                    Löschen
+                                </span>
                                 </x-form-submit>
                         </x-form>
                     </td>

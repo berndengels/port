@@ -42,12 +42,19 @@
                     <td class="hidden md:table-cell">{{ $item->carlength }} m</td>
                     <td class="hidden md:table-cell"><a href="mailto:{{ $item->email }}" target="_blank">{{ $item->email }}</a><br v-else></td>
                     <td>
-                        <x-nav-link href="{{ route('admin.caravans.edit', $item) }}" icon="fas fa-edit" class="btn" title="Bearbeiten">Edit</x-nav-link>
+                        <x-nav-link href="{{ route('admin.caravans.edit', $item) }}" icon="fas fa-edit" class="btn" title="Bearbeiten">
+                            <span class="hidden md:visible">Edit</span>
+                        </x-nav-link>
                     </td>
                     <td>
-                        <x-form action="{{ route('admin.caravans.destroy', ['caravan' => $item]) }}" class="inline-block m-0 p-0">
+                        <x-form action="{{ route('admin.caravans.destroy', ['caravan' => $item]) }}"
+                                class="m-0 p-0">
                             @method('delete')
-                            <x-form-submit icon="fas fa-trash-alt" class="btn-red delSoft">Löschen</x-form-submit>
+                            <x-form-submit icon="fas fa-trash-alt" inline class="mt-0 btn-red delSoft">
+                                <span class="hidden md:visible">
+                                    Löschen
+                                </span>
+                            </x-form-submit>
                         </x-form>
                     </td>
                 </tr>
