@@ -21,6 +21,7 @@ use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\AdminRoleController;
 use App\Http\Controllers\Admin\AdminPageController;
+use App\Http\Controllers\Admin\AdminPermissionController;
 
 Auth::routes();
 Route::get('/logout', function () {
@@ -42,6 +43,7 @@ Route::group([
 
     Route::resource('users', AdminUserController::class);
     Route::resource('roles', AdminRoleController::class);
+    Route::resource('permissions', AdminPermissionController::class);
     Route::resource('pages', AdminPageController::class);
 
     Route::post('caravanDates/sendExcel', [AdminCaravanDatesController::class, 'sendExcel'])->name('caravanDates.sendExcel');

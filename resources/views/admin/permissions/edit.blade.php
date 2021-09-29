@@ -2,10 +2,10 @@
 
 @section('main')
     <div class="p-6">
-        <x-nav-link :href="route('admin.roles.index')" icon="fas fa-backward" class="btn">zurück</x-nav-link>
-        <x-form method="post" :action="route('admin.roles.update', $role)" class="w-full lg:w-1/2">
+        <x-nav-link :href="route('admin.permissions.index')" icon="fas fa-backward" class="btn">zurück</x-nav-link>
+        <x-form method="post" :action="route('admin.permissions.update', $permission)" class="w-full lg:w-1/2">
             @method('put')
-            @bind($role)
+            @bind($permission)
             <x-form-input name="name" label="Name" required />
             <x-form-input name="guard_name" label="Guard Name" required />
             @endbind

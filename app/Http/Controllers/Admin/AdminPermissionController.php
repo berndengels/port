@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Models\Permission;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\PermissionRequest;
 
 class AdminPermissionController extends Controller
 {
@@ -16,7 +16,8 @@ class AdminPermissionController extends Controller
      */
     public function index()
     {
-        //
+        $data = Permission::paginate(config('port.default.pagination.limit'));
+        return view('admin.permissions.index', compact('data'));
     }
 
     /**
@@ -27,7 +28,7 @@ class AdminPermissionController extends Controller
      */
     public function show(Permission $permission)
     {
-        //
+        return view('admin.permissions.show', compact('permission'));
     }
 
     /**
@@ -37,18 +38,23 @@ class AdminPermissionController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.permissions.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param PermissionRequest $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(PermissionRequest $request)
     {
-        //
+        try {
+            Permission::create($request->validated());
+            return redirect()->route('admin.permissions.index')->with('success', 'Permission erfogreich angelegt!');
+        } catch(Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
     }
 
     /**
@@ -59,19 +65,24 @@ class AdminPermissionController extends Controller
      */
     public function edit(Permission $permission)
     {
-        //
+        return view('admin.users.edit', compact('permission'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
+     * @param PermissionRequest $request
      * @param Permission $permission
      * @return Response
      */
-    public function update(Request $request, Permission $permission)
+    public function update(PermissionRequest $request, Permission $permission)
     {
-        //
+        try {
+            $permission->update($request->validated());
+            return redirect()->route('admin.permissions.index')->with('success', 'Permission erfogreich bearbeitet!');
+        } catch(Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
     }
 
     /**
@@ -82,6 +93,11 @@ class AdminPermissionController extends Controller
      */
     public function destroy(Permission $permission)
     {
-        //
+        try {
+            $permission->delete();
+            return back()->with('success', 'Permission erfogreich gelöscht!');
+        } catch(Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
     }
 }

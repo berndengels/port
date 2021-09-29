@@ -43,6 +43,12 @@ return [
                             'icon'  => 'fas fa-user-tag',
                             'route' => 'admin.roles.index',
                         ],
+                        [
+                            'text'  => 'Permission',
+                            'title' => 'Permission',
+                            'icon'  => 'fas fa-user-tag',
+                            'route' => 'admin.permissions.index',
+                        ],
                     ],
                 ],
                 'Info'   => [

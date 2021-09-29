@@ -1,14 +1,13 @@
 <?php
-
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class RoleRequest extends FormRequest
+class PermissionRequest extends FormRequest
 {
     protected function getId()
     {
-        $route = $this->route('role');
+        $route = $this->route('permission');
         if($route) {
             return $route->id;
         }
@@ -33,7 +32,7 @@ class RoleRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'              => !$this->getId() ? 'required|unique:App\Models\Role,name' : 'required',
+            'name'              => !$this->getId() ? 'required|unique:App\Models\Permission,name' : 'required',
             'guard_name'        => 'required',
         ];
     }

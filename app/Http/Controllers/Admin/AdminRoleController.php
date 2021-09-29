@@ -53,7 +53,7 @@ class AdminRoleController extends AdminController
     {
         try {
             Role::create($request->validated());
-            return back()->with('success', 'Rolle erfogreich angelegt!');
+            return redirect()->route('admin.roles.index')->with('success', 'Rolle erfogreich angelegt!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -81,7 +81,7 @@ class AdminRoleController extends AdminController
     {
         try {
             $role->update($request->validated());
-            return back()->with('success', 'Rolle erfogreich bearbeitet!');
+            return redirect()->route('admin.roles.index')->with('success', 'Rolle erfogreich bearbeitet!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }
