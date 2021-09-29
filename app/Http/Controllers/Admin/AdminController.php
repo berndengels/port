@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 use App\Filters\Caravan\CaravanFilter;
 use App\Models\Caravan;
 use App\Models\Country;
+use App\Models\Role;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -26,6 +27,15 @@ class AdminController extends BaseController
      */
     protected $caravanOptions;
 
+    /**
+     * @var Collection
+     */
+    protected $roles;
+    /**
+     * @var Collection
+     */
+    protected $rolesOptions;
+
     public function __construct()
     {
         // @todo: set cache for countries
@@ -47,6 +57,9 @@ class AdminController extends BaseController
         ;
 
         $this->caravanOptionsAutocomplete = $caravans;
+
+        $this->roles = Role::all();
+        $this->rolesOptions = $this->roles->keyBy('id')->map->name;
     }
 
     public function main()

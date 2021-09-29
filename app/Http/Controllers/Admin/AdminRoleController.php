@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\RoleRequest;
 use App\Models\Role;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class AdminRoleController extends Controller
+class AdminRoleController extends AdminController
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +18,8 @@ class AdminRoleController extends Controller
      */
     public function index()
     {
-        //
+        $data = Role::paginate(config('port.default.pagination.limit'));
+        return view('admin.roles.index', compact('data'));
     }
 
     /**
@@ -27,7 +30,7 @@ class AdminRoleController extends Controller
      */
     public function show(Role $role)
     {
-        //
+        return view('admin.roles.show', compact('role'));
     }
 
     /**
@@ -37,7 +40,7 @@ class AdminRoleController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.roles.create');
     }
 
     /**
@@ -46,9 +49,14 @@ class AdminRoleController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(RoleRequest $request)
     {
-        //
+        try {
+            Role::create($request->validated());
+            return back()->with('success', 'Rolle erfogreich angelegt!');
+        } catch(Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
     }
 
     /**
@@ -59,7 +67,7 @@ class AdminRoleController extends Controller
      */
     public function edit(Role $role)
     {
-        //
+        return view('admin.users.edit', compact('role'));
     }
 
     /**
@@ -71,7 +79,12 @@ class AdminRoleController extends Controller
      */
     public function update(Request $request, Role $role)
     {
-        //
+        try {
+            $role->update($request->validated());
+            return back()->with('success', 'Rolle erfogreich bearbeitet!');
+        } catch(Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
     }
 
     /**
@@ -82,6 +95,11 @@ class AdminRoleController extends Controller
      */
     public function destroy(Role $role)
     {
-        //
+        try {
+            $role->delete();
+            return back()->with('success', 'Rolle erfogreich gelöscht!');
+        } catch(Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
     }
 }

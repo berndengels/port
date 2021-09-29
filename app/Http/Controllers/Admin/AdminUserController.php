@@ -2,23 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Models\Role;
 use App\Models\User;
-use Illuminate\Http\Request;
+use Exception;
 use Illuminate\Http\Response;
+use App\Http\Requests\UserRequest;
 
-class AdminUserController extends Controller
+class AdminUserController extends AdminController
 {
-    protected $roles;
-    protected $rolesOptions;
-
-    public function __construct()
-    {
-        $this->roles = Role::all();
-        $this->rolesOptions = $this->roles->keyBy('id')->map->name;
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -26,7 +16,8 @@ class AdminUserController extends Controller
      */
     public function index()
     {
-        //
+        $data = User::with('roles')->paginate(config('port.default.pagination.limit'));
+        return view('admin.users.index', compact('data'));
     }
 
     /**
@@ -37,7 +28,7 @@ class AdminUserController extends Controller
      */
     public function show(User $user)
     {
-        //
+        return view('admin.users.show', compact('user'));
     }
 
     /**
@@ -47,18 +38,24 @@ class AdminUserController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.users.create', ['roles' => $this->rolesOptions ]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param UserRequest $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        //
+        try {
+            User::create($request->validated())->syncRoles($request->validated()['roles']);
+
+            return redirect()->route('admin.users.index')->with('success', 'User erfogreich angelegt!');
+        } catch(Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
     }
 
     /**
@@ -69,19 +66,36 @@ class AdminUserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        $user->load('roles');
+        $user->password = null;
+        return view('admin.users.edit', [
+            'user'  => $user,
+            'roles' => $this->rolesOptions,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
+     * @param UserRequest $request
      * @param User $user
      * @return Response
      */
-    public function update(Request $request, User $user)
+    public function update(UserRequest $request, User $user)
     {
-        //
+        try {
+            $validated = $request->validated();
+            if(!$request->password) {
+                $validated = collect($validated)->except(['password','password_repeat'])->toArray();
+            }
+            $user
+                ->syncRoles($validated['roles'])
+                ->update($validated)
+            ;
+            return redirect()->route('admin.users.index')->with('success', 'User erfogreich bearbeitet!');
+        } catch(Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
     }
 
     /**
@@ -92,6 +106,11 @@ class AdminUserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        try {
+            $user->delete();
+            return back()->with('success', 'User erfogreich gelöscht!');
+        } catch(Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
     }
 }

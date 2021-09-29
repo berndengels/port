@@ -28,6 +28,34 @@ return [
                         ],
                     ],
                 ],
+                'Permissions'   => [
+                    'icon'  => 'fas fa-user-lock',
+                    'items' => [
+                        [
+                            'text'  => 'Users',
+                            'title' => 'Users',
+                            'icon'  => 'fas fa-user',
+                            'route' => 'admin.users.index',
+                        ],
+                        [
+                            'text'  => 'Roles',
+                            'title' => 'Roles',
+                            'icon'  => 'fas fa-user-tag',
+                            'route' => 'admin.roles.index',
+                        ],
+                    ],
+                ],
+                'Info'   => [
+                    'icon'  => 'fas fa-info-circle',
+                    'items' => [
+                        [
+                            'text'  => 'Routes',
+                            'title' => 'Routes',
+                            'icon'  => 'fas fa-route',
+                            'route' => 'admin.routes.index',
+                        ],
+                    ],
+                ],
 /*
                 'Boote'   => [
                     'icon'  => 'fas fa-ship',

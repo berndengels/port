@@ -9,6 +9,7 @@ use App\Http\Controllers\PriceController;
 use App\Http\Controllers\CarLicensePlateController;
 use App\Http\Controllers\RouteController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PageController;
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdminCaravanController;
@@ -17,6 +18,9 @@ use App\Http\Controllers\Admin\AdminPriceController;
 use App\Http\Controllers\Admin\AdminCarLicensePlateController;
 use App\Http\Controllers\Admin\AdminRouteController;
 use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\AdminUserController;
+use App\Http\Controllers\Admin\AdminRoleController;
+use App\Http\Controllers\Admin\AdminPageController;
 
 Auth::routes();
 Route::get('/logout', function () {
@@ -36,6 +40,10 @@ Route::group([
     Route::resource('caravans', AdminCaravanController::class);
     Route::resource('caravanDates', AdminCaravanDatesController::class);
 
+    Route::resource('users', AdminUserController::class);
+    Route::resource('roles', AdminRoleController::class);
+    Route::resource('pages', AdminPageController::class);
+
     Route::post('caravanDates/sendExcel', [AdminCaravanDatesController::class, 'sendExcel'])->name('caravanDates.sendExcel');
     Route::match(['post','put'],'caravan/price/calculate', [AdminPriceController::class, 'calculate'])->name('caravan.price.calculate');
     Route::get('caravan/price/excel/{year?}/{month?}', [AdminPriceController::class, 'excel'])->name('caravan.price.excel');
@@ -43,6 +51,7 @@ Route::group([
 
     Route::get('car/info/{caravanId}', [AdminCarLicensePlateController::class, 'info'])->name('car.info');
     Route::get('route/current', [AdminRouteController::class, 'setCurrentMenu'])->name('route.current');
+    Route::get('routes', [AdminRouteController::class, 'routes'])->name('routes.index');
 });
 
 Route::group([
@@ -51,6 +60,7 @@ Route::group([
     Route::get('dashboard', [DashboardController::class, 'show'])->name('dashboard');
     Route::resource('caravans', CaravanController::class);
     Route::resource('caravanDates', CaravanDatesController::class);
+    Route::resource('pages', PageController::class);
 
     Route::get('route/current', [RouteController::class, 'setCurrentMenu'])->name('route.current');
 });
