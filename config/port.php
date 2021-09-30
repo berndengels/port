@@ -12,15 +12,18 @@ return [
                     'route' => 'admin.dashboard',
                 ],
                 'Caravans'   => [
+                    'permissions'   => ['read CaravansMenu'],
                     'icon'  => 'fas fa-caravan',
                     'items' => [
                         [
+                            'permissions'   => ['read Caravan', 'write Caravan'],
                             'text'  => 'Caravans',
                             'title' => 'Caravans',
                             'icon'  => 'fas fa-caravan',
                             'route' => 'admin.caravans.index',
                         ],
                         [
+                            'permissions'   => ['read CaravanDates', 'write CaravanDates'],
                             'text'  => 'Caravan Rezeption',
                             'title' => 'Caravan Rezeption',
                             'icon'  => 'fas fa-concierge-bell',
@@ -29,32 +32,38 @@ return [
                     ],
                 ],
                 'Permissions'   => [
+                    'permissions'   => ['read PermissionsMenu'],
                     'icon'  => 'fas fa-user-lock',
                     'items' => [
                         [
+                            'permissions'   => ['read User', 'write User'],
                             'text'  => 'Users',
                             'title' => 'Users',
                             'icon'  => 'fas fa-user',
                             'route' => 'admin.users.index',
                         ],
                         [
+                            'permissions'   => ['read Role', 'write Role'],
                             'text'  => 'Roles',
                             'title' => 'Roles',
                             'icon'  => 'fas fa-user-tag',
                             'route' => 'admin.roles.index',
                         ],
                         [
-                            'text'  => 'Permission',
-                            'title' => 'Permission',
+                            'permissions'   => ['read Permission', 'write Permission'],
+                            'text'  => 'Permissions',
+                            'title' => 'Permissions',
                             'icon'  => 'fas fa-user-tag',
                             'route' => 'admin.permissions.index',
                         ],
                     ],
                 ],
                 'Info'   => [
+                    'permissions'   => ['read InfoMenu'],
                     'icon'  => 'fas fa-info-circle',
                     'items' => [
                         [
+                            'permissions'   => ['read Routes'],
                             'text'  => 'Routes',
                             'title' => 'Routes',
                             'icon'  => 'fas fa-route',

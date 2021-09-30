@@ -21,7 +21,14 @@ class PermissionRequest extends FormRequest
      */
     public function authorize()
     {
-        return auth()->check();
+        return auth()->user()->can('write Permission');
+    }
+
+    public function validationData()
+    {
+        return $this->merge([
+            'name' => $this->name ?? $this->action . ' ' . $this->model,
+        ])->toArray();
     }
 
     /**
@@ -32,8 +39,10 @@ class PermissionRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'              => !$this->getId() ? 'required|unique:App\Models\Permission,name' : 'required',
-            'guard_name'        => 'required',
+            'name'          => !$this->getId() ? 'unique:App\Models\Permission,name' : '',
+            'guard_name'    => 'required',
+            'model'         => 'required',
+            'action'        => 'required',
         ];
     }
 }

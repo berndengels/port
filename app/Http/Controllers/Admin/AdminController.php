@@ -5,6 +5,7 @@ use App\Filters\Caravan\CaravanFilter;
 use App\Models\Caravan;
 use App\Models\Country;
 use App\Models\Role;
+use App\Models\User;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;

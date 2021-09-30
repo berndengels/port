@@ -19,7 +19,9 @@
             id="{{ $id() }}"
         @endif
 
-        {!! $attributes->merge(['class' => 'form-select' . ($hasError($name) ? ' is-invalid' : '')]) !!}
+        {!! $attributes->merge([
+                'class' => 'form-select' . ($hasError($name) ? ' is-invalid' : ''),
+            ]) !!}
     >
         @forelse($options as $key => $option)
             <option value="{{ $key }}" @if($isSelected($key)) selected="selected" @endif>

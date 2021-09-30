@@ -18,9 +18,9 @@
 	btnClose.onclick = () => {
 		elemFlashMsg.style.display = 'none';
     };
-
+    @if($type !== 'error')
     window.setTimeout(function () {
 	    elemFlashMsg.style.display = 'none';
     }, 3000);
-
+    @endif
 </script>

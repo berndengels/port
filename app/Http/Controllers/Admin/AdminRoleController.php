@@ -2,15 +2,29 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\RoleRequest;
-use App\Models\Role;
 use Exception;
-use Illuminate\Http\Request;
+use App\Models\Role;
+use App\Models\Permission;
 use Illuminate\Http\Response;
+use Illuminate\Support\Collection;
+use App\Http\Requests\RoleRequest;
 
 class AdminRoleController extends AdminController
 {
+    /**
+     * @var Collection
+     */
+    protected $permissions;
+
+    public function __construct()
+    {
+        $this->permissions = Permission::orderBy('name')
+            ->get()
+            ->keyBy('id')
+            ->map
+            ->name;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -40,19 +54,19 @@ class AdminRoleController extends AdminController
      */
     public function create()
     {
-        return view('admin.roles.create');
+        return view('admin.roles.create', ['permissions' => $this->permissions]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param RoleRequest $request
      * @return Response
      */
     public function store(RoleRequest $request)
     {
         try {
-            Role::create($request->validated());
+            Role::create($request->validated())->syncPermissions($request->validated()['permissions']);
             return redirect()->route('admin.roles.index')->with('success', 'Rolle erfogreich angelegt!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
@@ -67,20 +81,21 @@ class AdminRoleController extends AdminController
      */
     public function edit(Role $role)
     {
-        return view('admin.users.edit', compact('role'));
+        $permissions = $this->permissions;
+        return view('admin.roles.edit', compact('role','permissions'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
+     * @param RoleRequest $request
      * @param Role $role
      * @return Response
      */
-    public function update(Request $request, Role $role)
+    public function update(RoleRequest $request, Role $role)
     {
         try {
-            $role->update($request->validated());
+            $role->syncPermissions($request->validated()['permissions'])->update($request->validated());
             return redirect()->route('admin.roles.index')->with('success', 'Rolle erfogreich bearbeitet!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());

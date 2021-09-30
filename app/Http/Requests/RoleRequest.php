@@ -22,7 +22,7 @@ class RoleRequest extends FormRequest
      */
     public function authorize()
     {
-        return auth()->check();
+        return auth()->user()->can('write Role');
     }
 
     /**
@@ -35,6 +35,7 @@ class RoleRequest extends FormRequest
         return [
             'name'              => !$this->getId() ? 'required|unique:App\Models\Role,name' : 'required',
             'guard_name'        => 'required',
+            'permissions'       => [],
         ];
     }
 }

@@ -2,13 +2,31 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helper\ModelHelper;
 use App\Models\Permission;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PermissionRequest;
+use Illuminate\Support\Collection;
 
 class AdminPermissionController extends Controller
 {
+    /**
+     * @var Collection
+     */
+    protected $models;
+    protected $actions;
+    protected $modelOptions;
+
+    public function __construct()
+    {
+        $this->actions = Permission::actions();
+        $this->models = ModelHelper::allModels()->keys()->keyBy(function($v){
+            return $v;
+        });
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -38,7 +56,10 @@ class AdminPermissionController extends Controller
      */
     public function create()
     {
-        return view('admin.permissions.create');
+        return view('admin.permissions.create', [
+            'models'    => $this->models,
+            'actions'   => $this->actions,
+        ]);
     }
 
     /**
@@ -65,7 +86,9 @@ class AdminPermissionController extends Controller
      */
     public function edit(Permission $permission)
     {
-        return view('admin.users.edit', compact('permission'));
+        $models = $this->models;
+        $actions = $this->actions;
+        return view('admin.permissions.edit', compact('permission','models','actions'));
     }
 
     /**

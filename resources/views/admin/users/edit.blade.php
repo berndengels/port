@@ -2,7 +2,7 @@
 
 @section('main')
     <div class="p-6">
-        <x-nav-link :href="route('admin.roles.index')" icon="fas fa-backward" class="btn">zurück</x-nav-link>
+        <x-nav-link :href="route('admin.users.index')" icon="fas fa-backward" class="btn">zurück</x-nav-link>
         <x-form :action="route('admin.users.update', $user)" class="w-full lg:w-1/2">
             @method('put')
             @bind($user)

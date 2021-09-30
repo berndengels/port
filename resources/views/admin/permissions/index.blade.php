@@ -24,7 +24,7 @@
             @foreach($data as $item)
                 <tr>
                     <td>{{ $item->id }}</td>
-                    <td>{{ $item->name }}</td>
+                    <td>{{ $item->name ?? null }}</td>
                     <td class="hidden md:table-cell">{{ $item->guard_name }}</td>
                     <td>
                         <x-nav-link href="{{ route('admin.permissions.edit', $item) }}" icon="fas fa-edit" class="btn" title="Bearbeiten">

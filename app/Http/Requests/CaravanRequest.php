@@ -25,7 +25,7 @@ class CaravanRequest extends FormRequest
      */
     public function authorize()
     {
-        return auth()->check();
+        return auth()->user()->can('write Caravan');
     }
 
     public function prepareForValidation()

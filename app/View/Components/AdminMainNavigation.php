@@ -2,6 +2,7 @@
 
 namespace App\View\Components;
 
+use App\Models\User;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
@@ -16,7 +17,17 @@ class AdminMainNavigation extends Component
      */
     public function __construct()
     {
-        $this->items = config('port.menu.admin.items');
+        /**
+         * @var $user User
+         */
+        $user = auth()->user();
+        $items = collect(config('port.menu.admin.items'))
+            ->filter(function ($item) use ($user) {
+                return (!isset($item['permissions']) || (isset($item['permissions']) && $user->can($item['permissions'])));
+            })
+        ;
+
+        $this->items = $items;
     }
 
     /**

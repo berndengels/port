@@ -16,7 +16,17 @@ class AdminUserController extends AdminController
      */
     public function index()
     {
-        $data = User::with('roles')->paginate(config('port.default.pagination.limit'));
+        /**
+         * @var $user User
+         */
+        $user = auth()->user();
+        $query = User::with('roles');
+
+        if($user && !$user->hasRole('admin')) {
+            $query->whereId($user->id);
+        }
+
+        $data = $query->paginate(config('port.default.pagination.limit'));
         return view('admin.users.index', compact('data'));
     }
 

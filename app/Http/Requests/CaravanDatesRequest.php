@@ -18,6 +18,16 @@ class CaravanDatesRequest extends FormRequest
      */
     protected $caravan;
 
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+        return auth()->user()->can('write CaravanDates') || auth()->user()->id === $this->id;
+    }
+
     public function prepareForValidation()
     {
         $this->merge([
