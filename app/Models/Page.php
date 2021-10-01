@@ -9,7 +9,7 @@ class Page extends Model
 {
     use HasFactory;
 
-    protected $table = '';
-    protected $guarded = [];
+    protected $table = 'pages';
+    protected $guarded = ['id'];
     public $timestamps = false;
 }

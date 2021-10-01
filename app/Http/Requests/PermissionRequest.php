@@ -1,18 +1,9 @@
 <?php
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
-
-class PermissionRequest extends FormRequest
+class PermissionRequest extends AdminRequest
 {
-    protected function getId()
-    {
-        $route = $this->route('permission');
-        if($route) {
-            return $route->id;
-        }
-        return null;
-    }
+    protected $routeParam = 'permission';
 
     /**
      * Determine if the user is authorized to make this request.

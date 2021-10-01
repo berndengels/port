@@ -1,15 +1,10 @@
 <?php
-
 namespace App\Http\Requests;
 
-use App\Http\Requests\Helper\Fix;
 use App\Models\Caravan;
-use App\Models\CaravanDates;
-use App\Rules\DatesIntervalUnique;
-use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\Helper\Fix;
 
-class CaravanDatesRequest extends FormRequest
+class CaravanDatesRequest extends AdminRequest
 {
     use Fix;
 
@@ -17,6 +12,7 @@ class CaravanDatesRequest extends FormRequest
      * @var Caravan
      */
     protected $caravan;
+    protected $routeParam = 'caravanDate';
 
     /**
      * Determine if the user is authorized to make this request.
@@ -25,7 +21,7 @@ class CaravanDatesRequest extends FormRequest
      */
     public function authorize()
     {
-        return auth()->user()->can('write CaravanDates') || auth()->user()->id === $this->id;
+        return auth()->user()->can('write CaravanDates');
     }
 
     public function prepareForValidation()

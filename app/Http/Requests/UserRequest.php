@@ -1,19 +1,9 @@
 <?php
-
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
-
-class UserRequest extends FormRequest
+class UserRequest extends AdminRequest
 {
-    protected function getId()
-    {
-        $route = $this->route('user');
-        if($route) {
-            return $route->id;
-        }
-        return null;
-    }
+    protected $routeParam = 'user';
 
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +12,7 @@ class UserRequest extends FormRequest
      */
     public function authorize()
     {
-        return auth()->user()->can('write User');
+        return $this->user()->id === $this->getId() || auth()->user()->can('write User');
     }
 
     /**

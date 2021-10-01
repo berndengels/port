@@ -1,22 +1,12 @@
 <?php
-
 namespace App\Http\Requests;
 
 use App\Http\Requests\Helper\Fix;
-use Illuminate\Foundation\Http\FormRequest;
 
-class CaravanRequest extends FormRequest
+class CaravanRequest extends AdminRequest
 {
     use Fix;
-
-    protected function getId()
-    {
-        $route = $this->route('caravan');
-        if($route) {
-            return $route->id;
-        }
-        return null;
-    }
+    protected $routeParam = 'caravan';
 
     /**
      * Determine if the user is authorized to make this request.

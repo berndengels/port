@@ -1,10 +1,11 @@
 <?php
+
 namespace App\Http\Requests;
 
-class RoleRequest extends AdminRequest
-{
-    protected $routeParam = 'role';
+use Illuminate\Foundation\Http\FormRequest;
 
+class CustomerRequest extends FormRequest
+{
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -12,7 +13,7 @@ class RoleRequest extends AdminRequest
      */
     public function authorize()
     {
-        return auth()->user()->can('write Role');
+        return false;
     }
 
     /**
@@ -23,9 +24,7 @@ class RoleRequest extends AdminRequest
     public function rules()
     {
         return [
-            'name'              => !$this->getId() ? 'required|unique:App\Models\Role,name' : 'required',
-            'guard_name'        => 'required',
-            'permissions'       => [],
+            //
         ];
     }
 }

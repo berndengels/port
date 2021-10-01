@@ -1,11 +1,10 @@
 <?php
-
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
-
-class PageRequest extends FormRequest
+class PageRequest extends AdminRequest
 {
+    protected $routeParam = 'page';
+
     /**
      * Determine if the user is authorized to make this request.
      *
