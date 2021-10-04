@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AdminPriceController;
+use App\Http\Controllers\Admin\AdminPriceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::group([
     'prefix'    => 'admin',
     'as'        => 'admin.',
-    'middleware' => ['auth'],
+    'middleware' => ['auth:admin','admin'],
 ],function () {
     Route::post('caravan/price/calculate', [AdminPriceController::class, 'calculate'])->name('caravan.price.calculate');
 });

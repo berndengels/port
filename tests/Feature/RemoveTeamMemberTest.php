@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Models\User;
+use App\Models\AdminUser;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -12,10 +12,10 @@ class RemoveTeamMemberTest extends TestCase
 
     public function test_team_members_can_be_removed_from_teams()
     {
-        $this->actingAs($user = User::factory()->withPersonalTeam()->create());
+        $this->actingAs($user = AdminUser::factory()->withPersonalTeam()->create());
 
         $user->currentTeam->users()->attach(
-            $otherUser = User::factory()->create(), ['role' => 'admin']
+            $otherUser = AdminUser::factory()->create(), ['role' => 'admin']
         );
 
         $response = $this->delete('/teams/'.$user->currentTeam->id.'/members/'.$otherUser->id);
@@ -25,10 +25,10 @@ class RemoveTeamMemberTest extends TestCase
 
     public function test_only_team_owner_can_remove_team_members()
     {
-        $user = User::factory()->withPersonalTeam()->create();
+        $user = AdminUser::factory()->withPersonalTeam()->create();
 
         $user->currentTeam->users()->attach(
-            $otherUser = User::factory()->create(), ['role' => 'admin']
+            $otherUser = AdminUser::factory()->create(), ['role' => 'admin']
         );
 
         $this->actingAs($otherUser);

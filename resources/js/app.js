@@ -13,4 +13,3 @@ $(document).ready(function () {
 		$sideNav.removeClass('active')
 	});
 });
-

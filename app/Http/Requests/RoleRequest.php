@@ -3,17 +3,7 @@ namespace App\Http\Requests;
 
 class RoleRequest extends AdminRequest
 {
-    protected $routeParam = 'role';
-
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return auth()->user()->can('write Role');
-    }
+    protected $modelName = 'Role';
 
     /**
      * Get the validation rules that apply to the request.

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Permission extends BaseModel
 {
     use HasFactory;
-    protected $appends = ['actions','model','action'];
+    protected $appends = ['actions','model','action','uniqName'];
     public $action;
     public $model;
 
@@ -19,6 +19,11 @@ class Permission extends BaseModel
     public static function actions()
     {
         return self::$actions;
+    }
+
+    public function getUniqNameAttribute()
+    {
+        return $this->name . ' '  .$this->guard_name;
     }
 
     public static function getActionsAttribute()

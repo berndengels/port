@@ -1,19 +1,12 @@
 <?php
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
+use Illuminate\Database\Query\Builder;
+
 class PermissionRequest extends AdminRequest
 {
-    protected $routeParam = 'permission';
-
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return auth()->user()->can('write Permission');
-    }
+    protected $modelName = 'Permission';
 
     public function validationData()
     {
@@ -30,7 +23,12 @@ class PermissionRequest extends AdminRequest
     public function rules()
     {
         return [
-            'name'          => !$this->getId() ? 'unique:App\Models\Permission,name' : '',
+            'name' => !$this->getId() ? Rule::unique('permissions')->where(function(Builder $query) {
+                return $query
+                    ->whereName($this->name)
+                    ->whereGuardName($this->guard_name)
+                ;
+            }) : '',
             'guard_name'    => 'required',
             'model'         => 'required',
             'action'        => 'required',

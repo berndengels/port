@@ -2,13 +2,22 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\User;
 use Exception;
+use App\Models\AdminUser;
 use Illuminate\Http\Response;
 use App\Http\Requests\UserRequest;
+use Illuminate\Support\Facades\Auth;
 
 class AdminUserController extends AdminController
 {
+
+    /**
+     * Guard used for admin user
+     *
+     * @var string
+     */
+    protected $guard = 'admin';
+
     /**
      * Display a listing of the resource.
      *
@@ -17,26 +26,26 @@ class AdminUserController extends AdminController
     public function index()
     {
         /**
-         * @var $user User
+         * @var $user AdminUser
          */
-        $user = auth()->user();
-        $query = User::with('roles');
+        $user = auth('admin')->user();
+        $query = AdminUser::with('roles');
 
         if($user && !$user->hasRole('admin')) {
             $query->whereId($user->id);
         }
 
-        $data = $query->paginate(config('port.default.pagination.limit'));
+        $data = $query->paginate(config('port.main.default.pagination.limit'));
         return view('admin.users.index', compact('data'));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param User $user
+     * @param AdminUser $user
      * @return Response
      */
-    public function show(User $user)
+    public function show(AdminUser $user)
     {
         return view('admin.users.show', compact('user'));
     }
@@ -60,7 +69,7 @@ class AdminUserController extends AdminController
     public function store(UserRequest $request)
     {
         try {
-            User::create($request->validated())->syncRoles($request->validated()['roles']);
+            AdminUser::create($request->validated())->syncRoles($request->validated()['roles']);
             return redirect()->route('admin.users.index')->with('success', 'User erfogreich angelegt!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
@@ -70,10 +79,10 @@ class AdminUserController extends AdminController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param User $user
+     * @param AdminUser $user
      * @return Response
      */
-    public function edit(User $user)
+    public function edit(AdminUser $user)
     {
         $user->load('roles');
         $user->password = null;
@@ -87,10 +96,10 @@ class AdminUserController extends AdminController
      * Update the specified resource in storage.
      *
      * @param UserRequest $request
-     * @param User $user
+     * @param AdminUser $user
      * @return Response
      */
-    public function update(UserRequest $request, User $user)
+    public function update(UserRequest $request, AdminUser $user)
     {
         try {
             $validated = $request->validated();
@@ -110,10 +119,10 @@ class AdminUserController extends AdminController
     /**
      * Remove the specified resource from storage.
      *
-     * @param User $user
+     * @param AdminUser $user
      * @return Response
      */
-    public function destroy(User $user)
+    public function destroy(AdminUser $user)
     {
         try {
             $user->delete();

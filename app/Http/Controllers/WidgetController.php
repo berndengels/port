@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\BoatType;
+use App\Models\Widget;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class BoatTypeController extends Controller
+class WidgetController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,10 +21,10 @@ class BoatTypeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param BoatType $boatType
+     * @param Widget $widget
      * @return Response
      */
-    public function show(BoatType $boatType)
+    public function show(Widget $widget)
     {
         //
     }
@@ -53,10 +53,10 @@ class BoatTypeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param BoatType $boatType
+     * @param Widget $widget
      * @return Response
      */
-    public function edit(BoatType $boatType)
+    public function edit(Widget $widget)
     {
         //
     }
@@ -65,10 +65,10 @@ class BoatTypeController extends Controller
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param BoatType $boatType
+     * @param Widget $widget
      * @return Response
      */
-    public function update(Request $request, BoatType $boatType)
+    public function update(Request $request, Widget $widget)
     {
         //
     }
@@ -76,10 +76,10 @@ class BoatTypeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param BoatType $boatType
+     * @param Widget $widget
      * @return Response
      */
-    public function destroy(BoatType $boatType)
+    public function destroy(Widget $widget)
     {
         //
     }

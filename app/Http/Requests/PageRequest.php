@@ -3,17 +3,7 @@ namespace App\Http\Requests;
 
 class PageRequest extends AdminRequest
 {
-    protected $routeParam = 'page';
-
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return auth()->user()->can('write Page');
-    }
+    protected $modelName = 'Page';
 
     /**
      * Get the validation rules that apply to the request.
@@ -23,7 +13,9 @@ class PageRequest extends AdminRequest
     public function rules()
     {
         return [
-            //
+            'title'     => $this->getId() ? 'required' : 'required|unique:pages,title',
+            'content'   => 'required',
+            'slug'      => '',
         ];
     }
 }

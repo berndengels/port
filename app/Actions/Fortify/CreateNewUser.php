@@ -3,7 +3,7 @@
 namespace App\Actions\Fortify;
 
 use App\Models\Team;
-use App\Models\User;
+use App\Models\AdminUser;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -18,7 +18,7 @@ class CreateNewUser implements CreatesNewUsers
      * Create a newly registered user.
      *
      * @param  array  $input
-     * @return User
+     * @return AdminUser
      */
     public function create(array $input)
     {
@@ -30,11 +30,11 @@ class CreateNewUser implements CreatesNewUsers
         ])->validate();
 
         return DB::transaction(function () use ($input) {
-            return tap(User::create([
+            return tap(AdminUser::create([
                 'name' => $input['name'],
                 'email' => $input['email'],
                 'password' => Hash::make($input['password']),
-            ]), function (User $user) {
+            ]), function (AdminUser $user) {
                 $this->createTeam($user);
             });
         });
@@ -43,10 +43,10 @@ class CreateNewUser implements CreatesNewUsers
     /**
      * Create a personal team for the user.
      *
-     * @param User $user
+     * @param AdminUser $user
      * @return void
      */
-    protected function createTeam(User $user)
+    protected function createTeam(AdminUser $user)
     {
         $user->ownedTeams()->save(Team::forceCreate([
             'user_id' => $user->id,

@@ -8,6 +8,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Notifications\DatabaseNotificationCollection;
@@ -15,7 +16,6 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
-use Laravel\Jetstream\HasTeams;
 use Laravel\Sanctum\HasApiTokens;
 use Laravel\Sanctum\PersonalAccessToken;
 use Spatie\Permission\Traits\HasRoles;
@@ -44,34 +44,35 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read Collection|PersonalAccessToken[] $tokens
  * @property-read int|null $tokens_count
  * @method static UserFactory factory(...$parameters)
- * @method static Builder|User newModelQuery()
- * @method static Builder|User newQuery()
- * @method static Builder|User query()
- * @method static Builder|User whereCreatedAt($value)
- * @method static Builder|User whereEmail($value)
- * @method static Builder|User whereEmailVerifiedAt($value)
- * @method static Builder|User whereId($value)
- * @method static Builder|User whereName($value)
- * @method static Builder|User wherePassword($value)
- * @method static Builder|User whereRememberToken($value)
- * @method static Builder|User whereTwoFactorRecoveryCodes($value)
- * @method static Builder|User whereTwoFactorSecret($value)
- * @method static Builder|User whereUpdatedAt($value)
+ * @method static Builder|AdminUser newModelQuery()
+ * @method static Builder|AdminUser newQuery()
+ * @method static Builder|AdminUser query()
+ * @method static Builder|AdminUser whereCreatedAt($value)
+ * @method static Builder|AdminUser whereEmail($value)
+ * @method static Builder|AdminUser whereEmailVerifiedAt($value)
+ * @method static Builder|AdminUser whereId($value)
+ * @method static Builder|AdminUser whereName($value)
+ * @method static Builder|AdminUser wherePassword($value)
+ * @method static Builder|AdminUser whereRememberToken($value)
+ * @method static Builder|AdminUser whereTwoFactorRecoveryCodes($value)
+ * @method static Builder|AdminUser whereTwoFactorSecret($value)
+ * @method static Builder|AdminUser whereUpdatedAt($value)
  * @mixin Eloquent
  * @property int|null $current_team_id
  * @property string|null $profile_photo_path
- * @method static Builder|User whereCurrentTeamId($value)
- * @method static Builder|User whereProfilePhotoPath($value)
+ * @method static Builder|AdminUser whereCurrentTeamId($value)
+ * @method static Builder|AdminUser whereProfilePhotoPath($value)
  */
-class User extends Authenticatable
+class AdminUser extends Authenticatable
 {
     use HasRoles;
-    use HasApiTokens;
+//    use HasApiTokens;
     use HasFactory;
     use HasProfilePhoto;
     use Notifiable;
-    use TwoFactorAuthenticatable;
+//    use TwoFactorAuthenticatable;
 
+    protected $table = 'admin_users';
     /**
      * The attributes that are mass assignable.
      *

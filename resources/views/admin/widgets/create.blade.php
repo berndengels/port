@@ -1,0 +1,41 @@
+@extends('layouts.main')
+
+@push('styles')
+    <link rel="stylesheet" type="text/css" href="{{ asset('froala-editor/css/froala_editor.pkgd.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('froala-editor/css/third_party/font_awesome.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('froala-editor/css/plugins/code_view.min.css') }}" />
+@endpush
+
+@push('scripts')
+    <script src="{{ asset('froala-editor/js/froala_editor.pkgd.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('froala-editor/js/plugins/file.min.js') }}"></script>
+    <script src="{{ asset('froala-editor/js/plugins/font_awesome.min.js') }}"></script>
+@endpush
+
+@section('main')
+    <div class="p-6">
+        <x-nav-link :href="route('admin.widgets.index')" icon="fas fa-backward" class="btn">zurück</x-nav-link>
+        <x-form name="frm" method="post" :action="route('admin.widgets.store')" class="w-full lg:w-1/2">
+            @csrf
+            <x-form-input name="position" label="Position" required />
+            <x-form-input name="title" label="Titel" required />
+            <x-form-input name="slug" label="slug" />
+            <x-form-input type="hidden" name="content" />
+            <div id="froala-editor" class="mt-2"></div>
+            <div class="mt-2">
+                <x-form-submit class="btn btn-save h-10 mt-3 w-full md:w-1/2" icon="fas fa-save">Speichern</x-form-submit>
+            </div>
+        </x-form>
+    </div>
+@endsection
+
+@push('inline-scripts')
+<script>
+	const uploadUrl = '{{ route('admin.upload.image', ['paramName' => 'image']) }}';
+	var editor = Editor.create('#froala-editor', 'image', uploadUrl);
+    document.frm.onsubmit = (e) => {
+	    document.frm.content.value = editor.html.get(true);
+		return true;
+    };
+</script>
+@endpush

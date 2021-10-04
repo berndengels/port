@@ -9,7 +9,8 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
     <!-- Styles -->
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
-    @stack('styles')
+    <link rel="stylesheet" type="text/css" href="{{ asset('froala-editor/css/froala_editor.pkgd.min.css') }}" />
+@stack('styles')
     <!-- Scripts -->
     <!--script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script-->
 

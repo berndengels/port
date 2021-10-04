@@ -4,12 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Helper\ModelHelper;
 use App\Models\Permission;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PermissionRequest;
 use Illuminate\Support\Collection;
 
-class AdminPermissionController extends Controller
+class AdminPermissionController extends AdminController
 {
     /**
      * @var Collection
@@ -26,7 +27,6 @@ class AdminPermissionController extends Controller
         });
     }
 
-
     /**
      * Display a listing of the resource.
      *
@@ -34,7 +34,7 @@ class AdminPermissionController extends Controller
      */
     public function index()
     {
-        $data = Permission::paginate(config('port.default.pagination.limit'));
+        $data = Permission::paginate($this->paginatorLimit);
         return view('admin.permissions.index', compact('data'));
     }
 

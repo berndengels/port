@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Models\User;
+use App\Models\AdminUser;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -12,7 +12,7 @@ class UpdateTeamNameTest extends TestCase
 
     public function test_team_names_can_be_updated()
     {
-        $this->actingAs($user = User::factory()->withPersonalTeam()->create());
+        $this->actingAs($user = AdminUser::factory()->withPersonalTeam()->create());
 
         $response = $this->put('/teams/'.$user->currentTeam->id, [
             'name' => 'Test Team',

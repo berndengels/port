@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Models\User;
+use App\Models\AdminUser;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Mail;
 use Laravel\Jetstream\Mail\TeamInvitation;
@@ -16,7 +16,7 @@ class InviteTeamMemberTest extends TestCase
     {
         Mail::fake();
 
-        $this->actingAs($user = User::factory()->withPersonalTeam()->create());
+        $this->actingAs($user = AdminUser::factory()->withPersonalTeam()->create());
 
         $response = $this->post('/teams/'.$user->currentTeam->id.'/members', [
             'email' => 'test@example.com',
@@ -30,7 +30,7 @@ class InviteTeamMemberTest extends TestCase
 
     public function test_team_member_invitations_can_be_cancelled()
     {
-        $this->actingAs($user = User::factory()->withPersonalTeam()->create());
+        $this->actingAs($user = AdminUser::factory()->withPersonalTeam()->create());
 
         $invitation = $user->currentTeam->teamInvitations()->create([
             'email' => 'test@example.com',

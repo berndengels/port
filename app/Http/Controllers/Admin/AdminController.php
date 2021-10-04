@@ -1,19 +1,18 @@
 <?php
 namespace App\Http\Controllers\Admin;
 
-use App\Filters\Caravan\CaravanFilter;
+use Carbon\Carbon;
+use Str;
 use App\Models\Caravan;
 use App\Models\Country;
 use App\Models\Role;
-use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
+use App\Filters\Caravan\CaravanFilter;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Pipeline\Pipeline;
 use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Support\Collection;
-use Closure;
-use Illuminate\Database\Eloquent\Builder;
 
 class AdminController extends BaseController
 {
@@ -36,9 +35,12 @@ class AdminController extends BaseController
      * @var Collection
      */
     protected $rolesOptions;
+    protected $paginatorLimit;
 
     public function __construct()
     {
+        $this->middleware(['auth', 'auth:admin']);
+        $this->paginatorLimit = config('port.main.default.pagination.limit');
         // @todo: set cache for countries
         $this->countries = Country::orderBy('de')
             ->get(['id','de'])
@@ -66,7 +68,7 @@ class AdminController extends BaseController
     public function main()
     {
         if(!auth()->check()) {
-            return redirect()->route('admin.dashboard');
+            return redirect()->route('public.dashboard');
         }
         return view('layouts.main');
     }

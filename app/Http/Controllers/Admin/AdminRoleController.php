@@ -18,21 +18,18 @@ class AdminRoleController extends AdminController
 
     public function __construct()
     {
-        $this->permissions = Permission::orderBy('name')
+        $this->permissions = Permission::orderBy('guard_name')
+            ->orderBy('name')
             ->get()
             ->keyBy('id')
-            ->map
-            ->name;
+            ->map(function ($item) {
+                return "$item->guard_name $item->name";
+            });
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
     public function index()
     {
-        $data = Role::paginate(config('port.default.pagination.limit'));
+        $data = Role::paginate($this->paginatorLimit);
         return view('admin.roles.index', compact('data'));
     }
 
@@ -66,7 +63,8 @@ class AdminRoleController extends AdminController
     public function store(RoleRequest $request)
     {
         try {
-            Role::create($request->validated())->syncPermissions($request->validated()['permissions']);
+            $permissions = isset($request->validated()['permissions']) ? $request->validated()['permissions'] : null;
+            Role::create($request->validated())->syncPermissions($permissions);
             return redirect()->route('admin.roles.index')->with('success', 'Rolle erfogreich angelegt!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
@@ -95,7 +93,8 @@ class AdminRoleController extends AdminController
     public function update(RoleRequest $request, Role $role)
     {
         try {
-            $role->syncPermissions($request->validated()['permissions'])->update($request->validated());
+            $permissions = isset($request->validated()['permissions']) ? $request->validated()['permissions'] : null;
+            $role->syncPermissions($permissions)->update($request->validated());
             return redirect()->route('admin.roles.index')->with('success', 'Rolle erfogreich bearbeitet!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());

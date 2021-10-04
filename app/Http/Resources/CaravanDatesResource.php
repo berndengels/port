@@ -22,11 +22,11 @@ class CaravanDatesResource extends JsonResource
         return [
             'kennzeichen'   => $this->caravan->carnumber,
             'laenge'        => $this->caravan->carlength,
-            'von'       => $this->from->format('d.m.Y'),
-            'bis'       => $this->until->format('d.m.Y'),
+            'von'           => $this->from->format('d.m.Y'),
+            'bis'           => $this->until->format('d.m.Y'),
             'tage'          => $this->from->diffInDays($this->until),
             'personen'      => $this->persons,
-            'strom'         => $this->electric ? 1 : 0,
+            'strom'         => $this->electric ? 'Ja' : 'Nein',
             'preis'         => $this->price,
         ];
     }

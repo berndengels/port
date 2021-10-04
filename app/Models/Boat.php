@@ -12,4 +12,5 @@ class Boat extends Model
     protected $table = 'boats';
     protected $guarded = ['id'];
     public $timestamps = false;
+
 }

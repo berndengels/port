@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Team;
-use App\Models\User;
+use App\Models\AdminUser;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class TeamFactory extends Factory
@@ -24,7 +24,7 @@ class TeamFactory extends Factory
     {
         return [
             'name' => $this->faker->unique()->company(),
-            'user_id' => User::factory(),
+            'user_id' => AdminUser::factory(),
             'personal_team' => true,
         ];
     }

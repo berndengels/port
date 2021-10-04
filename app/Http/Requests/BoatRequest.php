@@ -4,17 +4,9 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class BoatRequest extends FormRequest
+class BoatRequest extends AdminRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return false;
-    }
+    protected $modelName = 'Boat';
 
     /**
      * Get the validation rules that apply to the request.

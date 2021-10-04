@@ -6,17 +6,7 @@ use App\Http\Requests\Helper\Fix;
 class CaravanRequest extends AdminRequest
 {
     use Fix;
-    protected $routeParam = 'caravan';
-
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return auth()->user()->can('write Caravan');
-    }
+    protected $modelName = 'Caravan';
 
     public function prepareForValidation()
     {

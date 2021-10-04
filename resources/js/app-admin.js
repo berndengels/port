@@ -1,6 +1,8 @@
 require('./bootstrap');
 import Caravan from './Libs/Caravan'
+import Editor from './Libs/Editor'
 window.Caravan = new Caravan
+window.Editor = new Editor
 
 $(document).ready(function () {
 	const $sideNav = $('.sidenav');
@@ -16,3 +18,11 @@ $(document).ready(function () {
 	});
 });
 
+if($('[name="csrf-token"]').is(":visible")) {
+	$.ajaxSetup({
+		headers: {'X-CSRF-Token': $('[name="csrf-token"]').attr('content')},
+	});
+}
+$(document).ajaxError(function( event, xhr, settings, thrownError ) {
+	console.error(xhr);
+});

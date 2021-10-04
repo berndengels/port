@@ -3,7 +3,7 @@ namespace App\Http\Requests;
 
 class UserRequest extends AdminRequest
 {
-    protected $routeParam = 'user';
+    protected $modelName = 'User';
 
     /**
      * Determine if the user is authorized to make this request.

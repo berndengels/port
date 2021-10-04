@@ -2,88 +2,112 @@
 namespace App\Libs;
 
 use Carbon\Carbon;
+use DatePeriod;
 
 class CaravanPriceCalculator extends PriceCalculator
 {
-    public static function getPrice(Carbon $from, Carbon $until, int $length, int $persons = 1, bool $electric = false, int $dayPrice = null) {
-        $countDays = $from->diffInDays($until);
+    protected $dailyPrice = 0;
+    protected $priceTotal = 0;
+    protected $electric = false;
+    protected $electric_per_day = 0;
+    protected $sum_person_price = 0;
+    protected $persons = 0;
+    protected $is_saison = false;
+    protected $car_length = 0;
+    protected $car_price_per_day = 0;
 
-        $total = 0;
-        $configSaisonFromMonth      = config('port.dates.saison.fromMonth');
-        $configSaisonUntilMonth     = config('port.dates.saison.untilMonth');
-
-        $configPersonsInclusive     = config('port.prices.caravan.persons_inclusivce');
-        $configPersonsAdditional    = config('port.prices.caravan.persons_additionaL');
-
-        $configElectricPrice        = config('port.prices.caravan.electric_per_day');
-        $configDefaultPricePerDay   = config('port.prices.caravan.default_per_day');
-        $configLengthDefaultRange   = array_keys($configDefaultPricePerDay);
-        $configSaisonPricePerDay    = config('port.prices.caravan.saison_per_day');
-        $configLengthSaisonRange    = array_keys($configSaisonPricePerDay);
-
-        $configDefaultMinPricePerDay = $dayPrice ?? config('port.prices.caravan.min_price_default');
-        $configDefaultMaxPricePerDay = $dayPrice ?? config('port.prices.caravan.max_price_default');
-        $configSaisontMinPricePerDay = $dayPrice ?? config('port.prices.caravan.min_price_saison');
-        $configSaisonMaxPricePerDay  = $dayPrice ?? config('port.prices.caravan.max_price_saison');
-
-        $days       = [];
-        $current    = $from->copy();
-        $i = 0;
-
-        while ($i < $countDays) {
-            if(0 === $i) {
-                $day = $current;
-            } else {
-                $day = $current->addDay();
-            }
-            $sumPersonsPrice = 0;
-            // add price per person exclusive
-            if($persons > $configPersonsInclusive) {
-                $addPersons = $persons - $configPersonsInclusive;
-                $sumPersonsPrice = $configPersonsAdditional * $addPersons;
-            }
-            $price = $sumPersonsPrice;
-            // add electric price
-            if($electric) {
-                $price += $configElectricPrice;
-            }
-            // saison
-            if($day->month >= $configSaisonFromMonth && $day->month <= $configSaisonUntilMonth) {
-                if(min($configLengthSaisonRange) > $length) {
-                    $carPricePerDay = $configSaisontMinPricePerDay;
-                } else if(max($configLengthSaisonRange) < $length) {
-                    $carPricePerDay = $configSaisonMaxPricePerDay;
-                } else {
-                    $carPricePerDay = isset($configSaisonPricePerDay[$length]) ? $configSaisonPricePerDay[$length] : 0;
-                }
-            }
-            // neben saison
-            else
-            {
-                if(min($configLengthDefaultRange) > $length) {
-                    $carPricePerDay = $configDefaultMinPricePerDay;
-                } else if(max($configLengthDefaultRange) < $length) {
-                    $carPricePerDay = $configDefaultMaxPricePerDay;
-                } else {
-                    $carPricePerDay = isset($configDefaultPricePerDay[$length]) ? $configDefaultPricePerDay[$length] : 0;
-                }
-            }
-            $price += $dayPrice ?? $carPricePerDay;
-
-            $total += $price;
-            $days[$day->format('Y-m-d')] = [
-                'date'              => $day->format('d.m.Y'),
-                'persons'           => $persons,
-                'sum_person_price'  => $sumPersonsPrice,
-                'electric_per_day'  => $electric ? $configElectricPrice : 0,
-                'is_saison'         => (int) ($day->month >= $configSaisonFromMonth && $day->month <= $configSaisonUntilMonth),
-                'car_length'        => $length,
-                'car_price_per_day' => $dayPrice ?? $carPricePerDay,
-                'sum_price'         => $price,
-            ];
-
-            $i++;
+    public function getPrice(Carbon $from, Carbon $until, int $length, int $persons = 1, bool $electric = false, int $dayPrice = null) {
+        $this->priceTotal = 0;
+        $dates  = $from->toPeriod($until)->toDatePeriod();
+        foreach ( $dates as $day ) {
+            $this->dailyPrice = 0;
+            $result = $this
+                ->addDailyPersonsPrice($persons)
+                ->addDailyElectricPrice($electric)
+                ->addDailySaisonPriceByLength($day, $length)
+                ->setDailyIndividualPrice($dayPrice)
+                ->getDailyFormatedResult($day, $dayPrice)
+            ;
+            $this->priceTotal += $this->dailyPrice;
         }
-        return ['total' => $total, 'prices' => $days];
+        return ['total' => $this->priceTotal, 'prices' => $result];
+    }
+
+    protected function addDailyPersonsPrice($persons)
+    {
+        $personsInclusive   = config('port.main.prices.caravan.persons_inclusivce');
+        $personsAdditional  = config('port.main.prices.caravan.persons_additional');
+        $this->persons = $persons;
+        // add price per person exclusive
+        if($persons > $personsInclusive) {
+            $addPersons = $persons - $personsInclusive;
+            $this->sum_person_price = $personsAdditional * $addPersons;
+        }
+        $this->dailyPrice += $this->sum_person_price;
+        return $this;
+    }
+
+    protected function addDailyElectricPrice($electric = false)
+    {
+        $electricPrice = config('port.main.prices.caravan.electric_per_day');
+        $this->electric = $electric;
+        if($this->electric) {
+            $this->electric_per_day = $electricPrice;
+            $this->dailyPrice += $electricPrice;
+        }
+        return $this;
+    }
+
+    protected function addDailySaisonPriceByLength(Carbon $date, $length)
+    {
+        $saisonFromMonth    = config('port.main.dates.saison.fromMonth');
+        $saisonUntilMonth   = config('port.main.dates.saison.untilMonth');
+        $defaultPricePerDay = config('port.main.prices.caravan.default_per_day');
+        $saisonPricePerDay  = config('port.main.prices.caravan.saison_per_day');
+
+        $this->car_length = $length;
+        // saison
+        if($date->month >= $saisonFromMonth && $date->month <= $saisonUntilMonth) {
+            $this->is_saison = true;
+            $price = isset($saisonPricePerDay[$length]) ? $saisonPricePerDay[$length] : 0;
+        }
+        // neben saison
+        else
+        {
+            $this->is_saison = false;
+            $price = isset($defaultPricePerDay[$length]) ? $defaultPricePerDay[$length] : 0;
+        }
+
+        $this->dailyPrice += $price;
+        $this->car_price_per_day = $price;
+
+        return $this;
+    }
+
+    protected function setDailyIndividualPrice($individualPrice = null)
+    {
+        if($individualPrice && $individualPrice > 0) {
+            $this->dailyPrice = $individualPrice;
+        }
+        return $this;
+    }
+
+    protected function getDailyFormatedResult(Carbon $date, $indiviualPrice = null)
+    {
+        $data           = [];
+        $dailyElectricPrice  = config('port.main.prices.caravan.electric_per_day');
+
+        $data[$date->format('Y-m-d')] = [
+            'date'              => $date->format('d.m.Y'),
+            'persons'           => $this->persons,
+            'sum_person_price'  => $this->sum_person_price,
+            'electric_per_day'  => $this->electric ? $dailyElectricPrice : 0,
+            'is_saison'         => $this->is_saison,
+            'car_length'        => $this->car_length,
+            'car_price_per_day' => $indiviualPrice ?? $this->car_price_per_day,
+            'sum_price'         => $this->dailyPrice,
+        ];
+
+        return $data;
     }
 }

@@ -24,7 +24,7 @@ class AdminCaravanController extends AdminController
 
         $data = Caravan::orderBy('carnumber')
             ->caravan($caravanId)
-            ->paginate(config('port.default.pagination.limit'))
+            ->paginate(config('port.main.default.pagination.limit'))
         ;
 
         return view('admin.caravans.index', [

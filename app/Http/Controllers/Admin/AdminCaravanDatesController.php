@@ -99,7 +99,7 @@ class AdminCaravanDatesController extends AdminController
             return $item->price;
         });
 
-        $paginated = $data->paginate(config('port.default.pagination.limit'));
+        $paginated = $data->paginate(config('port.main.default.pagination.limit'));
         $queryString = $request->only(['caravan','dublicate','year', 'month']);
 
         return view('admin.caravanDates.index', [

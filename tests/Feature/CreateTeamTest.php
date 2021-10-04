@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Models\User;
+use App\Models\AdminUser;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -12,7 +12,7 @@ class CreateTeamTest extends TestCase
 
     public function test_teams_can_be_created()
     {
-        $this->actingAs($user = User::factory()->withPersonalTeam()->create());
+        $this->actingAs($user = AdminUser::factory()->withPersonalTeam()->create());
 
         $response = $this->post('/teams', [
             'name' => 'Test Team',

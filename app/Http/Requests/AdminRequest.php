@@ -2,11 +2,26 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
 class AdminRequest extends FormRequest
 {
+    protected $modelName;
     protected $routeParam;
+    /**
+     * @var Auth
+     */
+    protected $auth;
+
+    public function __construct(array $query = [], array $request = [], array $attributes = [], array $cookies = [], array $files = [], array $server = [], $content = null)
+    {
+        $this->auth = auth('admin');
+        parent::__construct($query, $request, $attributes, $cookies, $files, $server, $content);
+        if(!$this->routeParam) {
+            $this->routeParam = lcfirst($this->modelName);
+        }
+    }
 
     protected function getId()
     {
@@ -24,6 +39,7 @@ class AdminRequest extends FormRequest
      */
     public function authorize()
     {
-        return auth()->check();
+        return true;
+//        return $this->auth->user()->can('write ' . $this->modelName);
     }
 }

@@ -3,13 +3,11 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\CaravanAdminController;
-use App\Http\Controllers\CaravanDatesController;
 use App\Http\Controllers\PriceController;
-use App\Http\Controllers\CarLicensePlateController;
 use App\Http\Controllers\RouteController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\WidgetController;
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdminCaravanController;
@@ -22,22 +20,52 @@ use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\AdminRoleController;
 use App\Http\Controllers\Admin\AdminPageController;
 use App\Http\Controllers\Admin\AdminPermissionController;
+Use App\Http\Controllers\Admin\AdminCustomerController;
+use App\Http\Controllers\Admin\AdminBoatController;
+use App\Http\Controllers\Admin\AdminWidgetController;
+use App\Http\Controllers\Admin\AdminUploadController;
+
+use App\Http\Controllers\Admin\Auth\AdminLoginController;
+
 
 Auth::routes();
+
+Route::get('/admin/logout', function () {
+    Auth::logout();
+    return redirect('/');
+})->name('admin.logout');
+
 Route::get('/logout', function () {
     Auth::logout();
     return redirect('/');
-})->name('logout');
+})->name('customer.logout');
+
+//Route::post('customer/login', [AdminCustomerController::class,'login'])->name('customer.login');
+
 
 Route::get('', [Controller::class, 'main'])->name('main');
 
 Route::group([
+    'as'  => 'public.',
+],function () {
+    Route::get('dashboard', [DashboardController::class, 'show'])->name('dashboard');
+//    Route::resource('caravans', CaravanController::class);
+//    Route::resource('caravanDates', CaravanDatesController::class);
+    Route::resource('pages', PageController::class);
+    Route::resource('widgets', WidgetController::class);
+    Route::get('route/current', [RouteController::class, 'setCurrentMenu'])->name('route.current');
+});
+
+Route::group([
     'prefix'    => 'admin',
     'as'        => 'admin.',
-    'middleware' => ['auth'],
+    'middleware' => ['auth:admin'],
 ],function () {
     Route::get('', [AdminController::class, 'main'])->name('main');
     Route::get('dashboard', [AdminDashboardController::class, 'show'])->name('dashboard');
+    Route::get('customers/guests', [AdminCustomerController::class,'guests'])->name('customers.guests');
+    Route::get('boats/guests', [AdminBoatController::class,'guests'])->name('boats.guests');
+
     Route::resource('caravans', AdminCaravanController::class);
     Route::resource('caravanDates', AdminCaravanDatesController::class);
 
@@ -45,24 +73,19 @@ Route::group([
     Route::resource('roles', AdminRoleController::class);
     Route::resource('permissions', AdminPermissionController::class);
     Route::resource('pages', AdminPageController::class);
+    Route::resource('widgets', AdminWidgetController::class);
+    Route::resource('customers', AdminCustomerController::class);
+    Route::resource('boats', AdminBoatController::class);
 
     Route::post('caravanDates/sendExcel', [AdminCaravanDatesController::class, 'sendExcel'])->name('caravanDates.sendExcel');
     Route::match(['post','put'],'caravan/price/calculate', [AdminPriceController::class, 'calculate'])->name('caravan.price.calculate');
     Route::get('caravan/price/excel/{year?}/{month?}', [AdminPriceController::class, 'excel'])->name('caravan.price.excel');
     Route::get('caravan/price/pdf/{year?}/{month?}', [AdminPriceController::class, 'pdf'])->name('caravan.price.pdf');
-
     Route::get('car/info/{caravanId}', [AdminCarLicensePlateController::class, 'info'])->name('car.info');
     Route::get('route/current', [AdminRouteController::class, 'setCurrentMenu'])->name('route.current');
     Route::get('routes', [AdminRouteController::class, 'routes'])->name('routes.index');
+    Route::post('upload/image/{paramName}', [AdminUploadController::class, 'imageUpload'])->name('upload.image');
 });
 
-Route::group([
-    'as'  => 'public.',
-],function () {
-    Route::get('dashboard', [DashboardController::class, 'show'])->name('dashboard');
-    Route::resource('caravans', CaravanController::class);
-    Route::resource('caravanDates', CaravanDatesController::class);
-    Route::resource('pages', PageController::class);
-
-    Route::get('route/current', [RouteController::class, 'setCurrentMenu'])->name('route.current');
-});
+Route::get('admin', [AdminLoginController::class,'showLoginForm'])->name('admin.check');
+Route::post('admin/login', [AdminLoginController::class,'login'])->name('admin.login');

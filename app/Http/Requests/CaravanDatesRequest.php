@@ -13,16 +13,7 @@ class CaravanDatesRequest extends AdminRequest
      */
     protected $caravan;
     protected $routeParam = 'caravanDate';
-
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return auth()->user()->can('write CaravanDates');
-    }
+    protected $modelName = 'CaravanDates';
 
     public function prepareForValidation()
     {

@@ -2,24 +2,13 @@
 
 @section('main')
     <div class="flex-container-dashboard public">
-
-        <div class="flex-item-dashboard p-3">
-            <div class="">
-                Camerarius, emeritis itineris tramitems acceleratrix tractare de lotus, velox xiphias.
+        @if($widgets->count() > 0)
+            @foreach($widgets as $item)
+            <div class="flex-item-dashboard p-3">
+                <div class="title">{{ $item->title }}</div>
+                <div class="content mt-2">{!! $item->content !!}</div>
             </div>
-        </div>
-
-        <div class="flex-item-dashboard p-3">
-            <div class="flex flex-wrap flex-shrink-0">
-                Die proudly like a remarkable particle.
-            </div>
-        </div>
-
-        <div class="flex-item-dashboard p-3">
-            <div class="flex flex-wrap flex-shrink-0">
-                Believers, lovers, and simple therapists will always protect them.
-            </div>
-        </div>
-
+            @endforeach
+        @endif
     </div>
 @endsection

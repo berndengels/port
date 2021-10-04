@@ -12,15 +12,14 @@
 </div>
 
 <script>
-	const elemFlashMsg = document.querySelector('.flash-msg'),
-        btnClose = elemFlashMsg.querySelector('button.btn-msg-close');
+	const $elemFlashMsg = $('.flash-msg'),
+        $btnClose = $('button.btn-msg-close', $elemFlashMsg);
 
-	btnClose.onclick = () => {
-		elemFlashMsg.style.display = 'none';
-    };
+	$btnClose.click(() => $elemFlashMsg.fadeOut());
+
     @if($type !== 'error')
     window.setTimeout(function () {
-	    elemFlashMsg.style.display = 'none';
+	    $elemFlashMsg.fadeOut();
     }, 3000);
     @endif
 </script>

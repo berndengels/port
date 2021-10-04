@@ -1,2 +1,3 @@
 
-import('./CaravanPrice')
+import('./Caravan')
+import('./Editor')

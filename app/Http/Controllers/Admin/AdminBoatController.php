@@ -1,30 +1,41 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Models\CustomerType;
+use App\Http\Requests\BoatRequest;
+use App\Models\Boat;
+use App\Models\BoatType;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class CustomerTypeController extends Controller
+class AdminBoatController extends AdminController
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
+    protected $boatTypes;
+
+    public function __construct()
+    {
+        $this->boatTypes = json_decode(config('port.main.boat.types'), true);
+    }
+
     public function index()
     {
-        //
+        $data = Boat::paginate($this->paginatorLimit);
+        return view('admin.boats.index', compact('data'));
+    }
+
+    public function guests()
+    {
+        $data = Boat::paginate($this->paginatorLimit);
+        return view('admin.boats.index', compact('data'));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param CustomerType $customerType
+     * @param Boat $boat
      * @return Response
      */
-    public function show(CustomerType $customerType)
+    public function show(Boat $boat)
     {
         //
     }
@@ -53,10 +64,10 @@ class CustomerTypeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param CustomerType $customerType
+     * @param Boat $boat
      * @return Response
      */
-    public function edit(CustomerType $customerType)
+    public function edit(Boat $boat)
     {
         //
     }
@@ -65,10 +76,10 @@ class CustomerTypeController extends Controller
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param CustomerType $customerType
+     * @param Boat $boat
      * @return Response
      */
-    public function update(Request $request, CustomerType $customerType)
+    public function update(Request $request, Boat $boat)
     {
         //
     }
@@ -76,10 +87,10 @@ class CustomerTypeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param CustomerType $customerType
+     * @param Boat $boat
      * @return Response
      */
-    public function destroy(CustomerType $customerType)
+    public function destroy(Boat $boat)
     {
         //
     }

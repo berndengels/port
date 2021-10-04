@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Models\User;
+use App\Models\AdminUser;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Str;
 use Laravel\Jetstream\Features;
@@ -19,9 +19,9 @@ class ApiTokenPermissionsTest extends TestCase
         }
 
         if (Features::hasTeamFeatures()) {
-            $this->actingAs($user = User::factory()->withPersonalTeam()->create());
+            $this->actingAs($user = AdminUser::factory()->withPersonalTeam()->create());
         } else {
-            $this->actingAs($user = User::factory()->create());
+            $this->actingAs($user = AdminUser::factory()->create());
         }
 
         $token = $user->tokens()->create([

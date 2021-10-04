@@ -2,21 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Models\Page;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Http\Requests\PageRequest;
 
-class AdminPageController extends Controller
+class AdminPageController extends AdminController
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
     public function index()
     {
-        //
+        $data = Page::paginate($this->paginatorLimit);
+        return view('admin.pages.index', compact('data'));
     }
 
     /**
@@ -27,7 +22,7 @@ class AdminPageController extends Controller
      */
     public function show(Page $page)
     {
-        //
+        return view('admin.pages.show', compact('page'));
     }
 
     /**
@@ -37,18 +32,23 @@ class AdminPageController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.pages.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param PageRequest $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(PageRequest $request)
     {
-        //
+        try {
+            Page::create($request->validated());
+            return redirect()->route('admin.pages.index')->with('success', 'Page erfogreich angelegt!');
+        } catch(Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
     }
 
     /**
@@ -59,7 +59,7 @@ class AdminPageController extends Controller
      */
     public function edit(Page $page)
     {
-        //
+        return view('admin.pages.edit', compact('page'));
     }
 
     /**
@@ -69,9 +69,14 @@ class AdminPageController extends Controller
      * @param Page $page
      * @return Response
      */
-    public function update(Request $request, Page $page)
+    public function update(PageRequest $request, Page $page)
     {
-        //
+        try {
+            $page->update($request->validated());
+            return redirect()->route('admin.pages.index')->with('success', 'Page erfogreich bearbeitet!');
+        } catch(Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
     }
 
     /**
@@ -82,6 +87,11 @@ class AdminPageController extends Controller
      */
     public function destroy(Page $page)
     {
-        //
+        try {
+            $page->delete();
+            return back()->with('success', 'Page erfogreich gelöscht!');
+        } catch(Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
     }
 }

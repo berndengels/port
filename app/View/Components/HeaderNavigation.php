@@ -18,7 +18,6 @@ class HeaderNavigation extends Component
     public function __construct(Request $request)
     {
         $this->items = $request->session()->get('currentRoutes') ?? [];
-//        dd($this->items);
     }
 
     /**

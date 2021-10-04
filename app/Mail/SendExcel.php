@@ -39,7 +39,7 @@ class SendExcel extends Mailable
     {
         return $this
 //            ->to($this->to)
-            ->from(config('port.mail.sender.address'), config('port.mail.sender.name'))
+            ->from(config('port.main.mail.sender.address'), config('port.main.mail.sender.name'))
             ->attach($this->file)
             ->subject("Caravan Rezeptions Daten")
             ->markdown('email.excel', [

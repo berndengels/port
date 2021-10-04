@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Models\User;
+use App\Models\AdminUser;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -12,10 +12,10 @@ class LeaveTeamTest extends TestCase
 
     public function test_users_can_leave_teams()
     {
-        $user = User::factory()->withPersonalTeam()->create();
+        $user = AdminUser::factory()->withPersonalTeam()->create();
 
         $user->currentTeam->users()->attach(
-            $otherUser = User::factory()->create(), ['role' => 'admin']
+            $otherUser = AdminUser::factory()->create(), ['role' => 'admin']
         );
 
         $this->actingAs($otherUser);
@@ -27,7 +27,7 @@ class LeaveTeamTest extends TestCase
 
     public function test_team_owners_cant_leave_their_own_team()
     {
-        $this->actingAs($user = User::factory()->withPersonalTeam()->create());
+        $this->actingAs($user = AdminUser::factory()->withPersonalTeam()->create());
 
         $response = $this->delete('/teams/'.$user->currentTeam->id.'/members/'.$user->id);
 
