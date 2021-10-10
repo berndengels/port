@@ -14,7 +14,7 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'web',
+        'guard' => 'customer',
         'passwords' => 'customers',
     ],
 
@@ -36,13 +36,21 @@ return [
     */
 
     'guards' => [
+/*
         'web' => [
-            'driver' => 'session',
-            'provider' => 'customers',
+//            'redirectTo'    => 'admin.dashboard',
+            'driver'        => 'session',
+            'provider'      => 'customers',
+        ],
+*/
+        'customer' => [
+//            'redirectTo'    => 'admin.dashboard',
+            'driver'        => 'session',
+            'provider'      => 'customers',
         ],
         'admin' => [
-            'driver' => 'session',
-            'provider' => 'admin_users',
+            'driver'    => 'session',
+            'provider'  => 'admin_users',
         ],
         'api' => [
             'driver' => 'token',
@@ -97,7 +105,7 @@ return [
     'passwords' => [
         'admin_users' => [
             'provider' => 'admin_users',
-            'table' => 'admn_password_resets',
+            'table' => 'admin_password_resets',
             'expire' => 60,
             'throttle' => 60,
         ],

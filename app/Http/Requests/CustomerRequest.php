@@ -17,15 +17,6 @@ class CustomerRequest extends AdminRequest
         return $this->user()->id === $this->getId() || auth()->user()->can('write Customer');
     }
 
-    public function validated()
-    {
-        $validated = parent::validated();
-        if($validated['password'] && '' !== $validated['password']) {
-            $validated['password'] = Hash::make($validated['password']);
-        }
-        return $validated;
-    }
-
     /**
      * Get the validation rules that apply to the request.Customer
      *
@@ -37,7 +28,7 @@ class CustomerRequest extends AdminRequest
             'name'              => 'required|min:3',
             'email'             => $this->getId() ? '' : 'nullable|email|unique:customers,email',
 //            'password'          => !$this->getId() ? 'required|alpha_num|between:6,20|confirmed' : 'sometimes|required|alpha_num|between:6,20|confirmed',
-            'password'          => !$this->getId() ? 'required|alpha_num|between:6,20|confirmed' : 'nullable|required_if:confirmed,null',
+            'password'          => !$this->getId() ? 'required|alpha_num|between:6,20|confirmed' : 'nullable|alpha_num|between:6,20|required_if:confirmed,null',
             'customer_type'     => 'required',
             'fon'               => '',
             'street'            => '',

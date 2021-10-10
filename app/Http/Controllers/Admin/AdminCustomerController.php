@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Requests\CustomerRequest;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Auth\LoginController as DefaultLoginController;
+use Illuminate\Support\Facades\Hash;
 
 class AdminCustomerController extends AdminController
 {
@@ -18,10 +20,11 @@ class AdminCustomerController extends AdminController
      *
      * @var string
      */
-    protected $guard = 'web';
+    protected $guard = 'customer';
 
     public function __construct()
     {
+//        $this->middleware(['auth:admin','auth:customer']);
         $this->customerTypes = json_decode(config('port.main.customer.types'), true);
     }
 
@@ -66,7 +69,9 @@ class AdminCustomerController extends AdminController
     public function store(CustomerRequest $request)
     {
         try {
-            Customer::create($request->validated());
+            $validated = $request->validated();
+            $validated['password'] = Hash::make($validated['password']);
+            Customer::create($validated);
             return redirect()->route('admin.customers.index')->with('success', 'Kunde erfogreich angelegt!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
@@ -97,7 +102,11 @@ class AdminCustomerController extends AdminController
     public function update(CustomerRequest $request, Customer $customer)
     {
         try {
-            $customer->update($request->validated());
+            $validated = $request->validated();
+            if($validated['password']) {
+                $validated['password'] = Hash::make($validated['password']);
+            }
+            $customer->update($validated);
             return redirect()->route('admin.customers.index')->with('success', 'Kunde erfogreich bearbeitet!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
@@ -119,4 +128,6 @@ class AdminCustomerController extends AdminController
             return back()->with('error', $e->getMessage());
         }
     }
+
+
 }

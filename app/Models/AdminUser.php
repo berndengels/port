@@ -4,18 +4,19 @@ namespace App\Models;
 
 use Eloquent;
 use Database\Factories\UserFactory;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+//use Illuminate\Auth\Notifications\ResetPassword as ResetPasswordNotification;
+use App\Notifications\AdminResetPassword  as ResetPasswordNotification;
+use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
-use Laravel\Fortify\TwoFactorAuthenticatable;
-use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use Laravel\Sanctum\PersonalAccessToken;
 use Spatie\Permission\Traits\HasRoles;
@@ -62,15 +63,17 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string|null $profile_photo_path
  * @method static Builder|AdminUser whereCurrentTeamId($value)
  * @method static Builder|AdminUser whereProfilePhotoPath($value)
+ * @property-read Collection|Permission[] $permissions
+ * @property-read int|null $permissions_count
+ * @property-read Collection|Role[] $roles
+ * @property-read int|null $roles_count
+ * @method static Builder|AdminUser permission($permissions)
+ * @method static Builder|AdminUser role($roles, $guard = null)
  */
 class AdminUser extends Authenticatable
 {
-    use HasRoles;
+    use HasRoles, HasFactory, Notifiable, ThrottlesLogins, CanResetPassword;
 //    use HasApiTokens;
-    use HasFactory;
-    use HasProfilePhoto;
-    use Notifiable;
-//    use TwoFactorAuthenticatable;
 
     protected $table = 'admin_users';
     /**
@@ -78,9 +81,8 @@ class AdminUser extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = [
-        'name', 'email', 'password',
-    ];
+//    protected $fillable = ['name', 'email', 'password'];
+    protected $guarded = ['id'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -108,7 +110,21 @@ class AdminUser extends Authenticatable
      *
      * @var array
      */
-    protected $appends = [
-        'profile_photo_url',
-    ];
+    protected $appends = ['rolesString'];
+
+    public function getRolesStringAttribute()
+    {
+        return $this->roles->map->name->join(', ');
+    }
+
+    /**
+     * Send the password reset notification.
+     *
+     * @param  string  $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPasswordNotification($token));
+    }
 }

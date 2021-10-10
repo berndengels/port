@@ -33,7 +33,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = RouteServiceProvider::ADMIN_HOME;
 
     /**
      * Create a new controller instance.
@@ -47,7 +47,7 @@ class RegisterController extends Controller
 
     protected function guard()
     {
-        return Auth::guard('web');
+        return Auth::guard('customer');
     }
 
     /**

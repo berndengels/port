@@ -7,7 +7,17 @@
             <x-header-navigation />
         </div>
         <div class="header__right">
-            <a href="{{ route('login') }}">Login</a>
+            @auth('customer')
+                <x-form method="post" class="hidden md:inline-block" name="frmLogout" action="{{ route('customer.logout') }}">
+                    @csrf
+                    <span class="hidden md:inline clear-none">{{ auth('customer')->user()->name }}</span>
+                    <x-form-submit inline class="ml-2" icon="fas fa-sign-out-alt">
+                        <span class="hidden md:inline">Logout</span>
+                    </x-form-submit>
+                </x-form>
+            @else
+                <a href="{{ route('customer.login.form') }}">Kunden-Login</a>
+            @endif
         </div>
     </header>
 

@@ -9,15 +9,20 @@ use Illuminate\Http\Request;
 class AdminRouteController extends AdminController
 {
     protected $route;
-    protected $currentName;
-    protected $currentRoutes;
     protected $pregRoutesExcept = '/^(_|team)/i';
 
-    public function setCurrentMenu(Request $request) {
-        $this->currentName = $request->input('current');
-        $this->route = $request->input('route');
-        $request->session()->put('currentName', $this->currentName);
-        $request->session()->put('currentRoutes', config('port.menu.admin.items.'.$this->currentName));
+    public function setCurrentMenu($currentRouteName, Request $request) {
+        $currentRoutes = config('port.menu.admin.items.'.$currentRouteName);
+
+        if(isset($currentRoutes['route'])) {
+            $this->route = $currentRoutes['route'];
+        }
+        elseif(isset($currentRoutes['items']) && count($currentRoutes['items']) > 0 && isset($currentRoutes['items'][0]['route'])) {
+            $this->route = $currentRoutes['items'][0]['route'];
+        }
+        $request->session()->put('currentName', $currentRouteName);
+        $request->session()->put('currentRoutes', $currentRoutes);
+        $request->session()->put('currentRoute', $this->route);
 
         if($this->route && Route::getRoutes()->hasNamedRoute($this->route)) {
             return redirect()->route($this->route);

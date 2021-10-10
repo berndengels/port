@@ -1,8 +1,12 @@
 require('./bootstrap');
-import Caravan from './Libs/Caravan'
+
+import MyForm from './Libs/MyForm'
+import Caravan from "./Libs/Caravan";
 import Editor from './Libs/Editor'
-window.Caravan = new Caravan
-window.Editor = new Editor
+
+window.MyForm   = new MyForm
+window.Caravan  = new Caravan
+window.Editor   = new Editor
 
 $(document).ready(function () {
 	const $sideNav = $('.sidenav');

@@ -39,7 +39,6 @@ class AdminRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
-//        return $this->auth->user()->can('write ' . $this->modelName);
+        return false;
     }
 }

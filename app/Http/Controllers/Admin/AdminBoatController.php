@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\BoatRequest;
 use App\Models\Boat;
 use App\Models\BoatType;
+use App\Models\Customer;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -14,18 +16,19 @@ class AdminBoatController extends AdminController
 
     public function __construct()
     {
+        parent::__construct();
         $this->boatTypes = json_decode(config('port.main.boat.types'), true);
     }
 
     public function index()
     {
-        $data = Boat::paginate($this->paginatorLimit);
+        $data = Boat::with('customer')->paginate($this->paginatorLimit);
         return view('admin.boats.index', compact('data'));
     }
 
     public function guests()
     {
-        $data = Boat::paginate($this->paginatorLimit);
+        $data = Boat::with('customer')->paginate($this->paginatorLimit);
         return view('admin.boats.index', compact('data'));
     }
 
@@ -47,18 +50,30 @@ class AdminBoatController extends AdminController
      */
     public function create()
     {
-        //
+        return view('admin.boats.create', [
+            'types' => $this->boatTypes,
+            'customerOptions' => $this->customerOptionsAutocomplete,
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param BoatRequest $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(BoatRequest $request)
     {
-        //
+        $validated  = $request->validated();
+        $name       = $request->post('name');
+        try {
+            $customer   = Customer::whereName($name)->first() ?? new Customer();
+            $customer->fill($validated)->save();
+            $customer->boats()->create($validated);
+            return redirect()->route('admin.boats.index')->with('success', 'Boot erfogreich angelegt!');
+        } catch(Exception $e) {
+            return redirect()->route('admin.boats.create', $request)->with('error', $e->getMessage());
+        }
     }
 
     /**
@@ -69,19 +84,32 @@ class AdminBoatController extends AdminController
      */
     public function edit(Boat $boat)
     {
-        //
+        return view('admin.boats.edit', [
+            'boat'  => $boat,
+            'types' => $this->boatTypes,
+            'customerOptions' => $this->customerOptionsAutocomplete,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
+     * @param BoatRequest $request
      * @param Boat $boat
      * @return Response
      */
-    public function update(Request $request, Boat $boat)
+    public function update(BoatRequest $request, Boat $boat)
     {
-        //
+        $validated  = $request->validated();
+        $validatedBoat = collect($validated)->except(['name','fon','email','state'])->toArray();
+        $validatedCustomer = collect($validated)->only(['name','fon','email','state'])->toArray();
+        try {
+            $boat->update($validatedBoat);
+            $boat->customer()->update($validatedCustomer);
+            return redirect()->route('admin.boats.index')->with('success', 'Boot erfogreich bearbeitet!');
+        } catch(Exception $e) {
+            return redirect()->route('admin.boats.edit', $request)->with('error', $e->getMessage());
+        }
     }
 
     /**

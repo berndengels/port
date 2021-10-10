@@ -42,6 +42,14 @@ use Illuminate\Database\Query\JoinClause;
  * @method static Builder|CaravanDates getMonthsByYears($from = null, $until = null)
  * @method static CaravanDatesFactory factory(...$parameters)
  * @method static Builder|CaravanDates pageList()
+ * @property int|null $day_price
+ * @property-read mixed $valid_from
+ * @property-read mixed $valid_until
+ * @method static Builder|CaravanDates caravan(?int $caravanId = null)
+ * @method static Builder|CaravanDates caravanByDates(?int $caravanId = null)
+ * @method static Builder|CaravanDates dublicates()
+ * @method static Builder|CaravanDates fromYearMonth(?string $year = null, ?string $month = null)
+ * @method static Builder|CaravanDates whereDayPrice($value)
  */
 class CaravanDates extends Model
 {

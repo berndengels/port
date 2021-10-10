@@ -1,7 +1,8 @@
 <ul class="top-menu">
     @if(!isset($items['route']) && isset($items['items']) && count($items['items']) > 0)
         @foreach($items['items'] as $item)
-                @if(!isset($item['permissions']) || ( isset($item['permissions']) && auth()->user()->can($item['permissions'])) )
+            {{-- @if(!isset($item['permissions']) || ( isset($item['permissions']) && auth('admin')->user()->can($item['permissions'])) ) --}}
+
                 <li title="{{ $item['text'] }}" class="ml-3 @if(Route::current()->getName() === $item['route']) active @endif">
                 <a href="{{ route($item['route']) }}">
                     @if($item['icon'])
@@ -12,7 +13,8 @@
                     </span>
                 </a>
             </li>
-            @endif
+            {{-- @endif --}}
+
         @endforeach
     @endif
 </ul>

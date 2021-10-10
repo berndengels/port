@@ -10,11 +10,6 @@ use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    protected $caravansFromToday;
-
-    public function __construct()
-    {
-    }
 
     public function show() {
         $widgets = Widget::orderBy('position')->get();

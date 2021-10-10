@@ -5,8 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Exception;
 use App\Models\AdminUser;
 use Illuminate\Http\Response;
-use App\Http\Requests\UserRequest;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\AdminUserRequest;
 
 class AdminUserController extends AdminController
 {
@@ -63,10 +62,10 @@ class AdminUserController extends AdminController
     /**
      * Store a newly created resource in storage.
      *
-     * @param UserRequest $request
+     * @param AdminUserRequest $request
      * @return Response
      */
-    public function store(UserRequest $request)
+    public function store(AdminUserRequest $request)
     {
         try {
             AdminUser::create($request->validated())->syncRoles($request->validated()['roles']);
@@ -95,11 +94,11 @@ class AdminUserController extends AdminController
     /**
      * Update the specified resource in storage.
      *
-     * @param UserRequest $request
+     * @param AdminUserRequest $request
      * @param AdminUser $user
      * @return Response
      */
-    public function update(UserRequest $request, AdminUser $user)
+    public function update(AdminUserRequest $request, AdminUser $user)
     {
         try {
             $validated = $request->validated();

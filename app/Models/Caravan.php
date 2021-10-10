@@ -30,6 +30,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $country_id
  * @property-read Country $country
  * @method static Builder|Caravan whereCountryId($value)
+ * @property-read mixed $text
+ * @method static Builder|Caravan caravan(?int $caravanId = null)
+ * @method static Builder|Caravan caravanByDates(?int $caravanId = null)
  */
 class Caravan extends Model
 {

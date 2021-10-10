@@ -7,7 +7,7 @@ return [
         ],
         'info'  => [
             'icon'  => 'fas fa-info-circle',
-            'css'  => 'bg-blueGray-500',
+            'css'  => 'bg-blue-500',
         ],
         'warning'  => [
             'icon'  => 'fas fa-exclamation',

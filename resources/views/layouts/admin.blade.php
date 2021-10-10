@@ -9,13 +9,15 @@
             <x-header-navigation />
         </div>
         <div class="header__right">
-            <x-form method="post" class="hidden md:inline-block" name="frmLogout" action="{{ route('logout') }}">
+            @auth('admin')
+            <x-form method="post" class="hidden md:inline-block" name="frmLogout" action="{{ route('admin.logout') }}">
                 @csrf
-                <span class="hidden md:inline clear-none">{{ auth()->user()->name }}</span>
+                <span class="hidden md:inline clear-none">{{ auth('admin')->user()->name }}</span>
                 <x-form-submit inline class="ml-2" icon="fas fa-sign-out-alt">
                     <span class="hidden md:inline">Logout</span>
                 </x-form-submit>
             </x-form>
+            @endauth
         </div>
     </header>
 
@@ -25,7 +27,7 @@
         </div>
         <x-admin-main-navigation />
         <div class="ml-3 mt-0">
-            <x-form method="post" class="mt-0" name="frmLogout" action="{{ route('logout') }}">
+            <x-form method="get" class="mt-0" name="frmLogout" action="{{ route('admin.logout') }}">
                 @csrf
                 <x-form-submit class="mt-0" icon="fas fa-sign-out-alt">
                     Logout

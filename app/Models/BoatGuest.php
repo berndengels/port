@@ -1,0 +1,25 @@
+<?php
+
+namespace App\Models;
+
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+/**
+ * App\Models\boatGuest
+ *
+ * @method static Builder|boatGuest newModelQuery()
+ * @method static Builder|boatGuest newQuery()
+ * @method static Builder|boatGuest query()
+ * @mixin Eloquent
+ */
+class boatGuest extends Model
+{
+    use HasFactory;
+
+    protected $table = '';
+    protected $guarded = ['id'];
+    public $timestamps = false;
+}

@@ -1,10 +1,40 @@
 <?php
-
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
+/**
+ * App\Models\Boat
+ *
+ * @property int $id
+ * @property int $customer_id
+ * @property string $boat_type
+ * @property string $boat_name
+ * @property string|null $length
+ * @property string|null $width
+ * @property string|null $draft
+ * @property string|null $length_waterline
+ * @property string|null $length_keel
+ * @property string|null $home_port
+ * @property-read Customer $customer
+ * @method static Builder|Boat newModelQuery()
+ * @method static Builder|Boat newQuery()
+ * @method static Builder|Boat query()
+ * @method static Builder|Boat whereBoatName($value)
+ * @method static Builder|Boat whereBoatType($value)
+ * @method static Builder|Boat whereCustomerId($value)
+ * @method static Builder|Boat whereDraft($value)
+ * @method static Builder|Boat whereHomePort($value)
+ * @method static Builder|Boat whereId($value)
+ * @method static Builder|Boat whereLength($value)
+ * @method static Builder|Boat whereLengthKeel($value)
+ * @method static Builder|Boat whereLengthWaterline($value)
+ * @method static Builder|Boat whereWidth($value)
+ * @mixin Eloquent
+ */
 class Boat extends Model
 {
     use HasFactory;
@@ -13,4 +43,8 @@ class Boat extends Model
     protected $guarded = ['id'];
     public $timestamps = false;
 
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class);
+    }
 }

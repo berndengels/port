@@ -25,6 +25,7 @@
 	.flex-item-dashboard {
 		width: auto;
 		min-width: 30%;
+		max-width: 30%;
 		height: auto;
 		min-height: 30%;
 		clear: left;
@@ -44,7 +45,7 @@
 		opacity: 0.8;
 
 		@include media('<desktop') {
-			width: 93%;
+			min-width: 93%;
 			margin: 1.0rem 1.0rem 0 1.0rem;
 		}
 	}

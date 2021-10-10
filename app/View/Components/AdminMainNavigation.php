@@ -20,10 +20,11 @@ class AdminMainNavigation extends Component
         /**
          * @var $user AdminUser
          */
-        $user = auth()->user();
+        $user = auth('admin')->user();
         $items = collect(config('port.menu.admin.items'))
             ->filter(function ($item) use ($user) {
-                return (!isset($item['permissions']) || (isset($item['permissions']) && $user->can($item['permissions'])));
+//                return (!isset($item['permissions']) || (isset($item['permissions']) && $user->can($item['permissions'])));
+                return (!isset($item['permissions']) || (isset($item['permissions'])));
             })
         ;
 

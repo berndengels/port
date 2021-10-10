@@ -4,7 +4,7 @@
     <div class="p-6">
         <x-nav-link :href="route('admin.caravanDates.index')" icon="fas fa-backward" class="btn">zurück</x-nav-link>
 
-        <x-form id="frm" name="frm" action="{{ route('admin.caravanDates.update', ['caravanDate' => $caravanDate->id]) }}" class="w-full lg:w-1/2">
+        <x-form name="frm" action="{{ route('admin.caravanDates.update', ['caravanDate' => $caravanDate->id]) }}" class="w-full lg:w-1/2">
             @method('put')
             @bind($caravanDate->caravan)
             <x-form-input name="carnumber" label="Autokennzeichen" required />
@@ -33,12 +33,19 @@
 
 @push('inline-scripts')
 <script>
-	const calcUrl = "{{ route("admin.caravan.price.calculate") }}",
-			caravanOptions = {!! $caravanOptions !!};
-
 	$(document).ready(() => {
+		const calcUrl = "{{ route("admin.caravan.price.calculate") }}",
+			frm = document.frm,
+			options = {!! $caravanOptions !!},
+			bindings = {
+				name: frm.carnumber,
+				email: frm.carlength,
+				fon: frm.country_id,
+				state: frm.email,
+			};
+		MyForm.autocomplete(".autocomplete", frm.carnumber, options, bindings);
 		Caravan.calculate(document.frm, calcUrl, caravanOptions);
-	});
+	})
 </script>
 @endpush
 
