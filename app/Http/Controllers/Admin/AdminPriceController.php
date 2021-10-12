@@ -1,6 +1,8 @@
 <?php
 namespace App\Http\Controllers\Admin;
 
+use App\Libs\BoatCalculator;
+use App\Models\Boat;
 use Excel;
 use Carbon\Carbon;
 use App\Models\CaravanDates;
@@ -12,12 +14,12 @@ use App\Exports\CaravanDatesExport;
 class AdminPriceController extends AdminController
 {
     /**
-     * Calculate price.
+     * Calculate caravan price.
      *
      * @param Request $request
      * @return Response
      */
-    public function calculate(Request $request)
+    public function calculateCaravan(Request $request)
     {
         $carlength  = $request->post('carlength');
         $from       = $request->post('from');
@@ -32,6 +34,40 @@ class AdminPriceController extends AdminController
             $until      = new Carbon($until, config('app.timezone'));
             $response   = (new CaravanPriceCalculator)->getPrice($from, $until, $carlength, $persons, $electric, $dayPrice);
         }
+        return response()->json($response);
+    }
+
+    /**
+     * Calculate boat dates price.
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function calculateBoatDates(Request $request)
+    {
+        $boatId     = $request->post('boat_id');
+        $modus      = $request->post('modus');
+        $boat       = Boat::find($boatId);
+        $response = ['error' => true];
+
+        if($boat) {
+            $length     = $boat->length;
+            $width      = $boat->width;
+            $weight     = $boat->weight;
+            $from       = $request->post('from');
+            $until      = $request->post('until');
+            $defaultPrice = $request->post('default_price');
+
+            $crane      = (bool) $request->post('crane', false);
+            $mastCrane  = (bool) $request->post('mast_crane', false);
+            $cleaning   = (bool) $request->post('cleaning', false);
+
+            $from       = new Carbon($from, config('app.timezone'));
+            $until      = new Carbon($until, config('app.timezone'));
+
+            $response   = (new BoatCalculator())->getPrice($modus, $length, $width, $weight, $crane, $mastCrane, $cleaning, $from, $until, $defaultPrice);
+        }
+
         return response()->json($response);
     }
 

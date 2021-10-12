@@ -22,16 +22,24 @@
                 <th>Bis</th>
                 <th class="hidden md:table-cell">Eigner</th>
                 <th>Fon</th>
+                <th>Preis</th>
                 <th colspan="2"><br></th>
             </tr>
             @foreach($data as $item)
                 <tr>
                     <td class="hidden md:table-cell">{{ $item->id }}</td>
                     <td>{{ $item->boat->boat_name }}</td>
-                    <td>{{ $item->from->format('d.m.Y') }}</td>
-                    <td>{{ $item->until->format('d.m.Y') }}</td>
-                    @if($item->boat->customer)
-                    <td class="hidden md:table-cell"><a href="mailto:{{ $item->customer ? $item->customer->email : ''}}" target="_blank">{{ $item->customer ? $item->customer->name : '' }}</a></td>
+                    <td>{{ $item->from }}</td>
+                    <td>{{ $item->until }}</td>
+                    <td class="hidden md:table-cell">
+                        @if($item->boat->customer->email)
+                            <a href="mailto:{{ $item->boat->customer->email }}" target="_blank">
+                                {{ $item->boat->customer ? $item->boat->customer->name : '' }}
+                            </a>
+                        @else
+                            {{ $item->boat->customer ? $item->boat->customer->name : '' }}
+                        @endif
+                    </td>
                     <td>
                         @if($item->boat->customer->fonLink)
                         <a href="tel:{{ $item->boat->customer->fonLink }}" target="_blank">
@@ -42,7 +50,7 @@
                         <br>
                         @endif
                     </td>
-                    @endif
+                    <td>{{ $item->price }} €</td>
                     <td>
                         <x-nav-link href="{{ route('admin.boatDates.edit', $item) }}" icon="fas fa-edit" class="btn" title="Bearbeiten">
                             <span class="hidden md:visible">Edit</span>

@@ -1,5 +1,3 @@
-import Caravan from "./Caravan";
-
 class Editor {
 	create = (selector, paramName, uploadURL) => {
 		let toolBars = {

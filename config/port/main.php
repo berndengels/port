@@ -24,6 +24,7 @@ return [
         'types' => env('CUSTOMER_TYPES', ['guest' => 'guest', 'permanent' => 'permanent'])
     ],
     'boat'  => [
-        'types' => env('BOAT_TYPES', ['motor' => 'motor', 'sail' => 'sail'])
+        'types' => env('BOAT_TYPES', ['motor' => 'motor', 'sail' => 'sail']),
+        'dates' => ['modi' => json_decode(env('BOAT_DATES_MODI'), true)],
     ],
 ];

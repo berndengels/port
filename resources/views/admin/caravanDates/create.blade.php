@@ -40,7 +40,7 @@
 						state: frm.email,
 					};
 			MyForm.autocomplete(".autocomplete", frm.carnumber, options, bindings);
-			Caravan.calculate(document.frm, calcUrl, caravanOptions);
+			Prices.caravan.calculate(document.frm, calcUrl);
 		})
     </script>
 @endpush

@@ -26,7 +26,6 @@ class BoatRequest extends AdminRequest
         }
     }
 
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -44,6 +43,7 @@ class BoatRequest extends AdminRequest
             'costomer_id'       => '',
             'length'            => 'nullable|numeric',
             'width'             => 'nullable|numeric',
+            'weight'            => 'nullable|numeric',
             'draft'             => 'nullable|numeric',
             'length_waterline'  => 'nullable|numeric',
             'length_keel'       => 'nullable|numeric',

@@ -1,11 +1,11 @@
 require('./bootstrap');
 
 import MyForm from './Libs/MyForm'
-import Caravan from "./Libs/Caravan";
+import Prices from "./Libs/Prices";
 import Editor from './Libs/Editor'
 
 window.MyForm   = new MyForm
-window.Caravan  = new Caravan
+window.Prices   = new Prices
 window.Editor   = new Editor
 
 $(document).ready(function () {
