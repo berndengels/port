@@ -7,7 +7,9 @@ use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
+use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
@@ -58,7 +60,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Customer extends Authenticatable
 {
-    use HasFactory, HasRoles, Notifiable, CanResetPassword, ThrottlesLogins;
+    use HasFactory, HasRoles, Notifiable, CanResetPassword, ThrottlesLogins, Dispatchable;
 
     protected $table = 'customers';
     protected $appends = ['fonLink'];
@@ -78,4 +80,5 @@ class Customer extends Authenticatable
     {
         return $this->hasMany(Boat::class);
     }
+
 }

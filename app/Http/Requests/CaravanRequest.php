@@ -8,6 +8,15 @@ class CaravanRequest extends AdminRequest
     use Fix;
     protected $modelName = 'Caravan';
 
+    /**
+     * Determine if the user is authorized to make this request.
+     * @return bool
+     */
+    public function authorize()
+    {
+        return $this->auth->user()->can('write Caravan');
+    }
+
     public function prepareForValidation()
     {
         $this->merge([

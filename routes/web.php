@@ -25,7 +25,7 @@ use App\Http\Controllers\Admin\Auth\AdminLoginController;
 use App\Http\Controllers\Admin\Auth\AdminForgotPasswordController;
 use App\Http\Controllers\Admin\Auth\AdminResetPasswordController;
 
-Auth::routes();
+//Auth::routes();
 
 Route::get('', function () {
     return redirect('dashboard');
@@ -89,4 +89,7 @@ Route::group([
     Route::get('route/current/{currentRouteName}', [AdminRouteController::class, 'setCurrentMenu'])->name('route.current');
     Route::get('routes', [AdminRouteController::class, 'routes'])->name('routes.index');
     Route::post('upload/image/{paramName}', [AdminUploadController::class, 'imageUpload'])->name('upload.image');
+});
+Route::fallback(function () {
+    return redirect('');
 });

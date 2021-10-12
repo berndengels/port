@@ -13,8 +13,7 @@ class AdminUserRequest extends AdminRequest
      */
     public function authorize()
     {
-//        return (($this->user() && $this->user()->id === $this->getId()) || (auth()->user() && auth()->user()->can('write User')));
-        return true;
+        return (($this->user() && $this->user()->id === $this->getId()) || (auth()->user() && auth()->user()->can('write User')));
     }
 
     /**

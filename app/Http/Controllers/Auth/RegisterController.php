@@ -1,9 +1,9 @@
 <?php
-
 namespace App\Http\Controllers\Auth;
 
 use App\Models\Customer;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Database\Eloquent\Concerns\HasEvents;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -26,14 +26,14 @@ class RegisterController extends Controller
     |
     */
 
-    use RegistersUsers;
+    use RegistersUsers, HasEvents;
 
     /**
      * Where to redirect users after registration.
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::ADMIN_HOME;
+    protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
      * Create a new controller instance.
@@ -42,7 +42,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('guest:customer');
     }
 
     protected function guard()
@@ -59,24 +59,36 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:customers'],
+            'name' => ['required', 'string', 'max:50'],
+            'email' => ['required', 'string', 'email', 'max:50', 'unique:customers'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'fon' => ['required', 'string', 'max:50'],
+            'city' => ['required', 'string', 'max:50'],
+            'postcode' => ['required', 'string', 'max:50'],
+            'street' => ['required', 'string', 'max:50'],
         ]);
     }
 
     /**
-     * Create a new user instance after a valid registration.
+     * Create a new customer instance after a valid registration.
      *
      * @param  array  $data
-     * @return AdminUser
+     * @return Customer
      */
     protected function create(array $data)
     {
-        return Customer::create([
+        $customer = Customer::create([
             'name'      => $data['name'],
             'email'     => $data['email'],
             'password'  => Hash::make($data['password']),
+            'fon'       => $data['fon'],
+            'city'      => $data['city'],
+            'postcode'  => $data['postcode'],
+            'street'    => $data['street'],
         ]);
+
+        event(new Registered($customer));
+
+        return $customer;
     }
 }

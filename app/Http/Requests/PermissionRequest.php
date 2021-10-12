@@ -8,6 +8,15 @@ class PermissionRequest extends AdminRequest
 {
     protected $modelName = 'Permission';
 
+    /**
+     * Determine if the user is authorized to make this request.
+     * @return bool
+     */
+    public function authorize()
+    {
+        return $this->auth->user()->can('write Permission');
+    }
+
     public function validationData()
     {
         return $this->merge([

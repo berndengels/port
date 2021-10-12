@@ -1,4 +1,7 @@
 <?php
+
+use Carbon\Carbon;
+
 return [
     'caravan' => [
         'electric_per_day'      => env('CARAVAN_PRICE_ELECTRIC_PER_DAY', 2),
@@ -10,5 +13,16 @@ return [
         'max_price_default'     => env('CARAVAN_MAX_PRICE_DEAULT', 12),
         'min_price_saison'      => env('CARAVAN_MIN_PRICE_SAISON', 10),
         'max_price_saison'      => env('CARAVAN_MAX_PRICE_SAISON', 15),
+    ],
+    'boat' => [
+        'price_saison_factor'  => env('BOAT_PRICE_SAISON_FACTOR'),
+        'price_winter_factor'  => env('BOAT_PRICE_WINTER_FACTOR'),
+        'saison_start'  => env('BOAT_SAISON_START'),
+        'saison_end'    => env('BOAT_SAISON_END'),
+        'winter_start'  => env('BOAT_WINTER_START'),
+        'winter_end'    => env('BOAT_WINTER_END'),
+    ],
+    'boat_guest' => [
+        'price_per_meter'      => env('BOAT_GUEST_PRICE_PER_METER', 1.5),
     ],
 ];

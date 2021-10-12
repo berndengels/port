@@ -1,10 +1,8 @@
 <?php
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Caravan;
-use App\Models\CaravanDates;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
+use App\Models\CaravanDates;
 
 class AdminDashboardController extends AdminController
 {

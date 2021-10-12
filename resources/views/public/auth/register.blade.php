@@ -9,6 +9,10 @@
                 <x-form-input name="email" type="email" label="Email" required />
                 <x-form-input name="password" type="password" label="Passwort" required />
                 <x-form-input name="password_confirmation" type="password" label="Passwort wiederholen" required />
+                <x-form-input name="fon" type="tel" label="Telefon" />
+                <x-form-input name="city" label="Ort" />
+                <x-form-input name="postcode" label="PLZ" />
+                <x-form-input name="street" label="Strasse u. Hausnummer" />
                 <x-form-submit class="btn btn-save h-10 mt-3 w-full md:w-1/2" icon="fas fa-sign-in-alt">
                     Register
                 </x-form-submit>

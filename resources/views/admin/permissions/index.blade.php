@@ -13,6 +13,9 @@
             </div>
             <div></div>
         </div>
+        <div>
+            <x-search-filter name="name" action="{{ route('admin.permissions.index') }}" placeholder="Suche Permissions" />
+        </div>
         {{ $data->links() }}
         <table class="table w-full mt-3">
             <tr>

@@ -39,6 +39,6 @@ class AdminRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return $this->auth->check();
     }
 }

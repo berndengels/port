@@ -5,12 +5,14 @@ use App\Models\Customer;
 use App\Models\Caravan;
 use App\Models\Country;
 use App\Models\Role;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Collection;
 use App\Filters\Caravan\CaravanFilter;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Event;
 
 class AdminController extends BaseController
 {
@@ -72,6 +74,8 @@ class AdminController extends BaseController
 
         $this->roles = Role::all();
         $this->rolesOptions = $this->roles->keyBy('id')->map->name;
+
+        Registered::class;
     }
 
 /*

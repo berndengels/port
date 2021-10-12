@@ -34,7 +34,7 @@ class AdminPermissionController extends AdminController
      */
     public function index()
     {
-        $data = Permission::paginate($this->paginatorLimit);
+        $data = Permission::filter('name')->paginate($this->paginatorLimit);
         return view('admin.permissions.index', compact('data'));
     }
 

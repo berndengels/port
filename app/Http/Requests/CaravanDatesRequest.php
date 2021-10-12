@@ -15,6 +15,15 @@ class CaravanDatesRequest extends AdminRequest
     protected $routeParam = 'caravanDate';
     protected $modelName = 'CaravanDates';
 
+    /**
+     * Determine if the user is authorized to make this request.
+     * @return bool
+     */
+    public function authorize()
+    {
+        return $this->auth->user()->can('write CaravanDates');
+    }
+
     public function prepareForValidation()
     {
         $this->merge([

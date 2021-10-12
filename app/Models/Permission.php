@@ -1,6 +1,7 @@
 <?php
 namespace App\Models;
 
+use App\Models\Filter\Filter;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -40,7 +41,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Permission extends BaseModel
 {
-    use HasFactory;
+    use HasFactory, Filter;
     protected $appends = ['actions','model','action','uniqName'];
     public $action;
     public $model;

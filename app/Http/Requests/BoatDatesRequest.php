@@ -8,12 +8,11 @@ class BoatDatesRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
      * @return bool
      */
     public function authorize()
     {
-        return false;
+        return $this->auth->user()->can('write BoatDates');
     }
 
     /**
