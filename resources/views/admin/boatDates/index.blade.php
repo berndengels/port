@@ -13,6 +13,9 @@
             </div>
             <div></div>
         </div>
+        <div class="mx-5 mt-3">
+            <span class="font-extrabold text-xl text-blue-900">{{ 'saison' === $modus ? 'Sommerliegeplatz' : 'Winterlager'}}</span>
+        </div>
         {{ $data->links() }}
         <table class="table w-full mt-3">
             <tr>
@@ -29,11 +32,12 @@
                 <tr>
                     <td class="hidden md:table-cell">{{ $item->id }}</td>
                     <td>{{ $item->boat->boat_name }}</td>
-                    <td>{{ $item->from }}</td>
-                    <td>{{ $item->until }}</td>
+                    <td>{{ $item->from->format('d.m.Y') }}</td>
+                    <td>{{ $item->until->format('d.m.Y') }}</td>
                     <td class="hidden md:table-cell">
                         @if($item->boat->customer->email)
                             <a href="mailto:{{ $item->boat->customer->email }}" target="_blank">
+                                <i class="fas fa-at"></i>
                                 {{ $item->boat->customer ? $item->boat->customer->name : '' }}
                             </a>
                         @else
@@ -69,6 +73,11 @@
                     </td>
                 </tr>
             @endforeach
+            <tr>
+                <th colspan="9">
+                    <div class="mt-3 w-full text-red-700">Summe Preis: {{ $priceTotal }} €</div>
+                </th>
+            </tr>
         </table>
         {{ $data->links() }}
     </div>

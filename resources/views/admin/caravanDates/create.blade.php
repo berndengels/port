@@ -7,8 +7,8 @@
         <x-form name="frm" method="post" action="{{ route('admin.caravanDates.store') }}" class="w-full lg:w-1/2">
             <x-form-input name="prices" type="hidden" />
 			<x-form-input id="carnumber" name="carnumber" type="text" label="Kennzeichen" autocomplete="off" required />
-			<ul id="caravans" class="hidden w-full autocomplete"></ul>
-			<x-form-select id="country_id" name="country_id" label="Herkunftsland" :options="$countries" default="{{ config('port.default.country_id') }}" />
+			<ul class="hidden w-full autocomplete"></ul>
+			<x-form-select id="country_id" name="country_id" label="Herkunftsland" :options="$countries" default="{{ config('port.main.default.country_id') }}" />
 			<x-form-input id="carlength" name="carlength" label="Länge" required />
 			<x-form-input id="email" type="email" name="email" label="Email" />
 
@@ -30,17 +30,17 @@
 @push('inline-scripts')
     <script>
 		$(document).ready(() => {
-			const calcUrl = "{{ route("admin.caravan.price.calculate") }}",
+			const calcUrl = "{{ route("admin.caravanDates.price.calculate") }}",
 					frm = document.frm,
 					options = {!! $caravanOptions !!},
 					bindings = {
-						name: frm.carnumber,
-						email: frm.carlength,
-						fon: frm.country_id,
-						state: frm.email,
+						carnumber: frm.carnumber,
+						carlength: frm.carlength,
+						country_id: frm.country_id,
+						email: frm.email,
 					};
-			MyForm.autocomplete(".autocomplete", frm.carnumber, options, bindings);
-			Prices.caravan.calculate(document.frm, calcUrl);
+			MyForm.autocomplete(".autocomplete", frm.carnumber, options, 'carnumber', bindings);
+			Prices.caravanDates.calculate(document.frm, calcUrl);
 		})
     </script>
 @endpush

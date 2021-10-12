@@ -6,6 +6,7 @@ use Exception;
 use App\Models\AdminUser;
 use Illuminate\Http\Response;
 use App\Http\Requests\AdminUserRequest;
+use Illuminate\Support\Facades\Hash;
 
 class AdminUserController extends AdminController
 {
@@ -68,7 +69,9 @@ class AdminUserController extends AdminController
     public function store(AdminUserRequest $request)
     {
         try {
-            AdminUser::create($request->validated())->syncRoles($request->validated()['roles']);
+            $validated = $request->validated();
+            $validated['password'] = Hash::make($validated['password']);
+            AdminUser::create($validated)->syncRoles($validated['roles']);
             return redirect()->route('admin.users.index')->with('success', 'User erfogreich angelegt!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
@@ -104,6 +107,8 @@ class AdminUserController extends AdminController
             $validated = $request->validated();
             if(!$request->password) {
                 $validated = collect($validated)->except(['password','password_repeat'])->toArray();
+            } else {
+                $validated['password'] = Hash::make($validated['password']);
             }
             $user
                 ->syncRoles($validated['roles'])

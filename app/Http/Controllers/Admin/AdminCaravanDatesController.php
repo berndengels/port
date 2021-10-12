@@ -202,7 +202,7 @@ class AdminCaravanDatesController extends AdminController
         try {
             $caravanDate->caravan()->update($validatedCaravan);
             $caravanDate->update($validatedCaravanDates);
-            return back()->with(['success' => "Caravan-Eintrag mit ID: $caravanDate->id erfolgreich geändert"]);
+            return redirect()->route('admin.caravanDates.index')->with(['success' => "Caravan-Eintrag mit ID: $caravanDate->id erfolgreich geändert"]);
         } catch(Exception $e) {
             return back()->with(['error' => $e->getMessage()]);
         }

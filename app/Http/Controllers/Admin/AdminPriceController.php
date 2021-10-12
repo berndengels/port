@@ -19,7 +19,7 @@ class AdminPriceController extends AdminController
      * @param Request $request
      * @return Response
      */
-    public function calculateCaravan(Request $request)
+    public function calculateCaravanDates(Request $request)
     {
         $carlength  = $request->post('carlength');
         $from       = $request->post('from');

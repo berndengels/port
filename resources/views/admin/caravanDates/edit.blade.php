@@ -34,17 +34,17 @@
 @push('inline-scripts')
 <script>
 	$(document).ready(() => {
-		const calcUrl = "{{ route("admin.caravan.price.calculate") }}",
+		const calcUrl = "{{ route("admin.caravanDates.price.calculate") }}",
 			frm = document.frm,
 			options = {!! $caravanOptions !!},
 			bindings = {
-				name: frm.carnumber,
-				email: frm.carlength,
-				fon: frm.country_id,
-				state: frm.email,
+				carnumber: frm.carnumber,
+				carlength: frm.carlength,
+				country_id: frm.country_id,
+				email: frm.email,
 			};
-		MyForm.autocomplete(".autocomplete", frm.carnumber, options, bindings);
-		Prices.caravan.calculate(document.frm, calcUrl);
+		MyForm.autocomplete(".autocomplete", frm.carnumber, options, 'carnumber', bindings);
+		Prices.caravanDates.calculate(document.frm, calcUrl);
 	})
 </script>
 @endpush

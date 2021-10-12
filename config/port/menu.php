@@ -85,7 +85,7 @@ return [
                     ],
                 ],
             ],
-            'Customers'   => [
+            'Kunden'   => [
                 'permissions'   => ['read CustomersMenu'],
                 'icon'  => 'fas fa-user',
                 'items' => [
@@ -111,17 +111,26 @@ return [
                 'items' => [
                     [
                         'permissions'   => ['read Boat','write Boat'],
-                        'text'  => 'Dauerlieger',
-                        'title' => 'Dauerlieger',
-                        'icon'  => 'fas fa-ship',
-                        'route' => 'admin.boats.index',
-                    ],
-                    [
-                        'permissions'   => ['read Boat','write Boat'],
                         'text'  => 'Gäste',
                         'title' => 'Gäste',
                         'icon'  => 'fas fa-concierge-bell',
                         'route' => 'admin.boats.guests',
+                    ],
+/*
+                    [
+                        'permissions'   => ['read Boat','write Boat'],
+                        'text'  => 'Gäste Rezeption',
+                        'title' => 'Gäste Rezeption',
+                        'icon'  => 'fas fa-concierge-bell',
+                        'route' => 'admin.boats.guests',
+                    ],
+*/
+                    [
+                        'permissions'   => ['read Boat','write Boat'],
+                        'text'  => 'Dauerlieger',
+                        'title' => 'Dauerlieger',
+                        'icon'  => 'fas fa-ship',
+                        'route' => 'admin.boats.index',
                     ],
                     [
                         'permissions'   => ['read BoatDates','write BoatDates'],

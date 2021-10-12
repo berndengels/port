@@ -8,7 +8,9 @@
             <x-form-input type="email" name="email" label="Email" required />
             <x-form-input type="password" name="password" label="Passwort" required />
             <x-form-input type="password" name="password_repeat" label="Passwort wiederholen" required />
+            @can('write Role')
             <x-form-select name="roles[]" label="Role" :options="$roles" multiple />
+            @endcan
             <div class="mt-2">
                 <x-form-submit class="btn btn-save h-10 mt-3 w-full md:w-1/2" icon="fas fa-save">Speichern</x-form-submit>
             </div>

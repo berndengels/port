@@ -1,7 +1,7 @@
 
 class MyForm {
 //	constructor() {};
-	autocomplete = (listSelector, triggerSelector, options, binds) => {
+	autocomplete = (listSelector, triggerSelector, options, optionTextField, binds) => {
 		const $elSelect = $(listSelector);
 		var data = [];
 
@@ -11,9 +11,9 @@ class MyForm {
 
 			if($el.val().length > 0) {
 				for(item of options) {
-					if(item.name.indexOf($el.val()) !== -1) {
+					if(item[optionTextField].indexOf($el.val()) !== -1) {
 						data[item.id] = item
-						$elSelect.append($($li.clone().attr('data-id', item.id).text(item.name)))
+						$elSelect.append($($li.clone().attr('data-id', item.id).text(item[optionTextField])))
 						i++
 					}
 				}

@@ -24,5 +24,5 @@ Route::group([
     'as'        => 'admin.',
     'middleware' => ['auth:admin'],
 ],function () {
-    Route::post('caravan/price/calculate', [AdminPriceController::class, 'calculate'])->name('caravan.price.calculate');
+    //Route::post('caravan/price/calculate', [AdminPriceController::class, 'calculate'])->name('caravan.price.calculate');
 });

@@ -1,17 +1,19 @@
 
 class Prices {
-	caravan = {
+	caravanDates = {
 		calculate: (frm, calcUrl) => {
 			const $elObserve = $('.calc', frm);
 
-			$elObserve.change(() => {
+			$elObserve.change((e) => {
 				if(frm.from.value && frm.until.value && frm.persons.value && frm.carlength.value) {
 					let formData = new FormData(),elem;
-					console.info(frm.elements)
+					console.info(e.target.name + ": " + e.target.value)
 					for(elem of frm.elements) {
 						formData.append(elem.name, elem.value)
 					}
-					formData.set('electric', frm.electric.checked ? 1 : 0)
+
+				formData.set('electric', frm.electric.checked ? 1 : 0)
+
 					axios.post(calcUrl, formData)
 						.then(resp => {
 							frm.price.value = resp.data.total

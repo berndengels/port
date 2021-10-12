@@ -7,6 +7,7 @@ use App\Models\Boat;
 use App\Models\BoatDates;
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -35,8 +36,14 @@ class AdminBoatDatesController extends AdminController
         $query = BoatDates::with('boat')
             ->orderByDesc('from');
         $data = $query->paginate($this->paginatorLimit);
+        /**
+         * @var $priceTotal Collection
+         */
+        $priceTotal = $query->get()->sum(function ($item) {
+            return $item->price;
+        });
 
-        return view('admin.boatDates.index', compact('data'));
+        return view('admin.boatDates.index', compact('data','priceTotal'));
     }
 
 
@@ -55,8 +62,14 @@ class AdminBoatDatesController extends AdminController
             ->whereModus('saison')
             ->orderByDesc('from');
         $data = $query->paginate($this->paginatorLimit);
+        /**
+         * @var $priceTotal Collection
+         */
+        $priceTotal = $query->get()->sum(function ($item) {
+            return $item->price;
+        });
 
-        return view('admin.boatDates.index', compact('data','modus'));
+        return view('admin.boatDates.index', compact('data','modus', 'priceTotal'));
     }
 
     /**
@@ -74,7 +87,14 @@ class AdminBoatDatesController extends AdminController
             ->whereModus('winter')
             ->orderByDesc('from');
         $data = $query->paginate($this->paginatorLimit);
-        return view('admin.boatDates.index', compact('data','modus'));
+        /**
+         * @var $priceTotal Collection
+         */
+        $priceTotal = $query->get()->sum(function ($item) {
+            return $item->price;
+        });
+
+        return view('admin.boatDates.index', compact('data','modus', 'priceTotal'));
     }
 
     /**

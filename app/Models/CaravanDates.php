@@ -45,7 +45,7 @@ use Illuminate\Database\Query\JoinClause;
  * @property int|null $day_price
  * @property-read mixed $valid_from
  * @property-read mixed $valid_until
- * @method static Builder|CaravanDates caravan(?int $caravanId = null)
+ * @method static Builder|CaravanDates (?int $caravanId = null)
  * @method static Builder|CaravanDates caravanByDates(?int $caravanId = null)
  * @method static Builder|CaravanDates dublicates()
  * @method static Builder|CaravanDates fromYearMonth(?string $year = null, ?string $month = null)
@@ -66,7 +66,6 @@ class CaravanDates extends Model
     protected $casts = [
         'persons'   => 'integer',
         'price'     => 'integer',
-//        'prices'     => 'Object',
     ];
 
     public function caravan()

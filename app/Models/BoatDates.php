@@ -21,6 +21,8 @@ class BoatDates extends Model
 
     protected $table = 'boat_dates';
     protected $guarded = ['id'];
+    protected $dates = ['from', 'until'];
+    protected $dateFormat = 'Y-m-d';
     public $timestamps = false;
 
     public function boat() {

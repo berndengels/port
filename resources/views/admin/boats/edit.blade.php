@@ -42,7 +42,7 @@
 				    fon: frm.fon,
 				    state: frm.state,
 			    };
-		    MyForm.autocomplete(".autocomplete", frm.name, options, bindings);
+		    MyForm.autocomplete(".autocomplete", frm.name, options, 'name', bindings);
 	    })
     </script>
 @endpush

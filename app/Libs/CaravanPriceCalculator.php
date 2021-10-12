@@ -4,18 +4,57 @@ namespace App\Libs;
 use Carbon\Carbon;
 use DatePeriod;
 
+/**
+ *
+ */
 class CaravanPriceCalculator extends PriceCalculator
 {
+    /**
+     * @var int
+     */
     protected $dailyPrice = 0;
+    /**
+     * @var int
+     */
     protected $priceTotal = 0;
+    /**
+     * @var bool
+     */
     protected $electric = false;
+    /**
+     * @var int
+     */
     protected $electric_per_day = 0;
+    /**
+     * @var int
+     */
     protected $sum_person_price = 0;
+    /**
+     * @var int
+     */
     protected $persons = 0;
+    /**
+     * @var bool
+     */
     protected $is_saison = false;
+    /**
+     * @var int
+     */
     protected $car_length = 0;
+    /**
+     * @var int
+     */
     protected $car_price_per_day = 0;
 
+    /**
+     * @param Carbon $from
+     * @param Carbon $until
+     * @param int $length
+     * @param int $persons
+     * @param bool $electric
+     * @param int|null $dayPrice
+     * @return array
+     */
     public function getPrice(Carbon $from, Carbon $until, int $length, int $persons = 1, bool $electric = false, int $dayPrice = null) {
         $this->priceTotal = 0;
         $dates  = $from->toPeriod($until)->toDatePeriod();
@@ -33,10 +72,14 @@ class CaravanPriceCalculator extends PriceCalculator
         return ['total' => $this->priceTotal, 'prices' => $result];
     }
 
+    /**
+     * @param $persons
+     * @return $this
+     */
     protected function addDailyPersonsPrice($persons)
     {
-        $personsInclusive   = config('port.main.prices.caravan.persons_inclusivce');
-        $personsAdditional  = config('port.main.prices.caravan.persons_additional');
+        $personsInclusive   = config('port.prices.caravan.persons_inclusivce');
+        $personsAdditional  = config('port.prices.caravan.persons_additional');
         $this->persons = $persons;
         // add price per person exclusive
         if($persons > $personsInclusive) {
@@ -47,9 +90,13 @@ class CaravanPriceCalculator extends PriceCalculator
         return $this;
     }
 
+    /**
+     * @param false $electric
+     * @return $this
+     */
     protected function addDailyElectricPrice($electric = false)
     {
-        $electricPrice = config('port.main.prices.caravan.electric_per_day');
+        $electricPrice = config('port.prices.caravan.electric_per_day');
         $this->electric = $electric;
         if($this->electric) {
             $this->electric_per_day = $electricPrice;
@@ -58,12 +105,17 @@ class CaravanPriceCalculator extends PriceCalculator
         return $this;
     }
 
+    /**
+     * @param Carbon $date
+     * @param $length
+     * @return $this
+     */
     protected function addDailySaisonPriceByLength(Carbon $date, $length)
     {
         $saisonFromMonth    = config('port.main.dates.saison.fromMonth');
         $saisonUntilMonth   = config('port.main.dates.saison.untilMonth');
-        $defaultPricePerDay = config('port.main.prices.caravan.default_per_day');
-        $saisonPricePerDay  = config('port.main.prices.caravan.saison_per_day');
+        $defaultPricePerDay = config('port.prices.caravan.default_per_day');
+        $saisonPricePerDay  = config('port.prices.caravan.saison_per_day');
 
         $this->car_length = $length;
         // saison
@@ -84,6 +136,10 @@ class CaravanPriceCalculator extends PriceCalculator
         return $this;
     }
 
+    /**
+     * @param null $individualPrice
+     * @return $this
+     */
     protected function setDailyIndividualPrice($individualPrice = null)
     {
         if($individualPrice && $individualPrice > 0) {
@@ -92,10 +148,15 @@ class CaravanPriceCalculator extends PriceCalculator
         return $this;
     }
 
+    /**
+     * @param Carbon $date
+     * @param null $indiviualPrice
+     * @return array
+     */
     protected function getDailyFormatedResult(Carbon $date, $indiviualPrice = null)
     {
         $data           = [];
-        $dailyElectricPrice  = config('port.main.prices.caravan.electric_per_day');
+        $dailyElectricPrice  = config('port.prices.caravan.electric_per_day');
 
         $data[$date->format('Y-m-d')] = [
             'date'              => $date->format('d.m.Y'),
