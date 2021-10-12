@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PriceController;
 use App\Http\Controllers\RouteController;
@@ -21,6 +22,8 @@ Use App\Http\Controllers\Admin\AdminCustomerController;
 use App\Http\Controllers\Admin\AdminBoatController;
 use App\Http\Controllers\Admin\AdminWidgetController;
 use App\Http\Controllers\Admin\AdminUploadController;
+use App\Http\Controllers\Admin\AdminBoatDatesController;
+use App\Http\Controllers\Admin\AdminBoatGuestDatesController;
 use App\Http\Controllers\Admin\Auth\AdminLoginController;
 use App\Http\Controllers\Admin\Auth\AdminForgotPasswordController;
 use App\Http\Controllers\Admin\Auth\AdminResetPasswordController;
@@ -66,10 +69,12 @@ Route::group([
     'middleware' => ['auth:admin'],
 ],function () {
     Route::get('', [AdminDashboardController::class, 'show'])->name('dashboard');
+    Route::post('logout', [AdminLoginController::class,'logout'])->name('logout');
 
     Route::get('customers/guests', [AdminCustomerController::class,'guests'])->name('customers.guests');
     Route::get('boats/guests', [AdminBoatController::class,'guests'])->name('boats.guests');
-    Route::post('logout', [AdminLoginController::class,'logout'])->name('logout');
+    Route::get('boatDates/saison', [AdminBoatDatesController::class, 'saison'])->name('boatDates.saison');
+    Route::get('boatDates/winter', [AdminBoatDatesController::class, 'winter'])->name('boatDates.winter');
 
     Route::resource('customers', AdminCustomerController::class);
     Route::resource('caravans', AdminCaravanController::class);
@@ -80,6 +85,8 @@ Route::group([
     Route::resource('pages', AdminPageController::class);
     Route::resource('widgets', AdminWidgetController::class);
     Route::resource('boats', AdminBoatController::class);
+    Route::resource('boatDates', AdminBoatDatesController::class);
+
 
     Route::post('caravanDates/sendExcel', [AdminCaravanDatesController::class, 'sendExcel'])->name('caravanDates.sendExcel');
     Route::match(['post','put'],'caravan/price/calculate', [AdminPriceController::class, 'calculate'])->name('caravan.price.calculate');

@@ -38,6 +38,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @method static Builder|Permission whereName($value)
  * @method static Builder|Permission whereUpdatedAt($value)
  * @mixin Eloquent
+ * @method static Builder|Permission filter(?string $name = null)
  */
 class Permission extends BaseModel
 {

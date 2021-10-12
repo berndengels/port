@@ -57,6 +57,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @method static Builder|Customer whereState($value)
  * @method static Builder|Customer whereStreet($value)
  * @mixin Eloquent
+ * @property int|null $confirmed
+ * @method static Builder|Customer whereConfirmed($value)
  */
 class Customer extends Authenticatable
 {

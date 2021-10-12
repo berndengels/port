@@ -1,13 +1,22 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Models\Boat;
 use App\Models\BoatDates;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class AdminBoatDatesController extends Controller
+class AdminBoatDatesController extends AdminController
 {
+    protected $boatOptions;
+
+    public function __construct()
+    {
+        $boats = Boat::orderBy('boat_name')->get();
+        $this->boatOptions = $boats->keyBy('id')->map->boat_name->prepend('Boot wählen','');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +24,52 @@ class AdminBoatDatesController extends Controller
      */
     public function index()
     {
-        //
+        /**
+         * @var $query Builder
+         */
+        $query = BoatDates::with('customer')
+            ->orderByDesc('from');
+        $data = $query->paginate($this->paginatorLimit);
+
+        return view('admin.boatDates.index', compact('data'));
+    }
+
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Response
+     */
+    public function saison()
+    {
+        $modus = 'saison';
+        /**
+         * @var $query Builder
+         */
+        $query = BoatDates::with('customer')
+            ->whereModus('saison')
+            ->orderByDesc('from');
+        $data = $query->paginate($this->paginatorLimit);
+
+        return view('admin.boatDates.index', compact('data','modus'));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Response
+     */
+    public function winter()
+    {
+        $modus = 'winter';
+        /**
+         * @var $query Builder
+         */
+        $query = BoatDates::with('customer')
+            ->whereModus('winter')
+            ->orderByDesc('from');
+        $data = $query->paginate($this->paginatorLimit);
+        return view('admin.boatDates.index', compact('data','modus'));
     }
 
     /**
@@ -34,9 +88,12 @@ class AdminBoatDatesController extends Controller
      *
      * @return Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        return view('admin.boatDates.create', [
+            'modus' => $request->modus,
+            'boatOptions' => $this->boatOptions,
+        ]);
     }
 
     /**

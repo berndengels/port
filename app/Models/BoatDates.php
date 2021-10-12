@@ -19,7 +19,11 @@ class BoatDates extends Model
 {
     use HasFactory;
 
-    protected $table = '';
+    protected $table = 'boat_dates';
     protected $guarded = ['id'];
     public $timestamps = false;
+
+    public function boat() {
+        return $this->belongsTo(Boat::class);
+    }
 }

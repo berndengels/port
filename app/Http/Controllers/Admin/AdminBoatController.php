@@ -7,6 +7,7 @@ use App\Models\Boat;
 use App\Models\BoatType;
 use App\Models\Customer;
 use Exception;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -22,13 +23,21 @@ class AdminBoatController extends AdminController
 
     public function index()
     {
-        $data = Boat::with('customer')->paginate($this->paginatorLimit);
+        $data = Boat::with('customer')
+            ->whereHas('customer', function (Builder $query) {
+                $query->where('customer_type', '=', 'permanent');
+            })
+            ->paginate($this->paginatorLimit);
         return view('admin.boats.index', compact('data'));
     }
 
     public function guests()
     {
-        $data = Boat::with('customer')->paginate($this->paginatorLimit);
+        $data = Boat::with('customer')
+            ->whereHas('customer', function (Builder $query) {
+                $query->where('customer_type', '=', 'guest');
+            })
+            ->paginate($this->paginatorLimit);
         return view('admin.boats.index', compact('data'));
     }
 

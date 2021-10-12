@@ -47,4 +47,8 @@ class Boat extends Model
     {
         return $this->belongsTo(Customer::class);
     }
+
+    public function dates() {
+        return $this->hasMany(BoatDates::class);
+    }
 }

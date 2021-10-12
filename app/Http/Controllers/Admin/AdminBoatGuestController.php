@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\BoatGuest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class AdminBoatGuestController extends Controller
+class AdminBoatGuestController extends AdminController
 {
     /**
      * Display a listing of the resource.

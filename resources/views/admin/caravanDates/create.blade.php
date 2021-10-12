@@ -4,8 +4,7 @@
     <div class="p-6">
         <x-nav-link :href="route('admin.caravanDates.index')" icon="fas fa-backward" class="btn">zurück</x-nav-link>
 
-        <x-form name="frm" action="{{ route('admin.caravanDates.store') }}" class="w-full lg:w-1/2">
-        @method('post')
+        <x-form name="frm" method="post" action="{{ route('admin.caravanDates.store') }}" class="w-full lg:w-1/2">
             <x-form-input name="prices" type="hidden" />
 			<x-form-input id="carnumber" name="carnumber" type="text" label="Kennzeichen" autocomplete="off" required />
 			<ul id="caravans" class="hidden w-full autocomplete"></ul>

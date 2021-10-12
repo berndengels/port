@@ -1,11 +1,14 @@
 <?php
 namespace App\Libs;
 
+use App\Libs\Services\Crane;
+use App\Libs\Services\CraneMast;
+use App\Libs\Services\HighPressureCleaning;
 use Carbon\Carbon;
 
 class BoatCalculator extends PriceCalculator
 {
-
+    use Crane, CraneMast, HighPressureCleaning;
     /**
      * @var int
      */
@@ -44,7 +47,15 @@ class BoatCalculator extends PriceCalculator
         $this->winterEnd    = Carbon::make($nextYear . '-' . config('port.prices.boat.winter_end'));
     }
 
-    public function getSaisonPrice($length, $width, Carbon $from = null, Carbon $until = null)
+    public function getSaisonPriceTotal($length, $width, $weight, Carbon $from = null, Carbon $until = null) {
+
+    }
+
+    public function getWinterPriceTotal($length, $width, $weight, Carbon $from = null, Carbon $until = null) {
+
+    }
+
+    public function getSaisonPrice($length, $width, $weight, Carbon $from = null, Carbon $until = null)
     {
         $defaultPrice = $this->getDefaultSaisonPrice($length, $width);
         if(!$from && !$until) {
@@ -53,14 +64,14 @@ class BoatCalculator extends PriceCalculator
         $from   = !$from ? $this->saisonStart : $from;
         $until  = !$until ? $this->saisonEnd : $until;
 
-        $defaultDays    = $this->saisonEnd->diffInDays($this->saisonStart);
+        $defaultDays    = $this->getDefaultSaisonDays();
         $days           = $until->diffInDays($from);
 
         $price = round($defaultPrice * $days / $defaultDays);
         return $price;
     }
 
-    public function getWinterPrice($length, $width, Carbon $from = null, Carbon $until = null)
+    public function getWinterPrice($length, $width, $weight, Carbon $from = null, Carbon $until = null)
     {
         $defaultPrice = $this->getDefaultWinterPrice($length, $width);
         if(!$from && !$until) {
@@ -69,19 +80,27 @@ class BoatCalculator extends PriceCalculator
         $from   = !$from ? $this->winterStart : $from;
         $until  = !$until ? $this->winterEnd : $until;
 
-        $defaultDays    = $this->winterEnd->diffInDays($this->winterStart);
+        $defaultDays    = $this->getDefaultWinterDays();
         $days           = $until->diffInDays($from);
 
         $price = round($defaultPrice * $days / $defaultDays);
         return $price;
     }
 
-    public function getDefaultSaisonPrice($length, $width)
+    private function getDefaultSaisonDays() {
+        return $this->saisonEnd->diffInDays($this->saisonStart);
+    }
+
+    private function getDefaultWinterDays() {
+        return $this->winterEnd->diffInDays($this->winterStart);
+    }
+
+    private function getDefaultSaisonPrice($length, $width)
     {
         return round($this->priceSaisonFactor * $length * $width);
     }
 
-    public function getDefaultWinterPrice($length, $width)
+    private function getDefaultWinterPrice($length, $width)
     {
         return round($this->priceWinterFactor * $length * $width);
     }

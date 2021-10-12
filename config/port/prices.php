@@ -21,6 +21,9 @@ return [
         'saison_end'    => env('BOAT_SAISON_END'),
         'winter_start'  => env('BOAT_WINTER_START'),
         'winter_end'    => env('BOAT_WINTER_END'),
+        'crane_per_ton' => env('BOAT_CRANE_PRICE_PER_TON'),
+        'mast_crane'    => env('BOAT_CRANE_MAST_PRICE'),
+        'high_pressure_cleaning'  => env('BOAT_HIGH_PRESSURE_CLEANING_PRICE'),
     ],
     'boat_guest' => [
         'price_per_meter'      => env('BOAT_GUEST_PRICE_PER_METER', 1.5),

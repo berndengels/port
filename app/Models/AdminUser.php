@@ -69,6 +69,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read int|null $roles_count
  * @method static Builder|AdminUser permission($permissions)
  * @method static Builder|AdminUser role($roles, $guard = null)
+ * @property-read mixed $roles_string
  */
 class AdminUser extends Authenticatable
 {

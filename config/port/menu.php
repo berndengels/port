@@ -105,7 +105,7 @@ return [
                     ],
                 ],
             ],
-            'Boats'   => [
+            'Boote'   => [
                 'permissions'   => ['read BoatsMenu'],
                 'icon'  => 'fas fa-ship',
                 'items' => [
@@ -113,7 +113,7 @@ return [
                         'permissions'   => ['read Boat','write Boat'],
                         'text'  => 'Dauerlieger',
                         'title' => 'Dauerlieger',
-                        'icon'  => 'fas fa-caravan',
+                        'icon'  => 'fas fa-ship',
                         'route' => 'admin.boats.index',
                     ],
                     [
@@ -122,6 +122,20 @@ return [
                         'title' => 'Gäste',
                         'icon'  => 'fas fa-concierge-bell',
                         'route' => 'admin.boats.guests',
+                    ],
+                    [
+                        'permissions'   => ['read BoatDates','write BoatDates'],
+                        'text'  => 'Saison Liegeplätze',
+                        'title' => 'Saison Liegeplätze',
+                        'icon'  => 'fas fa-anchor',
+                        'route' => 'admin.boatDates.saison',
+                    ],
+                    [
+                        'permissions'   => ['read BoatDates','write BoatDates'],
+                        'text'  => 'Winterlager',
+                        'title' => 'Winterlager',
+                        'icon'  => 'fas fa-snowflake',
+                        'route' => 'admin.boatDates.winter',
                     ],
                 ],
             ],
