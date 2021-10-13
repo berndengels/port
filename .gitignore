@@ -6,6 +6,7 @@
 /public/mix-manifest.json
 /storage/*.key
 /vendor
+/clearme
 .DS_Store
 .env
 .env.backup
