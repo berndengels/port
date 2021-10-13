@@ -44,6 +44,16 @@
 		border-radius: 0.5rem;
 		opacity: 0.8;
 
+		&.widget {
+			.title {
+				font-size: 1.2rem;
+				font-weight: bold;
+				color: $indigo;
+			}
+			.content {
+
+			}
+		}
 		@include media('<desktop') {
 			min-width: 93%;
 			margin: 1.0rem 1.0rem 0 1.0rem;
