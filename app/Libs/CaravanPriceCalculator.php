@@ -57,10 +57,11 @@ class CaravanPriceCalculator extends PriceCalculator
      */
     public function getPrice(Carbon $from, Carbon $until, int $length, int $persons = 1, bool $electric = false, int $dayPrice = null) {
         $this->priceTotal = 0;
-        $dates  = $from->toPeriod($until)->toDatePeriod();
+        $dates = $from->toPeriod($until)->toDatePeriod();
+        $prices = [];
         foreach ( $dates as $day ) {
             $this->dailyPrice = 0;
-            $result = $this
+            $prices[] = $this
                 ->addDailyPersonsPrice($persons)
                 ->addDailyElectricPrice($electric)
                 ->addDailySaisonPriceByLength($day, $length)
@@ -69,7 +70,7 @@ class CaravanPriceCalculator extends PriceCalculator
             ;
             $this->priceTotal += $this->dailyPrice;
         }
-        return ['total' => $this->priceTotal, 'prices' => $result];
+        return ['total' => $this->priceTotal, 'prices' => $prices];
     }
 
     /**

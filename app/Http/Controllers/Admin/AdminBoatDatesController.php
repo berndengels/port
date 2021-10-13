@@ -161,6 +161,7 @@ class AdminBoatDatesController extends AdminController
      */
     public function edit(BoatDates $boatDate)
     {
+        $boatDate->load('boat');
         return view('admin.boatDates.edit', [
             'boatDate'      => $boatDate,
             'modus'         => $boatDate->modus,

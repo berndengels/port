@@ -23,9 +23,18 @@ class BoatDates extends Model
     protected $guarded = ['id'];
     protected $dates = ['from', 'until'];
     protected $dateFormat = 'Y-m-d';
+    protected $appends = ['validFrom','validUntil'];
     public $timestamps = false;
 
     public function boat() {
         return $this->belongsTo(Boat::class);
+    }
+
+    public function getValidFromAttribute() {
+        return $this->from->format('Y-m-d');
+    }
+
+    public function getValidUntilAttribute() {
+        return $this->until->format('Y-m-d');
     }
 }
