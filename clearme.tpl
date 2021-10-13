@@ -1,6 +1,8 @@
 #!/bin/bash
 php="/usr/local/bin/php"
+composer="/usr/local/bin/composer"
 #php="/opt/plesk/php/8.0/bin/php"
+#composer="/opt/plesk/php/8.0/bin/php /usr/local/psa/var/modules/composer/composer.phar"
 
 echo "clear all caches"
 $php artisan cache:clear
