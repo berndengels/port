@@ -23,7 +23,8 @@ return [
         'winter_end'    => env('BOAT_WINTER_END'),
         'crane_per_ton' => env('BOAT_CRANE_PRICE_PER_TON'),
         'mast_crane'    => env('BOAT_CRANE_MAST_PRICE'),
-        'high_pressure_cleaning'  => env('BOAT_HIGH_PRESSURE_CLEANING_PRICE'),
+        'mast_crane_upper_per_100kg'    => env('BOAT_CRANE_MAST_PRICE_UPPER_PER_100KG'),
+        'cleaning_per_length'           => env('BOAT_CLEANING_PRICE_PER_LENGTH_METER'),
     ],
     'boat_guest' => [
         'price_per_meter'      => env('BOAT_GUEST_PRICE_PER_METER', 1.5),

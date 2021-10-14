@@ -67,12 +67,13 @@ class  BoatCalculator extends PriceCalculator
         $this->winterStart  = Carbon::make($year . '-' . config('port.prices.boat.winter_start'));
         $this->winterEnd    = Carbon::make($nextYear . '-' . config('port.prices.boat.winter_end'));
 
-        $this->priceCranePerTon = (int) config('port.prices.boat.crane_per_ton') / 1000;
-        $this->priceMastCrane   = (int) config('port.prices.boat.mast_crane');
-        $this->priceCleaning    = (int) config('port.prices.boat.high_pressure_cleaning');
+        $this->priceCranePerTon         = (int) config('port.prices.boat.crane_per_ton') / 1000;
+        $this->priceMastCrane           = (int) config('port.prices.boat.mast_crane');
+        $this->priceMastCraneUpper100Kg = (int) config('port.prices.boat.mast_crane_upper_per_100kg');
+        $this->priceCleaningPerLength   = (int) config('port.prices.boat.cleaning_per_length');
     }
 
-    public function getPrice($modus, $length, $width, $weight, $crane, $mastCrane, $cleaning, Carbon $from = null, Carbon $until = null, $individualPrice = null)
+    public function getPrice($modus, $length, $width, $weight, $mastLength, $mastWeight, $crane, $mastCrane, $cleaning, Carbon $from = null, Carbon $until = null, $individualPrice = null)
     {
         $this->modus = $modus;
 
@@ -80,16 +81,16 @@ class  BoatCalculator extends PriceCalculator
             $result = $this
                 ->setSaisonPrice($length, $width, $from, $until)
                 ->setCranePrice($weight, $crane)
-                ->setCraneMastPrice($mastCrane)
-                ->setCleaningPrice($cleaning)
+                ->setCraneMastPrice($mastLength, $mastWeight, $mastCrane)
+                ->setCleaningPrice($length, $cleaning)
                 ->getFormatedResult($individualPrice)
             ;
         } else {
             $result = $this
                 ->setWinterPrice($length, $width, $from, $until)
                 ->setCranePrice($weight, $crane)
-                ->setCraneMastPrice($mastCrane)
-                ->setCleaningPrice($cleaning)
+                ->setCraneMastPrice($mastLength, $mastWeight, $mastCrane)
+                ->setCleaningPrice($length, $cleaning)
                 ->getFormatedResult($individualPrice)
             ;
         }
@@ -156,16 +157,20 @@ class  BoatCalculator extends PriceCalculator
         return $this;
     }
 
-    public function setCraneMastPrice($mastCrane = false) : self {
-        if($mastCrane) {
-            $this->priceTotal += $this->mastCrane = $this->priceMastCrane;
+    public function setCraneMastPrice($mastLength, $mastWeight = 0, $mastCrane = false) : self {
+        if($mastCrane && $mastLength > 0) {
+            if($mastWeight < 100) {
+                $this->priceTotal += $this->mastCrane = $this->priceMastCrane;
+            } else {
+                $this->priceTotal += $this->mastCrane = $this->priceMastCrane + $this->priceMastCraneUpper100Kg * $mastWeight/100;
+            }
         }
         return $this;
     }
 
-    public function setCleaningPrice($cleaning = false) : self {
-        if($cleaning) {
-            $this->priceTotal += $this->cleaning = $this->priceCleaning;
+    public function setCleaningPrice($length, $cleaning = false) : self {
+        if($length && $cleaning) {
+            $this->priceTotal += $this->cleaning = ceil($this->priceCleaningPerLength * $length);
         }
         return $this;
     }

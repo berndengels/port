@@ -54,6 +54,8 @@ class AdminPriceController extends AdminController
             $length     = $boat->length;
             $width      = $boat->width;
             $weight     = $boat->weight;
+            $mastLength = $boat->mast_length;
+            $mastWeight = $boat->mast_weight;
             $from       = $request->post('from');
             $until      = $request->post('until');
             $defaultPrice = $request->post('default_price');
@@ -65,7 +67,7 @@ class AdminPriceController extends AdminController
             $from       = new Carbon($from, config('app.timezone'));
             $until      = new Carbon($until, config('app.timezone'));
 
-            $response   = (new BoatCalculator())->getPrice($modus, $length, $width, $weight, $crane, $mastCrane, $cleaning, $from, $until, $defaultPrice);
+            $response   = (new BoatCalculator())->getPrice($modus, $length, $width, $weight, $mastLength, $mastWeight, $crane, $mastCrane, $cleaning, $from, $until, $defaultPrice);
         }
 
         return response()->json($response);
