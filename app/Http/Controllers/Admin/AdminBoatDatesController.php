@@ -180,9 +180,10 @@ class AdminBoatDatesController extends AdminController
     public function update(BoatDatesRequest $request, BoatDates $boatDate)
     {
         $validated = $request->validated();
+        $modus     = $validated['modus'];
         try {
             $boatDate->update($validated);
-            return redirect()->route('admin.boatDates.index')->with('success', 'Boot Date erfogreich geändert!');
+            return redirect()->route('admin.boatDates.'.$modus)->with('success', 'Boot Date erfogreich geändert!');
         } catch(Exception $e) {
             return redirect()->route('admin.boatDates.create')->with('error', $e->getMessage());
         }
