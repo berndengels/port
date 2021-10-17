@@ -61,7 +61,7 @@ class CaravanPriceCalculator extends PriceCalculator
         $prices = [];
         foreach ( $dates as $day ) {
             $this->dailyPrice = 0;
-            $prices[] = $this
+            $prices[$day->format('Y-m-d')] = $this
                 ->addDailyPersonsPrice($persons)
                 ->addDailyElectricPrice($electric)
                 ->addDailySaisonPriceByLength($day, $length)
@@ -156,10 +156,9 @@ class CaravanPriceCalculator extends PriceCalculator
      */
     protected function getDailyFormatedResult(Carbon $date, $indiviualPrice = null)
     {
-        $data           = [];
         $dailyElectricPrice  = config('port.prices.caravan.electric_per_day');
 
-        $data[$date->format('Y-m-d')] = [
+        $data = [
             'date'              => $date->format('d.m.Y'),
             'persons'           => $this->persons,
             'sum_person_price'  => $this->sum_person_price,

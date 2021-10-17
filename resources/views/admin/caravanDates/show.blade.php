@@ -36,7 +36,7 @@
                 <td colspan="2">
                     <div>
                         <table class="table w-full">
-                            @foreach(json_decode($caravanDate->prices) as $date => $price)
+                            @foreach(json_decode($caravanDate->prices, true) as $date => $price)
                             <tr>
                                 <th class="top-0">{{ \Carbon\Carbon::create($date)->format('D d.m.Y') }}</th>
                                 <td>
