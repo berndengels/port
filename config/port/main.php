@@ -21,10 +21,14 @@ return [
         ],
     ],
     'customer'  => [
-        'types' => env('CUSTOMER_TYPES', ['guest' => 'guest', 'permanent' => 'permanent'])
+        'types'         => ['guest' => 'guest', 'permanent' => 'permanent'],
+        'typeOptions'   => ['guest' => 'Gast', 'permanent' => 'Dauerlieger'],
     ],
     'boat'  => [
-        'types' => env('BOAT_TYPES', ['motor' => 'motor', 'sail' => 'sail']),
+        'types' => ['motor' => 'Motorboot', 'sail' => 'Segelboot'],
         'dates' => ['modi' => json_decode(env('BOAT_DATES_MODI'), true)],
     ],
+    'cache' => [
+        'enabled' => env('USE_CACHE', false),
+    ]
 ];

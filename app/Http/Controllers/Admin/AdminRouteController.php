@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 class AdminRouteController extends AdminController
 {
     protected $route;
-    protected $pregRoutesExcept = '/^(_|team)/i';
 
     public function setCurrentMenu($currentRouteName, Request $request) {
         $currentRoutes = config('port.menu.admin.items.'.$currentRouteName);
@@ -29,26 +28,5 @@ class AdminRouteController extends AdminController
         } else {
             return redirect()->back();
         }
-    }
-
-    public function routes(Request $request)
-    {
-        $routeName = $request->post('routeName');
-        $data = collect([]);
-        /**
-         * @var $route \Illuminate\Routing\Route
-         */
-        foreach(Route::getRoutes() as $route) {
-            if( !preg_match($this->pregRoutesExcept, $route->uri) ) {
-                $data->push($route);
-            }
-        }
-
-        if($routeName) {
-            $data = $data->filter(function($item) use ($routeName) {
-                return (isset($item->action['as']) && false !== stristr($item->action['as'], $routeName));
-            });
-        }
-        return view('admin.routes.index', compact('data','routeName'));
     }
 }

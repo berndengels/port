@@ -5,11 +5,15 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\BoatDatesRequest;
 use App\Models\Boat;
 use App\Models\BoatDates;
+use Barryvdh\DomPDF\PDF;
 use Carbon\Carbon;
 use Exception;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Database\Eloquent\Collection;
+use GrahamCampbell\Markdown\Facades\Markdown;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Str;
 
 class AdminBoatDatesController extends AdminController
 {
@@ -60,7 +64,8 @@ class AdminBoatDatesController extends AdminController
          */
         $query = BoatDates::with('boat')
             ->whereModus('saison')
-            ->orderByDesc('from');
+            ->orderByDesc('from')
+        ;
         $data = $query->paginate($this->paginatorLimit);
         /**
          * @var $priceTotal Collection
@@ -85,7 +90,8 @@ class AdminBoatDatesController extends AdminController
          */
         $query = BoatDates::with('boat')
             ->whereModus('winter')
-            ->orderByDesc('from');
+            ->orderByDesc('from')
+        ;
         $data = $query->paginate($this->paginatorLimit);
         /**
          * @var $priceTotal Collection
@@ -103,9 +109,9 @@ class AdminBoatDatesController extends AdminController
      * @param BoatDates $boatDates
      * @return Response
      */
-    public function show(BoatDates $boatDates)
+    public function show(BoatDates $boatDate)
     {
-        //
+        return view('admin.boatDates.show', compact('boatDate'));
     }
 
     /**
@@ -126,8 +132,9 @@ class AdminBoatDatesController extends AdminController
             $defaultFrom    = Carbon::create($year .'-'. config('port.prices.boat.winter_start'));
             $defaultUntil   = Carbon::create($nextYear .'-'. config('port.prices.boat.winter_end'));
         }
+
         return view('admin.boatDates.create', [
-            'modus'         => $request->modus,
+            'modus'         => $request->modus ?? 'saison',
             'datesModi'     => $this->datesModi,
             'boatOptions'   => $this->boatOptions,
             'defaultFrom'   => $defaultFrom->format('Y-m-d'),
@@ -185,7 +192,7 @@ class AdminBoatDatesController extends AdminController
             $boatDate->update($validated);
             return redirect()->route('admin.boatDates.'.$modus)->with('success', 'Boot Date erfogreich geändert!');
         } catch(Exception $e) {
-            return redirect()->route('admin.boatDates.create')->with('error', $e->getMessage());
+            return redirect()->route('admin.boatDates.edit', $boatDate)->with('error', $e->getMessage());
         }
     }
 
@@ -203,5 +210,22 @@ class AdminBoatDatesController extends AdminController
         } catch(Exception $e) {
             return redirect()->route('admin.boatDates.index')->with('error', $e->getMessage());
         }
+    }
+
+    public function invoice(BoatDates $boatDate)
+    {
+        $text = view('admin.boatDates.invoice', [
+            'data'      => $boatDate,
+            'customer'  => $boatDate->boat->customer,
+            'prices'    => json_decode($boatDate->prices),
+            'modus'     => config('port.main.boat.dates.modi')[$boatDate->modus],
+        ]);
+        $html = Str::of($text)->markdown();
+        /**
+         * @var PDF
+         */
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->loadHTML($html);
+        return $pdf->download('rechnung.pdf');
     }
 }

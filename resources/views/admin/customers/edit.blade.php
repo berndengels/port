@@ -3,9 +3,12 @@
 @section('main')
     <div class="p-6">
         <x-nav-link :href="route('admin.customers.index')" icon="fas fa-backward" class="btn">zurück</x-nav-link>
-        <x-form :action="route('admin.customers.update', $customer)" class="w-full lg:w-1/2">
+        <x-form :action="route('admin.customers.update', $customer)" class="w-full lg:w-1/2 mt-3">
             @method('put')
             @bind($customer)
+            @can('confirm Registration')
+                <x-form-checkbox name="confirmed" label="Bestätigt" class=" mb-0 pb-0" />
+            @endcan
             <x-form-select name="customer_type" label="Typ" :options="$customerTypes" required />
             <x-form-input name="name" label="Name" required />
             <x-form-input type="email" name="email" label="Email" required />

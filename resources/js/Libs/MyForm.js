@@ -6,14 +6,14 @@ class MyForm {
 		var data = [];
 
 		$(triggerSelector).keyup(e => {
-			var $el=$(e.target),$li=$('<li>'),i=0,item;
+			var $el=$(e.target),$li=$('<li>'),i=0;
 			$elSelect.empty();
 
 			if($el.val().length > 0) {
-				for(item of options) {
-					if(item[optionTextField].indexOf($el.val()) !== -1) {
-						data[item.id] = item
-						$elSelect.append($($li.clone().attr('data-id', item.id).text(item[optionTextField])))
+				for (let [key, val] of Object.entries(options)) {
+					if(val[optionTextField].indexOf($el.val()) !== -1) {
+						data[key] = val
+						$elSelect.append($($li.clone().attr('data-id', key).text(val[optionTextField])))
 						i++
 					}
 				}

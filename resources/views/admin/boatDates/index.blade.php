@@ -26,7 +26,7 @@
                 <th class="hidden md:table-cell">Eigner</th>
                 <th>Fon</th>
                 <th>Preis</th>
-                <th colspan="2"><br></th>
+                <th colspan="3"><br></th>
             </tr>
             @foreach($data as $item)
                 <tr>
@@ -55,6 +55,11 @@
                         @endif
                     </td>
                     <td>{{ $item->price }} €</td>
+                    <td>
+                        <x-nav-link href="{{ route('admin.boatDates.invoice', $item) }}" icon="fas fa-edit" class="btn" title="Bearbeiten">
+                            <span class="hidden md:visible">Rechnung</span>
+                        </x-nav-link>
+                    </td>
                     <td>
                         <x-nav-link href="{{ route('admin.boatDates.edit', $item) }}" icon="fas fa-edit" class="btn" title="Bearbeiten">
                             <span class="hidden md:visible">Edit</span>

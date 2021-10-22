@@ -1,8 +1,9 @@
 <?php
 namespace App\Models;
 
-use App\Models\Filter\Filter;
 use Eloquent;
+use App\Traits\Models\Filter\Filter;
+use App\Traits\Models\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Carbon;
@@ -42,7 +43,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Permission extends BaseModel
 {
-    use HasFactory, Filter;
+    use HasFactory, Filter, ClearsResponseCache;
     protected $appends = ['actions','model','action','uniqName'];
     public $action;
     public $model;

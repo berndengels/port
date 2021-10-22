@@ -1,8 +1,8 @@
 <?php
 
 return [
-    'lat'   => 54.026379,
-    'lng'   => 13.910093,
-    'zoom'  => 12,
+    'lat'   => env('MIX_POSITION_LAT'),
+    'lng'   => env('MIX_POSITION_LNG'),
+    'zoom'  => env('MIX_POSITION_ZOOM'),
     'token' => env('MIX_NAVIONICS_TOKEN'),
 ];

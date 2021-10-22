@@ -1,8 +1,10 @@
 <?php
 namespace App\Models;
 
+use App\Traits\Models\ClearsResponseCache;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -34,10 +36,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @method static Builder|Boat whereLengthWaterline($value)
  * @method static Builder|Boat whereWidth($value)
  * @mixin Eloquent
+ * @property int|null $weight
+ * @property int|null $mast_length
+ * @property int|null $mast_weight
+ * @property-read Collection|BoatDates[] $dates
+ * @property-read int|null $dates_count
+ * @method static Builder|Boat whereMastLength($value)
+ * @method static Builder|Boat whereMastWeight($value)
+ * @method static Builder|Boat whereWeight($value)
  */
 class Boat extends Model
 {
-    use HasFactory;
+    use HasFactory, ClearsResponseCache;
 
     protected $table = 'boats';
     protected $guarded = ['id'];

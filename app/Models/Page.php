@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use App\Models\Filter\HasSlug;
 use Eloquent;
+use App\Traits\Models\Filter\HasSlug;
+use App\Traits\Models\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -26,7 +27,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Page extends Model
 {
-    use HasFactory, HasSlug;
+    use HasFactory, HasSlug, ClearsResponseCache;
 
     protected $table = 'pages';
     protected $guarded = ['id'];

@@ -1,6 +1,7 @@
 <?php
 namespace App\Models;
 
+use App\Traits\Models\ClearsResponseCache;
 use Eloquent;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
@@ -31,6 +32,7 @@ use Illuminate\Database\Eloquent\Builder;
  */
 class Country extends Model
 {
+    use ClearsResponseCache;
     protected $table = 'countries';
     protected $guarded = ['id'];
     public $timestamps = false;

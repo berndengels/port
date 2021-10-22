@@ -9,5 +9,7 @@ $php artisan cache:clear
 $php artisan config:clear
 $php artisan route:clear
 $php artisan view:clear
+$php artisan responsecache:clear
+redis-cli FLUSHALL
 composer dumpautoload
 printf 'all DONE \360\237\230\216\n'

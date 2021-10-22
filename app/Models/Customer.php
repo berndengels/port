@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Eloquent;
+use App\Traits\Models\ClearsResponseCache;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -62,7 +63,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Customer extends Authenticatable
 {
-    use HasFactory, HasRoles, Notifiable, CanResetPassword, ThrottlesLogins, Dispatchable;
+    use HasFactory, HasRoles, Notifiable, CanResetPassword, ThrottlesLogins, Dispatchable, ClearsResponseCache;
 
     protected $table = 'customers';
     protected $appends = ['fonLink'];
@@ -73,7 +74,7 @@ class Customer extends Authenticatable
     public function getFonLinkAttribute()
     {
         if($this->fon) {
-            return preg_replace('/[ \t]+/i','', $this->fon);
+            return '+49' . preg_replace('/^0|[ \t]+/i','', $this->fon);
         }
         return null;
     }

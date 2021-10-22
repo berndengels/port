@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use App\Models\Filter\HasSlug;
 use Eloquent;
+use App\Traits\Models\Filter\HasSlug;
+use App\Traits\Models\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -29,7 +30,7 @@ use Illuminate\Support\Str;
  */
 class Widget extends Model
 {
-    use HasFactory, HasSlug;
+    use HasFactory, HasSlug, ClearsResponseCache;
 
     protected $table = 'widgets';
     protected $guarded = ['id'];

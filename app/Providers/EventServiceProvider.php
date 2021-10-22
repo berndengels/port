@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
-use App\Listeners\SendEmailNotification;
+use App\Listeners\SendInvoiceEmailNotification;
+use App\Listeners\SendRegisterEmailNotification;
+use App\Models\BoatDates;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -17,7 +19,16 @@ class EventServiceProvider extends ServiceProvider
      */
     protected $listen = [
         Registered::class => [
-            SendEmailNotification::class,
+            SendRegisterEmailNotification::class,
+        ],
+        'boatDates.created' => [
+            SendInvoiceEmailNotification::class,
+        ],
+        'boatDates.updated' => [
+            SendInvoiceEmailNotification::class,
+        ],
+        'boatDates.saved' => [
+            SendInvoiceEmailNotification::class,
         ],
     ];
 

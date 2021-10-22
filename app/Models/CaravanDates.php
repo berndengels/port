@@ -4,8 +4,9 @@ namespace App\Models;
 
 use Eloquent;
 use Illuminate\Support\Carbon;
-use App\Models\Filter\CaravanFilter;
-use App\Models\Filter\YearMonthFilter;
+use App\Traits\Models\ClearsResponseCache;
+use App\Traits\Models\Filter\CaravanFilter;
+use App\Traits\Models\Filter\YearMonthFilter;
 use Database\Factories\CaravanDatesFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -53,7 +54,7 @@ use Illuminate\Database\Query\JoinClause;
  */
 class CaravanDates extends Model
 {
-    use HasFactory, CaravanFilter, YearMonthFilter;
+    use HasFactory, CaravanFilter, YearMonthFilter, ClearsResponseCache;
 
     protected $table = 'caravan_dates';
     protected $guarded = ['id'];

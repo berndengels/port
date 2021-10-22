@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\Models\ClearsResponseCache;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -17,7 +18,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class boatGuestDates extends Model
 {
-    use HasFactory;
+    use HasFactory, ClearsResponseCache;
 
     protected $table = '';
     protected $guarded = ['id'];

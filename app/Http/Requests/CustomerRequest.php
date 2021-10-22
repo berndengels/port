@@ -17,6 +17,11 @@ class CustomerRequest extends AdminRequest
         return $this->user()->id === $this->getId() || auth()->user()->can('write Customer');
     }
 
+    public function validationData($keys = null)
+    {
+        return array_merge($this->all($keys), ['confirmed' => !!$this->post('confirmed') ?? false]);
+    }
+
     /**
      * Get the validation rules that apply to the request.Customer
      *
@@ -34,6 +39,7 @@ class CustomerRequest extends AdminRequest
             'street'            => '',
             'postcode'          => '',
             'city'              => '',
+            'confirmed'         => '',
         ];
     }
 }

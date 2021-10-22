@@ -50,6 +50,15 @@ class RegisterController extends Controller
         return Auth::guard('customer');
     }
 
+    public function showRegistrationForm()
+    {
+        return view('auth.register', [
+            'boatTypes' => config('port.main.boat.types'),
+            'customerTypes' => config('port.main.customer.types'),
+        ]);
+    }
+
+
     /**
      * Get a validator for an incoming registration request.
      *
@@ -62,10 +71,24 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:50'],
             'email' => ['required', 'string', 'email', 'max:50', 'unique:customers'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'fon' => ['required', 'string', 'max:50'],
-            'city' => ['required', 'string', 'max:50'],
-            'postcode' => ['required', 'string', 'max:50'],
-            'street' => ['required', 'string', 'max:50'],
+            'fon' => ['required'],
+            'city' => ['required'],
+            'postcode' => ['required'],
+            'street' => ['required'],
+
+            'customer_type'     => '',
+            'boat_type'         => '',
+            'boat_name'         => '',
+            'length'            => '',
+            'width'             => '',
+            'weight'            => '',
+            'mast_length'       => '',
+            'mast_weight'       => '',
+            'draft'             => '',
+            'length_waterline'  => '',
+            'length_keel'       => '',
+
+            'captcha' => 'required|captcha',
         ]);
     }
 
@@ -87,7 +110,7 @@ class RegisterController extends Controller
             'street'    => $data['street'],
         ]);
 
-        event(new Registered($customer));
+//        event(new Registered($customer));
 
         return $customer;
     }

@@ -19,13 +19,22 @@
                 <th class="hidden md:table-cell">ID</th>
                 <th>Name</th>
                 <th class="hidden md:table-cell">Email</th>
+                <th>Fon</th>
                 <th colspan="2"><br></th>
             </tr>
             @foreach($data as $item)
                 <tr>
                     <td class="hidden md:table-cell">{{ $item->id }}</td>
-                    <td>{{ $item->name }}</td>
+                    <td><x-navlink href="{{ route('admin.customers.show', $item) }}">{{ $item->name }}</x-navlink></td>
                     <td class="hidden md:table-cell"><a href="mailto:{{ $item->email }}" target="_blank">{{ $item->email }}</a></td>
+                    <td>
+                        @if($item->fon)
+                        <a href="tel:{{ $item->fonLink }}" target="_blank">
+                            <i class="fas fa-phone"></i>
+                            {{ $item->fon }}
+                        </a>
+                        @endif
+                    </td>
                     <td>
                         <x-nav-link href="{{ route('admin.customers.edit', $item) }}" icon="fas fa-edit" class="btn" title="Bearbeiten">
                             <span class="hidden md:visible">Edit</span>

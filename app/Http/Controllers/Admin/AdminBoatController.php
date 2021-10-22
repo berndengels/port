@@ -18,7 +18,7 @@ class AdminBoatController extends AdminController
     public function __construct()
     {
         parent::__construct();
-        $this->boatTypes = json_decode(config('port.main.boat.types'), true);
+        $this->boatTypes = config('port.main.boat.types');
     }
 
     public function index()

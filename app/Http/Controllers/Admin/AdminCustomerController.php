@@ -15,6 +15,7 @@ class AdminCustomerController extends AdminController
 //    use AuthenticatesUsers;
 
     protected $customerTypes;
+    protected $customerTypeOptions;
     /**
      * Guard used for admin user
      *
@@ -25,7 +26,10 @@ class AdminCustomerController extends AdminController
     public function __construct()
     {
 //        $this->middleware(['auth:admin','auth:customer']);
-        $this->customerTypes = json_decode(config('port.main.customer.types'), true);
+        $this->customerTypeOptions = config('port.main.customer.typeOptions');
+        $this->customerTypes = collect($this->customerTypeOptions)->map(function ($v, $k) {
+            return $k;
+        });
     }
 
     public function index()
@@ -48,6 +52,7 @@ class AdminCustomerController extends AdminController
      */
     public function show(Customer $customer)
     {
+        return view('admin.customers.show', compact('customer'));
     }
 
     /**
@@ -57,7 +62,7 @@ class AdminCustomerController extends AdminController
      */
     public function create()
     {
-        return view('admin.customers.create', ['customerTypes' => $this->customerTypes]);
+        return view('admin.customers.create', ['customerTypes' => $this->customerTypeOptions]);
     }
 
     /**
@@ -86,7 +91,7 @@ class AdminCustomerController extends AdminController
      */
     public function edit(Customer $customer)
     {
-        $customerTypes = $this->customerTypes;
+        $customerTypes = $this->customerTypeOptions;
         $customer->password = null;
         $customer->password_repeat = null;
         return view('admin.customers.edit', compact('customer','customerTypes'));
@@ -129,5 +134,10 @@ class AdminCustomerController extends AdminController
         }
     }
 
-
+    public function confirm(Customer $customer)
+    {
+        $customer->confirmed = true;
+        $customer->save();
+        return $this->show($customer);
+    }
 }

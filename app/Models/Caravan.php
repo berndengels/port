@@ -1,7 +1,8 @@
 <?php
 namespace App\Models;
 
-use App\Models\Filter\CaravanFilter;
+use App\Traits\Models\Filter\CaravanFilter;
+use App\Traits\Models\ClearsResponseCache;
 use Eloquent;
 use Database\Factories\CaravanFactory;
 use Illuminate\Database\Eloquent\Builder;
@@ -36,7 +37,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Caravan extends Model
 {
-    use HasFactory, CaravanFilter;
+    use HasFactory, CaravanFilter, ClearsResponseCache;
 
     protected $table = 'caravans';
     protected $guarded = ['id'];

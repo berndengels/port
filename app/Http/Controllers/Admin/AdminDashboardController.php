@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\Admin;
 
+use App\Models\AdminUser;
 use Carbon\Carbon;
 use App\Models\CaravanDates;
 

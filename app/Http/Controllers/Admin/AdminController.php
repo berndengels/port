@@ -5,6 +5,10 @@ use App\Models\Customer;
 use App\Models\Caravan;
 use App\Models\Country;
 use App\Models\Role;
+use App\Repositories\CaravanRepository;
+use App\Repositories\CountryRepository;
+use App\Repositories\CustomerRepository;
+use App\Repositories\RoleRepository;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Collection;
 use App\Filters\Caravan\CaravanFilter;
@@ -44,47 +48,14 @@ class AdminController extends BaseController
     {
 //        $this->middleware(['auth:admin','auth:customer']);
         $this->paginatorLimit = config('port.main.default.pagination.limit');
-        // @todo: set cache for countries
-        $this->countries = Country::orderBy('de')
-            ->get(['id','de'])
-            ->keyBy('id')
-            ->map
-            ->de
-            ->prepend('Land wählen','')
-        ;
-        $caravans = Caravan::orderBy('carnumber')->get();
-        $this->caravanOptionsAutocomplete = $caravans;
-        // @todo: set cache for caravanOptions
-        $this->caravanOptions = $caravans
-            ->keyBy('id')
-            ->map
-            ->carnumber
-            ->prepend('Kennzeichen wählen','')
-        ;
+        $this->countries = CountryRepository::options('de');
 
-        $customers = Customer::orderBy('name')->get();
-        $this->customerOptionsAutocomplete = $customers;
+        $this->caravanOptionsAutocomplete = CaravanRepository::optionsData('carnumber');
+        $this->caravanOptions = CaravanRepository::options('carnumber');
 
-        $this->customerOptions = $customers
-            ->keyBy('id')
-            ->map
-            ->name
-            ->prepend('Namen wählen','')
-        ;
+        $this->customerOptionsAutocomplete = CustomerRepository::optionsData();
+        $this->customerOptions = CustomerRepository::options()->prepend('Namen wählen','');
 
-        $this->roles = Role::all();
-        $this->rolesOptions = $this->roles->keyBy('id')->map->name;
-
-        Registered::class;
+        $this->rolesOptions = RoleRepository::options();
     }
-
-/*
-    public function main()
-    {
-        if(!auth('customer')->check()) {
-            return redirect()->route('public.dashboard');
-        }
-        return view('layouts.main');
-    }
-*/
 }

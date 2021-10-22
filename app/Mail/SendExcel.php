@@ -38,7 +38,6 @@ class SendExcel extends Mailable
     public function build()
     {
         return $this
-//            ->to($this->to)
             ->from(config('port.main.mail.sender.address'), config('port.main.mail.sender.name'))
             ->attach($this->file)
             ->subject("Caravan Rezeptions Daten")

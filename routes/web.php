@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminInfoController;
+use App\Http\Controllers\CaptchaServiceController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PriceController;
 use App\Http\Controllers\RouteController;
@@ -28,7 +30,7 @@ use App\Http\Controllers\Admin\Auth\AdminLoginController;
 use App\Http\Controllers\Admin\Auth\AdminForgotPasswordController;
 use App\Http\Controllers\Admin\Auth\AdminResetPasswordController;
 
-//Auth::routes();
+Auth::routes();
 
 Route::get('', function () {
     return redirect('dashboard');
@@ -39,7 +41,8 @@ Route::group([
 ],function () {
     Route::get('login', [CustomerLoginController::class, 'showLoginForm'])->name('login.form');
     Route::post('login', [CustomerLoginController::class, 'login'])->name('login.check');
-    Route::post('logout', [CustomerLoginController::class, 'logout'])->name('logout');
+    Route::post('logout', [CustomerLoginController::class, 'logout'])->name('logout')
+        ->middleware(['doNotCacheResponse']);
 });
 
 Route::group([
@@ -49,6 +52,7 @@ Route::group([
     Route::resource('pages', PageController::class);
     Route::resource('widgets', WidgetController::class);
     Route::get('route/current/{currentRouteName}', [RouteController::class, 'setCurrentMenu'])->name('route.current');
+    Route::get('reload-captcha', [CaptchaServiceController::class, 'reloadCaptcha'])->name('reload.captcha');
 });
 
 Route::group([
@@ -69,10 +73,12 @@ Route::group([
     'middleware' => ['auth:admin'],
 ],function () {
     Route::get('', [AdminDashboardController::class, 'show'])->name('dashboard');
-    Route::post('logout', [AdminLoginController::class,'logout'])->name('logout');
+    Route::post('logout', [AdminLoginController::class,'logout'])->name('logout')
+        ->middleware('doNotCacheResponse');
 
     Route::get('customers/guests', [AdminCustomerController::class,'guests'])->name('customers.guests');
     Route::get('boats/guests', [AdminBoatController::class,'guests'])->name('boats.guests');
+    Route::get('boatDates/invoice/{boatDate}', [AdminBoatDatesController::class, 'invoice'])->name('boatDates.invoice');
     Route::get('boatDates/saison', [AdminBoatDatesController::class, 'saison'])->name('boatDates.saison');
     Route::get('boatDates/winter', [AdminBoatDatesController::class, 'winter'])->name('boatDates.winter');
 
@@ -94,8 +100,10 @@ Route::group([
     Route::get('caravan/price/pdf/{year?}/{month?}', [AdminPriceController::class, 'pdf'])->name('caravan.price.pdf');
     Route::get('car/info/{caravanId}', [AdminCarLicensePlateController::class, 'info'])->name('car.info');
     Route::get('route/current/{currentRouteName}', [AdminRouteController::class, 'setCurrentMenu'])->name('route.current');
-    Route::get('routes', [AdminRouteController::class, 'routes'])->name('routes.index');
     Route::post('upload/image/{paramName}', [AdminUploadController::class, 'imageUpload'])->name('upload.image');
+
+    Route::get('routes', [AdminInfoController::class, 'routes'])->name('infos.routes');
+    Route::get('php', [AdminInfoController::class, 'phpinfo'])->name('infos.php');
 });
 Route::fallback(function () {
     return redirect('');
