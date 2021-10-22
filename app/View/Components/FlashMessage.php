@@ -33,15 +33,6 @@ class FlashMessage extends Component
                 break;
             }
         }
-/*
-        $type = 'error';
-        $this->viewData = [
-            'text'  => 'Das ist eine Test Flash Message!',
-            'type'  => $type,
-            'css'   => $types[$type]['css'],
-            'icon'  => $types[$type]['icon'],
-        ];
-*/
     }
 
     /**

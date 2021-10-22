@@ -8,7 +8,7 @@ class Editor {
 					['inlineClass', 'inlineStyle', 'clearFormatting'],
 					['formatOL', 'formatUL', 'paragraphFormat', 'paragraphStyle', 'outdent', 'indent', 'quote'],
 					['insertLink', 'insertImage', 'insertVideo', 'insertTable', 'fontAwesome', 'specialCharacters', 'insertHR'],
-					['undo', 'redo', 'fullscreen', 'spellChecker', 'selectAll', 'html', 'help'],
+					['save', 'undo', 'redo', 'fullscreen', 'spellChecker', 'selectAll', 'html', 'help'],
 				]
 			},
 		};

@@ -1,11 +1,11 @@
 require('./bootstrap');
 
+import Weather from "./Libs/Weather";
+window.Weather = new Weather;
+
 $(document).ready(function () {
 	const $sideNav = $('.sidenav');
 
-	$(".delSoft").click(function () {
-		return confirm("Daten wirklich löschen");
-	});
 	$(".menu-icon").click(() => {
 		$sideNav.addClass('active')
 	});
