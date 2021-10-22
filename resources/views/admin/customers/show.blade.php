@@ -5,6 +5,10 @@
         <x-nav-link :href="route('admin.customers.index')" icon="fas fa-backward" class="btn">zur Liste</x-nav-link>
         <div class="show-page">
             <div>
+                <div>Bestätigt</div>
+                <div>{{ $customer->confirmed ? 'JA' : 'NEIN' }}</div>
+            </div>
+            <div>
                 <div>Name</div>
                 <div>{{ $customer->name }}</div>
             </div>
@@ -35,10 +39,7 @@
                 <div>Ort</div>
                 <div>{{ $customer->city }}</div>
             </div>
-            <div>
-                <div>Bestätigt</div>
-                <div>{{ $customer->confirmed ? 'JA' : 'NEIN' }}</div>
-            </div>
         </div>
+    </div>
 @endsection
 

@@ -22,7 +22,7 @@ class CaravanFactory extends Factory
     public function definition()
     {
         return [
-            'country_id'    => config('port.default.country_id'),
+            'country_id'    => config('port.main.default.country_id'),
             'carnumber'     => $this->generateCarnumber(),
             'carlength'     => rand(6, 12),
             'email'         => $this->faker->unique()->safeEmail(),

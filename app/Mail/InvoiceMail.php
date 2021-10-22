@@ -28,7 +28,7 @@ class InvoiceMail extends Mailable
      *
      * @return void
      */
-    public function __construct(BoatDates $boatDate)
+    public function __construct(BoatDates $boatDate, $attache = null)
     {
         $user = auth('admin')->user();
         $this->data     = $boatDate;
@@ -43,6 +43,10 @@ class InvoiceMail extends Mailable
         ];
         $appName = config('app.name');
         $this->subject("Rechnung von $appName");
+
+        if($attache) {
+            $this->attachData($attache, 'rechnung.pdf');
+        }
     }
 
     /**

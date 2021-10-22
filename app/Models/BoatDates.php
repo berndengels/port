@@ -46,16 +46,29 @@ class BoatDates extends Model
     protected $guarded = ['id'];
     protected $dates = ['from', 'until'];
     protected $dateFormat = 'Y-m-d';
-    protected $appends = ['validFrom','validUntil','isCraned','isMastCraned','isCleaned'];
+    protected $appends = [
+        'validFrom',
+        'validUntil',
+        'isCraned',
+        'isMastCraned',
+        'isCleaned',
+        'priceData',
+        'basePrice',
+        'crane',
+        'mastCrane',
+        'cleaning',
+    ];
     public $timestamps = false;
 
     public function boat() {
         return $this->belongsTo(Boat::class);
     }
 
-    public function pricesEncoded() {
+    public function getPriceDataAttribute()
+    {
         return json_decode($this->prices);
     }
+
     public function getValidFromAttribute() {
         return $this->from->format('Y-m-d');
     }
@@ -66,15 +79,35 @@ class BoatDates extends Model
 
     public function getIsCranedAttribute()
     {
-        return (isset($this->pricesEncoded()->crane) && $this->pricesEncoded()->crane > 0) ? true : false;
+        return (isset($this->priceData->crane) && $this->priceData->crane > 0) ? true : false;
     }
 
     public function getIsMastCranedAttribute()
     {
-        return (isset($this->pricesEncoded()->mast_crane) && $this->pricesEncoded()->mast_crane > 0) ? true : false;
+        return (isset($this->priceData->mast_crane) && $this->priceData->mast_crane > 0) ? true : false;
     }
     public function getIsCleanedAttribute()
     {
-        return (isset($this->pricesEncoded()->cleaning) && $this->pricesEncoded()->cleaning > 0) ? true : false;
+        return (isset($this->priceData->cleaning) && $this->priceData->cleaning > 0) ? true : false;
+    }
+
+    public function getCraneAttribute()
+    {
+        return $this->priceData->crane ?? null;
+    }
+
+    public function getMastCraneAttribute()
+    {
+        return $this->priceData->mast_crane ?? null;
+    }
+
+    public function getCleaningAttribute()
+    {
+        return $this->priceData->cleaning ?? null;
+    }
+
+    public function getBasePriceAttribute()
+    {
+        return $this->priceData->price ?? null;
     }
 }

@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Controllers\Admin;
 
-use App\Libs\BoatCalculator;
+use App\Libs\BoatPriceCalculator;
 use App\Models\Boat;
 use Excel;
 use Carbon\Carbon;
@@ -67,7 +67,7 @@ class AdminPriceController extends AdminController
             $from       = new Carbon($from, config('app.timezone'));
             $until      = new Carbon($until, config('app.timezone'));
 
-            $response   = (new BoatCalculator())->getPrice($modus, $length, $width, $weight, $mastLength, $mastWeight, $crane, $mastCrane, $cleaning, $from, $until, $defaultPrice);
+            $response   = (new BoatPriceCalculator())->getPrice($modus, $length, $width, $weight, $mastLength, $mastWeight, $crane, $mastCrane, $cleaning, $from, $until, $defaultPrice);
         }
 
         return response()->json($response);

@@ -3,7 +3,7 @@ namespace App\Libs;
 
 use Carbon\Carbon;
 
-class  BoatCalculator extends PriceCalculator
+class  BoatPriceCalculator extends PriceCalculator
 {
     /**
      * @var int
@@ -73,7 +73,7 @@ class  BoatCalculator extends PriceCalculator
         $this->priceCleaningPerLength   = (int) config('port.prices.boat.cleaning_per_length');
     }
 
-    public function getPrice($modus, $length, $width, $weight, $mastLength, $mastWeight, $crane, $mastCrane, $cleaning, Carbon $from = null, Carbon $until = null, $individualPrice = null)
+    public function getPrice($modus, $length, $width, $weight, $mastLength = 0, $mastWeight = 0, $crane = false, $mastCrane = false, $cleaning = false, Carbon $from = null, Carbon $until = null, $individualPrice = null)
     {
         $this->modus = $modus;
 
@@ -157,7 +157,7 @@ class  BoatCalculator extends PriceCalculator
         return $this;
     }
 
-    public function setCraneMastPrice($mastLength, $mastWeight = 0, $mastCrane = false) : self {
+    public function setCraneMastPrice($mastLength = 0, $mastWeight = 0, $mastCrane = false) : self {
         if($mastCrane && $mastLength > 0) {
             if($mastWeight < 100) {
                 $this->priceTotal += $this->mastCrane = $this->priceMastCrane;

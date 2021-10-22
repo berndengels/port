@@ -2,12 +2,12 @@
 namespace Database\Seeders;
 
 use App\Models\Caravan;
-use Illuminate\Database\Seeder;
+use Database\Seeders\Ext\MainSeeder;
 use Illuminate\Support\Facades\Schema;
 
-class CaravanSeeder extends Seeder
+class CaravanSeeder extends MainSeeder
 {
-    private $count = 500;
+    protected $table = 'caravans';
     /**
      * Run the database seeds.
      *
@@ -15,8 +15,6 @@ class CaravanSeeder extends Seeder
      */
     public function run()
     {
-        Schema::disableForeignKeyConstraints();
-        Caravan::truncate();
         Caravan::factory()
             ->count($this->count)
             ->create();

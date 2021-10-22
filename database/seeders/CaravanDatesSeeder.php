@@ -1,14 +1,13 @@
 <?php
-
 namespace Database\Seeders;
 
 use App\Models\CaravanDates;
-use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Schema;
+use Database\Seeders\Ext\MainSeeder;
 
-class CaravanDatesSeeder extends Seeder
+class CaravanDatesSeeder extends MainSeeder
 {
-    private $count = 1000;
+    protected $count = 500;
+    protected $table = 'caravan_dates';
     /**
      * Run the database seeds.
      *
@@ -16,8 +15,6 @@ class CaravanDatesSeeder extends Seeder
      */
     public function run()
     {
-        Schema::disableForeignKeyConstraints();
-        CaravanDates::truncate();
         CaravanDates::factory()
             ->count($this->count)
             ->create()

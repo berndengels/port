@@ -21,6 +21,7 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendRegisterEmailNotification::class,
         ],
+/*
         'boatDates.created' => [
             SendInvoiceEmailNotification::class,
         ],
@@ -30,6 +31,7 @@ class EventServiceProvider extends ServiceProvider
         'boatDates.saved' => [
             SendInvoiceEmailNotification::class,
         ],
+*/
     ];
 
     /**

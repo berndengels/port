@@ -26,12 +26,12 @@
                 <th class="hidden md:table-cell">Eigner</th>
                 <th>Fon</th>
                 <th>Preis</th>
-                <th colspan="3"><br></th>
+                <th colspan="2"><br></th>
             </tr>
             @foreach($data as $item)
                 <tr>
                     <td class="hidden md:table-cell">{{ $item->id }}</td>
-                    <td>{{ $item->boat->boat_name }}</td>
+                    <td><a href="{{ route('admin.boatDates.show', $item) }}">{{ $item->boat->boat_name }}</a></td>
                     <td>{{ $item->from->format('d.m.Y') }}</td>
                     <td>{{ $item->until->format('d.m.Y') }}</td>
                     <td class="hidden md:table-cell">
@@ -55,11 +55,6 @@
                         @endif
                     </td>
                     <td>{{ $item->price }} €</td>
-                    <td>
-                        <x-nav-link href="{{ route('admin.boatDates.invoice', $item) }}" icon="fas fa-edit" class="btn" title="Bearbeiten">
-                            <span class="hidden md:visible">Rechnung</span>
-                        </x-nav-link>
-                    </td>
                     <td>
                         <x-nav-link href="{{ route('admin.boatDates.edit', $item) }}" icon="fas fa-edit" class="btn" title="Bearbeiten">
                             <span class="hidden md:visible">Edit</span>

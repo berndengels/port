@@ -1,11 +1,10 @@
 <?php
-
 namespace Database\Factories;
 
 use App\Models\Boat;
-use Illuminate\Database\Eloquent\Factories\Factory;
+use Database\Factories\Ext\MainFactory;
 
-class BoatFactory extends Factory
+class BoatFactory extends MainFactory
 {
     /**
      * The name of the factory's corresponding model.

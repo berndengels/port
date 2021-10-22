@@ -11,6 +11,9 @@
 
 @tailwind utilities;
 
+a {
+    cursor:pointer;
+}
 nav {
     background-color: #fff;
     min-height: 75px;
@@ -29,17 +32,22 @@ td, th {
     text-align: center;
     margin: 0;
 }
-td { border: 1px solid #ddd; }
+td {
+//    border: 1px solid #ddd;
+    a {
+        color: $red;
+    }
+}
 tr {
     margin: 0;
     padding: 0;
 }
-
+/*
 tr td:first-child { border-top-left-radius: 5px; }
 tr td:first-child { border-bottom-left-radius: 5px; }
 tr td:last-child { border-top-right-radius: 5px; }
 tr td:last-child { border-bottom-right-radius: 5px; }
-
+*/
 .btn {
     padding: 0.2rem 1.0rem;
     border-radius: 0.3rem;
@@ -78,9 +86,6 @@ tr td:last-child { border-bottom-right-radius: 5px; }
 .dublicate {
     color: #fff;
     background-color: #e53e3e;
-}
-a {
-    cursor:pointer;
 }
 .blue {
     color: #009;

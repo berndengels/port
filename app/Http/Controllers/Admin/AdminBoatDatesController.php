@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\BoatDatesRequest;
+use App\Mail\InvoiceMail;
 use App\Models\Boat;
 use App\Models\BoatDates;
 use Barryvdh\DomPDF\PDF;
@@ -13,6 +14,7 @@ use Illuminate\Http\Response;
 use Illuminate\Database\Eloquent\Collection;
 use GrahamCampbell\Markdown\Facades\Markdown;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class AdminBoatDatesController extends AdminController
@@ -212,7 +214,7 @@ class AdminBoatDatesController extends AdminController
         }
     }
 
-    public function invoice(BoatDates $boatDate)
+    public function invoice(BoatDates $boatDate, $sendAsMail = false)
     {
         $text = view('admin.boatDates.invoice', [
             'data'      => $boatDate,
@@ -222,10 +224,24 @@ class AdminBoatDatesController extends AdminController
         ]);
         $html = Str::of($text)->markdown();
         /**
-         * @var PDF
+         * @var $pdf PDF
          */
         $pdf = App::make('dompdf.wrapper');
         $pdf->loadHTML($html);
+
+        if($sendAsMail) {
+            return $pdf->output();
+        }
+
         return $pdf->download('rechnung.pdf');
+    }
+
+    public function sendInvoice(BoatDates $boatDate) {
+        try {
+            Mail::send(new InvoiceMail($boatDate, $this->invoice($boatDate, true)));
+            return redirect()->route('admin.boatDates.'.$boatDate->modus)->with('success', 'Rechnung erfogreich an '.$boatDate->boat->customer->email.' versand!');
+        } catch(Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
     }
 }

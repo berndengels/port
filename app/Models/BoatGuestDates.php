@@ -16,11 +16,16 @@ use Illuminate\Database\Eloquent\Model;
  * @method static Builder|boatGuestDates query()
  * @mixin Eloquent
  */
-class boatGuestDates extends Model
+class BoatGuestDates extends Model
 {
     use HasFactory, ClearsResponseCache;
 
-    protected $table = '';
+    protected $table = 'boat_guest_dates';
     protected $guarded = ['id'];
     public $timestamps = false;
+
+    public function boat() {
+        return $this->belongsTo(BoatGuest::class);
+    }
+
 }

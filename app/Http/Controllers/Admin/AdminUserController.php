@@ -116,6 +116,7 @@ class AdminUserController extends AdminController
             ;
             return redirect()->route('admin.users.index')->with('success', 'User erfogreich bearbeitet!');
         } catch(Exception $e) {
+            die($e->getMessage());
             return back()->with('error', $e->getMessage());
         }
     }

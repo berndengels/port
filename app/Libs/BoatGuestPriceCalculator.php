@@ -3,7 +3,7 @@ namespace App\Libs;
 
 use Carbon\Carbon;
 
-class BoatGuestCalculator extends PriceCalculator
+class BoatGuestPriceCalculator extends PriceCalculator
 {
     protected $pricePerMeter;
 

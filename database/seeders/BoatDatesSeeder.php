@@ -1,12 +1,14 @@
 <?php
 namespace Database\Seeders;
 
-use App\Models\Boat;
+use App\Models\BoatDates;
 use Database\Seeders\Ext\MainSeeder;
 
-class BoatSeeder extends MainSeeder
+class BoatDatesSeeder extends MainSeeder
 {
-    protected $table = 'boats';
+    protected $count = 500;
+    protected $table = 'boat_dates';
+
     /**
      * Run the database seeds.
      *
@@ -14,7 +16,7 @@ class BoatSeeder extends MainSeeder
      */
     public function run()
     {
-        Boat::factory()
+        BoatDates::factory()
             ->count($this->count)
             ->create();
     }
