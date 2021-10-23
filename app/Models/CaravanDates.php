@@ -54,7 +54,7 @@ use Illuminate\Database\Query\JoinClause;
  */
 class CaravanDates extends Model
 {
-    use HasFactory, CaravanFilter, YearMonthFilter, ClearsResponseCache;
+    use HasFactory, CaravanFilter, YearMonthFilter;
 
     protected $table = 'caravan_dates';
     protected $guarded = ['id'];

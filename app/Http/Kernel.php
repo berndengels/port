@@ -56,11 +56,11 @@ class Kernel extends HttpKernel
             EncryptCookies::class,
             AddQueuedCookiesToResponse::class,
             StartSession::class,
+            ShwitchDatabaseConnection::class,
             ShareErrorsFromSession::class,
             VerifyCsrfToken::class,
             SubstituteBindings::class,
             CacheResponse::class,
-            ShwitchDatabaseConnection::class,
         ],
         'api' => [
             'throttle:api',

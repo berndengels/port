@@ -23,8 +23,9 @@ class CustomerFactory extends Factory
     public function definition()
     {
         return [
-            'name'      => 'Paul Test-Kunde',
-            'email'     => 'kunde@test.com',
+            'customer_type' => 'permanent',
+            'name'      => 'Test Dauerlieger '.$this->faker->name,
+            'email'     => $this->faker->email,
             'fon'       => $this->faker->phoneNumber,
             'state'     => $this->faker->city,
             'street'    => $this->faker->streetAddress,

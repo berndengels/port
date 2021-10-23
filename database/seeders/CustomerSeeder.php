@@ -2,7 +2,6 @@
 namespace Database\Seeders;
 
 use App\Models\Customer;
-use App\Models\Role;
 use Database\Seeders\Ext\MainSeeder;
 
 class CustomerSeeder extends MainSeeder
@@ -15,11 +14,9 @@ class CustomerSeeder extends MainSeeder
      */
     public function run()
     {
-        Role::getModel()->refresh();
-        /**
-         * @var $customer Customer
-         */
-        $customer = Customer::factory()->create();
-//        $customer->assignRole('boat');
+        Customer::factory()
+            ->count($this->count)
+            ->create()
+        ;
     }
 }

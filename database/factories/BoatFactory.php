@@ -2,6 +2,7 @@
 namespace Database\Factories;
 
 use App\Models\Boat;
+use App\Models\Customer;
 use Database\Factories\Ext\MainFactory;
 
 class BoatFactory extends MainFactory
@@ -12,6 +13,7 @@ class BoatFactory extends MainFactory
      * @var string
      */
     protected $model = Boat::class;
+    protected $parentModel = Customer::class;
     protected $types = ['motor', 'sail'];
     protected $type;
     /**
@@ -22,8 +24,12 @@ class BoatFactory extends MainFactory
     public function definition()
     {
         $this->setType();
+        $parents    = $this->getParents();
+        $max        = max($parents->keys()->toArray()) - 1;
+        $randIndex  = rand(0, $max);
+
         $arr = [
-            'customer_id'       => 1,
+            'customer_id'       => $parents[$randIndex]->id,
             'boat_name'         => $this->faker->name(['female']),
             'boat_type'         => $this->type,
             'length'            => mt_rand(5, 20),
