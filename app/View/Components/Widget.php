@@ -7,15 +7,17 @@ use Illuminate\View\Component;
 
 class Widget extends Component
 {
-    public $data;
+    public $title;
+    public $content;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct(object $data)
+    public function __construct(string $title, string $content)
     {
-        $this->data = $data;
+        $this->title    = $title;
+        $this->content  = $content;
     }
 
     /**
@@ -25,6 +27,6 @@ class Widget extends Component
      */
     public function render()
     {
-        return view('components.widget', ['data' => $this->data]);
+        return view('components.widget');
     }
 }

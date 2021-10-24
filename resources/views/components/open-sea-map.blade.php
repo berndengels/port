@@ -1,5 +1,5 @@
 
-<div id="map" class="map"></div>
+<div id="map" class="flex-item-dashboard p-3 widget open-sea-map"></div>
 
 @push('inline-scripts')
 <script>
@@ -19,7 +19,7 @@
 			});
 			new L.marker(coord, {icon: myIcon})
 				.addTo(map)
-				.bindPopup("<b>Yachtanlieger Achterwasser</b>").openPopup()
+				.bindPopup("<b>Yachtlieger Achterwasser</b>").openPopup()
 
 		L.tileLayer.provider('OpenStreetMap.DE').addTo(map)
 		L.tileLayer.provider('OpenSeaMap').addTo(map)

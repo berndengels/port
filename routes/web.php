@@ -25,6 +25,7 @@ use App\Http\Controllers\Admin\AdminBoatController;
 use App\Http\Controllers\Admin\AdminWidgetController;
 use App\Http\Controllers\Admin\AdminUploadController;
 use App\Http\Controllers\Admin\AdminBoatDatesController;
+use App\Http\Controllers\Admin\AdminBoatGuestController;
 use App\Http\Controllers\Admin\AdminBoatGuestDatesController;
 use App\Http\Controllers\Admin\Auth\AdminLoginController;
 use App\Http\Controllers\Admin\Auth\AdminForgotPasswordController;
@@ -93,6 +94,8 @@ Route::group([
     Route::resource('widgets', AdminWidgetController::class);
     Route::resource('boats', AdminBoatController::class);
     Route::resource('boatDates', AdminBoatDatesController::class);
+    Route::resource('boatGuests', AdminBoatGuestController::class);
+    Route::resource('boatGuestDates', AdminBoatGuestDatesController::class);
 
     Route::post('caravanDates/sendExcel', [AdminCaravanDatesController::class, 'sendExcel'])->name('caravanDates.sendExcel');
     Route::match(['post','put'],'caravanDates/price/calculate', [AdminPriceController::class, 'calculateCaravanDates'])->name('caravanDates.price.calculate');

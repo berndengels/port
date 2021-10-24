@@ -16,7 +16,7 @@ class CreateBoatGuestsTable extends Migration
         Schema::create('boat_guests', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 50)->default('');
-            $table->decimal('length', 3, 1)->unsigned();
+            $table->unsignedTinyInteger('length');
             $table->string('home_port', 50)->default('');
         });
     }

@@ -25,7 +25,7 @@ class MainSeeder extends Seeder
         $this->dbProd = DB::connection('mysql');
         $this->dbTest = DB::connection('mysql-test');
         Schema::disableForeignKeyConstraints();
-        $this->dbTest->table($this->table)->delete();
+        $this->dbTest->table($this->table)->truncate();
     }
 
     public function run() {

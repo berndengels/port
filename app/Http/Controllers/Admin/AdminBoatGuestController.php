@@ -15,7 +15,8 @@ class AdminBoatGuestController extends AdminController
      */
     public function index()
     {
-        //
+        $data = BoatGuest::paginate($this->paginatorLimit);
+        return view('admin.boatGuests.index', compact('data'));
     }
 
     /**

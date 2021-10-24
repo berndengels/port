@@ -1,11 +1,10 @@
 <?php
-
 namespace Database\Factories;
 
 use App\Models\Page;
-use Illuminate\Database\Eloquent\Factories\Factory;
+use Database\Factories\Ext\MainFactory;
 
-class PageFactory extends Factory
+class PageFactory extends MainFactory
 {
     /**
      * The name of the factory's corresponding model.
@@ -22,7 +21,8 @@ class PageFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'title'     => $this->faker->text(20),
+            'content'   => $this->faker->text(5000),
         ];
     }
 }

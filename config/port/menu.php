@@ -114,17 +114,15 @@ return [
                         'text'  => 'Gäste',
                         'title' => 'Gäste',
                         'icon'  => 'fas fa-concierge-bell',
-                        'route' => 'admin.boats.guests',
+                        'route' => 'admin.boatGuests.index',
                     ],
-/*
                     [
                         'permissions'   => ['read Boat','write Boat'],
                         'text'  => 'Gäste Rezeption',
                         'title' => 'Gäste Rezeption',
                         'icon'  => 'fas fa-concierge-bell',
-                        'route' => 'admin.boats.guests',
+                        'route' => 'admin.boatGuestDates.index',
                     ],
-*/
                     [
                         'permissions'   => ['read Boat','write Boat'],
                         'text'  => 'Dauerlieger',

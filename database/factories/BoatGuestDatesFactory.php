@@ -24,16 +24,17 @@ class BoatGuestDatesFactory extends MainFactory
     public function definition()
     {
         $parents    = $this->getParents();
-        $max        = max($parents->keys()->toArray()) - 1;
+        $max        = max($parents->keys()->toArray());
         $randomDateEnd = Carbon::today()->addMonths(5)->format('Y-m-d');
         $from       = $this->randomDate('2020-05-01', $randomDateEnd,'Y-m-d');
         $until      = Carbon::create($from)->addDays(rand(1,7));
         $randIndex  = rand(0, $max);
         $length     = $parents[$randIndex]->length;
+        $parentId   = $parents[$randIndex]->id;
         $price      = config('port.prices.boat_guest.price_per_meter') * $length;
 
         return [
-            'boat_guest_id'  => $parents[$randIndex]->id,
+            'boat_guest_id'  => $parentId,
             'from'      => $from,
             'until'     => $until,
 //            'persons'   => 0,

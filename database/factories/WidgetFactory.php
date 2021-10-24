@@ -1,11 +1,10 @@
 <?php
-
 namespace Database\Factories;
 
 use App\Models\Widget;
-use Illuminate\Database\Eloquent\Factories\Factory;
+use Database\Factories\Ext\MainFactory;
 
-class WidgetFactory extends Factory
+class WidgetFactory extends MainFactory
 {
     /**
      * The name of the factory's corresponding model.
@@ -13,7 +12,7 @@ class WidgetFactory extends Factory
      * @var string
      */
     protected $model = Widget::class;
-
+    public static $number = 1;
     /**
      * Define the model's default state.
      *
@@ -22,7 +21,9 @@ class WidgetFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'title'     => $this->faker->text(20),
+            'content'   => $this->faker->text(500),
+            'position'  => static::$number++,
         ];
     }
 }

@@ -1,5 +1,5 @@
 <?php
-namespace App\Libs;
+namespace App\Libs\Prices;
 
 use Carbon\Carbon;
 use DatePeriod;

@@ -1,1 +1,10 @@
-{}
+{
+	"from": "from",
+	"until": "until",
+	"daysCount": "days count",
+	"pricePerDayElectric": "price electric",
+	"pricePerDayPersons": "price additional persons",
+	"priceBase": "base price",
+	"priceIndividual": "individual price",
+	"total": "price total"
+}

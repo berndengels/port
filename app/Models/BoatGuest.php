@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\Models\ClearsResponseCache;
+use App\Traits\Models\Filter\Filter;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -18,7 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class BoatGuest extends Model
 {
-    use HasFactory, ClearsResponseCache;
+    use HasFactory, ClearsResponseCache, Filter;
 
     protected $table = 'boat_guests';
     protected $guarded = ['id'];

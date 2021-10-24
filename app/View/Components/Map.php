@@ -11,17 +11,17 @@ abstract class Map extends Component
     public $lat;
     public $lng;
     public $zoom;
-    protected $view;
+
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct(float $lat, float $lng, int $zoom)
+    public function __construct()
     {
-        $this->lat  = $lat;
-        $this->lng  = $lng;
-        $this->zoom = $zoom;
+        $this->lat  = env('MIX_POSITION_LAT');
+        $this->lng  = env('MIX_POSITION_LNG');
+        $this->zoom = env('MIX_POSITION_ZOOM');
     }
 
     /**

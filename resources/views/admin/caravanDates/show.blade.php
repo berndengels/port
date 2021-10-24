@@ -1,12 +1,12 @@
 @extends('layouts.main')
 
 @section('main')
-    <div class="m-5 content-center w-1/2">
+    <div class="m-5 content-center">
         <x-nav-link :href="route('admin.caravanDates.index')" icon="fas fa-backward" class="btn">zurück</x-nav-link>
-        <table class="table w-full">
+        <table class="table mt-5">
             <tr>
                 <th class="text-right">Kennzeichen</th>
-                <td><span ondblclick="ondblclick()" class="carnumber cursor-pointer">{{ $caravanDate->caravan->carnumber }}</span></td>
+                <td><span class="carnumber cursor-pointer">{{ $caravanDate->caravan->carnumber }}</span></td>
             </tr>
             <tr>
                 <th class="text-right">Wagenlänge</th>
@@ -20,62 +20,31 @@
                 <th class="text-right">Strom-Anschluß</th>
                 <td>{{ $caravanDate->electric ? 'JA' : 'Nein'}}</td>
             </tr>
+        @foreach(json_decode($caravanDate->prices, true) as $prop => $price)
             <tr>
-                <th class="text-right">Von</th>
-                <td>{{ $caravanDate->from->format('D d.m.Y') }}</td>
+                <th class="text-right">{{ __($prop) }}</th>
+                <td>{{ $price }}</td>
             </tr>
-            <tr>
-                <th class="text-right">Bis</th>
-                <td>{{ $caravanDate->until->format('D d.m.Y') }}</td>
-            </tr>
-            <tr>
-                <th class="text-right">Anzahl Übernachtungen</th>
-                <td>{!! \Carbon\Carbon::create($caravanDate->from)->diff($caravanDate->until)->days !!}</td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <div>
-                        <table class="table w-full">
-                            @foreach(json_decode($caravanDate->prices, true) as $date => $price)
-                            <tr>
-                                <th class="top-0">{{ \Carbon\Carbon::create($date)->format('D d.m.Y') }}</th>
-                                <td>
-                                    <table class="table w-full">
-                                        @foreach($price as $key => $item)
-                                        <tr>
-                                            <th class="text-right">{{ $key }}</th>
-                                            <td >{!! $item !!}</td>
-                                        </tr>
-                                        @endforeach
-                                    </table>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </table>
-                    </div>
-
-                </td>
-            </tr>
+        @endforeach
         </table>
     </div>
 
 @endsection
 
-@section('inline-scripts')
-    @parent
+@push('inline-scripts')
     <script>
         const url = "{{ route('admin.car.info', ['caravanId'=> $caravanDate->caravan->id]) }}"
-	    var ondblclick = () => {
-		    axios.get(route(url))
-			    .then(resp => {
-				    if(resp.data.data && !resp.data.error) {
-					    let info = resp.data.data;
-					    alert(info.location + " (" + info.state + ")")
-				    }
-			    })
-			    .catch(e=>console.error(e));
-	    }
+        $('.carnumber').dblclick(() => {
+	        axios.get(url)
+		        .then(resp => {
+			        if(resp.data.data && !resp.data.error) {
+				        let info = resp.data.data;
+				        alert(info.location + " (" + info.state + ")")
+			        }
+		        })
+		        .catch(e=>console.error(e));
+        });
     </script>
-@endsection
+@endpush
 
 

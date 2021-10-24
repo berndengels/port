@@ -15,7 +15,7 @@ class CreateBoatGuestDatesTable extends Migration
     {
         Schema::create('boat_guest_dates', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('boat_guest_id')->index('caravan_id');
+            $table->unsignedInteger('boat_guest_id')->index();
             $table->date('from');
             $table->date('until');
             $table->unsignedTinyInteger('persons');

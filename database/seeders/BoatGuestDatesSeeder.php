@@ -1,6 +1,7 @@
 <?php
 namespace Database\Seeders;
 
+use App\Models\BoatGuest;
 use App\Models\BoatGuestDates;
 use Database\Seeders\Ext\MainSeeder;
 
@@ -16,7 +17,7 @@ class BoatGuestDatesSeeder extends MainSeeder
     public function run()
     {
         BoatGuestDates::factory()
-            ->count($this->count)
+            ->count(500)
             ->create()
         ;
     }

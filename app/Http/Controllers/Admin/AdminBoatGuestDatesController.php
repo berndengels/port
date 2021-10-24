@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\BoatGuestDates;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Database\Eloquent\Collection;
 
 class AdminBoatGuestDatesController extends AdminController
 {
@@ -15,7 +16,10 @@ class AdminBoatGuestDatesController extends AdminController
      */
     public function index()
     {
-        //
+        $query      = BoatGuestDates::with('boat')->orderByDesc('from');
+        $priceTotal = $query->get()->sum(fn ($item) => $item->price);
+        $data       = $query->paginate($this->paginatorLimit);
+        return view('admin.boatGuestDates.index', compact('data','priceTotal'));
     }
 
     /**

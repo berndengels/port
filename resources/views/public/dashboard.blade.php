@@ -6,9 +6,10 @@
             <div class="title">Wetter</div>
             <div class="content mt-2 weather"></div>
         </div>
+        <x-open-sea-map />
         @if($widgets->count() > 0)
             @foreach($widgets as $item)
-            <x-widget :data="$item" />
+            <x-widget :title="$item->title" :content="$item->content" />
             @endforeach
         @endif
     </div>

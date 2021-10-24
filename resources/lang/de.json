@@ -1,1 +1,10 @@
-{}
+{
+	"from": "Von",
+	"until": "Bis",
+	"daysCount": "Anzahl Tage",
+	"pricePerDayElectric": "Strompreis",
+	"pricePerDayPersons": "Preis für zusätzliche Personen",
+	"priceBase": "Grundpreis",
+	"priceIndividual": "individueller Preis",
+	"total": "Gesamtpreis"
+}

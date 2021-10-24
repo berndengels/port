@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Libs\BoatPriceCalculator;
+use App\Libs\Prices\CaravanPrice;
 use App\Models\Boat;
 use Excel;
 use Carbon\Carbon;
@@ -32,7 +33,8 @@ class AdminPriceController extends AdminController
         if($from && $until && $carlength && $persons) {
             $from       = new Carbon($from, config('app.timezone'));
             $until      = new Carbon($until, config('app.timezone'));
-            $response   = (new CaravanPriceCalculator)->getPrice($from, $until, $carlength, $persons, $electric, $dayPrice);
+//            $response   = (new CaravanPriceCalculator)->getPrice($from, $until, $carlength, $persons, $electric, $dayPrice);
+            $response   = (new CaravanPrice($from, $until))->getPrice($request);
         }
         return response()->json($response);
     }
