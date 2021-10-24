@@ -83,7 +83,6 @@ Route::group([
     Route::get('boatDates/sendInvoice/{boatDate}', [AdminBoatDatesController::class, 'sendInvoice'])->name('boatDates.sendInvoice');
     Route::get('boatDates/saison', [AdminBoatDatesController::class, 'saison'])->name('boatDates.saison');
     Route::get('boatDates/winter', [AdminBoatDatesController::class, 'winter'])->name('boatDates.winter');
-    Route::get('caravanDates/repair', [AdminCaravanDatesController::class,'repair'])->name('caravanDates.repair');
 
     Route::resource('customers', AdminCustomerController::class);
     Route::resource('caravans', AdminCaravanController::class);
@@ -99,8 +98,11 @@ Route::group([
     Route::resource('boatGuestDates', AdminBoatGuestDatesController::class);
 
     Route::post('caravanDates/sendExcel', [AdminCaravanDatesController::class, 'sendExcel'])->name('caravanDates.sendExcel');
+
     Route::match(['post','put'],'caravanDates/price/calculate', [AdminPriceController::class, 'calculateCaravanDates'])->name('caravanDates.price.calculate');
     Route::match(['post','put'],'boatDates/price/calculate', [AdminPriceController::class, 'calculateBoatDates'])->name('boatDates.price.calculate');
+    Route::match(['post','put'],'guestBoatDates/price/calculate', [AdminPriceController::class, 'calculateGuestBoatDates'])->name('guestBoatDates.price.calculate');
+
     Route::get('caravan/price/excel/{year?}/{month?}', [AdminPriceController::class, 'excel'])->name('caravan.price.excel');
     Route::get('caravan/price/pdf/{year?}/{month?}', [AdminPriceController::class, 'pdf'])->name('caravan.price.pdf');
     Route::get('car/info/{caravanId}', [AdminCarLicensePlateController::class, 'info'])->name('car.info');

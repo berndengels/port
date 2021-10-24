@@ -1,15 +1,15 @@
 <?php
-namespace App\Libs\Prices\Caravan;
+namespace App\Libs\Prices\BoatGuest;
 
+use App\Libs\Prices\CaravanPrice;
 use DatePeriod;
 use App\Libs\Prices\IDailyPrice;
 
 class Electric extends Main implements IDailyPrice
 {
-
     public function __construct(bool $useElectric)
     {
-        $this->initConfg();
+        $this->initConfig();
         $this->useElectric = $useElectric;
     }
 

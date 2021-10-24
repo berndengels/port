@@ -4,38 +4,30 @@ namespace App\Libs\Prices\Caravan;
 use App\Libs\Prices\CaravanPrice;
 use DatePeriod;
 use Carbon\Carbon;
-use App\Libs\Prices\IPrice;
+use App\Libs\Prices\IDailyPrice;
 
-class Base implements IPrice
+class Base extends Main implements IDailyPrice
 {
-    /**
-     * @var int
-     */
-    protected $carLength;
-
     public function __construct(int $carLength = 0)
     {
+        $this->initConfg();
         $this->carLength = $carLength;
     }
 
     public function addPrice(DatePeriod $days)
     {
-        $saisonFromMonth    = config('port.main.dates.saison.fromMonth');
-        $saisonUntilMonth   = config('port.main.dates.saison.untilMonth');
-        $defaultPricePerDay = config('port.prices.caravan.default_per_day');
-        $saisonPricePerDay  = config('port.prices.caravan.saison_per_day');
         $sumPrice = 0;
         /**
          * @var Carbon $date
          */
         foreach($days as $date) {
-            if($date->month >= $saisonFromMonth && $date->month <= $saisonUntilMonth) {
-                $price = isset($saisonPricePerDay[$this->carLength]) ? $saisonPricePerDay[$this->carLength] : 0;
+            if($date->month >= $this->saisonFromMonth && $date->month <= $this->saisonUntilMonth) {
+                $price = isset($this->saisonPricePerDay[$this->carLength]) ? $this->saisonPricePerDay[$this->carLength] : 0;
             }
             // neben saison
             else
             {
-                $price = isset($defaultPricePerDay[$this->carLength]) ? $defaultPricePerDay[$this->carLength] : 0;
+                $price = isset($this->defaultPricePerDay[$this->carLength]) ? $this->defaultPricePerDay[$this->carLength] : 0;
             }
             $sumPrice += $price;
         }

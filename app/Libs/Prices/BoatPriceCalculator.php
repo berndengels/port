@@ -3,7 +3,7 @@ namespace App\Libs\Prices;
 
 use Carbon\Carbon;
 
-class  BoatPriceCalculator extends PriceCalculator
+class  BoatPriceCalculator
 {
     /**
      * @var int

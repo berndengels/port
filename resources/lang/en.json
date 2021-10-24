@@ -2,9 +2,14 @@
 	"from": "from",
 	"until": "until",
 	"daysCount": "days count",
-	"pricePerDayElectric": "price electric",
-	"pricePerDayPersons": "price additional persons",
+	"priceElectric": "price electric",
+	"pricePersons": "price additional persons",
 	"priceBase": "base price",
 	"priceIndividual": "individual price",
-	"total": "price total"
+	"total": "price total",
+	"priceCleaning": "Preis Reinigung Bootsrumpf",
+	"priceCrane": "Preis Kranen",
+	"priceMastCrane": "Preis Mastkranen",
+	"saison": "Sommerliegeplatz",
+	"winter": "Winterlager"
 }

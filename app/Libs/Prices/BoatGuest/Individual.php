@@ -1,28 +1,24 @@
 <?php
-namespace App\Libs\Prices\Caravan;
+namespace App\Libs\Prices\BoatGuest;
 
+use DatePeriod;
 use App\Libs\Prices\IPrice;
 
 class Individual extends Main implements IPrice
 {
-    /**
-     * @var int|mixed
-     */
-    protected $individualPrice;
-
-    public function __construct(int $individualPrice = 0)
+    public function __construct($individualPrice = 0)
     {
-        $this->initConfg();
+        $this->initConfig();
         $this->individualPrice = $individualPrice;
     }
 
     public function addPrice()
     {
-        return $this->individualPrice > 0 ? $this->individualPrice : 0;
+        return $this->individualPrice ?: 0;
     }
 
     /**
-     * @return int
+     * @return DatePeriod
      */
     public function getIndividualPrice()
     {

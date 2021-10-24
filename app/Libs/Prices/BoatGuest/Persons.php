@@ -1,24 +1,21 @@
 <?php
-namespace App\Libs\Prices\Caravan;
+namespace App\Libs\Prices\BoatGuest;
 
+use App\Libs\Prices\CaravanPrice;
 use DatePeriod;
 use App\Libs\Prices\IDailyPrice;
 
 class Persons extends Main implements IDailyPrice
 {
-    /**
-     * @var int
-     */
-    protected $persons = 0;
-
     public function __construct(int $persons = 0)
     {
-        $this->initConfg();
+        $this->initConfig();
         $this->persons = $persons;
     }
 
     public function addPrice(DatePeriod $days)
     {
+
         if($this->persons > $this->personsInclusive) {
             return ($this->persons - $this->personsInclusive) * $this->personsAdditional;
         }

@@ -23,6 +23,7 @@
         "phpoffice/phpspreadsheet": "^1.18",
         "protonemedia/laravel-form-components": "^3.0",
         "spatie/db-dumper": "^2.21",
+        "spatie/emoji": "^3.0",
         "spatie/laravel-dashboard": "^2.0",
         "spatie/laravel-dashboard-time-weather-tile": "^2.0",
         "spatie/laravel-db-snapshots": "^1.7",

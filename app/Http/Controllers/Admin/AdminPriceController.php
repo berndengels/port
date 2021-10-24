@@ -2,8 +2,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Libs\BoatPriceCalculator;
+use App\Libs\Prices\BoatGuestPrice;
+use App\Libs\Prices\BoatPrice;
 use App\Libs\Prices\CaravanPrice;
 use App\Models\Boat;
+use App\Models\BoatGuest;
 use Excel;
 use Carbon\Carbon;
 use App\Models\CaravanDates;
@@ -45,35 +48,41 @@ class AdminPriceController extends AdminController
     public function calculateBoatDates(Request $request)
     {
         $boatId     = $request->post('boat_id');
-        $modus      = $request->post('modus');
+        $from       = $request->post('from');
+        $until      = $request->post('until');
         $boat       = Boat::find($boatId);
-        $response = ['error' => true];
+        $response   = ['error' => true];
 
-        if($boat) {
-            $length     = $boat->length;
-            $width      = $boat->width;
-            $weight     = $boat->weight;
-            $mastLength = $boat->mast_length;
-            $mastWeight = $boat->mast_weight;
-            $from       = $request->post('from');
-            $until      = $request->post('until');
-            $defaultPrice = $request->post('default_price');
-
-            $crane      = (bool) $request->post('crane', false);
-            $mastCrane  = (bool) $request->post('mast_crane', false);
-            $cleaning   = (bool) $request->post('cleaning', false);
-
+        if($boat && $from && $until) {
             $from       = new Carbon($from, config('app.timezone'));
             $until      = new Carbon($until, config('app.timezone'));
-
-            $response   = (new BoatPriceCalculator())->getPrice($modus, $length, $width, $weight, $mastLength, $mastWeight, $crane, $mastCrane, $cleaning, $from, $until, $defaultPrice);
+            $response   = (new BoatPrice($from, $until))->getPrice($request);
         }
 
         return response()->json($response);
     }
 
-    public function getBilling(CarabanDates $caravanDate)
+    /**
+     * Calculate boat dates price.
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function calculateGuestBoatDates(Request $request)
     {
+        $boatId     = $request->post('boat_id');
+        $from       = $request->post('from');
+        $until      = $request->post('until');
+        $boat       = BoatGuest::find($boatId);
+        $response   = ['error' => true];
+
+        if($boat && $from && $until) {
+            $from       = new Carbon($from, config('app.timezone'));
+            $until      = new Carbon($until, config('app.timezone'));
+            $response   = (new BoatGuestPrice($from, $until))->getPrice($request);
+        }
+
+        return response()->json($response);
     }
 
     public function excel($year = null, $month = nll)

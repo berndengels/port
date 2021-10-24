@@ -121,28 +121,6 @@ class AdminCaravanDatesController extends AdminController
         ]);
     }
 
-    public function repair() {
-        foreach (CaravanDates::all() as $item) {
-            $from   = $item->from;
-            $until  = $item->until;
-            $data = [
-                'from'      => $item->from->format('Y-m-d'),
-                'until'     => $item->until->format('Y-m-d'),
-                'carlength' => $item->caravan->carlength,
-                'persons'   => $item->persons,
-                'electric'  => $item->electric,
-                'day_price' => $item->day_price,
-            ];
-            $request = new Request();
-            $request->request->add($data);
-            $response = (new CaravanPrice($from, $until))->getPrice($request);
-            $item->prices = json_encode($response);
-            $item->save();
-            echo "$item->prices<br>";
-            flush();
-        }
-    }
-
     /**
      * Display the specified resource.
      *
