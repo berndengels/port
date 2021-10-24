@@ -48,10 +48,7 @@ abstract class PriceCalculator
                 $prices[$prop] = $val;
             }
         }
-        return [
-            'total' => static::$total,
-            'prices' => $prices,
-        ];
+        return $prices;
     }
 
     public abstract function getPrice(Request $request);

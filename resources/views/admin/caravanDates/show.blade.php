@@ -20,11 +20,13 @@
                 <th class="text-right">Strom-Anschluß</th>
                 <td>{{ $caravanDate->electric ? 'JA' : 'Nein'}}</td>
             </tr>
-        @foreach(json_decode($caravanDate->prices, true) as $prop => $price)
+        @foreach(json_decode($caravanDate->prices, true) as $prop => $data)
+            @if( is_string($prop) && (is_string($data) || is_int($data)))
             <tr>
                 <th class="text-right">{{ __($prop) }}</th>
-                <td>{{ $price }}</td>
+                <td>{{ $data }} @if(preg_match("/price|total/i", $prop)) € @endif</td>
             </tr>
+            @endif
         @endforeach
         </table>
     </div>

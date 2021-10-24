@@ -14,16 +14,16 @@
             @if($data->count() > 0 && $year || $month)
             <div class="float-right">
                 <a href="{{ route('admin.caravan.price.excel', ['year' => $year, 'month' => $month]) }}"
-                        class="btn btn-second ml-2 my-2 no-hide-text"
+                        class="btn btn-second ml-0 my-2 no-hide-text"
                         target="_blank"
                         title="Excel-Datei runterladen"
                 ><i class="far fa-file-excel"></i>Excel Download</a>
 
-                <x-form method="post" :action="route('admin.caravanDates.sendExcel')" class="flex-inline">
+                <x-form method="post" :action="route('admin.caravanDates.sendExcel')" class="mt-0 pt-0">
                     <x-form-input type="hidden" name="year" :bind="$year" />
                     <x-form-input type="hidden" name="month" :bind="$month" />
                     <x-form-input type="email" name="email" required autocomplete="email" placeholder="Email-Adresse" />
-                    <x-form-submit name="submit" class="btn btn-second" icon="fas fa-shipping-fast">Sende Excel</x-form-submit>
+                    <x-form-submit name="submit" inline class="btn btn-second mt-3" icon="fas fa-shipping-fast">Sende Excel</x-form-submit>
                 </x-form>
             </div>
             @endif

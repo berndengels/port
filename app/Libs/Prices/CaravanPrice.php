@@ -30,6 +30,7 @@ class CaravanPrice extends PriceCalculator
         static::$pricePerDayPersons     = $persons->addPrice(parent::$_datePeriod);
         static::$pricePerDayElectric    = $electric->addPrice(parent::$_datePeriod);
         static::$priceIndividual        = $individual->addPrice(parent::$_datePeriod);
+        static::$total = 0;
 
         $result = $this
             ->add(static::$priceBase)

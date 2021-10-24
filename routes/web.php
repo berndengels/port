@@ -83,6 +83,7 @@ Route::group([
     Route::get('boatDates/sendInvoice/{boatDate}', [AdminBoatDatesController::class, 'sendInvoice'])->name('boatDates.sendInvoice');
     Route::get('boatDates/saison', [AdminBoatDatesController::class, 'saison'])->name('boatDates.saison');
     Route::get('boatDates/winter', [AdminBoatDatesController::class, 'winter'])->name('boatDates.winter');
+    Route::get('caravanDates/repair', [AdminCaravanDatesController::class,'repair'])->name('caravanDates.repair');
 
     Route::resource('customers', AdminCustomerController::class);
     Route::resource('caravans', AdminCaravanController::class);
