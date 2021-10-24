@@ -1,21 +1,20 @@
 <?php
-
 namespace Tests\Feature;
 
-use App\Models\AdminUser;
+use App\Models\Customer;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
-class UpdatePasswordTest extends TestCase
+class CustomerUpdatePasswordTest extends TestCase
 {
-    use RefreshDatabase;
+//    use RefreshDatabase;
 
     public function test_password_can_be_updated()
     {
-        $this->actingAs($user = AdminUser::factory()->create());
+        $this->actingAs($user = Customer::first());
 
-        $response = $this->put('/user/password', [
+        $response = $this->put('/password', [
             'current_password' => 'password',
             'password' => 'new-password',
             'password_confirmation' => 'new-password',
@@ -26,31 +25,26 @@ class UpdatePasswordTest extends TestCase
 
     public function test_current_password_must_be_correct()
     {
-        $this->actingAs($user = AdminUser::factory()->create());
+        $this->actingAs($user = Customer::first());
 
-        $response = $this->put('/user/password', [
+        $response = $this->put('/password', [
             'current_password' => 'wrong-password',
             'password' => 'new-password',
             'password_confirmation' => 'new-password',
         ]);
-
         $response->assertSessionHasErrors();
-
         $this->assertTrue(Hash::check('password', $user->fresh()->password));
     }
 
     public function test_new_passwords_must_match()
     {
-        $this->actingAs($user = AdminUser::factory()->create());
-
-        $response = $this->put('/user/password', [
+        $this->actingAs($user = Customer::first());
+        $response = $this->put('/password', [
             'current_password' => 'password',
             'password' => 'new-password',
             'password_confirmation' => 'wrong-password',
         ]);
-
         $response->assertSessionHasErrors();
-
         $this->assertTrue(Hash::check('password', $user->fresh()->password));
     }
 }

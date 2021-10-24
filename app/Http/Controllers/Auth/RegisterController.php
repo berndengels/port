@@ -109,9 +109,6 @@ class RegisterController extends Controller
             'postcode'  => $data['postcode'],
             'street'    => $data['street'],
         ]);
-
-//        event(new Registered($customer));
-
         return $customer;
     }
 }

@@ -31,7 +31,6 @@
         "spatie/laravel-responsecache": "^7.1",
         "spatie/tax-calculator": "^0.1.2",
         "symfony/dom-crawler": "^5.3",
-        "tightenco/ziggy": "^1.0",
         "umulmrum/holiday": "^0.6.0"
     },
     "require-dev": {

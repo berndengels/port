@@ -3,10 +3,12 @@ namespace Database\Factories;
 
 use App\Libs\BoatPriceCalculator;
 use App\Libs\CaravanPriceCalculator;
+use App\Libs\Prices\BoatPrice;
 use App\Models\Boat;
 use App\Models\BoatDates;
 use Carbon\Carbon;
 use Database\Factories\Ext\MainFactory;
+use Illuminate\Http\Request;
 
 class BoatDatesFactory extends MainFactory
 {
@@ -31,25 +33,45 @@ class BoatDatesFactory extends MainFactory
         $randomDateEnd = Carbon::today()->addMonths(1)->format('Y-m-d');
         $from       = $this->randomDate('2020-01-01', $randomDateEnd,'Y-m-d');
         $until      = Carbon::create($from)->addDays(rand(1,7));
+        $from       = Carbon::create($from);
         $randIndex  = rand(0, $max);
+        $boat       = $boats[$randIndex];
         $modus      = $modi[rand(0,1)];
-        $boatType   = $boats[$randIndex]->boat_type;
-        $length     = $boats[$randIndex]->length;
-        $width      = $boats[$randIndex]->width;
-        $weight     = $boats[$randIndex]->weight;
+        $boatType   = $boat->boat_type;
+        $length     = $boat->length;
+        $width      = $boat->width;
+        $weight     = $boat->weight;
+        $mastLength = $boat->mast_length;
+        $mastWeight = $boat->mast_weight;
+        $crane      = (bool) rand(0,1);
+        $mastCrane  = (bool) rand(0,1);
+        $cleaning   = (bool) rand(0,1);
+
+        $params = [
+            'from'          => $from,
+            'until'         => $until,
+            'modus'         => $modus,
+            'length'        => $length,
+            'width'         => $width,
+            'weight'        => $weight,
+            'crane'         => $crane,
+            'mast_crane'    => $mastCrane,
+            'cleaning'      => $cleaning,
+        ];
 
         if('sail' === $boatType) {
-            $mastLength     = $boats[$randIndex]->mast_length;
-            $mastWeight     = $boats[$randIndex]->mast_weight;
-            $crane          = $boats[$randIndex]->crane;
-            $mastCrane      = $boats[$randIndex]->mastCrane;
-            $cleaning       = $boats[$randIndex]->cleaning;
-            $priceData  = (new BoatPriceCalculator())->getPrice($modus, $length, $width, $weight, $mastLength, $mastWeight, $crane, $mastCrane, $cleaning);
-        } else {
-            $priceData  = (new BoatPriceCalculator())->getPrice($modus, $length, $width, $weight);
+            $params = array_merge($params,[
+                'mast_length'   => $mastLength,
+                'mast_weight'   => $mastWeight,
+            ]);
         }
+
+        $request = new Request();
+        $request->request->add($params);
+        $priceData  = (new BoatPrice($from, $until))->getPrice($request);
+
         $price      = $priceData['total'];
-        $prices     = json_encode($priceData['prices']);
+        $prices     = json_encode($priceData);
 
         return [
             'boat_id'   => $boats[$randIndex]->id,

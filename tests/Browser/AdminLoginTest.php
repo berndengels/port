@@ -1,5 +1,4 @@
 <?php
-
 namespace Tests\Browser;
 
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -16,8 +15,8 @@ class AdminLoginTest extends DuskTestCase
     public function testExample()
     {
         $this->browse(function (Browser $browser) {
-            $browser->visit('/')
-                    ->assertSee('Laravel');
+            $browser->visit('/admin/login')
+                    ->assertSee('Admin Login');
         });
     }
 }

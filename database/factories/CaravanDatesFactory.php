@@ -1,11 +1,13 @@
 <?php
 namespace Database\Factories;
 
+use App\Libs\Prices\CaravanPrice;
 use Carbon\Carbon;
 use App\Models\Caravan;
 use App\Models\CaravanDates;
 use App\Libs\CaravanPriceCalculator;
 use Database\Factories\Ext\MainFactory;
+use Illuminate\Http\Request;
 
 /**
  *
@@ -35,15 +37,30 @@ class CaravanDatesFactory extends MainFactory
         $randomDateEnd = Carbon::today()->addMonths(1)->format('Y-m-d');
         $from       = $this->randomDate('2020-01-01', $randomDateEnd,'Y-m-d');
         $until      = Carbon::create($from)->addDays(rand(1,7));
+        $from       = Carbon::create($from);
         $randIndex  = rand(0, $max);
         $persons    = rand(1, 4);
         $electric   = rand(0, 1);
-        $priceData  = (new CaravanPriceCalculator())->getPrice(Carbon::create($from), Carbon::create($until), $caravans[$randIndex]->carlength, $persons, $electric);
+        $caravan    = $caravans[$randIndex];
+
+        $params = [
+            'from'      => $from,
+            'until'     => $until,
+            'carlength' => $caravan->carlength,
+            'persons'   => $persons,
+            'electric'  => $electric,
+            'day_price' => 0,
+        ];
+
+        $request = new Request();
+        $request->request->add($params);
+
+        $priceData  = (new CaravanPrice($from, $until))->getPrice($request);
         $price      = $priceData['total'];
-        $prices     = json_encode($priceData['prices']);
+        $prices     = json_encode($priceData);
 
         return [
-            'caravan_id'    => $caravans[$randIndex]->id,
+            'caravan_id'    => $caravan->id,
             'from'          => $from,
             'until'         => $until,
             'persons'       => $persons,
