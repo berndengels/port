@@ -2,12 +2,11 @@
 
 namespace App\Traits\Models;
 
-use Spatie\ResponseCache\Facades\ResponseCache;
-
-trait ClearsResponseCache
+trait ClearCache
 {
-    public static function bootClearsResponseCache()
+    public static function bootClearCache()
     {
+/*
         self::created(function () {
             ResponseCache::clear();
         });
@@ -19,5 +18,6 @@ trait ClearsResponseCache
         self::deleted(function () {
             ResponseCache::clear();
         });
+*/
     }
 }

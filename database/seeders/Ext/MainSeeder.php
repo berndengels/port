@@ -9,7 +9,7 @@ use Illuminate\Database\Connection;
 
 class MainSeeder extends Seeder
 {
-    protected $count = 100;
+    protected $count = 50;
     /**
      * @var Connection
      */
@@ -19,6 +19,7 @@ class MainSeeder extends Seeder
      */
     protected $dbTest;
     protected $table;
+    protected $model;
 
     public function __construct()
     {
@@ -38,6 +39,9 @@ class MainSeeder extends Seeder
             foreach ($items as $item) {
                 $this->dbTest->table($this->table)->insertOrIgnore($item);
             }
+        }
+        if($this->model) {
+            ($this->model)::getModel()->refresh();
         }
     }
 }

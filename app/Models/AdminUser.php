@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use App\Traits\Models\ClearsResponseCache;
 use Eloquent;
+use App\Traits\Models\ClearCache;
 use Database\Factories\CustomerFactory;
 //use Illuminate\Auth\Notifications\ResetPassword as ResetPasswordNotification;
 use App\Notifications\AdminResetPassword  as ResetPasswordNotification;
@@ -11,7 +11,6 @@ use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\DatabaseNotification;
@@ -75,7 +74,7 @@ use Spatie\Permission\Traits\HasRoles;
  */
 class AdminUser extends Authenticatable
 {
-    use HasRoles, HasFactory, Notifiable, ThrottlesLogins, CanResetPassword, HasPermissions, ClearsResponseCache;
+    use HasRoles, HasFactory, Notifiable, ThrottlesLogins, CanResetPassword, HasPermissions, ClearCache;
 //    use HasApiTokens;
 
     protected $table = 'admin_users';
@@ -114,7 +113,14 @@ class AdminUser extends Authenticatable
      * @var array
      */
     protected $appends = ['rolesString'];
-
+/*
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+        $user = auth('admin')->user();
+        $this->connection = ($user && 'test@test.com' === $user->email) ? 'mysql-test' : 'mysql';
+    }
+*/
     public function getRolesStringAttribute()
     {
         return $this->roles->map->name->join(', ');

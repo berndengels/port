@@ -6,7 +6,7 @@ use Database\Seeders\Ext\MainSeeder;
 
 class BoatDatesSeeder extends MainSeeder
 {
-    protected $count = 500;
+    protected $count = 100;
     protected $table = 'boat_dates';
 
     /**

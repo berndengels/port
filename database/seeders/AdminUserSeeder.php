@@ -22,6 +22,6 @@ class AdminUserSeeder extends MainSeeder
          * @var $user AdminUser
          */
         $user = AdminUser::factory()->create();
-//        $user->assignRole('demonstration');
+        $user->assignRole('admin');
     }
 }

@@ -2,11 +2,10 @@
 
 namespace App\Models;
 
-use App\Traits\Models\ClearsResponseCache;
 use Eloquent;
+use App\Traits\Models\ClearCache;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
 /**
  * App\Models\CarLicensePlate
@@ -30,7 +29,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class CarLicensePlate extends Model
 {
-    use HasFactory, ClearsResponseCache;
+    use HasFactory, ClearCache;
 
     protected $table = 'car_license_plates';
     protected $guarded = ['id'];

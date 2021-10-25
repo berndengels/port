@@ -27,7 +27,7 @@ class BoatDatesFactory extends MainFactory
      */
     public function definition()
     {
-        $modi       = ['guest','permanent'];
+        $modi       = ['saison','winter'];
         $boats      = $this->getParents();
         $max        = max($boats->keys()->toArray()) - 1;
         $randomDateEnd = Carbon::today()->addMonths(1)->format('Y-m-d');

@@ -2,11 +2,11 @@
 namespace App\Models;
 
 use Eloquent;
+use Illuminate\Support\Carbon;
+use App\Traits\Models\ClearCache;
 use App\Traits\Models\Filter\Filter;
-use App\Traits\Models\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Carbon;
 use Spatie\Permission\Models\Permission as BaseModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -43,7 +43,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Permission extends BaseModel
 {
-    use HasFactory, Filter, ClearsResponseCache;
+    use HasFactory, Filter, ClearCache;
     protected $appends = ['actions','model','action','uniqName'];
     public $action;
     public $model;
@@ -52,6 +52,13 @@ class Permission extends BaseModel
         'read'  => 'read',
         'write' => 'write'
     ];
+
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+        $user = auth('admin')->user();
+        $this->connection = ($user && 'test@test.com' === $user->email) ? 'mysql-test' : 'mysql';
+    }
 
     public static function actions()
     {

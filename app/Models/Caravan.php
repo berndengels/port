@@ -1,14 +1,13 @@
 <?php
 namespace App\Models;
 
-use App\Traits\Models\Filter\CaravanFilter;
-use App\Traits\Models\ClearsResponseCache;
 use Eloquent;
+use App\Traits\Models\ClearCache;
+use App\Traits\Models\Filter\CaravanFilter;
 use Database\Factories\CaravanFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
 /**
  * App\Models\Caravan
@@ -37,7 +36,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Caravan extends Model
 {
-    use HasFactory, CaravanFilter, ClearsResponseCache;
+    use HasFactory, CaravanFilter, ClearCache;
 
     protected $table = 'caravans';
     protected $guarded = ['id'];

@@ -1,14 +1,12 @@
 <?php
-
 namespace App\Models;
 
 use Eloquent;
+use Illuminate\Support\Str;
+use App\Traits\Models\ClearCache;
 use App\Traits\Models\Filter\HasSlug;
-use App\Traits\Models\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
 
 /**
  * App\Models\Widget
@@ -30,7 +28,7 @@ use Illuminate\Support\Str;
  */
 class Widget extends Model
 {
-    use HasFactory, HasSlug, ClearsResponseCache;
+    use HasFactory, HasSlug, ClearCache;
 
     protected $table = 'widgets';
     protected $guarded = ['id'];

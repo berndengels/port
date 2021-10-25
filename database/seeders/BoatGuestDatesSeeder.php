@@ -7,7 +7,7 @@ use Database\Seeders\Ext\MainSeeder;
 
 class BoatGuestDatesSeeder extends MainSeeder
 {
-    protected $count = 500;
+    protected $count = 100;
     protected $table = 'boat_guest_dates';
     /**
      * Run the database seeds.

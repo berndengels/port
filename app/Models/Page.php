@@ -3,10 +3,9 @@
 namespace App\Models;
 
 use Eloquent;
+use App\Traits\Models\ClearCache;
 use App\Traits\Models\Filter\HasSlug;
-use App\Traits\Models\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
@@ -27,7 +26,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Page extends Model
 {
-    use HasFactory, HasSlug, ClearsResponseCache;
+    use HasFactory, HasSlug, ClearCache;
 
     protected $table = 'pages';
     protected $guarded = ['id'];

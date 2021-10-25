@@ -22,9 +22,11 @@ class CustomerFactory extends Factory
      */
     public function definition()
     {
+        $modi = ['guest','permanent'];
+
         return [
-            'customer_type' => 'permanent',
-            'name'      => 'Test Dauerlieger '.$this->faker->name,
+            'customer_type' => $modi[rand(0,1)],
+            'name'      => $this->faker->name,
             'email'     => $this->faker->email,
             'fon'       => $this->faker->phoneNumber,
             'state'     => $this->faker->city,

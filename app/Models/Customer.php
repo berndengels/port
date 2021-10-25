@@ -1,13 +1,11 @@
 <?php
-
 namespace App\Models;
 
 use Eloquent;
-use App\Traits\Models\ClearsResponseCache;
+use App\Traits\Models\ClearCache;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Events\Dispatchable;
@@ -63,14 +61,21 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Customer extends Authenticatable
 {
-    use HasFactory, HasRoles, Notifiable, CanResetPassword, ThrottlesLogins, Dispatchable, ClearsResponseCache;
+    use HasFactory, HasRoles, Notifiable, CanResetPassword, ThrottlesLogins, Dispatchable, ClearCache;
 
     protected $table = 'customers';
     protected $appends = ['fonLink'];
     protected $guarded = ['id'];
     protected $hidden = ['password','remember_token'];
     public $timestamps = false;
-
+/*
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+        $user = auth('admin')->user();
+        $this->connection = ($user && 'test@test.com' === $user->email) ? 'mysql-test' : 'mysql';
+    }
+*/
     public function getFonLinkAttribute()
     {
         if($this->fon) {
@@ -83,5 +88,4 @@ class Customer extends Authenticatable
     {
         return $this->hasMany(Boat::class);
     }
-
 }

@@ -1,12 +1,12 @@
 <?php
 namespace App\Models;
 
-use App\Traits\Models\ClearsResponseCache;
 use Eloquent;
+use App\Traits\Models\ClearCache;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\DB;
 
 /**
  * App\Models\Boat
@@ -47,7 +47,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Boat extends Model
 {
-    use HasFactory, ClearsResponseCache;
+    use HasFactory, ClearCache;
 
     protected $table = 'boats';
     protected $guarded = ['id'];

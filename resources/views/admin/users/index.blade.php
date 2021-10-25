@@ -27,7 +27,7 @@
                     <td class="hidden md:table-cell">{{ $item->id }}</td>
                     <td>{{ $item->name }}</td>
                     <td class="hidden md:table-cell"><a href="mailto:{{ $item->email }}" target="_blank">{{ $item->email }}</a></td>
-                    <td class="hidden md:table-cell">{{ $item->rolesString }}</td>
+                    <td class="hidden md:table-cell">{{ $item->strRoles }}</td>
                     <td>
                         <x-nav-link href="{{ route('admin.users.edit', $item) }}" icon="fas fa-edit" class="btn" title="Bearbeiten">
                             <span class="hidden md:visible">Edit</span>

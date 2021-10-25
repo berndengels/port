@@ -42,8 +42,7 @@ Route::group([
 ],function () {
     Route::get('login', [CustomerLoginController::class, 'showLoginForm'])->name('login.form');
     Route::post('login', [CustomerLoginController::class, 'login'])->name('login.check');
-    Route::post('logout', [CustomerLoginController::class, 'logout'])->name('logout')
-        ->middleware(['doNotCacheResponse']);
+    Route::post('logout', [CustomerLoginController::class, 'logout'])->name('logout');
 });
 
 Route::group([
@@ -74,8 +73,7 @@ Route::group([
     'middleware' => ['auth:admin'],
 ],function () {
     Route::get('', [AdminDashboardController::class, 'show'])->name('dashboard');
-    Route::post('logout', [AdminLoginController::class,'logout'])->name('logout')
-        ->middleware('doNotCacheResponse');
+    Route::post('logout', [AdminLoginController::class,'logout'])->name('logout');
 
     Route::get('customers/guests', [AdminCustomerController::class,'guests'])->name('customers.guests');
     Route::get('boats/guests', [AdminBoatController::class,'guests'])->name('boats.guests');

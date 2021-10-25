@@ -28,7 +28,6 @@
         "spatie/laravel-dashboard-time-weather-tile": "^2.0",
         "spatie/laravel-db-snapshots": "^1.7",
         "spatie/laravel-permission": "^5.1",
-        "spatie/laravel-responsecache": "^7.1",
         "spatie/tax-calculator": "^0.1.2",
         "symfony/dom-crawler": "^5.3",
         "umulmrum/holiday": "^0.6.0"

@@ -6,7 +6,7 @@ use Database\Seeders\Ext\MainSeeder;
 
 class PagesSeeder extends MainSeeder
 {
-    protected $count = 10;
+    protected $count = 5;
     protected $table = 'pages';
 
     /**

@@ -21,14 +21,17 @@ class ShwitchDatabaseConnection
         /**
          * @var $user AdminUser
          */
+        $auth = auth('admin');
         if($user = $request->user('admin')) {
             if('test@test.com' === $user->email) {
                 DB::purge('mysql');
                 DB::setDefaultConnection('mysql-test');
-                $user = AdminUser::whereEmail($user->email)->first();
-                if(!$user->hasRole('demonstration')) {
-                    $user->assignRole('demonstration');
+                $testUser = AdminUser::whereEmail($user->email)->first();
+                if(!$testUser->hasRole('admin')) {
+                    $testUser->assignRole('admin');
                 }
+                $auth->setUser($testUser);
+                unset($user);
             }
         }
         return $next($request);

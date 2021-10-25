@@ -1,14 +1,12 @@
 <?php
-
 namespace App\Models;
 
 use Eloquent;
-use App\Traits\Models\ClearsResponseCache;
+use Illuminate\Support\Carbon;
+use App\Traits\Models\ClearCache;
 use App\Traits\Models\Events\FireEvents;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Carbon;
 
 /**
  * App\Models\BoatDates
@@ -40,7 +38,7 @@ use Illuminate\Support\Carbon;
  */
 class BoatDates extends Model
 {
-    use HasFactory, ClearsResponseCache, FireEvents;
+    use HasFactory, ClearCache, FireEvents;
 
     protected $table = 'boat_dates';
     protected $guarded = ['id'];

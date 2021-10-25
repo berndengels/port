@@ -14,9 +14,6 @@ class CustomerSeeder extends MainSeeder
      */
     public function run()
     {
-        Customer::factory()
-            ->count($this->count)
-            ->create()
-        ;
+        Customer::factory()->count($this->count)->create();
     }
 }

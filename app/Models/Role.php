@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use App\Traits\Models\ClearsResponseCache;
 use Eloquent;
+use App\Traits\Models\ClearCache;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Carbon;
@@ -36,11 +36,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Role extends BaseModel
 {
-    use HasFactory, ClearsResponseCache;
+    use HasFactory, ClearCache;
 
-    protected $appends = ['rolesString'];
+    protected $appends = ['strRoles'];
 
-    public function getRolesStringAttribute() {
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+        $user = auth('admin')->user();
+        $this->connection = ($user && 'test@test.com' === $user->email) ? 'mysql-test' : 'mysql';
+    }
+
+    public function getStrRolesAttribute() {
         if($this->roles && $this->roles->count() > 0) {
             return $this->roles->map->name->join(', ');
         }
