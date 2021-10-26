@@ -1,19 +1,19 @@
 <?php
 namespace App\Libs\Prices\BoatGuest;
 
+use App\Libs\Prices\Price;
 use DatePeriod;
 use App\Libs\Prices\IDailyPrice;
 
 class Base extends Main implements IDailyPrice
 {
-    public function __construct(int $length)
+    public function __construct(protected int $length)
     {
         $this->initConfig();
-        $this->length = $length;
     }
 
-    public function addPrice(DatePeriod $days)
+    public function addPrice(DatePeriod $days): Price
     {
-        return iterator_count($days) * $this->length * $this->pricePerMeter;
+        return new Price(value: $this->daysCount * $this->length * $this->pricePerMeter);
     }
 }

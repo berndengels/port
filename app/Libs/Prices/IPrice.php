@@ -3,5 +3,5 @@ namespace App\Libs\Prices;
 
 interface IPrice
 {
-    public function addPrice();
+    public function addPrice(): Price;
 }

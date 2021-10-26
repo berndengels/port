@@ -53,6 +53,17 @@ class AdminBoatController extends AdminController
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param Boat $boat
+     * @return Response
+     */
+    public function getJson(Boat $boat)
+    {
+        return response()->json($boat);
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return Response
@@ -61,7 +72,7 @@ class AdminBoatController extends AdminController
     {
         return view('admin.boats.create', [
             'types' => $this->boatTypes,
-            'customerOptions' => $this->customerOptionsAutocomplete,
+            'customerOptions' => $this->customerRepository->options()->getSelectOptionsData(),
         ]);
     }
 
@@ -96,7 +107,7 @@ class AdminBoatController extends AdminController
         return view('admin.boats.edit', [
             'boat'  => $boat,
             'types' => $this->boatTypes,
-            'customerOptions' => $this->customerOptionsAutocomplete,
+            'customerOptions' => $this->customerRepository->options()->getSelectOptionsData()
         ]);
     }
 

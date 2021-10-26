@@ -2,12 +2,10 @@
 
 namespace App\Libs\Prices\Caravan;
 
-abstract class Main
+use App\Libs\Prices\MainPriceItem;
+
+abstract class Main extends MainPriceItem
 {
-    protected $carLength;
-    protected $useElectric = false;
-    protected $persons = 0;
-    protected $individualPrice = 0;
     protected $saisonFromMonth;
     protected $saisonUntilMonth;
     protected $defaultPricePerDay;

@@ -18,12 +18,6 @@
             <x-form-input name="boat_name" label="Boots Name" required />
             <x-form-input name="length" type="number" step="0.1" label="Boots Länge" required />
             <x-form-input name="width" type="number" step="0.1" label="Boots Breite" />
-            <x-form-input name="weight" type="number" step="100" label="Boots Gewicht in Kg" placeholder="Gewicht in Kilogramm" />
-            <x-form-input name="mast_length" type="number" step="1" label="Mastlänge" />
-            <x-form-input name="mast_weight" type="number" step="1" label="Mastgewicht in Kg" placeholder="Gewicht in Kilogramm" />
-            <x-form-input name="draft" type="number" step="0.1" label="Tiefgang" />
-            <x-form-input name="length_waterline" type="number" step="0.1" step="0.1" label="Länge Wasserlinie" />
-            <x-form-input name="length_keel" type="number" step="0.1" label="Kiellänge" />
             <x-form-input name="home_port" label="Heimathafen" />
             @endbind
             <div class="mt-2">

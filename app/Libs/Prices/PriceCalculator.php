@@ -8,35 +8,48 @@ use Illuminate\Http\Request;
 abstract class PriceCalculator
 {
     /**
-     * @var DatePeriod
+     * @var Carbon
+     */
+    protected static $from;
+    /**
+     * @var Carbon
+     */
+    protected static $until;
+    /**
+     * @var int
      */
     protected static $daysCount;
-    protected static $from;
-    protected static $until;
+    /**
+     * @var DatePeriod
+     */
     protected static $_datePeriod;
+    /**
+     * @var int
+     */
     protected static $total = 0;
 
-    public function __construct(Carbon $from, Carbon $until)
+    public function __construct(Carbon $from,  Carbon $until)
     {
-        self::$from         = $from;
-        self::$until        = $until;
-        self::$_datePeriod  = $from->toPeriod($until)->toDatePeriod();
-        self::$daysCount    = iterator_count(self::$_datePeriod);
+        static::$from           = $from;
+        static::$until          = $until;
+        static::$_datePeriod    = $from->toPeriod($until)->toDatePeriod();
+        static::$daysCount      = iterator_count(static::$_datePeriod);
     }
 
-    public function add($price) {
-        static::$total += $price;
+    public function add(Price $price): self {
+        static::$total += $price->getValue();
         return $this;
     }
 
-    public function set($price) {
-        if($price > 0) {
-            static::$total = $price;
+    public function set(Price $price): self {
+        $value = $price->getValue();
+        if($value > 0) {
+            static::$total = $value;
         }
         return $this;
     }
 
-    protected function formatResult()
+    protected function formatResult(): array
     {
         $vars = get_class_vars(static::class);
         $prices = [];
@@ -45,11 +58,14 @@ abstract class PriceCalculator
                 if($val instanceof Carbon) {
                     $val = $val->format('d.m.Y');
                 }
+                if($val instanceof Price) {
+                    $val = $val->getValue();
+                }
                 $prices[$prop] = $val;
             }
         }
         return $prices;
     }
 
-    public abstract function getPrice(Request $request);
+    public abstract function getPrice(Request $request): array;
 }

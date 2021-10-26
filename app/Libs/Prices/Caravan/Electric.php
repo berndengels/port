@@ -2,23 +2,24 @@
 namespace App\Libs\Prices\Caravan;
 
 use DatePeriod;
+use App\Libs\Prices\Price;
 use App\Libs\Prices\IDailyPrice;
 
 class Electric extends Main implements IDailyPrice
 {
 
-    public function __construct(bool $useElectric)
+    public function __construct(protected bool $useElectric)
     {
         $this->initConfg();
-        $this->useElectric = $useElectric;
     }
 
-    public function addPrice(DatePeriod $days)
+    public function addPrice(DatePeriod $days): Price
     {
+        $value = 0;
         if($this->useElectric) {
-            return iterator_count($days) * $this->priceElectricPerDay;
+            $value = $this->daysCount * $this->priceElectricPerDay;
         }
-        return 0;
+        return new Price($value);
     }
 
     /**

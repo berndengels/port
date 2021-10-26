@@ -1,25 +1,26 @@
 <?php
 namespace App\Libs\Prices\Boat;
 
+use App\Libs\Prices\Price;
 use DatePeriod;
 use Carbon\Carbon;
 use App\Libs\Prices\IDailyPrice;
 
 class Base extends Main implements IDailyPrice
 {
-
-    public function __construct(string $modus, int $length, int $width)
+    public function __construct(
+        protected string $modus,
+        protected int $length,
+        protected int $width
+    )
     {
         $this->initConfig();
-        $this->modus    = $modus;
-        $this->length   = $length;
-        $this->width    = $width;
-        $this->defaultSaisonPrice   = round($this->priceSaisonFactor * $length * $width);
-        $this->defaultWinterPrice   = round($this->priceWinterFactor * $length * $width);
+        $this->defaultSaisonPrice   = round($this->priceSaisonFactor * $this->length * $this->width);
+        $this->defaultWinterPrice   = round($this->priceWinterFactor * $this->length * $this->width);
     }
 
 
-    public function addPrice(DatePeriod $days) : int
+    public function addPrice(DatePeriod $days): Price
     {
         $from   = $days->getStartDate();
         $until  = $days->getEndDate();
@@ -30,31 +31,31 @@ class Base extends Main implements IDailyPrice
             case 'winter':
                 return $this->getWinterPrice($from, $until);
             default:
-                return 0;
+                return new Price();
         }
     }
 
-    public function getSaisonPrice(Carbon $from = null, Carbon $until = null) : int
+    public function getSaisonPrice(Carbon $from = null, Carbon $until = null): Price
     {
         if(!$from && !$until) {
-            return $this->defaultSaisonPrice;
+            return new Price(value: $this->defaultSaisonPrice);
         }
         $from   = !$from ? $this->saisonStart : $from;
         $until  = !$until ? $this->saisonEnd : $until;
         $days   = $until->diffInDays($from);
 
-        return round($this->defaultSaisonPrice * $days / $this->defaultSaisonDays);
+        return new Price(value:  round($this->defaultSaisonPrice * $days / $this->defaultSaisonDays));
     }
 
-    public function getWinterPrice(Carbon $from = null, Carbon $until = null) : int
+    public function getWinterPrice(Carbon $from = null, Carbon $until = null): Price
     {
         if(!$from && !$until) {
-            return $this->defaultWinterPrice;
+            return new Price(value: $this->defaultWinterPrice);
         }
         $from   = !$from ? $this->winterStart : $from;
         $until  = !$until ? $this->winterEnd : $until;
         $days   = $until->diffInDays($from);
 
-        return round($this->defaultWinterPrice * $days / $this->defaultWinterDays);
+        return new Price(value: round($this->defaultWinterPrice * $days / $this->defaultWinterDays));
     }
 }

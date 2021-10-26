@@ -2,23 +2,18 @@
 namespace App\Libs\Prices\Caravan;
 
 use App\Libs\Prices\IPrice;
+use App\Libs\Prices\Price;
 
 class Individual extends Main implements IPrice
 {
-    /**
-     * @var int|mixed
-     */
-    protected $individualPrice;
-
-    public function __construct(int $individualPrice = 0)
+    public function __construct(protected $individualPrice = null)
     {
         $this->initConfg();
-        $this->individualPrice = $individualPrice;
     }
 
-    public function addPrice()
+    public function addPrice(): Price
     {
-        return $this->individualPrice > 0 ? $this->individualPrice : 0;
+        return new Price(value: $this->individualPrice ?: 0);
     }
 
     /**

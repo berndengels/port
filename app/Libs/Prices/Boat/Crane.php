@@ -2,21 +2,23 @@
 namespace App\Libs\Prices\Boat;
 
 use App\Libs\Prices\IPrice;
+use App\Libs\Prices\Price;
 
 class Crane extends Main implements IPrice
 {
-    protected $useCrane = false;
-    protected $weight;
-
-    public function __construct(bool $useCrane, $weight)
+    public function __construct(
+        protected bool $useCrane,
+        protected int $weight
+    )
     {
         $this->initConfig();
-        $this->useCrane = $useCrane;
-        $this->weight   = $weight;
     }
 
-    public function addPrice()
+    public function addPrice(): Price
     {
-        return $this->pricePerTon * $this->weight / 1000;
+        if($this->useCrane) {
+            return new Price($this->pricePerTon * $this->weight / 1000);
+        }
+        return new Price();
     }
 }

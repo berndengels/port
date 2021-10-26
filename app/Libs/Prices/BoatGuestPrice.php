@@ -14,7 +14,7 @@ class BoatGuestPrice extends PriceCalculator
     protected static $priceElectric;
     protected static $priceIndividual;
 
-    public function getPrice(Request $request)
+    public function getPrice(Request $request): array
     {
         $personsCount       = (int) $request->post('persons', 0);
         $length             = (int) $request->post('length', 0);
@@ -25,11 +25,14 @@ class BoatGuestPrice extends PriceCalculator
         $individual = new Individual($individualPrice);
         $persons    = new Persons($personsCount);
         $electric   = new Electric($hasElectric);
+        $dCount     = static::$daysCount;
+        $dPeriod    = static::$_datePeriod;
 
-        static::$priceBase          = $base->addPrice(parent::$_datePeriod);
-        static::$pricePersons       = $persons->addPrice(parent::$_datePeriod);
-        static::$priceElectric      = $electric->addPrice(parent::$_datePeriod);
+        static::$priceBase          = $base->setDaysCount($dCount)->addPrice($dPeriod);
+        static::$pricePersons       = $persons->setDaysCount($dCount)->addPrice($dPeriod);
+        static::$priceElectric      = $electric->setDaysCount($dCount)->addPrice($dPeriod);
         static::$priceIndividual    = $individual->addPrice();
+        static::$total = 0;
 
         if(static::$priceIndividual > 0) {
             $price = $this->set(static::$priceIndividual);

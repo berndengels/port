@@ -1,28 +1,28 @@
 <?php
 namespace App\Libs\Prices\BoatGuest;
 
+use App\Libs\Prices\Price;
 use DatePeriod;
 use App\Libs\Prices\IPrice;
 
 class Individual extends Main implements IPrice
 {
-    public function __construct($individualPrice = 0)
+    public function __construct(protected $individualPrice = null)
     {
         $this->initConfig();
-        $this->individualPrice = $individualPrice;
     }
 
-    public function addPrice()
+    public function addPrice(): Price
     {
-        return $this->individualPrice ?: 0;
+        return new Price(value: $this->individualPrice ?: 0);
     }
 
     /**
      * @return DatePeriod
      */
-    public function getIndividualPrice()
+    public function getIndividualPrice(): Price
     {
-        return $this->individualPrice;
+        return new Price(value: $this->individualPrice);
     }
 
     /**
@@ -31,7 +31,7 @@ class Individual extends Main implements IPrice
      */
     public function setIndividualPrice($individualPrice): Individual
     {
-        $this->individualPrice = $individualPrice;
+        $this->individualPrice = new Price(value: $individualPrice);
         return $this;
     }
 }

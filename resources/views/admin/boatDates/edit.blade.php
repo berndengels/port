@@ -6,8 +6,9 @@
         <x-form name="frm" method="post" :action="route('admin.boatDates.update', $boatDate)" class="w-full lg:w-1/2">
             @method('put')
             @bind($boatDate)
-            <x-form-select class="calc" name="boat_id" label="Boot" :options="$boatOptions" required />
-            <x-form-select class="calc" name="modus" label="Art" :options="$datesModi" required />
+            <x-form-input  class="calc" type="hidden" name="boat_id" required />
+            <x-form-input name="boat_name" label="Boot" unbind :default="$boatDate->boat->boat_name" disabled required />
+            <x-form-input class="calc" name="modus" label="Art" disabled required />
 
             <x-form-input class="calc" name="from" type="date" label="Von" :bind="false" :default="$boatDate->validFrom" required />
             <x-form-input class="calc" name="until" type="date" label="Bis" :bind="false" :default="$boatDate->validUntil" required />
@@ -24,6 +25,13 @@
             <x-form-input class="calc" name="default_price" label="eigener Preis" />
             <x-form-input name="price" label="Gesamt-Preis" required />
             <x-form-input type="hidden" name="prices" />
+            @endbind
+            @bind($boatDate->boat)
+            <x-form-input name="length" label="Länge" disabled />
+            <x-form-input name="width" label="Breite" disabled />
+            <x-form-input name="weight" label="Gewicht in Kg" disabled />
+            <x-form-input name="mast_length" label="Mastlänge" disabled />
+            <x-form-input name="mast_weight" label="Mastgewicht in Kg" disabled />
             @endbind
             <div class="mt-2">
                 <x-form-submit class="btn btn-save h-10 mt-3 w-full md:w-1/2" icon="fas fa-save">Speichern</x-form-submit>

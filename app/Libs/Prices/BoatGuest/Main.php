@@ -1,13 +1,13 @@
 <?php
 namespace App\Libs\Prices\BoatGuest;
 
-abstract class Main
+use App\Libs\Prices\MainPriceItem;
+
+abstract class Main extends MainPriceItem
 {
-    protected $length;
     protected $pricePerMeter;
     protected $priceElectricPerDay;
     protected $pricePersons = 0;
-    protected $useElectric = false;
     protected $personsInclusive = 0;
     protected $personsAdditional = 0;
 

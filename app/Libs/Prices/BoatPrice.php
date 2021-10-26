@@ -20,12 +20,13 @@ class BoatPrice extends PriceCalculator
     protected static $modusDatePeriod;
     protected static $priceIndividual = 0;
 
-    public function getPrice(Request $request)
+    public function getPrice(Request $request): array
     {
         $useCrane       = $request->post('crane');
         $useMastCrane   = $request->post('mast_crane');
         $useCleaning    = $request->post('cleaning');
         $modus          = $request->post('modus');
+
         $length         = (int) $request->post('length', 0);
         $width          = (int) $request->post('width', 0);
         $weight         = (int) $request->post('weight', 0);
@@ -36,10 +37,12 @@ class BoatPrice extends PriceCalculator
         $crane      = new Crane($useCrane, $weight);
         $mastCrane  = new MastCrane($useMastCrane, $mastWeight);
         $cleaning   = new Cleaning($useCleaning, $length);
+        $dCount     = static::$daysCount;
+        $dPeriod    = static::$_datePeriod;
 
         static::$modusDatePeriod    = $modus;
         static::$priceIndividual    = $individualPrice;
-        static::$priceBase          = $base->addPrice(parent::$_datePeriod);
+        static::$priceBase          = $base->setDaysCount($dCount)->addPrice($dPeriod);
         static::$priceCrane         = $crane->addPrice();
         static::$priceMastCrane     = $mastCrane->addPrice();
         static::$priceCleaning      = $cleaning->addPrice();

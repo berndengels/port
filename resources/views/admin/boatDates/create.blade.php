@@ -5,7 +5,7 @@
         <x-nav-link href="{{ route('admin.boatDates.'.$modus) }}" icon="fas fa-backward" class="btn">zurück</x-nav-link>
         <x-form name="frm" method="post" action="{{ route('admin.boatDates.store') }}" class="w-full lg:w-1/2">
 
-            <x-form-select class="calc" name="boat_id" label="Boot" :options="$boatOptions" required />
+            <x-form-select class="calc" class="boat" name="boat_id" label="Boot" :options="$boatOptions" required />
             <x-form-select class="calc" name="modus" label="Art" :options="$datesModi" :default="$modus" required />
 
             <x-form-input class="calc" name="from" type="date" label="Von" :default="$defaultFrom" required />
@@ -24,6 +24,12 @@
             <x-form-input name="price" label="Gesamt-Preis" required />
             <x-form-input type="hidden" name="prices" />
 
+            <x-form-input name="length" label="Länge" disabled />
+            <x-form-input name="width" label="Breite" disabled />
+            <x-form-input name="weight" label="Gewicht in Kg" disabled />
+            <x-form-input name="mast_length" label="Mastlänge" disabled />
+            <x-form-input name="mast_weight" label="Mastgewicht in Kg" disabled />
+
             <div class="mt-2">
                 <x-form-submit class="btn btn-save h-10 mt-3 w-full md:w-1/2" icon="fas fa-save">
                     Speichern
@@ -36,8 +42,25 @@
 @push('inline-scripts')
     <script>
 	    $(document).ready(() => {
-		    const calcUrl = "{{ route("admin.boatDates.price.calculate") }}";
-		    Prices.boatDates.calculate(document.frm, calcUrl);
+		    const priceCalcUrl = "{{ route("admin.boatDates.price.calculate") }}",
+            autofillParams = {
+	            length: document.frm.length,
+	            width: document.frm.width,
+	            weight: document.frm.weight,
+	            mast_length: document.frm.mast_length,
+	            mast_weight: document.frm.mast_weight,
+            };
+			let val = $('.boat').val();
+			if(val) {
+				MyForm.autofill("/admin/boats/json/" + val, autofillParams);
+            }
+			$('.boat').on('change', e => {
+				let val = e.target.value;
+				if(val && "" !== val) {
+					MyForm.autofill("/admin/boats/json/" + val, autofillParams);
+                }
+            });
+		    Prices.boatDates.calculate(document.frm, priceCalcUrl);
 	    })
     </script>
 @endpush

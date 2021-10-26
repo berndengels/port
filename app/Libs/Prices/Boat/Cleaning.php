@@ -2,22 +2,24 @@
 namespace App\Libs\Prices\Boat;
 
 use App\Libs\Prices\IPrice;
+use App\Libs\Prices\Price;
 
 class Cleaning extends Main implements IPrice
 {
-    public function __construct(bool $useCleaning, int $length)
+    public function __construct(
+        protected bool $useCleaning,
+        protected int $length
+    )
     {
         $this->initConfig();
-        $this->useCleaning  = $useCleaning;
-        $this->length       = $length;
     }
 
 
-    public function addPrice()
+    public function addPrice(): Price
     {
         if($this->useCleaning && $this->length > 0) {
-            return ceil($this->priceCleaningPerLength * $this->length);
+            return new Price(ceil($this->priceCleaningPerLength * $this->length));
         }
-        return 0;
+        return new Price();
     }
 }

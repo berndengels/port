@@ -2,17 +2,11 @@
 
 namespace App\Libs\Prices\Boat;
 
+use App\Libs\Prices\MainPriceItem;
 use Carbon\Carbon;
 
-abstract class Main
+abstract class Main extends MainPriceItem
 {
-    /**
-     * Summer berth or winter storage: saison/winter
-     * @var $modus
-     */
-    protected $modus;
-    protected $length;
-    protected $width;
     protected $priceSaisonFactor;
     protected $priceWinterFactor;
     protected $pricePerTon;
@@ -24,12 +18,7 @@ abstract class Main
     protected $defaultWinterDays;
     protected $defaultSaisonPrice;
     protected $defaultWinterPrice;
-    protected $useCleaning = false;
     protected $priceCleaningPerLength;
-    protected $useCrane = false;
-    protected $weight;
-    protected $useMastCrane = false;
-    protected $mastWeight;
     protected $priceMastCrane;
     protected $priceMastCraneUpperWeight;
 
@@ -46,10 +35,9 @@ abstract class Main
         $this->winterEnd            = Carbon::make($nextYear . '-' . config('port.prices.boat.winter_end'));
         $this->defaultSaisonDays    = $this->saisonEnd->diffInDays($this->saisonStart);
         $this->defaultWinterDays    = $this->winterEnd->diffInDays($this->winterStart);
-        $this->pricePerTon          = config('port.prices.boat.crane_per_ton');
+        $this->pricePerTon          = (int) config('port.prices.boat.crane_per_ton');
         $this->priceCleaningPerLength       = config('port.prices.boat.cleaning_per_length');
         $this->priceMastCrane               = (int) config('port.prices.boat.mast_crane');
         $this->priceMastCraneUpperWeight    = (int) config('port.prices.boat.mast_crane_upper_per_100kg');
-
     }
 }

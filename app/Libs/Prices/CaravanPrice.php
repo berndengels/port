@@ -14,7 +14,7 @@ class CaravanPrice extends PriceCalculator
     protected static $priceBase = 0;
     protected static $priceIndividual = 0;
 
-    public function getPrice(Request $request)
+    public function getPrice(Request $request): array
     {
         $personsCount       = $request->post('persons');
         $carLength          = $request->post('carlength');
@@ -25,10 +25,12 @@ class CaravanPrice extends PriceCalculator
         $persons    = new Persons($personsCount);
         $electric   = new Electric($hasElectric);
         $individual = new Individual($individualPrice);
+        $dCount     = static::$daysCount;
+        $dPeriod    = static::$_datePeriod;
 
-        static::$priceBase        = $base->addPrice(parent::$_datePeriod);
-        static::$pricePersons     = $persons->addPrice(parent::$_datePeriod);
-        static::$priceElectric    = $electric->addPrice(parent::$_datePeriod);
+        static::$priceBase        = $base->setDaysCount($dCount)->addPrice($dPeriod);
+        static::$pricePersons     = $persons->setDaysCount($dCount)->addPrice($dPeriod);
+        static::$priceElectric    = $electric->setDaysCount($dCount)->addPrice($dPeriod);
         static::$priceIndividual  = $individual->addPrice();
         static::$total = 0;
 

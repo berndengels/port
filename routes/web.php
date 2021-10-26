@@ -77,6 +77,7 @@ Route::group([
 
     Route::get('customers/guests', [AdminCustomerController::class,'guests'])->name('customers.guests');
     Route::get('boats/guests', [AdminBoatController::class,'guests'])->name('boats.guests');
+    Route::get('boats/json/{boat}', [AdminBoatController::class,'getJson'])->name('boats.json');
     Route::get('boatDates/invoice/{boatDate}', [AdminBoatDatesController::class, 'invoice'])->name('boatDates.invoice');
     Route::get('boatDates/sendInvoice/{boatDate}', [AdminBoatDatesController::class, 'sendInvoice'])->name('boatDates.sendInvoice');
     Route::get('boatDates/saison', [AdminBoatDatesController::class, 'saison'])->name('boatDates.saison');

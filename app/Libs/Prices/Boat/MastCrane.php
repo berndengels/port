@@ -1,27 +1,29 @@
 <?php
 namespace App\Libs\Prices\Boat;
 
-use DatePeriod;
+use App\Libs\Prices\Price;
 use App\Libs\Prices\IPrice;
 
 class MastCrane extends Main implements IPrice
 {
-    public function __construct(bool $useMastCrane, int $mastWeight)
+    public function __construct(
+        protected bool $useMastCrane,
+        protected int $mastWeight
+    )
     {
         $this->initConfig();
-        $this->useMastCrane = $useMastCrane;
-        $this->mastWeight   = $mastWeight;
     }
 
-    public function addPrice()
+    public function addPrice(): Price
     {
+        $value = 0;
         if($this->useMastCrane && $this->mastWeight > 0) {
             if($this->mastWeight < 100) {
-                return $this->priceMastCrane;
+                $value = $this->priceMastCrane;
             } else {
-                return $this->priceMastCrane + $this->priceMastCraneUpperWeight * $this->mastWeight / 100;
+                $value = $this->priceMastCrane + $this->priceMastCraneUpperWeight * $this->mastWeight / 100;
             }
         }
-        return 0;
+        return new Price($value);
     }
 }
