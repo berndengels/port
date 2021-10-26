@@ -35,7 +35,7 @@ class AdminUserController extends AdminController
             $query->whereId($user->id);
         }
 
-        $data = $query->paginate(config('port.main.default.pagination.limit'));
+        $data = $query->paginate($this->paginatorLimit);
         return view('admin.users.index', compact('data'));
     }
 
@@ -57,7 +57,8 @@ class AdminUserController extends AdminController
      */
     public function create()
     {
-        return view('admin.users.create', ['roles' => $this->rolesOptions ]);
+        $roles = $this->roleRepository->options()->getSelectOptions();
+        return view('admin.users.create', compact('roles'));
     }
 
     /**
@@ -90,7 +91,7 @@ class AdminUserController extends AdminController
         $user->password = null;
         return view('admin.users.edit', [
             'user'  => $user,
-            'roles' => $this->rolesOptions,
+            'roles' => $this->roleRepository->options()->getSelectOptions(),
         ]);
     }
 

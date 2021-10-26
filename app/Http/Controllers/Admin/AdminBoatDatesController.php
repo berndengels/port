@@ -6,6 +6,7 @@ use App\Http\Requests\BoatDatesRequest;
 use App\Mail\InvoiceMail;
 use App\Models\Boat;
 use App\Models\BoatDates;
+use App\Repositories\BoatRepository;
 use Barryvdh\DomPDF\PDF;
 use Carbon\Carbon;
 use Exception;
@@ -21,11 +22,11 @@ use Illuminate\Support\Str;
 
 class AdminBoatDatesController extends AdminController
 {
-    protected $boatOptions;
     protected $datesModi;
 
     public function __construct()
     {
+        parent::__construct();
         $this->datesModi = config('port.main.boat.dates.modi');
     }
 
@@ -134,11 +135,8 @@ class AdminBoatDatesController extends AdminController
             $defaultFrom    = Carbon::create($year .'-'. config('port.prices.boat.winter_start'));
             $defaultUntil   = Carbon::create($nextYear .'-'. config('port.prices.boat.winter_end'));
         }
-        $boats = Boat::with('customer')
-            ->whereHas('customer', function (Builder $query) {
-                $query->where('customer_type', '=', 'permanent');
-            })->orderBy('boat_name')->get();
-        $this->boatOptions = $boats->keyBy('id')->map->boat_name->prepend('Boot wählen','');
+        $options = $this->boatRepository->options('boat_name');
+        $this->boatOptions = $options->getSelectOptions();
 
         return view('admin.boatDates.create', [
             'modus'         => $request->modus ?? 'saison',
@@ -176,11 +174,8 @@ class AdminBoatDatesController extends AdminController
     public function edit(BoatDates $boatDate)
     {
         $boatDate->load('boat');
-        $boats = Boat::with('customer')
-            ->whereHas('customer', function (Builder $query) {
-                $query->where('customer_type', '=', 'permanent');
-            })->orderBy('boat_name')->get();
-        $this->boatOptions = $boats->keyBy('id')->map->boat_name->prepend('Boot wählen','');
+        $options = $this->boatRepository->options('boat_name');
+        $this->boatOptions = $options->getSelectOptions();
 
         return view('admin.boatDates.edit', [
             'boatDate'      => $boatDate,

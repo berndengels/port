@@ -28,7 +28,7 @@ class AdminCaravanController extends AdminController
         ;
 
         return view('admin.caravans.index', [
-            'caravanOptions' => $this->caravanOptions,
+            'caravanOptions' => $this->caravanRepository->options('carnumber')->getSelectOptions(),
             'data'  => $data,
             'id'    => $caravanId,
         ]);
@@ -53,7 +53,7 @@ class AdminCaravanController extends AdminController
     public function create()
     {
         return view('admin.caravans.create', [
-            'countries' => $this->countries,
+            'countries' => $this->countryRepository->options('de')->getSelectOptions(),
         ]);
     }
 
@@ -77,7 +77,7 @@ class AdminCaravanController extends AdminController
      */
     public function edit(Caravan $caravan)
     {
-        $countries = $this->countries;
+        $countries = $this->countryRepository->options('de')->getSelectOptions();
         return view('admin.caravans.edit', compact('caravan','countries'));
     }
 

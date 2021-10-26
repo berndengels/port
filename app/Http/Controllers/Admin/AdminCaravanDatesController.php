@@ -108,7 +108,7 @@ class AdminCaravanDatesController extends AdminController
             'data'              => $paginated,
             'years'             => $this->years,
             'monthsByYear'      => $this->monthsByYear,
-            'caravanOptions'    => $this->caravanOptions,
+            'caravanOptions'    => $this->caravanRepository->options('carnumber')->getSelectOptions(),
             'dublicateOptions'  => $dublicateOptions,
             'yearOptions'       => $yearOptions,
             'monthOptions'      => $monthOptions,
@@ -141,8 +141,8 @@ class AdminCaravanDatesController extends AdminController
     public function create()
     {
         return view('admin.caravanDates.create', [
-            'caravanOptions' => $this->caravanOptionsAutocomplete->toJson(),
-            'countries' => $this->countries,
+            'caravanOptions' => $this->caravanRepository->options('carnumber')->getSelectOptionsData()->toJson(),
+            'countries' => $this->countryRepository->options('de')->getSelectOptions(),
         ]);
     }
 
@@ -183,9 +183,10 @@ class AdminCaravanDatesController extends AdminController
      */
     public function edit(CaravanDates $caravanDate)
     {
-        $countries = $this->countries;
-        $caravanOptions = $this->caravanOptions;
         $caravanDate->load('caravan');
+        $countries = $this->countryRepository->options('de')->getSelectOptions();
+        $caravanOptions = $this->caravanRepository->options('carnumber')->getSelectOptionsData()->toJson();
+
         return view('admin.caravanDates.edit', compact('caravanDate','caravanOptions', 'countries'));
     }
 

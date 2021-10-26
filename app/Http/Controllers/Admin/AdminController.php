@@ -1,10 +1,12 @@
 <?php
 namespace App\Http\Controllers\Admin;
 
+use App\Libs\AppCache;
 use App\Models\Customer;
 use App\Models\Caravan;
 use App\Models\Country;
 use App\Models\Role;
+use App\Repositories\BoatRepository;
 use App\Repositories\CaravanRepository;
 use App\Repositories\CountryRepository;
 use App\Repositories\CustomerRepository;
@@ -43,19 +45,23 @@ class AdminController extends BaseController
      */
     protected $rolesOptions;
     protected $paginatorLimit;
+    /**
+     * @var BoatRepository
+     */
+    protected $boatRepository;
+    protected $countryRepository;
+    protected $caravanRepository;
+    protected $customerRepository;
+    protected $roleRepository;
 
     public function __construct()
     {
 //        $this->middleware(['auth:admin','auth:customer']);
-        $this->paginatorLimit = config('port.main.default.pagination.limit');
-        $this->countries = CountryRepository::options('de');
-
-        $this->caravanOptionsAutocomplete = CaravanRepository::optionsData('carnumber');
-        $this->caravanOptions = CaravanRepository::options('carnumber');
-
-        $this->customerOptionsAutocomplete = CustomerRepository::optionsData();
-        $this->customerOptions = CustomerRepository::options()->prepend('Namen wählen','');
-
-        $this->rolesOptions = RoleRepository::options();
+        $this->paginatorLimit       = config('port.main.default.pagination.limit');
+        $this->countryRepository    = new CountryRepository();
+        $this->caravanRepository    = new CaravanRepository();
+        $this->customerRepository   = new CustomerRepository();
+        $this->roleRepository       = new RoleRepository();
+        $this->boatRepository       = new BoatRepository();
     }
 }
