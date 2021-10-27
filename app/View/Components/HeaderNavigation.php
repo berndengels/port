@@ -10,10 +10,12 @@ use Illuminate\Support\Facades\Route;
 
 class HeaderNavigation extends Component
 {
-    public $items;
-    public $current;
-    public $currentSubRoute;
+    public $currentRouteName;
+    public $currentRoute;
+    public $currentTopRouteName;
+    public $currentRoutes;
     protected $subActions = ['show','edit','update','create','store','destroy'];
+    public $subRoutes = [];
 
     /**
      * Create a new component instance.
@@ -22,14 +24,20 @@ class HeaderNavigation extends Component
      */
     public function __construct(Request $request)
     {
-        $this->items = $request->session()->get('currentRoutes') ?? [];
-        $this->current = Route::current()->getName();
-        [$prefix, $controllerPrefix, $action] = explode('.', $this->current);
+        $this->currentRoute         = Route::current();
+        $this->currentTopRouteName  = $request->session()->get('currentTopRouteName');
+        $this->currentRoutes        = $request->session()->get('currentRoutes') ?? [];
+        $this->currentRouteName     = $this->currentRoute->getName();
+        $this->subActions           = collect($this->subActions);
 
-        if(in_array($action, $this->subActions)) {
-            $this->currentSubRoute = "{$prefix}.{$controllerPrefix}.{$action}";
-            dump($this->currentSubRoute);
+        [$prefix, $controllerPrefix,] = explode('.', $this->currentRouteName);
+        $this->subRoutes[$this->currentTopRouteName] = collect([$this->currentTopRouteName]);
+
+        $subs = $this->subActions->map(fn($action) => "{$prefix}.{$controllerPrefix}.{$action}");
+        foreach($subs as $sub) {
+            $this->subRoutes[$this->currentTopRouteName]->push($sub);
         }
+        $this->subRoutes[$this->currentTopRouteName] = $this->subRoutes[$this->currentTopRouteName]->keyBy(fn($v) => $v);
     }
 
     /**
