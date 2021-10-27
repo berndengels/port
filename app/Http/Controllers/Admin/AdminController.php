@@ -11,14 +11,12 @@ use App\Repositories\CaravanRepository;
 use App\Repositories\CountryRepository;
 use App\Repositories\CustomerRepository;
 use App\Repositories\RoleRepository;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Collection;
 use App\Filters\Caravan\CaravanFilter;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Support\Facades\Event;
 
 class AdminController extends BaseController
 {
