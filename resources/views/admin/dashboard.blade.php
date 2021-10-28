@@ -2,31 +2,29 @@
 
 @section('main')
 <div class="flex-container-dashboard admin">
-
     <div class="flex-item-dashboard p-3 widget">
         <div class="title">Wetter</div>
         <div class="content mt-2 weather"></div>
     </div>
-
+    <x-open-sea-map />
     @if($caravansFromToday && $caravansFromToday->count() > 0)
     <div class="flex-item-dashboard p-3 widget">
-        <h3>Wohnmobil heute:</h3>
+        <div class="title">Wohnmobile heute:</div>
         @foreach($caravansFromToday as $item)
-            <div class="carnumber">
+            <div class="content carnumber">
                 {{ $item }}
             </div>
         @endforeach
     </div>
     @endif
-
-    <div class="flex-item-dashboard p-0">
-        <x-open-sea-map class="w-full h-full" lat="{{ $map['lat'] }}" lng="{{ $map['lng'] }}" zoom="{{ $map['zoom'] }}" />
-    </div>
 </div>
+<x-tooltip id="tooltip" />
 @endsection
 
 @push('inline-scripts')
     <script>
-		Weather.get('.flex-container-dashboard .widget .weather');
+	    const routePrefix = "{{ route('admin.car.info') }}"
+	    Car.info(routePrefix, '.carnumber', '#tooltip')
+	    Weather.get('.flex-container-dashboard .widget .weather');
     </script>
 @endpush

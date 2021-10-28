@@ -34,13 +34,13 @@ class CaravanPrice extends PriceCalculator
         static::$priceIndividual  = $individual->addPrice();
         static::$total = 0;
 
-        $result = $this
+        $price = $this
             ->add(static::$priceBase)
             ->add(static::$pricePersons)
             ->add(static::$priceElectric)
             ->set(static::$priceIndividual)
-            ->formatResult()
         ;
-        return $result;
+
+        return $price->formatResult();
     }
 }

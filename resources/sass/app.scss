@@ -98,15 +98,6 @@ tr td:last-child { border-bottom-right-radius: 5px; }
     color: #fff;
 }
 
-.tooltip{
-    visibility: hidden;
-    position: absolute;
-}
-.has-tooltip:hover .tooltip {
-    visibility: visible;
-    z-index: 100;
-}
-
 .btn-wrapper {
     &.bg-red {
         .btn {

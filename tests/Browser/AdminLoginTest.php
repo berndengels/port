@@ -12,7 +12,7 @@ class AdminLoginTest extends DuskTestCase
      *
      * @return void
      */
-    public function testExample()
+    public function test_admin_login()
     {
         $this->browse(function (Browser $browser) {
             $browser->visit('/admin/login')

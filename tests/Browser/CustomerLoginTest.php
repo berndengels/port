@@ -13,7 +13,7 @@ class CustomerLoginTest extends DuskTestCase
      *
      * @return void
      */
-    public function testExample()
+    public function test_customer_login()
     {
         $this->browse(function (Browser $browser) {
             $browser->visit('/login')

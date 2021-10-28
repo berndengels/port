@@ -47,20 +47,12 @@ class AdminBoatController extends AdminController
      * @param Boat $boat
      * @return Response
      */
-    public function show(Boat $boat)
+    public function show(Boat $boat, Request $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param Boat $boat
-     * @return Response
-     */
-    public function getJson(Boat $boat)
-    {
-        return response()->json($boat);
+        if($request->isXmlHttpRequest() && $request->wantsJson()) {
+            return response()->json($boat);
+        }
+        return view('admin.boats.show', compact('boat'));
     }
 
     /**
@@ -140,6 +132,11 @@ class AdminBoatController extends AdminController
      */
     public function destroy(Boat $boat)
     {
-        //
+        try {
+            $boat->delete();
+            return redirect()->route('admin.boats.index')->with('success', 'Boot erfogreich gelöscht!');
+        } catch(Exception $e) {
+            return redirect()->route('admin.boats.index')->with('error', $e->getMessage());
+        }
     }
 }

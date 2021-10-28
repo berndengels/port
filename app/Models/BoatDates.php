@@ -1,6 +1,7 @@
 <?php
 namespace App\Models;
 
+use Database\Factories\BoatDatesFactory;
 use Eloquent;
 use Illuminate\Support\Carbon;
 use App\Traits\Models\ClearCache;
@@ -35,6 +36,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @method static Builder|BoatDates wherePrice($value)
  * @method static Builder|BoatDates wherePrices($value)
  * @method static Builder|BoatDates whereUntil($value)
+ * @property-read mixed $base_price
+ * @property-read mixed $cleaning
+ * @property-read mixed $crane
+ * @property-read mixed $mast_crane
+ * @property-read mixed $price_data
+ * @method static BoatDatesFactory factory(...$parameters)
  */
 class BoatDates extends Model
 {

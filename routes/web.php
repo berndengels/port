@@ -70,14 +70,13 @@ Route::group([
 Route::group([
     'prefix'    => 'admin',
     'as'        => 'admin.',
-    'middleware' => ['auth:admin'],
+//    'middleware' => ['auth:admin'],
 ],function () {
     Route::get('', [AdminDashboardController::class, 'show'])->name('dashboard');
     Route::post('logout', [AdminLoginController::class,'logout'])->name('logout');
 
     Route::get('customers/guests', [AdminCustomerController::class,'guests'])->name('customers.guests');
     Route::get('boats/guests', [AdminBoatController::class,'guests'])->name('boats.guests');
-    Route::get('boats/json/{boat}', [AdminBoatController::class,'getJson'])->name('boats.json');
     Route::get('boatDates/invoice/{boatDate}', [AdminBoatDatesController::class, 'invoice'])->name('boatDates.invoice');
     Route::get('boatDates/sendInvoice/{boatDate}', [AdminBoatDatesController::class, 'sendInvoice'])->name('boatDates.sendInvoice');
     Route::get('boatDates/saison', [AdminBoatDatesController::class, 'saison'])->name('boatDates.saison');
@@ -104,7 +103,7 @@ Route::group([
 
     Route::get('caravan/price/excel/{year?}/{month?}', [AdminPriceController::class, 'excel'])->name('caravan.price.excel');
     Route::get('caravan/price/pdf/{year?}/{month?}', [AdminPriceController::class, 'pdf'])->name('caravan.price.pdf');
-    Route::get('car/info/{caravanId}', [AdminCarLicensePlateController::class, 'info'])->name('car.info');
+    Route::get('car/info', [AdminCarLicensePlateController::class, 'info'])->name('car.info');
     Route::get('route/current/{currentRouteName}', [AdminRouteController::class, 'setCurrentMenu'])->name('route.current');
     Route::post('upload/image/{paramName}', [AdminUploadController::class, 'imageUpload'])->name('upload.image');
 

@@ -52,12 +52,12 @@
             };
 			let val = $('.boat').val();
 			if(val) {
-				MyForm.autofill("/admin/boats/json/" + val, autofillParams);
+				MyForm.autofill("/admin/boats/" + val, autofillParams);
             }
 			$('.boat').on('change', e => {
 				let val = e.target.value;
 				if(val && "" !== val) {
-					MyForm.autofill("/admin/boats/json/" + val, autofillParams);
+					MyForm.autofill("/admin/boats/" + val, autofillParams);
                 }
             });
 		    Prices.boatDates.calculate(document.frm, priceCalcUrl);

@@ -48,16 +48,13 @@ class BoatPrice extends PriceCalculator
         static::$priceCleaning      = $cleaning->addPrice();
         static::$total = 0;
 
-        if(static::$priceIndividual > 0) {
-            $price = static::$priceIndividual;
-        } else {
-            $price = $this
-                ->add(static::$priceBase)
-                ->add(static::$priceCrane)
-                ->add(static::$priceMastCrane)
-                ->add(static::$priceCleaning)
-            ;
-        }
+        $price = $this
+            ->add(static::$priceBase)
+            ->add(static::$priceCrane)
+            ->add(static::$priceMastCrane)
+            ->add(static::$priceCleaning)
+            ->set(static::$priceIndividual)
+        ;
 
         return $price->formatResult();
     }

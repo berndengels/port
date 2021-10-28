@@ -6,6 +6,7 @@ use App\Models\Customer;
 use App\Models\Caravan;
 use App\Models\Country;
 use App\Models\Role;
+use App\Repositories\BoatGuestsRepository;
 use App\Repositories\BoatRepository;
 use App\Repositories\CaravanRepository;
 use App\Repositories\CountryRepository;
@@ -47,6 +48,7 @@ class AdminController extends BaseController
      * @var BoatRepository
      */
     protected $boatRepository;
+    protected $boatGuestRepository;
     protected $countryRepository;
     protected $caravanRepository;
     protected $customerRepository;
@@ -54,12 +56,12 @@ class AdminController extends BaseController
 
     public function __construct()
     {
-//        $this->middleware(['auth:admin','auth:customer']);
         $this->paginatorLimit       = config('port.main.default.pagination.limit');
         $this->countryRepository    = new CountryRepository();
         $this->caravanRepository    = new CaravanRepository();
         $this->customerRepository   = new CustomerRepository();
         $this->roleRepository       = new RoleRepository();
         $this->boatRepository       = new BoatRepository();
+        $this->boatGuestRepository  = new BoatGuestsRepository();
     }
 }

@@ -1,6 +1,7 @@
 <?php
 namespace App\Models;
 
+use Database\Factories\CustomerFactory;
 use Eloquent;
 use App\Traits\Models\ClearCache;
 use Illuminate\Auth\Passwords\CanResetPassword;
@@ -58,6 +59,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @mixin Eloquent
  * @property int|null $confirmed
  * @method static Builder|Customer whereConfirmed($value)
+ * @method static CustomerFactory factory(...$parameters)
  */
 class Customer extends Authenticatable
 {

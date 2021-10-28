@@ -1,5 +1,5 @@
 
-<div id="map" class="flex-item-dashboard p-3 widget open-sea-map"></div>
+<div id="map" class="flex-item-dashboard p-0 widget open-sea-map"></div>
 
 @push('inline-scripts')
 <script>

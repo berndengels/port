@@ -2,6 +2,7 @@
 
 namespace Tests;
 
+use App\Models\AdminUser;
 use Facebook\WebDriver\Chrome\ChromeOptions;
 use Facebook\WebDriver\Remote\DesiredCapabilities;
 use Facebook\WebDriver\Remote\RemoteWebDriver;
@@ -10,6 +11,8 @@ use Laravel\Dusk\TestCase as BaseTestCase;
 abstract class DuskTestCase extends BaseTestCase
 {
     use CreatesApplication;
+
+    protected $adminUser;
 
     /**
      * Prepare for Dusk test execution.
@@ -57,5 +60,17 @@ abstract class DuskTestCase extends BaseTestCase
     {
         return isset($_SERVER['DUSK_HEADLESS_DISABLED']) ||
                isset($_ENV['DUSK_HEADLESS_DISABLED']);
+    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        // your code goes here
+    }
+
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+        // your code goes here
     }
 }

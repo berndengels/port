@@ -7,14 +7,21 @@ class NavionicsMap extends Map
     protected $view = 'components.navionics-map';
 
     /**
-     * Create a new component instance.
-     *
-     * @return void
+     * @return string
      */
-    public function __construct(float $lat, float $lng, int $zoom, string $token)
+    public function getToken(): string
     {
-        $this->token    = $token;
-        parent::__construct($lat, $lng, $zoom);
+        return $this->token;
+    }
+
+    /**
+     * @param string $token
+     * @return NavionicsMap
+     */
+    public function setToken(string $token): NavionicsMap
+    {
+        $this->token = $token;
         $this->viewParams += ['token' => $this->token];
+        return $this;
     }
 }

@@ -70,13 +70,12 @@ class AdminPriceController extends AdminController
      */
     public function calculateGuestBoatDates(Request $request)
     {
-        $boatId     = $request->post('boat_id');
         $from       = $request->post('from');
         $until      = $request->post('until');
-        $boat       = BoatGuest::find($boatId);
+        $length     = $request->post('length');
         $response   = ['error' => true];
 
-        if($boat && $from && $until) {
+        if($from && $until && $length) {
             $from       = new Carbon($from, config('app.timezone'));
             $until      = new Carbon($until, config('app.timezone'));
             $response   = (new BoatGuestPrice($from, $until))->getPrice($request);
@@ -85,7 +84,7 @@ class AdminPriceController extends AdminController
         return response()->json($response);
     }
 
-    public function excel($year = null, $month = nll)
+    public function excel($year = null, $month = null)
     {
         $now = Carbon::now()->format('Ymd-Hi');
         $export = new CaravanDatesExport($year, $month);

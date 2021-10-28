@@ -99,8 +99,10 @@
 						&.beschreibung {
 							margin-left: 1.0rem;
 							div {
-								font-size: 1.5rem;
+								font-size: 1.0rem;
 								line-height: 2.0;
+								white-space: wrap;
+								font-weight: bold;
 							}
 						}
 						&.temperatur {

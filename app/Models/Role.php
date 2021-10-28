@@ -33,6 +33,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @method static Builder|Role whereName($value)
  * @method static Builder|Role whereUpdatedAt($value)
  * @mixin Eloquent
+ * @property-read mixed $str_roles
  */
 class Role extends BaseModel
 {

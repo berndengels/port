@@ -8,7 +8,7 @@ use App\Libs\Prices\IDailyPrice;
 
 class Persons extends Main implements IDailyPrice
 {
-    public function __construct(protected int $persons = 0)
+    public function __construct(protected $persons = null)
     {
         $this->initConfig();
     }
@@ -16,7 +16,7 @@ class Persons extends Main implements IDailyPrice
     public function addPrice(DatePeriod $days): Price
     {
         $value = 0;
-        if($this->persons > $this->personsInclusive) {
+        if($this->persons && (int) $this->persons > $this->personsInclusive) {
             $value = ($this->persons - $this->personsInclusive) * $this->daysCount * $this->personsAdditional;
         }
         return new Price($value);
@@ -27,7 +27,7 @@ class Persons extends Main implements IDailyPrice
      */
     public function getPersons(): int
     {
-        return $this->persons;
+        return (int) $this->persons;
     }
 
     /**

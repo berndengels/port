@@ -8,31 +8,20 @@ use Illuminate\View\Component;
 
 class SearchFilter extends Component
 {
-    public $name;
-    public $label;
-    public $placeholder;
-    public $method = 'get';
-    public $action;
-    public $options;
-    public $css;
-
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct(string $name, string $action, string $label = '', string $placeholder = '',array $options = null, string $method = null, string $css = '')
-    {
-        $this->name     = $name;
-        $this->action   = $action;
-        $this->label    = $label;
-        $this->placeholder = $placeholder;
-        $this->options  = $options;
-        if($method) {
-            $this->method = $method;
-        }
-        $this->css = $css;
-    }
+    public function __construct(
+        public string $name,
+        public string $action,
+        public string $label = '',
+        public string $placeholder = '',
+        public string $method = 'get',
+        public string $css = '',
+        public $options = null
+    ) {}
 
     /**
      * Get the view / contents that represent the component.

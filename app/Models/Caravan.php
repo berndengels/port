@@ -40,7 +40,7 @@ class Caravan extends Model
 
     protected $table = 'caravans';
     protected $guarded = ['id'];
-    protected $appends = ['text'];
+    protected $appends = ['text','info'];
     public $timestamps = false;
 
     protected $casts = [
@@ -50,6 +50,15 @@ class Caravan extends Model
     public function getTextAttribute()
     {
         return $this->carnumber;
+    }
+
+    public function getInfoAttribute()
+    {
+        if($this->country->code === 'DE' && preg_match("/^[a-z]{1,3}\-/i", $this->carnumber)) {
+            list($code,) = explode('-', $this->carnumber);
+            return CarLicensePlate::where('code', '=', $code)->get()->first();
+        }
+        return null;
     }
 
     public function dates() {

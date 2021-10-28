@@ -1,10 +1,9 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
 
 use App\Models\BoatGuest;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Http\Requests\BoatGuestRequest;
 
 class AdminBoatGuestController extends AdminController
 {
@@ -27,7 +26,7 @@ class AdminBoatGuestController extends AdminController
      */
     public function show(BoatGuest $boatGuest)
     {
-        //
+        return view('admin.boatGuests.show', compact('boatGuest'));
     }
 
     /**
@@ -37,18 +36,24 @@ class AdminBoatGuestController extends AdminController
      */
     public function create()
     {
-        //
+        return view('admin.boatGuests.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param BoatGuestRequest $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(BoatGuestRequest $request)
     {
-        //
+        $validated  = $request->validated();
+        try {
+            BoatGuest::create($validated);
+            return redirect()->route('admin.boatGuests.index')->with('success', 'Gastboot erfogreich angelegt!');
+        } catch(Exception $e) {
+            return redirect()->route('admin.boatGuests.create', $request)->with('error', $e->getMessage());
+        }
     }
 
     /**
@@ -59,19 +64,25 @@ class AdminBoatGuestController extends AdminController
      */
     public function edit(BoatGuest $boatGuest)
     {
-        //
+        return view('admin.boatGuests.edit', compact('boatGuest'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
+     * @param BoatGuestRequest $request
      * @param BoatGuest $boatGuest
      * @return Response
      */
-    public function update(Request $request, BoatGuest $boatGuest)
+    public function update(BoatGuestRequest $request, BoatGuest $boatGuest)
     {
-        //
+        $validated  = $request->validated();
+        try {
+            $boatGuest->update($validated);
+            return redirect()->route('admin.boatGuests.index')->with('success', 'Gastboot erfogreich bearbeitet!');
+        } catch(Exception $e) {
+            return redirect()->route('admin.boatGuests.create', $request)->with('error', $e->getMessage());
+        }
     }
 
     /**
@@ -82,6 +93,11 @@ class AdminBoatGuestController extends AdminController
      */
     public function destroy(BoatGuest $boatGuest)
     {
-        //
+        try {
+            $boatGuest->delete();
+            return redirect()->route('admin.boatGuests.index')->with('success', 'Gastboot erfogreich gelöscht!');
+        } catch(Exception $e) {
+            return redirect()->route('admin.boatGuests.index')->with('error', $e->getMessage());
+        }
     }
 }

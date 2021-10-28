@@ -1,6 +1,7 @@
 <?php
 namespace App\Models;
 
+use Database\Factories\BoatFactory;
 use Eloquent;
 use App\Traits\Models\ClearCache;
 use Illuminate\Database\Eloquent\Builder;
@@ -44,6 +45,7 @@ use Illuminate\Support\Facades\DB;
  * @method static Builder|Boat whereMastLength($value)
  * @method static Builder|Boat whereMastWeight($value)
  * @method static Builder|Boat whereWeight($value)
+ * @method static BoatFactory factory(...$parameters)
  */
 class Boat extends Model
 {

@@ -2,11 +2,18 @@
 namespace App\Repositories\Ext;
 
 use App\Libs\AppCache;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 
 trait SelectOptions
 {
+    /**
+     * @var Collection
+     */
     protected $selectOptions;
+    /**
+     * @var Collection
+     */
     protected $selectOptionsData;
 
     public function getOptionsData($orderBy = 'name', $relations = [])
@@ -19,7 +26,7 @@ trait SelectOptions
         return $this->selectOptionsData;
     }
 
-    public function optionsData($orderBy = 'name', $relations = [])
+    public function optionsData($orderBy = 'name', $relations = []): Collection
     {
         return Cache::remember(static::$cacheKeyOptionsData, AppCache::TTL, fn() => $this->getOptionsData(
             orderBy: $orderBy,
@@ -27,7 +34,7 @@ trait SelectOptions
         ));
     }
 
-    public function options($textFieldName = 'name', $keyFieldName = 'id', $relations = [])
+    public function options($textFieldName = 'name', $keyFieldName = 'id', $relations = []): self
     {
         $this->selectOptionsData = $this->optionsData(
             orderBy: $textFieldName,
@@ -43,17 +50,17 @@ trait SelectOptions
     }
 
     /**
-     * @return mixed
+     * @return Collection
      */
-    public function getSelectOptions()
+    public function getSelectOptions(): Collection
     {
         return $this->selectOptions;
     }
 
     /**
-     * @return mixed
+     * @return Collection
      */
-    public function getSelectOptionsData()
+    public function getSelectOptionsData(): Collection
     {
         return $this->selectOptionsData;
     }

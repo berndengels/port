@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Database\Factories\PageFactory;
 use Eloquent;
 use App\Traits\Models\ClearCache;
 use App\Traits\Models\Filter\HasSlug;
@@ -23,6 +24,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @method static Builder|Page whereSlug($value)
  * @method static Builder|Page whereTitle($value)
  * @mixin Eloquent
+ * @method static PageFactory factory(...$parameters)
  */
 class Page extends Model
 {

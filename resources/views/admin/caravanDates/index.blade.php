@@ -76,18 +76,16 @@
             </tr>
             @foreach($data as $item)
                 <tr>
-                    <td>
-                        <a class="carnumber cursor-pointer" href="{{ route('admin.caravanDates.show', ['caravanDate' => $item]) }}">
-                            {{ $item->caravan->carnumber }}
-                        </a>
-                    </td>
-
+                    <td><span class="carnumber cursor-pointer">{{ $item->caravan->carnumber }}</span></td>
                     <td class="hidden md:table-cell">{{ $item->caravan->carlength }} m</td>
                     <td>{{ $item->from->format('d.m.y') }}</td>
                     <td>{{ $item->until->format('d.m.y') }}</td>
                     <td class="hidden md:table-cell">{{ $item->days }}</td>
-                    <td class="hidden md:table-cell">{{ $item->price }} €</td>
-
+                    <td class="hidden md:table-cell">
+                        <a class="cursor-pointer" href="{{ route('admin.caravanDates.show', ['caravanDate' => $item]) }}">
+                            {{ $item->price }} €
+                        </a>
+                    </td>
                     <td>
                         <x-nav-link href="{{ route('admin.caravanDates.edit', $item) }}" icon="fas fa-edit" class="btn" title="Bearbeiten">
                             <span class="hidden md:visible">Edit</span>
@@ -113,6 +111,7 @@
 
         {{ $data->appends($queryString)->links() }}
     </div>
+    <x-tooltip id="tooltip" />
 @endsection
 
 @push('inline-scripts')
@@ -167,5 +166,8 @@
 			item.onchange = filter
         })
 	    frm.querySelector('.btn-reset').onclick = reset
+
+	    const routePrefix = "{{ route('admin.car.info') }}"
+	    Car.info(routePrefix, '.carnumber', '#tooltip')
     </script>
 @endpush

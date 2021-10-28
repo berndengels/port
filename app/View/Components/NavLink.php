@@ -8,26 +8,18 @@ use Illuminate\View\Component;
 
 class NavLink extends Component
 {
-
-    public $href;
-    public $text;
-    public $icon;
-    public $class;
-    public $title;
-
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct(string $href, string $text = null, string $icon = null, string $class = null, string $title = null)
-    {
-        $this->href     = $href;
-        $this->text     = $text;
-        $this->icon     = $icon;
-        $this->class    = $class;
-        $this->title    = $title;
-    }
+    public function __construct(
+        public string $href,
+        public $text = null,
+        public $icon = null,
+        public $class = null,
+        public $title = null
+    ) {}
 
     /**
      * Get the view / contents that represent the component.

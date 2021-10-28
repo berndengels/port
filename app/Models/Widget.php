@@ -1,6 +1,7 @@
 <?php
 namespace App\Models;
 
+use Database\Factories\WidgetFactory;
 use Eloquent;
 use Illuminate\Support\Str;
 use App\Traits\Models\ClearCache;
@@ -25,6 +26,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @method static Builder|Widget whereSlug($value)
  * @method static Builder|Widget whereTitle($value)
  * @mixin Eloquent
+ * @method static WidgetFactory factory(...$parameters)
  */
 class Widget extends Model
 {

@@ -1,14 +1,16 @@
 require('./bootstrap');
 
-import MyForm from './Libs/MyForm'
-import Prices from "./Libs/Prices";
-import Editor from './Libs/Editor'
-import Weather from "./Libs/Weather";
+import MyForm from "./Libs/MyForm"
+import Prices from "./Libs/Prices"
+import Editor from "./Libs/Editor"
+import Weather from "./Libs/Weather"
+import Car from "./Libs/Car"
 
 window.MyForm   = new MyForm
 window.Prices   = new Prices
 window.Editor   = new Editor
 window.Weather  = new Weather;
+window.Car  = new Car;
 
 $(document).ready(function () {
 	const $sideNav = $('.sidenav');

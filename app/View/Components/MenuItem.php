@@ -8,25 +8,17 @@ use Illuminate\View\Component;
 
 class MenuItem extends Component
 {
-    public $item;
-    public $name;
-    public $icon;
-    public $route;
-    public $class;
-
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($name, $item = null, $icon = null, $route = null, $class = null)
-    {
-        $this->name = $name;
-        $this->item = $item;
-        $this->icon = $icon;
-        $this->route = $route;
-        $this->class = $class;
-    }
+    public function __construct(
+        public string $name,
+        public $item = null,
+        public $icon = null,
+        public $route = null,
+        public $class = null) {}
 
     /**
      * Get the view / contents that represent the component.

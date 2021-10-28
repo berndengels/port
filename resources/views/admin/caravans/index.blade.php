@@ -63,6 +63,7 @@
 
         {{ $data->links() }}
     </div>
+    <x-tooltip id="tooltip" />
 @endsection
 
 @push('inline-scripts')
@@ -72,5 +73,7 @@
 		document.frmFilter.caravan.value = ''
 	    document.frmFilter.submit();
     });
+    const routePrefix = "{{ route('admin.car.info') }}"
+    Car.info(routePrefix, '.carnumber', '#tooltip')
 </script>
 @endpush

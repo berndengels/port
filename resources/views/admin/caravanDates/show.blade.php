@@ -30,22 +30,13 @@
         @endforeach
         </table>
     </div>
-
+    <x-tooltip id="tooltip" />
 @endsection
 
 @push('inline-scripts')
     <script>
-        const url = "{{ route('admin.car.info', ['caravanId'=> $caravanDate->caravan->id]) }}"
-        $('.carnumber').dblclick(() => {
-	        axios.get(url)
-		        .then(resp => {
-			        if(resp.data.data && !resp.data.error) {
-				        let info = resp.data.data;
-				        alert(info.location + " (" + info.state + ")")
-			        }
-		        })
-		        .catch(e=>console.error(e));
-        });
+        const routePrefix = "{{ route('admin.car.info') }}"
+        Car.info(routePrefix, '.carnumber', '#tooltip')
     </script>
 @endpush
 

@@ -2,7 +2,6 @@
 namespace App\Libs\Prices\BoatGuest;
 
 use App\Libs\Prices\Price;
-use DatePeriod;
 use App\Libs\Prices\IPrice;
 
 class Individual extends Main implements IPrice
