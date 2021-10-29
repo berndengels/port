@@ -1,5 +1,6 @@
 {
     "/js/app.js": "/js/app.js",
+    "/js/app-admin.js": "/js/app-admin.js",
     "/js/leaflet.js": "/js/leaflet.js",
     "/js/leaflet-providers.js": "/js/leaflet-providers.js",
     "/css/app.css": "/css/app.css",
@@ -19,5 +20,12 @@
     "/webfonts/fa-solid-900.svg": "/webfonts/fa-solid-900.svg",
     "/webfonts/fa-solid-900.ttf": "/webfonts/fa-solid-900.ttf",
     "/webfonts/fa-solid-900.woff": "/webfonts/fa-solid-900.woff",
-    "/webfonts/fa-solid-900.woff2": "/webfonts/fa-solid-900.woff2"
+    "/webfonts/fa-solid-900.woff2": "/webfonts/fa-solid-900.woff2",
+    "/froala-editor/License.txt": "/froala-editor/License.txt",
+    "/froala-editor/README.md": "/froala-editor/README.md",
+    "/froala-editor/bower.json": "/froala-editor/bower.json",
+    "/froala-editor/composer.json": "/froala-editor/composer.json",
+    "/froala-editor/editor.jpg": "/froala-editor/editor.jpg",
+    "/froala-editor/index.html": "/froala-editor/index.html",
+    "/froala-editor/package.json": "/froala-editor/package.json"
 }
