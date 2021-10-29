@@ -2,7 +2,12 @@
 namespace Tests;
 
 use App\Models\AdminUser;
+use App\Models\Boat;
+use App\Models\BoatDates;
+use App\Models\BoatGuest;
 use App\Models\Caravan;
+use App\Models\Customer;
+use Carbon\Carbon;
 use Facebook\WebDriver\Chrome\ChromeOptions;
 use Facebook\WebDriver\Remote\DesiredCapabilities;
 use Facebook\WebDriver\Remote\RemoteWebDriver;
@@ -28,14 +33,32 @@ abstract class DuskTestCase extends BaseTestCase
     protected $screenName;
 
     /**
+     * @var Customer
+     */
+    protected $customer;
+    /**
      * @var AdminUser
      */
-    protected $adminUser;
+    protected $user;
     /**
      * @var Caravan
      */
     protected $caravan;
+    /**
+     * @var BoatGuest
+     */
+    protected $guestBoat;
+    /**
+     * @var Boat
+     */
+    protected $boat;
+    /**
+     * @var Carbon
+     */
     protected $from;
+    /**
+     * @var Carbon
+     */
     protected $until;
 
     /**
@@ -92,9 +115,25 @@ abstract class DuskTestCase extends BaseTestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->adminUser = AdminUser::whereEmail('test@test.com')->first();
-//        $this->caravan = Caravan::whereCountryId(config('port.main.default.country_id'))->first();
+        $this->user = AdminUser::whereEmail('test@test.com')->first();
+        $this->customer = Customer::whereCustomerType('permanent')->first();
         self::$screenPath = app()->basePath() . '/tests/Browser/screenshots';
+    }
+
+    /**
+     * @return AdminUser
+     */
+    protected function user()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @return Customer
+     */
+    protected function customer()
+    {
+        return $this->customer;
     }
 
     protected function tearDown(): void

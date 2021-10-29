@@ -1,9 +1,8 @@
 <?php
-
 namespace App\Libs\Prices\Boat;
 
-use App\Libs\Prices\MainPriceItem;
 use Carbon\Carbon;
+use App\Libs\Prices\MainPriceItem;
 
 abstract class Main extends MainPriceItem
 {

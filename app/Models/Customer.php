@@ -70,14 +70,7 @@ class Customer extends Authenticatable
     protected $guarded = ['id'];
     protected $hidden = ['password','remember_token'];
     public $timestamps = false;
-/*
-    public function __construct(array $attributes = [])
-    {
-        parent::__construct($attributes);
-        $user = auth('admin')->user();
-        $this->connection = ($user && 'test@test.com' === $user->email) ? 'mysql-test' : 'mysql';
-    }
-*/
+
     public function getFonLinkAttribute()
     {
         if($this->fon) {

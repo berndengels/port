@@ -17,7 +17,12 @@ class CustomerLoginTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $browser->visit('/login')
-                    ->assertSee('Kunden Login');
+                ->assertSee('Kunden Login')
+                ->loginAs($this->customer(), 'customer', )
+                ->assertAuthenticated('customer')
+                ->visit('/dashboard')
+                ->assertRouteIs('public.dashboard')
+            ;
         });
     }
 }

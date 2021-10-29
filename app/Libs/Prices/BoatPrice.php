@@ -6,6 +6,7 @@ use App\Libs\Prices\Boat\Base;
 use App\Libs\Prices\Boat\Cleaning;
 use App\Libs\Prices\Boat\Crane;
 use App\Libs\Prices\Boat\MastCrane;
+use App\Libs\Prices\Boat\Individual;
 use Illuminate\Http\Request;
 
 class BoatPrice extends PriceCalculator
@@ -31,17 +32,18 @@ class BoatPrice extends PriceCalculator
         $width          = (int) $request->post('width', 0);
         $weight         = (int) $request->post('weight', 0);
         $mastWeight     = (int) $request->post('mast_weight', 0);
-        $individualPrice   = (int) $request->post('default_price', 0);
+        $individualPrice = (int) $request->post('default_price', 0);
 
         $base       = new Base($modus, $length, $width);
         $crane      = new Crane($useCrane, $weight);
         $mastCrane  = new MastCrane($useMastCrane, $mastWeight);
         $cleaning   = new Cleaning($useCleaning, $length);
+        $individual = new Individual($individualPrice);
         $dCount     = static::$daysCount;
         $dPeriod    = static::$_datePeriod;
 
         static::$modusDatePeriod    = $modus;
-        static::$priceIndividual    = $individualPrice;
+        static::$priceIndividual    = $individual->addPrice($individualPrice);
         static::$priceBase          = $base->setDaysCount($dCount)->addPrice($dPeriod);
         static::$priceCrane         = $crane->addPrice();
         static::$priceMastCrane     = $mastCrane->addPrice();

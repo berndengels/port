@@ -7,11 +7,11 @@
             @method('put')
             @bind($boatDate)
             <x-form-input  class="calc" type="hidden" name="boat_id" required />
-            <x-form-input name="boat_name" label="Boot" unbind :default="$boatDate->boat->boat_name" disabled required />
-            <x-form-input class="calc" name="modus" label="Art" disabled required />
+            <x-form-input id="boat_name" name="boat_name" label="Boot" unbind :default="$boatDate->boat->boat_name" disabled required />
+            <x-form-input class="calc" id="modus" name="modus" label="Art" disabled required />
 
-            <x-form-input class="calc" name="from" type="date" label="Von" :bind="false" :default="$boatDate->validFrom" required />
-            <x-form-input class="calc" name="until" type="date" label="Bis" :bind="false" :default="$boatDate->validUntil" required />
+            <x-form-input class="calc" id="from" name="from" type="date" label="Von" :bind="false" :default="$boatDate->validFrom" required />
+            <x-form-input class="calc" id="until" name="until" type="date" label="Bis" :bind="false" :default="$boatDate->validUntil" required />
 
             <div class="mt-3">
                 <x-form-checkbox class="calc" name="crane" label="Kranen" :bind="false" :default="$boatDate->isCraned" />
@@ -23,15 +23,15 @@
                 <x-form-checkbox class="calc" name="cleaning" label="Rumpf-Reinigung" :bind="false" :default="$boatDate->isCleaned" />
             </div>
             <x-form-input class="calc" name="default_price" label="eigener Preis" />
-            <x-form-input name="price" label="Gesamt-Preis" required />
+            <x-form-input  id="price" name="price" type="number" min="0" label="Gesamt-Preis" required />
             <x-form-input type="hidden" name="prices" />
             @endbind
             @bind($boatDate->boat)
-            <x-form-input name="length" label="Länge" disabled />
-            <x-form-input name="width" label="Breite" disabled />
-            <x-form-input name="weight" label="Gewicht in Kg" disabled />
-            <x-form-input name="mast_length" label="Mastlänge" disabled />
-            <x-form-input name="mast_weight" label="Mastgewicht in Kg" disabled />
+            <x-form-input id="length" name="length" type="number" min="0" label="Länge" disabled />
+            <x-form-input id="width" name="width" type="number" min="0" step="0.1" label="Breite" disabled />
+            <x-form-input id="weight" name="weight" type="number" min="0" label="Gewicht in Kg" disabled />
+            <x-form-input id="mast_length" name="mast_length" type="number" min="0" label="Mastlänge" disabled />
+            <x-form-input id="mast_weight" name="mast_weight" type="number" min="0" label="Mastgewicht in Kg" disabled />
             @endbind
             <div class="mt-2">
                 <x-form-submit class="btn btn-save h-10 mt-3 w-full md:w-1/2" icon="fas fa-save">Speichern</x-form-submit>

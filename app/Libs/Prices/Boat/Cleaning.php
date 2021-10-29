@@ -20,6 +20,6 @@ class Cleaning extends Main implements IPrice
         if($this->useCleaning && $this->length > 0) {
             return new Price(ceil($this->priceCleaningPerLength * $this->length));
         }
-        return new Price();
+        return new Price(0);
     }
 }

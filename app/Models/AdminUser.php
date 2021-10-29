@@ -113,14 +113,7 @@ class AdminUser extends Authenticatable
      * @var array
      */
     protected $appends = ['rolesString'];
-/*
-    public function __construct(array $attributes = [])
-    {
-        parent::__construct($attributes);
-        $user = auth('admin')->user();
-        $this->connection = ($user && 'test@test.com' === $user->email) ? 'mysql-test' : 'mysql';
-    }
-*/
+
     public function getRolesStringAttribute()
     {
         return $this->roles->map->name->join(', ');

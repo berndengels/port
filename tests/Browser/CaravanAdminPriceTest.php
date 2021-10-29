@@ -2,13 +2,18 @@
 namespace Tests\Browser;
 
 use Carbon\Carbon;
-use Tests\DuskTestCase;
 use App\Models\Caravan;
 use Laravel\Dusk\Browser;
+use Tests\DuskTestCase;
 
-class CaravanPriceTest extends DuskTestCase
+class CaravanAdminPriceTest extends DuskTestCase
 {
-    private $price = 0;
+    protected $days       = 3;
+    protected $model      = Caravan::class;
+    protected $dayPrice   = 12;
+    protected $persons    = 5;
+    protected $electric   = 2;
+
     /**
      * A Dusk test example.
      *
@@ -19,25 +24,15 @@ class CaravanPriceTest extends DuskTestCase
         $this->screenName   = __FUNCTION__;
 
         $this->browse(function (Browser $browser) {
-            $days       = 3;
-            $dayPrice   = 12;
-            $personsInclusive = config('port.prices.caravan.persons_inclusivce');
-            $persons    = 5;
-            $personsPrice = ($persons < $personsInclusive) ? 0 : $persons - $personsInclusive;
-            if($personsPrice < 0) {
-                $personsPrice = 0;
-            }
-            $electric   = 2;
-            $expectedPrice = (int) (($dayPrice + $electric + $personsPrice) * $days);
-            $today = Carbon::today();
+            $today  = Carbon::today();
             $from   = $today;
-            $until  = $today->copy()->addDays($days);
-
+            $until  = $today->copy()->addDays($this->days);
+            $this->actingAs($this->user());
             $browser
                 ->visit('/admin/login')
-                ->loginAs($this->adminUser, 'admin', )
-                ->visit('/admin/caravanDates/create')
+                ->loginAs($this->user(), 'admin', )
                 ->assertAuthenticated('admin')
+                ->visit('/admin/caravanDates/create')
                 ->assertRouteIs('admin.caravanDates.create')
                 ->assertInputPresent('carnumber')
                 ->assertInputPresent('country_id')
@@ -47,27 +42,37 @@ class CaravanPriceTest extends DuskTestCase
                 ->assertInputPresent('until')
                 ->assertInputPresent('electric')
                 ->assertInputPresent('persons')
-                ->assertInputPresent('day_price')
                 ->assertInputPresent('price')
                 ->typeSlowly('carnumber', 'B')
                 ->waitFor('ul.autocomplete')
                 ->click('ul.autocomplete>li:first-child')
                 ->with('form', function (Browser $form) {
                     $carnumber = $form->inputValue('carnumber');
-                    $this->caravan = Caravan::whereCarnumber($carnumber)->first();
+                    $this->entity = ($this->model)::whereCarnumber($carnumber)->first();
                 })
                 ->typeDate('#from', $from)
                 ->typeDate('#until', $until)
-                ->check('electric', !!$electric)
-                ->type('persons', $persons)
-                ->type('#email','')
-                ->waitFor('#price', 2)
-                ->assertInputValue('price', $expectedPrice)
+                ->check('electric', !!$this->electric)
+                ->type('persons', $this->persons)
+                ->click('#email')
+                ->wait(3)
+                ->assertInputValue('price', $this->calculateExpectedPrice())
                 ->assertInputValueIsNot('prices', '')
                 ->screenshot($this->screenName)
-                ->logout('admin')
             ;
             static::createJpeg($this->screenName);
         });
+    }
+
+    protected function calculateExpectedPrice(): int|float
+    {
+//        $personsInclusive = $this->config('port.prices.caravan.persons_inclusivce');
+        $personsInclusive = 2;
+        $personsPrice = ($this->persons < $personsInclusive) ? 0 : $this->persons - $personsInclusive;
+        if($personsPrice < 0) {
+            $personsPrice = 0;
+        }
+        $price = ($this->dayPrice + $this->electric + $personsPrice) * $this->days;
+        return $price;
     }
 }

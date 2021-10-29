@@ -6,18 +6,18 @@
         <x-form name="frm" method="post" :action="route('admin.boatGuestDates.update', $boatGuestDate)" class="w-full lg:w-1/2">
             @method('put')
             @bind($boatGuestDate->boat)
-            <x-form-input name="name" label="Boots Name" placeholder="Boots Name" required autocomplete="off" />
+            <x-form-input id="name" name="name" label="Boots Name" placeholder="Boots Name" required autocomplete="off" />
             <ul class="hidden w-full autocomplete"></ul>
-            <x-form-input class="calc" name="length" type="number" step="1" label="Boots Länge" placeholder="Boots Länge" required />
-            <x-form-input name="home_port" label="Heimathafen" placeholder="Heimathafen" />
+            <x-form-input id="length" class="calc" name="length" type="number" step="1" min="1" label="Boots Länge" placeholder="Boots Länge" required />
+            <x-form-input id="home_port" name="home_port" label="Heimathafen" placeholder="Heimathafen" />
             @endbind
 
             @bind($boatGuestDate)
             <x-form-input name="from" class="calc" type="date" label="Von" required :bind="false" :default="$boatGuestDate->validFrom" />
             <x-form-input name="until" class="calc" type="date" label="Bis" required :bind="false" :default="$boatGuestDate->validUntil" />
             <x-form-input class="calc" name="day_price" label="eigener Preis" placeholder="eigener Preis" />
-            <x-form-input name="price" label="Gesamt-Preis" required />
-            <x-form-input type="hidden" name="prices" required />
+            <x-form-input type="number" id="price" name="price" min="0" label="Gesamt-Preis" required />
+            <x-form-input type="hidden" id="prices" name="prices" required />
             @endbind
             <div class="mt-2">
                 <x-form-submit class="btn btn-save h-10 mt-3 w-full md:w-1/2" icon="fas fa-save">Speichern</x-form-submit>

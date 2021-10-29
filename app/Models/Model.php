@@ -4,7 +4,6 @@ namespace App\Models;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model as BaseModel;
-use Illuminate\Support\Facades\DB;
 
 /**
  * App\Models\Model
@@ -20,6 +19,6 @@ class Model extends BaseModel
     {
         parent::__construct($attributes);
         $user = auth('admin')->user();
-        $this->connection = ($user && 'test@test.com' === $user->email) ? 'mysql-test' : 'mysql';
+        $this->connection = ($user && 'test@test.com' === $user->email) ? 'test' : 'port';
     }
 }

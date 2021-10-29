@@ -45,7 +45,7 @@ class Role extends BaseModel
     {
         parent::__construct($attributes);
         $user = auth('admin')->user();
-        $this->connection = ($user && 'test@test.com' === $user->email) ? 'mysql-test' : 'mysql';
+        $this->connection = ($user && 'test@test.com' === $user->email) ? 'test' : 'port';
     }
 
     public function getStrRolesAttribute() {
