@@ -1,21 +1,13 @@
 <?php
-
 namespace Tests\Browser;
 
-use App\Models\AdminUser;
+use Carbon\Carbon;
+use Tests\DuskTestCase;
 use App\Models\Caravan;
 use Laravel\Dusk\Browser;
-use Tests\DuskTestCase;
 
 class CaravanPriceTest extends DuskTestCase
 {
-    private $caravan;
-
-    public function __construct()
-    {
-//        $this->caravanDates = $this->caravan->dates->first();
-    }
-
     /**
      * A Dusk test example.
      *
@@ -23,17 +15,18 @@ class CaravanPriceTest extends DuskTestCase
      */
     public function test_caravan_price_calculation()
     {
-//        $this->adminUser = AdminUser::whereEmail('test@test.com')->first();
-        $this->adminUser = ['email' => 'test@test.com', 'password' => 'password'];
-//        $this->caravan = Caravan::find(1);
+        $today = Carbon::today();
+        $this->from         = $today;
+        $this->until        = $today->copy()->addDays(3);
+        $this->screenName   = __FUNCTION__;
 
         $this->browse(function (Browser $browser) {
-
             $browser
-//                ->loginAs($this->adminUser, 'admin')
-                ->visit('/caravanDates/create')
+                ->visit('/admin/login')
+                ->loginAs($this->adminUser, 'admin', )
+                ->visit('/admin/caravanDates/create')
                 ->assertAuthenticated('admin')
-/*
+                ->assertRouteIs('admin.caravanDates.create')
                 ->assertInputPresent('carnumber')
                 ->assertInputPresent('country_id')
                 ->assertInputPresent('carlength')
@@ -44,10 +37,25 @@ class CaravanPriceTest extends DuskTestCase
                 ->assertInputPresent('persons')
                 ->assertInputPresent('day_price')
                 ->assertInputPresent('price')
-                ->assertInputPresent('priccce')
-*/
+                ->typeSlowly('carnumber', 'B')
+                ->waitFor('ul.autocomplete')
+                ->click('ul.autocomplete>li:first-child')
+                ->with('form', function (Browser $form) {
+                    $carnumber = $form->inputValue('carnumber');
+                    $this->caravan = Caravan::whereCarnumber($carnumber)->first();
+                })
+                ->typeDate('#from', $this->from)
+                ->typeDate('#until', $this->until)
+                ->check('electric', 1)
+                ->type('persons', 3)
+                ->type('#email','')
+                ->waitFor('#price', 2)
+                ->assertInputValueIsNot('price', '')
+                ->assertInputValueIsNot('prices', '')
+                ->screenshot($this->screenName)
                 ->logout('admin')
             ;
+            static::createJpeg($this->screenName);
         });
     }
 }

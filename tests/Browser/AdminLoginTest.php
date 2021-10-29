@@ -16,7 +16,10 @@ class AdminLoginTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $browser->visit('/admin/login')
-                    ->assertSee('Admin Login');
+                ->assertSee('Admin Login')
+                ->loginAs($this->adminUser, 'admin', )
+                ->assertAuthenticated('admin')
+            ;
         });
     }
 }

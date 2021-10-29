@@ -175,6 +175,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Mews\Captcha\CaptchaServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
+        App\Providers\DuskServiceProvider::class,
     ],
 
     /*
@@ -231,6 +233,7 @@ return [
         // custom stuff
         'Captcha' => Mews\Captcha\Facades\Captcha::class,
         'Markdown' => GrahamCampbell\Markdown\Facades\Markdown::class,
+        'Image' => Intervention\Image\Facades\Image::class,
     ],
 
 ];

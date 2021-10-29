@@ -50,7 +50,6 @@ use Illuminate\Database\Query\JoinClause;
  * @method static Builder|CaravanDates dublicates()
  * @method static Builder|CaravanDates fromYearMonth(?string $year = null, ?string $month = null)
  * @method static Builder|CaravanDates whereDayPrice($value)
- * @method static Builder|CaravanDates caravan(?int $caravanId = null)
  */
 class CaravanDates extends Model
 {
@@ -60,7 +59,7 @@ class CaravanDates extends Model
     protected $guarded = ['id'];
     protected $dates = ['from','until'];
     protected $dateFormat = 'Y-m-d';
-    protected $appends = ['days'];
+    protected $appends = ['days','validFrom','validUntil'];
 
     public $timestamps = false;
 
