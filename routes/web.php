@@ -70,7 +70,7 @@ Route::group([
 Route::group([
     'prefix'    => 'admin',
     'as'        => 'admin.',
-//    'middleware' => ['auth:admin'],
+    'middleware' => ['auth:admin'],
 ],function () {
     Route::get('', [AdminDashboardController::class, 'show'])->name('dashboard');
     Route::post('logout', [AdminLoginController::class,'logout'])->name('logout');

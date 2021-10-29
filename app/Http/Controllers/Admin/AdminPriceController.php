@@ -28,10 +28,9 @@ class AdminPriceController extends AdminController
         $carlength  = $request->post('carlength');
         $from       = $request->post('from');
         $until      = $request->post('until');
-        $persons    = (int) $request->post('persons');
         $response   = ['error' => true];
 
-        if($from && $until && $carlength && $persons) {
+        if($from && $until && $carlength) {
             $from       = new Carbon($from, config('app.timezone'));
             $until      = new Carbon($until, config('app.timezone'));
             $response   = (new CaravanPrice($from, $until))->getPrice($request);

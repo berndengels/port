@@ -7,7 +7,7 @@
             @method('put')
             @bind($boatGuest)
             <x-form-input name="name" label="Boots Name" placeholder="Boots Name" required />
-            <x-form-input name="length" type="number" step="1" label="Boots Länge" placeholder="Boots Länge" required />
+            <x-form-input name="length" type="number" step="1" min="1" label="Boots Länge" placeholder="Boots Länge" required />
             <x-form-input name="home_port" label="Heimathafen" placeholder="Ihr Heimathafen" />
             @endbind
             <div class="mt-2">

@@ -8,6 +8,7 @@ use Laravel\Dusk\Browser;
 
 class CaravanPriceTest extends DuskTestCase
 {
+    private $price = 0;
     /**
      * A Dusk test example.
      *
@@ -15,12 +16,23 @@ class CaravanPriceTest extends DuskTestCase
      */
     public function test_caravan_price_calculation()
     {
-        $today = Carbon::today();
-        $this->from         = $today;
-        $this->until        = $today->copy()->addDays(3);
         $this->screenName   = __FUNCTION__;
 
         $this->browse(function (Browser $browser) {
+            $days       = 3;
+            $dayPrice   = 12;
+            $personsInclusive = config('port.prices.caravan.persons_inclusivce');
+            $persons    = 5;
+            $personsPrice = ($persons < $personsInclusive) ? 0 : $persons - $personsInclusive;
+            if($personsPrice < 0) {
+                $personsPrice = 0;
+            }
+            $electric   = 2;
+            $expectedPrice = (int) (($dayPrice + $electric + $personsPrice) * $days);
+            $today = Carbon::today();
+            $from   = $today;
+            $until  = $today->copy()->addDays($days);
+
             $browser
                 ->visit('/admin/login')
                 ->loginAs($this->adminUser, 'admin', )
@@ -44,13 +56,13 @@ class CaravanPriceTest extends DuskTestCase
                     $carnumber = $form->inputValue('carnumber');
                     $this->caravan = Caravan::whereCarnumber($carnumber)->first();
                 })
-                ->typeDate('#from', $this->from)
-                ->typeDate('#until', $this->until)
-                ->check('electric', 1)
-                ->type('persons', 3)
+                ->typeDate('#from', $from)
+                ->typeDate('#until', $until)
+                ->check('electric', !!$electric)
+                ->type('persons', $persons)
                 ->type('#email','')
                 ->waitFor('#price', 2)
-                ->assertInputValueIsNot('price', '')
+                ->assertInputValue('price', $expectedPrice)
                 ->assertInputValueIsNot('prices', '')
                 ->screenshot($this->screenName)
                 ->logout('admin')
