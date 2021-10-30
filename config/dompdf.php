@@ -132,7 +132,7 @@ return array(
          * the desired content might be different (e.g. screen or projection view of html file).
          * Therefore allow specification of content here.
          */
-        "default_media_type" => "screen",
+        "default_media_type" => "print",
 
         /**
          * The default paper size.
@@ -149,7 +149,7 @@ return array(
          * Used if no suitable fonts can be found. This must exist in the font folder.
          * @var string
          */
-        "default_font" => "serif",
+        "default_font" => "sans-serif",
 
         /**
          * Image DPI setting
@@ -227,7 +227,7 @@ return array(
          *
          * @var bool
          */
-        "enable_remote" => true,
+        "enable_remote" => false,
 
         /**
          * A ratio applied to the fonts height to be more like browsers' line height
@@ -239,6 +239,4 @@ return array(
          */
         "enable_html5_parser" => false,
     ),
-
-
 );

@@ -1,13 +1,13 @@
 <?php
-
 namespace App\Models;
 
-use Database\Factories\CaravanFactory;
 use Eloquent;
+use App\Traits\Models\ClearCache;
+use App\Traits\Models\Filter\CaravanFilter;
+use Database\Factories\CaravanFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
 /**
  * App\Models\Caravan
@@ -30,18 +30,36 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $country_id
  * @property-read Country $country
  * @method static Builder|Caravan whereCountryId($value)
+ * @property-read mixed $text
+ * @method static Builder|Caravan caravan(?int $caravanId = null)
+ * @method static Builder|Caravan caravanByDates(?int $caravanId = null)
  */
 class Caravan extends Model
 {
-    use HasFactory;
+    use HasFactory, CaravanFilter, ClearCache;
 
     protected $table = 'caravans';
     protected $guarded = ['id'];
+    protected $appends = ['text','info'];
     public $timestamps = false;
 
     protected $casts = [
         'carlength' => 'integer',
     ];
+
+    public function getTextAttribute()
+    {
+        return $this->carnumber;
+    }
+
+    public function getInfoAttribute()
+    {
+        if($this->country->code === 'DE' && preg_match("/^[a-z]{1,3}\-/i", $this->carnumber)) {
+            list($code,) = explode('-', $this->carnumber);
+            return CarLicensePlate::where('code', '=', $code)->get()->first();
+        }
+        return null;
+    }
 
     public function dates() {
         return $this->hasMany(CaravanDates::class);

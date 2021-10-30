@@ -1,1 +1,15 @@
-{}
+{
+	"from": "Von",
+	"until": "Bis",
+	"daysCount": "Anzahl Tage",
+	"priceElectric": "Strompreis",
+	"pricePersons": "Preis für zusätzliche Personen",
+	"priceBase": "Grundpreis",
+	"priceIndividual": "individueller Preis",
+	"total": "Gesamtpreis",
+	"priceCleaning": "Preis Reinigung Bootsrumpf",
+	"priceCrane": "Preis Kranen",
+	"priceMastCrane": "Preis Mastkranen",
+	"saison": "Sommerliegeplatz",
+	"winter": "Winterlager"
+}

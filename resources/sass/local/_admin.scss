@@ -1,0 +1,36 @@
+.register-form {
+	label {
+		font-weight: bold;
+	}
+}
+.show-page {
+	width: 100%;
+	margin-top: 1rem;
+
+	div {
+		width: 100%;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		grid-template-rows: 1fr;
+		gap: 10px 10px;
+		grid-auto-flow: row;
+		margin-bottom: 0.2rem;
+		div {
+			padding: 0.1rem;
+		}
+		div:first-child {
+			text-align: right;
+			font-weight: bold;
+		}
+		div:last-child {
+			a {
+				display: inline-block;
+				white-space: nowrap;
+				color: #c00;
+			}
+		}
+	}
+}
+input[disabled], select[disabled], textara[disabled] {
+	background-color: #eee;
+}

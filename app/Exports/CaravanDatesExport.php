@@ -9,7 +9,6 @@ use Maatwebsite\Excel\Concerns\FromView;
 
 class CaravanDatesExport implements FromView
 {
-    public $until;
     public $data;
     public $count;
     public $priceTotal;
@@ -32,7 +31,7 @@ class CaravanDatesExport implements FromView
         if($this->year) {
             $query->whereRaw('YEAR(`from`) = ?', [$this->year]);
             if($this->month) {
-                $query->whereRaw('YEAR(`from`) = ? AND MONTH(`from`) = ?', [$this->year, $this->month]);
+                $query->whereRaw('MONTH(`from`) = ?', [$this->month]);
             }
         }
 
@@ -52,19 +51,27 @@ class CaravanDatesExport implements FromView
     }
 
     /**
-     * @return mixed|null
+     * @return int
      */
-    public function getFrom()
+    public function getCount(): int
     {
-        return $this->from;
+        return $this->count;
     }
 
     /**
      * @return mixed|null
      */
-    public function getUntil()
+    public function getYear()
     {
-        return $this->until;
+        return $this->year;
+    }
+
+    /**
+     * @return mixed|null
+     */
+    public function getMonth()
+    {
+        return $this->month;
     }
 
     /**

@@ -1,21 +1,20 @@
 <?php
-
 namespace App\Http\Requests;
 
 use App\Http\Requests\Helper\Fix;
-use Illuminate\Foundation\Http\FormRequest;
 
-class CaravanRequest extends FormRequest
+class CaravanRequest extends AdminRequest
 {
     use Fix;
+    protected $modelName = 'Caravan';
+
     /**
      * Determine if the user is authorized to make this request.
-     *
      * @return bool
      */
     public function authorize()
     {
-        return auth()->check();
+        return $this->auth->user()->can('write Caravan');
     }
 
     public function prepareForValidation()
@@ -37,12 +36,13 @@ class CaravanRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rule = [
             'country_id' => 'required',
-            'carnumber' => !$this->id ? 'required|unique:caravans,carnumber' : 'required',
+            'carnumber' => !$this->getId() ? 'required|unique:caravans,carnumber' : 'required',
             'carlength' => ['required','regex:/^[0-9]+$/i'],
             'email'     => 'email|nullable',
         ];
+        return $rule;
     }
 
     public function messages()
@@ -50,6 +50,7 @@ class CaravanRequest extends FormRequest
         return [
             'country_id.required'  => 'Bitte ein Herkunftsland angeben!',
             'carnumber.required'   => 'Bitte das Auto-Kennzeichen angeben!',
+            'carnumber.unique'     => 'Ein Fahrzeug mit diesem Kennzeichen wurde bereits eingetragen!',
             'carlength.required'   => 'Bitte die Länge des Fahrzeugs angeben!',
             'carlength.regex'      => 'Die Länge des Fahrzeugs muß als ganze Zahl angegeben werden!',
             'email.email'          => 'Bitte eine korrekte oder gar keine keine Email-Adresse angeben.',

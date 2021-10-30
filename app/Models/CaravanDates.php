@@ -2,13 +2,15 @@
 
 namespace App\Models;
 
-use Database\Factories\CaravanDatesFactory;
 use Eloquent;
+use Illuminate\Support\Carbon;
+use App\Traits\Models\ClearCache;
+use App\Traits\Models\Filter\CaravanFilter;
+use App\Traits\Models\Filter\YearMonthFilter;
+use Database\Factories\CaravanDatesFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Collection;
+use Illuminate\Database\Query\JoinClause;
 
 /**
  * App\Models\CaravanDates
@@ -40,28 +42,61 @@ use Illuminate\Support\Collection;
  * @method static Builder|CaravanDates getMonthsByYears($from = null, $until = null)
  * @method static CaravanDatesFactory factory(...$parameters)
  * @method static Builder|CaravanDates pageList()
+ * @property int|null $day_price
+ * @property-read mixed $valid_from
+ * @property-read mixed $valid_until
+ * @method static Builder|CaravanDates (?int $caravanId = null)
+ * @method static Builder|CaravanDates caravanByDates(?int $caravanId = null)
+ * @method static Builder|CaravanDates dublicates()
+ * @method static Builder|CaravanDates fromYearMonth(?string $year = null, ?string $month = null)
+ * @method static Builder|CaravanDates whereDayPrice($value)
  */
 class CaravanDates extends Model
 {
-    use HasFactory;
+    use HasFactory, CaravanFilter, YearMonthFilter, ClearCache;
 
     protected $table = 'caravan_dates';
     protected $guarded = ['id'];
     protected $dates = ['from','until'];
     protected $dateFormat = 'Y-m-d';
-    protected $appends = ['days'];
+    protected $appends = ['days','validFrom','validUntil'];
 
     public $timestamps = false;
 
     protected $casts = [
         'persons'   => 'integer',
         'price'     => 'integer',
-//        'prices'     => 'Object',
     ];
 
     public function caravan()
     {
         return $this->belongsTo(Caravan::class);
+    }
+
+    public function scopeDublicates(Builder $builder)
+    {
+        $builder->selectRaw('cd.*, c.carnumber, c.carlength, c.email, COUNT(cd.caravan_id) anzahl')
+            ->from($this->table, 'cd')
+            ->join('caravans AS c', 'c.id','=', 'cd.caravan_id')
+            ->join('caravan_dates AS cd2', function (JoinClause $j){
+                return $j
+                    ->whereRaw('cd2.id != cd.id ')
+                    ->whereRaw('cd2.caravan_id = cd.caravan_id')
+                    ->whereRaw('(DATE(cd.from) BETWEEN cd2.from AND cd2.until OR DATE(cd.until) BETWEEN cd2.from AND cd2.until)')
+                    ;
+            })
+            ->groupBy(['cd.caravan_id'])
+            ->having('anzahl','>', 1)
+        ;
+        return $builder;
+    }
+
+    public function getValidFromAttribute() {
+        return $this->from->format('Y-m-d');
+    }
+
+    public function getValidUntilAttribute() {
+        return $this->until->format('Y-m-d');
     }
 
     public function getDaysAttribute() {

@@ -1,21 +1,15 @@
 require('./bootstrap');
 
-import { createApp, h } from 'vue';
-import { createInertiaApp } from '@inertiajs/inertia-vue3';
-import { InertiaProgress } from '@inertiajs/progress';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import Weather from "./Libs/Weather";
+window.Weather = new Weather;
 
-const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
+$(document).ready(function () {
+	const $sideNav = $('.sidenav');
 
-createInertiaApp({
-    title: (title) => `${title} - ${appName}`,
-    resolve: (name) => require(`./Pages/${name}.vue`),
-    setup({ el, app, props, plugin }) {
-        return createApp({ render: () => h(app, props) })
-            .use(plugin, FontAwesomeIcon)
-            .mixin({ methods: { route } })
-            .mount(el);
-    },
+	$(".menu-icon").click(() => {
+		$sideNav.addClass('active')
+	});
+	$(".sidenav__close-icon").click(() => {
+		$sideNav.removeClass('active')
+	});
 });
-
-InertiaProgress.init({ color: '#4B5563' });

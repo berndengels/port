@@ -1,0 +1,12 @@
+### Send request with dynamic variables in request's body
+POST http://port.test/admin/guestBoatDates/price/calculate
+Content-Type: application/json
+
+{
+    "from": "2022-10-27",
+	"until": "2022-10-29",
+	"length": 9,
+    "day_price": 0
+}
+
+###

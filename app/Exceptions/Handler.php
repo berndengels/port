@@ -1,10 +1,9 @@
 <?php
-
 namespace App\Exceptions;
 
 use Throwable;
-//use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Bengels\LaravelEmailExceptions\Exceptions\EmailHandler as ExceptionHandler;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+//use Bengels\LaravelEmailExceptions\Exceptions\EmailHandler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
 {
@@ -38,5 +37,22 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    public function render($request, Throwable $e)
+    {
+        if ($request->wantsJson()) {
+            $response = [
+                'error' => $e->getMessage()
+            ];
+            $status = 400;
+
+            if ($this->isHttpException($e)) {
+                $status = $e->getStatusCode();
+            }
+
+            return response()->json($response, $status);
+        }
+        return parent::render($request, $e);
     }
 }

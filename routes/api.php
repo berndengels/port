@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\PriceController;
+use App\Http\Controllers\Admin\AdminPriceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,12 +14,15 @@ use App\Http\Controllers\Api\PriceController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
+/*
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+*/
 Route::group([
-//    'middleware' => ['auth', 'verified'],
+    'prefix'    => 'admin',
+    'as'        => 'admin.',
+    'middleware' => ['auth:admin'],
 ],function () {
-    Route::post('caravan/price/calculate', [PriceController::class, 'calculate'])->name('caravan.price.calculate');
+    //Route::post('caravan/price/calculate', [AdminPriceController::class, 'calculate'])->name('caravan.price.calculate');
 });

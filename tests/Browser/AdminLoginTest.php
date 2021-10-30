@@ -1,0 +1,27 @@
+<?php
+namespace Tests\Browser;
+
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Laravel\Dusk\Browser;
+use Tests\DuskTestCase;
+
+class AdminLoginTest extends DuskTestCase
+{
+    /**
+     * A Dusk test example.
+     *
+     * @return void
+     */
+    public function test_admin_login()
+    {
+        $this->browse(function (Browser $browser) {
+            $browser->visit('/admin/login')
+                ->assertSee('Admin Login')
+                ->loginAs($this->user(), 'admin', )
+                ->assertAuthenticated('admin')
+                ->visit('/admin')
+                ->assertRouteIs('admin.dashboard')
+            ;
+        });
+    }
+}

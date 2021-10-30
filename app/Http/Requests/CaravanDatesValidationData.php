@@ -10,6 +10,15 @@ class CaravanDatesValidationData
 
     private $request;
 
+    /**
+     * Determine if the user is authorized to make this request.
+     * @return bool
+     */
+    public function authorize()
+    {
+        return $this->auth->user()->can('write CaravanDates');
+    }
+
     public function __construct(Request $request){
         $request->merge([
             'carnumber' => $this->fixCarNumber($request->carnumber),
@@ -33,6 +42,7 @@ class CaravanDatesValidationData
             'until'     => ['required','date','after:from'],
             'email'     => 'email|nullable',
             'persons'   => ['required','regex:/^[1-9]+$/i'],
+            'day_price' => 'numeric|nullable',
             'price'     => 'required|numeric',
             'caravan_id' => '',
             'electric'  => '',
@@ -53,6 +63,7 @@ class CaravanDatesValidationData
             'until.after'           => 'Das Abreise-Datum muß nach dem Anreise-Datum liegen',
             'persons.required'      => 'Bitte die Anzahl der Personen angeben.',
             'persons.regex'         => 'Die Anzahl der Personen muß eine ganza Zahl sein.',
+            'day_price.numeric'     => 'Der Tages-Preis muß numerisch sein.',
             'price.required'        => 'Bitte einen Preis angeben.',
             'price.numeric'         => 'Der Preis muß eine ganze Zahl sein.',
             'email.email'           => 'Bitte eine korrekte oder keine Email-Adresse angeben.',

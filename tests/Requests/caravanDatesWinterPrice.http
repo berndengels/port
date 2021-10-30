@@ -1,0 +1,15 @@
+### Send request with dynamic variables in request's body
+POST http://port.test/admin/caravanDates/price/calculate
+Content-Type: application/json
+
+{
+    "caravan_id": 2,
+    "from": "2021-10-01",
+	"until": "2021-10-05",
+	"persons": 2,
+	"electric": false,
+	"carlength": 9,
+    "day_price": 0
+}
+
+###

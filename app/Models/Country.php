@@ -1,11 +1,9 @@
 <?php
-
 namespace App\Models;
 
 use Eloquent;
+use App\Traits\Models\ClearCache;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
 /**
  * App\Models\Country
@@ -33,7 +31,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Country extends Model
 {
-    use HasFactory;
+    use ClearCache;
 
     protected $table = 'countries';
     protected $guarded = ['id'];
