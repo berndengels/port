@@ -149,6 +149,7 @@ abstract class DuskTestCase extends BaseTestCase
             if (!empty($body)) {
                 $currentSize = $body->getSize();
                 $size = new WebDriverDimension($currentSize->getWidth(), $currentSize->getHeight());
+                dump($size);
                 $browser->driver->manage()->window()->setSize($size);
             }
             $file = 'failure-'.$this->getName().'-'.$key;
@@ -157,7 +158,7 @@ abstract class DuskTestCase extends BaseTestCase
         });
     }
 
-    public static function createJpeg( $screenName, $removeOrigial = true ) {
+    public function createJpeg( $screenName, $removeOrigial = true ) {
         $publicPath		= storage_path('/app/public/reports/images');
         $screenFullPath = self::$screenPath .'/'.$screenName . '.png';
         $thumbPath		= $publicPath . '/thumbs';
@@ -170,7 +171,7 @@ abstract class DuskTestCase extends BaseTestCase
         ;
 
         @chmod($fileToSave, 0666);
-        self::createJpegThumbnail( $img, $thumbPath );
+        $this->createJpegThumbnail( $img, $thumbPath );
 
         if($removeOrigial) {
             unlink($screenFullPath);
@@ -179,7 +180,7 @@ abstract class DuskTestCase extends BaseTestCase
         return $img;
     }
 
-    public static function createJpegThumbnail( Image $img, $path ) {
+    public function createJpegThumbnail( Image $img, $path ) {
         $file = $path.'/'.$img->filename.'.'.$img->extension;
         $img = StaticImage::make($img->basePath())
             ->widen(static::$screenshotThumbWidth)

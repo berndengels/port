@@ -29,6 +29,5 @@
     @endauth
 
     @stack('inline-scripts')
-
 </body>
 </html>
