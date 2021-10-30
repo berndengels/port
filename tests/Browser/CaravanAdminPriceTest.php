@@ -60,7 +60,7 @@ class CaravanAdminPriceTest extends DuskTestCase
                 ->assertInputValueIsNot('prices', '')
                 ->screenshot($this->screenName)
             ;
-            static::createJpeg($this->screenName);
+            $this->createJpeg($this->screenName);
         });
     }
 

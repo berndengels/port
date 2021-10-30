@@ -72,7 +72,7 @@ class BoatDatesSaisonAdminPriceTest extends DuskTestCase
 
                 ->screenshot($this->screenName)
             ;
-            static::createJpeg($this->screenName);
+            $this->createJpeg($this->screenName);
         });
     }
 

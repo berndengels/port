@@ -38,7 +38,7 @@ class GuestBoatAdminPriceTest extends DuskTestCase
                 ->assertInputPresent('from')
                 ->assertInputPresent('until')
                 ->assertInputPresent('price')
-                ->typeSlowly('name', 'A')
+                ->typeSlowly('name', 'E')
                 ->waitFor('ul.autocomplete')
                 ->click('ul.autocomplete>li:first-child')
                 ->with('form', function (Browser $form) {
@@ -57,7 +57,7 @@ class GuestBoatAdminPriceTest extends DuskTestCase
                 ->assertInputValueIsNot('prices', '')
                 ->screenshot($this->screenName)
             ;
-            static::createJpeg($this->screenName);
+            $this->createJpeg($this->screenName);
         });
     }
 
