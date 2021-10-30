@@ -2,8 +2,13 @@
 
 namespace App\Console;
 
+use App\Console\Commands\RepairBoatPriceData;
+use App\Console\Commands\RepairCaravanPriceData;
+use App\Console\Commands\RepairGuestBoatPriceData;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+//use Spatie\TimeWeatherTile\Commands\FetchOpenWeatherMapDataCommand;
+//use Spatie\TimeWeatherTile\Commands\FetchBuienradarForecastsCommand;
 
 class Kernel extends ConsoleKernel
 {
@@ -13,18 +18,21 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        RepairCaravanPriceData::class,
+        RepairGuestBoatPriceData::class,
     ];
 
     /**
      * Define the application's command schedule.
      *
-     * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
+     * @param Schedule $schedule
      * @return void
      */
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+//        $schedule->command(FetchOpenWeatherMapDataCommand::class)->everyMinute();
+//        $schedule->command(FetchBuienradarForecastsCommand::class)->everyMinute();
     }
 
     /**
@@ -35,7 +43,6 @@ class Kernel extends ConsoleKernel
     protected function commands()
     {
         $this->load(__DIR__.'/Commands');
-
         require base_path('routes/console.php');
     }
 }

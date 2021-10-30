@@ -45,9 +45,10 @@ class CaravanDatesController extends Controller
      *
      * @return Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Inertia::render('CaravanDates/index', [
+
+        return view('caravanDates.index', [
             'years'         => $this->years,
             'monthsByYear'  => $this->monthsByYear,
             'create_url'    => URL::route('caravanDates.create'),
@@ -97,18 +98,6 @@ class CaravanDatesController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param CaravanDates $caravanDate
-     * @return Response
-     */
-    public function show(CaravanDates $caravanDate)
-    {
-        $caravanDate->load('caravan');
-        return Inertia::render('CaravanDates/show', compact('caravanDate'));
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param CaravanDates $caravanDate
@@ -119,7 +108,7 @@ class CaravanDatesController extends Controller
         $countries = $this->countries;
         $caravans = $this->caravans;
         $caravanDate->load('caravan');
-        return Inertia::render('CaravanDates/edit', compact('caravanDate','caravans','countries'));
+        return view('caravanDates.edit', compact('caravanDate','caravans', 'countries'));
     }
 
     /**
@@ -153,19 +142,18 @@ class CaravanDatesController extends Controller
         return Redirect::route('caravanDates.index');
     }
 
-    public function sendExcel(Request $request)
+    public function sendExcel(Request $request, $from = null)
     {
         $email      = $request->post('email');
-        $year       = $request->post('year');
-        $month      = $request->post('month');
-
         $now        = Carbon::now()->format('Ymd-Hi');
         $fileName   = $now.'_caravan_dates.xls';
         $fullPath   = storage_path('app/temp/'.$fileName);
-
+        if($from) {
+            $from = Carbon::create($from);
+        }
         try {
-            $export = new CaravanDatesExport($year, $month);
-
+            $export = new CaravanDatesExport($from);
+            //@todo: get excel from content, not per file
             if(Excel::store($export, $fileName, 'temp')) {
                 Mail::send(new SendExcel($email, $export, $fullPath));
             }

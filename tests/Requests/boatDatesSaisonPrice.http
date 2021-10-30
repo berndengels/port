@@ -1,0 +1,21 @@
+### Send request with dynamic variables in request's body
+POST http://port.test/admin/boatDates/price/calculate
+Content-Type: application/json
+
+{
+    "boat_id": 1,
+    "from": "2022-05-01",
+	"until": "2022-10-31",
+	"crane": 1,
+	"mast_crane": 1,
+	"cleaning": 0,
+	"modus": "saison",
+	"length": 9,
+    "width": 2.5,
+    "weight": 3000,
+    "mast_length": 9,
+    "mast_weight": 70,
+    "default_price": 0
+}
+
+###

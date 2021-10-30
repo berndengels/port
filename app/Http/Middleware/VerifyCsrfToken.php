@@ -12,6 +12,9 @@ class VerifyCsrfToken extends Middleware
      * @var array
      */
     protected $except = [
-        //
+        '/admin/caravanDates/repair',
+        '/admin/*/price/calculate',
+        '/admin/upload/image/*',
+        '/livewire/*',
     ];
 }

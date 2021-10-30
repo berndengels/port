@@ -1,14 +1,10 @@
 <?php
-
 namespace App\Http\Requests;
 
-use App\Http\Requests\Helper\Fix;
 use App\Models\Caravan;
-use App\Models\CaravanDates;
-use App\Rules\DatesIntervalUnique;
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\Helper\Fix;
 
-class CaravanDatesRequest extends FormRequest
+class CaravanDatesRequest extends AdminRequest
 {
     use Fix;
 
@@ -16,6 +12,17 @@ class CaravanDatesRequest extends FormRequest
      * @var Caravan
      */
     protected $caravan;
+    protected $routeParam = 'caravanDate';
+    protected $modelName = 'CaravanDates';
+
+    /**
+     * Determine if the user is authorized to make this request.
+     * @return bool
+     */
+    public function authorize()
+    {
+        return $this->auth->user()->can('write CaravanDates');
+    }
 
     public function prepareForValidation()
     {
@@ -41,19 +48,16 @@ class CaravanDatesRequest extends FormRequest
             'country_id' => 'required',
             'carnumber' => 'required',
             'carlength' => ['required','regex:/^[0-9]+$/i'],
-            'from'      => 'date',
-            'until'     => ['date','after:from'],
+            'from'      => 'exclude_if:until,null|required|date|before:until',
+            'until'     => ['required','date','after:from'],
             'email'     => 'email|nullable',
             'persons'   => ['required','regex:/^[1-9]+$/i'],
+            'day_price' => 'numeric|nullable',
             'price'     => 'required|numeric',
             'caravan_id' => '',
             'electric'  => '',
             'prices'    => '',
         ];
-
-        if(!$this->id) {
-//            $rules['until'] += [new DatesIntervalUnique($this->caravan)];
-        }
 
         return $rules;
     }
@@ -66,9 +70,10 @@ class CaravanDatesRequest extends FormRequest
             'carlength.regex'       => 'Die Länge des Fahrzeugs muß als ganze Zahl angegeben werden!',
             'from.date'             => 'Das Anreise-Datum muß als Datum angegeben werden.',
             'until.date'            => 'Das Abreise-Datum muß als Datum angegeben werden.',
-            'until.after'           => 'Das Abreise-Datum muß nach dem Anreise-Datum liegen',
+            'until.after'           => 'Das Anreise-Datum liegt vor einem vorhandenen Abreise-Datum',
             'persons.required'      => 'Bitte die Anzahl der Personen angeben.',
             'persons.regex'         => 'Die Anzahl der Personen muß eine ganza Zahl sein.',
+            'day_price.numeric'     => 'Der Tages-Preis muß numerisch sein.',
             'price.required'        => 'Bitte einen Preis angeben.',
             'price.numeric'         => 'Der Preis muß eine ganze Zahl sein.',
             'email.email'           => 'Bitte eine korrekte oder keine Email-Adresse angeben.',

@@ -1,0 +1,76 @@
+@extends('layouts.main')
+
+@section('main')
+    <div class="m-5 content-center w-3/4">
+        <div class="w-full block">
+            <div class="float-left">
+                <x-nav-link href="{{ route('admin.boatDates.'.$boatDate->modus) }}" icon="fas fa-backward" class="btn">zur Liste</x-nav-link>
+            </div>
+            <div class="float-right">
+                <x-nav-link href="{{ route('admin.boatDates.sendInvoice', $boatDate) }}" icon="fas fa-edit" class="btn" title="Rechnung senden">
+                    <span class="hidden md:visible">Rechnung senden</span>
+                </x-nav-link>
+            </div>
+        </div>
+
+        <div class="show-page mt-3">
+            <div>
+                <div>Boot</div>
+                <div>{{ $boatDate->boat->boat_name }}</div>
+            </div>
+            <div>
+                <div>Eigner</div>
+                <div>{{ $boatDate->boat->customer->name }}</div>
+            </div>
+            <div>
+                <div>Email</div>
+                <div><a href="mailto:{{ $boatDate->boat->customer->email }}" target="_blank">{{ $boatDate->boat->customer->email }}</a></div>
+            </div>
+            <div>
+                <div>Fon</div>
+                <div>
+                    @if($boatDate->boat->customer->fon)
+                        <a href="tel:{{ $boatDate->boat->customer->fonLink }}" target="_blank">
+                            <i class="fas fa-phone"></i>
+                            {{ $boatDate->boat->customer->fon }}
+                        </a>
+                    @endif
+                </div>
+            </div>
+            <div>
+                <div>Art</div>
+                <div>{{ config('port.main.boat.dates.modi')[$boatDate->modus] }}</div>
+            </div>
+            <div>
+                <div>Von</div>
+                <div>{{ $boatDate->from->format('d.m.Y') }}</div>
+            </div>
+            <div>
+                <div>Bis</div>
+                <div>{{ $boatDate->until->format('d.m.Y') }}</div>
+            </div>
+
+            <div>
+                <div>Grundpreis</div>
+                <div>{{ $boatDate->basePrice }} €</div>
+            </div>
+            <div>
+                <div>Kranen</div>
+                <div>{{ $boatDate->crane }} €</div>
+            </div>
+            <div>
+                <div>Mastkranen</div>
+                <div>{{ $boatDate->mastCrane }} €</div>
+            </div>
+            <div>
+                <div>Reinigung</div>
+                <div>{{ $boatDate->cleaning }} €</div>
+            </div>
+
+            <div>
+                <div>Gesamt-Preis</div>
+                <div><b>{{ $boatDate->price }} €</b></div>
+            </div>
+        </div>
+    </div>
+@endsection

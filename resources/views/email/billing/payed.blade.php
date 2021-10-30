@@ -5,10 +5,10 @@
 @endcomponent
 @endslot
 
-# Bestellung
+# Rechnung
 Kunde:
 {{ $customer->name }} <a href="mailto:{{ $customer->email }}">{{ $customer->email }}</a>
-{{ $customer->shipping->street }}, {{ $customer->shipping->postcode }} {{ $customer->shipping->city }}
+{{ $customer->street }}, {{ $customer->postcode }} {{ $customer->city }}
 
 - Summe Total: {{ $params['amount_received'] }} €
 - bezahlt am: {{ date_format($params['paid_on'], 'd.m.Y H:i') . ' Uhr' ?? null }}

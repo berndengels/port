@@ -1,18 +1,12 @@
 <?php
-
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
+use App\Models\Role;
+use Database\Seeders\Ext\MainSeeder;
 
-class RoleSeeder extends Seeder
+class RoleSeeder extends MainSeeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
-    public function run()
-    {
-        //
-    }
+    protected $table = 'roles';
+    protected $model = Role::class;
+
 }

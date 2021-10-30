@@ -1,0 +1,120 @@
+
+.flex-container-dashboard {
+	paddin-top: 1.0rem;
+	width: 100%;
+	min-height: 100vh;
+//	display: -ms-inline-flexbox;
+//	display: -webkit-inline-flex;
+	display: flex;
+//	-webkit-flex-direction: column;
+//	-ms-flex-direction: column;
+//	flex-direction: column;
+//	-webkit-flex-wrap: wrap;
+//	-ms-flex-wrap: wrap;
+//	flex-wrap: wrap;
+	flex-flow: row wrap;
+//	-webkit-justify-content: start;
+//	-ms-flex-pack: flex-start;
+	justify-content: flex-start;
+//	-webkit-align-content: space-between;
+//	-ms-flex-line-pack: justify;
+	align-content: flex-start;
+//	-webkit-align-items: flex-start;
+//	-ms-flex-align: flex-start;
+	align-items: flex-start;
+
+	.flex-item-dashboard {
+		width: 20rem;
+//		min-width: 30%;
+//		max-width: 30%;
+//		height: auto;
+//		max-height: 100%;
+		clear: left;
+//		-webkit-order: 0;
+//		-ms-flex-order: 0;
+		order: 0;
+//		-webkit-flex: 0 1 auto;
+//		-ms-flex: 0 1 auto;
+		flex: 0 1 auto;
+//		flex-basis: 30%;
+//		flex: 0 0 10rem;
+//		-webkit-align-self: auto;
+//		-ms-flex-item-align: auto;
+		align-self: auto;
+		margin: 1.0rem 0 0 1.0rem;
+		color: #444;
+		background-color: #eee;
+		border-radius: 0.5rem;
+
+		&.widget {
+			&.open-sea-map {
+				min-height: 20rem;
+			}
+			.title {
+				font-size: 1.2rem;
+				font-weight: bold;
+				color: $indigo;
+			}
+			.content {
+				&.weather {
+					div {
+						display: grid;
+						grid-template-columns: 1fr 1fr;
+						grid-template-rows: 1fr;
+						gap: 10px 10px;
+						grid-auto-flow: row;
+						div {
+							padding: 0.1rem;
+						}
+						div:last-child {
+							white-space: nowrap;
+						}
+						&.beschreibung,&.bild,&datum {
+							grid-template-columns: 1fr;
+						}
+						&.bild,&.beschreibung {
+							display: inline-block;
+							float: left;
+							div {
+								display: inline-block;
+							}
+						}
+						&.bild {
+							width: 50px;
+							height: 50px;
+							padding: 0;
+							margin: 0;
+							div {
+								width: 50px;
+								height: 50px;
+								padding: 0;
+								margin: 0;
+								img {
+									width: 50px;
+									height: 50px;
+									margin: 0;
+								}
+							}
+						}
+						&.beschreibung {
+							margin-left: 1.0rem;
+							div {
+								font-size: 1.0rem;
+								line-height: 2.0;
+								white-space: wrap;
+								font-weight: bold;
+							}
+						}
+						&.temperatur {
+							clear: both;
+						}
+					}
+				}
+			}
+		}
+		@include media('<desktop') {
+			min-width: 93%;
+			margin: 1.0rem 1.0rem 0 1.0rem;
+		}
+	}
+}

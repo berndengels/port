@@ -44,6 +44,12 @@ return [
             'root' => storage_path('app/temp'),
 //            'visibility' => 'public',
         ],
+        'images' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/images'),
+            'url' => env('APP_URL').'/storage/images',
+            'visibility' => 'public',
+        ],
         'snapshots' => [
             'driver' => 'local',
             'root' => database_path('dumps'),

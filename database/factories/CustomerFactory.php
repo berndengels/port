@@ -1,0 +1,40 @@
+<?php
+
+namespace Database\Factories;
+
+use App\Models\Customer;
+use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class CustomerFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Customer::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        $modi = ['guest','permanent'];
+
+        return [
+            'customer_type' => $modi[rand(0,1)],
+            'name'      => $this->faker->name,
+            'email'     => $this->faker->email,
+            'fon'       => $this->faker->phoneNumber,
+            'state'     => $this->faker->city,
+            'street'    => $this->faker->streetAddress,
+            'postcode'  => $this->faker->postcode,
+            'city'      => $this->faker->city,
+            'password'  => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'remember_token' => Str::random(10),
+        ];
+    }
+}
