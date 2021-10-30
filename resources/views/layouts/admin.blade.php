@@ -45,4 +45,3 @@
     </footer>
 
 </div>
-<div id="bottom" class="absolute block w-full m-0 p-0 bottom-0 justify-items-center bg-blue-800 text-white text-2xl clear-both"><b>bottom</b></div>

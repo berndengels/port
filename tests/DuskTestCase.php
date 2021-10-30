@@ -3,12 +3,13 @@ namespace Tests;
 
 use App\Models\AdminUser;
 use App\Models\Boat;
-use App\Models\BoatDates;
 use App\Models\BoatGuest;
 use App\Models\Caravan;
 use App\Models\Customer;
 use Carbon\Carbon;
+use Exception;
 use Facebook\WebDriver\Chrome\ChromeOptions;
+use Facebook\WebDriver\Exception\NoSuchElementException;
 use Facebook\WebDriver\Remote\DesiredCapabilities;
 use Facebook\WebDriver\Remote\RemoteWebDriver;
 use Facebook\WebDriver\Remote\WebDriverCapabilityType;
@@ -82,7 +83,8 @@ abstract class DuskTestCase extends BaseTestCase
     protected function driver()
     {
         $options = (new ChromeOptions)->addArguments(collect([
-            '--window-size=1920,1080',
+//            '--window-size=1920,1080',
+            '--window-size=1920,1600',
             '--no-sandbox',
             '--ignore-certificate-errors',
         ])->unless($this->hasHeadlessDisabled(), function ($items) {
@@ -145,9 +147,9 @@ abstract class DuskTestCase extends BaseTestCase
     protected function captureFailuresFor($browsers)
     {
         $browsers->each(function (Browser $browser, $key) {
-            $body = $browser->driver->findElement(WebDriverBy::tagName('body'));
-            if (!empty($body)) {
-                $currentSize = $body->getSize();
+            $main = $browser->driver->findElement(WebDriverBy::tagName('main'));
+            if (!empty($main)) {
+                $currentSize = $main->getSize();
                 $size = new WebDriverDimension($currentSize->getWidth(), $currentSize->getHeight());
                 dump($size);
                 $browser->driver->manage()->window()->setSize($size);
@@ -164,20 +166,22 @@ abstract class DuskTestCase extends BaseTestCase
         $thumbPath		= $publicPath . '/thumbs';
         $fileToSave 	= $publicPath.'/'.$screenName.'.jpg';
 
-        $img = StaticImage::make($screenFullPath)
-            ->widen(static::$screenshotWidth)
-            ->encode('jpg', static::$screenshotCompression)
-            ->save($fileToSave)
-        ;
+        try {
+            $size = $this->driver()->manage()->window()->fullscreen()->getSize();
+            $img = StaticImage::make($screenFullPath)->resize($size);
+            $img->encode('jpg', static::$screenshotCompression)->save($fileToSave);
+            dump($size);
+            @chmod($fileToSave, 0666);
+            $this->createJpegThumbnail( $img, $thumbPath );
 
-        @chmod($fileToSave, 0666);
-        $this->createJpegThumbnail( $img, $thumbPath );
+            if($removeOrigial) {
+                unlink($screenFullPath);
+            }
 
-        if($removeOrigial) {
-            unlink($screenFullPath);
+            return $img;
+        } catch(Exception $e) {
+            return null;
         }
-
-        return $img;
     }
 
     public function createJpegThumbnail( Image $img, $path ) {
