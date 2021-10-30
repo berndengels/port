@@ -9,7 +9,7 @@ use Illuminate\Database\Connection;
 
 class MainSeeder extends Seeder
 {
-    protected $count = 50;
+    protected $count = 10;
     /**
      * @var Connection
      */

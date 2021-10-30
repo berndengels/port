@@ -6,7 +6,7 @@ use Database\Seeders\Ext\MainSeeder;
 
 class CaravanDatesSeeder extends MainSeeder
 {
-    protected $count = 100;
+    protected $count = 50;
     protected $table = 'caravan_dates';
     /**
      * Run the database seeds.
