@@ -1,9 +1,9 @@
 name: DuskTests
 on:
     push:
-        branches: [ serverside ]
+        branches: [ main ]
     pull_request:
-        branches: [ serverside ]
+        branches: [ main ]
 
 jobs:
 
