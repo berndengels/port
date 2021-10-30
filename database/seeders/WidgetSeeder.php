@@ -6,7 +6,7 @@ use Database\Seeders\Ext\MainSeeder;
 
 class WidgetSeeder extends MainSeeder
 {
-    protected $count = 5;
+    protected $count = 3;
     protected $table = 'widgets';
 
     /**

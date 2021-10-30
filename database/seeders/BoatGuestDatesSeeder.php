@@ -17,7 +17,7 @@ class BoatGuestDatesSeeder extends MainSeeder
     public function run()
     {
         BoatGuestDates::factory()
-            ->count(500)
+            ->count($this->count)
             ->create()
         ;
     }

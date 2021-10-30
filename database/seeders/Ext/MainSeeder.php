@@ -20,6 +20,7 @@ class MainSeeder extends Seeder
     protected $dbTest;
     protected $table;
     protected $model;
+    protected $dataClass;
 
     public function __construct()
     {

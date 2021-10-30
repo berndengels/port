@@ -9,7 +9,7 @@ class CountryData {
     /**
      * @var array
      */
-    public static $data = [
+    public static array $data = [
         ['code' => 'AD','en' => 'Andorra','de' => 'Andorra','es' => 'Andorra','fr' => 'ANDORRE','it' => 'Andorra','ru' => 'Андорра'],
         ['code' => 'AE','en' => 'United Arab Emirates','de' => 'Vereinigte Arabische Emirate','es' => 'Emiratos Árabes Unidos','fr' => 'ÉMIRATS ARABES UNIS','it' => 'Emirati Arabi Uniti','ru' => 'ОАЭ'],
         ['code' => 'AF','en' => 'Afghanistan','de' => 'Afghanistan','es' => 'Afganistán','fr' => 'AFGHANISTAN','it' => 'Afghanistan','ru' => 'Афганистан'],

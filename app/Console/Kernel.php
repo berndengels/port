@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Console\Commands\RepairBoatPriceData;
+use App\Console\Commands\ExportTableData;
 use App\Console\Commands\RepairCaravanPriceData;
 use App\Console\Commands\RepairGuestBoatPriceData;
 use Illuminate\Console\Scheduling\Schedule;
@@ -20,6 +21,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         RepairCaravanPriceData::class,
         RepairGuestBoatPriceData::class,
+        ExportTableData::class,
     ];
 
     /**
