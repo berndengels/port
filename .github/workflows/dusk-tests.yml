@@ -1,5 +1,10 @@
 name: DuskTests
-on: [push]
+on:
+    push:
+        branches: [ serverside ]
+    pull_request:
+        branches: [ serverside ]
+
 jobs:
 
     dusk-php:
