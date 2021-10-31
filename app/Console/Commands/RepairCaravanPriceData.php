@@ -2,6 +2,7 @@
 namespace App\Console\Commands;
 
 use App\Libs\Sanitizers\CaravanSanitizer;
+use App\Models\CaravanDates;
 use Spatie\Emoji\Emoji;
 
 class RepairCaravanPriceData extends RepairPriceData
@@ -29,7 +30,6 @@ class RepairCaravanPriceData extends RepairPriceData
     {
         parent::__construct();
         $this->sanitizer = new CaravanSanitizer();
-        $this->data = $this->sanitizer->getData();
     }
 
     /**
@@ -39,6 +39,7 @@ class RepairCaravanPriceData extends RepairPriceData
      */
     public function handle()
     {
+        $this->data = CaravanDates::all();
         if ($this->confirm('Do you wish to continue?', true)) {
             if($this->data && $this->data->count() > 0) {
                 $this->withProgressBar($this->data, function ($item) {
