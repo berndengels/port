@@ -2,9 +2,9 @@
 namespace Database\Seeders;
 
 use App\Models\Page;
-use Database\Seeders\Ext\MainSeeder;
+use Database\Seeders\Ext\MainTestSeeder;
 
-class PagesSeeder extends MainSeeder
+class PagesTestSeeder extends MainTestSeeder
 {
     protected $count = 5;
     protected $table = 'pages';
@@ -17,6 +17,7 @@ class PagesSeeder extends MainSeeder
     public function run()
     {
         Page::factory()
+            ->connection('test')
             ->count($this->count)
             ->create()
         ;

@@ -2,9 +2,9 @@
 namespace Database\Seeders;
 
 use App\Models\Widget;
-use Database\Seeders\Ext\MainSeeder;
+use Database\Seeders\Ext\MainTestSeeder;
 
-class WidgetSeeder extends MainSeeder
+class WidgetTestSeeder extends MainTestSeeder
 {
     protected $count = 3;
     protected $table = 'widgets';
@@ -17,6 +17,7 @@ class WidgetSeeder extends MainSeeder
     public function run()
     {
         Widget::factory()
+            ->connection('test')
             ->count($this->count)
             ->create()
         ;

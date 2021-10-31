@@ -1,10 +1,7 @@
 <?php
-
 namespace Database\Seeders;
 
-use Eloquent;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,26 +12,23 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Eloquent::unguard();
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         $this->call([
-            RoleSeeder::class,
-            PermissionSeeder::class,
-            ModelHasPermissionsSeeder::class,
-            RoleHasPermissionsSeeder::class,
-            CustomerSeeder::class,
-            AdminUserSeeder::class,
-            CountrySeeder::class,
-            CarLicensePlateSeeder::class,
-            PagesSeeder::class,
-            WidgetSeeder::class,
-            CaravanSeeder::class,
-            CaravanDatesSeeder::class,
-            BoatSeeder::class,
-            BoatDatesSeeder::class,
-            BoatGuestSeeder::class,
-            BoatGuestDatesSeeder::class,
+            RoleTestSeeder::class,
+            PermissionTestSeeder::class,
+            ModelHasPermissionsTestSeeder::class,
+            RoleHasPermissionsTestSeeder::class,
+            CustomerTestSeeder::class,
+            AdminUserTestSeeder::class,
+            CountryTestSeeder::class,
+            CarLicensePlateTestSeeder::class,
+            PagesTestSeeder::class,
+            WidgetTestSeeder::class,
+            CaravanTestSeeder::class,
+            CaravanDatesTestSeeder::class,
+            BoatGuestTestSeeder::class,
+            BoatGuestDatesTestSeeder::class,
+            BoatTestSeeder::class,
+            BoatDatesTestSeeder::class,
         ]);
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }

@@ -15,14 +15,14 @@ class ExportTableData extends GeneratorCommand
      *
      * @var string
      */
-    protected $signature = 'make:model-export {table} {--f|format=array : output as php-array,csv or json}';
+    protected $signature = 'make:model-export {table}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Export database table to a data class file (php array,csv,json)';
+    protected $description = 'Export database table to a data class file with data property as array';
     /**
      * The type of class being generated.
      *
@@ -35,7 +35,6 @@ class ExportTableData extends GeneratorCommand
      * @var Collection
      */
     protected $data;
-    protected $argFormat = 'array';
     protected $table;
     protected $path = 'database/data';
     protected $model;
@@ -54,20 +53,20 @@ class ExportTableData extends GeneratorCommand
             throw new InvalidParameterException('missing parameter for table"');
         }
 
-        if($this->hasOption('format')) {
-            $this->argFormat = $this->option('format');
-        }
-
         $basePath = base_path($this->path);
         $this->makeDirectory($this->path);
 
-        $this->dataClass = Str::singular($this->table).'Data';
+        $this->dataClass = ucfirst(Str::camel(Str::singular($this->table)).'Data');
         $path = $basePath.'/'.$this->dataClass.'.php';
 
-        if ($this->alreadyExists($path)) {
-            $this->error($this->type.' already exists!');
-            return false;
+        if ($this->files->exists($path)) {
+            $this->error($this->dataClass.' already exists!');
+            if (! $this->confirm('Do you wish to continue?', true)) {
+                $this->info('OK, action canceled');
+                return 1;
+            }
         }
+
         try {
             $this->data = DB::table($this->table)->get()->all();
         }
@@ -76,18 +75,7 @@ class ExportTableData extends GeneratorCommand
             return 1;
         }
 
-        switch($this->argFormat) {
-            case 'csv':
-                $data = $this->getCsvString($this->data);
-                break;
-            case 'json':
-                $data = "'".json_encode($this->data)."'";
-                break;
-            case 'array':
-            default:
-                $data = $this->getArrayString($this->data);
-                break;
-        }
+        $data = $this->getArrayString($this->data);
 
         $stub = $this->buildClass($this->dataClass);
         $this
@@ -103,6 +91,9 @@ class ExportTableData extends GeneratorCommand
 
     protected function getArrayString(array $data)
     {
+        if(count($data) < 1) {
+            return '[]';
+        }
         $rows = [];
         foreach($data as $items) {
             $item = [];
@@ -112,22 +103,6 @@ class ExportTableData extends GeneratorCommand
             $rows[] = "\t\t[".implode(",", $item)."]";
         }
         return " [\n" . implode(",\n", $rows). "\n\t]";
-    }
-
-    protected function getCsvString(array $data)
-    {
-        $cols = collect(array_keys($data[0]))->map(fn($c)=>"\"$c\"");
-        $rows = [];
-        $rows[] = $cols->join(',');
-        foreach($data as $items) {
-            $item = [];
-            foreach($items as $k => $v) {
-                $v = stripslashes($v);
-                $item[] = "\"$v\"";
-            }
-            $rows[] = implode(",", $item);
-        }
-        return "<<< CSV\n" . implode("\n", $rows). "\nCSV";
     }
 
     protected function replaceDataBlock(&$stub, $data)

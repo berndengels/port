@@ -2,9 +2,9 @@
 namespace Database\Seeders;
 
 use Database\Data\RoleHasPermissionsData;
-use Database\Seeders\Ext\MainSeeder;
+use Database\Seeders\Ext\MainTestSeeder;
 
-class RoleHasPermissionsSeeder extends MainSeeder
+class RoleHasPermissionsTestSeeder extends MainTestSeeder
 {
     protected $table = 'role_has_permissions';
     protected $dataClass = RoleHasPermissionsData::class;

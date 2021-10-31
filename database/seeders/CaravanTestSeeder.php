@@ -2,10 +2,10 @@
 namespace Database\Seeders;
 
 use App\Models\Caravan;
-use Database\Seeders\Ext\MainSeeder;
+use Database\Seeders\Ext\MainTestSeeder;
 use Illuminate\Support\Facades\Schema;
 
-class CaravanSeeder extends MainSeeder
+class CaravanTestSeeder extends MainTestSeeder
 {
     protected $table = 'caravans';
     /**
@@ -16,6 +16,7 @@ class CaravanSeeder extends MainSeeder
     public function run()
     {
         Caravan::factory()
+            ->connection('test')
             ->count($this->count)
             ->create();
     }

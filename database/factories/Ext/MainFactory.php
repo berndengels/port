@@ -1,26 +1,30 @@
 <?php
 namespace Database\Factories\Ext;
 
-use Symfony\Component\DomCrawler\Crawler;
+use App\Models\Model;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 abstract class MainFactory extends Factory
 {
     protected $model;
+    /**
+     * @var Model
+     */
     protected $parentModel;
 
     /**
      * @return Collection
      */
-    protected function getParents(array $cols = null) {
+    protected function getParents($cols = '*') {
+        DB::setDefaultConnection('test');
         if(!$this->parentModel) {
             return null;
         }
-        if($cols) {
-            return ($this->parentModel)::all($cols);
-        }
-        return ($this->parentModel)::all();
+        DB::setDefaultConnection('test');
+        $table = $this->parentModel::getModel()->getTable();
+        return collect(DB::table($table)->get($cols)->all());
     }
 
     /**

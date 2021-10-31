@@ -3,9 +3,9 @@ namespace Database\Seeders;
 
 use App\Models\Permission;
 use Database\Data\ModelHasPermissionsData;
-use Database\Seeders\Ext\MainSeeder;
+use Database\Seeders\Ext\MainTestSeeder;
 
-class PermissionSeeder extends MainSeeder
+class PermissionTestSeeder extends MainTestSeeder
 {
     protected $table = 'permissions';
     protected $model = Permission::class;

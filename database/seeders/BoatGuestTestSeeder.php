@@ -1,13 +1,12 @@
 <?php
 namespace Database\Seeders;
 
-use App\Models\CaravanDates;
-use Database\Seeders\Ext\MainSeeder;
+use App\Models\BoatGuest;
+use Database\Seeders\Ext\MainTestSeeder;
 
-class CaravanDatesSeeder extends MainSeeder
+class BoatGuestTestSeeder extends MainTestSeeder
 {
-    protected $count = 50;
-    protected $table = 'caravan_dates';
+    protected $table = 'boat_guests';
     /**
      * Run the database seeds.
      *
@@ -15,7 +14,8 @@ class CaravanDatesSeeder extends MainSeeder
      */
     public function run()
     {
-        CaravanDates::factory()
+        BoatGuest::factory()
+            ->connection('test')
             ->count($this->count)
             ->create()
         ;

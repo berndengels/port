@@ -66,6 +66,7 @@ class Customer extends Authenticatable
     use HasFactory, HasRoles, Notifiable, CanResetPassword, ThrottlesLogins, Dispatchable, ClearCache;
 
     protected $table = 'customers';
+    protected $guard_name = 'web';
     protected $appends = ['fonLink'];
     protected $guarded = ['id'];
     protected $hidden = ['password','remember_token'];

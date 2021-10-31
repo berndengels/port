@@ -23,7 +23,6 @@ class BoatFactory extends MainFactory
      */
     public function definition()
     {
-        $this->setType();
         $parents    = $this->getParents();
         $max        = max($parents->keys()->toArray()) - 1;
         $randIndex  = rand(0, $max);
@@ -31,7 +30,7 @@ class BoatFactory extends MainFactory
         $arr = [
             'customer_id'       => $parents[$randIndex]->id,
             'boat_name'         => $this->faker->name(['female']),
-            'boat_type'         => $this->type,
+            'boat_type'         => $this->types[rand(0,1)],
             'length'            => mt_rand(5, 20),
             'width'             => mt_rand(20, 40) / 10,
             'weight'            => mt_rand(1000, 10000),
@@ -43,14 +42,10 @@ class BoatFactory extends MainFactory
                 'mast_weight'       => mt_rand(50, 200),
                 'draft'             => mt_rand(30, 200) / 10,
                 'length_waterline'  => $arr['length'] - 1,
-                'length_keel'       => mt_rand(150, 600) / 10,
+                'length_keel'       => mt_rand(15, 60) / 10,
             ]);
         }
 
         return $arr;
-    }
-
-    private function setType() {
-        $this->type = $this->types[rand(0,1)];
     }
 }

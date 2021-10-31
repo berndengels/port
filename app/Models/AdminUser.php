@@ -78,6 +78,7 @@ class AdminUser extends Authenticatable
 //    use HasApiTokens;
 
     protected $table = 'admin_users';
+    protected $guard_name = 'admin';
     /**
      * The attributes that are mass assignable.
      *

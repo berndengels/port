@@ -23,7 +23,7 @@ class CreateBoatsTable extends Migration
             $table->unsignedInteger('weight')->nullable();
             $table->unsignedTinyInteger('mast_length')->nullable();
             $table->unsignedInteger('mast_weight')->nullable();
-            $table->decimal('draft', 2, 1)->unsigned()->nullable();
+            $table->decimal('draft', 3, 1)->unsigned()->nullable();
             $table->decimal('length_waterline', 3, 1)->unsigned()->nullable();
             $table->decimal('length_keel', 3, 1)->unsigned()->nullable();
             $table->string('home_port', 50)->nullable();

@@ -1,10 +1,10 @@
 <?php
 namespace Database\Seeders;
 
-use Database\Seeders\Ext\MainSeeder;
+use Database\Seeders\Ext\MainTestSeeder;
 use Database\Data\ModelHasPermissionsData;
 
-class ModelHasPermissionsSeeder extends MainSeeder
+class ModelHasPermissionsTestSeeder extends MainTestSeeder
 {
     protected $table = 'model_has_permissions';
     protected $dataClass = ModelHasPermissionsData::class;

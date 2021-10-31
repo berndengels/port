@@ -2,9 +2,9 @@
 namespace Database\Seeders;
 
 use App\Models\Boat;
-use Database\Seeders\Ext\MainSeeder;
+use Database\Seeders\Ext\MainTestSeeder;
 
-class BoatSeeder extends MainSeeder
+class BoatTestSeeder extends MainTestSeeder
 {
     protected $table = 'boats';
     /**
@@ -15,6 +15,7 @@ class BoatSeeder extends MainSeeder
     public function run()
     {
         Boat::factory()
+            ->connection('test')
             ->count($this->count)
             ->create();
     }
