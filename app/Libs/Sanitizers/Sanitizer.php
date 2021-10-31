@@ -10,13 +10,4 @@ class Sanitizer
      * @var Collection|null
      */
     protected $data;
-
-    /**
-     * @return Collection|null
-     */
-    public function getData()
-    {
-        $this->data = (static::$model)::all();
-        return $this->data;
-    }
 }
