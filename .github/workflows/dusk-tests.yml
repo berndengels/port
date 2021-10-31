@@ -19,7 +19,7 @@ jobs:
             - name: Install Composer Dependencies
               run: composer install --no-progress --prefer-dist --optimize-autoloader
             - name: Run database migrations
-              run: php artisan migrate --database=test --seed
+              run: php artisan migrate --database=test
             - name: Upgrade Chrome Driver
               run: php artisan dusk:chrome-driver `/opt/google/chrome/chrome --version | cut -d " " -f3 | cut -d "." -f1`
             - name: Start Chrome Driver
