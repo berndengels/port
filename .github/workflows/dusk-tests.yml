@@ -18,6 +18,12 @@ jobs:
                   mysql --user="root" --password="root" -e "CREATE DATABASE port character set UTF8mb4 collate utf8mb4_bin;"
             - name: Install Composer Dependencies
               run: composer install --no-progress --prefer-dist --optimize-autoloader
+            - name: Install JS Dependencies
+              run: npm install
+            - name: Install JS Dependencies
+              run: npm install
+            - name: Mix Build JS/CSS
+              run: npm run dev
             - name: Run database migrations
               run: php artisan migrate --database=test
             - name: Run database seeds
