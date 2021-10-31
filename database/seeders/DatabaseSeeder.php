@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        DB::setDefaultConnection('demo');
+//        DB::setDefaultConnection('demo');
         $this->call([
             RoleTestSeeder::class,
             PermissionTestSeeder::class,

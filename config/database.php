@@ -75,9 +75,11 @@ return [
             ]) : [],
         ],
         'testing' => [
+/*
             'driver'   => 'sqlite',
             'database' => ':memory:',
             'prefix'   => '',
+*/
         ],
         'pgsql' => [
             'driver' => 'pgsql',

@@ -8,13 +8,14 @@ use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
 {
-    use CreatesApplication, RefreshDatabase;
+    use CreatesApplication, RefreshDatabase, DatabaseMigrations;
 
     protected function setUp(): void
     {
         parent::setUp();
 //        $this->runDatabaseMigrations();
-        $this->refreshInMemoryDatabase();
+//        $this->refreshInMemoryDatabase();
+        $this->refreshTestDatabase();
     }
 
 
