@@ -17,7 +17,8 @@ class PublicDashboardTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $browser->visit('/')
-                    ->assertSee('Wetter');
+                ->assertSee('Wetter')
+            ;
         });
     }
 }

@@ -57,7 +57,7 @@ class GuestBoatAdminPriceTest extends DuskTestCase
                 ->assertInputValueIsNot('prices', '')
                 ->screenshot($this->screenName)
             ;
-            $this->createJpeg($this->screenName);
+//            $this->createJpeg($this->screenName);
         });
     }
 
