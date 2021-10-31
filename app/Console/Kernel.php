@@ -19,9 +19,9 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        RepairCaravanPriceData::class,
-        RepairGuestBoatPriceData::class,
-        ExportTableData::class,
+//        RepairCaravanPriceData::class,
+//        RepairGuestBoatPriceData::class,
+//        ExportTableData::class,
     ];
 
     /**
