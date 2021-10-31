@@ -11,16 +11,12 @@ class Sanitizer
      */
     protected $data;
 
-    public function __construct()
-    {
-        $this->data = (static::$model)::all();
-    }
-
     /**
      * @return Collection|null
      */
     public function getData()
     {
+        $this->data = (static::$model)::all();
         return $this->data;
     }
 }
