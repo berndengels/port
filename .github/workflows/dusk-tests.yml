@@ -26,8 +26,12 @@ jobs:
               run: php artisan migrate --database=test
             - name: Run database seeds
               run: php artisan db:seed --database=test
+            - name: Install dusk
+              run: php artisan dusk:install
+#            - name: Upgrade Chrome Driver
+#              run: php artisan dusk:chrome-driver `/opt/google/chrome/chrome --version | cut -d " " -f3 | cut -d "." -f1`
             - name: Upgrade Chrome Driver
-              run: php artisan dusk:chrome-driver `/opt/google/chrome/chrome --version | cut -d " " -f3 | cut -d "." -f1`
+              run: php artisan dusk:chrome-driver
             - name: Start Chrome Driver
               run: ./vendor/laravel/dusk/bin/chromedriver-linux &
             - name: Run Laravel Server
@@ -35,7 +39,6 @@ jobs:
             - name: Run Dusk Tests
               env:
                   APP_URL: "http://127.0.0.1:8000"
-#              run: php artisan dusk
               run: php artisan pest:dusk
             - name: Upload Screenshots
               if: failure()
