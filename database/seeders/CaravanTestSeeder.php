@@ -2,6 +2,7 @@
 namespace Database\Seeders;
 
 use App\Models\Caravan;
+use App\Models\CaravanDates;
 use Database\Seeders\Ext\MainTestSeeder;
 use Illuminate\Support\Facades\Schema;
 
@@ -16,7 +17,7 @@ class CaravanTestSeeder extends MainTestSeeder
     public function run()
     {
         Caravan::factory()
-            ->connection('test')
+            ->hasDates(3)
             ->count($this->count)
             ->create();
     }

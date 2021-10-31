@@ -25,3 +25,4 @@ yarn-error.log
 /package-lock.json
 /public/webfonts/
 /public/froala-editor/
+/.env.dusk.local

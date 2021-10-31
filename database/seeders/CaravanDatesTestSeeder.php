@@ -16,7 +16,6 @@ class CaravanDatesTestSeeder extends MainTestSeeder
     public function run()
     {
         CaravanDates::factory()
-            ->connection('test')
             ->count($this->count)
             ->create()
         ;

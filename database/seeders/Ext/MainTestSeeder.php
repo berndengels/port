@@ -11,7 +11,7 @@ use Illuminate\Database\Connection;
 
 class MainTestSeeder extends Seeder
 {
-    protected $count = 10;
+    protected $count = 5;
     /**
      * @var Connection
      */
@@ -27,30 +27,29 @@ class MainTestSeeder extends Seeder
 
     public function __construct()
     {
-        $this->dbProd = DB::connection('port');
-        $this->dbTest = DB::connection('test');
-        DB::setDefaultConnection('test');
+        $this->dbProd = DB::connection('mysql');
+        $this->dbTest = DB::connection('demo');
+        DB::setDefaultConnection('demo');
+        $this->dbTest->statement('SET FOREIGN_KEY_CHECKS=0;');
+        Schema::disableForeignKeyConstraints();
     }
 
     public function run() {
         Eloquent::unguard();
-        DB::setDefaultConnection('test');
-        $this->dbTest->statement('SET FOREIGN_KEY_CHECKS=0;');
+//        $this->dbTest->statement('SET FOREIGN_KEY_CHECKS=0;');
         Schema::disableForeignKeyConstraints();
-//        $this->dbTest->table($this->table)->delete();
-//        $this->dbTest->table($this->table)->truncate();
 
         if($this->dataClass && class_exists($this->dataClass)) {
             $this->inserByData($this->dataClass);
         } {
-            $this->insertByTable();
+//            $this->insertByTable();
         }
 
         if($this->model) {
             ($this->model)::getModel()->refresh();
         }
         Schema::enableForeignKeyConstraints();
-        $this->dbTest->statement('SET FOREIGN_KEY_CHECKS=1;');
+//        $this->dbTest->statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 
     protected function inserByData($dataClass) {

@@ -24,8 +24,8 @@ class ShwitchDatabaseConnection
         $auth = auth('admin');
         if($user = $request->user('admin')) {
             if('test@test.com' === $user->email) {
-                DB::purge('port');
-                DB::setDefaultConnection('test');
+                DB::purge('mysql');
+                DB::setDefaultConnection('demo');
                 $testUser = AdminUser::whereEmail($user->email)->first();
                 if(!$testUser->hasRole('admin')) {
                     $testUser->assignRole('admin');

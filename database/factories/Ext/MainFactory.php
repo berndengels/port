@@ -9,23 +9,6 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 abstract class MainFactory extends Factory
 {
     protected $model;
-    /**
-     * @var Model
-     */
-    protected $parentModel;
-
-    /**
-     * @return Collection
-     */
-    protected function getParents($cols = '*') {
-        DB::setDefaultConnection('test');
-        if(!$this->parentModel) {
-            return null;
-        }
-        DB::setDefaultConnection('test');
-        $table = $this->parentModel::getModel()->getTable();
-        return collect(DB::table($table)->get($cols)->all());
-    }
 
     /**
      * Method to generate random date between two dates

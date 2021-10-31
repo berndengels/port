@@ -17,7 +17,6 @@ class WidgetTestSeeder extends MainTestSeeder
     public function run()
     {
         Widget::factory()
-            ->connection('test')
             ->count($this->count)
             ->create()
         ;

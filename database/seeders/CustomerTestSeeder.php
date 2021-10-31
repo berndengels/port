@@ -1,9 +1,12 @@
 <?php
 namespace Database\Seeders;
 
+use App\Models\Boat;
+use App\Models\BoatDates;
 use App\Models\Role;
 use App\Models\Customer;
 use Database\Seeders\Ext\MainTestSeeder;
+use Illuminate\Support\Facades\DB;
 
 class CustomerTestSeeder extends MainTestSeeder
 {
@@ -16,14 +19,17 @@ class CustomerTestSeeder extends MainTestSeeder
     public function run()
     {
         $customers = Customer::factory()
-            ->connection('test')
+            ->has(Boat::factory()
+                    ->has(BoatDates::factory()->count(3),'dates')
+                ->count(1),'boats')
             ->count($this->count)
-            ->create();
+            ->create()
+        ;
 
         Role::getModel()->refresh();
 
+//        if(DB::connection('demo')->table('roles')->where('name','=','boat')->first()) {
         if(Role::whereName('boat')->first()) {
-            dump('role boat exist!');
             $customers->each(function (Customer $customer) {
                 $customer->assignRole('boat');
             });

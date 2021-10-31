@@ -6,7 +6,7 @@ use Database\Seeders\Ext\MainTestSeeder;
 
 class PagesTestSeeder extends MainTestSeeder
 {
-    protected $count = 5;
+    protected $count = 3;
     protected $table = 'pages';
 
     /**
@@ -17,7 +17,6 @@ class PagesTestSeeder extends MainTestSeeder
     public function run()
     {
         Page::factory()
-            ->connection('test')
             ->count($this->count)
             ->create()
         ;

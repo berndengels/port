@@ -4,6 +4,8 @@ namespace Database\Seeders;
 use App\Models\Role;
 use App\Models\AdminUser;
 use Database\Seeders\Ext\MainTestSeeder;
+use Illuminate\Database\ConnectionResolver;
+use Illuminate\Support\Facades\DB;
 
 class AdminUserTestSeeder extends MainTestSeeder
 {
@@ -17,13 +19,12 @@ class AdminUserTestSeeder extends MainTestSeeder
      */
     public function run()
     {
-        Role::getModel()->refresh();
         /**
          * @var $user AdminUser
          */
-        $user = AdminUser::factory()->connection('test')->create();
         Role::getModel()->refresh();
-
+        $user = AdminUser::factory()->create();
+//        if(DB::connection('demo')->table('roles')->where('name','=','admin')->first()) {
         if(Role::whereName('admin')->first()) {
             $user->assignRole('admin');
         }

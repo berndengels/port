@@ -36,7 +36,7 @@ return [
             'prefix' => '',
             'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
         ],
-        'port' => [
+        'mysql' => [
             'driver' => 'mysql',
             'url' => env('DATABASE_URL'),
             'host' => env('DB_HOST', '127.0.0.1'),
@@ -55,15 +55,15 @@ return [
                 PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
             ]) : [],
         ],
-        'test' => [
+        'demo' => [
             'driver' => 'mysql',
-            'url' => env('DATABASE_URL_TEST'),
-            'host' => env('DB_HOST_TEST', '127.0.0.1'),
-            'port' => env('DB_PORT_TEST', '3306'),
-            'database' => env('DB_DATABASE_TEST', 'forge'),
-            'username' => env('DB_USERNAME_TEST', 'forge'),
-            'password' => env('DB_PASSWORD_TEST', ''),
-            'unix_socket' => env('DB_SOCKET_TEST', ''),
+            'url' => env('DATABASE_URL_DEMO'),
+            'host' => env('DB_HOST_DEMO', '127.0.0.1'),
+            'port' => env('DB_PORT_DEMO', '3306'),
+            'database' => env('DB_DATABASE_DEMO', 'forge'),
+            'username' => env('DB_USERNAME_DEMO', 'forge'),
+            'password' => env('DB_PASSWORD_DEMO', ''),
+            'unix_socket' => env('DB_SOCKET_DEMO', ''),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
             'prefix' => '',
@@ -73,6 +73,11 @@ return [
             'options' => extension_loaded('pdo_mysql') ? array_filter([
                 PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
             ]) : [],
+        ],
+        'testing' => [
+            'driver'   => 'sqlite',
+            'database' => ':memory:',
+            'prefix'   => '',
         ],
         'pgsql' => [
             'driver' => 'pgsql',

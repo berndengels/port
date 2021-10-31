@@ -2,9 +2,11 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
+
     /**
      * Seed the application's database.
      *
@@ -12,23 +14,20 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        DB::setDefaultConnection('demo');
         $this->call([
             RoleTestSeeder::class,
             PermissionTestSeeder::class,
             ModelHasPermissionsTestSeeder::class,
             RoleHasPermissionsTestSeeder::class,
-            CustomerTestSeeder::class,
             AdminUserTestSeeder::class,
             CountryTestSeeder::class,
             CarLicensePlateTestSeeder::class,
             PagesTestSeeder::class,
             WidgetTestSeeder::class,
             CaravanTestSeeder::class,
-            CaravanDatesTestSeeder::class,
             BoatGuestTestSeeder::class,
-            BoatGuestDatesTestSeeder::class,
-            BoatTestSeeder::class,
-            BoatDatesTestSeeder::class,
+            CustomerTestSeeder::class,
         ]);
     }
 }

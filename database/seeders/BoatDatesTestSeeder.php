@@ -17,7 +17,6 @@ class BoatDatesTestSeeder extends MainTestSeeder
     public function run()
     {
         BoatDates::factory()
-            ->connection('test')
             ->count($this->count)
             ->create();
     }

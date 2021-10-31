@@ -16,6 +16,7 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "intervention/image": "^2.7",
         "laravel/framework": "^8.40",
+        "laravel/passport": "^10.1",
         "laravel/sanctum": "^2.6",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.3",
@@ -25,9 +26,8 @@
         "protonemedia/laravel-form-components": "^3.0",
         "spatie/db-dumper": "^2.21",
         "spatie/emoji": "^3.0",
-        "spatie/laravel-dashboard": "^2.0",
-        "spatie/laravel-dashboard-time-weather-tile": "^2.0",
         "spatie/laravel-db-snapshots": "^1.7",
+        "spatie/laravel-medialibrary": "^9.8",
         "spatie/laravel-permission": "^5.1",
         "spatie/tax-calculator": "^0.1.2",
         "symfony/dom-crawler": "^5.3",
@@ -51,7 +51,15 @@
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/",
             "Database\\Data\\": "database/data/"
-        }
+        },
+        "classmap": [
+            "database",
+            "database/seeders",
+            "database/factories",
+            "database/data"
+        ],
+        "files": [
+        ]
     },
     "autoload-dev": {
         "psr-4": {
