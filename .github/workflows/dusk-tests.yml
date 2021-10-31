@@ -23,9 +23,9 @@ jobs:
             - name: Mix Build JS/CSS
               run: npm run dev
             - name: Run database migrations
-              run: php artisan migrate --database=demo
+              run: php artisan migrate --database=testing
             - name: Run database seeds
-              run: php artisan db:seed --database=demo
+              run: php artisan db:seed --database=testing
             - name: Install dusk
               run: php artisan dusk:install
             - name: Upgrade Chrome Driver

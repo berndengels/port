@@ -2,7 +2,6 @@
 namespace Database\Factories;
 
 use App\Models\Boat;
-use App\Models\Customer;
 use Database\Factories\Ext\MainFactory;
 
 class BoatFactory extends MainFactory

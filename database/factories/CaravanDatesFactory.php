@@ -1,25 +1,15 @@
 <?php
 namespace Database\Factories;
 
-use App\Libs\Prices\CaravanPrice;
 use Carbon\Carbon;
-use App\Models\Caravan;
-use App\Models\CaravanDates;
 use App\Libs\CaravanPriceCalculator;
 use Database\Factories\Ext\MainFactory;
-use Illuminate\Http\Request;
 
 /**
  *
  */
 class CaravanDatesFactory extends MainFactory
 {
-    /**
-     * The name of the factory's corresponding model.
-     * @var string
-     */
-    protected $model = CaravanDates::class;
-
     /**
      * Define the model's default state.
      *
@@ -34,21 +24,6 @@ class CaravanDatesFactory extends MainFactory
         $persons    = rand(1, 4);
         $electric   = rand(0, 1);
 
-/*
-        $params = [
-            'from'      => $from,
-            'until'     => $until,
-            'persons'   => $persons,
-            'electric'  => $electric,
-            'day_price' => 0,
-        ];
-        $request = new Request();
-        $request->request->add($params);
-
-        $priceData  = (new CaravanPrice($from, $until))->getPrice($request);
-        $price      = $priceData['total'];
-        $prices     = json_encode($priceData);
-*/
         return [
             'from'          => $from,
             'until'         => $until,

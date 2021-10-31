@@ -15,10 +15,6 @@ class MainTestSeeder extends Seeder
     /**
      * @var Connection
      */
-    protected $dbProd;
-    /**
-     * @var Connection
-     */
     protected $dbTest;
     protected $table;
     protected $model;
@@ -27,10 +23,9 @@ class MainTestSeeder extends Seeder
 
     public function __construct()
     {
-        $this->dbProd = DB::connection('mysql');
-        $this->dbTest = DB::connection('demo');
-        DB::setDefaultConnection('demo');
-        $this->dbTest->statement('SET FOREIGN_KEY_CHECKS=0;');
+//        $this->dbTest = DB::connection('demo');
+//        DB::setDefaultConnection('demo');
+        DB::connection()->statement('SET FOREIGN_KEY_CHECKS=0;');
         Schema::disableForeignKeyConstraints();
     }
 
@@ -41,8 +36,6 @@ class MainTestSeeder extends Seeder
 
         if($this->dataClass && class_exists($this->dataClass)) {
             $this->inserByData($this->dataClass);
-        } {
-//            $this->insertByTable();
         }
 
         if($this->model) {
@@ -58,19 +51,6 @@ class MainTestSeeder extends Seeder
                 foreach($dataClass::$data as $row) {
                     $this->dbTest->table($this->table)->insertOrIgnore($row);
                 }
-            }
-        }
-    }
-
-    protected function insertByTable() {
-        $items = $this->dbProd
-            ->getPdo()
-            ->query("SELECT * FROM $this->table")
-            ->fetchAll(PDO::FETCH_ASSOC)
-        ;
-        if($items && count($items) > 0) {
-            foreach ($items as $item) {
-                $this->dbTest->table($this->table)->insertOrIgnore($item);
             }
         }
     }

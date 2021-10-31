@@ -2,20 +2,10 @@
 namespace Database\Factories;
 
 use Carbon\Carbon;
-use App\Models\BoatGuest;
-use App\Models\BoatGuestDates;
 use Database\Factories\Ext\MainFactory;
 
 class BoatGuestDatesFactory extends MainFactory
 {
-    /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
-    protected $model = BoatGuestDates::class;
-    protected $parentModel = BoatGuest::class;
-
     /**
      * Define the model's default state.
      *
@@ -30,8 +20,6 @@ class BoatGuestDatesFactory extends MainFactory
         return [
             'from'      => $from,
             'until'     => $until,
-//            'persons'   => 0,
-//            'electric'  => 0,
             'price'     => 0,
             'prices'    => '{}',
         ];

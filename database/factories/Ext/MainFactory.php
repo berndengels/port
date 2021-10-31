@@ -1,15 +1,10 @@
 <?php
 namespace Database\Factories\Ext;
 
-use App\Models\Model;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 abstract class MainFactory extends Factory
 {
-    protected $model;
-
     /**
      * Method to generate random date between two dates
      * @param $sStartDate
