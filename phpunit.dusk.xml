@@ -27,7 +27,7 @@
     <php>
         <server name="APP_ENV" value="dusk.local"/>
         <server name="DB_CONNECTION" value="demo"/>
-        <server name="DB_DATABASE" value="demo_port"/>
+        <server name="DB_DATABASE" value="port_demo"/>
         <server name="BCRYPT_ROUNDS" value="4"/>
         <server name="CACHE_DRIVER" value="array"/>
         <server name="MAIL_MAILER" value="array"/>
