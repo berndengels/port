@@ -44,7 +44,7 @@ class AdminCaravanTest extends TestCase
             ->asFakeUser($this->permission)
             ->post('/admin/caravans', $this->caravanParams)
             ->assertStatus(200)
-            ->assertSee($this->caravanParams['carnumber'])
+            ->assertSeeText($this->caravanParams['carnumber'])
         ;
     }
 
@@ -60,7 +60,21 @@ class AdminCaravanTest extends TestCase
             ->asFakeUser($this->permission)
             ->put('/admin/caravans/' . $caravan->id , $this->caravanParams)
             ->assertStatus(200)
-            ->assertSee($email)
+            ->assertSeeText($email)
+        ;
+    }
+
+    public function test_caravan_destroy()
+    {
+        $this->test_caravan_create();
+        $caravan = Caravan::whereCarnumber($this->caravanParams['carnumber'])->first();
+
+        $this
+            ->followingRedirects()
+            ->asFakeUser($this->permission)
+            ->delete('/admin/caravans/' . $caravan->id)
+            ->assertStatus(200)
+            ->assertSeeText('success: Caravan '.$this->caravanParams['carnumber'].' erfolgreich gelöscht!')
         ;
     }
 }
