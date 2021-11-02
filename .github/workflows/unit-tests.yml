@@ -25,9 +25,9 @@ jobs:
             - name: Mix Build JS/CSS
               run: npm run dev
             - name: Run database migrations
-              run: php artisan migrate --database=testing
+              run: php artisan migrate --env=testing --path=database/migrations/testing
             - name: Run database seeds
-              run: php artisan db:seed --database=testing
+              run: php artisan db:seed --env=testing
             - name: Run Laravel Server
               run: php artisan serve --env=testing --no-reload &
             - name: Run Unit-Tests
