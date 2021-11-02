@@ -18,9 +18,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        if(! app()->environment(['prod','production'])) {
-             $this->app->register(QuickMigrationsServiceProvider::class);
-        }
     }
 
     /**

@@ -39,7 +39,6 @@
         "kitloong/laravel-migrations-generator": "^4.5",
         "laravel/dusk": "^6.19",
         "laravel/sail": "^1.0.1",
-        "mnabialek/laravel-quick-migrations": "^1.2",
         "mockery/mockery": "^1.4.2",
         "nunomaduro/collision": "^5.0",
         "pestphp/pest": "^1.20",
@@ -69,10 +68,7 @@
     },
     "extra": {
         "laravel": {
-            "dont-discover": [],
-            "providers": [
-                "Mnabialek\\LaravelQuickMigrations\\Providers\\ServiceProvider"
-            ]
+            "dont-discover": []
         }
     },
     "config": {

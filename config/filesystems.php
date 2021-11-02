@@ -52,7 +52,7 @@ return [
         ],
         'snapshots' => [
             'driver' => 'local',
-            'root' => database_path('dumps'),
+            'root' => database_path('snapshots'),
         ],
         's3' => [
             'driver' => 's3',
