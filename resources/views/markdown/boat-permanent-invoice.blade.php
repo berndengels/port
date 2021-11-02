@@ -1,27 +1,38 @@
-@component('mail::message')
-# {{ config('app.name') }}
-# Rechnung für **{{ $modus }}** vom {{ $data->from->format('d.m.Y') }} bis {{ $data->until->format('d.m.Y') }}
+@component('mail::layout')
+@slot('header')
+@component('mail::header', ['url' => config('app.url')])
+{{ config('app.name') }}
+@endcomponent
+@endslot
+
+### Rechnung für **{{ $modus }}** vom {{ $data->from->format('d.m.Y') }} bis {{ $data->until->format('d.m.Y') }}
 - Name: {{ $customer->name }}
 - Email: <{{ $customer->email }}>
 - Telefon: {{ $customer->fon }}
 - Adresse: {{ $customer->street }}, {{ $customer->poszcode }} {{ $customer->city }}
 
-Preis für {{ $modus }} {{ $prices->price }} €
+Grund-Preis für {{ $modus }} {{ $prices->priceBase }} €
 
-@if($data->isCraned)
-    - Kranen: {{ $prices->crane }} €
+@if($prices->priceCrane > 0)
+- Kranen: {{ $prices->priceCrane }} €
 @endif
 
-@if($data->isMastCraned)
-    - Mast-Kranen: {{ $prices->mast_crane }} €
+@if($prices->priceMastCrane > 0)
+- Mast-Kranen: {{ $prices->priceMastCrane }} €
 @endif
 
-@if($data->isCleaned)
-    - Reinigung {{ $prices->cleaning }} €
+@if($prices->priceCleaning > 0)
+- Reinigung {{ $prices->priceCleaning }} €
 @endif
 
 Summe Preis: {{ $data->price }} €
 
-Danke,<br>
+@slot('footer')
+Danke für Ihren Besuch,
 {{ config('app.name') }}
+@component('mail::footer')
+© {{ date('Y') }} {{ config('app.name') }}. @lang('All rights reserved.')
+@endcomponent
+@endslot
+
 @endcomponent

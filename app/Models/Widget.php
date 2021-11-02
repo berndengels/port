@@ -28,7 +28,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @mixin Eloquent
  * @method static WidgetFactory factory(...$parameters)
  */
-class Widget extends Model
+class Widget extends BaseModel
 {
     use HasFactory, HasSlug, ClearCache;
 

@@ -146,6 +146,19 @@ return [
                     ],
                 ],
             ],
+            'Rechnungen'   => [
+                'permissions'   => ['read InvoiceMenu'],
+                'icon'  => 'fas fa-file-invoice-dollar',
+                'items' => [
+                    [
+                        'permissions'   => ['read Invoices','write Invoices'],
+                        'text'  => 'Boote',
+                        'title' => 'Boote',
+                        'icon'  => 'fas fa-file-invoice-dollar',
+                        'route' => 'admin.boatDates.invoices',
+                    ],
+                ],
+            ],
             'Info'   => [
                 'permissions'   => ['read InfoMenu'],
                 'icon'  => 'fas fa-info-circle',

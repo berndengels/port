@@ -1,13 +1,16 @@
 @component('mail::message')
-# Registrierungs Bestätigung für neuen Kunden
-- Name: {{ $customer->name }}
-- Email: <{{ $customer->email }}>
-- Telefon: {{ $customer->fon }}
-- Adresse: {{ $customer->street }}, {{ $customer->poszcode }} {{ $customer->city }}
+# {{ config('app.name') }}
+- Boot: {{ $data->boat->name }}
 
-@component('mail::button', ['url' => route('admin.customers.edit', $customer)])
-    Bitte hier Registrierung bestätigen
-@endcomponent
+# Rechnung für Liegeplatz vom {{ $data->from->format('d.m.Y') }} bis {{ $data->until->format('d.m.Y') }}
+
+@if($prices->daysCount > 1)
+- {{ $prices->daysCount }} Übernachtungen
+@else
+- {{ $prices->daysCount }} Übernachtung
+@endif
+
+Summe Preis: {{ $data->price }} €
 
 Danke,<br>
 {{ config('app.name') }}

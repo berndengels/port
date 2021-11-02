@@ -51,7 +51,7 @@ use Illuminate\Database\Query\JoinClause;
  * @method static Builder|CaravanDates fromYearMonth(?string $year = null, ?string $month = null)
  * @method static Builder|CaravanDates whereDayPrice($value)
  */
-class CaravanDates extends Model
+class CaravanDates extends BaseModel
 {
     use HasFactory, CaravanFilter, YearMonthFilter, ClearCache;
 

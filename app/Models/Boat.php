@@ -46,7 +46,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @method static Builder|Boat whereWeight($value)
  * @method static BoatFactory factory(...$parameters)
  */
-class Boat extends Model
+class Boat extends BaseModel
 {
     use HasFactory, ClearCache;
 

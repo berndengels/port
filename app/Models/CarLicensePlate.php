@@ -27,7 +27,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @method static Builder|CarLicensePlate whereState($value)
  * @mixin Eloquent
  */
-class CarLicensePlate extends Model
+class CarLicensePlate extends BaseModel
 {
     use HasFactory, ClearCache;
 

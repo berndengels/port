@@ -1,13 +1,24 @@
 @component('mail::message')
-# Registrierungs Bestätigung für neuen Kunden
-- Name: {{ $customer->name }}
-- Email: <{{ $customer->email }}>
-- Telefon: {{ $customer->fon }}
-- Adresse: {{ $customer->street }}, {{ $customer->poszcode }} {{ $customer->city }}
+# {{ config('app.name') }}
+- Caravan: {{ $data->caravan->carnumber }}
 
-@component('mail::button', ['url' => route('admin.customers.edit', $customer)])
-    Bitte hier Registrierung bestätigen
-@endcomponent
+# Rechnung für Stellplatz vom {{ $data->from->format('d.m.Y') }} bis {{ $data->until->format('d.m.Y') }}
+
+@if($prices->daysCount > 1)
+    - {{ $prices->daysCount }} Übernachtungen
+@else
+    - {{ $prices->daysCount }} Übernachtung
+@endif
+
+@if($prices->priceIndividual > 0)
+- Sonderpreis: {{ $prices->priceIndividual }} €
+@else
+- Basis-Preis: {{ $prices->priceBase }} €
+- Personen-Preis:  {{ $prices->pricePersons }} €
+- Preis Stromanschluß: {{ $prices->priceElectric }} €
+@endif
+
+Summe Preis: {{ $prices->total }} €
 
 Danke,<br>
 {{ config('app.name') }}

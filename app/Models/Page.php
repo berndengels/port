@@ -26,7 +26,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @mixin Eloquent
  * @method static PageFactory factory(...$parameters)
  */
-class Page extends Model
+class Page extends BaseModel
 {
     use HasFactory, HasSlug, ClearCache;
 

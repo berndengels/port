@@ -50,22 +50,15 @@
                 <div>{{ $boatDate->until->format('d.m.Y') }}</div>
             </div>
 
+            @foreach(json_decode($boatDate->prices, true) as $label => $val)
+                @if('total' === $label)
+                    @continue
+                @endif
             <div>
-                <div>Grundpreis</div>
-                <div>{{ $boatDate->basePrice }} €</div>
+                <div>{{ __($label) }}</div>
+                <div>{{ $val }} @if(0 === strpos($val, 'price', 0)) € @endif</div>
             </div>
-            <div>
-                <div>Kranen</div>
-                <div>{{ $boatDate->crane }} €</div>
-            </div>
-            <div>
-                <div>Mastkranen</div>
-                <div>{{ $boatDate->mastCrane }} €</div>
-            </div>
-            <div>
-                <div>Reinigung</div>
-                <div>{{ $boatDate->cleaning }} €</div>
-            </div>
+            @endforeach
 
             <div>
                 <div>Gesamt-Preis</div>
