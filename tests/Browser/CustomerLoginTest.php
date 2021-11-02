@@ -10,7 +10,7 @@ class CustomerLoginTest extends DuskTestCase
 {
     /**
      * A Dusk test example.
-     *
+     * @test
      * @return void
      */
     public function test_customer_login()

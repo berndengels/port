@@ -19,7 +19,8 @@ use Mockery;
 
 abstract class TestCase extends BaseTestCase
 {
-    use CreatesApplication, DatabaseMigrations;
+//    use CreatesApplication, DatabaseMigrations, RefreshDatabase;
+    use CreatesApplication;
 
     /**
      * @var AdminUser $user
@@ -29,15 +30,17 @@ abstract class TestCase extends BaseTestCase
      * @var Customer $customer
      */
     protected $customer;
-    protected $useNotTearDown = true;
+    protected $useNotTearDown = false;
     protected $followRedirects = true;
 
     protected function setUp(): void
     {
         parent::setUp();
         Cache::clear();
-        $this->runDatabaseMigrations();
-        $this->artisan('db:seed --database=testing');
+//        $this->runDatabaseMigrations();
+//        $this->refreshDatabase();
+        $this->artisan('migrate:fresh --drop-views --database=testing --env=testing --path=database/migrations/testing');
+        $this->artisan('db:seed --database=testing --env=testing');
         $this
             ->createUser()
             ->createCustomer()

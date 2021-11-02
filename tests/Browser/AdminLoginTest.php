@@ -9,7 +9,7 @@ class AdminLoginTest extends DuskTestCase
 {
     /**
      * A Dusk test example.
-     *
+     * @test
      * @return void
      */
     public function test_admin_login()

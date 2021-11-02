@@ -10,7 +10,7 @@ class PublicDashboardTest extends DuskTestCase
 {
     /**
      * A basic browser test example.
-     *
+     * @test
      * @return void
      */
     public function testPublicDashboard()

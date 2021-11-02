@@ -17,11 +17,19 @@ use Illuminate\Database\Eloquent\Model as BaseModel;
 class Model extends BaseModel
 {
     use HasFactory;
-
     public function __construct(array $attributes = [])
     {
+        // For unit tests
+        switch(config('app.env')) {
+            case 'testing':
+                $this->setConnection('testing');
+                break;
+            case 'demo':
+            case 'dusk.local':
+                $this->setConnection('demo');
+                break;
+            default:
+                $this->setConnection('mysql');
+        }
         parent::__construct($attributes);
-//        $user = auth('admin')->user();
-//        $this->connection = ($user && 'test@test.com' === $user->email) ? 'demo' : 'mysql';
-    }
-}
+    }}
