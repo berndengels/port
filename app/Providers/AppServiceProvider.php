@@ -1,14 +1,10 @@
 <?php
 namespace App\Providers;
 
-//use Illuminate\Foundation\Http\Kernel;
-use App\Http\Kernel;
-use Closure;
 use Debugbar;
+use App\Http\Kernel;
 use Illuminate\Pagination\Paginator;
-use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use App\Http\Middleware\HandleInertiaRequests;
 
@@ -31,6 +27,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(Kernel $kernel)
     {
+        Schema::defaultStringLength(191);
         env('APP_DEBUG_BAR') ? Debugbar::enable() : Debugbar::disable();
         Paginator::useTailwind();
     }
