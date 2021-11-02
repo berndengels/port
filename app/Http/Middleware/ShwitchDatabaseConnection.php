@@ -23,7 +23,7 @@ class ShwitchDatabaseConnection
          */
         $auth = auth('admin');
         if($user = $request->user('admin')) {
-            if('test@test.com' === $user->email) {
+            if('demo@test.com' === $user->email && app()->environment('demo')) {
                 DB::purge('mysql');
                 DB::setDefaultConnection('demo');
                 $testUser = AdminUser::whereEmail($user->email)->first();

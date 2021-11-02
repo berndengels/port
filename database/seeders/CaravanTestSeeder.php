@@ -3,6 +3,7 @@ namespace Database\Seeders;
 
 use App\Models\Caravan;
 use App\Models\CaravanDates;
+use App\Models\Country;
 use Database\Seeders\Ext\MainTestSeeder;
 use Illuminate\Support\Facades\Schema;
 

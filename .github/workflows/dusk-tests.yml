@@ -11,11 +11,12 @@ jobs:
         steps:
             - uses: actions/checkout@v2
             - name: Prepare The Environment
-              run: cp .env.example .env
+#              run: cp .env.example .env
+              run: cp .env.dusk.local .env
             - name: Create Database
               run: |
                   sudo systemctl start mysql
-                  mysql --user="root" --password="root" -e "CREATE DATABASE port_testing character set UTF8mb4 collate utf8mb4_bin;"
+                  mysql --user="root" --password="root" -e "CREATE DATABASE port_demo character set UTF8mb4 collate utf8mb4_bin;"
             - name: Install Composer Dependencies
               run: composer install --no-progress --prefer-dist --optimize-autoloader
             - name: Install JS Dependencies
@@ -23,9 +24,9 @@ jobs:
             - name: Mix Build JS/CSS
               run: npm run dev
             - name: Run database migrations
-              run: php artisan migrate --database=testing
+              run: php artisan migrate --database=demo
             - name: Run database seeds
-              run: php artisan db:seed --database=testing
+              run: php artisan db:seed --database=demo
             - name: Install dusk
               run: php artisan dusk:install
             - name: Upgrade Chrome Driver

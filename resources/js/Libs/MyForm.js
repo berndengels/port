@@ -22,7 +22,7 @@ class MyForm {
 
 			if($el.val().length > 0) {
 				for (let [key, val] of Object.entries(options)) {
-					if(val[optionTextField].indexOf($el.val()) !== -1) {
+					if(val[optionTextField].toLowerCase().indexOf($el.val().toLowerCase()) !== -1) {
 						data[key] = val
 						$elSelect.append($($li.clone().attr('data-id', key).text(val[optionTextField])))
 						i++

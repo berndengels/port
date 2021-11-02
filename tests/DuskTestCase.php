@@ -15,6 +15,10 @@ use Facebook\WebDriver\Remote\RemoteWebDriver;
 use Facebook\WebDriver\Remote\WebDriverCapabilityType;
 use Facebook\WebDriver\WebDriverBy;
 use Facebook\WebDriver\WebDriverDimension;
+use Illuminate\Contracts\Console\Kernel;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Cache;
 use Laravel\Dusk\Browser;
 use Laravel\Dusk\TestCase as BaseTestCase;
 use Intervention\Image\ImageManagerStatic as StaticImage;
@@ -22,8 +26,10 @@ use Intervention\Image\Image;
 
 abstract class DuskTestCase extends BaseTestCase
 {
-    use CreatesApplication;
+    use DatabaseMigrations;
 
+    protected $dbConnectionName = 'demo';
+    protected $useNotTearDown = false;
     public static $screenshotWidth 			= 1920;
     public static $screenshotThumbWidth 	= 200;
     public static $screenshotCompression	= 60;
@@ -62,6 +68,14 @@ abstract class DuskTestCase extends BaseTestCase
      */
     protected $until;
 
+    public function createApplication()
+    {
+        $app = require __DIR__.'/../bootstrap/app.php';
+        $app->make(Kernel::class)->bootstrap();
+        $app['config']->set('database.default', 'demo');
+        return $app;
+    }
+
     /**
      * Prepare for Dusk test execution.
      *
@@ -75,6 +89,44 @@ abstract class DuskTestCase extends BaseTestCase
         }
     }
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->artisan('db:seed --database=demo');
+        $this->artisan('cache:clear');
+        Cache::clear();
+        $this->runDatabaseMigrations();
+//        $this->artisan('migrate:fresh --database=demo');
+        $this->artisan('db:seed --database=demo');
+        $this->user = AdminUser::on('demo')->whereEmail($this->dbConnectionName . '@test.com')->first();
+        $this->customer = Customer::on('demo')->whereCustomerType('permanent')->first();
+        self::$screenPath = app()->basePath() . '/tests/Browser/screenshots';
+    }
+
+    protected function tearDown(): void
+    {
+        if($this->useNotTearDown) {
+            return;
+        }
+        parent::tearDown();
+    }
+
+    /**
+     * @return AdminUser
+     */
+    protected function user(): AdminUser
+    {
+        return $this->user;
+    }
+
+    /**
+     * @return Customer
+     */
+    protected function customer(): Customer
+    {
+        return $this->customer;
+    }
+
     /**
      * Create the RemoteWebDriver instance.
      *
@@ -83,7 +135,6 @@ abstract class DuskTestCase extends BaseTestCase
     protected function driver()
     {
         $options = (new ChromeOptions)->addArguments(collect([
-//            '--window-size=1920,1080',
             '--window-size=1920,1600',
             '--no-sandbox',
             '--ignore-certificate-errors',
@@ -114,36 +165,6 @@ abstract class DuskTestCase extends BaseTestCase
                isset($_ENV['DUSK_HEADLESS_DISABLED']);
     }
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->user = AdminUser::whereEmail('test@test.com')->first();
-        $this->customer = Customer::whereCustomerType('permanent')->first();
-        self::$screenPath = app()->basePath() . '/tests/Browser/screenshots';
-    }
-
-    /**
-     * @return AdminUser
-     */
-    protected function user()
-    {
-        return $this->user;
-    }
-
-    /**
-     * @return Customer
-     */
-    protected function customer()
-    {
-        return $this->customer;
-    }
-
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-        // your code goes here
-    }
-
     protected function captureFailuresFor($browsers)
     {
         $browsers->each(function (Browser $browser, $key) {
@@ -151,7 +172,6 @@ abstract class DuskTestCase extends BaseTestCase
             if (!empty($main)) {
                 $currentSize = $main->getSize();
                 $size = new WebDriverDimension($currentSize->getWidth(), $currentSize->getHeight());
-                dump($size);
                 $browser->driver->manage()->window()->setSize($size);
             }
             $file = 'failure-'.$this->getName().'-'.$key;
@@ -170,7 +190,6 @@ abstract class DuskTestCase extends BaseTestCase
             $size = $this->driver()->manage()->window()->fullscreen()->getSize();
             $img = StaticImage::make($screenFullPath)->resize($size);
             $img->encode('jpg', static::$screenshotCompression)->save($fileToSave);
-            dump($size);
             @chmod($fileToSave, 0666);
             $this->createJpegThumbnail( $img, $thumbPath );
 

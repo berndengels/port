@@ -22,6 +22,12 @@ class CustomerTestSeeder extends MainTestSeeder
             ->has(Boat::factory()
                     ->has(BoatDates::factory()->count(3),'dates')
                 ->count(1),'boats')
+/*
+            ->hasRoles(1, [
+                'name' => 'boat',
+                'guard_name' => 'web',
+            ])
+*/
             ->count($this->count)
             ->create()
         ;

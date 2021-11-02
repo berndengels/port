@@ -71,7 +71,7 @@ class BoatDatesSaisonAdminPriceTest extends DuskTestCase
                 ->assertInputValueIsNot('weight', '')
                 ->screenshot($this->screenName)
             ;
-//            $this->createJpeg($this->screenName);
+            $this->createJpeg($this->screenName);
         });
     }
 

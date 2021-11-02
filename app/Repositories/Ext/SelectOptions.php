@@ -18,11 +18,15 @@ trait SelectOptions
 
     public function getOptionsData($orderBy = 'name', $relations = [])
     {
-        $query = (static::$model)::with($relations)
+        $query = (static::$model)::on(app('db.connection')->getName())
+            ->with($relations)
             ->select()
             ->orderBy($orderBy)
         ;
-        $this->selectOptionsData = $query->get();
+        $this->selectOptionsData = $query->get()->map(function ($item) use ($orderBy) {
+            $item->{$orderBy} = config('app.env').' '.$item->{$orderBy};
+            return $item;
+        });
         return $this->selectOptionsData;
     }
 

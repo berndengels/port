@@ -3,6 +3,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use function Pest\Laravel\delete;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,20 +15,33 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-//        DB::setDefaultConnection('demo');
-        $this->call([
-            RoleTestSeeder::class,
-            PermissionTestSeeder::class,
-            ModelHasPermissionsTestSeeder::class,
-            RoleHasPermissionsTestSeeder::class,
-            AdminUserTestSeeder::class,
-            CountryTestSeeder::class,
-            CarLicensePlateTestSeeder::class,
-            PagesTestSeeder::class,
-            WidgetTestSeeder::class,
-            CaravanTestSeeder::class,
-            BoatGuestTestSeeder::class,
-            CustomerTestSeeder::class,
-        ]);
+        switch(config('app.env')) {
+            case 'testing':
+                $this->call([
+                    PermissionTestSeeder::class,
+                    CountryTestSeeder::class,
+                    CarLicensePlateTestSeeder::class,
+                ]);
+                break;
+            case 'dusk.local':
+            case 'demo':
+                $this->call([
+//                    RoleTestSeeder::class,
+                    PermissionTestSeeder::class,
+//                    ModelHasPermissionsTestSeeder::class,
+//                    RoleHasPermissionsTestSeeder::class,
+                    AdminUserTestSeeder::class,
+                    CountryTestSeeder::class,
+                    CarLicensePlateTestSeeder::class,
+                    PagesTestSeeder::class,
+                    WidgetTestSeeder::class,
+                    CaravanTestSeeder::class,
+                    BoatGuestTestSeeder::class,
+                    CustomerTestSeeder::class,
+                ]);
+                break;
+            default:
+                $this->call([]);
+        }
     }
 }

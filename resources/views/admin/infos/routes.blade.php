@@ -17,18 +17,19 @@
             </div>
             <div></div>
         </div>
-        <table class="table w-full">
+        <table class="table w-full dt-left">
             <tr>
                 <th>Methode</th>
                 <th>Route</th>
-                <th>Action</th>
+                <th>Uri</th>
                 <th>Middleware</th>
             </tr>
             @foreach($data as $item)
                 <tr>
                     <td>{{ implode(', ',$item->methods()) }}</td>
                     <td>{{ isset($item->action['as']) ? $item->action['as'] : ''}}</td>
-                    <td>{{ $item->action['controller'] ?? null }}</td>
+                    <td>{{ $item->uri }}</td>
+                    <!--td>{{ $item->action['controller'] ?? null }}</td-->
                     <td>{{ implode(', ', $item->middleware()) ?? null }}</td>
                 </tr>
             @endforeach

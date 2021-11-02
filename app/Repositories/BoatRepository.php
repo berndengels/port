@@ -16,7 +16,8 @@ class BoatRepository extends Repository
 
     public function getOptionsData($orderBy = 'name', $relations = [])
     {
-        $this->selectOptionsData = Boat::with('customer')
+        $this->selectOptionsData = Boat::on(app('db.connection')->getName())
+            ->with('customer')
             ->whereHas('customer', function (Builder $query) {
                 $query->where('customer_type', '=', 'permanent');
             })

@@ -3,7 +3,7 @@ namespace App\Libs;
 
 class AppCache
 {
-    const TTL = 120;
+    const TTL = 1;
     const KEY_OPTIONS_BOAT          = 'options.boat';
     const KEY_OPTIONS_DATA_BOAT     = 'options.data.boat';
 

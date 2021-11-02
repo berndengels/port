@@ -34,3 +34,12 @@
 input[disabled], select[disabled], textara[disabled] {
 	background-color: #eee;
 }
+.table {
+	&.dt-left {
+		tr {
+			td {
+				text-align: left;
+			}
+		}
+	}
+}

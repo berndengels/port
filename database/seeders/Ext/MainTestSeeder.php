@@ -2,6 +2,7 @@
 namespace Database\Seeders\Ext;
 
 use App\Models\Role;
+use Illuminate\Database\Eloquent\Model;
 use PDO;
 use Eloquent;
 use Illuminate\Database\Seeder;
@@ -15,8 +16,10 @@ class MainTestSeeder extends Seeder
     /**
      * @var Connection
      */
-    protected $dbTest;
     protected $table;
+    /**
+     * @var Model $model
+     */
     protected $model;
     protected $dataClass;
     protected $useFactory = false;
@@ -51,7 +54,7 @@ class MainTestSeeder extends Seeder
         if(property_exists($dataClass, 'data')) {
             if ($this->table && count($dataClass::$data) > 0) {
                 foreach($dataClass::$data as $row) {
-                    $this->dbTest->table($this->table)->insertOrIgnore($row);
+                    DB::connection(config('database.default'))->table($this->table)->insertOrIgnore($row);
                 }
             }
         }

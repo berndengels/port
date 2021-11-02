@@ -1,6 +1,7 @@
 <?php
 namespace Database\Factories;
 
+use App\Models\Country;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class CaravanFactory extends Factory
@@ -13,7 +14,7 @@ class CaravanFactory extends Factory
     public function definition()
     {
         return [
-            'country_id'    => config('port.main.default.country_id'),
+            'country_id'    => 55,
             'carnumber'     => $this->generateCarnumber(),
             'carlength'     => rand(6, 12),
             'email'         => $this->faker->unique()->safeEmail(),

@@ -4,8 +4,6 @@ namespace Database\Seeders;
 use App\Models\Role;
 use App\Models\AdminUser;
 use Database\Seeders\Ext\MainTestSeeder;
-use Illuminate\Database\ConnectionResolver;
-use Illuminate\Support\Facades\DB;
 
 class AdminUserTestSeeder extends MainTestSeeder
 {

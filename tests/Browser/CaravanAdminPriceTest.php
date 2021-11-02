@@ -48,7 +48,11 @@ class CaravanAdminPriceTest extends DuskTestCase
                 ->click('ul.autocomplete>li:first-child')
                 ->with('form', function (Browser $form) {
                     $carnumber = $form->inputValue('carnumber');
-                    $this->entity = ($this->model)::whereCarnumber($carnumber)->first();
+                    $this->entity = ($this->model)
+//                        ::on($this->dbConnectionName)
+                        ::whereCarnumber($carnumber)
+                        ->first()
+                    ;
                 })
                 ->typeDate('#from', $from)
                 ->typeDate('#until', $until)
@@ -60,7 +64,7 @@ class CaravanAdminPriceTest extends DuskTestCase
                 ->assertInputValueIsNot('prices', '')
                 ->screenshot($this->screenName)
             ;
-//            $this->createJpeg($this->screenName);
+            $this->createJpeg($this->screenName);
         });
     }
 

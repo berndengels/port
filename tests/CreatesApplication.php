@@ -1,9 +1,9 @@
 <?php
-
 namespace Tests;
 
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 trait CreatesApplication
@@ -17,7 +17,7 @@ trait CreatesApplication
     {
         $app = require __DIR__.'/../bootstrap/app.php';
         $app->make(Kernel::class)->bootstrap();
-        $app['config']->set('database.default', 'testing');
+//        $app['config']->set('database.default', 'testing');
         return $app;
     }
 }

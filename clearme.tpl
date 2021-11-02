@@ -6,7 +6,11 @@ composer="/usr/local/bin/composer"
 
 echo "clear all caches"
 $php artisan cache:clear
+$php artisan cache:clear --env=testing
+$php artisan cache:clear --env=testing
 $php artisan config:clear
+$php artisan config:clear --env=testing
+$php artisan config:clear --env=dusk.local
 $php artisan route:clear
 $php artisan view:clear
 redis-cli FLUSHALL
