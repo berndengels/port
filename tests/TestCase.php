@@ -36,8 +36,6 @@ abstract class TestCase extends BaseTestCase
     {
         parent::setUp();
         Cache::clear();
-//        $this->runDatabaseMigrations();
-//        $this->refreshDatabase();
         $this->artisan('migrate:fresh --drop-views --database=testing --env=testing --path=database/migrations/testing');
         $this->artisan('db:seed --database=testing --env=testing');
         $this
