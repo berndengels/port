@@ -23,10 +23,14 @@ trait SelectOptions
             ->select()
             ->orderBy($orderBy)
         ;
+/*
+ * only for tests
         $this->selectOptionsData = $query->get()->map(function ($item) use ($orderBy) {
             $item->{$orderBy} = config('app.env').' '.$item->{$orderBy};
             return $item;
         });
+*/
+        $this->selectOptionsData = $query->get();
         return $this->selectOptionsData;
     }
 
