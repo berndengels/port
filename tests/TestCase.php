@@ -19,7 +19,6 @@ use Mockery;
 
 abstract class TestCase extends BaseTestCase
 {
-//    use CreatesApplication, DatabaseMigrations, RefreshDatabase;
     use CreatesApplication;
 
     /**
