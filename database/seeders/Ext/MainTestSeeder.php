@@ -28,8 +28,8 @@ class MainTestSeeder extends Seeder
     {
 //        $this->dbTest = DB::connection('demo');
 //        DB::setDefaultConnection('demo');
-        DB::connection()->statement('SET FOREIGN_KEY_CHECKS=0;');
-        if('sqlite' === DB::connection()->getDriverName()) {
+//        DB::connection()->statement('SET FOREIGN_KEY_CHECKS=0;');
+        if('testing' === DB::connection()->getDriverName()) {
         }
         Schema::disableForeignKeyConstraints();
     }

@@ -9,7 +9,7 @@ class BoatTest extends DuskTestCase
 {
     /**
      * A Dusk test example.
-     *
+     * @test
      * @return void
      */
     public function test_boat_list()

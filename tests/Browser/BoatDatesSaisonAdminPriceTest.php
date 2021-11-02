@@ -20,7 +20,7 @@ class BoatDatesSaisonAdminPriceTest extends DuskTestCase
 
     /**
      * A Dusk test example.
-     *
+     * @test
      * @return void
      */
     public function test_boat_dates_saison_price_calculation()

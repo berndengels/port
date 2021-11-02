@@ -9,15 +9,12 @@ use App\Models\Customer;
 use Carbon\Carbon;
 use Exception;
 use Facebook\WebDriver\Chrome\ChromeOptions;
-use Facebook\WebDriver\Exception\NoSuchElementException;
 use Facebook\WebDriver\Remote\DesiredCapabilities;
 use Facebook\WebDriver\Remote\RemoteWebDriver;
 use Facebook\WebDriver\Remote\WebDriverCapabilityType;
 use Facebook\WebDriver\WebDriverBy;
 use Facebook\WebDriver\WebDriverDimension;
 use Illuminate\Contracts\Console\Kernel;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Cache;
 use Laravel\Dusk\Browser;
 use Laravel\Dusk\TestCase as BaseTestCase;
@@ -26,8 +23,6 @@ use Intervention\Image\Image;
 
 abstract class DuskTestCase extends BaseTestCase
 {
-    use DatabaseMigrations;
-
     protected $dbConnectionName = 'demo';
     protected $useNotTearDown = false;
     public static $screenshotWidth 			= 1920;
@@ -92,12 +87,11 @@ abstract class DuskTestCase extends BaseTestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->artisan('db:seed --database=demo');
         $this->artisan('cache:clear');
         Cache::clear();
-        $this->runDatabaseMigrations();
-//        $this->artisan('migrate:fresh --database=demo');
-        $this->artisan('db:seed --database=demo');
+//        $this->artisan('migrate:fresh --env=dusk.local');
+//        $this->artisan('db:seed --env=dusk.local');
+        $this->artisan('snapshot:load --force db-test --env=dusk.local');
         $this->user = AdminUser::on('demo')->whereEmail($this->dbConnectionName . '@test.com')->first();
         $this->customer = Customer::on('demo')->whereCustomerType('permanent')->first();
         self::$screenPath = app()->basePath() . '/tests/Browser/screenshots';

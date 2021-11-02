@@ -16,7 +16,7 @@ class CaravanAdminPriceTest extends DuskTestCase
 
     /**
      * A Dusk test example.
-     *
+     * @test
      * @return void
      */
     public function test_caravan_price_calculation()

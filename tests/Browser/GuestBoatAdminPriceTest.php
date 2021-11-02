@@ -13,7 +13,7 @@ class GuestBoatAdminPriceTest extends DuskTestCase
 
     /**
      * A Dusk test example.
-     *
+     * @test
      * @return void
      */
     public function test_guest_boat_price_calculation()
