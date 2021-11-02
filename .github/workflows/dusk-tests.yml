@@ -11,7 +11,6 @@ jobs:
         steps:
             - uses: actions/checkout@v2
             - name: Prepare The Environment
-#              run: cp .env.example .env
               run: cp .env.example .env
             - name: Create Database
               run: |
@@ -38,7 +37,7 @@ jobs:
             - name: Run Dusk Tests
               env:
                   APP_URL: "http://127.0.0.1:8000"
-              run: php artisan pest:dusk
+              run: php artisan dusk --no-interaction
             - name: Upload Screenshots
               if: failure()
               uses: actions/upload-artifact@v2
