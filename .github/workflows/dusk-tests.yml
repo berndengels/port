@@ -22,10 +22,10 @@ jobs:
               run: npm install
             - name: Mix Build JS/CSS
               run: npm run dev
-            - name: Run database migrations
-              run: php artisan migrate --database=demo
-            - name: Run database seeds
-              run: php artisan db:seed --database=demo
+#            - name: Run database migrations
+#              run: php artisan migrate --env=dusk.local
+#            - name: Run database seeds
+#              run: php artisan db:seed --env=dusk.local
             - name: Install dusk
               run: php artisan dusk:install
             - name: Upgrade Chrome Driver
