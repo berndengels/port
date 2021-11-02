@@ -1,9 +1,9 @@
 name: DuskTests
 on:
     push:
-        branches: [ main ]
+        branches: [ testing ]
     pull_request:
-        branches: [ main ]
+        branches: [ testing ]
 
 jobs:
     dusk-php:
