@@ -5,10 +5,12 @@ namespace App\Mail;
 use App\Models\AdminUser;
 use App\Models\BoatDates;
 use App\Models\Customer;
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Support\Str;
 
 class InvoiceMail extends Mailable
 {
@@ -43,9 +45,10 @@ class InvoiceMail extends Mailable
         ];
         $appName = config('app.name');
         $this->subject("Rechnung von $appName");
+        $fileName = Carbon::today()->format('Ymd').'_'.Str::slug(config('app.name')) . '_rechnung.pdf';
 
         if($attache) {
-            $this->attachData($attache, 'rechnung.pdf');
+            $this->attachData($attache, $fileName);
         }
     }
 

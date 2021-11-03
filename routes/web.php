@@ -81,7 +81,6 @@ Route::group([
     Route::get('boatDates/sendInvoice/{boatDate}', [AdminBoatDatesController::class, 'sendInvoice'])->name('boatDates.sendInvoice');
     Route::get('boatDates/saison', [AdminBoatDatesController::class, 'saison'])->name('boatDates.saison');
     Route::get('boatDates/winter', [AdminBoatDatesController::class, 'winter'])->name('boatDates.winter');
-    Route::get('boatDates/invoices', [AdminBoatDatesController::class, 'invoices'])->name('boatDates.invoices');
 
     Route::resource('customers', AdminCustomerController::class);
     Route::resource('caravans', AdminCaravanController::class);
@@ -110,6 +109,9 @@ Route::group([
 
     Route::get('routes', [AdminInfoController::class, 'routes'])->name('infos.routes');
     Route::get('php', [AdminInfoController::class, 'phpinfo'])->name('infos.php');
+    Route::fallback(function () {
+        return redirect('/admin');
+    });
 });
 Route::fallback(function () {
     return redirect('');

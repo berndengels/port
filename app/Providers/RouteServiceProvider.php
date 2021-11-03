@@ -20,6 +20,21 @@ class RouteServiceProvider extends ServiceProvider
      */
     public const HOME = '';
     public const ADMIN_HOME = 'admin';
+    private const DIGIT_KEYS = [
+        'id',
+        'user',
+        'customer',
+        'caravan',
+        'boat',
+        'boatGuest',
+        'caravanDate',
+        'boatDate',
+        'boatGuestDate',
+        'role',
+        'permission',
+        'page',
+        'widget',
+    ];
 
     /**
      * The controller namespace for the application.
@@ -37,6 +52,10 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        foreach (self::DIGIT_KEYS as $key) {
+            Route::pattern($key, '[\d]+');
+        }
+
         $this->configureRateLimiting();
 
         $this->routes(function () {
