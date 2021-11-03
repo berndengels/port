@@ -33,5 +33,4 @@ class BaseModel extends Model
             default:
                 $this->setConnection('mysql');
         }
-        dump(__METHOD__.': '.DB::getDefaultConnection());
     }}

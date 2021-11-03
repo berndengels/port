@@ -29,6 +29,9 @@ class ShwitchDatabaseConnection
             if('demo@test.com' === $user->email || app()->environment(['demo','dusk.local'])) {
                 DB::purge('mysql');
                 DB::setDefaultConnection('demo');
+                app('cache')->clear();
+                config()->set('app.env', 'dusk.local');
+//                config()->set('database.default', 'demo');
 
                 $role = Role::whereName('admin')->whereGuardName('admin')->first();
                 if(!$role) {
@@ -41,9 +44,7 @@ class ShwitchDatabaseConnection
 
                 $auth->setUser($testUser);
                 unset($user);
-                app('cache')->clear();
             }
-            dump(__METHOD__.': '.DB::getDefaultConnection());
         }
         return $next($request);
     }

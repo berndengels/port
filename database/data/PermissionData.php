@@ -44,6 +44,9 @@ class PermissionData
 		[ 'id' => '35', 'name' => 'write BoatGuest', 'guard_name' => 'admin', 'created_at' => '2021-10-10 22:17:28', 'updated_at' => '2021-10-10 22:17:28'],
 		[ 'id' => '36', 'name' => 'read BoatGuestDates', 'guard_name' => 'admin', 'created_at' => '2021-10-10 22:17:37', 'updated_at' => '2021-10-10 22:17:37'],
 		[ 'id' => '37', 'name' => 'write BoatGuestDates', 'guard_name' => 'admin', 'created_at' => '2021-10-10 22:17:44', 'updated_at' => '2021-10-10 22:17:44'],
-		[ 'id' => '38', 'name' => 'confirm Registration', 'guard_name' => 'admin', 'created_at' => '2021-10-20 12:11:54', 'updated_at' => '2021-10-20 12:11:54']
+		[ 'id' => '38', 'name' => 'confirm Registration', 'guard_name' => 'admin', 'created_at' => '2021-10-20 12:11:54', 'updated_at' => '2021-10-20 12:11:54'],
+		[ 'id' => '39', 'name' => 'read InvoiceMenu', 'guard_name' => 'admin', 'created_at' => '2021-11-02 23:26:37', 'updated_at' => '2021-11-02 23:37:54'],
+		[ 'id' => '40', 'name' => 'read Invoices', 'guard_name' => 'admin', 'created_at' => '2021-11-02 23:28:44', 'updated_at' => '2021-11-02 23:29:27'],
+		[ 'id' => '41', 'name' => 'write Invoices', 'guard_name' => 'admin', 'created_at' => '2021-11-02 23:29:09', 'updated_at' => '2021-11-02 23:29:09']
 	];
 }
