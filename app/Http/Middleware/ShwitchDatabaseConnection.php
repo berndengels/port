@@ -31,7 +31,6 @@ class ShwitchDatabaseConnection
                 DB::setDefaultConnection('demo');
                 app('cache')->clear();
                 config()->set('app.env', 'dusk.local');
-//                config()->set('database.default', 'demo');
 
                 $role = Role::whereName('admin')->whereGuardName('admin')->first();
                 if(!$role) {
