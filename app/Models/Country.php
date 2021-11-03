@@ -29,7 +29,7 @@ use Illuminate\Database\Eloquent\Builder;
  * @method static Builder|Country whereRu($value)
  * @mixin Eloquent
  */
-class Country extends Model
+class Country extends BaseModel
 {
     use ClearCache;
 

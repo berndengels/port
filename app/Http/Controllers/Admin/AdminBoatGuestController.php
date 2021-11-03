@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\BoatGuest;
 use Illuminate\Http\Response;
 use App\Http\Requests\BoatGuestRequest;
+use Illuminate\Support\Facades\DB;
 
 class AdminBoatGuestController extends AdminController
 {

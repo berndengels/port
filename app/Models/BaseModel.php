@@ -4,21 +4,23 @@ namespace App\Models;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model as BaseModel;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 /**
  * App\Models\Model
  *
- * @method static Builder|Model newModelQuery()
- * @method static Builder|Model newQuery()
- * @method static Builder|Model query()
+ * @method static Builder|BaseModel newModelQuery()
+ * @method static Builder|BaseModel newQuery()
+ * @method static Builder|BaseModel query()
  * @mixin Eloquent
  */
-class Model extends BaseModel
+class BaseModel extends Model
 {
     use HasFactory;
     public function __construct(array $attributes = [])
     {
+        parent::__construct($attributes);
         // For unit tests
         switch(config('app.env')) {
             case 'testing':
@@ -31,5 +33,4 @@ class Model extends BaseModel
             default:
                 $this->setConnection('mysql');
         }
-        parent::__construct($attributes);
     }}

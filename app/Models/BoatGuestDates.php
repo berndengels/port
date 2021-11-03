@@ -40,7 +40,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|BoatGuestDates wherePrices($value)
  * @method static Builder|BoatGuestDates whereUntil($value)
  */
-class BoatGuestDates extends Model
+class BoatGuestDates extends BaseModel
 {
     use HasFactory, ClearCache, Filter;
 

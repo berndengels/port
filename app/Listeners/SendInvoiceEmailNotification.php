@@ -18,6 +18,7 @@ class SendInvoiceEmailNotification
      */
     public function handle(BoatDates $event)
     {
+        dd($event->data);
         return Mail::send(new InvoiceMail($event));
     }
 }

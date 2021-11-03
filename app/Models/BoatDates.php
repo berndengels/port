@@ -43,7 +43,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property-read mixed $price_data
  * @method static BoatDatesFactory factory(...$parameters)
  */
-class BoatDates extends Model
+class BoatDates extends BaseModel
 {
     use HasFactory, ClearCache, FireEvents;
 
@@ -57,11 +57,14 @@ class BoatDates extends Model
         'isCraned',
         'isMastCraned',
         'isCleaned',
+        'hasIndividualPrice',
         'priceData',
         'basePrice',
+        'priceIndividual',
         'crane',
         'mastCrane',
         'cleaning',
+        'period',
     ];
     public $timestamps = false;
 
@@ -84,35 +87,49 @@ class BoatDates extends Model
 
     public function getIsCranedAttribute()
     {
-        return (isset($this->priceData->crane) && $this->priceData->crane > 0) ? true : false;
+        return (isset($this->priceData->priceCrane) && $this->priceData->priceCrane > 0) ? true : false;
     }
 
     public function getIsMastCranedAttribute()
     {
-        return (isset($this->priceData->mast_crane) && $this->priceData->mast_crane > 0) ? true : false;
+        return (isset($this->priceData->priceMastCrane) && $this->priceData->priceMastCrane > 0) ? true : false;
     }
     public function getIsCleanedAttribute()
     {
-        return (isset($this->priceData->cleaning) && $this->priceData->cleaning > 0) ? true : false;
+        return (isset($this->priceData->priceCleaning) && $this->priceData->priceCleaning > 0) ? true : false;
+    }
+    public function getHasIndividualPriceAttribute()
+    {
+        return (isset($this->priceData->priceCleaning) && $this->priceData->priceCleaning > 0) ? true : false;
     }
 
     public function getCraneAttribute()
     {
-        return $this->priceData->crane ?? null;
+        return $this->priceData->priceCrane ?? null;
     }
 
     public function getMastCraneAttribute()
     {
-        return $this->priceData->mast_crane ?? null;
+        return $this->priceData->priceMastCrane ?? null;
     }
 
     public function getCleaningAttribute()
     {
-        return $this->priceData->cleaning ?? null;
+        return $this->priceData->priceCleaning ?? null;
     }
 
     public function getBasePriceAttribute()
     {
-        return $this->priceData->price ?? null;
+        return $this->priceData->priceBase ?? null;
+    }
+
+    public function getIndividualPriceAttribute()
+    {
+        return $this->priceData->priceIndividual ?? null;
+    }
+
+    public function getPeriodAttribute()
+    {
+        return $this->priceData->modusDatePeriod ?? null;
     }
 }

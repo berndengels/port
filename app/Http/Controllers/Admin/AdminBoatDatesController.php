@@ -242,12 +242,27 @@ class AdminBoatDatesController extends AdminController
         return $pdf->download('rechnung.pdf');
     }
 
-    public function sendInvoice(BoatDates $boatDate) {
+    public function     sendInvoice(BoatDates $boatDate) {
         try {
             Mail::send(new InvoiceMail($boatDate, $this->invoice($boatDate, true)));
             return redirect()->route('admin.boatDates.'.$boatDate->modus)->with('success', 'Rechnung erfogreich an '.$boatDate->boat->customer->email.' versand!');
         } catch(Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
+    }
+
+    public function invoices(Request $request) {
+        $query = BoatDates::query();
+
+        $priceTotal = $query->get()->sum(function ($item) {
+            return $item->price;
+        });
+
+        $data = $query->paginate($this->paginatorLimit);
+
+        return view('admin.boatDates.invoices', [
+            'data'  => $data,
+            'priceTotal' => $priceTotal,
+        ]);
     }
 }

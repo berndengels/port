@@ -34,7 +34,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @method static Builder|Caravan caravan(?int $caravanId = null)
  * @method static Builder|Caravan caravanByDates(?int $caravanId = null)
  */
-class Caravan extends Model
+class Caravan extends BaseModel
 {
     use HasFactory, CaravanFilter, ClearCache;
 

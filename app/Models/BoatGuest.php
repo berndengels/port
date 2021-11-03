@@ -30,7 +30,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @method static Builder|BoatGuest whereLength($value)
  * @method static Builder|BoatGuest whereName($value)
  */
-class BoatGuest extends Model
+class BoatGuest extends BaseModel
 {
     use HasFactory, ClearCache, Filter;
 

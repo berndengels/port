@@ -1,29 +1,24 @@
-### {{ config('app.name') }}
+## {{ config('app.name') }}</h3>
 ### Rechnung für **{{ $modus }}** vom {{ $data->from->format('d.m.Y') }} bis {{ $data->until->format('d.m.Y') }}
-- Name: {{ $customer->name }}
-- Email: <{{ $customer->email }}>
-- Telefon: <tel:{{ $customer->fonLink }}>
-- Adresse: {{ $customer->street }}, {{ $customer->postcode }} {{ $customer->city }}
+### Boot: {{ $data->boat->boat_name }}
 
-### Preisdetails
+- Name: {{ $customer->name }}<br>
+- Email: <{{ $customer->email }}><br>
+- Telefon: {{ $customer->fon }}<br>
+- Adresse: {{ $customer->street }}, {{ $customer->poszcode }} {{ $customer->city }}<br>
 
-{{ $modus }}: {{ $prices->price }} €
-
-@if($data->isCraned)
-Kranen: {{ $prices->crane }} €
+Preis für {{ $modus }} {{ $prices->priceBase }} €
+@if($prices->priceCrane > 0)
+- Kranen: {{ $prices->priceCrane }} €
 @endif
-
-@if($data->isMastCraned)
-Mast-Kranen: {{ $prices->mast_crane }} €
+@if($prices->priceMastCrane > 0)
+- Mast-Kranen: {{ $prices->priceMastCrane }} €
 @endif
-
-@if($data->isCleaned)
-Reinigung {{ $prices->cleaning }} €
+@if($prices->priceCleaning > 0)
+- Reinigung {{ $prices->priceCleaning }} €
 @endif
+<h3>Summe Preis: {{ $data->price }} €
 
-### Summe Preis: {{ $data->price }} €
+Danke für Ihren Besuch
 
-Danke,<br>
-{{ config('app.name') }}
-
-
+© {{ date('Y') }} {{ config('app.name') }}. @lang('All rights reserved.')
