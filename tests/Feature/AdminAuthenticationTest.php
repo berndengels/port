@@ -18,20 +18,20 @@ class AdminAuthenticationTest extends TestCase
 
     public function test_users_can_authenticate_using_the_login_screen()
     {
-        $user = AdminUser::whereEmail('test@test.com')->first();
-        $response = $this->post('/admin/login', [
-            'email' => $user->email,
-            'password' => 'password',
-        ]);
+        $this->post('/admin/login', [
+                'email' => $this->user->email,
+                'password' => 'password',
+            ])
+//            ->assertLocation(RouteServiceProvider::ADMIN_HOME)
+            ->assertOk()
+        ;
         $this->assertAuthenticated('admin');
-        $response->assertRedirect(RouteServiceProvider::ADMIN_HOME);
     }
 
     public function test_users_can_not_authenticate_with_invalid_password()
     {
-        $user = AdminUser::whereEmail('test@test.com')->first();
         $this->post('/admin/login', [
-            'email' => $user->email,
+            'email' => $this->user->email,
             'password' => 'wrong-password',
         ]);
         $this->assertGuest();

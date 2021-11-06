@@ -42,6 +42,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property-read mixed $mast_crane
  * @property-read mixed $price_data
  * @method static BoatDatesFactory factory(...$parameters)
+ * @property-read mixed $has_individual_price
+ * @property-read mixed $individual_price
+ * @property-read mixed $period
  */
 class BoatDates extends BaseModel
 {

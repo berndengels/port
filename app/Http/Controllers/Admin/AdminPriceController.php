@@ -52,9 +52,9 @@ class AdminPriceController extends AdminController
         $boat       = Boat::find($boatId);
         $response   = ['error' => true];
 
-        if($boat && $from && $until) {
-            $from       = new Carbon($from, config('app.timezone'));
-            $until      = new Carbon($until, config('app.timezone'));
+        if($boat) {
+            $from       = $from ? new Carbon($from, config('app.timezone')) : null;
+            $until      = $until ? new Carbon($until, config('app.timezone')) : null;
             $response   = (new BoatPrice($from, $until))->getPrice($request);
         }
 

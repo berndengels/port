@@ -28,23 +28,23 @@ abstract class PriceCalculator
      */
     protected static $total = 0;
 
-    public function __construct(Carbon $from,  Carbon $until)
+    public function __construct(Carbon $from = null,  Carbon $until = null)
     {
         static::$from           = $from;
         static::$until          = $until;
-        static::$_datePeriod    = $from->toPeriod($until)->toDatePeriod();
-        static::$daysCount      = iterator_count(static::$_datePeriod);
+        static::$_datePeriod    = ($from && $until) ? $from->toPeriod($until)->toDatePeriod() : null;
+        static::$daysCount      = static::$_datePeriod ? iterator_count(static::$_datePeriod) : 0;
     }
 
     public function add(Price $price): self {
-        static::$total += $price->getValue();
+        static::$total += (float) $price->getValue();
         return $this;
     }
 
     public function set(Price $price): self {
         $value = $price->getValue();
         if($value > 0) {
-            static::$total = $value;
+            static::$total = (float) $value;
         }
         return $this;
     }
@@ -59,7 +59,7 @@ abstract class PriceCalculator
                     $val = $val->format('d.m.Y');
                 }
                 if($val instanceof Price) {
-                    $val = $val->getValue();
+                    $val = (float) $val->getValue();
                 }
                 $prices[$prop] = $val;
             }

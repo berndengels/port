@@ -19,7 +19,8 @@ class Electric extends Main implements IDailyPrice
         if($this->useElectric) {
             $value = $this->daysCount * $this->priceElectricPerDay;
         }
-        return new Price($value);
+
+        return new Price((float) $value);
     }
 
     /**

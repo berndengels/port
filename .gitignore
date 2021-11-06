@@ -27,3 +27,4 @@ yarn-error.log
 /public/webfonts/
 /public/froala-editor/
 /.env.dusk.local
+/.env.demo

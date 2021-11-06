@@ -22,6 +22,7 @@
                 <th>Methode</th>
                 <th>Route</th>
                 <th>Uri</th>
+                <th>Actions</th>
                 <th>Middleware</th>
             </tr>
             @foreach($data as $item)
@@ -29,7 +30,7 @@
                     <td>{{ implode(', ',$item->methods()) }}</td>
                     <td>{{ isset($item->action['as']) ? $item->action['as'] : ''}}</td>
                     <td>{{ $item->uri }}</td>
-                    <!--td>{{ $item->action['controller'] ?? null }}</td-->
+                    <td>{{ $item->action['controller'] ?? null }}</td>
                     <td>{{ implode(', ', $item->middleware()) ?? null }}</td>
                 </tr>
             @endforeach

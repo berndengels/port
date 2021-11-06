@@ -14,6 +14,6 @@ class Base extends Main implements IDailyPrice
 
     public function addPrice(DatePeriod $days): Price
     {
-        return new Price(value: $this->daysCount * $this->length * $this->pricePerMeter);
+        return new Price(value: (float) ($this->daysCount * $this->length * $this->pricePerMeter));
     }
 }

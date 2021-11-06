@@ -1,5 +1,5 @@
 <?php
-namespace Tests\Unit;
+namespace Tests\Feature\PriceCalculation;
 
 use App\Models\AdminUser;
 use App\Models\Caravan;
@@ -17,25 +17,6 @@ class AdminCaravanTest extends TestCase
     {
         parent::setUp();
         $this->caravanParams = Caravan::factory()->definition();
-    }
-
-
-    public function test_admin_login()
-    {
-        $this
-            ->post('/admin/logout')
-            ->assertLocation('/')
-        ;
-        $this
-            ->get('/admin')
-            ->assertRedirect('/admin/login')
-        ;
-        $this
-            ->asFakeUser()
-            ->assertAuthenticated('admin')
-            ->get('/admin')
-            ->assertStatus(200)
-        ;
     }
 
     public function test_caravan_create()

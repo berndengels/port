@@ -21,7 +21,8 @@ class CustomerTestSeeder extends MainTestSeeder
         $customers = Customer::factory()
             ->has(Boat::factory()
                     ->has(BoatDates::factory()->count(3),'dates')
-                ->count(1),'boats')
+                ->count(1),'boats'
+            )
 /*
             ->hasRoles(1, [
                 'name' => 'boat',

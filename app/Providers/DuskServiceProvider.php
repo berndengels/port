@@ -24,5 +24,18 @@ class DuskServiceProvider extends BaseProvider
             sleep($seconds);
             return $this;
         });
+        Browser::macro('stepScreenshot', function ($directory) {
+            if(! isset($this->counter)) {
+                $this->counter = 0;
+            }
+            $filePath = sprintf('%s/%s/%d.png', rtrim(static::$storeScreenshotsAt, '/'), $directory, $this->counter);
+            $directoryPath = dirname($filePath);
+            if (! is_dir($directoryPath)) {
+                mkdir($directoryPath, 0777, true);
+            }
+            $this->driver->takeScreenshot($filePath);
+            ++$this->counter;
+            return $this;
+        });
     }
 }

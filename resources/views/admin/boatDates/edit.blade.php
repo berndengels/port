@@ -5,11 +5,12 @@
         <x-nav-link :href="route('admin.boats.index')" icon="fas fa-backward" class="btn">zurück</x-nav-link>
         <x-form name="frm" method="post" :action="route('admin.boatDates.update', $boatDate)" class="w-full lg:w-1/2">
             @method('put')
+
+            <div class="mt-5">
+                <span class="text-2xl text-blue-900">Boot: {{ $boatDate->boat->boat_name }} ({{ $boatDate->modus }})</span>
+            </div>
             @bind($boatDate)
             <x-form-input  class="calc" type="hidden" name="boat_id" required />
-            <x-form-input id="boat_name" name="boat_name" label="Boot" unbind :default="$boatDate->boat->boat_name" disabled required />
-            <x-form-input class="calc" id="modus" name="modus" label="Art" disabled required />
-
             <x-form-input class="calc" id="from" name="from" type="date" label="Von" :bind="false" :default="$boatDate->validFrom" required />
             <x-form-input class="calc" id="until" name="until" type="date" label="Bis" :bind="false" :default="$boatDate->validUntil" required />
 

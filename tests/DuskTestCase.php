@@ -1,13 +1,13 @@
 <?php
 namespace Tests;
 
+use Exception;
+use Carbon\Carbon;
 use App\Models\AdminUser;
 use App\Models\Boat;
 use App\Models\BoatGuest;
 use App\Models\Caravan;
 use App\Models\Customer;
-use Carbon\Carbon;
-use Exception;
 use Facebook\WebDriver\Chrome\ChromeOptions;
 use Facebook\WebDriver\Remote\DesiredCapabilities;
 use Facebook\WebDriver\Remote\RemoteWebDriver;
@@ -84,14 +84,21 @@ abstract class DuskTestCase extends BaseTestCase
         }
     }
 
+    /**
+     * Determine whether the Dusk command has disabled headless mode.
+     * @return bool
+     */
+    protected function hasHeadlessDisabled()
+    {
+        return $_SERVER['DUSK_HEADLESS_DISABLED'] || $_ENV['DUSK_HEADLESS_DISABLED'];
+    }
+
     protected function setUp(): void
     {
         parent::setUp();
         $this->artisan('cache:clear');
         Cache::clear();
-//        $this->artisan('migrate:fresh --env=dusk.local');
-//        $this->artisan('db:seed --env=dusk.local');
-        $this->artisan('snapshot:load --force db-test --env=dusk.local');
+        $this->artisan('snapshot:load --force db-test --env=demo');
         $this->user = AdminUser::on('demo')->whereEmail($this->dbConnectionName . '@test.com')->first();
         $this->customer = Customer::on('demo')->whereCustomerType('permanent')->first();
         self::$screenPath = app()->basePath() . '/tests/Browser/screenshots';
@@ -148,29 +155,22 @@ abstract class DuskTestCase extends BaseTestCase
         );
     }
 
-    /**
-     * Determine whether the Dusk command has disabled headless mode.
-     *
-     * @return bool
-     */
-    protected function hasHeadlessDisabled()
-    {
-        return isset($_SERVER['DUSK_HEADLESS_DISABLED']) ||
-               isset($_ENV['DUSK_HEADLESS_DISABLED']);
-    }
-
     protected function captureFailuresFor($browsers)
     {
         $browsers->each(function (Browser $browser, $key) {
-            $main = $browser->driver->findElement(WebDriverBy::tagName('main'));
-            if (!empty($main)) {
-                $currentSize = $main->getSize();
-                $size = new WebDriverDimension($currentSize->getWidth(), $currentSize->getHeight());
-                $browser->driver->manage()->window()->setSize($size);
+            try {
+                $main = $browser->driver->findElement(WebDriverBy::tagName('main'));
+                if (!empty($main)) {
+                    $currentSize = $main->getSize();
+                    $size = new WebDriverDimension($currentSize->getWidth(), $currentSize->getHeight());
+                    $browser->driver->manage()->window()->setSize($size);
+                }
+                $file = 'failure-'.$this->getName().'-'.$key;
+                $browser->screenshot($file);
+                @chmod(self::$screenPath . '/' . $file, 0666);
+            } catch(Exception $e) {
+                dump($e->getMessage());
             }
-            $file = 'failure-'.$this->getName().'-'.$key;
-            $browser->screenshot($file);
-            @chmod(self::$screenPath . '/' . $file, 0666);
         });
     }
 
@@ -206,5 +206,4 @@ abstract class DuskTestCase extends BaseTestCase
         @chmod($file, 0666);
         return $img;
     }
-
 }

@@ -4,7 +4,7 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class ExampleTest extends TestCase
+class PublicDashboardTest extends TestCase
 {
     /**
      * A basic test example.
@@ -13,9 +13,10 @@ class ExampleTest extends TestCase
      */
     public function test_redirect_public()
     {
-        $response = $this->get('/');
-        $response->assertRedirect('/dashboard');
-        $response->assertStatus(302);
+        $this->get('/')
+            ->assertStatus(200)
+//            ->assertLocation('/dashboard')
+        ;
     }
 
     public function test_dashboard_public()

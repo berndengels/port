@@ -2,8 +2,6 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
-
 class BoatDatesRequest extends AdminRequest
 {
     protected $modelName = 'BoatDates';
@@ -36,7 +34,6 @@ class BoatDatesRequest extends AdminRequest
     {
         return [
             'boat_id'       => 'required',
-            'modus'         => 'required',
             'price'         => 'required',
             'prices'        => 'required',
             'from'          => 'exclude_if:until,null|date|before:until',

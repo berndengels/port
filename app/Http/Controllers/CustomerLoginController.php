@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Hash;
 
 class CustomerLoginController extends DefaultLoginController
 {
-    protected $redirectTo = '/admin/dashboard';
+    protected $redirectTo = '/dashboard';
 
     public function __construct()
     {
@@ -79,4 +79,6 @@ class CustomerLoginController extends DefaultLoginController
             ? new JsonResponse([], 204)
             : redirect('/');
     }
+
+
 }

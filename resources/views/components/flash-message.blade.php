@@ -19,7 +19,7 @@
 
     @if($type !== 'error')
     window.setTimeout(function () {
-	    $elemFlashMsg.fadeOut();
+	    $elemFlashMsg.slideUp().fadeOut();
     }, 3000);
     @endif
 </script>

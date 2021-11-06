@@ -1,6 +1,7 @@
 <?php
 namespace App\Models;
 
+use Database\Factories\PermissionFactory;
 use Eloquent;
 use Illuminate\Support\Carbon;
 use App\Traits\Models\ClearCache;
@@ -40,6 +41,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @method static Builder|Permission whereUpdatedAt($value)
  * @mixin Eloquent
  * @method static Builder|Permission filter(?string $name = null)
+ * @method static PermissionFactory factory(...$parameters)
  */
 class Permission extends BaseModel
 {

@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminInfoController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\CaptchaServiceController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PriceController;
@@ -32,6 +34,7 @@ use App\Http\Controllers\Admin\Auth\AdminForgotPasswordController;
 use App\Http\Controllers\Admin\Auth\AdminResetPasswordController;
 
 Auth::routes();
+//dd(Route::getRoutes());
 
 Route::get('', function () {
     return redirect('dashboard');
@@ -40,8 +43,12 @@ Route::get('', function () {
 Route::group([
     'as'  => 'customer.',
 ],function () {
-    Route::get('login', [CustomerLoginController::class, 'showLoginForm'])->name('login.form');
-    Route::post('login', [CustomerLoginController::class, 'login'])->name('login.check');
+    Route::get('login', [CustomerLoginController::class, 'showLoginForm'])->name('login');
+    Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+    Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+    Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+    Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
+    Route::post('login', [CustomerLoginController::class, 'login'])->name('login');
     Route::post('logout', [CustomerLoginController::class, 'logout'])->name('logout');
 });
 
@@ -59,7 +66,7 @@ Route::group([
     'prefix'    => 'admin',
     'as'        => 'admin.',
 ],function () {
-    Route::get('login', [AdminLoginController::class,'showLoginForm'])->name('login.form');
+    Route::get('login', [AdminLoginController::class,'showLoginForm'])->name('login');
     Route::post('login', [AdminLoginController::class,'login'])->name('login');
     Route::get('password/reset', [AdminForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
     Route::post('password/email', [AdminForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
@@ -81,7 +88,10 @@ Route::group([
     Route::get('boatDates/sendInvoice/{boatDate}', [AdminBoatDatesController::class, 'sendInvoice'])->name('boatDates.sendInvoice');
     Route::get('boatDates/saison', [AdminBoatDatesController::class, 'saison'])->name('boatDates.saison');
     Route::get('boatDates/winter', [AdminBoatDatesController::class, 'winter'])->name('boatDates.winter');
-    Route::get('boatDates/invoices', [AdminBoatDatesController::class, 'invoices'])->name('boatDates.invoices');
+
+    Route::match(['post','put'],'caravanDates/price/calculate', [AdminPriceController::class, 'calculateCaravanDates'])->name('caravanDates.price.calculate');
+    Route::match(['post','put'],'boatDates/price/calculate', [AdminPriceController::class, 'calculateBoatDates'])->name('boatDates.price.calculate');
+    Route::match(['post','put'],'guestBoatDates/price/calculate', [AdminPriceController::class, 'calculateGuestBoatDates'])->name('guestBoatDates.price.calculate');
 
     Route::resource('customers', AdminCustomerController::class);
     Route::resource('caravans', AdminCaravanController::class);
@@ -98,10 +108,6 @@ Route::group([
 
     Route::post('caravanDates/sendExcel', [AdminCaravanDatesController::class, 'sendExcel'])->name('caravanDates.sendExcel');
 
-    Route::match(['post','put'],'caravanDates/price/calculate', [AdminPriceController::class, 'calculateCaravanDates'])->name('caravanDates.price.calculate');
-    Route::match(['post','put'],'boatDates/price/calculate', [AdminPriceController::class, 'calculateBoatDates'])->name('boatDates.price.calculate');
-    Route::match(['post','put'],'guestBoatDates/price/calculate', [AdminPriceController::class, 'calculateGuestBoatDates'])->name('guestBoatDates.price.calculate');
-
     Route::get('caravan/price/excel/{year?}/{month?}', [AdminPriceController::class, 'excel'])->name('caravan.price.excel');
     Route::get('caravan/price/pdf/{year?}/{month?}', [AdminPriceController::class, 'pdf'])->name('caravan.price.pdf');
     Route::get('car/info', [AdminCarLicensePlateController::class, 'info'])->name('car.info');
@@ -110,6 +116,9 @@ Route::group([
 
     Route::get('routes', [AdminInfoController::class, 'routes'])->name('infos.routes');
     Route::get('php', [AdminInfoController::class, 'phpinfo'])->name('infos.php');
+    Route::fallback(function () {
+        return redirect('/admin');
+    });
 });
 Route::fallback(function () {
     return redirect('');

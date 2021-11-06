@@ -1,21 +1,21 @@
 <?php
 namespace Tests;
 
-use App\Models\AdminUser;
-use App\Models\Customer;
-use App\Models\Permission;
+use Mockery;
+use Notification;
 use Carbon\Carbon;
+use App\Models\AdminUser;
+use App\Models\Boat;
+use App\Models\BoatDates;
+use App\Models\Customer;
 use Carbon\CarbonImmutable;
 use Illuminate\Console\Application as Artisan;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Queue\Queue;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\ParallelTesting;
 use Illuminate\Support\Str;
 use Mockery\Exception\InvalidCountException;
-use Mockery;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -36,6 +36,7 @@ abstract class TestCase extends BaseTestCase
     {
         parent::setUp();
         Cache::clear();
+        Notification::fake();
         $this->artisan('migrate:fresh --drop-views --database=testing --env=testing --path=database/migrations/testing');
         $this->artisan('db:seed --database=testing --env=testing');
         $this
@@ -49,46 +50,7 @@ abstract class TestCase extends BaseTestCase
         if($this->useNotTearDown) {
             return;
         }
-
-        if ($this->app) {
-            $this->callBeforeApplicationDestroyedCallbacks();
-            ParallelTesting::callTearDownTestCaseCallbacks($this);
-            $this->app->flush();
-            $this->app = null;
-        }
-
-        $this->setUpHasRun = false;
-
-        if (property_exists($this, 'serverVariables')) {
-            $this->serverVariables = [];
-        }
-        if (property_exists($this, 'defaultHeaders')) {
-            $this->defaultHeaders = [];
-        }
-        if (class_exists('Mockery')) {
-            if ($container = Mockery::getContainer()) {
-                $this->addToAssertionCount($container->mockery_getExpectationCount());
-            }
-            try {
-                Mockery::close();
-            } catch (InvalidCountException $e) {
-                if (! Str::contains($e->getMethodName(), ['doWrite', 'askQuestion'])) {
-                    throw $e;
-                }
-            }
-        }
-
-        if (class_exists(Carbon::class)) {
-            Carbon::setTestNow();
-        }
-        if (class_exists(CarbonImmutable::class)) {
-            CarbonImmutable::setTestNow();
-        }
-        $this->afterApplicationCreatedCallbacks = [];
-        $this->beforeApplicationDestroyedCallbacks = [];
-
-        Artisan::forgetBootstrappers();
-        Queue::createPayloadUsing(null);
+        parent::tearDown();
     }
 
     protected function createUser() {
@@ -98,16 +60,22 @@ abstract class TestCase extends BaseTestCase
                 'guard_name'    => 'admin',
             ])
             ->create();
+        $this->user->guard(['admin'])->refresh();
         return $this;
     }
 
     protected function createCustomer() {
         $this->customer = Customer::factory()
+            ->has(Boat::factory()
+                ->has(BoatDates::factory()->count(3),'dates')
+                ->count(1),'boats'
+            )
             ->hasRoles(1, [
                 'name'          => 'boat',
                 'guard_name'    => 'web',
             ])
             ->create();
+        $this->user->guard(['customer'])->refresh();
         return $this;
     }
 
@@ -124,7 +92,7 @@ abstract class TestCase extends BaseTestCase
         if($permission) {
             $this->customer->givePermissionTo($permission);
         }
-        $this->be($this->customer, 'web');
+        $this->be($this->customer, 'customer');
         return $this;
     }
 }

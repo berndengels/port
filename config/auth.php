@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Authentication Defaults
@@ -12,12 +11,10 @@ return [
     | as required, but they're a perfect start for most applications.
     |
     */
-
     'defaults' => [
         'guard' => 'customer',
         'passwords' => 'customers',
     ],
-
     /*
     |--------------------------------------------------------------------------
     | Authentication Guards
@@ -34,7 +31,6 @@ return [
     | Supported: "session", "token"
     |
     */
-
     'guards' => [
 /*
         'web' => [
@@ -58,7 +54,6 @@ return [
             'hash' => false,
         ],
     ],
-
     /*
     |--------------------------------------------------------------------------
     | User Providers
@@ -75,7 +70,6 @@ return [
     | Supported: "database", "eloquent"
     |
     */
-
     'providers' => [
         'admin_users' => [
             'driver' => 'eloquent',
@@ -86,7 +80,6 @@ return [
              'model' => App\Models\Customer::class,
         ],
     ],
-
     /*
     |--------------------------------------------------------------------------
     | Resetting Passwords
@@ -101,22 +94,20 @@ return [
     | they have less time to be guessed. You may change this as needed.
     |
     */
-
     'passwords' => [
         'admin_users' => [
             'provider' => 'admin_users',
             'table' => 'admin_password_resets',
             'expire' => 60,
-            'throttle' => 60,
+            'throttle' => 1,
         ],
         'customers' => [
             'provider' => 'customers',
             'table' => 'password_resets',
             'expire' => 60,
-            'throttle' => 60,
+            'throttle' => 1,
         ],
     ],
-
     /*
     |--------------------------------------------------------------------------
     | Password Confirmation Timeout
@@ -127,7 +118,5 @@ return [
     | confirmation screen. By default, the timeout lasts for three hours.
     |
     */
-
     'password_timeout' => 10800,
-
 ];

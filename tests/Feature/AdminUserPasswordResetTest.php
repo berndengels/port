@@ -9,21 +9,22 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Auth\Notifications\ResetPassword;
 
-class CustomerPasswordResetTest extends TestCase
+class AdminUserPasswordResetTest extends TestCase
 {
     use WithFaker;
 
-    const ROUTE_PASSWORD_EMAIL          = 'customer.password.email';
-    const ROUTE_PASSWORD_REQUEST        = 'customer.password.request';
-    const ROUTE_PASSWORD_RESET          = 'customer.password.reset';
-    const ROUTE_PASSWORD_RESET_SUBMIT   = 'customer.password.update';
+    const ROUTE_PASSWORD_REQUEST        = 'admin.password.request';
+    const ROUTE_PASSWORD_RESET          = 'admin.password.reset';
+    const ROUTE_PASSWORD_EMAIL          = 'admin.password.email';
+    const ROUTE_PASSWORD_RESET_SUBMIT   = 'admin.password.update';
     const USER_ORIGINAL_PASSWORD        = 'password';
-    const USER_GUARD                    = 'customer';
+    const USER_GUARD                    = 'admin';
 
     public function testShowPasswordResetRequestPage()
     {
         $this
-            ->get(route(self::ROUTE_PASSWORD_REQUEST))
+//            ->get(route(self::ROUTE_PASSWORD_REQUEST))
+            ->get('admin/password/reset')
             ->assertSuccessful()
             ->assertSeeText('Passwort zurücksetzen')
             ->assertSeeText('Email')
@@ -33,11 +34,10 @@ class CustomerPasswordResetTest extends TestCase
 
     public function testSubmitPasswordResetRequestInvalidEmail()
     {
+        $params = ['email' => Str::random()];
         $this
             ->from(route(self::ROUTE_PASSWORD_REQUEST))
-            ->post(route(self::ROUTE_PASSWORD_EMAIL), [
-                'email' => Str::random(),
-            ])
+            ->post(route(self::ROUTE_PASSWORD_EMAIL, $params), $params)
             ->assertSuccessful()
             ->assertSee(__('validation.email', [
                 'attribute' => 'email',
@@ -51,11 +51,10 @@ class CustomerPasswordResetTest extends TestCase
      */
     public function testSubmitPasswordResetRequestEmailNotFound()
     {
+        $params = ['email' => $this->faker->unique()->safeEmail];
         $response = $this
             ->from(route(self::ROUTE_PASSWORD_REQUEST))
-            ->post(route(self::ROUTE_PASSWORD_EMAIL), [
-                'email' => $this->faker->unique()->safeEmail,
-            ])
+            ->post(route(self::ROUTE_PASSWORD_EMAIL, $params), $params)
             ->assertSuccessful()
         ;
         $response->assertSeeText(__('passwords.user'));
@@ -66,19 +65,19 @@ class CustomerPasswordResetTest extends TestCase
      */
     public function testSubmitPasswordResetRequest()
     {
-        $params = ['email' => $this->customer->email];
+        $params = ['email' => $this->user->email];
         $this
             ->from(route(self::ROUTE_PASSWORD_REQUEST))
             ->post(route(self::ROUTE_PASSWORD_EMAIL), $params)
             ->assertSuccessful()
             ->assertSeeText(__('passwords.sent'))
         ;
-        Notification::assertSentTo($this->customer, ResetPassword::class);
+        Notification::assertSentTo($this->user, ResetPassword::class);
     }
 
     public function testShowPasswordResetPage()
     {
-        $token = Password::broker()->createToken($this->customer);
+        $token = Password::broker()->createToken($this->user);
         $this
             ->get(route(self::ROUTE_PASSWORD_RESET, $token))
             ->assertSuccessful()
@@ -95,7 +94,7 @@ class CustomerPasswordResetTest extends TestCase
      */
     public function testSubmitPasswordResetInvalidEmail()
     {
-        $token = Password::broker()->createToken($this->customer);
+        $token = Password::broker()->createToken($this->user);
         $password = Str::random();
         $params = [
             'token' => $token,
@@ -114,9 +113,9 @@ class CustomerPasswordResetTest extends TestCase
                 'attribute' => 'email',
             ]));
 
-        $this->customer->refresh();
-        $this->assertFalse(Hash::check($password, $this->customer->password));
-        $this->assertTrue(Hash::check('password', $this->customer->password));
+        $this->user->refresh();
+        $this->assertFalse(Hash::check($password, $this->user->password));
+        $this->assertTrue(Hash::check('password', $this->user->password));
     }
 
     /**
@@ -125,7 +124,7 @@ class CustomerPasswordResetTest extends TestCase
      */
     public function testSubmitPasswordResetEmailNotFound()
     {
-        $token = Password::broker()->createToken($this->customer);
+        $token = Password::broker()->createToken($this->user);
         $password = Str::random();
         $params = [
             'token' => $token,
@@ -142,9 +141,9 @@ class CustomerPasswordResetTest extends TestCase
             ->assertSuccessful()
             ->assertSee(__('passwords.user'));
 
-        $this->customer->refresh();
-        $this->assertFalse(Hash::check($password, $this->customer->password));
-        $this->assertTrue(Hash::check('password', $this->customer->password));
+        $this->user->refresh();
+        $this->assertFalse(Hash::check($password, $this->user->password));
+        $this->assertTrue(Hash::check('password', $this->user->password));
     }
 
     /**
@@ -153,13 +152,12 @@ class CustomerPasswordResetTest extends TestCase
      */
     public function testSubmitPasswordResetPasswordMismatch()
     {
-        $token = Password::broker()->createToken($this->customer);
-
+        $token = Password::broker()->createToken($this->user);
         $password = Str::random();
         $password_confirmation = Str::random();
         $params = [
             'token' => $token,
-            'email' => $this->customer->email,
+            'email' => $this->user->email,
             'password' => $password,
             'password_confirmation' => $password_confirmation,
         ];
@@ -174,9 +172,9 @@ class CustomerPasswordResetTest extends TestCase
                 'attribute' => 'password',
             ]));
 
-        $this->customer->refresh();
-        $this->assertFalse(Hash::check($password, $this->customer->password));
-        $this->assertTrue(Hash::check('password', $this->customer->password));
+        $this->user->refresh();
+        $this->assertFalse(Hash::check($password, $this->user->password));
+        $this->assertTrue(Hash::check('password', $this->user->password));
     }
 
     /**
@@ -185,11 +183,11 @@ class CustomerPasswordResetTest extends TestCase
      */
     public function testSubmitPasswordResetPasswordTooShort()
     {
-        $token = Password::broker()->createToken($this->customer);
+        $token = Password::broker()->createToken($this->user);
         $password = Str::random(5);
         $params = [
             'token' => $token,
-            'email' => $this->customer->email,
+            'email' => $this->user->email,
             'password' => $password,
             'password_confirmation' => $password,
         ];
@@ -205,9 +203,9 @@ class CustomerPasswordResetTest extends TestCase
                 'min' => 8,
             ]));
 
-        $this->customer->refresh();
-        $this->assertFalse(Hash::check($password, $this->customer->password));
-        $this->assertTrue(Hash::check('password', $this->customer->password));
+        $this->user->refresh();
+        $this->assertFalse(Hash::check($password, $this->user->password));
+        $this->assertTrue(Hash::check('password', $this->user->password));
     }
 
     /**
@@ -215,11 +213,11 @@ class CustomerPasswordResetTest extends TestCase
      */
     public function testSubmitPasswordReset()
     {
-        $token = Password::broker()->createToken($this->customer);
+        $token = Password::broker()->createToken($this->user);
         $password = Str::random();
         $params = [
             'token' => $token,
-            'email' => $this->customer->email,
+            'email' => $this->user->email,
             'password' => $password,
             'password_confirmation' => $password,
         ];
@@ -229,9 +227,9 @@ class CustomerPasswordResetTest extends TestCase
             ->assertSuccessful()
         ;
 
-        $this->customer->refresh();
-        $this->assertAuthenticated(self::USER_GUARD);
-        $this->assertFalse(Hash::check('password', $this->customer->password));
-        $this->assertTrue(Hash::check($password, $this->customer->password));
+//        $this->user->refresh();
+//        $this->assertAuthenticatedAs($this->user);
+        $this->assertFalse(Hash::check('password', $this->user->password));
+        $this->assertTrue(Hash::check($password, $this->user->password));
     }
 }

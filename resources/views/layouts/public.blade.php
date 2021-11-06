@@ -16,7 +16,7 @@
                     </x-form-submit>
                 </x-form>
             @else
-                <a href="{{ route('customer.login.form') }}">Kunden-Login</a>
+                <a href="{{ route('customer.login') }}">Kunden-Login</a>
             @endif
         </div>
     </header>
