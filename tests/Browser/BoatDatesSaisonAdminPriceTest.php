@@ -4,6 +4,7 @@ namespace Tests\Browser;
 use Carbon\Carbon;
 use App\Models\BoatDates;
 use Laravel\Dusk\Browser;
+use Tests\Browser\Traits\UseScreenshotSlides;
 use Tests\DuskTestCase;
 
 class BoatDatesSaisonAdminPriceTest extends DuskTestCase
@@ -26,6 +27,8 @@ class BoatDatesSaisonAdminPriceTest extends DuskTestCase
     public function test_boat_dates_saison_price_calculation()
     {
         $this->screenName = __FUNCTION__;
+        $this->screenDirectory = __FUNCTION__;
+
         $this->entity = ($this->model)::whereBoatId($this->boatId)->first();
 
         $this->browse(function (Browser $browser) {
@@ -39,6 +42,7 @@ class BoatDatesSaisonAdminPriceTest extends DuskTestCase
                 ->loginAs($this->user(), 'admin', )
                 ->assertAuthenticated('admin')
                 ->visit('/admin/boatDates/create')
+                ->stepScreenshot($this->screenDirectory)
                 ->assertRouteIs('admin.boatDates.create')
                 ->assertInputPresent('boat_id')
                 ->assertInputPresent('modus')
@@ -56,11 +60,17 @@ class BoatDatesSaisonAdminPriceTest extends DuskTestCase
                 ->assertInputPresent('mast_length')
                 ->assertInputPresent('mast_weight')
                 ->select('boat_id', $this->boatId)
+                ->stepScreenshot($this->screenDirectory)
                 ->select('modus', $this->modus)
+                ->stepScreenshot($this->screenDirectory)
                 ->typeDate('#from', $from)
+                ->stepScreenshot($this->screenDirectory)
                 ->typeDate('#until', $until)
+                ->stepScreenshot($this->screenDirectory)
                 ->check('crane', 1)
+                ->stepScreenshot($this->screenDirectory)
                 ->check('mast_crane', 1)
+                ->stepScreenshot($this->screenDirectory)
                 ->click('#default_price')
                 ->wait(3)
 //                ->assertInputValue('price', $this->calculateExpectedPrice())
@@ -69,9 +79,9 @@ class BoatDatesSaisonAdminPriceTest extends DuskTestCase
                 ->assertInputValueIsNot('length', '')
                 ->assertInputValueIsNot('width', '')
                 ->assertInputValueIsNot('weight', '')
-                ->screenshot($this->screenName)
+                ->stepScreenshot($this->screenDirectory)
             ;
-            $this->createJpeg($this->screenName);
+            $this->createJpeg($this->screenName, false);
         });
     }
 

@@ -50,6 +50,7 @@ use Illuminate\Database\Query\JoinClause;
  * @method static Builder|CaravanDates dublicates()
  * @method static Builder|CaravanDates fromYearMonth(?string $year = null, ?string $month = null)
  * @method static Builder|CaravanDates whereDayPrice($value)
+ * @method static Builder|CaravanDates caravan(?int $caravanId = null)
  */
 class CaravanDates extends BaseModel
 {

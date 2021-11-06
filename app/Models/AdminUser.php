@@ -1,18 +1,18 @@
 <?php
-
 namespace App\Models;
 
 use Eloquent;
 use App\Traits\Models\ClearCache;
 use Database\Factories\CustomerFactory;
 //use Illuminate\Auth\Notifications\ResetPassword as ResetPasswordNotification;
-use App\Notifications\AdminResetPassword  as ResetPasswordNotification;
+use App\Notifications\AdminResetPassword;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
@@ -74,8 +74,7 @@ use Spatie\Permission\Traits\HasRoles;
  */
 class AdminUser extends Authenticatable
 {
-    use HasRoles, HasFactory, Notifiable, ThrottlesLogins, CanResetPassword, HasPermissions, ClearCache;
-//    use HasApiTokens;
+    use HasFactory, HasRoles, Notifiable, CanResetPassword, ThrottlesLogins, Dispatchable, ClearCache;
 
     protected $table = 'admin_users';
     protected $guard_name = 'admin';
@@ -85,8 +84,6 @@ class AdminUser extends Authenticatable
      * @var array
      */
     protected $fillable = ['id', 'name', 'email', 'password'];
-//    protected $guarded = ['id'];
-//    protected $guarded = [];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -121,14 +118,8 @@ class AdminUser extends Authenticatable
         return $this->roles->map->name->join(', ');
     }
 
-    /**
-     * Send the password reset notification.
-     *
-     * @param  string  $token
-     * @return void
-     */
     public function sendPasswordResetNotification($token)
     {
-        $this->notify(new ResetPasswordNotification($token));
+        $this->notify(new AdminResetPassword($token));
     }
 }

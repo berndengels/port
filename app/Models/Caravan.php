@@ -33,6 +33,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property-read mixed $text
  * @method static Builder|Caravan caravan(?int $caravanId = null)
  * @method static Builder|Caravan caravanByDates(?int $caravanId = null)
+ * @property-read mixed $info
  */
 class Caravan extends BaseModel
 {

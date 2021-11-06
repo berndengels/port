@@ -12,16 +12,15 @@ class Price
     /**
      * @param int|float $value
      */
-    public function __construct(protected int|float $value = 0) {
+    public function __construct(protected float $value = 0) {
         $type = gettype($value);
-/*
+
         if(!in_array($type, $this->validTypes)) {
             throw PriceValueException::wrongType($type);
         }
         if($this->value < 0) {
             throw PriceValueException::wrongValue($this->value);
         }
-*/
     }
 
     /**

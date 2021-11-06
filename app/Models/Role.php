@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Database\Factories\RoleFactory;
 use Eloquent;
 use App\Traits\Models\ClearCache;
 use Illuminate\Database\Eloquent\Builder;
@@ -34,6 +35,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @method static Builder|Role whereUpdatedAt($value)
  * @mixin Eloquent
  * @property-read mixed $str_roles
+ * @method static RoleFactory factory(...$parameters)
  */
 class Role extends BaseModel
 {

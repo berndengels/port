@@ -11,7 +11,7 @@ class BrowserSessionsTest extends TestCase
 
     public function test_other_browser_sessions_can_be_logged_out()
     {
-        $this->actingAs($user = AdminUser::whereEmail('test@test.com')->first());
+        $this->actingAs($user = $this->user);
 
         $response = $this->delete('/user/other-browser-sessions', [
             'password' => 'password',
