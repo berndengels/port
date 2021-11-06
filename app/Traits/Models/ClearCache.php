@@ -6,7 +6,7 @@ trait ClearCache
 {
     public static function bootClearCache()
     {
-/*
+        /*
         self::created(function () {
             ResponseCache::clear();
         });
@@ -18,6 +18,6 @@ trait ClearCache
         self::deleted(function () {
             ResponseCache::clear();
         });
-*/
+        */
     }
 }

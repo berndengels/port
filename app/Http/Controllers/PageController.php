@@ -21,7 +21,7 @@ class PageController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param Page $page
+     * @param  Page $page
      * @return Response
      */
     public function show(Page $page)
@@ -42,7 +42,7 @@ class PageController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param  Request $request
      * @return Response
      */
     public function store(Request $request)
@@ -53,7 +53,7 @@ class PageController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Page $page
+     * @param  Page $page
      * @return Response
      */
     public function edit(Page $page)
@@ -64,8 +64,8 @@ class PageController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
-     * @param Page $page
+     * @param  Request $request
+     * @param  Page    $page
      * @return Response
      */
     public function update(Request $request, Page $page)
@@ -76,7 +76,7 @@ class PageController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param Page $page
+     * @param  Page $page
      * @return Response
      */
     public function destroy(Page $page)

@@ -56,7 +56,7 @@ class AdminForgotPasswordController extends ForgotPasswordController
     /**
      * Get the response for a successful password reset link.
      *
-     * @param Request $request
+     * @param  Request $request
      * @param  string  $response
      * @return RedirectResponse|JsonResponse
      */
@@ -70,7 +70,7 @@ class AdminForgotPasswordController extends ForgotPasswordController
     /**
      * Send a reset link to the given user.
      *
-     * @param Request $request
+     * @param  Request $request
      * @return RedirectResponse|JsonResponse
      */
 

@@ -8,7 +8,9 @@ use Illuminate\View\Component;
 
 class Tooltip extends Component
 {
-    public function __construct(public $id = null) {}
+    public function __construct(public $id = null)
+    {
+    }
 
     /**
      * Get the view / contents that represent the component.

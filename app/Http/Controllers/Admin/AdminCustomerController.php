@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Hash;
 
 class AdminCustomerController extends AdminController
 {
-//    use AuthenticatesUsers;
+    //    use AuthenticatesUsers;
 
     protected $customerTypes;
     protected $customerTypeOptions;
@@ -25,11 +25,13 @@ class AdminCustomerController extends AdminController
 
     public function __construct()
     {
-//        $this->middleware(['auth:admin','auth:customer']);
+        //        $this->middleware(['auth:admin','auth:customer']);
         $this->customerTypeOptions = config('port.main.customer.typeOptions');
-        $this->customerTypes = collect($this->customerTypeOptions)->map(function ($v, $k) {
-            return $k;
-        });
+        $this->customerTypes = collect($this->customerTypeOptions)->map(
+            function ($v, $k) {
+                return $k;
+            }
+        );
     }
 
     public function index()
@@ -47,7 +49,7 @@ class AdminCustomerController extends AdminController
     /**
      * Display the specified resource.
      *
-     * @param Customer $customer
+     * @param  Customer $customer
      * @return Response
      */
     public function show(Customer $customer)
@@ -68,7 +70,7 @@ class AdminCustomerController extends AdminController
     /**
      * Store a newly created resource in storage.
      *
-     * @param CustomerRequest $request
+     * @param  CustomerRequest $request
      * @return Response
      */
     public function store(CustomerRequest $request)
@@ -86,7 +88,7 @@ class AdminCustomerController extends AdminController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Customer $customer
+     * @param  Customer $customer
      * @return Response
      */
     public function edit(Customer $customer)
@@ -94,14 +96,14 @@ class AdminCustomerController extends AdminController
         $customerTypes = $this->customerTypeOptions;
         $customer->password = null;
         $customer->password_repeat = null;
-        return view('admin.customers.edit', compact('customer','customerTypes'));
+        return view('admin.customers.edit', compact('customer', 'customerTypes'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param CustomerRequest $request
-     * @param Customer $customer
+     * @param  CustomerRequest $request
+     * @param  Customer        $customer
      * @return Response
      */
     public function update(CustomerRequest $request, Customer $customer)
@@ -121,7 +123,7 @@ class AdminCustomerController extends AdminController
     /**
      * Remove the specified resource from storage.
      *
-     * @param Customer $customer
+     * @param  Customer $customer
      * @return Response
      */
     public function destroy(Customer $customer)

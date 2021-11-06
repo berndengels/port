@@ -46,11 +46,13 @@ class AdminBoatDatesController extends AdminController
         /**
          * @var $priceTotal Collection
          */
-        $priceTotal = $query->get()->sum(function ($item) {
-            return $item->price;
-        });
+        $priceTotal = $query->get()->sum(
+            function ($item) {
+                return $item->price;
+            }
+        );
 
-        return view('admin.boatDates.index', compact('data','priceTotal'));
+        return view('admin.boatDates.index', compact('data', 'priceTotal'));
     }
 
 
@@ -67,17 +69,18 @@ class AdminBoatDatesController extends AdminController
          */
         $query = BoatDates::with('boat')
             ->whereModus('saison')
-            ->orderByDesc('from')
-        ;
+            ->orderByDesc('from');
         $data = $query->paginate($this->paginatorLimit);
         /**
          * @var $priceTotal Collection
          */
-        $priceTotal = $query->get()->sum(function ($item) {
-            return $item->price;
-        });
+        $priceTotal = $query->get()->sum(
+            function ($item) {
+                return $item->price;
+            }
+        );
 
-        return view('admin.boatDates.index', compact('data','modus', 'priceTotal'));
+        return view('admin.boatDates.index', compact('data', 'modus', 'priceTotal'));
     }
 
     /**
@@ -93,23 +96,24 @@ class AdminBoatDatesController extends AdminController
          */
         $query = BoatDates::with('boat')
             ->whereModus('winter')
-            ->orderByDesc('from')
-        ;
+            ->orderByDesc('from');
         $data = $query->paginate($this->paginatorLimit);
         /**
          * @var $priceTotal Collection
          */
-        $priceTotal = $query->get()->sum(function ($item) {
-            return $item->price;
-        });
+        $priceTotal = $query->get()->sum(
+            function ($item) {
+                return $item->price;
+            }
+        );
 
-        return view('admin.boatDates.index', compact('data','modus', 'priceTotal'));
+        return view('admin.boatDates.index', compact('data', 'modus', 'priceTotal'));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param BoatDates $boatDates
+     * @param  BoatDates $boatDates
      * @return Response
      */
     public function show(BoatDates $boatDate)
@@ -138,19 +142,21 @@ class AdminBoatDatesController extends AdminController
         $options = $this->boatRepository->options('boat_name');
         $this->boatOptions = $options->getSelectOptions();
 
-        return view('admin.boatDates.create', [
+        return view(
+            'admin.boatDates.create', [
             'modus'         => $request->modus ?? 'saison',
             'datesModi'     => $this->datesModi,
             'boatOptions'   => $this->boatOptions,
             'defaultFrom'   => $defaultFrom->format('Y-m-d'),
             'defaultUntil'  => $defaultUntil->format('Y-m-d'),
-        ]);
+            ]
+        );
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param BoatDatesRequest $request
+     * @param  BoatDatesRequest $request
      * @return Response
      */
     public function store(BoatDatesRequest $request)
@@ -168,7 +174,7 @@ class AdminBoatDatesController extends AdminController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param BoatDates $boatDates
+     * @param  BoatDates $boatDates
      * @return Response
      */
     public function edit(BoatDates $boatDate)
@@ -177,19 +183,21 @@ class AdminBoatDatesController extends AdminController
         $options = $this->boatRepository->options('boat_name');
         $this->boatOptions = $options->getSelectOptions();
 
-        return view('admin.boatDates.edit', [
+        return view(
+            'admin.boatDates.edit', [
             'boatDate'      => $boatDate,
             'modus'         => $boatDate->modus,
             'datesModi'     => $this->datesModi,
             'boatOptions'   => $this->boatOptions,
-        ]);
+            ]
+        );
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param BoatDatesRequest $request
-     * @param BoatDates $boatDates
+     * @param  BoatDatesRequest $request
+     * @param  BoatDates        $boatDates
      * @return Response
      */
     public function update(BoatDatesRequest $request, BoatDates $boatDate)
@@ -207,7 +215,7 @@ class AdminBoatDatesController extends AdminController
     /**
      * Remove the specified resource from storage.
      *
-     * @param BoatDates $boatDates
+     * @param  BoatDates $boatDates
      * @return Response
      */
     public function destroy(BoatDates $boatDate)
@@ -222,12 +230,14 @@ class AdminBoatDatesController extends AdminController
 
     public function invoice(BoatDates $boatDate, $sendAsMail = false)
     {
-        $text = view('admin.boatDates.invoice', [
+        $text = view(
+            'admin.boatDates.invoice', [
             'data'      => $boatDate,
             'customer'  => $boatDate->boat->customer,
             'prices'    => json_decode($boatDate->prices),
             'modus'     => config('port.main.boat.dates.modi')[$boatDate->modus],
-        ]);
+            ]
+        );
         $html = Str::of($text)->markdown();
         /**
          * @var $pdf PDF
@@ -243,7 +253,8 @@ class AdminBoatDatesController extends AdminController
         return $pdf->download($fileName);
     }
 
-    public function sendInvoice(BoatDates $boatDate) {
+    public function sendInvoice(BoatDates $boatDate)
+    {
         try {
             Mail::send(new InvoiceMail($boatDate, $this->invoice($boatDate, true)));
             return redirect()->route('admin.boatDates.'.$boatDate->modus)->with('success', 'Rechnung erfogreich an '.$boatDate->boat->customer->email.' versand!');

@@ -17,7 +17,7 @@ class AdminPageController extends AdminController
     /**
      * Display the specified resource.
      *
-     * @param Page $page
+     * @param  Page $page
      * @return Response
      */
     public function show(Page $page)
@@ -38,7 +38,7 @@ class AdminPageController extends AdminController
     /**
      * Store a newly created resource in storage.
      *
-     * @param PageRequest $request
+     * @param  PageRequest $request
      * @return Response
      */
     public function store(PageRequest $request)
@@ -54,7 +54,7 @@ class AdminPageController extends AdminController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Page $page
+     * @param  Page $page
      * @return Response
      */
     public function edit(Page $page)
@@ -65,8 +65,8 @@ class AdminPageController extends AdminController
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
-     * @param Page $page
+     * @param  Request $request
+     * @param  Page    $page
      * @return Response
      */
     public function update(PageRequest $request, Page $page)
@@ -82,7 +82,7 @@ class AdminPageController extends AdminController
     /**
      * Remove the specified resource from storage.
      *
-     * @param Page $page
+     * @param  Page $page
      * @return Response
      */
     public function destroy(Page $page)

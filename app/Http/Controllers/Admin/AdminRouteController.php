@@ -12,7 +12,8 @@ class AdminRouteController extends AdminController
     protected $subRoute;
     protected $subActions = ['show','edit','update','create','store','destroy'];
 
-    public function setCurrentMenu($currentRouteName, Request $request) {
+    public function setCurrentMenu($currentRouteName, Request $request)
+    {
         $currentRoutes      = config('port.menu.admin.items.'.$currentRouteName);
 
         if(isset($currentRoutes['route'])) {

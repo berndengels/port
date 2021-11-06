@@ -17,16 +17,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string|null $slug
  * @property string $content
  * @property int $position
- * @method static Builder|Widget newModelQuery()
- * @method static Builder|Widget newQuery()
- * @method static Builder|Widget query()
- * @method static Builder|Widget whereContent($value)
- * @method static Builder|Widget whereId($value)
- * @method static Builder|Widget wherePosition($value)
- * @method static Builder|Widget whereSlug($value)
- * @method static Builder|Widget whereTitle($value)
- * @mixin Eloquent
- * @method static WidgetFactory factory(...$parameters)
+ * @method   static Builder|Widget newModelQuery()
+ * @method   static Builder|Widget newQuery()
+ * @method   static Builder|Widget query()
+ * @method   static Builder|Widget whereContent($value)
+ * @method   static Builder|Widget whereId($value)
+ * @method   static Builder|Widget wherePosition($value)
+ * @method   static Builder|Widget whereSlug($value)
+ * @method   static Builder|Widget whereTitle($value)
+ * @mixin    Eloquent
+ * @method   static WidgetFactory factory(...$parameters)
  */
 class Widget extends BaseModel
 {

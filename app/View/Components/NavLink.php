@@ -19,7 +19,8 @@ class NavLink extends Component
         public $icon = null,
         public $class = null,
         public $title = null
-    ) {}
+    ) {
+    }
 
     /**
      * Get the view / contents that represent the component.

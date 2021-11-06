@@ -42,7 +42,7 @@ class AdminUserController extends AdminController
     /**
      * Display the specified resource.
      *
-     * @param AdminUser $user
+     * @param  AdminUser $user
      * @return Response
      */
     public function show(AdminUser $user)
@@ -64,7 +64,7 @@ class AdminUserController extends AdminController
     /**
      * Store a newly created resource in storage.
      *
-     * @param AdminUserRequest $request
+     * @param  AdminUserRequest $request
      * @return Response
      */
     public function store(AdminUserRequest $request)
@@ -82,24 +82,26 @@ class AdminUserController extends AdminController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param AdminUser $user
+     * @param  AdminUser $user
      * @return Response
      */
     public function edit(AdminUser $user)
     {
         $user->load('roles');
         $user->password = null;
-        return view('admin.users.edit', [
+        return view(
+            'admin.users.edit', [
             'user'  => $user,
             'roles' => $this->roleRepository->options()->getSelectOptions(),
-        ]);
+            ]
+        );
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param AdminUserRequest $request
-     * @param AdminUser $user
+     * @param  AdminUserRequest $request
+     * @param  AdminUser        $user
      * @return Response
      */
     public function update(AdminUserRequest $request, AdminUser $user)
@@ -113,8 +115,7 @@ class AdminUserController extends AdminController
             }
             $user
                 ->syncRoles($validated['roles'])
-                ->update($validated)
-            ;
+                ->update($validated);
             return redirect()->route('admin.users.index')->with('success', 'User erfogreich bearbeitet!');
         } catch(Exception $e) {
             die($e->getMessage());
@@ -125,7 +126,7 @@ class AdminUserController extends AdminController
     /**
      * Remove the specified resource from storage.
      *
-     * @param AdminUser $user
+     * @param  AdminUser $user
      * @return Response
      */
     public function destroy(AdminUser $user)

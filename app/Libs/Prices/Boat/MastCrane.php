@@ -9,8 +9,7 @@ class MastCrane extends Main implements IPrice
     public function __construct(
         protected bool $useMastCrane,
         protected int $mastWeight
-    )
-    {
+    ) {
         $this->initConfig();
     }
 

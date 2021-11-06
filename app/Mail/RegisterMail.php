@@ -25,7 +25,7 @@ class RegisterMail extends Mailable
      */
     public function __construct(Customer $customer)
     {
-//        $users = AdminUser::permission('confirm Registration')->get();
+        //        $users = AdminUser::permission('confirm Registration')->get();
         $users = AdminUser::role('admin')->get();
         $this->customer = $customer;
         foreach ($users as $user) {
@@ -48,8 +48,10 @@ class RegisterMail extends Mailable
      */
     public function build()
     {
-        return $this->markdown('markdown/register', [
+        return $this->markdown(
+            'markdown/register', [
             'customer'  => $this->customer,
-        ]);
+            ]
+        );
     }
 }

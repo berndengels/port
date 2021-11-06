@@ -22,9 +22,11 @@ class AdminRoleController extends AdminController
             ->orderBy('name')
             ->get()
             ->keyBy('id')
-            ->map(function ($item) {
-                return "$item->guard_name $item->name";
-            });
+            ->map(
+                function ($item) {
+                    return "$item->guard_name $item->name";
+                }
+            );
     }
 
     public function index()
@@ -36,7 +38,7 @@ class AdminRoleController extends AdminController
     /**
      * Display the specified resource.
      *
-     * @param Role $role
+     * @param  Role $role
      * @return Response
      */
     public function show(Role $role)
@@ -57,7 +59,7 @@ class AdminRoleController extends AdminController
     /**
      * Store a newly created resource in storage.
      *
-     * @param RoleRequest $request
+     * @param  RoleRequest $request
      * @return Response
      */
     public function store(RoleRequest $request)
@@ -74,20 +76,20 @@ class AdminRoleController extends AdminController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Role $role
+     * @param  Role $role
      * @return Response
      */
     public function edit(Role $role)
     {
         $permissions = $this->permissions;
-        return view('admin.roles.edit', compact('role','permissions'));
+        return view('admin.roles.edit', compact('role', 'permissions'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param RoleRequest $request
-     * @param Role $role
+     * @param  RoleRequest $request
+     * @param  Role        $role
      * @return Response
      */
     public function update(RoleRequest $request, Role $role)
@@ -104,7 +106,7 @@ class AdminRoleController extends AdminController
     /**
      * Remove the specified resource from storage.
      *
-     * @param Role $role
+     * @param  Role $role
      * @return Response
      */
     public function destroy(Role $role)

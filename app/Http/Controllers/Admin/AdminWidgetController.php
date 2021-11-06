@@ -24,7 +24,7 @@ class AdminWidgetController extends AdminController
     /**
      * Display the specified resource.
      *
-     * @param  Widget  $widget
+     * @param  Widget $widget
      * @return Response
      */
     public function show(Widget $widget)
@@ -45,7 +45,7 @@ class AdminWidgetController extends AdminController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  WidgetRequest  $request
+     * @param  WidgetRequest $request
      * @return Response
      */
     public function store(WidgetRequest $request)
@@ -61,7 +61,7 @@ class AdminWidgetController extends AdminController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  Widget  $widget
+     * @param  Widget $widget
      * @return Response
      */
     public function edit(Widget $widget)
@@ -72,8 +72,8 @@ class AdminWidgetController extends AdminController
     /**
      * Update the specified resource in storage.
      *
-     * @param  WidgetRequest  $request
-     * @param  Widget  $widget
+     * @param  WidgetRequest $request
+     * @param  Widget        $widget
      * @return Response
      */
     public function update(WidgetRequest $request, Widget $widget)
@@ -89,7 +89,7 @@ class AdminWidgetController extends AdminController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  Widget  $widget
+     * @param  Widget $widget
      * @return Response
      */
     public function destroy(Widget $widget)

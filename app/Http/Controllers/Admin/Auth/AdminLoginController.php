@@ -25,7 +25,7 @@ class AdminLoginController extends DefaultLoginController
     |
     */
 
-//    use AuthenticatesUsers;
+    //    use AuthenticatesUsers;
 
     /**
      * Where to redirect users after login.
@@ -58,7 +58,7 @@ class AdminLoginController extends DefaultLoginController
     /**
      * Login the admin.
      *
-     * @param Request $request
+     * @param  Request $request
      * @return RedirectResponse
      */
     public function login(Request $request)
@@ -66,7 +66,7 @@ class AdminLoginController extends DefaultLoginController
         $this->validateLogin($request);
 
         //check if the user has too many login attempts.
-        if ($this->hasTooManyLoginAttempts($request)){
+        if ($this->hasTooManyLoginAttempts($request)) {
             //Fire the lockout event.
             $this->fireLockoutEvent($request);
 
@@ -76,12 +76,14 @@ class AdminLoginController extends DefaultLoginController
 
         //attempt login.
         if($this->guard()->attempt(
-            $request->only('email','password'),
-            $request->filled('remember'))) {
+            $request->only('email', 'password'),
+            $request->filled('remember')
+        )
+        ) {
             //Authenticated
             return redirect()
                 ->intended(route('admin.dashboard'))
-                ->with('status','You are Logged in as Admin!');
+                ->with('status', 'You are Logged in as Admin!');
         }
 
         //keep track of login attempts from the user.

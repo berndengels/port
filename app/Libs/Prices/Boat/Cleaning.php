@@ -9,8 +9,7 @@ class Cleaning extends Main implements IPrice
     public function __construct(
         protected bool $useCleaning,
         protected int $length
-    )
-    {
+    ) {
         $this->initConfig();
     }
 

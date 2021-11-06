@@ -12,6 +12,7 @@ class CaravanDatesValidationData
 
     /**
      * Determine if the user is authorized to make this request.
+     *
      * @return bool
      */
     public function authorize()
@@ -19,11 +20,14 @@ class CaravanDatesValidationData
         return $this->auth->user()->can('write CaravanDates');
     }
 
-    public function __construct(Request $request){
-        $request->merge([
+    public function __construct(Request $request)
+    {
+        $request->merge(
+            [
             'carnumber' => $this->fixCarNumber($request->carnumber),
             'electric' => !!$request->post('electric') ?? false,
-        ]);
+            ]
+        );
         $this->request = $request;
     }
 

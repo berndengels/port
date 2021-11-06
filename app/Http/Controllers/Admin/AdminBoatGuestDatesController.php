@@ -18,13 +18,13 @@ class AdminBoatGuestDatesController extends AdminController
         $query      = BoatGuestDates::with('boat')->orderByDesc('from');
         $priceTotal = $query->get()->sum(fn ($item) => $item->price);
         $data       = $query->paginate($this->paginatorLimit);
-        return view('admin.boatGuestDates.index', compact('data','priceTotal'));
+        return view('admin.boatGuestDates.index', compact('data', 'priceTotal'));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param BoatGuestDates $boatGuestDates
+     * @param  BoatGuestDates $boatGuestDates
      * @return Response
      */
     public function show(BoatGuestDates $boatGuestDate)
@@ -40,16 +40,18 @@ class AdminBoatGuestDatesController extends AdminController
     public function create()
     {
         $options = $this->boatGuestRepository->options();
-        return view('admin.boatGuestDates.create', [
+        return view(
+            'admin.boatGuestDates.create', [
             'boatGuestsOptions' => $options->getSelectOptions(),
             'boatGuestsOptionsAutocomplete' => $options->getSelectOptionsData()->toJson()
-        ]);
+            ]
+        );
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param BoatGuestDatesRequest $request
+     * @param  BoatGuestDatesRequest $request
      * @return Response
      */
     public function store(BoatGuestDatesRequest $request)
@@ -70,24 +72,26 @@ class AdminBoatGuestDatesController extends AdminController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param BoatGuestDates $boatGuestDate
+     * @param  BoatGuestDates $boatGuestDate
      * @return Response
      */
     public function edit(BoatGuestDates $boatGuestDate)
     {
         $options = $this->boatGuestRepository->options();
-        return view('admin.boatGuestDates.edit', [
+        return view(
+            'admin.boatGuestDates.edit', [
             'boatGuestDate'     => $boatGuestDate,
             'boatGuestsOptions' => $options->getSelectOptions(),
             'boatGuestsOptionsAutocomplete' => $options->getSelectOptionsData()->toJson()
-        ]);
+            ]
+        );
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param BoatGuestDatesRequest $request
-     * @param BoatGuestDates $boatGuestDate
+     * @param  BoatGuestDatesRequest $request
+     * @param  BoatGuestDates        $boatGuestDate
      * @return Response
      */
     public function update(BoatGuestDatesRequest $request, BoatGuestDates $boatGuestDate)
@@ -107,7 +111,7 @@ class AdminBoatGuestDatesController extends AdminController
     /**
      * Remove the specified resource from storage.
      *
-     * @param BoatGuestDates $boatGuestDate
+     * @param  BoatGuestDates $boatGuestDate
      * @return Response
      */
     public function destroy(BoatGuestDates $boatGuestDate)

@@ -24,9 +24,11 @@ class AdminBoatController extends AdminController
     public function index()
     {
         $data = Boat::with('customer')
-            ->whereHas('customer', function (Builder $query) {
-                $query->where('customer_type', '=', 'permanent');
-            })
+            ->whereHas(
+                'customer', function (Builder $query) {
+                    $query->where('customer_type', '=', 'permanent');
+                }
+            )
             ->paginate($this->paginatorLimit);
         return view('admin.boats.index', compact('data'));
     }
@@ -34,9 +36,11 @@ class AdminBoatController extends AdminController
     public function guests()
     {
         $data = Boat::with('customer')
-            ->whereHas('customer', function (Builder $query) {
-                $query->where('customer_type', '=', 'guest');
-            })
+            ->whereHas(
+                'customer', function (Builder $query) {
+                    $query->where('customer_type', '=', 'guest');
+                }
+            )
             ->paginate($this->paginatorLimit);
         return view('admin.boats.index', compact('data'));
     }
@@ -44,7 +48,7 @@ class AdminBoatController extends AdminController
     /**
      * Display the specified resource.
      *
-     * @param Boat $boat
+     * @param  Boat $boat
      * @return Response
      */
     public function show(Boat $boat, Request $request)
@@ -62,16 +66,18 @@ class AdminBoatController extends AdminController
      */
     public function create()
     {
-        return view('admin.boats.create', [
+        return view(
+            'admin.boats.create', [
             'types' => $this->boatTypes,
             'customerOptions' => $this->customerRepository->options()->getSelectOptionsData(),
-        ]);
+            ]
+        );
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param BoatRequest $request
+     * @param  BoatRequest $request
      * @return Response
      */
     public function store(BoatRequest $request)
@@ -91,23 +97,25 @@ class AdminBoatController extends AdminController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Boat $boat
+     * @param  Boat $boat
      * @return Response
      */
     public function edit(Boat $boat)
     {
-        return view('admin.boats.edit', [
+        return view(
+            'admin.boats.edit', [
             'boat'  => $boat,
             'types' => $this->boatTypes,
             'customerOptions' => $this->customerRepository->options()->getSelectOptionsData()
-        ]);
+            ]
+        );
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param BoatRequest $request
-     * @param Boat $boat
+     * @param  BoatRequest $request
+     * @param  Boat        $boat
      * @return Response
      */
     public function update(BoatRequest $request, Boat $boat)
@@ -127,7 +135,7 @@ class AdminBoatController extends AdminController
     /**
      * Remove the specified resource from storage.
      *
-     * @param Boat $boat
+     * @param  Boat $boat
      * @return Response
      */
     public function destroy(Boat $boat)

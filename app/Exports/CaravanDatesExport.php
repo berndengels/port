@@ -21,7 +21,11 @@ class CaravanDatesExport implements FromView
         $this->month    = $month;
         $this->data     = $this->getData();
         $this->count    = $this->data->count();
-        $this->priceTotal = $this->data->sum(function ($item){ return $item->price; });
+        $this->priceTotal = $this->data->sum(
+            function ($item) {
+                return $item->price; 
+            }
+        );
     }
 
     public function getData()
@@ -37,17 +41,18 @@ class CaravanDatesExport implements FromView
 
         $data = $query
             ->orderBy('from')
-            ->get()
-        ;
+            ->get();
         return $data;
     }
 
     public function view(): View
     {
-        return view('caravanDates.export', [
+        return view(
+            'caravanDates.export', [
             'data'          => $this->data,
             'priceTotal'    => $this->priceTotal,
-        ]);
+            ]
+        );
     }
 
     /**

@@ -21,7 +21,8 @@ class SearchFilter extends Component
         public string $method = 'get',
         public string $css = '',
         public $options = null
-    ) {}
+    ) {
+    }
 
     /**
      * Get the view / contents that represent the component.

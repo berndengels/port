@@ -17,6 +17,7 @@ class CaravanDatesRequest extends AdminRequest
 
     /**
      * Determine if the user is authorized to make this request.
+     *
      * @return bool
      */
     public function authorize()
@@ -26,9 +27,11 @@ class CaravanDatesRequest extends AdminRequest
 
     public function prepareForValidation()
     {
-        $this->merge([
+        $this->merge(
+            [
             'carnumber' => $this->fixCarNumber($this->carnumber),
-        ]);
+            ]
+        );
         return $this;
     }
 

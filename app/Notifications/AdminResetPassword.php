@@ -10,7 +10,7 @@ class AdminResetPassword extends ResetPassword
     /**
      * Build the mail representation of the notification.
      *
-     * @param  mixed  $notifiable
+     * @param  mixed $notifiable
      * @return MailMessage
      */
     public function toMail($notifiable)
@@ -22,10 +22,14 @@ class AdminResetPassword extends ResetPassword
         if (static::$createUrlCallback) {
             $url = call_user_func(static::$createUrlCallback, $notifiable, $this->token);
         } else {
-            $url = url(route('admin.password.reset', [
-                'token' => $this->token,
-                'email' => $notifiable->getEmailForPasswordReset(),
-            ], false));
+            $url = url(
+                route(
+                    'admin.password.reset', [
+                    'token' => $this->token,
+                    'email' => $notifiable->getEmailForPasswordReset(),
+                    ], false
+                )
+            );
         }
 
         return $this->buildMailMessage($url);

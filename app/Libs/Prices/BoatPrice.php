@@ -45,19 +45,19 @@ class BoatPrice extends PriceCalculator
             $winterEnd      = Carbon::make($nextYear . '-' . config('port.prices.boat.winter_end'));
 
             switch ($modus) {
-                case 'saison':
-                    static::$from   = $saisonStart;
-                    static::$until  = $saisonEnd;
-                    static::$_datePeriod = $saisonStart->toPeriod($saisonEnd)->toDatePeriod();
-                    static::$daysCount   = static::$_datePeriod->getDateInterval()->days;
-                    break;
-                case 'winter':
-                default:
-                    static::$from   = $winterStart;
-                    static::$until  = $winterEnd;
-                    static::$_datePeriod = $winterStart->toPeriod($winterEnd)->toDatePeriod();
-                    static::$daysCount   = static::$_datePeriod->getDateInterval()->days;
-                    break;
+            case 'saison':
+                static::$from   = $saisonStart;
+                static::$until  = $saisonEnd;
+                static::$_datePeriod = $saisonStart->toPeriod($saisonEnd)->toDatePeriod();
+                static::$daysCount   = static::$_datePeriod->getDateInterval()->days;
+                break;
+            case 'winter':
+            default:
+                static::$from   = $winterStart;
+                static::$until  = $winterEnd;
+                static::$_datePeriod = $winterStart->toPeriod($winterEnd)->toDatePeriod();
+                static::$daysCount   = static::$_datePeriod->getDateInterval()->days;
+                break;
             }
         }
 
@@ -82,8 +82,7 @@ class BoatPrice extends PriceCalculator
             ->add(static::$priceCrane)
             ->add(static::$priceMastCrane)
             ->add(static::$priceCleaning)
-            ->set(static::$priceIndividual)
-        ;
+            ->set(static::$priceIndividual);
 
         return $price->formatResult();
     }

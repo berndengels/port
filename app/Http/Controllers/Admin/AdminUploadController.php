@@ -17,7 +17,7 @@ class AdminUploadController extends AdminController
              */
             $file = $request->$paramName;
             $disk = Storage::disk('images');
-            $path = str_replace(config('app.url'),'', $disk->url(''));
+            $path = str_replace(config('app.url'), '', $disk->url(''));
             $fileName = $disk->putFileAs('', $file, $file->hashName());
             $response = [
                 'success'   => true,

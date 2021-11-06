@@ -29,7 +29,8 @@ abstract class Map extends Component
      *
      * @return View|Closure|string
      */
-    function render() {
+    function render()
+    {
         return view($this->view);
     }
 }

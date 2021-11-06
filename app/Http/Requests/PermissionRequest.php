@@ -10,6 +10,7 @@ class PermissionRequest extends AdminRequest
 
     /**
      * Determine if the user is authorized to make this request.
+     *
      * @return bool
      */
     public function authorize()
@@ -19,9 +20,11 @@ class PermissionRequest extends AdminRequest
 
     public function validationData()
     {
-        return $this->merge([
+        return $this->merge(
+            [
             'name' => $this->name ?? $this->action . ' ' . $this->model,
-        ])->toArray();
+            ]
+        )->toArray();
     }
 
     /**
@@ -32,12 +35,13 @@ class PermissionRequest extends AdminRequest
     public function rules()
     {
         return [
-            'name' => !$this->getId() ? Rule::unique('permissions')->where(function(Builder $query) {
-                return $query
-                    ->whereName($this->name)
-                    ->whereGuardName($this->guard_name)
-                ;
-            }) : '',
+            'name' => !$this->getId() ? Rule::unique('permissions')->where(
+                function (Builder $query) {
+                    return $query
+                        ->whereName($this->name)
+                        ->whereGuardName($this->guard_name);
+                }
+            ) : '',
             'guard_name'    => 'required',
             'model'         => 'required',
             'action'        => 'required',

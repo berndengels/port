@@ -21,25 +21,26 @@ trait SelectOptions
         $query = (static::$model)::on(app('db.connection')->getName())
             ->with($relations)
             ->select()
-            ->orderBy($orderBy)
-        ;
-/*
- * only for tests
+            ->orderBy($orderBy);
+        /*
+        * only for tests
         $this->selectOptionsData = $query->get()->map(function ($item) use ($orderBy) {
             $item->{$orderBy} = config('app.env').' '.$item->{$orderBy};
             return $item;
         });
-*/
+        */
         $this->selectOptionsData = $query->get();
         return $this->selectOptionsData;
     }
 
     public function optionsData($orderBy = 'name', $relations = []): Collection
     {
-        return Cache::remember(static::$cacheKeyOptionsData, AppCache::TTL, fn() => $this->getOptionsData(
-            orderBy: $orderBy,
-            relations: $relations
-        ));
+        return Cache::remember(
+            static::$cacheKeyOptionsData, AppCache::TTL, fn() => $this->getOptionsData(
+                orderBy: $orderBy,
+                relations: $relations
+            )
+        );
     }
 
     public function options($textFieldName = 'name', $keyFieldName = 'id', $relations = []): self
@@ -48,12 +49,14 @@ trait SelectOptions
             orderBy: $textFieldName,
             relations: $relations
         );
-        $this->selectOptions = Cache::remember(static::$cacheKeyOptions, AppCache::TTL, function() use ($keyFieldName, $textFieldName) {
-            return $this->selectOptionsData
-                ->keyBy($keyFieldName)
-                ->map->{$textFieldName}
-            ;
-        });
+        $this->selectOptions = Cache::remember(
+            static::$cacheKeyOptions, AppCache::TTL, function () use ($keyFieldName, $textFieldName) {
+                return $this->selectOptionsData
+                    ->keyBy($keyFieldName)
+                    ->map->{$textFieldName}
+                ;
+            }
+        );
         return $this;
     }
 

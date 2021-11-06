@@ -59,17 +59,17 @@ class AdminCaravanDatesController extends AdminController
          * @var $query Builder
          */
         $query = CaravanDates::with('caravan')
-            ->orderByDesc('from')
-        ;
+            ->orderByDesc('from');
         $dublicateOptions = CaravanDates::dublicates()
             ->get()
             ->keyBy('caravan_id')
             ->sortByDesc('anzahl')
-            ->map(function($item) {
-                return "$item->carnumber";
-            })
-            ->prepend('Dublikat wählen', '')
-        ;
+            ->map(
+                function ($item) {
+                    return "$item->carnumber";
+                }
+            )
+            ->prepend('Dublikat wählen', '');
 
         $yearOptions = CaravanDates::selectRaw('YEAR(`from`) AS year')
             ->groupByRaw('year')
@@ -77,8 +77,7 @@ class AdminCaravanDatesController extends AdminController
             ->keyBy('year')
             ->map
             ->year
-            ->prepend('Jahr wählen', '')
-        ;
+            ->prepend('Jahr wählen', '');
 
         $monthOptions = CaravanDates::selectRaw('MONTH(`from`) AS number, MONTHNAME(`from`) AS monthname')
             ->groupByRaw('number')
@@ -86,25 +85,26 @@ class AdminCaravanDatesController extends AdminController
             ->keyBy('number')
             ->map
             ->monthname
-            ->prepend('Monat wählen', '')
-        ;
+            ->prepend('Monat wählen', '');
         $data = $query
             ->caravanByDates($caravanId ?? $dublicatéId)
-            ->fromYearMonth($year, $month)
-        ;
+            ->fromYearMonth($year, $month);
 
         /**
          * @var $priceTotal \Illuminate\Database\Eloquent\Collection
          */
         $priceTotal = $data->get();
-        $priceTotal = $priceTotal->sum(function ($item) {
-            return $item->price;
-        });
+        $priceTotal = $priceTotal->sum(
+            function ($item) {
+                return $item->price;
+            }
+        );
 
         $paginated = $data->paginate($this->paginatorLimit);
         $queryString = $request->only(['caravan','dublicate','year', 'month']);
 
-        return view('admin.caravanDates.index', [
+        return view(
+            'admin.caravanDates.index', [
             'data'              => $paginated,
             'years'             => $this->years,
             'monthsByYear'      => $this->monthsByYear,
@@ -118,13 +118,14 @@ class AdminCaravanDatesController extends AdminController
             'year'              => $year,
             'month'             => $month,
             'queryString'       => $queryString,
-        ]);
+            ]
+        );
     }
 
     /**
      * Display the specified resource.
      *
-     * @param CaravanDates $caravanDate
+     * @param  CaravanDates $caravanDate
      * @return Response
      */
     public function show(CaravanDates $caravanDate)
@@ -140,16 +141,18 @@ class AdminCaravanDatesController extends AdminController
      */
     public function create()
     {
-        return view('admin.caravanDates.create', [
+        return view(
+            'admin.caravanDates.create', [
             'caravanOptions' => $this->caravanRepository->options('carnumber')->getSelectOptionsData()->toJson(),
             'countries' => $this->countryRepository->options('de')->getSelectOptions(),
-        ]);
+            ]
+        );
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param  Request $request
      * @return Response
      */
     public function store(Request $request)
@@ -171,14 +174,14 @@ class AdminCaravanDatesController extends AdminController
         $validated  = collect($validator->validated())->except(['country_id','carnumber','carlength','email'])->toArray();
         $caravanDate = $caravan->dates()->create($validated);
 
-//        return back()->with(['success' => "Caravan-Eintrag mit ID: $caravanDate->id erfolgreich angelegt"]);
+        //        return back()->with(['success' => "Caravan-Eintrag mit ID: $caravanDate->id erfolgreich angelegt"]);
         return $this->show($caravanDate);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param CaravanDates $caravanDate
+     * @param  CaravanDates $caravanDate
      * @return Response
      */
     public function edit(CaravanDates $caravanDate)
@@ -187,14 +190,14 @@ class AdminCaravanDatesController extends AdminController
         $countries = $this->countryRepository->options('de')->getSelectOptions();
         $caravanOptions = $this->caravanRepository->options('carnumber')->getSelectOptionsData()->toJson();
 
-        return view('admin.caravanDates.edit', compact('caravanDate','caravanOptions', 'countries'));
+        return view('admin.caravanDates.edit', compact('caravanDate', 'caravanOptions', 'countries'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param CaravanDatesRequest $request
-     * @param CaravanDates $caravanDate
+     * @param  CaravanDatesRequest $request
+     * @param  CaravanDates        $caravanDate
      * @return Response
      */
     public function update(CaravanDatesRequest $request, CaravanDates $caravanDate)
@@ -214,7 +217,7 @@ class AdminCaravanDatesController extends AdminController
     /**
      * Remove the specified resource from storage.
      *
-     * @param CaravanDates $caravanDate
+     * @param  CaravanDates $caravanDate
      * @return Response
      */
     public function destroy(CaravanDates $caravanDate)
@@ -238,7 +241,7 @@ class AdminCaravanDatesController extends AdminController
                 Mail::send(new SendExcel($email, $export, $fullPath));
             }
             unlink($fullPath);
-//            return response()->json(['success' => true, 'error' => null]);
+            //            return response()->json(['success' => true, 'error' => null]);
             return back()->with(['success' => 'Excel-Datei erfolgreich versand!']);
         } catch (Exception $e) {
             return back()->withErrors(['error' => 'Excel-Datei konnte nicht versand werden!']);

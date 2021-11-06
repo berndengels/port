@@ -9,7 +9,7 @@ trait Filter
     {
         if(request()->has($name)) {
             $value = request()->input($name);
-            $builder->where($name,'like', '%'.$value.'%');
+            $builder->where($name, 'like', '%'.$value.'%');
         }
         return $builder;
     }

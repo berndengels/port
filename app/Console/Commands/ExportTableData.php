@@ -80,8 +80,7 @@ class ExportTableData extends GeneratorCommand
         $stub = $this->buildClass($this->dataClass);
         $this
             ->replaceDataBlock($stub, $data)
-            ->replaceNamespace($stub, $this->path)
-        ;
+            ->replaceNamespace($stub, $this->path);
         $this->files->put($path, $stub);
         $this->info($this->type.' created successfully.');
         $this->line("<info>Created Data class :</info> $this->dataClass");

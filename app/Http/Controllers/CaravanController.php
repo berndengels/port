@@ -26,7 +26,7 @@ class CaravanController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param Caravan $caravan
+     * @param  Caravan $caravan
      * @return Response
      */
     public function show(Caravan $caravan)

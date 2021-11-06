@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\DB;
  * @method static Builder|BaseModel newModelQuery()
  * @method static Builder|BaseModel newQuery()
  * @method static Builder|BaseModel query()
- * @mixin Eloquent
+ * @mixin  Eloquent
  */
 class BaseModel extends Model
 {
@@ -23,14 +23,15 @@ class BaseModel extends Model
         parent::__construct($attributes);
         // For unit tests
         switch(config('app.env')) {
-            case 'testing':
-                $this->setConnection('testing');
-                break;
-            case 'demo':
-            case 'dusk.local':
-                $this->setConnection('demo');
-                break;
-            default:
-                $this->setConnection('mysql');
+        case 'testing':
+            $this->setConnection('testing');
+            break;
+        case 'demo':
+        case 'dusk.local':
+            $this->setConnection('demo');
+            break;
+        default:
+            $this->setConnection('mysql');
         }
-    }}
+    }
+}

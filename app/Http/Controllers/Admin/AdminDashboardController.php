@@ -14,19 +14,23 @@ class AdminDashboardController extends AdminController
         $today = Carbon::today()->format('Y-m-d');
         $data = CaravanDates::with('caravan')
             ->whereRaw('DATE(?) BETWEEN `from` AND `until`', [$today])
-            ->get()
-        ;
+            ->get();
         if($data->count() > 0) {
-            $this->caravansFromToday = $data->map(function($item) {
-                return $item->caravan->carnumber;
-            })->sort();
+            $this->caravansFromToday = $data->map(
+                function ($item) {
+                    return $item->caravan->carnumber;
+                }
+            )->sort();
         }
     }
 
-    public function show() {
-        return view('admin.dashboard', [
+    public function show()
+    {
+        return view(
+            'admin.dashboard', [
             'map'   => config('port.map'),
             'caravansFromToday' => $this->caravansFromToday,
-        ]);
+            ]
+        );
     }
 }

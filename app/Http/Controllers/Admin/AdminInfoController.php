@@ -16,17 +16,19 @@ class AdminInfoController extends AdminController
          * @var $route \Illuminate\Routing\Route
          */
         foreach(Route::getRoutes() as $route) {
-            if( !preg_match($this->pregRoutesExcept, $route->uri) ) {
+            if(!preg_match($this->pregRoutesExcept, $route->uri) ) {
                 $data->push($route);
             }
         }
 
         if($routeName) {
-            $data = $data->filter(function($item) use ($routeName) {
-                return (isset($item->action['as']) && false !== stristr($item->action['as'], $routeName));
-            });
+            $data = $data->filter(
+                function ($item) use ($routeName) {
+                    return (isset($item->action['as']) && false !== stristr($item->action['as'], $routeName));
+                }
+            );
         }
-        return view('admin.infos.routes', compact('data','routeName'));
+        return view('admin.infos.routes', compact('data', 'routeName'));
     }
 
     public function phpinfo()
