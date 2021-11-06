@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Notification;
-use Illuminate\Auth\Notifications\ResetPassword;
+use App\Notifications\AdminResetPassword;
 
 class AdminUserPasswordResetTest extends TestCase
 {
@@ -72,12 +72,12 @@ class AdminUserPasswordResetTest extends TestCase
             ->assertSuccessful()
             ->assertSeeText(__('passwords.sent'))
         ;
-        Notification::assertSentTo($this->user, ResetPassword::class);
+        Notification::assertSentTo($this->user, AdminResetPassword::class);
     }
 
     public function testShowPasswordResetPage()
     {
-        $token = Password::broker()->createToken($this->user);
+        $token = Password::broker('admin_users')->createToken($this->user);
         $this
             ->get(route(self::ROUTE_PASSWORD_RESET, $token))
             ->assertSuccessful()
@@ -94,7 +94,7 @@ class AdminUserPasswordResetTest extends TestCase
      */
     public function testSubmitPasswordResetInvalidEmail()
     {
-        $token = Password::broker()->createToken($this->user);
+        $token = Password::broker('admin_users')->createToken($this->user);
         $password = Str::random();
         $params = [
             'token' => $token,
@@ -124,7 +124,7 @@ class AdminUserPasswordResetTest extends TestCase
      */
     public function testSubmitPasswordResetEmailNotFound()
     {
-        $token = Password::broker()->createToken($this->user);
+        $token = Password::broker('admin_users')->createToken($this->user);
         $password = Str::random();
         $params = [
             'token' => $token,
@@ -152,7 +152,7 @@ class AdminUserPasswordResetTest extends TestCase
      */
     public function testSubmitPasswordResetPasswordMismatch()
     {
-        $token = Password::broker()->createToken($this->user);
+        $token = Password::broker('admin_users')->createToken($this->user);
         $password = Str::random();
         $password_confirmation = Str::random();
         $params = [
@@ -183,7 +183,7 @@ class AdminUserPasswordResetTest extends TestCase
      */
     public function testSubmitPasswordResetPasswordTooShort()
     {
-        $token = Password::broker()->createToken($this->user);
+        $token = Password::broker('admin_users')->createToken($this->user);
         $password = Str::random(5);
         $params = [
             'token' => $token,
@@ -213,7 +213,7 @@ class AdminUserPasswordResetTest extends TestCase
      */
     public function testSubmitPasswordReset()
     {
-        $token = Password::broker()->createToken($this->user);
+        $token = Password::broker('admin_users')->createToken($this->user);
         $password = Str::random();
         $params = [
             'token' => $token,
@@ -227,8 +227,8 @@ class AdminUserPasswordResetTest extends TestCase
             ->assertSuccessful()
         ;
 
-//        $this->user->refresh();
-//        $this->assertAuthenticatedAs($this->user);
+        $this->user->refresh();
+        $this->assertAuthenticatedAs($this->user);
         $this->assertFalse(Hash::check('password', $this->user->password));
         $this->assertTrue(Hash::check($password, $this->user->password));
     }

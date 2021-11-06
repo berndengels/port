@@ -1,11 +1,9 @@
 <?php
 namespace Tests\Browser;
 
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Password;
-use Illuminate\Support\Str;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
+use Illuminate\Support\Facades\Password;
 
 class AdminResetPasswordTest extends DuskTestCase
 {
