@@ -20,7 +20,7 @@ class AdminPriceController extends AdminController
     /**
      * Calculate caravan price.
      *
-     * @param Request $request
+     * @param  Request $request
      * @return Response
      */
     public function calculateCaravanDates(Request $request)
@@ -41,7 +41,7 @@ class AdminPriceController extends AdminController
     /**
      * Calculate boat dates price.
      *
-     * @param Request $request
+     * @param  Request $request
      * @return Response
      */
     public function calculateBoatDates(Request $request)
@@ -64,7 +64,7 @@ class AdminPriceController extends AdminController
     /**
      * Calculate boat dates price.
      *
-     * @param Request $request
+     * @param  Request $request
      * @return Response
      */
     public function calculateGuestBoatDates(Request $request)
@@ -93,9 +93,8 @@ class AdminPriceController extends AdminController
     public function pdf(Carbon $from)
     {
         $data = CaravanDates::with('caravan')
-            ->whereDate('from','>=', $from)
+            ->whereDate('from', '>=', $from)
             ->orderBy('from')
-            ->get()
-        ;
+            ->get();
     }
 }

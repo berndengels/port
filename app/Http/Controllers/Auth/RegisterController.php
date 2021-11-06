@@ -52,22 +52,25 @@ class RegisterController extends Controller
 
     public function showRegistrationForm()
     {
-        return view('auth.register', [
+        return view(
+            'auth.register', [
             'boatTypes' => config('port.main.boat.types'),
             'customerTypes' => config('port.main.customer.types'),
-        ]);
+            ]
+        );
     }
 
 
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
+        return Validator::make(
+            $data, [
             'name' => ['required', 'string', 'max:50'],
             'email' => ['required', 'string', 'email', 'max:50', 'unique:customers'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
@@ -89,18 +92,20 @@ class RegisterController extends Controller
             'length_keel'       => '',
 
             'captcha' => 'required|captcha',
-        ]);
+            ]
+        );
     }
 
     /**
      * Create a new customer instance after a valid registration.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return Customer
      */
     protected function create(array $data)
     {
-        $customer = Customer::create([
+        $customer = Customer::create(
+            [
             'name'      => $data['name'],
             'email'     => $data['email'],
             'password'  => Hash::make($data['password']),
@@ -108,7 +113,8 @@ class RegisterController extends Controller
             'city'      => $data['city'],
             'postcode'  => $data['postcode'],
             'street'    => $data['street'],
-        ]);
+            ]
+        );
         return $customer;
     }
 }

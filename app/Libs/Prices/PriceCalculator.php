@@ -36,12 +36,14 @@ abstract class PriceCalculator
         static::$daysCount      = static::$_datePeriod ? iterator_count(static::$_datePeriod) : 0;
     }
 
-    public function add(Price $price): self {
+    public function add(Price $price): self
+    {
         static::$total += (float) $price->getValue();
         return $this;
     }
 
-    public function set(Price $price): self {
+    public function set(Price $price): self
+    {
         $value = $price->getValue();
         if($value > 0) {
             static::$total = (float) $value;

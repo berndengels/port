@@ -15,7 +15,7 @@ class NavionicsMap extends Map
     }
 
     /**
-     * @param string $token
+     * @param  string $token
      * @return NavionicsMap
      */
     public function setToken(string $token): NavionicsMap

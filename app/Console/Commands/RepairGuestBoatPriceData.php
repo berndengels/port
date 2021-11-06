@@ -43,9 +43,11 @@ class RepairGuestBoatPriceData extends RepairPriceData
         if ($this->confirm('Do you wish to continue?', true)) {
             $this->data = BoatGuestDates::all();
             if($this->data && $this->data->count() > 0) {
-                $this->withProgressBar($this->data, function ($item) {
-                    $this->sanitizer->sanitize($item);
-                });
+                $this->withProgressBar(
+                    $this->data, function ($item) {
+                        $this->sanitizer->sanitize($item);
+                    }
+                );
                 echo Emoji::okHand();
                 return 0;
             } else {

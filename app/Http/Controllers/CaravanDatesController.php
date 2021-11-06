@@ -48,12 +48,14 @@ class CaravanDatesController extends Controller
     public function index(Request $request)
     {
 
-        return view('caravanDates.index', [
+        return view(
+            'caravanDates.index', [
             'years'         => $this->years,
             'monthsByYear'  => $this->monthsByYear,
             'create_url'    => URL::route('caravanDates.create'),
             'caravans'      => $this->caravans,
-        ]);
+            ]
+        );
     }
 
     /**
@@ -63,16 +65,18 @@ class CaravanDatesController extends Controller
      */
     public function create()
     {
-        return Inertia::render('CaravanDates/create', [
+        return Inertia::render(
+            'CaravanDates/create', [
             'caravans' => $this->caravans,
             'countries' => $this->countries,
-        ]);
+            ]
+        );
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param  Request $request
      * @return Response
      */
     public function store(Request $request)
@@ -100,7 +104,7 @@ class CaravanDatesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param CaravanDates $caravanDate
+     * @param  CaravanDates $caravanDate
      * @return Response
      */
     public function edit(CaravanDates $caravanDate)
@@ -108,14 +112,14 @@ class CaravanDatesController extends Controller
         $countries = $this->countries;
         $caravans = $this->caravans;
         $caravanDate->load('caravan');
-        return view('caravanDates.edit', compact('caravanDate','caravans', 'countries'));
+        return view('caravanDates.edit', compact('caravanDate', 'caravans', 'countries'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param CaravanDatesRequest $request
-     * @param CaravanDates $caravanDate
+     * @param  CaravanDatesRequest $request
+     * @param  CaravanDates        $caravanDate
      * @return Response
      */
     public function update(CaravanDatesRequest $request, CaravanDates $caravanDate)
@@ -133,7 +137,7 @@ class CaravanDatesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param CaravanDates $caravanDate
+     * @param  CaravanDates $caravanDate
      * @return Response
      */
     public function destroy(CaravanDates $caravanDate)

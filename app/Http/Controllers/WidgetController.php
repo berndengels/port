@@ -21,7 +21,7 @@ class WidgetController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param Widget $widget
+     * @param  Widget $widget
      * @return Response
      */
     public function show(Widget $widget)
@@ -42,7 +42,7 @@ class WidgetController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param  Request $request
      * @return Response
      */
     public function store(Request $request)
@@ -53,7 +53,7 @@ class WidgetController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Widget $widget
+     * @param  Widget $widget
      * @return Response
      */
     public function edit(Widget $widget)
@@ -64,8 +64,8 @@ class WidgetController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
-     * @param Widget $widget
+     * @param  Request $request
+     * @param  Widget  $widget
      * @return Response
      */
     public function update(Request $request, Widget $widget)
@@ -76,7 +76,7 @@ class WidgetController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param Widget $widget
+     * @param  Widget $widget
      * @return Response
      */
     public function destroy(Widget $widget)

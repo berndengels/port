@@ -22,7 +22,7 @@ class BoatRequest extends AdminRequest
     protected function prepareForValidation()
     {
         foreach($this->floats as $item) {
-            $this->$item = str_replace(',','.', $item);
+            $this->$item = str_replace(',', '.', $item);
         }
     }
 

@@ -15,7 +15,8 @@ class Widget extends Component
     public function __construct(
         public string $title,
         public string $content
-    ) {}
+    ) {
+    }
 
     /**
      * Get the view / contents that represent the component.

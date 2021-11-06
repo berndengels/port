@@ -30,7 +30,7 @@ class Persons extends Main implements IDailyPrice
     }
 
     /**
-     * @param int $persons
+     * @param  int $persons
      * @return Persons
      */
     public function setPersons(int $persons): Persons

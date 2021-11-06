@@ -31,7 +31,7 @@ class CustomerLoginController extends DefaultLoginController
     /**
      * Login the customer.
      *
-     * @param Request $request
+     * @param  Request $request
      * @return RedirectResponse
      */
     public function login(Request $request)
@@ -39,7 +39,7 @@ class CustomerLoginController extends DefaultLoginController
         $this->validateLogin($request);
 
         //check if the user has too many login attempts.
-        if ($this->hasTooManyLoginAttempts($request)){
+        if ($this->hasTooManyLoginAttempts($request)) {
             //Fire the lockout event.
             $this->fireLockoutEvent($request);
 
@@ -49,12 +49,14 @@ class CustomerLoginController extends DefaultLoginController
 
         //attempt login.
         if(Auth::guard('customer')->attempt(
-            $request->only('email','password'),
-            $request->filled('remember'))) {
+            $request->only('email', 'password'),
+            $request->filled('remember')
+        )
+        ) {
             //Authenticated
             return redirect()
                 ->intended(route('public.dashboard'))
-                ->with('status','You are Logged in as Customer!');
+                ->with('status', 'You are Logged in as Customer!');
         }
 
         //keep track of login attempts from the user.

@@ -22,10 +22,11 @@ class AdminMainNavigation extends Component
          */
         $user = auth('admin')->user();
         $items = collect(config('port.menu.admin.items'))
-            ->filter(function ($item) use ($user) {
-                return (!isset($item['permissions']) || (isset($item['permissions']) && $user->can($item['permissions'])));
-            })
-        ;
+            ->filter(
+                function ($item) use ($user) {
+                    return (!isset($item['permissions']) || (isset($item['permissions']) && $user->can($item['permissions'])));
+                }
+            );
 
         $this->items = $items;
     }

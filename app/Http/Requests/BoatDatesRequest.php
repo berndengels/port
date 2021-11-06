@@ -9,6 +9,7 @@ class BoatDatesRequest extends AdminRequest
 
     /**
      * Determine if the user is authorized to make this request.
+     *
      * @return bool
      */
     public function authorize()
@@ -18,11 +19,13 @@ class BoatDatesRequest extends AdminRequest
 
     public function validationData()
     {
-        return array_merge($this->all(), [
+        return array_merge(
+            $this->all(), [
             'crane'         => !!$this->post('crane') ?? false,
             'mast_crane'    => !!$this->post('mast_crane') ?? false,
             'cleaning'      => !!$this->post('cleaning') ?? false,
-        ]);
+            ]
+        );
     }
 
     /**

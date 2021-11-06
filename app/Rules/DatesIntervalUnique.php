@@ -27,7 +27,7 @@ class DatesIntervalUnique implements Rule
     /**
      * Determine if the validation rule passes.
      *
-     * @param  string  $attribute
+     * @param  string $attribute
      * @param  mixed  $value
      * @return bool
      */
@@ -38,15 +38,16 @@ SELECT * FROM `caravan_dates`
 WHERE `caravan_id` = ?
 AND (DATE(?) BETWEEN `from` AND `until` OR DATE(?) BETWEEN `from` AND `until`)
 SQL;
-//        $this->existing = DB::select(DB::raw($sql), [$this->caravan->id, request('from'), $value]);
+        //        $this->existing = DB::select(DB::raw($sql), [$this->caravan->id, request('from'), $value]);
         $this->existing = CaravanDates::with(['caravan'])
-            ->whereRaw('caravan_id = ? AND (DATE(?) BETWEEN `from` AND `until` OR DATE(?) BETWEEN `from` AND `until`)', [
+            ->whereRaw(
+                'caravan_id = ? AND (DATE(?) BETWEEN `from` AND `until` OR DATE(?) BETWEEN `from` AND `until`)', [
                 $this->caravan->id,
                 request('from'),
                 $value
-            ])
-            ->get()
-        ;
+                ]
+            )
+            ->get();
         if($this->existing->count() > 0) {
             return false;
         }
@@ -60,13 +61,15 @@ SQL;
      */
     public function message()
     {
-        $msg = $this->existing->map(function($item){
-            $carnumber  = $item->caravan->carnumber;
-            $from       = $item->from->format('d.m.Y');
-            $until      = $item->until->format('d.m.Y');
-            $url        = route('admin.caravanDates.edit', ['caravanDate' => $item->id]);
-            return "<li><a class='btn btn-red mt-3' href='$url'>$carnumber: $from bis $until</a></li>";
-        })->toArray();
+        $msg = $this->existing->map(
+            function ($item) {
+                $carnumber  = $item->caravan->carnumber;
+                $from       = $item->from->format('d.m.Y');
+                $until      = $item->until->format('d.m.Y');
+                $url        = route('admin.caravanDates.edit', ['caravanDate' => $item->id]);
+                return "<li><a class='btn btn-red mt-3' href='$url'>$carnumber: $from bis $until</a></li>";
+            }
+        )->toArray();
         $msg = implode('', $msg);
         return "Es existieren schon ein Einträge für diesen Zeitraum: <br><ul>$msg</ul>";
     }

@@ -25,7 +25,7 @@ class Individual extends Main implements IPrice
     }
 
     /**
-     * @param int|float $individualPrice
+     * @param  int|float $individualPrice
      * @return Individual
      */
     public function setIndividualPrice($individualPrice): Individual

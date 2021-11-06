@@ -22,9 +22,11 @@ class AdminPermissionController extends AdminController
     public function __construct()
     {
         $this->actions = Permission::actions();
-        $this->models = ModelHelper::allModels()->keys()->keyBy(function($v){
-            return $v;
-        });
+        $this->models = ModelHelper::allModels()->keys()->keyBy(
+            function ($v) {
+                return $v;
+            }
+        );
     }
 
     /**
@@ -41,7 +43,7 @@ class AdminPermissionController extends AdminController
     /**
      * Display the specified resource.
      *
-     * @param Permission $permission
+     * @param  Permission $permission
      * @return Response
      */
     public function show(Permission $permission)
@@ -56,16 +58,18 @@ class AdminPermissionController extends AdminController
      */
     public function create()
     {
-        return view('admin.permissions.create', [
+        return view(
+            'admin.permissions.create', [
             'models'    => $this->models,
             'actions'   => $this->actions,
-        ]);
+            ]
+        );
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param PermissionRequest $request
+     * @param  PermissionRequest $request
      * @return Response
      */
     public function store(PermissionRequest $request)
@@ -81,21 +85,21 @@ class AdminPermissionController extends AdminController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Permission $permission
+     * @param  Permission $permission
      * @return Response
      */
     public function edit(Permission $permission)
     {
         $models = $this->models;
         $actions = $this->actions;
-        return view('admin.permissions.edit', compact('permission','models','actions'));
+        return view('admin.permissions.edit', compact('permission', 'models', 'actions'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param PermissionRequest $request
-     * @param Permission $permission
+     * @param  PermissionRequest $request
+     * @param  Permission        $permission
      * @return Response
      */
     public function update(PermissionRequest $request, Permission $permission)
@@ -111,7 +115,7 @@ class AdminPermissionController extends AdminController
     /**
      * Remove the specified resource from storage.
      *
-     * @param Permission $permission
+     * @param  Permission $permission
      * @return Response
      */
     public function destroy(Permission $permission)

@@ -12,8 +12,7 @@ class Base extends Main implements IDailyPrice
         protected string $modus,
         protected int $length,
         protected int $width
-    )
-    {
+    ) {
         $this->initConfig();
         $this->defaultSaisonPrice   = round($this->priceSaisonFactor * $this->length * $this->width);
         $this->defaultWinterPrice   = round($this->priceWinterFactor * $this->length * $this->width);
@@ -26,12 +25,12 @@ class Base extends Main implements IDailyPrice
         $until  = $days->getEndDate();
 
         switch($this->modus) {
-            case 'saison':
-                return $this->getSaisonPrice($from, $until);
-            case 'winter':
-                return $this->getWinterPrice($from, $until);
-            default:
-                return new Price();
+        case 'saison':
+            return $this->getSaisonPrice($from, $until);
+        case 'winter':
+            return $this->getWinterPrice($from, $until);
+        default:
+            return new Price();
         }
     }
 

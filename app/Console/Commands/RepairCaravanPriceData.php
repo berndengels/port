@@ -42,9 +42,11 @@ class RepairCaravanPriceData extends RepairPriceData
         $this->data = CaravanDates::all();
         if ($this->confirm('Do you wish to continue?', true)) {
             if($this->data && $this->data->count() > 0) {
-                $this->withProgressBar($this->data, function ($item) {
-                    $this->sanitizer->sanitize($item);
-                });
+                $this->withProgressBar(
+                    $this->data, function ($item) {
+                        $this->sanitizer->sanitize($item);
+                    }
+                );
                 $this->newLine();
                 $this->info(' OK ' . Emoji::okHand());
                 return 0;

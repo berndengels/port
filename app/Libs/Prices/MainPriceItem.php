@@ -14,7 +14,7 @@ class MainPriceItem
     }
 
     /**
-     * @param int $daysCount
+     * @param  int $daysCount
      * @return MainPriceItem
      */
     public function setDaysCount(int $daysCount): MainPriceItem

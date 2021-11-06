@@ -9,8 +9,7 @@ class Crane extends Main implements IPrice
     public function __construct(
         protected bool $useCrane,
         protected int $weight
-    )
-    {
+    ) {
         $this->initConfig();
     }
 

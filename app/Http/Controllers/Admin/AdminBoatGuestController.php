@@ -22,7 +22,7 @@ class AdminBoatGuestController extends AdminController
     /**
      * Display the specified resource.
      *
-     * @param BoatGuest $boatGuest
+     * @param  BoatGuest $boatGuest
      * @return Response
      */
     public function show(BoatGuest $boatGuest)
@@ -43,7 +43,7 @@ class AdminBoatGuestController extends AdminController
     /**
      * Store a newly created resource in storage.
      *
-     * @param BoatGuestRequest $request
+     * @param  BoatGuestRequest $request
      * @return Response
      */
     public function store(BoatGuestRequest $request)
@@ -60,7 +60,7 @@ class AdminBoatGuestController extends AdminController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param BoatGuest $boatGuest
+     * @param  BoatGuest $boatGuest
      * @return Response
      */
     public function edit(BoatGuest $boatGuest)
@@ -71,8 +71,8 @@ class AdminBoatGuestController extends AdminController
     /**
      * Update the specified resource in storage.
      *
-     * @param BoatGuestRequest $request
-     * @param BoatGuest $boatGuest
+     * @param  BoatGuestRequest $request
+     * @param  BoatGuest        $boatGuest
      * @return Response
      */
     public function update(BoatGuestRequest $request, BoatGuest $boatGuest)
@@ -89,7 +89,7 @@ class AdminBoatGuestController extends AdminController
     /**
      * Remove the specified resource from storage.
      *
-     * @param BoatGuest $boatGuest
+     * @param  BoatGuest $boatGuest
      * @return Response
      */
     public function destroy(BoatGuest $boatGuest)

@@ -9,7 +9,8 @@ class RouteController extends Controller
 {
     protected $route;
 
-    public function setCurrentMenu($currentRouteName, Request $request) {
+    public function setCurrentMenu($currentRouteName, Request $request)
+    {
         $currentRoutes  = collect(config('port.menu.public.items.'.$currentRouteName));
         $this->route    = (!$this->route && isset($this->currentRoutes['items']) && count($this->currentRoutes['items']) && isset($this->currentRoutes['items'][0]['route'])) ? $this->currentRoutes['items'][0]['route'] : null;
 

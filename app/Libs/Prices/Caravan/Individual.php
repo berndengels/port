@@ -25,7 +25,7 @@ class Individual extends Main implements IPrice
     }
 
     /**
-     * @param DatePeriod $individualPrice
+     * @param  DatePeriod $individualPrice
      * @return Individual
      */
     public function setIndividualPrice($individualPrice): Individual

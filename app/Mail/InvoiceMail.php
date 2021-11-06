@@ -66,11 +66,13 @@ class InvoiceMail extends Mailable
         } else {
             $view = 'boat-guest-invoice';
         }
-        return $this->markdown('markdown/' . $view, [
+        return $this->markdown(
+            'markdown/' . $view, [
             'data'      => $this->data,
             'customer'  => $this->customer,
             'prices'    => $prices,
             'modus'     => config('port.main.boat.dates.modi')[$this->data->modus],
-        ]);
+            ]
+        );
     }
 }

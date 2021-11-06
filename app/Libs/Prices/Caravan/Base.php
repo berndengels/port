@@ -44,7 +44,7 @@ class Base extends Main implements IDailyPrice
     }
 
     /**
-     * @param int $carLength
+     * @param  int $carLength
      * @return Base
      */
     public function setCarLength(int $carLength): Base

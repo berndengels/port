@@ -17,7 +17,7 @@ class BoatGuestPrice extends PriceCalculator
     public function getPrice(Request $request): array
     {
         $length             = (int) $request->post('length', 0);
-        $individualPrice    = (int) $request->post('day_price', 0) ;
+        $individualPrice    = (int) $request->post('day_price', 0);
 
         $base       = new Base($length);
         $individual = new Individual($individualPrice);
@@ -30,8 +30,7 @@ class BoatGuestPrice extends PriceCalculator
 
         $price = $this
             ->add(static::$priceBase)
-            ->set(static::$priceIndividual)
-        ;
+            ->set(static::$priceIndividual);
         return $price->formatResult();
     }
 }

@@ -24,23 +24,25 @@ class AdminCaravanController extends AdminController
 
         $data = Caravan::orderBy('carnumber')
             ->caravan($caravanId)
-            ->paginate(config('port.main.default.pagination.limit'))
-        ;
+            ->paginate(config('port.main.default.pagination.limit'));
 
-        return view('admin.caravans.index', [
+        return view(
+            'admin.caravans.index', [
             'caravanOptions' => $this->caravanRepository->options('carnumber')->getSelectOptions(),
             'data'  => $data,
             'id'    => $caravanId,
-        ]);
+            ]
+        );
     }
 
     /**
      * Display the specified resource.
      *
-     * @param Caravan $caravan
+     * @param  Caravan $caravan
      * @return Response
      */
-    public function show(Caravan $caravan) {
+    public function show(Caravan $caravan)
+    {
         // @todo: show caravanDates and price data, sum prices
         return view('admin.caravans.show', compact('caravan'));
     }
@@ -52,15 +54,17 @@ class AdminCaravanController extends AdminController
      */
     public function create()
     {
-        return view('admin.caravans.create', [
+        return view(
+            'admin.caravans.create', [
             'countries' => $this->countryRepository->options('de')->getSelectOptions(),
-        ]);
+            ]
+        );
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param  Request $request
      * @return Response
      */
     public function store(CaravanRequest $request)
@@ -72,20 +76,20 @@ class AdminCaravanController extends AdminController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Caravan $caravan
+     * @param  Caravan $caravan
      * @return Response
      */
     public function edit(Caravan $caravan)
     {
         $countries = $this->countryRepository->options('de')->getSelectOptions();
-        return view('admin.caravans.edit', compact('caravan','countries'));
+        return view('admin.caravans.edit', compact('caravan', 'countries'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param CaravanRequest $request
-     * @param Caravan $caravan
+     * @param  CaravanRequest $request
+     * @param  Caravan        $caravan
      * @return Response
      */
     public function update(CaravanRequest $request, Caravan $caravan)
@@ -97,7 +101,7 @@ class AdminCaravanController extends AdminController
     /**
      * Remove the specified resource from storage.
      *
-     * @param Caravan $caravan
+     * @param  Caravan $caravan
      * @return Response
      */
     public function destroy(Caravan $caravan)

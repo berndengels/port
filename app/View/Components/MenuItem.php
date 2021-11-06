@@ -18,7 +18,9 @@ class MenuItem extends Component
         public $item = null,
         public $icon = null,
         public $route = null,
-        public $class = null) {}
+        public $class = null
+    ) {
+    }
 
     /**
      * Get the view / contents that represent the component.

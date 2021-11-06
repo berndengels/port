@@ -41,9 +41,10 @@ class SendExcel extends Mailable
             ->from(config('port.main.mail.sender.address'), config('port.main.mail.sender.name'))
             ->attach($this->file)
             ->subject("Caravan Rezeptions Daten")
-            ->markdown('email.excel', [
+            ->markdown(
+                'email.excel', [
                 'data' => $this->data
-            ])
-       ;
+                ]
+            );
     }
 }

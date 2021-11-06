@@ -32,7 +32,7 @@ class Electric extends Main implements IDailyPrice
     }
 
     /**
-     * @param bool $useElectric
+     * @param  bool $useElectric
      * @return Electric
      */
     public function setUseElectric(bool $useElectric): Electric
