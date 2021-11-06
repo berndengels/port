@@ -62,12 +62,21 @@ var msToBft = (ms) => {
 	return bft;
 }
 var display = (selector, data) => {
-	const $wrapper = $(selector),$div=$('<div>'),skipLabels=['Beschreibung','Bild','Datum'];
+	const
+		$weatherTitle = $('.weatherTitle'),
+		$wrapper = $(selector),
+		$div=$('<div>'),
+		skipLabels=['Name','Beschreibung','Bild','Datum']
+	;
+	$('.weatherTitle').append(" für "+ data.Name);
 	for(const [k,v] of Object.entries(data)) {
 		let $row = $div.clone().addClass(k.toLowerCase()),
 			$label = $div.clone().html(k),
 			$text = $div.clone().html(v)
 		;
+		if('Name' === k) {
+			continue;
+		}
 		if(-1 === $.inArray(k, skipLabels)) {
 			$row.append($label)
 		}
@@ -95,9 +104,10 @@ class Weather {
 					dateSunset  = new Date(r.sys.sunset * 1000)
 				;
 				const result = {
+					Name:                   r.name,
 					Bild:                   $img.attr({src: iconUrl}),
 					Beschreibung:           r.weather[0].description,
-					Temperatur:             Math.round(r.main.temp) + " ° Celsius",
+					Temperatur:             Math.round(r.main.temp) + "° Celsius",
 //					Datum:                  (new Date(r.dt * 1000)).toLocaleDateString(),
 					Sonnenaufgang:          dateSunrise.getHours() + ":" + zeroFill(dateSunrise.getMinutes()) + " Uhr",
 					Sonnenuntergang:        dateSunset.getHours() + ":" + zeroFill(dateSunset.getMinutes()) + " Uhr",

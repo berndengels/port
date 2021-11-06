@@ -28,3 +28,4 @@ yarn-error.log
 /public/froala-editor/
 /.env.dusk.local
 /.env.demo
+/.env.dusk.demo

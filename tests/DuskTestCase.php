@@ -90,7 +90,7 @@ abstract class DuskTestCase extends BaseTestCase
      */
     protected function hasHeadlessDisabled()
     {
-        return $_SERVER['DUSK_HEADLESS_DISABLED'] || $_ENV['DUSK_HEADLESS_DISABLED'];
+        return $_ENV['DUSK_HEADLESS_DISABLED'] ?? true;
     }
 
     protected function setUp(): void
