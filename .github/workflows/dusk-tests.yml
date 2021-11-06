@@ -28,16 +28,18 @@ jobs:
 #              run: php artisan db:seed --env=dusk.local
             - name: Install dusk
               run: php artisan dusk:install
+            - name: Install pest
+              run: php artisan pest:install
             - name: Upgrade Chrome Driver
               run: php artisan dusk:chrome-driver `/opt/google/chrome/chrome --version | cut -d " " -f3 | cut -d "." -f1`
             - name: Start Chrome Driver
               run: ./vendor/laravel/dusk/bin/chromedriver-linux &
             - name: Run Laravel Server
-              run: php artisan serve --env=dusk.local --no-reload &
+              run: php artisan serve --env=demo --no-reload &
             - name: Run Dusk Tests
               env:
                   APP_URL: "http://127.0.0.1:8000"
-              run: php artisan dusk --env=dusk.local
+              run: php artisan pest:dusk --env=demo
             - name: Upload Screenshots
               if: failure()
               uses: actions/upload-artifact@v2
