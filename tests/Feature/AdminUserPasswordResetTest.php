@@ -23,8 +23,8 @@ class AdminUserPasswordResetTest extends TestCase
     public function testShowPasswordResetRequestPage()
     {
         $this
-//            ->get(route(self::ROUTE_PASSWORD_REQUEST))
-            ->get('admin/password/reset')
+            ->get(route(self::ROUTE_PASSWORD_REQUEST))
+//            ->get('admin/password/reset')
             ->assertSuccessful()
             ->assertSeeText('Passwort zurücksetzen')
             ->assertSeeText('Email')
