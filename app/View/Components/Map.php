@@ -11,7 +11,8 @@ abstract class Map extends Component
     public $lat;
     public $lng;
     public $zoom;
-
+    protected $view;
+    protected $viewParams = [];
     /**
      * Create a new component instance.
      *
@@ -31,6 +32,6 @@ abstract class Map extends Component
      */
     function render()
     {
-        return view($this->view);
+        return view($this->view, $this->viewParams);
     }
 }
