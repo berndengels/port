@@ -23,7 +23,6 @@ use Intervention\Image\Image;
 
 abstract class DuskTestCase extends BaseTestCase
 {
-
     protected $dbConnectionName = 'demo';
     protected $useNotTearDown = false;
     public static $screenshotWidth 			= 1920;
@@ -85,13 +84,20 @@ abstract class DuskTestCase extends BaseTestCase
         }
     }
 
+    /**
+     * Determine whether the Dusk command has disabled headless mode.
+     * @return bool
+     */
+    protected function hasHeadlessDisabled()
+    {
+        return $_SERVER['DUSK_HEADLESS_DISABLED'] || $_ENV['DUSK_HEADLESS_DISABLED'];
+    }
+
     protected function setUp(): void
     {
         parent::setUp();
         $this->artisan('cache:clear');
         Cache::clear();
-//        $this->artisan('migrate:fresh --env=dusk.local');
-//        $this->artisan('db:seed --env=dusk.local');
         $this->artisan('snapshot:load --force db-test --env=demo');
         $this->user = AdminUser::on('demo')->whereEmail($this->dbConnectionName . '@test.com')->first();
         $this->customer = Customer::on('demo')->whereCustomerType('permanent')->first();
@@ -149,17 +155,6 @@ abstract class DuskTestCase extends BaseTestCase
         );
     }
 
-    /**
-     * Determine whether the Dusk command has disabled headless mode.
-     *
-     * @return bool
-     */
-    protected function hasHeadlessDisabled()
-    {
-        return isset($_SERVER['DUSK_HEADLESS_DISABLED']) ||
-               isset($_ENV['DUSK_HEADLESS_DISABLED']);
-    }
-
     protected function captureFailuresFor($browsers)
     {
         $browsers->each(function (Browser $browser, $key) {
@@ -202,9 +197,6 @@ abstract class DuskTestCase extends BaseTestCase
         }
     }
 
-    public function createSlide($functionName) {
-    }
-
     public function createJpegThumbnail( Image $img, $path ) {
         $file = $path.'/'.$img->filename.'.'.$img->extension;
         $img = StaticImage::make($img->basePath())
@@ -214,5 +206,4 @@ abstract class DuskTestCase extends BaseTestCase
         @chmod($file, 0666);
         return $img;
     }
-
 }
