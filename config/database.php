@@ -76,8 +76,11 @@ return [
         ],
         'testing' => [
             'driver'   => 'sqlite',
-            'database' => ':memory:',
+            'url' => env('DATABASE_URL'),
+//            'database' => ':memory:',
+            'database' => database_path() . '/testing.db',
             'prefix'   => '',
+            'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
 /*
             'driver' => 'mysql',
             'host' => env('DB_HOST_TEST', '127.0.0.1'),

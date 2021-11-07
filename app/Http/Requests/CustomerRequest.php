@@ -29,17 +29,22 @@ class CustomerRequest extends AdminRequest
      */
     public function rules()
     {
-        return [
+        $rules = [
             'name'              => 'required|min:3',
             'email'             => $this->getId() ? '' : 'nullable|email|unique:customers,email',
         //            'password'          => !$this->getId() ? 'required|alpha_num|between:6,20|confirmed' : 'sometimes|required|alpha_num|between:6,20|confirmed',
             'password'          => !$this->getId() ? 'required|alpha_num|between:6,20|confirmed' : 'nullable|alpha_num|between:6,20|required_if:confirmed,null',
             'customer_type'     => 'required',
-            'fon'               => '',
-            'street'            => '',
-            'postcode'          => '',
-            'city'              => '',
-            'confirmed'         => '',
+            'fon'               => 'required',
+            'city'              => 'required',
+            'postcode'          => 'required',
+            'street'            => 'required',
         ];
+
+        if(app()->environment(['production'])) {
+            $rules += ['captcha' => 'required|captcha'];
+        }
+
+        return $rules;
     }
 }

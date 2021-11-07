@@ -111,9 +111,9 @@ class AdminUser extends Authenticatable
      *
      * @var array
      */
-    protected $appends = ['rolesString'];
+    protected $appends = ['strRoles'];
 
-    public function getRolesStringAttribute()
+    public function getStrRolesAttribute()
     {
         return $this->roles->map->name->join(', ');
     }

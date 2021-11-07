@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Libs\AppCache;
 use Database\Factories\RoleFactory;
 use Eloquent;
 use App\Traits\Models\ClearCache;
@@ -42,6 +43,14 @@ class Role extends BaseModel
     use HasFactory, ClearCache;
 
     protected $appends = ['strRoles'];
+    protected static $cacheKeys = [
+        AppCache::KEY_OPTIONS_ADMIN_ROLE,
+        AppCache::KEY_OPTIONS_CUSTOMER_ROLE,
+        AppCache::KEY_OPTIONS_WEB_ROLE,
+        AppCache::KEY_OPTIONS_DATA_ADMIN_ROLE,
+        AppCache::KEY_OPTIONS_DATA_CUSTOMER_ROLE,
+        AppCache::KEY_OPTIONS_DATA_WEB_ROLE,
+    ];
 
     public function __construct(array $attributes = [])
     {

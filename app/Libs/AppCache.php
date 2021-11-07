@@ -19,6 +19,15 @@ class AppCache
     const KEY_OPTIONS_ROLE          = 'options.role';
     const KEY_OPTIONS_DATA_ROLE     = 'options.data.role';
 
+    const KEY_OPTIONS_ADMIN_ROLE        = 'options.admin.role';
+    const KEY_OPTIONS_DATA_ADMIN_ROLE   = 'options.data.admn.role';
+
+    const KEY_OPTIONS_WEB_ROLE      = 'options.web.role';
+    const KEY_OPTIONS_DATA_WEB_ROLE = 'options.data.web.role';
+
+    const KEY_OPTIONS_CUSTOMER_ROLE      = 'options.customer.role';
+    const KEY_OPTIONS_DATA_CUSTOMER_ROLE = 'options.data.customer.role';
+
     const KEY_OPTIONS_COUNTRY       = 'options.country';
     const KEY_OPTIONS_DATA_COUNTRY  = 'options.data.country';
 }

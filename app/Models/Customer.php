@@ -66,8 +66,8 @@ class Customer extends Authenticatable
     use HasFactory, HasRoles, Notifiable, CanResetPassword, ThrottlesLogins, Dispatchable, ClearCache;
 
     protected $table = 'customers';
-    protected $guard_name = 'web';
-    protected $appends = ['fonLink'];
+    protected $guard_name = 'customer';
+    protected $appends = ['fonLink','strRoles'];
     protected $guarded = ['id'];
     protected $hidden = ['password','remember_token'];
     public $timestamps = false;
@@ -83,5 +83,10 @@ class Customer extends Authenticatable
     public function boats()
     {
         return $this->hasMany(Boat::class);
+    }
+
+    public function getStrRolesAttribute()
+    {
+        return $this->roles->map->name->join(', ');
     }
 }

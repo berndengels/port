@@ -14,20 +14,17 @@ class RegisterMail extends Mailable
     use Queueable, SerializesModels;
 
     /**
-     * @var Customer
-     */
-    protected $customer;
-
-    /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(Customer $customer)
+    public function __construct(protected Customer $customer)
     {
-        //        $users = AdminUser::permission('confirm Registration')->get();
-        $users = AdminUser::role('admin')->get();
-        $this->customer = $customer;
+        // $users = AdminUser::permission('confirm Registration')->get();
+        $users = app()->environment(['local'])
+            ? AdminUser::whereEmail('engels@f50.de')->get()
+            : AdminUser::permission('confirm Registration')->get();
+
         foreach ($users as $user) {
             $this->to[] = [
                 'name'      => $user->name,
@@ -50,7 +47,7 @@ class RegisterMail extends Mailable
     {
         return $this->markdown(
             'markdown/register', [
-            'customer'  => $this->customer,
+            'customer' => $this->customer,
             ]
         );
     }

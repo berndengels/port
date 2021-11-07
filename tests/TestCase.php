@@ -1,6 +1,9 @@
 <?php
 namespace Tests;
 
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\DB;
 use Mockery;
 use Notification;
 use Carbon\Carbon;
@@ -29,7 +32,7 @@ abstract class TestCase extends BaseTestCase
      * @var Customer $customer
      */
     protected $customer;
-    protected $useNotTearDown = false;
+    protected $useNotTearDown = true;
     protected $followRedirects = true;
 
     protected function setUp(): void
@@ -37,8 +40,8 @@ abstract class TestCase extends BaseTestCase
         parent::setUp();
         Cache::clear();
         Notification::fake();
-        $this->artisan('migrate:fresh --drop-views --database=testing --env=testing --path=database/migrations/testing');
-        $this->artisan('db:seed --database=testing --env=testing');
+        $this->artisan('migrate:fresh --drop-views --env=testing --path=database/migrations/testing');
+        $this->artisan('db:seed --env=testing');
         $this
             ->createUser()
             ->createCustomer()
