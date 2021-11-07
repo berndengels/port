@@ -12,10 +12,12 @@ class RouteController extends Controller
     public function setCurrentMenu($currentRouteName, Request $request)
     {
         $currentRoutes  = collect(config('port.menu.public.items.'.$currentRouteName));
-        $this->route    = (!$this->route && isset($this->currentRoutes['items']) && count($this->currentRoutes['items']) && isset($this->currentRoutes['items'][0]['route'])) ? $this->currentRoutes['items'][0]['route'] : null;
 
-        if($this->route && Route::getRoutes()->hasNamedRoute($this->route)) {
-            $this->route = $this->route;
+        if(isset($currentRoutes['route'])) {
+            $this->route = $currentRoutes['route'];
+        }
+        elseif(isset($currentRoutes['items']) && count($currentRoutes['items']) > 0 && isset($currentRoutes['items'][0]['route'])) {
+            $this->route = $currentRoutes['items'][0]['route'];
         }
 
         $request->session()->put('currentName', $currentRouteName);

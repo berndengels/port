@@ -30,14 +30,18 @@ class HeaderNavigation extends Component
         $this->currentRouteName     = $this->currentRoute->getName();
         $this->subActions           = collect($this->subActions);
 
-        [$prefix, $controllerPrefix,] = explode('.', $this->currentRouteName);
-        $this->subRoutes[$this->currentTopRouteName] = collect([$this->currentTopRouteName]);
+        $arr = explode('.', $this->currentRouteName);
 
-        $subs = $this->subActions->map(fn($action) => "{$prefix}.{$controllerPrefix}.{$action}");
-        foreach($subs as $sub) {
-            $this->subRoutes[$this->currentTopRouteName]->push($sub);
+        if(count($arr) > 1) {
+            [$prefix, $controllerPrefix,] = $arr;
+            $this->subRoutes[$this->currentTopRouteName] = collect([$this->currentTopRouteName]);
+
+            $subs = $this->subActions->map(fn($action) => "{$prefix}.{$controllerPrefix}.{$action}");
+            foreach($subs as $sub) {
+                $this->subRoutes[$this->currentTopRouteName]->push($sub);
+            }
+            $this->subRoutes[$this->currentTopRouteName] = $this->subRoutes[$this->currentTopRouteName]->keyBy(fn($v) => $v);
         }
-        $this->subRoutes[$this->currentTopRouteName] = $this->subRoutes[$this->currentTopRouteName]->keyBy(fn($v) => $v);
     }
 
     /**

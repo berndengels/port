@@ -14,7 +14,7 @@ class AdminRouteController extends AdminController
 
     public function setCurrentMenu($currentRouteName, Request $request)
     {
-        $currentRoutes      = config('port.menu.admin.items.'.$currentRouteName);
+        $currentRoutes = config('port.menu.admin.items.'.$currentRouteName);
 
         if(isset($currentRoutes['route'])) {
             $this->route = $currentRoutes['route'];

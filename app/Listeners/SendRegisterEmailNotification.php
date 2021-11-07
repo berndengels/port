@@ -6,8 +6,6 @@ use App\Mail\RegisterMail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 
 class SendRegisterEmailNotification extends SendEmailVerificationNotification
 {

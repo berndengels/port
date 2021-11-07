@@ -23,9 +23,11 @@ use Intervention\Image\Image;
 
 abstract class DuskTestCase extends BaseTestCase
 {
+    protected $useHeadless = true;
     protected $dbConnectionName = 'demo';
     protected $useNotTearDown = false;
-    public static $screenshotWidth 			= 1920;
+    public static $screenshotWidth 			= 1200;
+    public static $screenshotHeight 		= 1600;
     public static $screenshotThumbWidth 	= 200;
     public static $screenshotCompression	= 60;
     /**
@@ -67,7 +69,6 @@ abstract class DuskTestCase extends BaseTestCase
     {
         $app = require __DIR__.'/../bootstrap/app.php';
         $app->make(Kernel::class)->bootstrap();
-        $app['config']->set('database.default', 'demo');
         return $app;
     }
 
@@ -82,15 +83,6 @@ abstract class DuskTestCase extends BaseTestCase
         if (! static::runningInSail()) {
             static::startChromeDriver();
         }
-    }
-
-    /**
-     * Determine whether the Dusk command has disabled headless mode.
-     * @return bool
-     */
-    protected function hasHeadlessDisabled()
-    {
-        return $_SERVER['DUSK_HEADLESS_DISABLED'] || $_ENV['DUSK_HEADLESS_DISABLED'];
     }
 
     protected function setUp(): void
@@ -136,10 +128,10 @@ abstract class DuskTestCase extends BaseTestCase
     protected function driver()
     {
         $options = (new ChromeOptions)->addArguments(collect([
-            '--window-size=1920,1600',
+            '--window-size=' . static::$screenshotWidth. ',' . static::$screenshotHeight,
             '--no-sandbox',
             '--ignore-certificate-errors',
-        ])->unless($this->hasHeadlessDisabled(), function ($items) {
+        ])->unless(! $this->useHeadless, function ($items) {
             return $items->merge([
                 '--disable-gpu',
                 '--headless',

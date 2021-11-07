@@ -2,17 +2,28 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Models\Customer;
+use Exception;
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Database\Eloquent\Concerns\HasEvents;
+use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Contracts\Auth\StatefulGuard;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Database\Eloquent\Concerns\HasEvents;
+use App\Http\Requests\RegistrationRequest;
 
+/**
+ *
+ */
 class RegisterController extends Controller
 {
     /*
@@ -45,76 +56,45 @@ class RegisterController extends Controller
         $this->middleware('guest:customer');
     }
 
+    /**
+     * @return Guard|StatefulGuard
+     */
     protected function guard()
     {
         return Auth::guard('customer');
     }
 
+    /**
+     * @return Application|Factory|View
+     */
     public function showRegistrationForm()
     {
         return view(
-            'auth.register', [
-            'boatTypes' => config('port.main.boat.types'),
+            'public.auth.register', [
+            'boatTypes' => collect(config('port.main.boat.types'))->prepend('Bitte wählen', null),
             'customerTypes' => config('port.main.customer.types'),
             ]
         );
     }
 
-
     /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array $data
-     * @return \Illuminate\Contracts\Validation\Validator
+     * @param RegistrationRequest $request
+     * @return Application|JsonResponse|RedirectResponse|Redirector|mixed
      */
-    protected function validator(array $data)
+    public function register(RegistrationRequest $request)
     {
-        return Validator::make(
-            $data, [
-            'name' => ['required', 'string', 'max:50'],
-            'email' => ['required', 'string', 'email', 'max:50', 'unique:customers'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'fon' => ['required'],
-            'city' => ['required'],
-            'postcode' => ['required'],
-            'street' => ['required'],
+        try {
+            $customer = Customer::create($request->validated());
+            $customer->boats()->create($request->validated());
 
-            'customer_type'     => '',
-            'boat_type'         => '',
-            'boat_name'         => '',
-            'length'            => '',
-            'width'             => '',
-            'weight'            => '',
-            'mast_length'       => '',
-            'mast_weight'       => '',
-            'draft'             => '',
-            'length_waterline'  => '',
-            'length_keel'       => '',
+            event(new Registered($customer));
+            $this->guard()->login($customer);
 
-            'captcha' => 'required|captcha',
-            ]
-        );
-    }
-
-    /**
-     * Create a new customer instance after a valid registration.
-     *
-     * @param  array $data
-     * @return Customer
-     */
-    protected function create(array $data)
-    {
-        $customer = Customer::create(
-            [
-            'name'      => $data['name'],
-            'email'     => $data['email'],
-            'password'  => Hash::make($data['password']),
-            'fon'       => $data['fon'],
-            'city'      => $data['city'],
-            'postcode'  => $data['postcode'],
-            'street'    => $data['street'],
-            ]
-        );
-        return $customer;
+            return $request->wantsJson()
+                ? new JsonResponse([], 201)
+                : redirect($this->redirectPath())->with('success',"Kunde '$customer->name' erfolgreich angelegt");
+        } catch(Exception $e) {
+            return redirect()->back()->with('error', 'Bei der Registrierung ist leider ein Fehler aufgetreten!');
+        }
     }
 }

@@ -2,7 +2,7 @@
 
 @section('main')
     <div class="w-full">
-        <h1 class="sm:mt-5 m-3 text-4xl">{{ __('Registrierung') }}</h1>
+        <h1 class="sm:mt-5 m-3 text-4xl">{{ __('Registrierung für Dauerlieger') }}</h1>
         <div class="flex w-full justify-center mb-5">
             <x-form class="w-full mx-3 md:w-1/2 register-form" method="POST" action="{{ route('register') }}">
                 <x-form-input name="name" label="Name" required placeholder="Name" />
@@ -18,18 +18,21 @@
                     <span class="text-2xl text-white">Bootsdaten</span>
                 </div>
 
-                <x-form-select name="customer_type" label="Typ" :options="$customerTypes" default="permanent" required />
-                <x-form-select name="boat_type" label="Typ" :options="$boatTypes" required />
+                <x-form-input type="hidden" name="customer_type" default="permanent" required />
+                <x-form-select id="boat_type" name="boat_type" label="Boots Typ" :options="$boatTypes" required />
+                <x-form-group class="sail hidden">
+                    <x-form-input name="mast_length" type="number" step="1" label="Mastlänge" placeholder="Mastlänge" />
+                    <x-form-input name="mast_weight" type="number" step="1" label="Mastgewicht in Kg" placeholder="Mastgewicht in Kilogramm" />
+                    <x-form-input name="length_keel" type="number" step="0.1" label="Kiellänge" placeholder="Kiellänge" />
+                </x-form-group>
                 <x-form-input name="boat_name" label="Boots Name" required  placeholder="Boots Name" />
                 <x-form-input name="length" type="number" step="0.1" label="Boots Länge" placeholder="Boots Länge" required />
                 <x-form-input name="width" type="number" step="0.1" label="Boots Breite" placeholder="Boots Breite" />
                 <x-form-input name="weight" type="number" step="100" label="Boots Gewicht in Kg" placeholder="Gewicht in Kilogramm" />
-                <x-form-input name="mast_length" type="number" step="1" label="Mastlänge" placeholder="Mastlänge" />
-                <x-form-input name="mast_weight" type="number" step="1" label="Mastgewicht in Kg" placeholder="Mastgewicht in Kilogramm" />
                 <x-form-input name="draft" type="number" step="0.1" label="Tiefgang" placeholder="Tiefgang" />
                 <x-form-input name="length_waterline" type="number" step="0.1" step="0.1" label="Länge Wasserlinie" placeholder="Länge Wasserlinie" />
-                <x-form-input name="length_keel" type="number" step="0.1" label="Kiellänge" placeholder="Kiellänge" />
 
+                @env('production')
                 <div class="form-group mt-4 mb-4">
                     <div class="captcha">
                         <span>{!! captcha_img('flat') !!}</span>
@@ -39,9 +42,10 @@
                     </div>
                 </div>
                 <x-form-input id="captcha" name="captcha" label="Enter Captcha" placeholder="Enter Captcha" />
+                @endenv
 
                 <x-form-submit class="btn btn-save h-10 mt-3 w-full md:w-1/2" icon="fas fa-sign-in-alt">
-                    Register
+                    {{ __('Register') }}
                 </x-form-submit>
             </x-form>
     </div>
@@ -50,6 +54,16 @@
 
 @push('inline-scripts')
     <script>
+        $('#boat_type').change(e => {
+			switch (e.target.value) {
+				case 'sail':
+					$('.sail').fadeIn()
+					break;
+				case 'motor':
+					$('.sail').fadeOut()
+					break;
+            }
+        });
         const reloadURL = "{{ route('public.reload.captcha') }}";
 		$('#reload').click(function () {
 			$.ajax({

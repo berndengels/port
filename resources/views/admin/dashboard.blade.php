@@ -3,7 +3,7 @@
 @section('main')
 <div class="flex-container-dashboard admin">
     <div class="flex-item-dashboard p-3 widget">
-        <div class="title">Wetter</div>
+        <div class="title weatherTitle">Wetter</div>
         <div class="content mt-2 weather"></div>
     </div>
     <x-open-sea-map />

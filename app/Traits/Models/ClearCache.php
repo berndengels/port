@@ -2,22 +2,30 @@
 
 namespace App\Traits\Models;
 
+use Illuminate\Support\Facades\Cache;
+
 trait ClearCache
 {
     public static function bootClearCache()
     {
-        /*
         self::created(function () {
-            ResponseCache::clear();
+            static::clearCache();
         });
 
         self::updated(function () {
-            ResponseCache::clear();
+            static::clearCache();
         });
 
         self::deleted(function () {
-            ResponseCache::clear();
+            static::clearCache();
         });
-        */
+    }
+
+    protected static function clearCache() {
+        if(isset(static::$cacheKeys) && count(static::$cacheKeys) > 0) {
+            foreach (static::$cacheKeys as $key) {
+                Cache::forget($key);
+            }
+        }
     }
 }
