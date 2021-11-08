@@ -4,7 +4,9 @@
     </div-->
     <header class="header">
         <div class="header__left">
-            <!--span class="text-lg text-red-700">{{-- DB::getDefaultConnection() --}}</span-->
+            @if(! app()->environment(['production']))
+                <span class="text-lg text-red-700">{{ DB::getDefaultConnection() }}</span>
+            @endif
             <x-header-navigation />
         </div>
         <div class="header__right">

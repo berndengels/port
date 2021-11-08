@@ -8,6 +8,7 @@
             @bind($user)
             <x-form-input name="name" label="Name" required />
             <x-form-input type="email" name="email" label="Email" required />
+            <x-form-input name="fon" label="Mobiltelefon" />
             <x-form-input type="password" name="password" label="Passwort" />
             <x-form-input type="password" name="password_repeat" label="Passwort wiederholen" />
             @can('write Role')

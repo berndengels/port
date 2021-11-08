@@ -6,6 +6,7 @@
         <x-form method="post" :action="route('admin.users.store')" class="w-full lg:w-1/2">
             <x-form-input name="name" label="Name" required />
             <x-form-input type="email" name="email" label="Email" required />
+            <x-form-input name="fon" label="Mobiltelefon" />
             <x-form-input type="password" name="password" label="Passwort" required />
             <x-form-input type="password" name="password_repeat" label="Passwort wiederholen" required />
             @can('write Role')

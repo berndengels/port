@@ -7,6 +7,9 @@ USE_CACHE=false
 APP_URL=http://port.test
 MIX_API_URL=http://port.test
 
+NEXMO_KEY=
+NEXMO_SECRET=
+
 DB_CONNECTION=testing
 
 DB_HOST=127.0.0.1

@@ -92,9 +92,15 @@ class RegisterController extends Controller
 
             return $request->wantsJson()
                 ? new JsonResponse([], 201)
-                : redirect($this->redirectPath())->with('success',"Kunde '$customer->name' erfolgreich angelegt");
+                : redirect($this->redirectPath())
+                    ->with('success',"Kunde '$customer->name' erfolgreich angelegt")
+                ;
         } catch(Exception $e) {
-            return redirect()->back()->with('error', 'Bei der Registrierung ist leider ein Fehler aufgetreten!');
+            return redirect()
+                ->back()
+                ->withInput($request->validated())
+                ->with('error', 'Bei der Registrierung ist leider ein Fehler aufgetreten!')
+                ;
         }
     }
 }

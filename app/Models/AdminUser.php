@@ -16,6 +16,7 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Notifications\Notification;
 use Illuminate\Support\Carbon;
 use Laravel\Sanctum\HasApiTokens;
 use Laravel\Sanctum\PersonalAccessToken;
@@ -83,7 +84,7 @@ class AdminUser extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = ['id', 'name', 'email', 'password'];
+    protected $fillable = ['id', 'name', 'email', 'fon', 'password'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -121,5 +122,16 @@ class AdminUser extends Authenticatable
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new AdminResetPassword($token));
+    }
+
+    /**
+     * Route notifications for the Nexmo channel.
+     *
+     * @param  Notification  $notification
+     * @return string
+     */
+    public function routeNotificationForNexmo($notification)
+    {
+        return $this->fon;
     }
 }
