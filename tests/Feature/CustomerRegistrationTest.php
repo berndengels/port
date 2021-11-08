@@ -15,9 +15,10 @@ class CustomerRegistrationTest extends TestCase
 {
     use WithFaker;
 
-    const ROUTE_RREGISTER_REQUEST       = 'register';
-    const ROUTE_RREGISTER_SUBMIT        = 'register';
-    const USER_GUARD                    = 'customer';
+    const ROUTE_RREGISTER_REQUEST   = 'register';
+    const ROUTE_RREGISTER_SUBMIT    = 'register';
+    const ROUTE_DASHBOARD           = 'public.dashboard';
+    const USER_GUARD                = 'customer';
 
     private $params = [
         'name'      => 'Paul Meier',
@@ -110,9 +111,11 @@ class CustomerRegistrationTest extends TestCase
             ->from(route(self::ROUTE_RREGISTER_REQUEST))
             ->post(route(self::ROUTE_RREGISTER_SUBMIT, $this->params), $this->params)
             ->assertSuccessful()
-            ->assertSeeText('Alles OK')
+            ->assertSeeText('Logout')
         ;
-//        Notification::assertSentTo($this->user, SendRegisterEmailNotification::class);
+        $this
+            ->assertAuthenticated('customer')
+        ;
 //        Event::fake()->assertDispatched(Registered::class);
 //        Notification::fake()->assertSentTo($this->user, SendRegisterEmailNotification::class);
         $this->assertDatabaseHas(Customer::class,['email' => $this->params['email']], 'testing');

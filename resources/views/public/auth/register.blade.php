@@ -5,6 +5,7 @@
         <h1 class="sm:mt-5 m-3 text-4xl">{{ __('Registrierung für Dauerlieger') }}</h1>
         <div class="flex w-full justify-center mb-5">
             <x-form class="w-full mx-3 md:w-1/2 register-form" method="POST" action="{{ route('register') }}">
+                <x-form-input type="hidden" name="customer_type" default="permanent" />
                 <x-form-input name="name" label="Name" required placeholder="Name" />
                 <x-form-input name="email" type="email" label="Email" required placeholder="Email" />
                 <x-form-input name="password" type="password" label="Passwort" required />
@@ -18,7 +19,6 @@
                     <span class="text-2xl text-white">Bootsdaten</span>
                 </div>
 
-                <x-form-input type="hidden" name="customer_type" default="permanent" required />
                 <x-form-select id="boat_type" name="boat_type" label="Boots Typ" :options="$boatTypes" required />
                 <x-form-group class="sail hidden">
                     <x-form-input name="mast_length" type="number" step="1" label="Mastlänge" placeholder="Mastlänge" />
