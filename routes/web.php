@@ -6,6 +6,9 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\CaptchaServiceController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PriceController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\BoatController;
+use App\Http\Controllers\BoatDatesController;
 use App\Http\Controllers\RouteController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PageController;
@@ -16,7 +19,6 @@ use App\Http\Controllers\Admin\AdminCaravanController;
 use App\Http\Controllers\Admin\AdminCaravanDatesController;
 use App\Http\Controllers\Admin\AdminPriceController;
 use App\Http\Controllers\Admin\AdminCarLicensePlateController;
-use App\Http\Controllers\Admin\AdminRouteController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\AdminRoleController;
@@ -36,10 +38,6 @@ use App\Http\Controllers\Admin\Auth\AdminResetPasswordController;
 Auth::routes();
 //dd(Route::getRoutes());
 
-Route::get('', function () {
-    return redirect('dashboard');
-});
-
 Route::group([
     'as'  => 'customer.',
 ],function () {
@@ -51,6 +49,22 @@ Route::group([
     Route::post('login', [CustomerLoginController::class, 'login'])->name('login');
     Route::post('logout', [CustomerLoginController::class, 'logout'])->name('logout');
 });
+Route::get('route/current/{guard}/{currentRouteName}/{route}', [RouteController::class, 'setCurrentMenu'])
+    ->name('route.current')
+    ->middleware(['auth:admin,customer'])
+;
+Route::get('', fn () => redirect('dashboard'));
+
+Route::group([
+    'prefix'    => 'customer',
+    'as'        => 'customer.',
+    'middleware' => ['auth:admin,customer'],
+],function () {
+    Route::resource('profile', ProfileController::class);
+    Route::resource('boats', BoatController::class);
+    Route::resource('boatDates', BoatDatesController::class);
+    Route::get('boatDates/invoice/{boatDate}', [BoatDatesController::class, 'invoice'])->name('boatDates.invoice');
+});
 
 Route::group([
     'as'  => 'public.',
@@ -58,10 +72,8 @@ Route::group([
     Route::get('dashboard', [DashboardController::class, 'show'])->name('dashboard');
     Route::resource('pages', PageController::class);
     Route::resource('widgets', WidgetController::class);
-    Route::get('route/current/{currentRouteName}', [RouteController::class, 'setCurrentMenu'])->name('route.current');
     Route::get('reload-captcha', [CaptchaServiceController::class, 'reloadCaptcha'])->name('reload.captcha');
 });
-
 Route::group([
     'prefix'    => 'admin',
     'as'        => 'admin.',
@@ -101,8 +113,8 @@ Route::group([
     Route::resource('permissions', AdminPermissionController::class);
     Route::resource('pages', AdminPageController::class);
     Route::resource('widgets', AdminWidgetController::class);
-    Route::resource('boats', AdminBoatController::class);
-    Route::resource('boatDates', AdminBoatDatesController::class);
+    Route::resource('boats', BoatController::class);
+    Route::resource('boatDates', BoatDatesController::class);
     Route::resource('boatGuests', AdminBoatGuestController::class);
     Route::resource('boatGuestDates', AdminBoatGuestDatesController::class);
 
@@ -111,15 +123,17 @@ Route::group([
     Route::get('caravan/price/excel/{year?}/{month?}', [AdminPriceController::class, 'excel'])->name('caravan.price.excel');
     Route::get('caravan/price/pdf/{year?}/{month?}', [AdminPriceController::class, 'pdf'])->name('caravan.price.pdf');
     Route::get('car/info', [AdminCarLicensePlateController::class, 'info'])->name('car.info');
-    Route::get('route/current/{currentRouteName}', [AdminRouteController::class, 'setCurrentMenu'])->name('route.current');
+//    Route::get('route/current//{currentRouteName}', [RouteController::class, 'setCurrentMenu'])->name('route.current');
     Route::post('upload/image/{paramName}', [AdminUploadController::class, 'imageUpload'])->name('upload.image');
 
     Route::get('routes', [AdminInfoController::class, 'routes'])->name('infos.routes');
     Route::get('php', [AdminInfoController::class, 'phpinfo'])->name('infos.php');
     Route::fallback(function () {
-        return redirect('/admin');
+//        return redirect('/admin');
+        return 'wrong admin route';
     });
 });
+
 Route::fallback(function () {
     return redirect('');
 });

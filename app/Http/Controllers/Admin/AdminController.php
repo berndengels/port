@@ -17,7 +17,7 @@ use App\Filters\Caravan\CaravanFilter;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Routing\Controller as BaseController;
+use App\Http\Controllers\Controller as BaseController;
 
 class AdminController extends BaseController
 {
@@ -43,25 +43,10 @@ class AdminController extends BaseController
      * @var Collection
      */
     protected $rolesOptions;
-    protected $paginatorLimit;
-    /**
-     * @var BoatRepository
-     */
-    protected $boatRepository;
-    protected $boatGuestRepository;
-    protected $countryRepository;
-    protected $caravanRepository;
-    protected $customerRepository;
-    protected $roleRepository;
+
 
     public function __construct()
     {
-        $this->paginatorLimit       = config('port.main.default.pagination.limit');
-        $this->countryRepository    = new CountryRepository();
-        $this->caravanRepository    = new CaravanRepository();
-        $this->customerRepository   = new CustomerRepository();
-        $this->roleRepository       = new RoleRepository();
-        $this->boatRepository       = new BoatRepository();
-        $this->boatGuestRepository  = new BoatGuestsRepository();
+        parent::__construct();
     }
 }

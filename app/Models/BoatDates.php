@@ -51,6 +51,7 @@ class BoatDates extends BaseModel
     use HasFactory, ClearCache, FireEvents;
 
     protected $table = 'boat_dates';
+    protected $with = 'boat';
     protected $guarded = ['id'];
     protected $dates = ['from', 'until'];
     protected $dateFormat = 'Y-m-d';

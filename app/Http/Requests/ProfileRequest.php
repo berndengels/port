@@ -1,11 +1,14 @@
 <?php
+
 namespace App\Http\Requests;
 
+use App\Models\Customer;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Foundation\Http\FormRequest;
 
-class CustomerRequest extends AdminRequest
+class ProfileRequest extends MainFormRequest
 {
-    protected $modelName = 'Customer';
+    protected $modelName = Customer::class;
 
     /**
      * Determine if the user is authorized to make this request.
@@ -14,15 +17,7 @@ class CustomerRequest extends AdminRequest
      */
     public function authorize()
     {
-        dd($this->getId());
-        return $this->user()->id === $this->getId()
-            || auth()->user()->can('write Customer')
-            ;
-    }
-
-    public function validationData($keys = null)
-    {
-        return array_merge($this->all($keys), ['confirmed' => !!$this->post('confirmed') ?? false]);
+        return $this->user()->id === $this->getId();
     }
 
     /**
@@ -37,17 +32,11 @@ class CustomerRequest extends AdminRequest
             'email'             => $this->getId() ? '' : 'nullable|email|unique:customers,email',
         //            'password'          => !$this->getId() ? 'required|alpha_num|between:6,20|confirmed' : 'sometimes|required|alpha_num|between:6,20|confirmed',
             'password'          => !$this->getId() ? 'required|alpha_num|between:6,20|confirmed' : 'nullable|alpha_num|between:6,20|required_if:confirmed,null',
-            'customer_type'     => '',
-//            'customer_type'     => '',
             'fon'               => 'required',
             'city'              => 'required',
             'postcode'          => 'required',
             'street'            => 'required',
         ];
-
-        if(app()->environment(['production'])) {
-            $rules += ['captcha' => 'required|captcha'];
-        }
 
         return $rules;
     }

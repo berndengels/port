@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-class BoatRequest extends AdminRequest
+class CustomerBoatRequest extends MainFormRequest
 {
     protected $modelName = 'Boat';
     private $floats = ['length','width','draft','length_waterline','length_keel'];
@@ -14,7 +14,7 @@ class BoatRequest extends AdminRequest
      */
     public function authorize()
     {
-        return $this->auth->user()->can('write Boat');
+        return auth('customer')->user()->can('write Boat');
     }
 
     protected function prepareForValidation()
@@ -32,13 +32,8 @@ class BoatRequest extends AdminRequest
     public function rules()
     {
         return [
-            'name'     => 'required',
-            'fon'      => '',
-            'email'    => '',
-            'state'    => 'required',
             'boat_name'         => 'required',
             'boat_type'         => 'required',
-            'costomer_id'       => '',
             'length'            => 'nullable|numeric',
             'width'             => 'nullable|numeric',
             'weight'            => 'nullable|numeric',
@@ -47,7 +42,6 @@ class BoatRequest extends AdminRequest
             'draft'             => 'nullable|numeric',
             'length_waterline'  => 'nullable|numeric',
             'length_keel'       => 'nullable|numeric',
-            'home_port'         => '',
         ];
     }
 }

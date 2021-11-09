@@ -9,8 +9,10 @@
 
 # Port project
 ### For Test Implementation
-- create MySql database 'port'
+- create MySql database 'port_demo'
 - copy .env.example to .env
 - set all credentials, passwords in .env (DB, EMAIL)
 - run './setup' in console in project directory. this will install test-data
-- login data: login: test@test.de, password: password
+- Login data: 
+  - login: demo@test.com, 
+  - password: password

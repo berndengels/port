@@ -30,5 +30,8 @@ return [
     ],
     'cache' => [
         'enabled' => env('USE_CACHE', false),
-    ]
+    ],
+    'show' => [
+        'env'   => env('SHOW_ENV', false),
+    ],
 ];

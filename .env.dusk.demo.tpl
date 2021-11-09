@@ -7,7 +7,7 @@ USE_CACHE=false
 APP_URL=http://port.test
 MIX_API_URL=http://port.test
 MIX_NAVIONICS_TOKEN=
-DUSK_HEADLESS_DISABLED=false
+SHOW_ENV=false
 
 NEXMO_KEY=
 NEXMO_SECRET=

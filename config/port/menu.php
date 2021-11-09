@@ -10,6 +10,43 @@ return [
             ],
         ],
     ],
+    'customer' => [
+        'items' => [
+            'Dashboard'   => [
+                'text'  => 'Dashboard',
+                'title' => 'Dashboard',
+                'icon'  => 'fas fa-home',
+                'route' => 'public.dashboard',
+            ],
+            'Daten'   => [
+                'permissions'   => ['read ProfileMenu'],
+                'icon'  => 'fas fa-ship',
+                'items' => [
+                    [
+                        'permissions'   => ['read Customer','write Customer'],
+                        'text'  => 'Profile',
+                        'title' => 'Profile',
+                        'icon'  => 'fas fa-user',
+                        'route' => 'customer.profile.index',
+                    ],
+                    [
+                        'permissions'   => ['read Boat','write Boat'],
+                        'text'  => 'Boots Daten',
+                        'title' => 'Boots Daten',
+                        'icon'  => 'fas fa-anchor',
+                        'route' => 'customer.boats.index',
+                    ],
+                    [
+                        'permissions'   => ['read BoatDates'],
+                        'text'  => 'Rechnungen',
+                        'title' => 'Rechnungen',
+                        'icon'  => 'fas fa-concierge-bell',
+                        'route' => 'customer.boatDates.index',
+                    ],
+                ],
+            ],
+        ],
+    ],
     'admin' => [
         'items' => [
             'Dashboard'   => [

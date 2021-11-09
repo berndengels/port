@@ -248,6 +248,7 @@ i {
             background-color: #e3e4e6;
             color: slategray;
         }
+/*
         .main-cards {
             column-count: 1;
             column-gap: 20px;
@@ -264,7 +265,6 @@ i {
                 padding: 24px;
                 box-sizing: border-box;
             }
-            /* Force varying heights to simulate dynamic content */
             .card:first-child {
                 height: 485px;
             }
@@ -275,14 +275,17 @@ i {
                 height: 265px;
             }
         }
+*/
         /* Medium-sized screen breakpoint (tablet, 1050px) */
+/*
         @include media('<=tablet') {
             //@media only screen and (min-width: 65.625em) {
-            /* Break out main cards into two columns */
+            // Break out main cards into two columns
             .main-cards {
                 column-count: 2;
             }
         }
+*/
     }
     .footer {
         grid-area: footer;

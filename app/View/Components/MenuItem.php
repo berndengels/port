@@ -8,6 +8,7 @@ use Illuminate\View\Component;
 
 class MenuItem extends Component
 {
+    public $currentRouteName;
     /**
      * Create a new component instance.
      *
@@ -15,11 +16,13 @@ class MenuItem extends Component
      */
     public function __construct(
         public string $name,
+        public string $guard,
         public $item = null,
         public $icon = null,
         public $route = null,
         public $class = null
     ) {
+        $this->currentRouteName = session()->get('currentRoute');
     }
 
     /**
