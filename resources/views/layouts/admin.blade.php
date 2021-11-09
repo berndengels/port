@@ -6,7 +6,9 @@
 
     <header class="header">
         <div class="header__left">
-        <!--span class="text-lg text-red-700">{{-- DB::getDefaultConnection() --}}</span-->
+            @if(! app()->environment(['production']) && config('port.main.show.env'))
+                <span class="text-lg text-red-700">{{ DB::getDefaultConnection() }}</span>
+            @endif
             <x-header-navigation />
         </div>
         <div class="header__right">
@@ -26,7 +28,7 @@
         <div class="sidenav__close-icon">
             <i class="fas fa-times"></i>
         </div>
-        <x-admin-main-navigation />
+        <x-main-navigation guard="admin" />
         <div class="ml-3 mt-0">
             <x-form method="get" class="mt-0" name="frmLogout" action="{{ route('admin.logout') }}">
                 @csrf

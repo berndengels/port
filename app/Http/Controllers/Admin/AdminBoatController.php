@@ -23,8 +23,7 @@ class AdminBoatController extends AdminController
 
     public function index()
     {
-        $data = Boat::with('customer')
-            ->whereHas(
+        $data = Boat::whereHas(
                 'customer', function (Builder $query) {
                     $query->where('customer_type', '=', 'permanent');
                 }

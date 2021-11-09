@@ -23,9 +23,11 @@
 
     <x-flash-message />
     @auth('admin')
-        @include('layouts.admin')
+        <x-content guard="admin" />
+    @elseauth('customer')
+        <x-content guard="customer" />
     @else
-        @include('layouts.public')
+        <x-content />
     @endauth
 
     @stack('inline-scripts')

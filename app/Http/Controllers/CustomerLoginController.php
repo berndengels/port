@@ -15,6 +15,7 @@ class CustomerLoginController extends DefaultLoginController
 
     public function __construct()
     {
+        $this->middleware('guest')->except('logout');
         $this->middleware('guest:customer')->except('logout');
     }
 
@@ -66,6 +67,12 @@ class CustomerLoginController extends DefaultLoginController
         return $this->sendFailedLoginResponse($request);
     }
 
+    protected function credentials(Request $request)
+    {
+        return array_merge($request->only($this->username(), 'password'), ['confirmed' => true]);
+    }
+
+
     public function logout(Request $request)
     {
         $this->guard()->logout();
@@ -81,6 +88,4 @@ class CustomerLoginController extends DefaultLoginController
             ? new JsonResponse([], 204)
             : redirect('/');
     }
-
-
 }

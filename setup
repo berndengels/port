@@ -29,8 +29,8 @@ else
     echo "APP_KEY seems to be valid: $appKey"
 fi
 # init db test-data (user, roles, caravans, caravanDates)
-php artisan migrate:fresh
-php artisan db:seed
+php artisan migrate:fresh --env=demo
+php artisan db:seed --env=demo
 
 # clear caches
 echo "clear all caches"
@@ -41,5 +41,5 @@ php artisan view:clear
 printf 'all done \360\237\230\216\n'
 
 echo "Use Logindata"
-echo "email: test@test.de"
+echo "email: demo@test.com"
 echo "password: password"

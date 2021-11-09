@@ -22,7 +22,7 @@ class HeaderNavigation extends Component
      *
      * @return void
      */
-    public function __construct(Request $request)
+    public function __construct(public string $guard, Request $request)
     {
         $this->currentRoute         = Route::current();
         $this->currentTopRouteName  = $request->session()->get('currentTopRouteName');

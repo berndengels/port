@@ -17,12 +17,14 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "intervention/image": "^2.7",
         "laravel/framework": "^8.40",
+        "laravel/nexmo-notification-channel": "^2.5",
         "laravel/passport": "^10.1",
         "laravel/sanctum": "^2.6",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.3",
         "maatwebsite/excel": "^3.1",
         "mews/captcha": "^3.2",
+        "nexmo/laravel": "^2.4",
         "phpoffice/phpspreadsheet": "^1.18",
         "protonemedia/laravel-form-components": "^3.0",
         "spatie/db-dumper": "^2.21",
@@ -32,7 +34,8 @@
         "spatie/laravel-permission": "^5.1",
         "spatie/tax-calculator": "^0.1.2",
         "symfony/dom-crawler": "^5.3",
-        "umulmrum/holiday": "^0.6.0"
+        "umulmrum/holiday": "^0.6.0",
+        "vonage/client": "^2.4"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

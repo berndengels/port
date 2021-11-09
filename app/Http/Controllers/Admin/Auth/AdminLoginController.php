@@ -41,6 +41,7 @@ class AdminLoginController extends DefaultLoginController
      */
     public function __construct()
     {
+        $this->middleware('guest')->except('logout');
         $this->middleware('guest:admin')->except('logout');
     }
 

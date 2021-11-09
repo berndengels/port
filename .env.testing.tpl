@@ -6,6 +6,10 @@ APP_DEBUG_BAR=false
 USE_CACHE=false
 APP_URL=http://port.test
 MIX_API_URL=http://port.test
+SHOW_ENV=false
+
+NEXMO_KEY=
+NEXMO_SECRET=
 
 DB_CONNECTION=testing
 

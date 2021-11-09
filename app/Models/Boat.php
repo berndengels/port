@@ -51,6 +51,7 @@ class Boat extends BaseModel
     use HasFactory, ClearCache;
 
     protected $table = 'boats';
+    protected $with = 'customer';
     protected $guarded = ['id'];
     public $timestamps = false;
 

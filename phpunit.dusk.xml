@@ -13,7 +13,7 @@
 >
     <testsuites>
         <testsuite name="Browser">
-            <directory suffix="Test.php">./tests/Browser</directory>
+            <directory suffix="CustomerRegistrationTest.php">./tests/Browser</directory>
         </testsuite>
     </testsuites>
     <coverage processUncoveredFiles="true">

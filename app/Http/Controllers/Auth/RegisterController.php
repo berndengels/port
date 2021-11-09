@@ -40,19 +40,13 @@ class RegisterController extends Controller
     use RegistersUsers, HasEvents;
 
     /**
-     * Where to redirect users after registration.
-     *
-     * @var string
-     */
-    protected $redirectTo = RouteServiceProvider::HOME;
-
-    /**
      * Create a new controller instance.
      *
      * @return void
      */
     public function __construct()
     {
+        $this->middleware('guest');
         $this->middleware('guest:customer');
     }
 
@@ -92,9 +86,16 @@ class RegisterController extends Controller
 
             return $request->wantsJson()
                 ? new JsonResponse([], 201)
-                : redirect($this->redirectPath())->with('success',"Kunde '$customer->name' erfolgreich angelegt");
+                : redirect()
+                    ->route('public.dashboard')
+                    ->with('success',"Kunde '$customer->name' erfolgreich angelegt")
+                ;
         } catch(Exception $e) {
-            return redirect()->back()->with('error', 'Bei der Registrierung ist leider ein Fehler aufgetreten!');
+            return redirect()
+                ->back()
+                ->withInput($request->validated())
+                ->with('error', 'Bei der Registrierung ist leider ein Fehler aufgetreten!')
+                ;
         }
     }
 }
