@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\AdminUser;
+use Detection\MobileDetect;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -13,7 +14,12 @@ class RouteController extends Controller
 
     public function setCurrentMenu(string $guard, string $currentRouteName, string $route, Request $request)
     {
-        $currentRoutes  = collect(config('port.menu.'.$guard.'.items.'.$currentRouteName));
+        $isMobile = (new MobileDetect())->isMobile();
+
+        $currentRoutes = collect(config('port.menu.'.$guard.'.items.'.$currentRouteName))->recursive();
+        $currentRoutes = $currentRoutes->filter(fn($item) => !$isMobile || ($isMobile && ! $item['hide_on_mobile']));
+
+
 /*
         if(isset($currentRoutes['route'])) {
             $this->route = $currentRoutes['route'];

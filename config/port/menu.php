@@ -17,10 +17,12 @@ return [
                 'title' => 'Dashboard',
                 'icon'  => 'fas fa-home',
                 'route' => 'public.dashboard',
+                'hide_on_mobile' => false,
             ],
             'Daten'   => [
                 'permissions'   => ['read ProfileMenu'],
                 'icon'  => 'fas fa-ship',
+                'hide_on_mobile' => false,
                 'items' => [
                     [
                         'permissions'   => ['read Customer','write Customer'],
@@ -28,6 +30,7 @@ return [
                         'title' => 'Profile',
                         'icon'  => 'fas fa-user',
                         'route' => 'customer.profile.index',
+                        'hide_on_mobile' => false,
                     ],
                     [
                         'permissions'   => ['read Boat','write Boat'],
@@ -35,6 +38,7 @@ return [
                         'title' => 'Boots Daten',
                         'icon'  => 'fas fa-anchor',
                         'route' => 'customer.boats.index',
+                        'hide_on_mobile' => false,
                     ],
                     [
                         'permissions'   => ['read BoatDates'],
@@ -42,6 +46,7 @@ return [
                         'title' => 'Rechnungen',
                         'icon'  => 'fas fa-concierge-bell',
                         'route' => 'customer.boatDates.index',
+                        'hide_on_mobile' => false,
                     ],
                 ],
             ],
@@ -54,10 +59,12 @@ return [
                 'title' => 'Dashboard',
                 'icon'  => 'fas fa-home',
                 'route' => 'admin.dashboard',
+                'hide_on_mobile' => false,
             ],
             'Caravans'   => [
                 'permissions'   => ['read CaravansMenu'],
                 'icon'  => 'fas fa-caravan',
+                'hide_on_mobile' => false,
                 'items' => [
                     [
                         'permissions'   => ['read Caravan', 'write Caravan'],
@@ -65,6 +72,7 @@ return [
                         'title' => 'Caravans',
                         'icon'  => 'fas fa-caravan',
                         'route' => 'admin.caravans.index',
+                        'hide_on_mobile' => true,
                     ],
                     [
                         'permissions'   => ['read CaravanDates', 'write CaravanDates'],
@@ -72,12 +80,14 @@ return [
                         'title' => 'Caravan Rezeption',
                         'icon'  => 'fas fa-concierge-bell',
                         'route' => 'admin.caravanDates.index',
+                        'hide_on_mobile' => false,
                     ],
                 ],
             ],
             'Content'   => [
                 'permissions'   => ['read ContentMenu'],
                 'icon'  => 'fas fa-newspaper',
+                'hide_on_mobile' => false,
                 'items' => [
                     [
                         'permissions'   => ['read Page', 'write Page'],
@@ -85,6 +95,7 @@ return [
                         'title' => 'Pages',
                         'icon'  => 'fas fa-file',
                         'route' => 'admin.pages.index',
+                        'hide_on_mobile' => false,
                     ],
                     [
                         'permissions'   => ['read Widget', 'write Widget'],
@@ -92,12 +103,14 @@ return [
                         'title' => 'Widgets',
                         'icon'  => 'fas fa-newspaper',
                         'route' => 'admin.widgets.index',
+                        'hide_on_mobile' => false,
                     ],
                 ],
             ],
             'Permissions'   => [
                 'permissions'   => ['read PermissionsMenu'],
                 'icon'  => 'fas fa-user-lock',
+                'hide_on_mobile' => false,
                 'items' => [
                     [
                         'permissions'   => ['read User', 'write User'],
@@ -105,6 +118,7 @@ return [
                         'title' => 'Users',
                         'icon'  => 'fas fa-user',
                         'route' => 'admin.users.index',
+                        'hide_on_mobile' => false,
                     ],
                     [
                         'permissions'   => ['read Role', 'write Role'],
@@ -112,6 +126,7 @@ return [
                         'title' => 'Roles',
                         'icon'  => 'fas fa-user-tag',
                         'route' => 'admin.roles.index',
+                        'hide_on_mobile' => false,
                     ],
                     [
                         'permissions'   => ['read Permission', 'write Permission'],
@@ -119,12 +134,14 @@ return [
                         'title' => 'Permissions',
                         'icon'  => 'fas fa-user-tag',
                         'route' => 'admin.permissions.index',
+                        'hide_on_mobile' => false,
                     ],
                 ],
             ],
             'Kunden'   => [
                 'permissions'   => ['read CustomersMenu'],
                 'icon'  => 'fas fa-user',
+                'hide_on_mobile' => false,
                 'items' => [
                     [
                         'permissions'   => ['read Customer', 'write Customer'],
@@ -132,6 +149,7 @@ return [
                         'title' => 'Dauerlieger',
                         'icon'  => 'fas fa-user',
                         'route' => 'admin.customers.index',
+                        'hide_on_mobile' => false,
                     ],
                     [
                         'permissions'   => ['read Customer', 'write Customer'],
@@ -139,12 +157,14 @@ return [
                         'title' => 'Gäste',
                         'icon'  => 'fas fa-concierge-bell',
                         'route' => 'admin.customers.guests',
+                        'hide_on_mobile' => false,
                     ],
                 ],
             ],
             'Boote'   => [
                 'permissions'   => ['read BoatsMenu'],
                 'icon'  => 'fas fa-ship',
+                'hide_on_mobile' => false,
                 'items' => [
                     [
                         'permissions'   => ['read Boat','write Boat'],
@@ -152,6 +172,7 @@ return [
                         'title' => 'Gäste',
                         'icon'  => 'fas fa-concierge-bell',
                         'route' => 'admin.boatGuests.index',
+                        'hide_on_mobile' => true,
                     ],
                     [
                         'permissions'   => ['read Boat','write Boat'],
@@ -159,6 +180,7 @@ return [
                         'title' => 'Gäste Rezeption',
                         'icon'  => 'fas fa-concierge-bell',
                         'route' => 'admin.boatGuestDates.index',
+                        'hide_on_mobile' => false,
                     ],
                     [
                         'permissions'   => ['read Boat','write Boat'],
@@ -166,6 +188,7 @@ return [
                         'title' => 'Dauerlieger',
                         'icon'  => 'fas fa-ship',
                         'route' => 'admin.boats.index',
+                        'hide_on_mobile' => true,
                     ],
                     [
                         'permissions'   => ['read BoatDates','write BoatDates'],
@@ -173,6 +196,7 @@ return [
                         'title' => 'Saison Liegeplätze',
                         'icon'  => 'fas fa-anchor',
                         'route' => 'admin.boatDates.saison',
+                        'hide_on_mobile' => false,
                     ],
                     [
                         'permissions'   => ['read BoatDates','write BoatDates'],
@@ -180,12 +204,14 @@ return [
                         'title' => 'Winterlager',
                         'icon'  => 'fas fa-snowflake',
                         'route' => 'admin.boatDates.winter',
+                        'hide_on_mobile' => false,
                     ],
                 ],
             ],
             'Info'   => [
                 'permissions'   => ['read InfoMenu'],
                 'icon'  => 'fas fa-info-circle',
+                'hide_on_mobile' => false,
                 'items' => [
                     [
                         'permissions'   => ['read Routes'],
@@ -193,6 +219,7 @@ return [
                         'title' => 'Routes',
                         'icon'  => 'fas fa-route',
                         'route' => 'admin.infos.routes',
+                        'hide_on_mobile' => false,
                     ],
                     [
                         'permissions'   => ['read Routes'],
@@ -200,6 +227,7 @@ return [
                         'title' => 'PHPInfo',
                         'icon'  => 'fas fa-info',
                         'route' => 'admin.infos.php',
+                        'hide_on_mobile' => false,
                     ],
                 ],
             ],
