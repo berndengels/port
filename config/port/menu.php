@@ -7,8 +7,10 @@ return [
                 'title' => 'Dashboard',
                 'icon'  => 'fas fa-home',
                 'route' => 'public.dashboard',
+                'hide_on_mobile' => false,
             ],
         ],
+        'hide_on_mobile' => false,
     ],
     'customer' => [
         'items' => [
@@ -51,6 +53,7 @@ return [
                 ],
             ],
         ],
+        'hide_on_mobile' => false,
     ],
     'admin' => [
         'items' => [
@@ -232,5 +235,6 @@ return [
                 ],
             ],
         ],
+        'hide_on_mobile' => false,
     ],
 ];
