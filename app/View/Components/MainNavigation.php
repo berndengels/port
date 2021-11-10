@@ -23,13 +23,11 @@ class MainNavigation extends Component
          * @var $user AdminUser|Customer
          */
         $user = auth($this->guard)->user();
-        $isMobile = (new MobileDetect())->isMobile();
         $this->items = collect([]);
         if($user) {
             $this->items = collect(config('port.menu.'.$this->guard.'.items'))
                 ->filter(fn ($item) => (!isset($item['permissions'])
                     || (isset($item['permissions']) && $user->can($item['permissions']))
-//                    && ($isMobile && false === $item['hide_on_mobile'])
                 ))
             ;
         }

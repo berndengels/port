@@ -179,7 +179,6 @@ return [
         Mews\Captcha\CaptchaServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         App\Providers\DuskServiceProvider::class,
-        CollectionServiceProvider::class,
     ],
 
     /*
