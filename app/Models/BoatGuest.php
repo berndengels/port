@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Libs\AppCache;
 use Database\Factories\BoatGuestFactory;
 use Eloquent;
 use App\Traits\Models\ClearCache;
@@ -37,6 +38,11 @@ class BoatGuest extends BaseModel
     protected $table = 'boat_guests';
     protected $guarded = ['id'];
     public $timestamps = false;
+
+    protected static $cacheKeys = [
+        AppCache::KEY_OPTIONS_BOAT_GUEST,
+        AppCache::KEY_OPTIONS_DATA_BOAT_GUEST,
+    ];
 
     public function dates()
     {

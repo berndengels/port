@@ -1,6 +1,7 @@
 <?php
 namespace App\Models;
 
+use App\Libs\AppCache;
 use Eloquent;
 use Database\Factories\BoatFactory;
 use App\Traits\Models\ClearCache;
@@ -54,6 +55,11 @@ class Boat extends BaseModel
     protected $with = 'customer';
     protected $guarded = ['id'];
     public $timestamps = false;
+
+    protected static $cacheKeys = [
+        AppCache::KEY_OPTIONS_BOAT,
+        AppCache::KEY_OPTIONS_DATA_BOAT,
+    ];
 
     public function customer()
     {

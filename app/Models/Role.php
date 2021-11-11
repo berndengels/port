@@ -2,13 +2,13 @@
 
 namespace App\Models;
 
-use App\Libs\AppCache;
-use Database\Factories\RoleFactory;
 use Eloquent;
+use App\Libs\AppCache;
+use Illuminate\Support\Carbon;
+use Database\Factories\RoleFactory;
 use App\Traits\Models\ClearCache;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Carbon;
 use Spatie\Permission\Models\Role as BaseModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 

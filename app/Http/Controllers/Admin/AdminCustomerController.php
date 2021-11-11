@@ -27,11 +27,7 @@ class AdminCustomerController extends AdminController
     {
         //        $this->middleware(['auth:admin','auth:customer']);
         $this->customerTypeOptions = config('port.main.customer.typeOptions');
-        $this->customerTypes = collect($this->customerTypeOptions)->map(
-            function ($v, $k) {
-                return $k;
-            }
-        );
+        $this->customerTypes = collect($this->customerTypeOptions)->map(fn ($v, $k) => $k);
     }
 
     public function index()
@@ -110,7 +106,7 @@ class AdminCustomerController extends AdminController
     {
         try {
             $validated = $request->validated();
-            if($validated['password']) {
+            if($validated['password'] && '' !== $validated['password']) {
                 $validated['password'] = Hash::make($validated['password']);
             }
             $customer->update($validated);

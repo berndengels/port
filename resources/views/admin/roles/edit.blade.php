@@ -7,7 +7,7 @@
             @method('put')
             @bind($role)
             <x-form-input name="name" label="Name" required />
-            <x-form-input name="guard_name" label="Guard Name" required />
+            <x-form-select name="guard_name" label="Guard Name" :options="$guards" required />
             <x-form-select name="permissions[]" :options="$permissions" class="flexy" size="10" many-relation multiple />
             @endbind
             <div class="mt-2">

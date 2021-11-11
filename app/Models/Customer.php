@@ -1,6 +1,7 @@
 <?php
 namespace App\Models;
 
+use App\Libs\AppCache;
 use Database\Factories\CustomerFactory;
 use Eloquent;
 use App\Traits\Models\ClearCache;
@@ -72,17 +73,27 @@ class Customer extends Authenticatable
     protected $hidden = ['password','remember_token'];
     public $timestamps = false;
 
+    protected static $cacheKeys = [
+        AppCache::KEY_OPTIONS_CUSTOMER,
+        AppCache::KEY_OPTIONS_DATA_CUSTOMER,
+    ];
+
+    public function boats()
+    {
+        return $this->hasMany(Boat::class);
+    }
+
+    public function serviceRequests()
+    {
+        return $this->hasMany(ServiceRequest::class);
+    }
+
     public function getFonLinkAttribute()
     {
         if($this->fon) {
             return '+49' . preg_replace('/^0|[ \t]+/i', '', $this->fon);
         }
         return null;
-    }
-
-    public function boats()
-    {
-        return $this->hasMany(Boat::class);
     }
 
     public function getStrRolesAttribute()

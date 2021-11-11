@@ -1,6 +1,7 @@
 <?php
 namespace App\Models;
 
+use App\Libs\AppCache;
 use Eloquent;
 use App\Traits\Models\ClearCache;
 use Illuminate\Database\Eloquent\Builder;
@@ -36,6 +37,12 @@ class Country extends BaseModel
     protected $table = 'countries';
     protected $guarded = ['id'];
     public $timestamps = false;
+
+    protected static $cacheKeys = [
+        AppCache::KEY_OPTIONS_COUNTRY,
+        AppCache::KEY_OPTIONS_DATA_COUNTRY,
+    ];
+
     /*
     public function caravans() {
         return $this->belongsTo(Caravan::class);

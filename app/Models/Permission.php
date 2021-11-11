@@ -1,8 +1,9 @@
 <?php
 namespace App\Models;
 
-use Database\Factories\PermissionFactory;
 use Eloquent;
+use App\Libs\AppCache;
+use Database\Factories\PermissionFactory;
 use Illuminate\Support\Carbon;
 use App\Traits\Models\ClearCache;
 use App\Traits\Models\Filter\Filter;
@@ -46,9 +47,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Permission extends BaseModel
 {
     use HasFactory, Filter, ClearCache;
+
     protected $appends = ['actions','model','action','uniqName'];
     public $action;
     public $model;
+
+    protected static $cacheKeys = [
+        AppCache::KEY_OPTIONS_PERMISSION,
+        AppCache::KEY_OPTIONS_DATA_PERMISSION,
+    ];
 
     protected static $actions = [
         'read'  => 'read',

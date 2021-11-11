@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str;
 
 class MainFormRequest extends FormRequest
 {
@@ -29,7 +30,7 @@ class MainFormRequest extends FormRequest
 
     protected function getId()
     {
-        $route = $this->route('profile');
+        $route = $this->route($this->routeParam);
         if($route) {
             return $route->id;
         }

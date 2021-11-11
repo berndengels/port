@@ -1,6 +1,7 @@
 <?php
 namespace App\Models;
 
+use App\Libs\AppCache;
 use Eloquent;
 use App\Traits\Models\ClearCache;
 use App\Traits\Models\Filter\CaravanFilter;
@@ -43,6 +44,11 @@ class Caravan extends BaseModel
     protected $guarded = ['id'];
     protected $appends = ['text','info'];
     public $timestamps = false;
+
+    protected static $cacheKeys = [
+        AppCache::KEY_OPTIONS_CARAVAN,
+        AppCache::KEY_OPTIONS_DATA_CARAVAN,
+    ];
 
     protected $casts = [
         'carlength' => 'integer',

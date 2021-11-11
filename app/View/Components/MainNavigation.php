@@ -24,6 +24,7 @@ class MainNavigation extends Component
          */
         $user = auth($this->guard)->user();
         $this->items = collect([]);
+
         if($user) {
             $this->items = collect(config('port.menu.'.$this->guard.'.items'))
                 ->filter(fn ($item) => (!isset($item['permissions'])

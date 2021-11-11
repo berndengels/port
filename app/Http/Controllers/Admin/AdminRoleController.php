@@ -15,9 +15,11 @@ class AdminRoleController extends AdminController
      * @var Collection
      */
     protected $permissions;
+    protected $guards;
 
     public function __construct()
     {
+        $this->guards = collect(config('auth.guards'))->map(fn($v,$k) => $k)->toArray();
         $this->permissions = Permission::orderBy('guard_name')
             ->orderBy('name')
             ->get()
@@ -53,7 +55,10 @@ class AdminRoleController extends AdminController
      */
     public function create()
     {
-        return view('admin.roles.create', ['permissions' => $this->permissions]);
+        return view('admin.roles.create', [
+            'permissions' => $this->permissions,
+            'guards' => $this->guards,
+        ]);
     }
 
     /**
@@ -81,8 +86,9 @@ class AdminRoleController extends AdminController
      */
     public function edit(Role $role)
     {
+        $guards = $this->guards;
         $permissions = $this->permissions;
-        return view('admin.roles.edit', compact('role', 'permissions'));
+        return view('admin.roles.edit', compact('role', 'permissions','guards'));
     }
 
     /**
