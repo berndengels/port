@@ -47,6 +47,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @method static Builder|Boat whereMastWeight($value)
  * @method static Builder|Boat whereWeight($value)
  * @method static BoatFactory factory(...$parameters)
+ * @property-read Collection|ServiceRequest[] $serviceRequests
+ * @property-read int|null $service_requests_count
  */
 class Boat extends BaseModel
 {

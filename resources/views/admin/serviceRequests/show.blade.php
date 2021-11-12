@@ -11,7 +11,7 @@
         </tr>
         <tr>
             <th>Boot:</th>
-            <td>{{ $serviceRequest->boat->boat_name }}</td>
+            <td>{{ $serviceRequest->boat->boat_name }} (Unterwassershiff: {{ round($underWaterShip, 1) }} m²)</td>
         </tr>
         <tr>
             <th>Kunden Bemerkung:</th>
@@ -34,6 +34,7 @@
                 <div class="my-3 p-2 text-lg font-extrabold bg-blue-800 text-white">Aufgaben</div>
             </td>
         </tr>
+
         @foreach($serviceRequest->services as $service)
             <tr>
                 <th>Name</th>
@@ -55,27 +56,24 @@
                     </ul>
                 </td>
             </tr>
+            <tr>
+                <th>benötigte Materialmenge</th>
+                <td>{{ round($material->getQuantity($underWaterShip), 1) }} {{ $material->fertility_per }}</td>
+            </tr>
+            <tr>
+                <th>berechneter Materialpreis</th>
+                <td>{{ round($material->getMaterialPrice($underWaterShip)) }} €</td>
+            </tr>
+            <tr>
+                <th>berechneter Arbeitspreis</th>
+                <td>{{ ceil($service->getServicePrice($underWaterShip)) }} €</td>
+            </tr>
         @endforeach
-        <tr>
-            <th>Unterwasserfläche Boot</th>
-            <td>{{ round($serviceRequest->boat->getUnderwaterShipArea(), 1) }} m²</td>
-        </tr>
-        <tr>
-            <th>benötigte Materialmenge</th>
-            <td>{{ round($serviceRequest->boat->getUnderwaterShipArea() / $material->fertility, 1) }} {{ $material->fertility_per }}</td>
-        </tr>
-        <tr>
-            <th>berechneter Materialpreis</th>
-            <td>{{ round($serviceRequest->boat->getUnderwaterShipArea() * $material->price_per_unit / $material->fertility) }} €</td>
-        </tr>
-        <tr>
-            <th>berechneter Arbeitspreis</th>
-            <td>{{ ceil($serviceRequest->boat->getUnderwaterShipArea() * $service->price) }} €</td>
-        </tr>
+
         <tr>
             <td colspan="2">
                 <div class="my-3 p-2 text-lg font-extrabold bg-red-600 text-white">
-                    Gesamtpreis {{ ceil( $serviceRequest->boat->getUnderwaterShipArea() * $service->price + ($serviceRequest->boat->getUnderwaterShipArea() * $material->price_per_unit / $material->fertility)) }} €
+                    Gesamtpreis {{ ceil($serviceRequest->totalPrice($underWaterShip)) }} €
                 </div>
             </td>
         </tr>

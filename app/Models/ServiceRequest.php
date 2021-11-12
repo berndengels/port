@@ -36,6 +36,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @method static Builder|ServiceRequest whereId($value)
  * @method static Builder|ServiceRequest whereUpdatedAt($value)
  * @mixin Eloquent
+ * @property mixed $done_until
+ * @method static Builder|ServiceRequest whereDoneUntil($value)
  */
 class ServiceRequest extends Model
 {
@@ -68,5 +70,16 @@ class ServiceRequest extends Model
             Service::class,
             'service_requests_services'
         );
+    }
+
+    public function totalPrice(int|float $targetValue, int $roundPrecision = 2 ): int|float
+    {
+        $total = $this->services->sum(function (Service $service) use ($targetValue) {
+            $servicePrice = $service->getServicePrice($targetValue);
+            return $servicePrice + $service->materials->sum(function(Material $material) use($servicePrice, $targetValue) {
+                return $material->getMaterialPrice($targetValue);
+            });
+        });
+        return round($total, $roundPrecision);
     }
 }

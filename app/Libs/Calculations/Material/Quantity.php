@@ -10,11 +10,11 @@ class Quantity
     protected $quantity;
 
     public function __construct(
-        protected string $tagetValue,
+        protected string $targetValue,
         protected float $fertility,
     )
     {
-        $this->quantity = $this->tagetValue / $this->fertility;
+        $this->quantity = $this->targetValue / $this->fertility;
     }
 
     /**

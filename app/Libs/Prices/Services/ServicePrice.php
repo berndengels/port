@@ -9,10 +9,10 @@ class ServicePrice
     protected $price;
 
     public function __construct(
-        protected string $unit,
+        protected string $targetValue,
         protected float $pricePerUntit
     ) {
-        $this->price = new Price($this->unit * $this->pricePerUntit);
+        $this->price = new Price($this->targetValue * $this->pricePerUntit);
     }
 
     public function getPrice() {

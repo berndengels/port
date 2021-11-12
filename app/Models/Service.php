@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\Models\Calculations\ServicePriceCalculation;
 use Database\Factories\ServiceFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
@@ -37,7 +38,7 @@ use Illuminate\Support\Carbon;
  */
 class Service extends Model
 {
-    use HasFactory;
+    use HasFactory, ServicePriceCalculation;
 
     protected $table = 'services';
     protected $guarded = ['id'];

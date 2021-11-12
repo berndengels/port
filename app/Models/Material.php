@@ -2,13 +2,15 @@
 
 namespace App\Models;
 
+use App\Traits\Models\Calculations\MaterialPriceCalculation;
+use Eloquent;
 use App\Libs\AppCache;
 use App\Traits\Models\ClearCache;
 use Database\Factories\MaterialFactory;
-use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\Models\Calculations\MaterialCalculation;
 
 /**
  * App\Models\Material
@@ -41,7 +43,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Material extends Model
 {
-    use HasFactory, ClearCache;
+    use HasFactory, ClearCache, MaterialCalculation, MaterialPriceCalculation;
 
     protected $table = 'materials';
     protected $guarded = ['id'];

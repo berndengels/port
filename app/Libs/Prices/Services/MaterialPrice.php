@@ -9,12 +9,12 @@ class MaterialPrice
     protected $price;
 
     public function __construct(
-        protected float $area,
+        protected float $targetValue,
         protected float $fertility,
         protected float $pricePerUnit
     )
     {
-        $this->price = new Price($this->area * $this->pricePerUnit / $this->fertility);
+        $this->price = new Price($this->targetValue * $this->pricePerUnit / $this->fertility);
     }
 
     /**
