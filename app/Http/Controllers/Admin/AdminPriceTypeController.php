@@ -6,7 +6,7 @@ use App\Models\PriceType;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class AdminPriceTypeController extends Controller
+class AdminPriceTypeController extends AdminController
 {
     /**
      * Display a listing of the resource.

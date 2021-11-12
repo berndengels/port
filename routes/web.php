@@ -122,8 +122,8 @@ Route::group([
     Route::resource('permissions', AdminPermissionController::class);
     Route::resource('pages', AdminPageController::class);
     Route::resource('widgets', AdminWidgetController::class);
-    Route::resource('boats', BoatController::class);
-    Route::resource('boatDates', BoatDatesController::class);
+    Route::resource('boats', AdminBoatController::class);
+    Route::resource('boatDates', AdminBoatDatesController::class);
     Route::resource('boatGuests', AdminBoatGuestController::class);
     Route::resource('boatGuestDates', AdminBoatGuestDatesController::class);
     Route::resource('services', AdminServiceController::class);

@@ -18,8 +18,9 @@
         <table class="table w-full mt-3">
             <tr>
                 <th>ID</th>
-                <!--th class="hidden md:table-cell">Service</th-->
+                <th >Boot</th>
                 <th class="hidden md:table-cell">Beschreibung</th>
+                <th>Bis</th>
                 <th>Erledigt</th>
                 <th>Am</th>
                 <th>Erstellt</th>
@@ -28,8 +29,9 @@
             @foreach($data as $item)
                 <tr>
                     <td>{{ $item->id }}</td>
-                    <!--td class="hidden md:table-cell">{{-- $item->services->name --}}</td-->
+                    <td>{{ $item->boat->boat_name }}</td>
                     <td class="hidden md:table-cell">{{ $item->description }}</td>
+                    <td>{{ $item->done_until->format('d.m.Y') }}</td>
                     <td>{{ $item->done ? 'Ja' : 'Nein' }}</td>
                     <td>{{ $item->done_at ? $item->done_at->format('d.m.Y H:i') : '' }}</td>
                     <td>{{ $item->created_at->format('d.m.Y H:i') }}</td>

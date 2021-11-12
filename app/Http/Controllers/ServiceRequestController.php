@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Boat;
+use App\Models\Customer;
 use Exception;
 use Illuminate\Http\Response;
 use App\Models\ServiceRequest;
@@ -24,7 +26,15 @@ class ServiceRequestController extends Controller
      */
     public function index()
     {
-        $data = ServiceRequest::whereCustomerId(auth('customer')->user()->id)
+        /**
+         * @var Customer $customer
+         */
+        $customer = auth('customer')->user();
+        $data = $customer
+            ->boats()
+            ->with('serviceRequests')
+            ->whereHas('serviceRequests')
+            ->getRelation('serviceRequests')
             ->paginate($this->paginatorLimit)
         ;
         return view('customer.serviceRequests.index', compact('data'));
@@ -48,8 +58,16 @@ class ServiceRequestController extends Controller
      */
     public function create()
     {
+        $customer = auth('customer')->user();
+        $boats = $this->boatRepository
+            ->setCustomer($customer)
+            ->options(textFieldName: 'boat_name', relations: 'serviceRequests')
+            ->getSelectOptions()
+        ;
+
         return view('customer.serviceRequests.create', [
             'services'  => $this->services,
+            'boats' => $boats,
         ]);
     }
 
@@ -62,10 +80,20 @@ class ServiceRequestController extends Controller
     public function store(ServiceRequestRequest $request)
     {
         try {
-            $request->user('customer')
+            /**
+             * @var Customer $customer
+             */
+            $customer = $request->user('customer');
+            $serviceRequest = $customer
+                ->boats()
+                ->find($request->validated()['boat_id'])
                 ->serviceRequests()
-                ->create($request->validated());
-
+                ->create($request->validated())
+            ;
+            $serviceRequest
+                ->services()
+                ->sync($request->validated()['services'])
+            ;
             return redirect()->route('customer.serviceRequests.index')->with('success', 'Service Anfrage erfogreich angelegt!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
@@ -80,9 +108,17 @@ class ServiceRequestController extends Controller
      */
     public function edit(ServiceRequest $serviceRequest)
     {
+        $customer = auth('customer')->user();
+        $boats = $this->boatRepository
+            ->setCustomer($customer)
+            ->options(textFieldName: 'boat_name', relations: 'serviceRequests')
+            ->getSelectOptions()
+        ;
+
         return view('customer.serviceRequests.edit', [
             'serviceRequest'  => $serviceRequest,
             'services'  => $this->services,
+            'boats' => $boats,
         ]);
     }
 
@@ -95,11 +131,12 @@ class ServiceRequestController extends Controller
      */
     public function update(ServiceRequestRequest $request, ServiceRequest $serviceRequest)
     {
-        if($serviceRequest->customer->id !== $request->user()->id) {
+        if($serviceRequest->boat->customer->id !== $request->user()->id) {
             throw new Exception('wrong ownership');
         }
         try {
             $serviceRequest->update($request->validated());
+            $serviceRequest->services()->sync($request->validated()['services']);
             return redirect()->route('customer.serviceRequests.index')->with('success', 'Service Anfrage erfogreich bearbeitet!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());

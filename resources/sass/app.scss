@@ -46,12 +46,6 @@ tr {
     margin: 0;
     padding: 0;
 }
-/*
-tr td:first-child { border-top-left-radius: 5px; }
-tr td:first-child { border-bottom-left-radius: 5px; }
-tr td:last-child { border-top-right-radius: 5px; }
-tr td:last-child { border-bottom-right-radius: 5px; }
-*/
 .btn {
     padding: 0.2rem 1.0rem;
     border-radius: 0.3rem;
@@ -248,7 +242,6 @@ i {
             background-color: #e3e4e6;
             color: slategray;
         }
-/*
         .main-cards {
             column-count: 1;
             column-gap: 20px;
@@ -275,9 +268,7 @@ i {
                 height: 265px;
             }
         }
-*/
         /* Medium-sized screen breakpoint (tablet, 1050px) */
-/*
         @include media('<=tablet') {
             //@media only screen and (min-width: 65.625em) {
             // Break out main cards into two columns
@@ -285,7 +276,6 @@ i {
                 column-count: 2;
             }
         }
-*/
     }
     .footer {
         grid-area: footer;

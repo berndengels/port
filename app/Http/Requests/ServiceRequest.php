@@ -24,7 +24,7 @@ class ServiceRequest extends AdminRequest
     {
         return [
             'name'  => !$this->getId() ? 'required|unique:App\Models\Service,description' : 'required',
-            'service_id' => 'required',
+            'service_category_id' => 'required',
             'price'         => 'required',
             'materials'     => [],
         ];

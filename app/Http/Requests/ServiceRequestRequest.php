@@ -22,7 +22,7 @@ class ServiceRequestRequest extends MainFormRequest
     {
         return array_merge(
             $this->all(), [
-                'done' => !!$this->post('done') ?? false,
+                'done' => (bool) $this->post('done', false) ?? false,
             ]
         );
     }
@@ -35,14 +35,13 @@ class ServiceRequestRequest extends MainFormRequest
     public function rules()
     {
         $rules = [
+            'boat_id'       => 'required',
             'description'   => 'required',
+            'done_until'    => 'required|date',
             'done'          => '',
             'done_at'       => '',
             'services'      => [],
         ];
-        if(auth('admin')->check()) {
-            $rules += ['customer_id'   => 'required'];
-        }
         return $rules;
     }
 }

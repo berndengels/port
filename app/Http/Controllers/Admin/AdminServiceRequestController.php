@@ -8,14 +8,14 @@ use App\Http\Requests\ServiceRequestRequest;
 
 class AdminServiceRequestController extends AdminController
 {
-    protected $customers;
+    protected $boats;
     protected $services;
 
     public function __construct()
     {
         parent::__construct();
-        $this->customers = $this->customerRepository->options()->getSelectOptions();
-        $this->services = $this->serviceRepository->options('description')->getSelectOptions();
+        $this->boats = $this->boatRepository->options()->getSelectOptions();
+        $this->services = $this->serviceRepository->options()->getSelectOptions();
     }
 
     /**
@@ -37,7 +37,7 @@ class AdminServiceRequestController extends AdminController
      */
     public function show(ServiceRequest $serviceRequest)
     {
-        //
+        return view('admin.serviceRequests.show', compact('serviceRequest'));
     }
 
     /**
@@ -47,10 +47,6 @@ class AdminServiceRequestController extends AdminController
      */
     public function create()
     {
-        return view('admin.serviceRequests.create', [
-            'customers'  => $this->customers,
-            'services'  => $this->services,
-        ]);
     }
 
     /**
@@ -63,7 +59,7 @@ class AdminServiceRequestController extends AdminController
     {
         try {
             ServiceRequest::create($request->validated());
-            return redirect()->route('admin.services.index')->with('success', 'Service Anfrage erfogreich angelegt!');
+            return redirect()->route('admin.serviceRequests.index')->with('success', 'Service Anfrage erfogreich angelegt!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -79,7 +75,7 @@ class AdminServiceRequestController extends AdminController
     {
         return view('admin.serviceRequests.edit', [
             'serviceRequest'  => $serviceRequest,
-            'customers' => $this->customers,
+            'boats' => $this->boats,
             'services'  => $this->services,
         ]);
     }
@@ -95,7 +91,7 @@ class AdminServiceRequestController extends AdminController
     {
         try {
             $serviceRequest->update($request->validated());
-            return redirect()->route('admin.services.index')->with('success', 'Service Anfrage erfogreich bearbeitet!');
+            return redirect()->route('admin.serviceRequests.index')->with('success', 'Service Anfrage erfogreich bearbeitet!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -111,7 +107,7 @@ class AdminServiceRequestController extends AdminController
     {
         try {
             $serviceRequest->delete();
-            return redirect()->route('admin.services.index')->with('success', 'Service Anfrage erfogreich gelöscht!');
+            return redirect()->route('admin.serviceRequests.index')->with('success', 'Service Anfrage erfogreich gelöscht!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }

@@ -26,16 +26,16 @@ use Spatie\Permission\Traits\HasRoles;
 /**
  * App\Models\User
  *
- * @property      int $id
- * @property      string $name
- * @property      string $email
- * @property      Carbon|null $email_verified_at
- * @property      string $password
- * @property      string|null $two_factor_secret
- * @property      string|null $two_factor_recovery_codes
- * @property      string|null $remember_token
- * @property      Carbon|null $created_at
- * @property      Carbon|null $updated_at
+ * @property int $id
+ * @property string $name
+ * @property string $email
+ * @property Carbon|null $email_verified_at
+ * @property string $password
+ * @property string|null $two_factor_secret
+ * @property string|null $two_factor_recovery_codes
+ * @property string|null $remember_token
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  * @property-read Team $currentTeam
  * @property-read string $profile_photo_url
  * @property-read DatabaseNotificationCollection|DatabaseNotification[] $notifications
@@ -46,32 +46,35 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read int|null $teams_count
  * @property-read Collection|PersonalAccessToken[] $tokens
  * @property-read int|null $tokens_count
- * @method        static CustomerFactory factory(...$parameters)
- * @method        static Builder|AdminUser newModelQuery()
- * @method        static Builder|AdminUser newQuery()
- * @method        static Builder|AdminUser query()
- * @method        static Builder|AdminUser whereCreatedAt($value)
- * @method        static Builder|AdminUser whereEmail($value)
- * @method        static Builder|AdminUser whereEmailVerifiedAt($value)
- * @method        static Builder|AdminUser whereId($value)
- * @method        static Builder|AdminUser whereName($value)
- * @method        static Builder|AdminUser wherePassword($value)
- * @method        static Builder|AdminUser whereRememberToken($value)
- * @method        static Builder|AdminUser whereTwoFactorRecoveryCodes($value)
- * @method        static Builder|AdminUser whereTwoFactorSecret($value)
- * @method        static Builder|AdminUser whereUpdatedAt($value)
- * @mixin         Eloquent
- * @property      int|null $current_team_id
- * @property      string|null $profile_photo_path
- * @method        static Builder|AdminUser whereCurrentTeamId($value)
- * @method        static Builder|AdminUser whereProfilePhotoPath($value)
+ * @method static CustomerFactory factory(...$parameters)
+ * @method static Builder|AdminUser newModelQuery()
+ * @method static Builder|AdminUser newQuery()
+ * @method static Builder|AdminUser query()
+ * @method static Builder|AdminUser whereCreatedAt($value)
+ * @method static Builder|AdminUser whereEmail($value)
+ * @method static Builder|AdminUser whereEmailVerifiedAt($value)
+ * @method static Builder|AdminUser whereId($value)
+ * @method static Builder|AdminUser whereName($value)
+ * @method static Builder|AdminUser wherePassword($value)
+ * @method static Builder|AdminUser whereRememberToken($value)
+ * @method static Builder|AdminUser whereTwoFactorRecoveryCodes($value)
+ * @method static Builder|AdminUser whereTwoFactorSecret($value)
+ * @method static Builder|AdminUser whereUpdatedAt($value)
+ * @mixin Eloquent
+ * @property int|null $current_team_id
+ * @property string|null $profile_photo_path
+ * @method static Builder|AdminUser whereCurrentTeamId($value)
+ * @method static Builder|AdminUser whereProfilePhotoPath($value)
  * @property-read Collection|Permission[] $permissions
  * @property-read int|null $permissions_count
  * @property-read Collection|Role[] $roles
  * @property-read int|null $roles_count
- * @method        static Builder|AdminUser permission($permissions)
- * @method        static Builder|AdminUser role($roles, $guard = null)
+ * @method static Builder|AdminUser permission($permissions)
+ * @method static Builder|AdminUser role($roles, $guard = null)
  * @property-read mixed $roles_string
+ * @property string|null $fon
+ * @property-read mixed $str_roles
+ * @method static Builder|AdminUser whereFon($value)
  */
 class AdminUser extends Authenticatable
 {
