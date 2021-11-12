@@ -68,6 +68,14 @@
             <th>berechneter Materialpreis</th>
             <td>{{ round($serviceRequest->boat->getUnderwaterShipArea() * $material->price_per_unit / $material->fertility) }} €</td>
         </tr>
+        <tr>
+            <th>berechneter Arbeitspreis</th>
+            <td>{{ ceil($serviceRequest->boat->getUnderwaterShipArea() * $service->price) }} €</td>
+        </tr>
+        <tr>
+            <th>Gesamtpreis</th>
+            <td>{{ ceil( $serviceRequest->boat->getUnderwaterShipArea() * $service->price + ($serviceRequest->boat->getUnderwaterShipArea() * $material->price_per_unit / $material->fertility)) }} €</td>
+        </tr>
     </table>
 @endsection
 
