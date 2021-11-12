@@ -45,6 +45,7 @@ class Material extends Model
 
     protected $table = 'materials';
     protected $guarded = ['id'];
+    protected $appends = [];
     public $timestamps = false;
 
     protected static $cacheKeys = [

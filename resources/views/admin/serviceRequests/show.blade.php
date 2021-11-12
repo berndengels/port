@@ -73,9 +73,13 @@
             <td>{{ ceil($serviceRequest->boat->getUnderwaterShipArea() * $service->price) }} €</td>
         </tr>
         <tr>
-            <th>Gesamtpreis</th>
-            <td>{{ ceil( $serviceRequest->boat->getUnderwaterShipArea() * $service->price + ($serviceRequest->boat->getUnderwaterShipArea() * $material->price_per_unit / $material->fertility)) }} €</td>
+            <td colspan="2">
+                <div class="my-3 p-2 text-lg font-extrabold bg-red-600 text-white">
+                    Gesamtpreis {{ ceil( $serviceRequest->boat->getUnderwaterShipArea() * $service->price + ($serviceRequest->boat->getUnderwaterShipArea() * $material->price_per_unit / $material->fertility)) }} €
+                </div>
+            </td>
         </tr>
+
     </table>
 @endsection
 

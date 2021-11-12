@@ -53,8 +53,6 @@ class Service extends Model
         return $this->belongsToMany(
             Material::class,
             'service_materials'
-//            'service_id',
-//            'material_id'
         );
     }
 }

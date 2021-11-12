@@ -34,6 +34,7 @@ class Area
     }
 
     private function base() {
+        // LWL * (Breite + Tiefgang)
         return $this->lengthWaterline * ($this->width + $this->draft);
     }
 
