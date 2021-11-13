@@ -6,12 +6,20 @@
     </div>
     <table class="table m-10 show-table">
         <tr>
-            <th>Kunde:</th>
-            <td>{{ $serviceRequest->boat->customer->name }}</td>
+            <th>Boot:</th>
+            <td>{{ $serviceRequest->boat->boat_name }} (Eigner: {{ $serviceRequest->boat->customer->name }})</td>
         </tr>
         <tr>
-            <th>Boot:</th>
-            <td>{{ $serviceRequest->boat->boat_name }} (Unterwassershiff: {{ round($underWaterShip, 1) }} m²)</td>
+            <th>Fläche Unterwasserschiff:</th>
+            <td>{{ round($underWaterShip, 1) }} m²</td>
+        </tr>
+        <tr>
+            <th>Bootslänge:</th>
+            <td>{{ $serviceRequest->boat->length }} m</td>
+        </tr>
+        <tr>
+            <th>Bootsbreite:</th>
+            <td>{{ $serviceRequest->boat->width }} m</td>
         </tr>
         <tr>
             <th>Kunden Bemerkung:</th>
@@ -41,39 +49,32 @@
                 <td>{{ $service->name }}</td>
             </tr>
             <tr>
-                <th>Arbeits-Preis</th>
-                <td>{{ $service->category->name }} {{ $service->price }} €</td>
-            </tr>
-            <tr>
-                <th class="align-text-top">Material</th>
-                <td>
-                    <ul class="">
-                        @foreach($service->materials as $material)
-                            <li>{{ $material->name }}</li>
-                            <li>Preis: {{ $material->price_per_unit }} € pro {{ $material->priceType->unit }}</li>
-                            <li>Ergiebigkeit: {{ $material->fertility }} {{ $material->fertility_unit }} pro {{ $material->fertility_per }}</li>
-                        @endforeach
-                    </ul>
-                </td>
-            </tr>
-            <tr>
-                <th>benötigte Materialmenge</th>
-                <td>{{ round($material->getQuantity($underWaterShip), 1) }} {{ $material->fertility_per }}</td>
-            </tr>
-            <tr>
-                <th>berechneter Materialpreis</th>
-                <td>{{ round($material->getMaterialPrice($underWaterShip)) }} €</td>
-            </tr>
-            <tr>
                 <th>berechneter Arbeitspreis</th>
-                <td>{{ ceil($service->getServicePrice($underWaterShip)) }} €</td>
+                <td>{{ ceil($service->getServicePrice($serviceRequest->boat)) }} € ({{ $service->price }} € {{ $service->priceType->name }})</td>
             </tr>
+            @if($service->materials && $service->materials->count() > 0)
+                <tr>
+                    <th class="align-text-top">Material</th>
+                    <td>
+                        <ul class="list-disc ml-3">
+                            @foreach($service->materials as $material)
+                                <li>{{ $material->name }}</li>
+                                <li>Preis: {{ $material->price_per_unit }} € pro {{ $material->priceType->unit }}</li>
+                                <li>Ergiebigkeit: {{ $material->fertility }} {{ $material->fertility_unit }} pro {{ $material->fertility_per }}</li>
+                                <li>benötigte Materialmenge: {{ round($material->getQuantity($serviceRequest->boat), 1) }} {{ $material->fertility_per }}</li>
+                                <li>berechneter Materialpreis: {{ round($material->getMaterialPrice($serviceRequest->boat)) }} €</li>
+                            @endforeach
+                        </ul>
+                    </td>
+                </tr>
+            @endif
+            <tr><td colspan="2"><hr></td></tr>
         @endforeach
 
         <tr>
             <td colspan="2">
                 <div class="my-3 p-2 text-lg font-extrabold bg-red-600 text-white">
-                    Gesamtpreis {{ ceil($serviceRequest->totalPrice($underWaterShip)) }} €
+                    Gesamtpreis {{ ($serviceRequest->totalPrice()) }} €
                 </div>
             </td>
         </tr>

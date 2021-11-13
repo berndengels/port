@@ -7,8 +7,6 @@
             @method('put')
             @bind($serviceCategory)
             <x-form-input name="name" label="Name" required />
-            <x-form-select name="price_type_id" label="Preis-Typ" :options="$priceTypes" required />
-            <x-form-input type="number" steps="0.1" name="price" label="Preis" required />
             @endbind
             <div class="mt-2">
                 <x-form-submit class="btn btn-save h-10 mt-3 w-full md:w-1/2" icon="fas fa-save">Speichern</x-form-submit>

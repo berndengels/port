@@ -2,22 +2,24 @@
 
 namespace App\Traits\Models\Calculations;
 
-use App\Models\Service;
-use App\Libs\Prices\Services\ServicePrice;
 use Exception;
+use App\Models\Boat;
+use App\Models\Service;
+use App\Libs\Prices\Boat\Services\ServicePrice;
 
 trait ServicePriceCalculation
 {
 
-    public function getServicePrice($targetValue)
+    public function getServicePrice(Boat $boat)
     {
         if(! $this instanceof Service) {
             throw new Exception('wrong model instance');
         }
 
         return (new ServicePrice(
-            targetValue: $targetValue,
-            pricePerUntit: $this->price)
-        )->getPrice();
+            boat: $boat,
+            priceType: $this->priceType,
+            pricePerUntit: $this->price
+        ))->getPrice();
     }
 }

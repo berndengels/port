@@ -9,7 +9,7 @@
             <x-form-select name="boat_id" label="Boot" :options="$boats" required />
             <x-form-select name="services[]" label="Services" :options="$services" class="flexy" size="10" many-relation multiple />
             <x-form-input name="description" label="Beschreibung" required />
-            <x-form-input type="date" name="done_until" label="gewünschte Ausführung bis" :unbind="true" :default="$serviceRequest->done_until->format('Y-m-d')" required />
+            <x-form-input type="date" name="done_until" label="gewünschte Ausführung bis" :bind="false" :default="$serviceRequest->done_until->format('Y-m-d')" required />
             @endbind
             <div class="mt-2">
                 <x-form-submit class="btn btn-save h-10 mt-3 w-full md:w-1/2" icon="fas fa-save">Speichern</x-form-submit>

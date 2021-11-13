@@ -8,12 +8,9 @@ use App\Http\Requests\ServiceCategoryRequest;
 
 class AdminServiceCategoryController extends AdminController
 {
-    protected $priceTypes;
-
     public function __construct()
     {
         parent::__construct();
-        $this->priceTypes = $this->priceTypeRepository->options()->getSelectOptions();
     }
     /**
      * Display a listing of the resource.
@@ -44,9 +41,7 @@ class AdminServiceCategoryController extends AdminController
      */
     public function create()
     {
-        return view('admin.serviceCategories.create', [
-            'priceTypes'    => $this->priceTypes,
-        ]);
+        return view('admin.serviceCategories.create');
     }
 
     /**
@@ -75,7 +70,6 @@ class AdminServiceCategoryController extends AdminController
     {
         return view('admin.serviceCategories.edit', [
             'serviceCategory' => $serviceCategory,
-            'priceTypes' => $this->priceTypes,
         ]);
     }
 
@@ -92,6 +86,7 @@ class AdminServiceCategoryController extends AdminController
             $serviceCategory->update($request->validated());
             return redirect()->route('admin.serviceCategories.index')->with('success', 'Service Typ erfogreich bearbeitet!');
         } catch(Exception $e) {
+            dd($e->getMessage());
             return back()->with('error', $e->getMessage());
         }
     }

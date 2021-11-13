@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Traits\Models\Calculations\MaterialPriceCalculation;
 use Eloquent;
 use App\Libs\AppCache;
 use App\Traits\Models\ClearCache;
@@ -11,6 +10,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Traits\Models\Calculations\MaterialCalculation;
+use App\Traits\Models\Calculations\MaterialPriceCalculation;
 
 /**
  * App\Models\Material

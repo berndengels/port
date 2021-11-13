@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Carbon;
 
@@ -44,9 +45,14 @@ class Service extends Model
     protected $guarded = ['id'];
 //    public $timestamps = false;
 
-    public function category()
+    public function category(): BelongsTo
     {
         return $this->belongsTo(ServiceCategory::class, 'service_category_id', 'id');
+    }
+
+    public function priceType(): BelongsTo
+    {
+        return $this->belongsTo(PriceType::class);
     }
 
     public function materials(): BelongsToMany

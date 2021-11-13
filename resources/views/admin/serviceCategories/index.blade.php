@@ -18,16 +18,12 @@
             <tr>
                 <th>ID</th>
                 <th>Name</th>
-                <th>Preis-Typ</th>
-                <th>Preis</th>
                 <th colspan="2"><br></th>
             </tr>
             @foreach($data as $item)
                 <tr>
                     <td>{{ $item->id }}</td>
                     <td>{{ $item->name }}</td>
-                    <td>{{ $item->priceType->name }}</td>
-                    <td>{{ $item->price }} €</td>
                     <td>
                         <x-nav-link href="{{ route('admin.serviceCategories.edit', $item) }}" icon="fas fa-edit" class="btn" title="Bearbeiten">
                             <span class="hidden md:visible">Edit</span>

@@ -10,12 +10,14 @@ class AdminServiceController extends AdminController
 {
     protected $categories;
     protected $materials;
+    protected $priceTypes;
 
     public function __construct()
     {
         parent::__construct();
         $this->categories   = $this->serviceCategoryRepository->options()->getSelectOptions();
         $this->materials    = $this->materialRepository->options()->getSelectOptions();
+        $this->priceTypes   = $this->priceTypeRepository->options()->getSelectOptions();
     }
 
     /**
@@ -48,8 +50,9 @@ class AdminServiceController extends AdminController
     public function create()
     {
         return view('admin.services.create', [
-            'categories'  => $this->categories,
-            'materials' => $this->materials,
+            'categories'    => $this->categories,
+            'materials'     => $this->materials,
+            'priceTypes'    => $this->priceTypes,
         ]);
     }
 
@@ -62,7 +65,9 @@ class AdminServiceController extends AdminController
     public function store(ServiceRequest $request)
     {
         try {
-            Service::create($request->validated());
+            $service = Service::create($request->validated());
+//            if($request->validated()) {
+//            }
             return redirect()->route('admin.services.index')->with('success', 'Service erfogreich angelegt!');
         } catch(Exception $e) {
             dd($e->getMessage());
@@ -82,6 +87,7 @@ class AdminServiceController extends AdminController
             'service'       => $service,
             'categories'    => $this->categories,
             'materials'     => $this->materials,
+            'priceTypes'    => $this->priceTypes,
         ]);
     }
 
@@ -95,8 +101,12 @@ class AdminServiceController extends AdminController
     public function update(ServiceRequest $request, Service $service)
     {
         try {
-            $service->update($request->validated());
-            $service->materials()->sync($request->validated()['materials']);
+            $validated = $request->validated();
+            $service->update($validated);
+            $materials = $validated['materials'] ?? null;
+            if($materials && count($materials) > 0) {
+                $service->materials()->sync($materials);
+            }
             return redirect()->route('admin.services.index')->with('success', 'Service erfogreich bearbeitet!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());

@@ -27,6 +27,7 @@
                     <td>{{ $item->id }}</td>
                     <td class="hidden md:table-cell">{{ $item->name }}</td>
                     <td>{{ $item->price }} €</td>
+                    <td>{{ $item->priceType->name }} €</td>
                     <td>{{ $item->created_at->format('d.m.Y H:i') }}</td>
                     <td>
                         <x-nav-link href="{{ route('admin.services.edit', $item) }}" icon="fas fa-edit" class="btn" title="Bearbeiten">

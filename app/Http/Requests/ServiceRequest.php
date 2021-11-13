@@ -23,8 +23,9 @@ class ServiceRequest extends AdminRequest
     public function rules()
     {
         return [
-            'name'  => !$this->getId() ? 'required|unique:App\Models\Service,description' : 'required',
+            'name'  => !$this->getId() ? 'required|unique:App\Models\Service,name' : 'required',
             'service_category_id' => 'required',
+            'price_type_id' => 'required',
             'price'         => 'required',
             'materials'     => [],
         ];

@@ -6,6 +6,7 @@
         <x-form method="post" :action="route('admin.services.store')" class="w-full lg:w-1/2">
             <x-form-input name="name" label="Beschreibung" required />
             <x-form-select name="materials[]" label="Material" :options="$materials" class="flexy" size="10" many-relation multiple />
+            <x-form-select name="price_type_id" label="Arbeits-Preis-Type" :options="$priceTypes" required />
             <x-form-input type="number" step="0.1" name="price" label="Arbeits Preis" required />
             <x-form-select name="service_category_id" label="Kategorie" :options="$categories" required />
             <div class="mt-2">

@@ -72,12 +72,12 @@ class ServiceRequest extends Model
         );
     }
 
-    public function totalPrice(int|float $targetValue, int $roundPrecision = 2 ): int|float
+    public function totalPrice(int $roundPrecision = 0 ): int|float
     {
-        $total = $this->services->sum(function (Service $service) use ($targetValue) {
-            $servicePrice = $service->getServicePrice($targetValue);
-            return $servicePrice + $service->materials->sum(function(Material $material) use($servicePrice, $targetValue) {
-                return $material->getMaterialPrice($targetValue);
+        $total = $this->services->sum(function (Service $service) {
+            $servicePrice = $service->getServicePrice($this->boat);
+            return $servicePrice + $service->materials->sum(function(Material $material) use($servicePrice) {
+                return $material->getMaterialPrice($this->boat);
             });
         });
         return round($total, $roundPrecision);
