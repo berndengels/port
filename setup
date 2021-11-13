@@ -18,7 +18,7 @@ npm run dev
 
 if [ ! -f .env ]; then
     echo "create .env file"
-    cp .env.example .env
+    cp .env.demo.tpl .env
 fi
 # check for APP_KEY
 appKey=$(grep ^APP_KEY .env|awk -F "=" '{print $2}')

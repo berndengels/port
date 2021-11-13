@@ -8,11 +8,11 @@
 </p>
 
 # Port project
-### For Test Implementation
+### For Test Implementation (only linux, mac osx)
 - create MySql database 'port_demo'
-- copy .env.example to .env
-- set all credentials, passwords in .env (DB, EMAIL)
 - run './setup' in console in project directory. this will install test-data
+- set all credentials, passwords in .env (DB, EMAIL)
+- php artisan server --env=demo
 - Login data: 
   - login: demo@test.com, 
   - password: password
