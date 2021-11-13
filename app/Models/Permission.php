@@ -1,8 +1,9 @@
 <?php
 namespace App\Models;
 
-use Database\Factories\PermissionFactory;
 use Eloquent;
+use App\Libs\AppCache;
+use Database\Factories\PermissionFactory;
 use Illuminate\Support\Carbon;
 use App\Traits\Models\ClearCache;
 use App\Traits\Models\Filter\Filter;
@@ -14,11 +15,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 /**
  * App\Models\Permission
  *
- * @property      int $id
- * @property      string $name
- * @property      string $guard_name
- * @property      Carbon|null $created_at
- * @property      Carbon|null $updated_at
+ * @property int $id
+ * @property string $name
+ * @property string $guard_name
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  * @property-read mixed $action
  * @property-read mixed $actions
  * @property-read mixed $model
@@ -29,26 +30,32 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property-read int|null $roles_count
  * @property-read Collection|Customer[] $users
  * @property-read int|null $users_count
- * @method        static Builder|Permission newModelQuery()
- * @method        static Builder|Permission newQuery()
- * @method        static Builder|Permission permission($permissions)
- * @method        static Builder|Permission query()
- * @method        static Builder|Permission role($roles, $guard = null)
- * @method        static Builder|Permission whereCreatedAt($value)
- * @method        static Builder|Permission whereGuardName($value)
- * @method        static Builder|Permission whereId($value)
- * @method        static Builder|Permission whereName($value)
- * @method        static Builder|Permission whereUpdatedAt($value)
- * @mixin         Eloquent
- * @method        static Builder|Permission filter(?string $name = null)
- * @method        static PermissionFactory factory(...$parameters)
+ * @method static Builder|Permission newModelQuery()
+ * @method static Builder|Permission newQuery()
+ * @method static Builder|Permission permission($permissions)
+ * @method static Builder|Permission query()
+ * @method static Builder|Permission role($roles, $guard = null)
+ * @method static Builder|Permission whereCreatedAt($value)
+ * @method static Builder|Permission whereGuardName($value)
+ * @method static Builder|Permission whereId($value)
+ * @method static Builder|Permission whereName($value)
+ * @method static Builder|Permission whereUpdatedAt($value)
+ * @mixin Eloquent
+ * @method static Builder|Permission filter(?string $name = null)
+ * @method static PermissionFactory factory(...$parameters)
  */
 class Permission extends BaseModel
 {
     use HasFactory, Filter, ClearCache;
+
     protected $appends = ['actions','model','action','uniqName'];
     public $action;
     public $model;
+
+    protected static $cacheKeys = [
+        AppCache::KEY_OPTIONS_PERMISSION,
+        AppCache::KEY_OPTIONS_DATA_PERMISSION,
+    ];
 
     protected static $actions = [
         'read'  => 'read',

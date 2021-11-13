@@ -14,10 +14,8 @@ class CustomerRequest extends AdminRequest
      */
     public function authorize()
     {
-        dd($this->getId());
-        return $this->user()->id === $this->getId()
-            || auth()->user()->can('write Customer')
-            ;
+        return ($this->user('customer') && $this->user('customer')->id === $this->getId())
+            || auth()->user()->can('write Customer');
     }
 
     public function validationData($keys = null)

@@ -16,16 +16,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string $location
  * @property string $district
  * @property string $state
- * @method   static Builder|CarLicensePlate newModelQuery()
- * @method   static Builder|CarLicensePlate newQuery()
- * @method   static Builder|CarLicensePlate query()
- * @method   static Builder|CarLicensePlate whereCode($value)
- * @method   static Builder|CarLicensePlate whereCountryId($value)
- * @method   static Builder|CarLicensePlate whereDistrict($value)
- * @method   static Builder|CarLicensePlate whereId($value)
- * @method   static Builder|CarLicensePlate whereLocation($value)
- * @method   static Builder|CarLicensePlate whereState($value)
- * @mixin    Eloquent
+ * @method static Builder|CarLicensePlate newModelQuery()
+ * @method static Builder|CarLicensePlate newQuery()
+ * @method static Builder|CarLicensePlate query()
+ * @method static Builder|CarLicensePlate whereCode($value)
+ * @method static Builder|CarLicensePlate whereCountryId($value)
+ * @method static Builder|CarLicensePlate whereDistrict($value)
+ * @method static Builder|CarLicensePlate whereId($value)
+ * @method static Builder|CarLicensePlate whereLocation($value)
+ * @method static Builder|CarLicensePlate whereState($value)
+ * @mixin Eloquent
  */
 class CarLicensePlate extends BaseModel
 {

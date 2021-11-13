@@ -1,6 +1,7 @@
 <?php
 namespace App\Http;
 
+use App\Http\Middleware\UnAuthorizedAction;
 use Fruitcake\Cors\HandleCors;
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\EncryptCookies;
@@ -58,6 +59,7 @@ class Kernel extends HttpKernel
             StartSession::class,
             HeaderNavigation::class,
             ShwitchDatabaseConnection::class,
+            UnAuthorizedAction::class,
             ShareErrorsFromSession::class,
             VerifyCsrfToken::class,
             SubstituteBindings::class,

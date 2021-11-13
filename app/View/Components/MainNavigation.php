@@ -2,11 +2,12 @@
 
 namespace App\View\Components;
 
+use Closure;
 use App\Models\AdminUser;
 use App\Models\Customer;
-use Closure;
-use Illuminate\Contracts\View\View;
+use Detection\MobileDetect;
 use Illuminate\View\Component;
+use Illuminate\Contracts\View\View;
 
 class MainNavigation extends Component
 {
@@ -23,9 +24,12 @@ class MainNavigation extends Component
          */
         $user = auth($this->guard)->user();
         $this->items = collect([]);
+
         if($user) {
             $this->items = collect(config('port.menu.'.$this->guard.'.items'))
-//                ->filter(fn ($item) => (!isset($item['permissions']) || (isset($item['permissions']) && $user->can($item['permissions']))))
+                ->filter(fn ($item) => (!isset($item['permissions'])
+                    || (isset($item['permissions']) && $user->can($item['permissions']))
+                ))
             ;
         }
     }

@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\DB;
  * @method static Builder|BaseModel newModelQuery()
  * @method static Builder|BaseModel newQuery()
  * @method static Builder|BaseModel query()
- * @mixin  Eloquent
+ * @mixin Eloquent
  */
 class BaseModel extends Model
 {

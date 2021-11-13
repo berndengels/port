@@ -15,42 +15,42 @@ use Illuminate\Database\Query\JoinClause;
 /**
  * App\Models\CaravanDates
  *
- * @property      int $id
- * @property      int $caravan_id
- * @property      int $persons
- * @property      Carbon $from
- * @property      Carbon $until
- * @property      int|null $electrical_connection
- * @property      int $price
+ * @property int $id
+ * @property int $caravan_id
+ * @property int $persons
+ * @property Carbon $from
+ * @property Carbon $until
+ * @property int|null $electrical_connection
+ * @property int $price
  * @property-read Caravan $caravan
- * @method        static Builder|CaravanDates newModelQuery()
- * @method        static Builder|CaravanDates newQuery()
- * @method        static Builder|CaravanDates query()
- * @method        static Builder|CaravanDates whereCaravanId($value)
- * @method        static Builder|CaravanDates whereElectricalConnection($value)
- * @method        static Builder|CaravanDates whereFrom($value)
- * @method        static Builder|CaravanDates whereId($value)
- * @method        static Builder|CaravanDates wherePersons($value)
- * @method        static Builder|CaravanDates wherePrice($value)
- * @method        static Builder|CaravanDates whereUntil($value)
- * @mixin         Eloquent
- * @property      int|null $electric
- * @property      string $prices
+ * @method static Builder|CaravanDates newModelQuery()
+ * @method static Builder|CaravanDates newQuery()
+ * @method static Builder|CaravanDates query()
+ * @method static Builder|CaravanDates whereCaravanId($value)
+ * @method static Builder|CaravanDates whereElectricalConnection($value)
+ * @method static Builder|CaravanDates whereFrom($value)
+ * @method static Builder|CaravanDates whereId($value)
+ * @method static Builder|CaravanDates wherePersons($value)
+ * @method static Builder|CaravanDates wherePrice($value)
+ * @method static Builder|CaravanDates whereUntil($value)
+ * @mixin Eloquent
+ * @property int|null $electric
+ * @property string $prices
  * @property-read mixed $days
- * @method        static Builder|CaravanDates whereElectric($value)
- * @method        static Builder|CaravanDates wherePrices($value)
- * @method        static Builder|CaravanDates getMonthsByYears($from = null, $until = null)
- * @method        static CaravanDatesFactory factory(...$parameters)
- * @method        static Builder|CaravanDates pageList()
- * @property      int|null $day_price
+ * @method static Builder|CaravanDates whereElectric($value)
+ * @method static Builder|CaravanDates wherePrices($value)
+ * @method static Builder|CaravanDates getMonthsByYears($from = null, $until = null)
+ * @method static CaravanDatesFactory factory(...$parameters)
+ * @method static Builder|CaravanDates pageList()
+ * @property int|null $day_price
  * @property-read mixed $valid_from
  * @property-read mixed $valid_until
- * @method        static Builder|CaravanDates (?int $caravanId = null)
- * @method        static Builder|CaravanDates caravanByDates(?int $caravanId = null)
- * @method        static Builder|CaravanDates dublicates()
- * @method        static Builder|CaravanDates fromYearMonth(?string $year = null, ?string $month = null)
- * @method        static Builder|CaravanDates whereDayPrice($value)
- * @method        static Builder|CaravanDates caravan(?int $caravanId = null)
+ * @method static Builder|CaravanDates (?int $caravanId = null)
+ * @method static Builder|CaravanDates caravanByDates(?int $caravanId = null)
+ * @method static Builder|CaravanDates dublicates()
+ * @method static Builder|CaravanDates fromYearMonth(?string $year = null, ?string $month = null)
+ * @method static Builder|CaravanDates whereDayPrice($value)
+ * @method static Builder|CaravanDates caravan(?int $caravanId = null)
  */
 class CaravanDates extends BaseModel
 {

@@ -3,6 +3,7 @@
 namespace App\View\Components;
 
 use Closure;
+use Detection\MobileDetect;
 use Illuminate\Http\Request;
 use Illuminate\View\Component;
 use Illuminate\Contracts\View\View;

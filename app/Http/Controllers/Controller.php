@@ -7,7 +7,12 @@ use App\Repositories\BoatRepository;
 use App\Repositories\CaravanRepository;
 use App\Repositories\CountryRepository;
 use App\Repositories\CustomerRepository;
+use App\Repositories\MaterialRepository;
+use App\Repositories\MaterialCategoryRepository;
+use App\Repositories\PriceTypeRepository;
 use App\Repositories\RoleRepository;
+use App\Repositories\ServiceCategoryRepository;
+use App\Repositories\ServiceRepository;
 use Illuminate\Routing\Controller as BaseController;
 
 class Controller extends BaseController
@@ -19,6 +24,11 @@ class Controller extends BaseController
     protected $caravanRepository;
     protected $customerRepository;
     protected $roleRepository;
+    protected $priceTypeRepository;
+    protected $materialRepository;
+    protected $materialCategoryRepository;
+    protected $serviceCategoryRepository;
+    protected $serviceRepository;
 
     public function __construct()
     {
@@ -29,5 +39,10 @@ class Controller extends BaseController
         $this->roleRepository       = new RoleRepository();
         $this->boatRepository       = new BoatRepository();
         $this->boatGuestRepository  = new BoatGuestsRepository();
+        $this->priceTypeRepository  = new PriceTypeRepository();
+        $this->materialRepository   = new MaterialRepository();
+        $this->materialCategoryRepository   = new MaterialCategoryRepository();
+        $this->serviceCategoryRepository    = new ServiceCategoryRepository();
+        $this->serviceRepository    = new ServiceRepository();
     }
 }

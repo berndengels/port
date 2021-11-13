@@ -14,6 +14,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\WidgetController;
 use App\Http\Controllers\CustomerLoginController;
+use App\Http\Controllers\CustomerServiceController;
+use App\Http\Controllers\ServiceRequestController;
 
 use App\Http\Controllers\Admin\AdminCaravanController;
 use App\Http\Controllers\Admin\AdminCaravanDatesController;
@@ -34,6 +36,11 @@ use App\Http\Controllers\Admin\AdminBoatGuestDatesController;
 use App\Http\Controllers\Admin\Auth\AdminLoginController;
 use App\Http\Controllers\Admin\Auth\AdminForgotPasswordController;
 use App\Http\Controllers\Admin\Auth\AdminResetPasswordController;
+use App\Http\Controllers\Admin\AdminServiceController;
+use App\Http\Controllers\Admin\AdminServiceCategoryController;
+use App\Http\Controllers\Admin\AdminMaterialController;
+use App\Http\Controllers\Admin\AdminMaterialCategoryController;
+use App\Http\Controllers\Admin\AdminServiceRequestController;
 
 Auth::routes();
 //dd(Route::getRoutes());
@@ -63,6 +70,8 @@ Route::group([
     Route::resource('profile', ProfileController::class);
     Route::resource('boats', BoatController::class);
     Route::resource('boatDates', BoatDatesController::class);
+    Route::resource('serviceRequests', ServiceRequestController::class);
+
     Route::get('boatDates/invoice/{boatDate}', [BoatDatesController::class, 'invoice'])->name('boatDates.invoice');
 });
 
@@ -113,10 +122,15 @@ Route::group([
     Route::resource('permissions', AdminPermissionController::class);
     Route::resource('pages', AdminPageController::class);
     Route::resource('widgets', AdminWidgetController::class);
-    Route::resource('boats', BoatController::class);
-    Route::resource('boatDates', BoatDatesController::class);
+    Route::resource('boats', AdminBoatController::class);
+    Route::resource('boatDates', AdminBoatDatesController::class);
     Route::resource('boatGuests', AdminBoatGuestController::class);
     Route::resource('boatGuestDates', AdminBoatGuestDatesController::class);
+    Route::resource('services', AdminServiceController::class);
+    Route::resource('serviceCategories', AdminServiceCategoryController::class);
+    Route::resource('materials', AdminMaterialController::class);
+    Route::resource('materialCategories', AdminMaterialCategoryController::class);
+    Route::resource('serviceRequests', AdminServiceRequestController::class);
 
     Route::post('caravanDates/sendExcel', [AdminCaravanDatesController::class, 'sendExcel'])->name('caravanDates.sendExcel');
 

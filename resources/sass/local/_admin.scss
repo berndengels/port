@@ -42,4 +42,15 @@ input[disabled], select[disabled], textara[disabled] {
 			}
 		}
 	}
+	&.show-table {
+		th,td {
+			padding: 0.2rem 0.5rem;
+		}
+		th {
+			text-align: right;
+		}
+		td {
+			text-align: left;
+		}
+	}
 }

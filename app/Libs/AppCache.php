@@ -19,6 +19,9 @@ class AppCache
     const KEY_OPTIONS_ROLE          = 'options.role';
     const KEY_OPTIONS_DATA_ROLE     = 'options.data.role';
 
+    const KEY_OPTIONS_PERMISSION          = 'options.permission';
+    const KEY_OPTIONS_DATA_PERMISSION     = 'options.data.permission';
+
     const KEY_OPTIONS_ADMIN_ROLE        = 'options.admin.role';
     const KEY_OPTIONS_DATA_ADMIN_ROLE   = 'options.data.admn.role';
 
@@ -30,4 +33,19 @@ class AppCache
 
     const KEY_OPTIONS_COUNTRY       = 'options.country';
     const KEY_OPTIONS_DATA_COUNTRY  = 'options.data.country';
+
+    const KEY_OPTIONS_PRICE_TYPE      = 'options.priceType';
+    const KEY_OPTIONS_DATA_PRICE_TYPE  = 'options.data.priceType';
+
+    const KEY_OPTIONS_MATERIAL          = 'options.material';
+    const KEY_OPTIONS_DATA_MATERIAL     = 'options.data.material';
+
+    const KEY_OPTIONS_MATERIAL_CATEGORY      = 'options.materialCategory';
+    const KEY_OPTIONS_DATA_MATERIAL_CATEGORY  = 'options.data.materialCategory';
+
+    const KEY_OPTIONS_SERVICE_CATEGORY      = 'options.serviceCategory';
+    const KEY_OPTIONS_DATA_SERVICE_CATEGORY  = 'options.data.serviceCategory';
+
+    const KEY_OPTIONS_SERVICE       = 'options.service';
+    const KEY_OPTIONS_DATA_SERVICE  = 'options.data.service';
 }

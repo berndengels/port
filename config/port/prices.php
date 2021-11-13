@@ -30,4 +30,21 @@ return [
         'persons_inclusivce'    => (float) env('BOAT_GUEST_PRICE_PERSONS_INCLUSIVE', 0),
         'persons_additional'    => (float) env('BOAT_GUEST_PRICE_ADDITIONAL_PERSONS_PER_DAY', 0),
     ],
+    'fertility' => [
+        'types' =>
+            [
+                'meter' => 'per Meter',
+                'quadratmeter' => 'per Quadratmeter',
+            ],
+        'units' => [
+            'Meter' => 'Meter',
+            'Quadratmeter' => 'Quadratmeter',
+            'Liter' => 'Liter',
+        ],
+        'per' => [
+            'Meter' => 'Meter',
+            'Quadratmeter' => 'Quadratmeter',
+            'Liter' => 'Liter',
+        ],
+    ],
 ];
