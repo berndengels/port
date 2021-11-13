@@ -16,19 +16,16 @@
         {{ $data->links() }}
         <table class="table w-full mt-3">
             <tr>
-                <th>ID</th>
                 <th class="hidden md:table-cell">Name</th>
-                <th>Preis</th>
-                <th>Erstellt</th>
+                <th>Arbeits-Preis</th>
+                <th>Pro</th>
                 <th colspan="2"><br></th>
             </tr>
             @foreach($data as $item)
                 <tr>
-                    <td>{{ $item->id }}</td>
                     <td class="hidden md:table-cell">{{ $item->name }}</td>
                     <td>{{ $item->price }} €</td>
-                    <td>{{ $item->priceType->name }} €</td>
-                    <td>{{ $item->created_at->format('d.m.Y H:i') }}</td>
+                    <td>{{ $item->priceType->name }}</td>
                     <td>
                         <x-nav-link href="{{ route('admin.services.edit', $item) }}" icon="fas fa-edit" class="btn" title="Bearbeiten">
                             <span class="hidden md:visible">Edit</span>

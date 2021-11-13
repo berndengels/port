@@ -9,7 +9,6 @@
         {{ $data->links() }}
         <table class="table w-full mt-3">
             <tr>
-                <th>ID</th>
                 <th class="hidden md:table-cell">Kunde</th>
                 <th>Boot</th>
                 <th class="hidden md:table-cell">Beschreibung</th>
@@ -20,7 +19,6 @@
             </tr>
             @foreach($data as $item)
                 <tr>
-                    <td>{{ $item->id }}</td>
                     <td class="hidden md:table-cell">{{ $item->boat->customer->name }}</td>
                     <td>{{ $item->boat->boat_name }}</td>
                     <td class="hidden md:table-cell">{{ $item->description }}</td>

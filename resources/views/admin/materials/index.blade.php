@@ -16,7 +16,6 @@
         {{ $data->links() }}
         <table class="table w-full mt-3">
             <tr>
-                <th>ID</th>
                 <th>Art</th>
                 <th>Preis-Typ</th>
                 <th>Name</th>
@@ -25,7 +24,6 @@
             </tr>
             @foreach($data as $item)
                 <tr>
-                    <td>{{ $item->id }}</td>
                     <td>{{ $item->category->name }}</td>
                     <td>{{ $item->priceType->name }}</td>
                     <td>{{ $item->name }}</td>

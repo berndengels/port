@@ -16,13 +16,11 @@
         {{ $data->links() }}
         <table class="table w-full mt-3">
             <tr>
-                <th>ID</th>
                 <th>Name</th>
                 <th colspan="2"><br></th>
             </tr>
             @foreach($data as $item)
                 <tr>
-                    <td>{{ $item->id }}</td>
                     <td>{{ $item->name }}</td>
                     <td>
                         <x-nav-link href="{{ route('admin.serviceCategories.edit', $item) }}" icon="fas fa-edit" class="btn" title="Bearbeiten">

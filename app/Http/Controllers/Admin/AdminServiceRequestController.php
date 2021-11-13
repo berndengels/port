@@ -25,7 +25,9 @@ class AdminServiceRequestController extends AdminController
      */
     public function index()
     {
-        $data = ServiceRequest::paginate($this->paginatorLimit);
+        $data = ServiceRequest::orderBy('created_at', 'desc')
+            ->paginate($this->paginatorLimit)
+        ;
         return view('admin.serviceRequests.index', compact('data'));
     }
 
