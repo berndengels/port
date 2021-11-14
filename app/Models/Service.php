@@ -36,6 +36,9 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Service whereServiceCategoryId($value)
  * @method static Builder|Service whereUpdatedAt($value)
  * @mixin Eloquent
+ * @property int $price_type_id
+ * @property-read PriceType $priceType
+ * @method static Builder|Service wherePriceTypeId($value)
  */
 class Service extends Model
 {

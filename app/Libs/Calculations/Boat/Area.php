@@ -2,6 +2,8 @@
 
 namespace App\Libs\Calculations\Boat;
 
+use Exception;
+
 class Area
 {
     protected $area;
@@ -10,12 +12,14 @@ class Area
     public function __construct(
         protected string $boatType,
         protected float $lengthWaterline,
-        protected float $lengthKeel,
         protected float $width,
-        protected float $draft
+        protected float $draft,
+        protected $lengthKeel = null
     )
     {
-        $this->percentKeelLength = round($this->lengthKeel * 100 / $this->lengthWaterline);
+        if($this->lengthKeel && $this->lengthKeel > 0) {
+            $this->percentKeelLength = round($this->lengthKeel * 100 / $this->lengthWaterline);
+        }
         $this->calculateArea();
     }
 
@@ -40,6 +44,9 @@ class Area
 
     private function calculateSailingBoat()
     {
+        if(! $this->percentKeelLength) {
+            throw new Exception('no keel length given');
+        }
         // Kurzkieler
         if($this->percentKeelLength < 50) {
             // 0.5 * LWL * (B + Tg)

@@ -3,7 +3,7 @@
 @section('main')
     <div class="p-6">
         <x-nav-link :href="route('admin.pages.index')" icon="fas fa-backward" class="btn">zurück</x-nav-link>
-        <x-form action="{{ route('admin.pages.update', ['page' => $page]) }}" class="w-full lg:w-1/2">
+        <x-form action="{{ route('admin.pages.update', $page) }}" class="w-full lg:w-1/2">
             @method('put')
             @bind($page)
             <x-form-input name="title" label="Titel" required />

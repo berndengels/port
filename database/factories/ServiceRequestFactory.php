@@ -2,10 +2,11 @@
 
 namespace Database\Factories;
 
+use Carbon\Carbon;
 use App\Models\ServiceRequest;
-use Illuminate\Database\Eloquent\Factories\Factory;
+use Database\Factories\Ext\MainFactory;
 
-class ServiceRequestFactory extends Factory
+class ServiceRequestFactory extends MainFactory
 {
     /**
      * The name of the factory's corresponding model.
@@ -22,7 +23,8 @@ class ServiceRequestFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'description'   => $this->faker->text(50),
+            'done_until'    => Carbon::today()->addMonths(rand(1,10))->format('Y-m-d'),
         ];
     }
 }

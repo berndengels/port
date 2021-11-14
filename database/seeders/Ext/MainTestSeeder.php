@@ -1,4 +1,5 @@
 <?php
+
 namespace Database\Seeders\Ext;
 
 use App\Models\Role;
