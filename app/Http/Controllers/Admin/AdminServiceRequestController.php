@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Models\ServiceRequest;
 use App\Http\Requests\ServiceRequestRequest;
@@ -96,6 +97,16 @@ class AdminServiceRequestController extends AdminController
         try {
             $serviceRequest->update($request->validated());
             return redirect()->route('admin.serviceRequests.index')->with('success', 'Service Anfrage erfogreich bearbeitet!');
+        } catch(Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
+    }
+
+    public function done(Request $request, ServiceRequest $serviceRequest)
+    {
+        try {
+            $serviceRequest->update(['done' => $request->post('done') ?? false]);
+            return redirect()->route('admin.serviceRequests.index')->with('success', 'Service Anfrage als erledigt markiert!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }
