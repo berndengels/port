@@ -42,7 +42,7 @@
     </aside>
     @endif
 
-    <main class="main">
+    <main class="main bg-main">
         @yield('main')
     </main>
 
