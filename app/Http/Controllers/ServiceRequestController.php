@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ServiceRequested;
 use App\Models\Boat;
 use App\Models\Customer;
+use App\Notifications\NewServiceRequest;
 use Exception;
 use Illuminate\Http\Response;
 use App\Models\ServiceRequest;
@@ -48,7 +50,8 @@ class ServiceRequestController extends Controller
      */
     public function show(ServiceRequest $serviceRequest)
     {
-        //
+        $underWaterShip = $serviceRequest->boat->getUnderwaterShipArea();
+        return view('customer.serviceRequests.show', compact('serviceRequest','underWaterShip'));
     }
 
     /**
@@ -84,6 +87,9 @@ class ServiceRequestController extends Controller
              * @var Customer $customer
              */
             $customer = $request->user('customer');
+            /**
+             * @var ServiceRequest $serviceRequest
+             */
             $serviceRequest = $customer
                 ->boats()
                 ->find($request->validated()['boat_id'])
@@ -94,6 +100,9 @@ class ServiceRequestController extends Controller
                 ->services()
                 ->sync($request->validated()['services'])
             ;
+
+            event(new ServiceRequested($serviceRequest->refresh(),'store'));
+
             return redirect()->route('customer.serviceRequests.index')->with('success', 'Service Anfrage erfogreich angelegt!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
@@ -137,6 +146,9 @@ class ServiceRequestController extends Controller
         try {
             $serviceRequest->update($request->validated());
             $serviceRequest->services()->sync($request->validated()['services']);
+
+            event(new ServiceRequested($serviceRequest->refresh(), 'update'));
+
             return redirect()->route('customer.serviceRequests.index')->with('success', 'Service Anfrage erfogreich bearbeitet!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());

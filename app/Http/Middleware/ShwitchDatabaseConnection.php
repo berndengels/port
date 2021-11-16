@@ -22,6 +22,10 @@ class ShwitchDatabaseConnection
      */
     public function handle(Request $request, Closure $next)
     {
+        if(app()->environment(['testing'])) {
+            return $next($request);
+        }
+
         $authAdmin = auth('admin');
         $authCustomer = auth('customer');
 

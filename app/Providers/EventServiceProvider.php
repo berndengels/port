@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Events\ServiceRequested;
 use App\Listeners\SendInvoiceEmailNotification;
 use App\Listeners\SendRegisterEmailNotification;
+use App\Listeners\ServiceRequestNotification;
 use App\Models\BoatDates;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -21,6 +23,9 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendRegisterEmailNotification::class,
+        ],
+        ServiceRequested::class => [
+            ServiceRequestNotification::class,
         ],
         /*
         'boatDates.created' => [
