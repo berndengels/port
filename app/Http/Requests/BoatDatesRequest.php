@@ -41,6 +41,7 @@ class BoatDatesRequest extends AdminRequest
             'prices'        => 'required',
             'from'          => 'exclude_if:until,null|date|before:until',
             'until'         => ['date','after:from'],
+            'modus'         => '',
             'crane'         => '',
             'mast_crane'    => '',
             'cleaning'      => '',

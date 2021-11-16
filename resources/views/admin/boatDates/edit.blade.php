@@ -10,6 +10,7 @@
                 <span class="text-2xl text-blue-900">Boot: {{ $boatDate->boat->boat_name }} ({{ $boatDate->modus }})</span>
             </div>
             @bind($boatDate)
+            <x-form-input  class="calc" type="hidden" name="modus" required />
             <x-form-input  class="calc" type="hidden" name="boat_id" required />
             <x-form-input class="calc" id="from" name="from" type="date" label="Von" :bind="false" :default="$boatDate->validFrom" required />
             <x-form-input class="calc" id="until" name="until" type="date" label="Bis" :bind="false" :default="$boatDate->validUntil" required />
