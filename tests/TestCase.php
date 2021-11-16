@@ -40,6 +40,7 @@ abstract class TestCase extends BaseTestCase
         parent::setUp();
         Cache::clear();
         Notification::fake();
+        DB::setDefaultConnection('testing');
         $this->artisan('migrate:fresh --drop-views --env=testing --path=database/migrations/testing');
         $this->artisan('db:seed --env=testing');
         $this
