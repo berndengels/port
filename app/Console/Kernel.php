@@ -2,12 +2,17 @@
 
 namespace App\Console;
 
+use Carbon\Carbon;
 use Illuminate\Console\Scheduling\Schedule;
 use App\Console\Commands\RepairBoatPriceData;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
 {
+    protected $today;
+    protected $obsoleteDate;
+
+
     /**
      * The Artisan commands provided by your application.
      *
@@ -27,6 +32,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        $schedule->command('snapshot:create')->hourly();
+        $schedule->command('snapshot:cleanup --keep=24')->hourly();
     }
 
     /**
