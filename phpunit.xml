@@ -28,8 +28,14 @@
         </report>
     </coverage>
     <php>
-        <server name="APP_ENV" value="testing"/>
-        <server name="DB_CONNECTION" value="testing"/>
+        <env name="APP_ENV" value="testing" force="true" />
+        <env name="DB_CONNECTION" value="testing" force="true" />
+        <env name="DB_DATABASE" value=":memory:" force="true" />
+
+        <server name="APP_ENV" value="testing" force="true" />
+        <server name="DB_CONNECTION" value="testing" force="true" />
+        <server name="DB_DATABASE" value=":memory:" force="true" />
+
         <server name="BCRYPT_ROUNDS" value="4"/>
         <server name="CACHE_DRIVER" value="array"/>
         <server name="MAIL_MAILER" value="array"/>
@@ -38,7 +44,5 @@
         <server name="QUEUE_CONNECTION" value="sync"/>
         <server name="TELESCOPE_ENABLED" value="false"/>
         <ini name="error_reporting" value="-1" />
-        <!--ini name="xdebug.mode" value="coverage" />
-        <env name="XDEBUG_MODE" value="coverage" /-->
     </php>
 </phpunit>

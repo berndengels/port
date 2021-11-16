@@ -11,3 +11,6 @@ FROM caravan_dates d
 GROUP BY c.id
 HAVING anzahl > 1
 ORDER BY anzahl DESC;
+
+-- new tables
+price_types, materials, material_categories, services, service_categories, service_materials, service_requests, service_requests_services

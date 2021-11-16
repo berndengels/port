@@ -3,9 +3,9 @@
 namespace Database\Factories;
 
 use App\Models\PriceType;
-use Illuminate\Database\Eloquent\Factories\Factory;
+use Database\Factories\Ext\MainFactory;
 
-class PriceTypeFactory extends Factory
+class PriceTypeFactory extends MainFactory
 {
     /**
      * The name of the factory's corresponding model.
@@ -22,7 +22,8 @@ class PriceTypeFactory extends Factory
     public function definition()
     {
         return [
-            //
         ];
     }
+
+
 }

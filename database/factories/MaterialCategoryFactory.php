@@ -3,9 +3,9 @@
 namespace Database\Factories;
 
 use App\Models\MaterialCategory;
-use Illuminate\Database\Eloquent\Factories\Factory;
+use Database\Factories\Ext\MainFactory;
 
-class MaterialCategoryFactory extends Factory
+class MaterialCategoryFactory extends MainFactory
 {
     /**
      * The name of the factory's corresponding model.
@@ -13,7 +13,6 @@ class MaterialCategoryFactory extends Factory
      * @var string
      */
     protected $model = MaterialCategory::class;
-
     /**
      * Define the model's default state.
      *
@@ -22,7 +21,6 @@ class MaterialCategoryFactory extends Factory
     public function definition()
     {
         return [
-            //
         ];
     }
 }

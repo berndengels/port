@@ -2,11 +2,11 @@
 namespace Database\Seeders;
 
 use App\Models\Boat;
-use App\Models\BoatDates;
 use App\Models\Role;
 use App\Models\Customer;
+use App\Models\BoatDates;
+use App\Models\ServiceRequest;
 use Database\Seeders\Ext\MainTestSeeder;
-use Illuminate\Support\Facades\DB;
 
 class CustomerTestSeeder extends MainTestSeeder
 {
@@ -20,22 +20,12 @@ class CustomerTestSeeder extends MainTestSeeder
     {
         $customers = Customer::factory()
             ->has(Boat::factory()
-                    ->has(BoatDates::factory()->count(3),'dates')
-                ->count(1),'boats'
-            )
-/*
-            ->hasRoles(1, [
-                'name' => 'boat',
-                'guard_name' => 'web',
-            ])
-*/
-            ->count($this->count)
+                ->has(BoatDates::factory()->count(3),'dates')->count(1),'boats')
             ->create()
         ;
 
         Role::getModel()->refresh();
 
-//        if(DB::connection('demo')->table('roles')->where('name','=','boat')->first()) {
         if(Role::whereName('boat')->first()) {
             $customers->each(function (Customer $customer) {
                 $customer->assignRole('boat');

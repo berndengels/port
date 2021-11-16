@@ -146,6 +146,7 @@ i {
 }
 .map {
     display: block;
+//    z-index: 1;
     float: left;
     clear: both;
     width: 100%;
@@ -292,6 +293,7 @@ i {
     /* Mobile-first side nav styles */
     .sidenav {
         display: flex; /* Will be hidden on mobile */
+        z-index: 1001; /* Needs to set above the hamburger menu icon and map */
         grid-area: sidenav;
         flex-direction: column;
         height: 100%;
@@ -299,7 +301,6 @@ i {
         position: fixed;
         overflow-y: auto;
         box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
-        z-index: 2; /* Needs to set above the hamburger menu icon */
         background-color: $bgSideNav;
         transform: translateX(-245px);
         //transition: all .3s ease-in-out;

@@ -22,21 +22,23 @@ class BoatFactory extends MainFactory
     public function definition()
     {
         $this->type = $this->types[rand(0,1)];
+        $length = mt_rand(5, 15);
         $arr = [
             'boat_name'         => $this->faker->name(['female']),
             'boat_type'         => $this->type,
-            'length'            => mt_rand(5, 20),
+            'length'            => $length,
             'width'             => mt_rand(20, 40) / 10,
             'weight'            => mt_rand(1000, 10000),
+            'draft'             => mt_rand(3, 10) / 10,
+            'length_waterline'  => $length - 1,
             'home_port'         => $this->faker->city(),
         ];
         if('sail' === $this->type) {
             $arr = array_merge($arr, [
                 'mast_length'       => mt_rand(8, 18),
                 'mast_weight'       => mt_rand(50, 200),
-                'draft'             => mt_rand(30, 200) / 10,
-                'length_waterline'  => $arr['length'] - 1,
                 'length_keel'       => mt_rand(15, 60) / 10,
+                'draft'             => mt_rand(10, 20) / 10,
             ]);
         }
 

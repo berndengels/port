@@ -40,6 +40,12 @@ php artisan route:clear
 php artisan view:clear
 printf 'all done \360\237\230\216\n'
 
-echo "Use Logindata"
-echo "email: demo@test.com"
+echo "admin login"
+echo "route /admin/login"
+echo "email: admin@test.loc"
+echo "password: password"
+
+echo "customer login"
+echo "route /login"
+echo "email: kunde@test.loc"
 echo "password: password"

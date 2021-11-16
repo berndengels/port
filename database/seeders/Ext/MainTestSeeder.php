@@ -1,4 +1,5 @@
 <?php
+
 namespace Database\Seeders\Ext;
 
 use App\Models\Role;
@@ -22,21 +23,9 @@ class MainTestSeeder extends Seeder
      */
     protected $model;
     protected $dataClass;
-    protected $useFactory = false;
-
-    public function __construct()
-    {
-//        $this->dbTest = DB::connection('demo');
-//        DB::setDefaultConnection('demo');
-//        DB::connection()->statement('SET FOREIGN_KEY_CHECKS=0;');
-        if('testing' === DB::connection()->getDriverName()) {
-        }
-        Schema::disableForeignKeyConstraints();
-    }
 
     public function run() {
         Eloquent::unguard();
-//        $this->dbTest->statement('SET FOREIGN_KEY_CHECKS=0;');
         Schema::disableForeignKeyConstraints();
 
         if($this->dataClass && class_exists($this->dataClass)) {
@@ -47,7 +36,6 @@ class MainTestSeeder extends Seeder
             ($this->model)::getModel()->refresh();
         }
         Schema::enableForeignKeyConstraints();
-//        $this->dbTest->statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 
     protected function inserByData($dataClass) {

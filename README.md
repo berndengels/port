@@ -13,6 +13,13 @@
 - run './setup' in console in project directory. this will install test-data
 - set all credentials, passwords in .env (DB, EMAIL)
 - php artisan server --env=demo
-- Login data: 
-  - login: demo@test.com, 
+
+### Admin Login:
+  - route /admin
+  - login: admin@test.loc
   - password: password
+
+### Customer Login:
+- route /login
+- login: kunde@test.loc
+- password: password

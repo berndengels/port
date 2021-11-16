@@ -30,7 +30,9 @@
                 <tr>
                     <td>{{ $item->id }}</td>
                     <td>{{ $item->boat->boat_name }}</td>
-                    <td class="hidden md:table-cell">{{ $item->description }}</td>
+                    <td class="hidden md:table-cell">
+                        <a href="{{ route('customer.serviceRequests.show', $item) }}">{{ $item->description }}</a>
+                    </td>
                     <td>{{ $item->done_until->format('d.m.Y') }}</td>
                     <td>{{ $item->done ? 'Ja' : 'Nein' }}</td>
                     <td>{{ $item->done_at ? $item->done_at->format('d.m.Y H:i') : '' }}</td>

@@ -26,7 +26,6 @@ class MaterialRequest extends AdminRequest
             'name'              => !$this->getId() ? 'required|unique:App\Models\Material,name' : 'required',
             'material_category_id' => 'required',
             'price_type_id'     => 'required',
-//            'number'            => 'required',
             'price_per_unit'    => 'required',
             'fertility'         => '',
             'fertility_per'     => '',

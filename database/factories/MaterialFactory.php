@@ -3,9 +3,9 @@
 namespace Database\Factories;
 
 use App\Models\Material;
-use Illuminate\Database\Eloquent\Factories\Factory;
+use Database\Factories\Ext\MainFactory;
 
-class MaterialFactory extends Factory
+class MaterialFactory extends MainFactory
 {
     /**
      * The name of the factory's corresponding model.
@@ -22,7 +22,6 @@ class MaterialFactory extends Factory
     public function definition()
     {
         return [
-            //
         ];
     }
 }

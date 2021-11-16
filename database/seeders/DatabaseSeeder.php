@@ -38,6 +38,13 @@ class DatabaseSeeder extends Seeder
                     CaravanTestSeeder::class,
                     BoatGuestTestSeeder::class,
                     CustomerTestSeeder::class,
+                    PriceTypeTestSeeder::class,
+                    MaterialCategoryTestSeeder::class,
+                    ServiceCategoryTestSeeder::class,
+                    MaterialTestSeeder::class,
+                    ServiceTestSeeder::class,
+                    ServiceMaterialTestSeeder::class,
+                    ServiceRequestTestSeeder::class,
                 ]);
                 break;
             default:

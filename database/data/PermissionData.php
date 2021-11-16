@@ -45,8 +45,23 @@ class PermissionData
 		[ 'id' => '36', 'name' => 'read BoatGuestDates', 'guard_name' => 'admin', 'created_at' => '2021-10-10 22:17:37', 'updated_at' => '2021-10-10 22:17:37'],
 		[ 'id' => '37', 'name' => 'write BoatGuestDates', 'guard_name' => 'admin', 'created_at' => '2021-10-10 22:17:44', 'updated_at' => '2021-10-10 22:17:44'],
 		[ 'id' => '38', 'name' => 'confirm Registration', 'guard_name' => 'admin', 'created_at' => '2021-10-20 12:11:54', 'updated_at' => '2021-10-20 12:11:54'],
-		[ 'id' => '39', 'name' => 'read InvoiceMenu', 'guard_name' => 'admin', 'created_at' => '2021-11-02 23:26:37', 'updated_at' => '2021-11-02 23:37:54'],
-		[ 'id' => '40', 'name' => 'read Invoices', 'guard_name' => 'admin', 'created_at' => '2021-11-02 23:28:44', 'updated_at' => '2021-11-02 23:29:27'],
-		[ 'id' => '41', 'name' => 'write Invoices', 'guard_name' => 'admin', 'created_at' => '2021-11-02 23:29:09', 'updated_at' => '2021-11-02 23:29:09']
+		[ 'id' => '39', 'name' => 'read ProfileMenu', 'guard_name' => 'customer', 'created_at' => '2021-11-09 18:38:30', 'updated_at' => '2021-11-09 18:38:30'],
+		[ 'id' => '40', 'name' => 'write Boat', 'guard_name' => 'customer', 'created_at' => '2021-11-09 18:39:39', 'updated_at' => '2021-11-09 18:39:39'],
+		[ 'id' => '41', 'name' => 'read BoatDates', 'guard_name' => 'customer', 'created_at' => '2021-11-09 18:40:41', 'updated_at' => '2021-11-09 18:40:41'],
+		[ 'id' => '42', 'name' => 'read ServiceMenu', 'guard_name' => 'admin', 'created_at' => '2021-11-10 14:21:29', 'updated_at' => '2021-11-10 15:03:47'],
+		[ 'id' => '43', 'name' => 'read ServiceMenu', 'guard_name' => 'customer', 'created_at' => '2021-11-10 14:21:49', 'updated_at' => '2021-11-10 15:04:28'],
+		[ 'id' => '44', 'name' => 'read Service', 'guard_name' => 'admin', 'created_at' => '2021-11-10 14:22:09', 'updated_at' => '2021-11-10 14:22:09'],
+		[ 'id' => '45', 'name' => 'write Service', 'guard_name' => 'admin', 'created_at' => '2021-11-10 14:22:18', 'updated_at' => '2021-11-10 14:22:18'],
+		[ 'id' => '46', 'name' => 'read ServiceCategory', 'guard_name' => 'admin', 'created_at' => '2021-11-10 14:22:28', 'updated_at' => '2021-11-10 14:22:28'],
+		[ 'id' => '47', 'name' => 'write ServiceCategory', 'guard_name' => 'admin', 'created_at' => '2021-11-10 14:22:37', 'updated_at' => '2021-11-10 14:22:37'],
+		[ 'id' => '48', 'name' => 'read Material', 'guard_name' => 'admin', 'created_at' => '2021-11-10 14:22:45', 'updated_at' => '2021-11-10 14:22:45'],
+		[ 'id' => '49', 'name' => 'write Material', 'guard_name' => 'admin', 'created_at' => '2021-11-10 14:22:54', 'updated_at' => '2021-11-10 14:22:54'],
+		[ 'id' => '50', 'name' => 'read MaterialCategory', 'guard_name' => 'admin', 'created_at' => '2021-11-10 14:23:03', 'updated_at' => '2021-11-10 14:23:03'],
+		[ 'id' => '51', 'name' => 'write MaterialCategory', 'guard_name' => 'admin', 'created_at' => '2021-11-10 14:23:13', 'updated_at' => '2021-11-10 14:23:13'],
+		[ 'id' => '52', 'name' => 'read Service', 'guard_name' => 'customer', 'created_at' => '2021-11-10 14:23:38', 'updated_at' => '2021-11-10 14:23:38'],
+		[ 'id' => '53', 'name' => 'read ServiceRequest', 'guard_name' => 'admin', 'created_at' => '2021-11-10 14:32:06', 'updated_at' => '2021-11-10 14:32:06'],
+		[ 'id' => '54', 'name' => 'write ServiceRequest', 'guard_name' => 'admin', 'created_at' => '2021-11-10 14:32:18', 'updated_at' => '2021-11-10 14:32:18'],
+		[ 'id' => '55', 'name' => 'read ServiceRequest', 'guard_name' => 'customer', 'created_at' => '2021-11-10 14:32:37', 'updated_at' => '2021-11-10 14:32:37'],
+		[ 'id' => '56', 'name' => 'write ServiceRequest', 'guard_name' => 'customer', 'created_at' => '2021-11-10 14:32:51', 'updated_at' => '2021-11-10 14:32:51']
 	];
 }

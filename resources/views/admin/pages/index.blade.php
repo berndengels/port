@@ -14,7 +14,7 @@
             <div></div>
         </div>
         {{ $data->links() }}
-        <table class="table w-full">
+        <table class="table w-full mt-3">
             <tr>
                 <th>Titel</th>
                 <th class="hidden md:table-cell">Slug</th>
@@ -30,7 +30,7 @@
                         </x-nav-link>
                     </td>
                     <td>
-                        <x-form action="{{ route('admin.pages.destroy', ['caravan' => $item]) }}"
+                        <x-form action="{{ route('admin.pages.destroy', $item) }}"
                                 class="m-0 p-0">
                             @method('delete')
                             <x-form-submit icon="fas fa-trash-alt" inline class="mt-0 btn-red delSoft">
