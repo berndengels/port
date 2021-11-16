@@ -22,6 +22,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @method static Builder|MaterialCategory whereId($value)
  * @method static Builder|MaterialCategory whereName($value)
  * @mixin Eloquent
+ * @property string|null $modus
+ * @method static Builder|MaterialCategory whereModus($value)
  */
 class MaterialCategory extends Model
 {

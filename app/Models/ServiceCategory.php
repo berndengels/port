@@ -27,6 +27,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @method static Builder|ServiceCategory wherePrice($value)
  * @method static Builder|ServiceCategory wherePriceTypeId($value)
  * @mixin Eloquent
+ * @property string|null $modus
+ * @method static Builder|ServiceCategory whereModus($value)
  */
 class ServiceCategory extends Model
 {

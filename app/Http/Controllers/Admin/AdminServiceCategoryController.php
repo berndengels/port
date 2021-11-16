@@ -41,7 +41,8 @@ class AdminServiceCategoryController extends AdminController
      */
     public function create()
     {
-        return view('admin.serviceCategories.create');
+        $modi = config('port.main.boat.material.modi');
+        return view('admin.serviceCategories.create', compact('modi'));
     }
 
     /**
@@ -68,9 +69,8 @@ class AdminServiceCategoryController extends AdminController
      */
     public function edit(ServiceCategory $serviceCategory)
     {
-        return view('admin.serviceCategories.edit', [
-            'serviceCategory' => $serviceCategory,
-        ]);
+        $modi = config('port.main.boat.material.modi');
+        return view('admin.serviceCategories.edit', compact('serviceCategory','modi'));
     }
 
     /**

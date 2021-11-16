@@ -14,6 +14,7 @@ class Quantity
 
     public function __construct(
         protected Boat $boat,
+        protected string $modus,
         protected float $fertility,
         protected string $fertilityPer,
         protected string $fertilityUnit
@@ -21,7 +22,15 @@ class Quantity
     {
         switch($this->fertilityUnit) {
             case 'Quadratmeter':
-                $this->targetValue = $this->boat->getUnderwaterShipArea();
+                switch ($modus) {
+                    case 'underwater':
+                        $this->targetValue = $this->boat->underwaterArea;
+                        break;
+                    case 'board';
+                    default:
+                        $this->targetValue = $this->boat->boardArea;
+                        break;
+                }
                 break;
             case 'Meter':
             default:

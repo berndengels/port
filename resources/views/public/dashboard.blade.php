@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('main')
-    <div class="flex-container-dashboard public">
+    <div class="flex-container-dashboard public bg-main">
         <div class="flex-item-dashboard p-3 widget">
             <div class="title weatherTitle">Wetter</div>
             <div class="content mt-2 weather"></div>

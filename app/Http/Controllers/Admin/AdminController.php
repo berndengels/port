@@ -26,23 +26,24 @@ class AdminController extends BaseController
     /**
      * @var Collection
      */
-    protected $countries;
+//    protected $countries;
     /**
      * @var Collection
      */
+/*
     protected $caravanOptions;
     protected $caravanOptionsAutocomplete;
     protected $customerOptions;
     protected $customerOptionsAutocomplete;
-
+*/
     /**
      * @var Collection
      */
-    protected $roles;
+//    protected $roles;
     /**
      * @var Collection
      */
-    protected $rolesOptions;
+//    protected $rolesOptions;
 
 
     public function __construct()
