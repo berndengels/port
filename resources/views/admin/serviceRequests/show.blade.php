@@ -38,8 +38,17 @@
             <td>{{ $serviceRequest->done_until->format('d.m.Y') }}</td>
         </tr>
         <tr>
-            <th>Ist erledigt:</th>
-            <td>{{ $serviceRequest->done ? 'Ja' : 'Nein' }}</td>
+            <td colspan="2">
+                <div class="w-full border-blue-800 mt-3">
+                    <x-form method="post" :action="route('admin.serviceRequests.done', $serviceRequest)" class="">
+                        @method('post')
+                        @bind($serviceRequest)
+                        <x-form-checkbox name="done" label="Erledigt" />
+                        @endbind
+                        <button type="submit" class="btn btn-save inline-block absolute ml-24 -mt-7">Speichern</button>
+                    </x-form>
+                </div>
+            </td>
         </tr>
         <tr>
             <td colspan="2">

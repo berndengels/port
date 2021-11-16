@@ -54,9 +54,7 @@ class ServiceRequest extends Model
 
     public function setDoneAttribute(bool $value) {
         $this->attributes['done'] = $value;
-        if($value) {
-            $this->attributes['done_at'] = Carbon::now()->format('Y-m-d H:i:s');
-        }
+        $this->attributes['done_at'] = $value ? Carbon::now()->format('Y-m-d H:i:s') : null;
     }
 
     public function boat()

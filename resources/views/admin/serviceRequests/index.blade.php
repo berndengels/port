@@ -13,18 +13,18 @@
                 <th>Boot</th>
                 <th class="hidden md:table-cell">Beschreibung</th>
                 <th>Erledigt</th>
-                <th>Am</th>
-                <th>Erstellt</th>
+                <!--th>Am</th-->
+                <th>Erledigt bis</th>
                 <th colspan="2"><br></th>
             </tr>
             @foreach($data as $item)
                 <tr>
                     <td class="hidden md:table-cell">{{ $item->boat->customer->name }}</td>
                     <td>{{ $item->boat->boat_name }}</td>
-                    <td class="hidden md:table-cell">{{ $item->description }}</td>
+                    <td class="hidden md:table-cell">{{ Str::limit($item->description, 30) }}</td>
                     <td>{{ $item->done ? 'Ja' : 'Nein' }}</td>
-                    <td>{{ $item->done_at ? $item->done_at->format('d.m.Y H:i') : '' }}</td>
-                    <td>{{ $item->created_at->format('d.m.Y H:i') }}</td>
+                    <!--td>{{-- $item->done_at ? $item->done_at->format('d.m.Y H:i') : '' --}}</td-->
+                    <td>{{ $item->done_until->format('d.m.Y') }}</td>
                     <td>
                         <x-nav-link href="{{ route('admin.serviceRequests.show', $item) }}" icon="fas fa-eye" class="btn" title="Bearbeiten">
                             <span class="hidden md:visible">Show</span>

@@ -132,6 +132,7 @@ Route::group([
     Route::resource('materialCategories', AdminMaterialCategoryController::class);
     Route::resource('serviceRequests', AdminServiceRequestController::class);
 
+    Route::post('serviceRequests/done/{serviceRequest}', [AdminServiceRequestController::class, 'done'])->name('serviceRequests.done');
     Route::post('caravanDates/sendExcel', [AdminCaravanDatesController::class, 'sendExcel'])->name('caravanDates.sendExcel');
 
     Route::get('caravan/price/excel/{year?}/{month?}', [AdminPriceController::class, 'excel'])->name('caravan.price.excel');
