@@ -6,9 +6,6 @@
 
     <header class="header">
         <div class="header__left">
-            @if(! app()->environment(['production']) && config('port.main.show.env'))
-                <span class="text-lg text-red-700">{{ DB::getDefaultConnection() }}</span>
-            @endif
             @if($guard)
             <x-header-navigation :guard="$guard" />
             @endif

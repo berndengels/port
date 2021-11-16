@@ -45,7 +45,7 @@ CREATE TABLE `admin_users` (
 
 LOCK TABLES `admin_users` WRITE;
 /*!40000 ALTER TABLE `admin_users` DISABLE KEYS */;
-INSERT INTO `admin_users` VALUES (1,'Paul Test-Admin','demo@test.com','2021-11-02 15:13:32','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',NULL,NULL,'rBYqOupmT3',NULL,'2021-11-02 15:13:32','2021-11-02 15:13:32');
+INSERT INTO `admin_users` VALUES (1,'Paul Test-Admin','admin@test.loc','2021-11-02 15:13:32','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',NULL,NULL,'rBYqOupmT3',NULL,'2021-11-02 15:13:32','2021-11-02 15:13:32');
 /*!40000 ALTER TABLE `admin_users` ENABLE KEYS */;
 UNLOCK TABLES;
 DROP TABLE IF EXISTS `boat_dates`;

@@ -50,7 +50,7 @@
             </tr>
             <tr>
                 <th>berechneter Arbeitspreis</th>
-                <td>{{ ceil($service->getServicePrice($serviceRequest->boat)) }} € ({{ $service->price }} € {{ $service->priceType->name }})</td>
+                <td>{{ ($service->getServicePrice($serviceRequest->boat)) }} € ({{ $service->price }} € {{ $service->priceType->name }})</td>
             </tr>
             @if($service->materials && $service->materials->count() > 0)
                 <tr>
@@ -61,8 +61,8 @@
                                 <li>{{ $material->name }}</li>
                                 <li>Preis: {{ $material->price_per_unit }} € pro {{ $material->priceType->unit }}</li>
                                 <li>Ergiebigkeit: {{ $material->fertility }} {{ $material->fertility_unit }} pro {{ $material->fertility_per }}</li>
-                                <li>benötigte Materialmenge: {{ round($material->getQuantity($serviceRequest->boat), 1) }} {{ $material->fertility_per }}</li>
-                                <li>berechneter Materialpreis: {{ round($material->getMaterialPrice($serviceRequest->boat)) }} €</li>
+                                <li>benötigte Materialmenge: {{ round($material->getQuantity($serviceRequest->boat),1) }} {{ $material->fertility_per }}</li>
+                                <li>berechneter Materialpreis: {{ round($material->getMaterialPrice($serviceRequest->boat),1) }} €</li>
                             @endforeach
                         </ul>
                     </td>
@@ -74,7 +74,7 @@
         <tr>
             <td colspan="2">
                 <div class="my-3 p-2 text-lg font-extrabold bg-red-600 text-white">
-                    Gesamtpreis {{ ($serviceRequest->totalPrice()) }} €
+                    Gesamtpreis {{ ceil($serviceRequest->totalPrice()) }} € (aufgerundet)
                 </div>
             </td>
         </tr>

@@ -45,8 +45,6 @@ class DatabaseSeeder extends Seeder
                     ServiceTestSeeder::class,
                     ServiceMaterialTestSeeder::class,
                     ServiceRequestTestSeeder::class,
-//                    BoatTestSeeder::class,
-//                    BoatDatesTestSeeder::class,
                 ]);
                 break;
             default:

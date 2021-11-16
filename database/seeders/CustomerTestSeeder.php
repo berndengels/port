@@ -20,9 +20,7 @@ class CustomerTestSeeder extends MainTestSeeder
     {
         $customers = Customer::factory()
             ->has(Boat::factory()
-//                ->has(ServiceRequest::factory()->hasServices(3)->count(2))
                 ->has(BoatDates::factory()->count(3),'dates')->count(1),'boats')
-            ->count($this->count)
             ->create()
         ;
 
