@@ -1,13 +1,14 @@
 <?php
 namespace App\Models;
 
+use Closure;
 use Eloquent;
 use App\Libs\AppCache;
+use App\Libs\Calculations\Boat\Area;
 use Database\Factories\BoatFactory;
 use App\Traits\Models\ClearCache;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
-use App\Traits\Models\Calculations\BoatAreaCalculation;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
@@ -49,15 +50,24 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @method static BoatFactory factory(...$parameters)
  * @property-read Collection|ServiceRequest[] $serviceRequests
  * @property-read int|null $service_requests_count
+ * @property int|null $board_height
+ * @property-read mixed $board_area
+ * @property-read mixed $underwater_area
+ * @method static Builder|Boat whereBoardHeight($value)
  */
 class Boat extends BaseModel
 {
-    use HasFactory, ClearCache, BoatAreaCalculation;
+    use HasFactory, ClearCache;
 
     protected $table = 'boats';
     protected $with = 'customer';
     protected $guarded = ['id'];
+    protected $appends = ['underwaterArea', 'boardArea'];
     public $timestamps = false;
+    /**
+     * @var Area
+     */
+    protected $calculator;
 
     protected static $cacheKeys = [
         AppCache::KEY_OPTIONS_BOAT,
@@ -80,5 +90,29 @@ class Boat extends BaseModel
             return $this->hasMany(ServiceRequest::class);
         }
 //        return null;
+    }
+
+    protected function area(): Area
+    {
+        $area = new Area(
+            boatType: $this->boat_type,
+            length: $this->length,
+            lengthWaterline: $this->length_waterline,
+            lengthKeel: $this->length_keel,
+            width: $this->width,
+            draft: $this->draft,
+            boardHeight: $this->board_height
+        );
+        return $area;
+    }
+
+    public function getBoardAreaAttribute()
+    {
+        return $this->area()->getBoardArea();
+    }
+
+    public function getUnderwaterAreaAttribute()
+    {
+        return $this->area()->getUnderwaterArea();
     }
 }

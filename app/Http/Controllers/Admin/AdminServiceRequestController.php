@@ -39,8 +39,9 @@ class AdminServiceRequestController extends AdminController
      */
     public function show(ServiceRequest $serviceRequest)
     {
-        $underWaterShip = $serviceRequest->boat->getUnderwaterShipArea();
-        return view('admin.serviceRequests.show', compact('serviceRequest','underWaterShip'));
+        $underwaterArea = $serviceRequest->boat->underwaterArea;
+        $boardArea = $serviceRequest->boat->boardArea;
+        return view('admin.serviceRequests.show', compact('serviceRequest','underwaterArea','boardArea'));
     }
 
     /**

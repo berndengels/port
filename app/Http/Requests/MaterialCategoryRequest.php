@@ -24,6 +24,7 @@ class MaterialCategoryRequest extends AdminRequest
     {
         return [
             'name' => !$this->getId() ? 'required|unique:App\Models\MaterialCategory,name' : 'required',
+            'modus' => 'required',
         ];
     }
 }

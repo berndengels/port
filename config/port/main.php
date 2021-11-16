@@ -27,6 +27,14 @@ return [
     'boat'  => [
         'types' => ['motor' => 'Motorboot', 'sail' => 'Segelboot'],
         'dates' => ['modi' => json_decode(env('BOAT_DATES_MODI'), true)],
+        'material' => [
+            'modi'  => [
+                'underwater'  => 'Unterwasser',
+                'board'  => 'Bordwand',
+                'deck'  => 'Deck',
+                'all'  => 'Irrelevant',
+            ],
+        ],
     ],
     'cache' => [
         'enabled' => env('USE_CACHE', false),

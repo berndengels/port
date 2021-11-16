@@ -13,12 +13,21 @@ class ServicePrice
 
     public function __construct(
         protected Boat $boat,
+        protected string $modus,
         protected PriceType $priceType,
         protected float $pricePerUntit
     ) {
         switch ($this->priceType->type) {
             case 'area':
-                $this->targetValue = $this->boat->getUnderwaterShipArea();
+                switch ($modus) {
+                    case 'underwater':
+                        $this->targetValue = $this->boat->underwaterArea;
+                        break;
+                    case 'board';
+                    default:
+                        $this->targetValue = $this->boat->boardArea;
+                        break;
+                }
                 break;
             case 'length':
                 $this->targetValue = $this->boat->length;

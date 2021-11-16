@@ -37,7 +37,8 @@ class AdminMaterialCategoryController extends AdminController
      */
     public function create()
     {
-        return view('admin.materialCategories.create');
+        $modi = config('port.main.boat.material.modi');
+        return view('admin.materialCategories.create',compact('modi'));
     }
 
     /**
@@ -64,7 +65,8 @@ class AdminMaterialCategoryController extends AdminController
      */
     public function edit(MaterialCategory $materialCategory)
     {
-        return view('admin.materialCategories.edit', compact('materialCategory'));
+        $modi = config('port.main.boat.material.modi');
+        return view('admin.materialCategories.edit', compact('materialCategory','modi'));
     }
 
     /**

@@ -2,15 +2,15 @@
 
 namespace App\Models;
 
+use App\Libs\Prices\Boat\Services\MaterialPrice;
 use Eloquent;
 use App\Libs\AppCache;
 use App\Traits\Models\ClearCache;
 use Database\Factories\MaterialFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use App\Libs\Calculations\Boat\Material\Quantity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use App\Traits\Models\Calculations\MaterialCalculation;
-use App\Traits\Models\Calculations\MaterialPriceCalculation;
 
 /**
  * App\Models\Material
@@ -43,7 +43,7 @@ use App\Traits\Models\Calculations\MaterialPriceCalculation;
  */
 class Material extends Model
 {
-    use HasFactory, ClearCache, MaterialCalculation, MaterialPriceCalculation;
+    use HasFactory, ClearCache;
 
     protected $table = 'materials';
     protected $guarded = ['id'];
@@ -63,5 +63,30 @@ class Material extends Model
     public function priceType()
     {
         return $this->belongsTo(PriceType::class);
+    }
+
+    public function getQuantity(Boat $boat)
+    {
+        return (new Quantity(
+            boat: $boat,
+            modus: $this->category->modus,
+            fertility: $this->fertility,
+            fertilityPer: $this->fertility_per,
+            fertilityUnit: $this->fertility_unit
+        ))->getQuantity();
+    }
+
+    public function getMaterialPrice(Boat $boat)
+    {
+        if(! $this instanceof Material) {
+            throw new Exception('wrong model instance');
+        }
+        return (new MaterialPrice(
+            boat: $boat,
+            modus: $this->category->modus,
+            fertility: $this->fertility,
+            fertilityUnit: $this->fertility_unit,
+            pricePerUnit: $this->price_per_unit
+        ))->getPrice();
     }
 }

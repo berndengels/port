@@ -42,6 +42,7 @@ class BoatRequest extends AdminRequest
             'length'            => 'nullable|numeric',
             'width'             => 'nullable|numeric',
             'weight'            => 'nullable|numeric',
+            'board_height'      => 'nullable|numeric',
             'mast_length'       => 'nullable|numeric',
             'mast_weight'       => 'nullable|numeric',
             'draft'             => 'nullable|numeric',

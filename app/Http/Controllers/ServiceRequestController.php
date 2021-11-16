@@ -50,8 +50,9 @@ class ServiceRequestController extends Controller
      */
     public function show(ServiceRequest $serviceRequest)
     {
-        $underWaterShip = $serviceRequest->boat->getUnderwaterShipArea();
-        return view('customer.serviceRequests.show', compact('serviceRequest','underWaterShip'));
+        $underwaterArea = $serviceRequest->boat->underwaterArea;
+        $boardArea = $serviceRequest->boat->boardArea;
+        return view('customer.serviceRequests.show', compact('serviceRequest','underwaterArea', 'boardArea'));
     }
 
     /**

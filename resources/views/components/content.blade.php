@@ -8,6 +8,7 @@
         <div class="header__left">
             @if($guard)
             <x-header-navigation :guard="$guard" />
+            @else
             @endif
         </div>
         <div class="header__right">
@@ -26,10 +27,11 @@
     </header>
 
     @if( $guard && auth($guard)->check() )
-    <aside class="sidenav">
+    <aside class="sidenav mt-0">
         <div class="sidenav__close-icon">
             <i class="fas fa-times"></i>
         </div>
+        <div class="hidden md:inline-block app-logo">PORTmanager</div>
         <x-main-navigation :guard="$guard" />
         <div class="ml-3 mt-0">
             <x-form method="get" class="mt-0" name="frmLogout" action="{{ route($guard . '.logout') }}">

@@ -24,6 +24,7 @@ class ServiceCategoryRequest extends AdminRequest
     {
         return [
             'name' => !$this->getId() ? 'required|unique:App\Models\ServiceCategory,name' : 'required',
+            'modus' => 'required',
         ];
     }
 }

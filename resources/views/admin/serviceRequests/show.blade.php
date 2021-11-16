@@ -11,7 +11,11 @@
         </tr>
         <tr>
             <th>Fläche Unterwasserschiff:</th>
-            <td>{{ round($underWaterShip, 1) }} m²</td>
+            <td>{{ round($underwaterArea, 1) }} m²</td>
+        </tr>
+        <tr>
+            <th>Fläche Bord über Wasserlinie:</th>
+            <td>{{ round($boardArea, 1) }} m²</td>
         </tr>
         <tr>
             <th>Bootslänge:</th>

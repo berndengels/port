@@ -6,34 +6,38 @@ use Exception;
 
 class Area
 {
-    protected $area;
+    protected $boardArea;
+    protected $underwaterArea;
     protected $percentKeelLength;
 
     public function __construct(
         protected string $boatType,
+        protected float $length,
         protected float $lengthWaterline,
         protected float $width,
         protected float $draft,
+        protected $boardHeight = null,
         protected $lengthKeel = null
     )
     {
         if($this->lengthKeel && $this->lengthKeel > 0) {
             $this->percentKeelLength = round($this->lengthKeel * 100 / $this->lengthWaterline);
         }
-        $this->calculateArea();
+        $this->calculate();
     }
 
-    public function calculateArea()
+    public function calculate()
     {
         switch($this->boatType) {
             case 'motor':
-                $this->area = $this->base();
+                $this->underwaterArea = $this->base();
                 break;
             case 'sail':
             default:
-                $this->area = $this->calculateSailingBoat();
+                $this->underwaterArea = $this->calculateSailingBoatArea();
                 break;
         }
+        $this->boardArea = ($this->length + $this->width) * 2 * $this->boardHeight;
         return $this;
     }
 
@@ -42,7 +46,7 @@ class Area
         return $this->lengthWaterline * ($this->width + $this->draft);
     }
 
-    private function calculateSailingBoat()
+    private function calculateSailingBoatArea()
     {
         if(! $this->percentKeelLength) {
             throw new Exception('no keel length given');
@@ -64,8 +68,16 @@ class Area
     /**
      * @return mixed
      */
-    public function getArea()
+    public function getUnderwaterArea()
     {
-        return $this->area;
+        return $this->underwaterArea;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBoardArea()
+    {
+        return $this->boardArea;
     }
 }
