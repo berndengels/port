@@ -16,6 +16,7 @@ class CreateMaterialCategoriesTestTable extends Migration
         Schema::create('material_categories', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 100);
+            $table->enum('modus', ['underwater','board','deck','all'])->default('underwater');
         });
     }
 

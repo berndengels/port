@@ -40,7 +40,7 @@ class Prices {
 					formData.set('cleaning', frm.cleaning.checked ? 1 : 0)
 					axios.post(calcUrl, formData)
 						.then(resp => {
-							frm.price.value = resp.data.total
+							frm.price.value = Math.ceil(resp.data.total)
 							frm.prices.value = JSON.stringify(resp.data)
 						})
 						.catch(err => console.error(err))
@@ -63,7 +63,7 @@ class Prices {
 					axios.post(calcUrl, formData)
 						.then(resp => {
 							console.info(resp.data)
-							frm.price.value = resp.data.total
+							frm.price.value = Math.ceil(resp.data.total)
 							frm.prices.value = JSON.stringify(resp.data)
 						})
 						.catch(err => console.error(err))
