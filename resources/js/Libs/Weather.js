@@ -66,7 +66,7 @@ var display = (selector, data) => {
 		$weatherTitle = $('.weatherTitle'),
 		$wrapper = $(selector),
 		$div=$('<div>'),
-		skipLabels=['Name','Beschreibung','Bild','Datum']
+		skipLabels=['Name','Beschreibung','Bild']
 	;
 	$('.weatherTitle').append(" für "+ data.Name);
 	for(const [k,v] of Object.entries(data)) {
@@ -101,19 +101,17 @@ class Weather {
 			success: function( r ) {
 				let iconUrl = iconURL.replace("%ICON%", r.weather[0].icon),
 					dateSunrise = new Date(r.sys.sunrise * 1000),
-					dateSunset  = new Date(r.sys.sunset * 1000)
-				;
-				const result = {
-					Name:                   r.name,
-					Bild:                   $img.attr({src: iconUrl}),
-					Beschreibung:           r.weather[0].description,
-					Temperatur:             Math.round(r.main.temp) + "° Celsius",
-//					Datum:                  (new Date(r.dt * 1000)).toLocaleDateString(),
-					Sonnenaufgang:          dateSunrise.getHours() + ":" + zeroFill(dateSunrise.getMinutes()) + " Uhr",
-					Sonnenuntergang:        dateSunset.getHours() + ":" + zeroFill(dateSunset.getMinutes()) + " Uhr",
-					Windrichtúng:           convertDegreesToWindDirection(r.wind.deg),
-					Windgeschwindigkeit:    msToBft(r.wind.speed) + " Bft",
-				};
+					dateSunset  = new Date(r.sys.sunset * 1000),
+					result = {
+						Name:                   r.name,
+						Bild:                   $img.attr({src: iconUrl}),
+						Beschreibung:           r.weather[0].description,
+						Temperatur:             Math.round(r.main.temp) + "° Celsius",
+						Sonnenaufgang:          dateSunrise.getHours() + ":" + zeroFill(dateSunrise.getMinutes()) + " Uhr",
+						Sonnenuntergang:        dateSunset.getHours() + ":" + zeroFill(dateSunset.getMinutes()) + " Uhr",
+						Windrichtúng:           convertDegreesToWindDirection(r.wind.deg),
+						Windgeschwindigkeit:    msToBft(r.wind.speed) + " Bft",
+					};
 				display(selector, result);
 			}
 		});

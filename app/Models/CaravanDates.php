@@ -50,7 +50,6 @@ use Illuminate\Database\Query\JoinClause;
  * @method static Builder|CaravanDates dublicates()
  * @method static Builder|CaravanDates fromYearMonth(?string $year = null, ?string $month = null)
  * @method static Builder|CaravanDates whereDayPrice($value)
- * @method static Builder|CaravanDates caravan(?int $caravanId = null)
  */
 class CaravanDates extends BaseModel
 {
@@ -67,6 +66,8 @@ class CaravanDates extends BaseModel
     protected $casts = [
         'persons'   => 'integer',
         'price'     => 'integer',
+        'from'      => 'date:Y-m-d',
+        'until'     => 'date:Y-m-d',
     ];
 
     public function caravan()
@@ -94,12 +95,18 @@ class CaravanDates extends BaseModel
 
     public function getValidFromAttribute()
     {
-        return $this->from->format('Y-m-d');
+        if($this->from) {
+            return $this->from->format('Y-m-d');
+        }
+        return null;
     }
 
     public function getValidUntilAttribute()
     {
-        return $this->until->format('Y-m-d');
+        if($this->until) {
+            return $this->until->format('Y-m-d');
+        }
+        return null;
     }
 
     public function getDaysAttribute()

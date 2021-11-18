@@ -1,3 +1,5 @@
+import cors from "cors";
+
 require('./bootstrap');
 
 import MyForm from "./Libs/MyForm"
@@ -5,6 +7,8 @@ import Prices from "./Libs/Prices"
 import Editor from "./Libs/Editor"
 import Weather from "./Libs/Weather"
 import Car from "./Libs/Car"
+import { createApp } from 'vue'
+import Dashboard from "./views/Dashboard";
 
 window.MyForm   = new MyForm
 window.Prices   = new Prices
@@ -24,6 +28,11 @@ $(document).ready(function () {
 	$(".sidenav__close-icon").click(() => {
 		$sideNav.removeClass('active')
 	});
+	if($("#dashboard").is(":visible")) {
+		const app = createApp(Dashboard).mount("#dashboard");
+//		var cors = require('cors');
+//		app.use(cors());
+	}
 });
 
 if($('[name="csrf-token"]').is(":visible")) {

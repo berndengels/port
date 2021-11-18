@@ -18,4 +18,5 @@ mix.autoload({
 	.copy('node_modules/@fortawesome/fontawesome-free/webfonts', 'public/webfonts')
 	.copy('node_modules/froala-editor', 'public/froala-editor')
 	.webpackConfig(require('./webpack.config'))
+	.vue({version: 3})
 ;
