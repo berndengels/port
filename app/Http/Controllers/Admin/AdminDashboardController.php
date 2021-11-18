@@ -27,7 +27,7 @@ class AdminDashboardController extends AdminController
     public function show()
     {
         return view(
-            'admin.dashboard', [
+            'admin.vue-dashboard', [
             'map'   => config('port.map'),
             'caravansFromToday' => $this->caravansFromToday,
             ]

@@ -22,7 +22,6 @@ class AdminUserTestSeeder extends MainTestSeeder
          */
         Role::getModel()->refresh();
         $user = AdminUser::factory()->create();
-//        if(DB::connection('demo')->table('roles')->where('name','=','admin')->first()) {
         if(Role::whereName('admin')->first()) {
             $user->assignRole('admin');
         }

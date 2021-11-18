@@ -15,9 +15,8 @@ class CreateServiceCategoriesTestTable extends Migration
     {
         Schema::create('service_categories', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('price_type_id');
             $table->string('name', 100);
-            $table->decimal('price', 10)->unsigned()->nullable();
+            $table->enum('modus', ['underwater','board','deck','all'])->default('underwater');
         });
     }
 
