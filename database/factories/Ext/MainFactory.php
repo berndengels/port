@@ -1,6 +1,7 @@
 <?php
 namespace Database\Factories\Ext;
 
+use App\Helper\DateHelper;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 abstract class MainFactory extends Factory
@@ -12,19 +13,11 @@ abstract class MainFactory extends Factory
      * @param string $sFormat
      * @return bool|string
      */
-    protected function randomDate($sStartDate, $sEndDate, $sFormat = 'Y-m-d H:i:s') {
-        // Convert the supplied date to timestamp
-        $fMin = strtotime($sStartDate);
-        $fMax = strtotime($sEndDate);
-
-        // Generate a random number from the start and end dates
-        $fVal = mt_rand($fMin, $fMax);
-
-        // Convert back to the specified date format
-        return date($sFormat, $fVal);
+    public function randomDate($sStartDate, $sEndDate, $sFormat = 'Y-m-d H:i:s') {
+        return DateHelper::randomDate($sStartDate, $sEndDate, $sFormat);
     }
 
-    protected function randomHtmlPart($maxChars = 50)
+    public function randomHtmlPart($maxChars = 50)
     {
         $count = rand(5, 10);
         $i = 0;

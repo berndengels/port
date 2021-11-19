@@ -7,6 +7,7 @@ use App\Libs\Prices\Boat\Cleaning;
 use App\Libs\Prices\Boat\Crane;
 use App\Libs\Prices\Boat\MastCrane;
 use App\Libs\Prices\Boat\Individual;
+use App\Models\Boat;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -28,12 +29,19 @@ class BoatPrice extends PriceCalculator
         $useMastCrane   = $request->post('mast_crane');
         $useCleaning    = $request->post('cleaning');
         $modus          = $request->post('modus');
-
-        $length         = (int) $request->post('length', 0);
-        $width          = (int) $request->post('width', 0);
-        $weight         = (int) $request->post('weight', 0);
-        $mastWeight     = (int) $request->post('mast_weight', 0);
         $specialPrice   = (int) $request->post('default_price', 0);
+
+        if($this->model && $this->model instanceof Boat) {
+            $length         = (int) $this->model->length;
+            $width          = (int) $this->model->width;
+            $weight         = (int) $this->model->weight;
+            $mastWeight     = (int) $this->model->mast_weight;
+        } else {
+            $length         = (int) $request->post('length', 0);
+            $width          = (int) $request->post('width', 0);
+            $weight         = (int) $request->post('weight', 0);
+            $mastWeight     = (int) $request->post('mast_weight', 0);
+        }
 
         if((!static::$from || !static::$until) && $modus) {
             $today          = Carbon::today();

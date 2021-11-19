@@ -1,6 +1,7 @@
 <?php
 namespace App\Libs\Prices;
 
+use App\Models\Caravan;
 use Illuminate\Http\Request;
 use App\Libs\Prices\Caravan\Base;
 use App\Libs\Prices\Caravan\Persons;
@@ -16,8 +17,14 @@ class CaravanPrice extends PriceCalculator
 
     public function getPrice(Request $request): array
     {
-        $personsCount       = $request->post('persons');
-        $carLength          = $request->post('carlength');
+        $personsCount = $request->post('persons');
+
+        if($this->model && $this->model instanceof Caravan) {
+            $carLength = $this->model->carlength;
+        } else {
+            $carLength = $request->post('carlength');
+        }
+
         $individualPrice    = (int) $request->post('day_price', 0);
         $hasElectric        = (bool) $request->post('electric', false);
 

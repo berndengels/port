@@ -6,6 +6,7 @@ use Database\Factories\Ext\MainFactory;
 
 class BoatGuestDatesFactory extends MainFactory
 {
+
     /**
      * Define the model's default state.
      *

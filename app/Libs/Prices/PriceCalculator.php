@@ -28,7 +28,7 @@ abstract class PriceCalculator
      */
     protected static $total = 0;
 
-    public function __construct(Carbon $from = null,  Carbon $until = null)
+    public function __construct(Carbon $from = null,  Carbon $until = null, protected $model = null)
     {
         static::$from           = $from;
         static::$until          = $until;

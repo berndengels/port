@@ -29,6 +29,7 @@ class BoatFactory extends MainFactory
             'length'            => $length,
             'width'             => mt_rand(20, 40) / 10,
             'weight'            => mt_rand(1000, 10000),
+            'board_height'      => mt_rand(5, 20) / 10,
             'draft'             => mt_rand(3, 10) / 10,
             'length_waterline'  => $length - 1,
             'home_port'         => $this->faker->city(),

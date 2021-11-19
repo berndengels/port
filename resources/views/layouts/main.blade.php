@@ -31,5 +31,6 @@
     @endauth
 
     @stack('inline-scripts')
+    <span class="hidden">{{ config('app.env') }}</span>
 </body>
 </html>
