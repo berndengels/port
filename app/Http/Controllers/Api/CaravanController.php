@@ -18,7 +18,7 @@ class CaravanController extends Controller
     public function stats(Request $request)
     {
         $query = CaravanDates::groupBy(['from'])
-            ->selectRaw('until,`from`,SUM(price) AS sumprice, COUNT(*) AS count')
+            ->selectRaw('`from`, COUNT(*) AS count')
             ->orderBy('from')
         ;
 

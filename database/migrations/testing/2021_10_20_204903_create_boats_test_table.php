@@ -21,6 +21,7 @@ class CreateBoatsTestTable extends Migration
             $table->decimal('length', 3, 1)->unsigned()->nullable();
             $table->decimal('width', 2, 1)->unsigned()->nullable();
             $table->unsignedInteger('weight')->nullable();
+            $table->unsignedTinyInteger('board_height')->nullable();
             $table->unsignedTinyInteger('mast_length')->nullable();
             $table->unsignedInteger('mast_weight')->nullable();
             $table->decimal('draft', 3, 1)->unsigned()->nullable();
