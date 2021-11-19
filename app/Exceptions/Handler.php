@@ -2,8 +2,8 @@
 namespace App\Exceptions;
 
 use Throwable;
-//use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Bengels\LaravelEmailExceptions\Exceptions\EmailHandler as ExceptionHandler;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+//use Bengels\LaravelEmailExceptions\Exceptions\EmailHandler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
 {

@@ -2,8 +2,6 @@
 namespace Database\Factories;
 
 use Carbon\Carbon;
-use App\Libs\BoatPriceCalculator;
-use App\Libs\CaravanPriceCalculator;
 use Database\Factories\Ext\MainFactory;
 
 class BoatDatesFactory extends MainFactory

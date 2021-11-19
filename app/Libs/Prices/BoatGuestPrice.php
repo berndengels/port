@@ -4,6 +4,7 @@ namespace App\Libs\Prices;
 use App\Libs\Prices\BoatGuest\Electric;
 use App\Libs\Prices\BoatGuest\Individual;
 use App\Libs\Prices\BoatGuest\Persons;
+use App\Models\BoatGuest;
 use Illuminate\Http\Request;
 use App\Libs\Prices\BoatGuest\Base;
 
@@ -16,7 +17,11 @@ class BoatGuestPrice extends PriceCalculator
 
     public function getPrice(Request $request): array
     {
-        $length             = (int) $request->post('length', 0);
+        if($this->model && $this->model instanceof BoatGuest) {
+            $length = (int) $this->model->length;
+        } else {
+            $length = (int) $request->post('length', 0);
+        }
         $individualPrice    = (int) $request->post('day_price', 0);
 
         $base       = new Base($length);

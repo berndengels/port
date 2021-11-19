@@ -23,7 +23,6 @@ class CaravanAdminPriceTest extends DuskTestCase
     {
         $this->screenName = __FUNCTION__.'/';
         $this->browse(function (Browser $browser) {
-            dump(static::$counter);
             $today  = Carbon::today();
             $from   = $today;
             $until  = $today->copy()->addDays($this->days);
