@@ -40,7 +40,9 @@ class BoatDatesController extends Controller
          * @var $query Builder
          */
         $query = BoatDates::with('boat')
-            ->orderByDesc('from');
+            ->whereIn('boat_id', auth('customer')->user()->boats->map->id)
+            ->orderByDesc('from')
+        ;
         $data = $query->paginate($this->paginatorLimit);
         /**
          * @var $priceTotal Collection
