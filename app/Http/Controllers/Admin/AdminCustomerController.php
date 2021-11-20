@@ -94,11 +94,13 @@ class AdminCustomerController extends AdminController
      */
     public function edit(Customer $customer)
     {
+        $customer->load('roles');
         $roles = $this->roleRepository->setGuardName('customer')->options()->getSelectOptions();
         $customerTypes = $this->customerTypeOptions;
         $customer->password = null;
-        $customer->password_repeat = null;
-        return view('admin.customers.edit', compact('customer', 'customerTypes', 'roles'));
+//        $customer->password_repeat = null;
+        $confirmed = $customer->confirmed;
+        return view('admin.customers.edit', compact('customer', 'confirmed','customerTypes', 'roles'));
     }
 
     /**
@@ -119,10 +121,9 @@ class AdminCustomerController extends AdminController
                 $validated['password'] = Hash::make($validated['password']);
             }
 
-            $customer->update($validated);
-            $customer->roles()->sync($validated['roles']);
+            $customer->syncRoles($validated['roles'] ?? [])->update($validated);
 
-            if($customer->confirmed) {
+            if($customer->confirmed && !$validated['confirmed_old']) {
                 $customer->notify(new RegistrationConfirmed($customer));
             }
 

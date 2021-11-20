@@ -20,7 +20,11 @@ class CustomerRequest extends AdminRequest
 
     public function validationData($keys = null)
     {
-        return array_merge($this->all($keys), ['confirmed' => !!$this->post('confirmed') ?? false]);
+        return array_merge($this->all($keys),
+            [
+                'confirmed' => !!$this->post('confirmed') ?? false,
+                'confirmed_old' => !!$this->post('confirmed_old') ?? false,
+            ]);
     }
 
     /**
@@ -40,6 +44,7 @@ class CustomerRequest extends AdminRequest
             'postcode'          => 'required',
             'street'            => 'required',
             'confirmed'         => '',
+            'confirmed_old'     => '',
             'roles'             => [],
         ];
 
