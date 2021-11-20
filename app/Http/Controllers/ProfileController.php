@@ -55,10 +55,15 @@ class ProfileController extends GuardedController
     {
         try {
             $validated = $request->validated();
-            if($validated['password']) {
+
+            if(!$request->password) {
+                $validated = collect($validated)->except(['password','password_repeat'])->toArray();
+            } else {
                 $validated['password'] = Hash::make($validated['password']);
             }
+
             $profile->update($validated);
+
             return redirect()
                 ->route('customer.profile.show', compact('profile'))
                 ->with('success', 'Kunde erfogreich bearbeitet!')

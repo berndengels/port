@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\ServiceRequested;
+use Exception;
 use App\Models\Boat;
 use App\Models\Customer;
-use App\Notifications\NewServiceRequest;
-use Exception;
 use Illuminate\Http\Response;
 use App\Models\ServiceRequest;
+use App\Events\ServiceRequested;
+use Illuminate\Database\Eloquent\Builder;
 use App\Http\Requests\ServiceRequestRequest;
 
 class ServiceRequestController extends Controller
@@ -32,11 +32,9 @@ class ServiceRequestController extends Controller
          * @var Customer $customer
          */
         $customer = auth('customer')->user();
-        $data = $customer
-            ->boats()
-            ->with('serviceRequests')
-            ->whereHas('serviceRequests')
-            ->getRelation('serviceRequests')
+        $boats = $customer->boats->map->id;
+        $data = ServiceRequest::whereIn('boat_id', $boats)
+            ->orderByDesc('created_at')
             ->paginate($this->paginatorLimit)
         ;
         return view('customer.serviceRequests.index', compact('data'));

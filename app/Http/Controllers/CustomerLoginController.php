@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Auth\LoginController as DefaultLoginController;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\URL;
 
 class CustomerLoginController extends DefaultLoginController
 {
@@ -15,8 +16,7 @@ class CustomerLoginController extends DefaultLoginController
 
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
-        $this->middleware('guest:customer')->except('logout');
+        $this->middleware(['guest','guest:customer'])->except('logout');
     }
 
     public function showLoginForm()
@@ -48,16 +48,21 @@ class CustomerLoginController extends DefaultLoginController
             return $this->sendLockoutResponse($request);
         }
 
-        //attempt login.
-        if(Auth::guard('customer')->attempt(
-            $request->only('email', 'password'),
-            $request->filled('remember')
-        )
+        //attempt login
+        if( $this->guard()->attempt(
+                $request->only('email', 'password'),
+                $request->filled('remember')
+            ) && 1 == $this->guard()->user()->confirmed
         ) {
             //Authenticated
             return redirect()
                 ->intended(route('public.dashboard'))
                 ->with('status', 'You are Logged in as Customer!');
+        } else {
+            $this->guard()->logout();
+            return redirect()
+                ->back()
+                ->with('error', 'Sorry, Ihre Kunden-Registrierung wurde noch nicht bestätigt !');
         }
 
         //keep track of login attempts from the user.
@@ -87,5 +92,19 @@ class CustomerLoginController extends DefaultLoginController
         return $request->wantsJson()
             ? new JsonResponse([], 204)
             : redirect('/');
+    }
+
+    public function signin(Request $request, $customerId) {
+        $customer = Customer::find($customerId);
+        if($request->hasValidSignature() && $customer) {
+            $this->guard()->login($customer);
+            return $request->wantsJson()
+                ? new JsonResponse([], 201)
+                : redirect()
+                    ->route('public.dashboard')
+                    ->with('success',"Kunde '$customer->name' erfolgreich angemeldet")
+                ;
+        }
+        return redirect()->back()->with('error','Action not pertmitted!');
     }
 }

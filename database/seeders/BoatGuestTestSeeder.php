@@ -13,6 +13,7 @@ use http\Client\Request;
 class BoatGuestTestSeeder extends MainTestSeeder
 {
     protected $table = 'boat_guests';
+    protected $count = 300;
     /**
      * Run the database seeds.
      *

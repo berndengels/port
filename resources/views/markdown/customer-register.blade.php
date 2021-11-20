@@ -1,6 +1,6 @@
 @component('mail::message')
 ## Neue Kunden Registrierung erfolgt
-### Registrierungs Bestätigung für neuen Kunden
+### Hier Ihre Kunden-Daten
 - Name: {{ $customer->name }}
 - Email: <{{ $customer->email }}>
 - Telefon: {{ $customer->fon }}
@@ -20,9 +20,9 @@
 - Länge Kiel: {{ $boat->length_keel ?? 0 }} m
 @endif
 
-@component('mail::button', ['url' => route('admin.customers.edit', $customer)])
-    Bitte hier Registrierung bestätigen
-@endcomponent
+Sobald Ihre Registrierung bestätigt wurde, erhalten Sie eine weitere Email.
+Wenn Sie sich über das Kunden-Login einloggen, sehen Sie weitere Inhalte, um Ihre Daten zu
+verwalten oder Service-Anfragen zu erstellen.
 
 Danke,<br>
 {{ config('app.name') }}

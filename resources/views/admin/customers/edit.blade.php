@@ -9,6 +9,9 @@
             @can('confirm Registration')
                 <x-form-checkbox name="confirmed" label="Bestätigt" class=" mb-0 pb-0" />
             @endcan
+            @can('write Role')
+                <x-form-select name="roles[]" label="Role" :options="$roles" multiple />
+            @endcan
             <x-form-select name="customer_type" label="Typ" :options="$customerTypes" required />
             <x-form-input name="name" label="Name" required />
             <x-form-input type="email" name="email" label="Email" required />

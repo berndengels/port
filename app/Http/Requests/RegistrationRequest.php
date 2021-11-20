@@ -3,6 +3,14 @@ namespace App\Http\Requests;
 
 class RegistrationRequest extends CustomerRequest
 {
+    protected $floats = [
+        'length',
+        'width',
+        'draft',
+        'length_waterline',
+        'length_keel',
+        'board_height',
+    ];
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -11,6 +19,13 @@ class RegistrationRequest extends CustomerRequest
     public function authorize()
     {
         return true;
+    }
+
+    protected function prepareForValidation()
+    {
+        foreach($this->floats as $item) {
+            $this->$item = str_replace(',', '.', $item);
+        }
     }
 
     /**
@@ -26,6 +41,7 @@ class RegistrationRequest extends CustomerRequest
             'length'            => 'required',
             'width'             => 'required',
             'weight'            => 'required',
+            'board_height'      => 'nullable|numeric',
             'draft'             => 'required',
             'length_waterline'  => '',
             'mast_length'       => 'exclude_if:boat_type,motor|required',

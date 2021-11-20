@@ -33,14 +33,14 @@ class CustomerRequest extends AdminRequest
         $rules = [
             'name'              => 'required|min:3',
             'email'             => $this->getId() ? '' : 'nullable|email|unique:customers,email',
-        //            'password'          => !$this->getId() ? 'required|alpha_num|between:6,20|confirmed' : 'sometimes|required|alpha_num|between:6,20|confirmed',
             'password'          => !$this->getId() ? 'required|alpha_num|between:6,20|confirmed' : 'nullable|alpha_num|between:6,20|required_if:confirmed,null',
             'customer_type'     => '',
-//            'customer_type'     => '',
             'fon'               => 'required',
             'city'              => 'required',
             'postcode'          => 'required',
             'street'            => 'required',
+            'confirmed'         => '',
+            'roles'             => [],
         ];
 
         if(app()->environment(['production'])) {
