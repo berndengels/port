@@ -3,9 +3,9 @@
         <x-form-label :label="$label"/>
         <input {!! $attributes->merge([
             'class' => 'h-10' . ($inline ? ' inline-flex' : ' block w-full')
-                . ' ' . ($label ? 'mt-1' : ' ')
-//                . (($label && $inline) ? ' sm:block sm:w-full ' : ' ')
-                . ($class ?? ''),
+                . ' ' . ($label ? ' mt-1' : '')
+//                . (($label && $inline) ? ' sm:block sm:w-full' : '')
+                . ($class ? ' '.$class : ''),
             'autocomplete' => $attributes['autocomplete'] ?? '',
         ]) !!}
             @if($isWired())

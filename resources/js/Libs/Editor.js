@@ -1,5 +1,5 @@
 class Editor {
-	create = (selector, paramName, uploadURL) => {
+	create(selector, paramName, uploadURL) {
 		let toolBars = {
 			'default': {
 				'buttons': [

@@ -15,8 +15,8 @@
 
             @bind($caravanDate)
             <x-form-input name="prices" type="hidden" />
-            <x-form-input name="from" class="calc" type="date" label="Von" required :bind="false" :default="$caravanDate->validFrom" />
-            <x-form-input name="until" class="calc" type="date" label="Bis" required :bind="false" :default="$caravanDate->validUntil" />
+            <x-form-input name="from" class="calc" type="date" label="Von" required :bind="false" default="{{$caravanDate->validFrom}}" />
+            <x-form-input name="until" class="calc" type="date" label="Bis" required :bind="false" default="{{$caravanDate->validUntil}}" />
             <div class="mt-3">
                 <x-form-checkbox class="calc" name="electric" label="Stromanschluß" />
             </div>

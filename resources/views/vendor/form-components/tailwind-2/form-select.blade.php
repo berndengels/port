@@ -15,8 +15,8 @@
             {!! $attributes->merge([
                 'class' =>'h-10' .  (($label && !$inline) ? ' mt-1' : '')
                     . ($inline ? ' inline-flex' : ' block w-full')
-//                    . (($label && $inline) ? ' sm:block sm:w-full ' : ' ')
-                    . ($class ?? ''),
+//                    . (($label && $inline) ? ' sm:block sm:w-full' : '')
+                    . ($class ? ' '.$class : ''),
             ]) !!}>
             @forelse($options as $key => $option)
                 <option value="{{ $key }}" @if($isSelected($key)) selected="selected" @endif>

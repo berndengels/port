@@ -17,8 +17,8 @@ class CaravanDatesFactory extends MainFactory
      */
     public function definition()
     {
-        $randomDateEnd = Carbon::today()->addMonths(1)->format('Y-m-d');
-        $from       = $this->randomDate('2020-01-01', $randomDateEnd,'Y-m-d');
+        $endDate    = Carbon::today()->addMonths(1)->format('Y-m-d');
+        $from       = $this->randomDate('2020-01-01', $endDate,'Y-m-d');
         $until      = Carbon::create($from)->addDays(rand(1,7));
         $from       = Carbon::create($from);
         $persons    = rand(1, 4);

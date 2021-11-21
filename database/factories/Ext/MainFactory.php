@@ -13,7 +13,7 @@ abstract class MainFactory extends Factory
      * @param string $sFormat
      * @return bool|string
      */
-    public function randomDate($sStartDate, $sEndDate, $sFormat = 'Y-m-d H:i:s') {
+    public function randomDate(string $sStartDate, string $sEndDate, $sFormat = 'Y-m-d') {
         return DateHelper::randomDate($sStartDate, $sEndDate, $sFormat);
     }
 
