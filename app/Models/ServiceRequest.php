@@ -44,6 +44,7 @@ class ServiceRequest extends Model
     use HasFactory;
 
     protected $table = 'service_requests';
+    protected $with = 'boat';
     protected $guarded = ['id'];
     protected $dates = ['created_at', 'updated_at', 'done_at', 'done_until'];
     protected $casts = [
@@ -59,7 +60,7 @@ class ServiceRequest extends Model
 
     public function boat()
     {
-        return $this->belongsTo(Boat::class);
+        return $this->belongsTo(Boat::class, 'boat_id', 'id');
     }
 
     public function services(): BelongsToMany

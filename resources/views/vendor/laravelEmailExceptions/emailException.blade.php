@@ -6,14 +6,14 @@
 </head>
 <body style="color: #000000; font-family: 'Open Sans', sans-serif;">
 
-<table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="bodyTable">
+<table height="100%" width="100%" id="bodyTable">
     <tr>
         <td align="center" valign="top">
-            <table border="0" cellpadding="20" cellspacing="0" width="600" id="emailContainer">
+            <table id="emailContainer">
                 <tr>
                     <td align="center" valign="top">
                         <h3 style="height: 40px; line-height: 40px; background-color: #f56857; color: #ffffff;">There has been an exception thrown on {{ env('APP_URL', 'unknown') }}</h3>
-                        <table class="emailExceptionTable" style="text-align: left;" border="0" cellspacing="0" cellpadding="3">
+                        <table class="emailExceptionTable" style="text-align: left;">
                             <tr>
                                 <td><strong>Environment:</strong></td>
                                 <td>{{ env('APP_ENV', 'unknown') }}</td>
@@ -68,17 +68,22 @@
                             </tr>
                         </table>
                         <hr style="color: #f6f6f6;">
-                        <table align="center" style="text-align: center;" border="0" cellspacing="0" cellpadding="0">
+                        <table style="text-align: center;">
                             <tr>
                                 <td>In {{ $exception->getFile() }} on line {{  $exception->getLine() }}</td>
                             </tr>
                         </table>
                         <hr style="color: #f6f6f6;">
-                        <table align="center" style="text-align: center;" border="0" cellspacing="0" cellpadding="0">
+                        <table style="text-align: center;">
                             <tr>
                                 <td><strong>Stack Trace:</strong></td>
                             </tr>
-                            <tr><td align="left" style="text-align: left;">{!! nl2br($exception->getTraceAsString()) !!}</td>
+                            @foreach($exception->getTrace() as $item)
+                            <tr>
+                                <td style="text-align: left;">
+                                    {{ $item['file'] }} ({{ $item['line'] }}): {{ $item['class'] ?? '' }}{{ $item['type'] ?? '' }}{{ $item['function'] }}
+                                </td>
+                            @endforeach
                             </tr>
                         </table>
                     </td>

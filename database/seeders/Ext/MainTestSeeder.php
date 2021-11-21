@@ -13,7 +13,7 @@ use Illuminate\Database\Connection;
 
 class MainTestSeeder extends Seeder
 {
-    protected $count = 5;
+    protected $count = 50;
     /**
      * @var Connection
      */

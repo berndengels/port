@@ -37,7 +37,7 @@
             @foreach($data as $item)
                 <tr>
                     <td class="has-tooltip">
-                        <span @dblclick="" class="carnumber cursor-pointer">{{ $item->carnumber }}</span>
+                        <span class="carnumber cursor-pointer">{{ $item->carnumber }}</span>
                     </td>
                     <td class="hidden md:table-cell">{{ $item->carlength }} m</td>
                     <td class="hidden md:table-cell"><a href="mailto:{{ $item->email }}" target="_blank">{{ $item->email }}</a><br v-else></td>

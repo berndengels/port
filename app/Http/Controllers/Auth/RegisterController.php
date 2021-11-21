@@ -1,8 +1,8 @@
 <?php
 namespace App\Http\Controllers\Auth;
 
-use App\Models\Customer;
 use Exception;
+use App\Models\Customer;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\StatefulGuard;
@@ -16,7 +16,6 @@ use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Database\Eloquent\Concerns\HasEvents;
 use App\Http\Requests\RegistrationRequest;
@@ -78,8 +77,10 @@ class RegisterController extends Controller
     public function register(RegistrationRequest $request)
     {
         try {
-            $customer = Customer::create($request->validated());
-            $customer->boats()->create($request->validated());
+            $validated = $request->validated();
+            $validated['password'] = Hash::make($validated['password']);
+            $customer = Customer::create($validated);
+            $customer->boats()->create($validated);
 
             event(new Registered($customer));
             $this->guard()->login($customer);

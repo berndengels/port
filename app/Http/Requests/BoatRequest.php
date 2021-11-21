@@ -5,7 +5,14 @@ namespace App\Http\Requests;
 class BoatRequest extends AdminRequest
 {
     protected $modelName = 'Boat';
-    private $floats = ['length','width','draft','length_waterline','length_keel'];
+    protected $floats = [
+        'length',
+        'width',
+        'draft',
+        'length_waterline',
+        'length_keel',
+        'board_height',
+    ];
 
     /**
      * Determine if the user is authorized to make this request.

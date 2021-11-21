@@ -6,7 +6,7 @@
         <div class="show-page">
             <div>
                 <div>Bestätigt</div>
-                <div>{{ $customer->confirmed ? 'JA' : 'NEIN' }}</div>
+                <div>{!! $customer->icon('confirmed') !!}</div>
             </div>
             <div>
                 <div>Name</div>
@@ -38,6 +38,20 @@
             <div>
                 <div>Ort</div>
                 <div>{{ $customer->city }}</div>
+            </div>
+            <div>
+                <div>Rollen</div>
+                <div>
+                    @if($customer->roles->count() > 0)
+                        <ul>
+                        @foreach($customer->roles as $role)
+                            <li>{{ $role->name }}</li>
+                        @endforeach
+                        </ul>
+                    @else
+                        keine
+                    @endif
+                </div>
             </div>
         </div>
     </div>

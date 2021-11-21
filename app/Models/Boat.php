@@ -87,7 +87,7 @@ class Boat extends BaseModel
     public function serviceRequests()
     {
         if($this->hasOne(Customer::class)) {
-            return $this->hasMany(ServiceRequest::class);
+            return $this->hasMany(ServiceRequest::class, 'boat_id', 'id');
         }
 //        return null;
     }

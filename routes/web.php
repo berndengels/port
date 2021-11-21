@@ -55,6 +55,9 @@ Route::group([
     Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
     Route::post('login', [CustomerLoginController::class, 'login'])->name('login');
     Route::post('logout', [CustomerLoginController::class, 'logout'])->name('logout');
+    Route::get('signin/{customerId}', [CustomerLoginController::class, 'signin'])->name('signin')
+        ->middleware('signed')
+    ;
 });
 Route::get('route/current/{guard}/{currentRouteName}/{route}', [RouteController::class, 'setCurrentMenu'])
     ->name('route.current')
@@ -143,6 +146,7 @@ Route::group([
 
     Route::get('routes', [AdminInfoController::class, 'routes'])->name('infos.routes');
     Route::get('php', [AdminInfoController::class, 'phpinfo'])->name('infos.php');
+    Route::get('emojis', [AdminInfoController::class, 'emojis'])->name('infos.emojis');
     Route::fallback(function () {
 //        return redirect('/admin');
         return 'wrong admin route';

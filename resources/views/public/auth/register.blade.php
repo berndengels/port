@@ -21,16 +21,17 @@
 
                 <x-form-select id="boat_type" name="boat_type" label="Boots Typ" :options="$boatTypes" required />
                 <x-form-group class="sail hidden">
-                    <x-form-input name="mast_length" type="number" step="1" label="Mastlänge" placeholder="Mastlänge" />
+                    <x-form-input name="mast_length" type="number" step="1" label="Mastlänge in Meter" placeholder="Mastlänge" />
                     <x-form-input name="mast_weight" type="number" step="1" label="Mastgewicht in Kg" placeholder="Mastgewicht in Kilogramm" />
-                    <x-form-input name="length_keel" type="number" step="0.1" label="Kiellänge" placeholder="Kiellänge" />
+                    <x-form-input name="length_keel" type="number" step="0.1" label="Kiellänge in Meter" placeholder="Kiellänge" />
                 </x-form-group>
                 <x-form-input name="boat_name" label="Boots Name" required  placeholder="Boots Name" />
-                <x-form-input name="length" type="number" step="0.1" label="Boots Länge" placeholder="Boots Länge" required />
-                <x-form-input name="width" type="number" step="0.1" label="Boots Breite" placeholder="Boots Breite" />
+                <x-form-input name="length" type="number" step="0.1" label="Boots Länge in Meter" placeholder="Boots Länge" required />
+                <x-form-input name="width" type="number" step="0.1" label="Boots Breite in Meter" placeholder="Boots Breite" />
                 <x-form-input name="weight" type="number" step="100" label="Boots Gewicht in Kg" placeholder="Gewicht in Kilogramm" />
-                <x-form-input name="draft" type="number" step="0.1" label="Tiefgang" placeholder="Tiefgang" />
-                <x-form-input name="length_waterline" type="number" step="0.1" step="0.1" label="Länge Wasserlinie" placeholder="Länge Wasserlinie" />
+                <x-form-input name="board_height" type="number" step="0.1" label="Bordhöhe in Meter" placeholder="Höhe Bord über Wasserlinie in Meter" />
+                <x-form-input name="draft" type="number" step="0.1" label="Tiefgang in Meter" placeholder="Tiefgang" />
+                <x-form-input name="length_waterline" type="number" step="0.1" step="0.1" label="Länge Wasserlinie in Meter" placeholder="Länge Wasserlinie" />
 
                 @env('production')
                 <div class="form-group mt-4 mb-4">

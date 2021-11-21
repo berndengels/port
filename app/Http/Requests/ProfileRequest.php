@@ -30,7 +30,6 @@ class ProfileRequest extends MainFormRequest
         $rules = [
             'name'              => 'required|min:3',
             'email'             => $this->getId() ? '' : 'nullable|email|unique:customers,email',
-        //            'password'          => !$this->getId() ? 'required|alpha_num|between:6,20|confirmed' : 'sometimes|required|alpha_num|between:6,20|confirmed',
             'password'          => !$this->getId() ? 'required|alpha_num|between:6,20|confirmed' : 'nullable|alpha_num|between:6,20|required_if:confirmed,null',
             'fon'               => 'required',
             'city'              => 'required',

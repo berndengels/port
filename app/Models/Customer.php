@@ -2,7 +2,9 @@
 namespace App\Models;
 
 use App\Libs\AppCache;
+use App\Traits\Models\UseBooeanlIcon;
 use Database\Factories\CustomerFactory;
+use Database\Factories\RandomCustomerFactory;
 use Eloquent;
 use App\Traits\Models\ClearCache;
 use Illuminate\Auth\Passwords\CanResetPassword;
@@ -65,13 +67,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Customer extends Authenticatable
 {
-    use HasFactory, HasRoles, Notifiable, CanResetPassword, ThrottlesLogins, Dispatchable, ClearCache;
+    use HasFactory, HasRoles, Notifiable, CanResetPassword, ThrottlesLogins, Dispatchable, ClearCache, UseBooeanlIcon;
 
     protected $table = 'customers';
     protected $guard_name = 'customer';
     protected $appends = ['fonLink','strRoles'];
     protected $guarded = ['id'];
     protected $hidden = ['password','remember_token'];
+    protected $casts = [
+        'confirmed' => 'boolean',
+    ];
     public $timestamps = false;
 
     protected static $cacheKeys = [
@@ -95,5 +100,10 @@ class Customer extends Authenticatable
     public function getStrRolesAttribute()
     {
         return $this->roles->map->name->join(', ');
+    }
+
+    public static function randomFactory()
+    {
+        return RandomCustomerFactory::new();
     }
 }

@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Schema;
 class CaravanTestSeeder extends MainTestSeeder
 {
     protected $table = 'caravans';
+    protected $count = 300;
     /**
      * Run the database seeds.
      *

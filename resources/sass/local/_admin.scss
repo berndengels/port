@@ -54,3 +54,32 @@ input[disabled], select[disabled], textara[disabled] {
 		}
 	}
 }
+form.frm-admin {
+	.frm-group {
+		div {
+			div {
+				margin-left: 1.0rem;
+				label {
+					width: 100%;
+					.label {
+						margin-right: 0.5rem;
+						line-height: 2.5;
+						white-space: nowrap;
+					}
+					i.help{
+						line-height: 2.0;
+					}
+				}
+			}
+			div:first-child {
+				margin-left: 0;
+			}
+			@include media('<tablet') {
+				div {
+					width: 100%;
+					margin-left: 0;
+				}
+			}
+		}
+	}
+}

@@ -20,7 +20,11 @@ class CustomerRequest extends AdminRequest
 
     public function validationData($keys = null)
     {
-        return array_merge($this->all($keys), ['confirmed' => !!$this->post('confirmed') ?? false]);
+        return array_merge($this->all($keys),
+            [
+                'confirmed' => !!$this->post('confirmed') ?? false,
+                'confirmed_old' => !!$this->post('confirmed_old') ?? false,
+            ]);
     }
 
     /**
@@ -33,14 +37,15 @@ class CustomerRequest extends AdminRequest
         $rules = [
             'name'              => 'required|min:3',
             'email'             => $this->getId() ? '' : 'nullable|email|unique:customers,email',
-        //            'password'          => !$this->getId() ? 'required|alpha_num|between:6,20|confirmed' : 'sometimes|required|alpha_num|between:6,20|confirmed',
             'password'          => !$this->getId() ? 'required|alpha_num|between:6,20|confirmed' : 'nullable|alpha_num|between:6,20|required_if:confirmed,null',
             'customer_type'     => '',
-//            'customer_type'     => '',
             'fon'               => 'required',
             'city'              => 'required',
             'postcode'          => 'required',
             'street'            => 'required',
+            'confirmed'         => '',
+            'confirmed_old'     => '',
+            'roles'             => [],
         ];
 
         if(app()->environment(['production'])) {

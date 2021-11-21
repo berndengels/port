@@ -19,6 +19,7 @@
                 <th class="hidden md:table-cell">ID</th>
                 <th>Name</th>
                 <th class="hidden md:table-cell">Email</th>
+                <th>Bestätigt</th>
                 <th>Fon</th>
                 <th colspan="2"><br></th>
             </tr>
@@ -27,10 +28,11 @@
                     <td class="hidden md:table-cell">{{ $item->id }}</td>
                     <td><x-navlink href="{{ route('admin.customers.show', $item) }}">{{ $item->name }}</x-navlink></td>
                     <td class="hidden md:table-cell"><a href="mailto:{{ $item->email }}" target="_blank">{{ $item->email }}</a></td>
+                    <td>{!! $item->icon('confirmed') !!}</td>
                     <td>
                         @if($item->fon)
                         <a href="tel:{{ $item->fonLink }}" target="_blank">
-                            <i class="fas fa-phone"></i>
+                            <i class="fas fa-phone text-blue"></i>
                             {{ $item->fon }}
                         </a>
                         @endif

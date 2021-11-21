@@ -26,7 +26,7 @@
         "mews/captcha": "^3.2",
         "nexmo/laravel": "^2.4",
         "phpoffice/phpspreadsheet": "^1.18",
-        "protonemedia/laravel-form-components": "^3.0",
+        "protonemedia/laravel-form-components": "^3.2",
         "spatie/db-dumper": "^2.21",
         "spatie/emoji": "^3.0",
         "spatie/laravel-db-snapshots": "^1.7",

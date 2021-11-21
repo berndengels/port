@@ -114,8 +114,9 @@ class AdminUserController extends AdminController
                 $validated['password'] = Hash::make($validated['password']);
             }
             $user
-                ->syncRoles($validated['roles'])
-                ->update($validated);
+                ->syncRoles($validated['roles'] ?? [])
+                ->update($validated)
+            ;
             return redirect()->route('admin.users.index')->with('success', 'User erfogreich bearbeitet!');
         } catch(Exception $e) {
             die($e->getMessage());

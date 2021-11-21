@@ -2,14 +2,13 @@
 
 namespace App\Mail;
 
-use App\Models\AdminUser;
 use App\Models\Customer;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class RegisterMail extends Mailable
+class CustomerRegisterMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -20,22 +19,15 @@ class RegisterMail extends Mailable
      */
     public function __construct(protected Customer $customer)
     {
-        // $users = AdminUser::permission('confirm Registration')->get();
-        $users = app()->environment(['local'])
-            ? AdminUser::whereEmail('engels@f50.de')->get()
-            : AdminUser::permission('confirm Registration')->get();
-
-        foreach ($users as $user) {
-            $this->to[] = [
-                'name'      => $user->name,
-                'address'   => $user->email,
-            ];
-        }
+        $this->to[] = [
+            'name'      => $customer->name,
+            'address'   => $customer->email,
+        ];
         $this->from[] = [
             'name'      => $customer->name,
             'address'   => $customer->email,
         ];
-        $this->subject("Bitte bestätige Registrierung von $customer->name ($customer->email)");
+        $this->subject("Registrierung von $customer->name ($customer->email) erfolgreich");
     }
 
     /**
@@ -46,8 +38,9 @@ class RegisterMail extends Mailable
     public function build()
     {
         return $this->markdown(
-            'markdown.register', [
-                'customer' => $this->customer,
+            'markdown/customer-register', [
+                'customer'  => $this->customer,
+                'boat'      => $this->customer->boats()->first()
             ]
         );
     }

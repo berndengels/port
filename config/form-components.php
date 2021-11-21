@@ -1,5 +1,7 @@
 <?php
 
+use App\View\Components\Form\FormInput;
+use App\View\Components\Form\FormSelect;
 use ProtoneMedia\LaravelFormComponents\Components;
 
 return [
@@ -30,8 +32,10 @@ return [
         ],
 
         'form-input' => [
-            'view'  => 'form-components::{framework}.form-input',
-            'class' => Components\FormInput::class,
+//            'view'  => 'form-components::{framework}.form-input',
+            'view'  => 'vendor.form-components.{framework}.form-input',
+//            'class' => Components\FormInput::class,
+            'class' => FormInput::class,
         ],
 
         'form-input-group' => [
@@ -61,7 +65,8 @@ return [
 
         'form-select' => [
             'view'  => 'form-components::{framework}.form-select',
-            'class' => Components\FormSelect::class,
+//            'class' => Components\FormSelect::class,
+            'class' => FormSelect::class,
         ],
 
         'form-submit' => [
