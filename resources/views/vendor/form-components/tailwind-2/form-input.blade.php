@@ -1,10 +1,12 @@
-<div class="@if($type === 'hidden') hidden @else mt-4 @endif">
-    <label class="block">
-        <x-form-label :label="$label" />
-
+<div class="@if($type === 'hidden') hidden @elseif($inline) 'inline-flex' @else mt-2 @endif">
+    <label class="@if($inline) inline-flex @endif">
+        <x-form-label :label="$label"/>
         <input {!! $attributes->merge([
-            'class' => 'block w-full ' . ($label ? 'mt-1' : ''),
-            'autocomplete' => isset($attributes['autocomplete']) ? $attributes['autocomplete'] : '',
+            'class' => 'h-10' . ($inline ? ' inline-flex' : ' block w-full')
+                . ' ' . ($label ? 'mt-1' : ' ')
+//                . (($label && $inline) ? ' sm:block sm:w-full ' : ' ')
+                . ($class ?? ''),
+            'autocomplete' => $attributes['autocomplete'] ?? '',
         ]) !!}
             @if($isWired())
                 wire:model{!! $wireModifier() !!}="{{ $name }}"
@@ -15,7 +17,11 @@
                autocomplete={{ $attributes['autocomplete'] }}
             @endif
             name="{{ $name }}"
-            type="{{ $type }}" />
+            type="{{ $type }}"
+        />
+        @if($help)
+            <i data-info="{{ $help }}" class="help text-xl text-blue-900 right-auto ml-2 fas fa-question-circle"></i>
+        @endif
     </label>
 
     @if($hasErrorAndShow($name))

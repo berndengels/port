@@ -1,7 +1,6 @@
-<div class="mt-4">
-    <label class="block">
+<div class="@if($inline) inline-flex @else mt-2 @endif">
+    <label class="@if($inline) inline-flex @endif">
         <x-form-label :label="$label" />
-
         <select
             @if($isWired())
                 wire:model{!! $wireModifier() !!}="{{ $name }}"
@@ -14,7 +13,10 @@
             @endif
 
             {!! $attributes->merge([
-                'class' => ($label ? 'mt-1' : '') . ' block w-full'
+                'class' =>'h-10' .  (($label && !$inline) ? ' mt-1' : '')
+                    . ($inline ? ' inline-flex' : ' block w-full')
+//                    . (($label && $inline) ? ' sm:block sm:w-full ' : ' ')
+                    . ($class ?? ''),
             ]) !!}>
             @forelse($options as $key => $option)
                 <option value="{{ $key }}" @if($isSelected($key)) selected="selected" @endif>
@@ -24,6 +26,9 @@
                 {!! $slot !!}
             @endforelse
         </select>
+        @if($help)
+            <i data-info="{{ $help }}" class="help text-xl text-blue-900 right-auto ml-2 fas fa-question-circle"></i>
+        @endif
     </label>
 
     @if($hasErrorAndShow($name))

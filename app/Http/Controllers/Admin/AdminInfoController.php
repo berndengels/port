@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Spatie\Emoji\Emoji;
 
 class AdminInfoController extends AdminController
 {
@@ -34,5 +35,10 @@ class AdminInfoController extends AdminController
     public function phpinfo()
     {
         return view('admin.infos.phpinfo');
+    }
+
+    public function emojis() {
+        $data = Emoji::all();
+        return view('admin.infos.emoji', compact('data'));
     }
 }

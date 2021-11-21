@@ -287,6 +287,14 @@ return [
                         'hide_on_mobile' => false,
                     ],
                     [
+                        'permissions'   => ['read Emojis'],
+                        'text'  => 'Emojis',
+                        'title' => 'Emojis',
+                        'icon'  => 'fas fa-route',
+                        'route' => 'admin.infos.emojis',
+                        'hide_on_mobile' => false,
+                    ],
+                    [
                         'permissions'   => ['read Routes'],
                         'text'  => 'PHPInfo',
                         'title' => 'PHPInfo',

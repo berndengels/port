@@ -146,6 +146,7 @@ Route::group([
 
     Route::get('routes', [AdminInfoController::class, 'routes'])->name('infos.routes');
     Route::get('php', [AdminInfoController::class, 'phpinfo'])->name('infos.php');
+    Route::get('emojis', [AdminInfoController::class, 'emojis'])->name('infos.emojis');
     Route::fallback(function () {
 //        return redirect('/admin');
         return 'wrong admin route';

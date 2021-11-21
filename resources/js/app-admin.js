@@ -7,6 +7,7 @@ import Prices from "./Libs/Prices"
 import Editor from "./Libs/Editor"
 import Weather from "./Libs/Weather"
 import Car from "./Libs/Car"
+import Tooltip from "./Libs/Tooltip";
 import { createApp } from 'vue'
 import Dashboard from "./views/Dashboard";
 
@@ -15,6 +16,7 @@ window.Prices   = new Prices
 window.Editor   = new Editor
 window.Weather  = new Weather;
 window.Car  = new Car;
+window.Tooltip = new Tooltip
 
 $(document).ready(function () {
 	const $sideNav = $('.sidenav');
