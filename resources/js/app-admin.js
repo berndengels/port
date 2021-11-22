@@ -1,6 +1,11 @@
-import cors from "cors";
-
 require('./bootstrap');
+
+const axios = require('axios');
+axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+axios.defaults.baseURL = process.env.MIX_API_URL;
+axios.defaults.withCredentials = true;
+axios.get('/sanctum/csrf-cookie');
+window.axios = axios
 
 import MyForm from "./Libs/MyForm"
 import Prices from "./Libs/Prices"

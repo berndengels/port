@@ -16,22 +16,15 @@ use App\Http\Controllers\Admin\AdminPriceController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-/*
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-*/
-Route::group([
-    'prefix'    => 'admin',
-    'as'        => 'admin.',
-    'middleware' => ['auth:admin'],
-],function () {
-    //Route::post('caravan/price/calculate', [AdminPriceController::class, 'calculate'])->name('caravan.price.calculate');
-});
+
 Route::get('weather',WeatherController::class)->name('weather');
 Route::group([
     'prefix'    => 'stats',
     'as'        => 'stats.',
+    'middleware' => ['auth:sanctum'],
 ], function () {
     Route::get('caravans',[StatisticController::class,'caravans'])->name('caravans');
     Route::get('boats',[StatisticController::class,'boats'])->name('boats');

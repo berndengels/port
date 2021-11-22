@@ -78,7 +78,14 @@ use Spatie\Permission\Traits\HasRoles;
  */
 class AdminUser extends Authenticatable
 {
-    use HasFactory, HasRoles, Notifiable, CanResetPassword, ThrottlesLogins, Dispatchable, ClearCache;
+    use HasFactory,
+        HasRoles,
+        Notifiable,
+        CanResetPassword,
+        ThrottlesLogins,
+        Dispatchable,
+        ClearCache,
+        HasApiTokens;
 
     protected $table = 'admin_users';
     protected $guard_name = 'admin';
