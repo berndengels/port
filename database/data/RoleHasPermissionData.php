@@ -148,6 +148,8 @@ class RoleHasPermissionData
 		[ 'permission_id' => '55', 'role_id' => '1'],
 		[ 'permission_id' => '55', 'role_id' => '6'],
 		[ 'permission_id' => '56', 'role_id' => '1'],
-		[ 'permission_id' => '56', 'role_id' => '6']
+		[ 'permission_id' => '56', 'role_id' => '6'],
+		[ 'permission_id' => '57', 'role_id' => '3'],
+		[ 'permission_id' => '58', 'role_id' => '3']
 	];
 }

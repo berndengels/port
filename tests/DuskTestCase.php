@@ -64,6 +64,7 @@ abstract class DuskTestCase extends BaseTestCase
      * @var Carbon
      */
     protected $until;
+    protected $screenDirectory;
 
     public function createApplication()
     {
@@ -91,8 +92,9 @@ abstract class DuskTestCase extends BaseTestCase
         $this->artisan('cache:clear');
         Cache::clear();
         $this->artisan('snapshot:load --force db-test --env=demo');
-        $this->user = AdminUser::on('demo')->whereEmail($this->dbConnectionName . '@test.com')->first();
-        $this->customer = Customer::on('demo')->whereCustomerType('permanent')->first();
+        $this->user = AdminUser::on('demo')->whereEmail('admin@test.loc')->first();
+//        $this->customer = Customer::on('demo')->whereCustomerType('permanent')->first();
+        $this->customer = Customer::on('demo')->whereEmail('kunde@test.loc')->first();
         self::$screenPath = app()->basePath() . '/tests/Browser/screenshots';
     }
 

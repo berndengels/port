@@ -62,6 +62,8 @@ class PermissionData
 		[ 'id' => '53', 'name' => 'read ServiceRequest', 'guard_name' => 'admin', 'created_at' => '2021-11-10 14:32:06', 'updated_at' => '2021-11-10 14:32:06'],
 		[ 'id' => '54', 'name' => 'write ServiceRequest', 'guard_name' => 'admin', 'created_at' => '2021-11-10 14:32:18', 'updated_at' => '2021-11-10 14:32:18'],
 		[ 'id' => '55', 'name' => 'read ServiceRequest', 'guard_name' => 'customer', 'created_at' => '2021-11-10 14:32:37', 'updated_at' => '2021-11-10 14:32:37'],
-		[ 'id' => '56', 'name' => 'write ServiceRequest', 'guard_name' => 'customer', 'created_at' => '2021-11-10 14:32:51', 'updated_at' => '2021-11-10 14:32:51']
+		[ 'id' => '56', 'name' => 'write ServiceRequest', 'guard_name' => 'customer', 'created_at' => '2021-11-10 14:32:51', 'updated_at' => '2021-11-10 14:32:51'],
+		[ 'id' => '57', 'name' => 'read Emojis', 'guard_name' => 'admin', 'created_at' => '2021-11-20 23:39:44', 'updated_at' => '2021-11-20 23:39:44'],
+		[ 'id' => '58', 'name' => 'write Emojis', 'guard_name' => 'admin', 'created_at' => '2021-11-20 23:40:03', 'updated_at' => '2021-11-20 23:40:03']
 	];
 }

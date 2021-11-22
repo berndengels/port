@@ -18,6 +18,7 @@ class CustomerAuthenticationTest extends TestCase
 
     public function test_users_can_authenticate_using_the_login_screen()
     {
+        dump('customer email: '. $this->customer->email);
         $this->post('/login', [
                 'email' => $this->customer->email,
                 'password' => 'password',
