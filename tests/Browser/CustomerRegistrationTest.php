@@ -12,7 +12,6 @@ class CustomerRegistrationTest extends DuskTestCase
     const ROUTE_RREGISTER_HOME      = 'public.dashboard';
     const USER_GUARD                = 'customer';
 
-    protected $screenDirectory;
     private $params = [
         'name'      => 'Paul Meier',
         'email'     => 'paul@meier.de',
@@ -24,13 +23,14 @@ class CustomerRegistrationTest extends DuskTestCase
         'city'      => 'Hummelsbach',
         'boat_name' => 'Ohne Yoko',
         'length'    => 10,
-        'width'     => 3,
+        'width'     => 3.5,
         'weight'    => 4000,
         'draft'     => 1.6,
         'length_waterline' => 9,
         'mast_weight'      => 100,
         'mast_length'      => 11,
         'length_keel'      => 2,
+        'board_height'     => 1.3,
     ];
     private $selectParams = [
         'boat_type' => 'sail',

@@ -14,8 +14,8 @@ class BoatDatesFactory extends MainFactory
     public function definition()
     {
         $modi       = ['saison','winter'];
-        $randomDateEnd = Carbon::today()->addMonths(1)->format('Y-m-d');
-        $from       = $this->randomDate('2020-01-01', $randomDateEnd,'Y-m-d');
+        $endDate    = Carbon::today()->addMonths(1)->format('Y-m-d');
+        $from       = $this->randomDate('2020-01-01', $endDate);
         $until      = Carbon::create($from)->addDays(rand(1,7));
         $from       = Carbon::create($from);
         $modus      = $modi[rand(0,1)];

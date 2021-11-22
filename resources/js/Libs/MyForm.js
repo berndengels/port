@@ -1,7 +1,6 @@
 
 class MyForm {
-//	constructor() {};
-	autofill = (calcUrl, binds) => {
+	autofill(calcUrl, binds) {
 		axios.get(calcUrl)
 			.then(resp => {
 				console.info(resp.data)
@@ -12,7 +11,7 @@ class MyForm {
 			.catch(err => console.error(err))
 		;
 	};
-	autocomplete = (listSelector, triggerSelector, options, optionTextField, binds) => {
+	autocomplete(listSelector, triggerSelector, options, optionTextField, binds) {
 		const $elSelect = $(listSelector);
 		var data = [];
 

@@ -18,7 +18,7 @@ class GuestBoatAdminPriceTest extends DuskTestCase
      */
     public function test_guest_boat_price_calculation()
     {
-        $this->screenName   = __FUNCTION__;
+        $this->screenDirectory = __FUNCTION__;
         $this->browse(function (Browser $browser) {
             $today  = Carbon::today();
             $from   = $today;
@@ -38,9 +38,9 @@ class GuestBoatAdminPriceTest extends DuskTestCase
                 ->assertInputPresent('price')
                 ->typeSlowly('name', 'E')
                 ->waitFor('ul.autocomplete')
-                ->screenshot($this->screenName)
+                ->stepScreenshot($this->screenDirectory)
             ;
-            $this->createJpeg($this->screenName);
+//            $this->createJpeg($this->screenName);
 /*
                 ->click('ul.autocomplete>li:first-child')
                 ->with('form', function (Browser $form) {

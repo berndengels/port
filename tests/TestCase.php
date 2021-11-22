@@ -76,7 +76,7 @@ abstract class TestCase extends BaseTestCase
             )
             ->hasRoles(1, [
                 'name'          => 'boat',
-                'guard_name'    => 'web',
+                'guard_name'    => 'customer',
             ])
             ->create();
         $this->user->guard(['customer'])->refresh();

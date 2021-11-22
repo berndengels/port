@@ -14,9 +14,9 @@ class BoatGuestDatesFactory extends MainFactory
      */
     public function definition()
     {
-        $randomDateEnd = Carbon::today()->addMonths(5)->format('Y-m-d');
-        $from  = $this->randomDate('2020-05-01', $randomDateEnd,'Y-m-d');
-        $until = Carbon::create($from)->addDays(rand(1,7));
+        $endDate    = Carbon::today()->addMonths(5)->format('Y-m-d');
+        $from       = $this->randomDate('2020-05-01', $endDate,'Y-m-d');
+        $until      = Carbon::create($from)->addDays(rand(1,7));
 
         return [
             'from'      => $from,

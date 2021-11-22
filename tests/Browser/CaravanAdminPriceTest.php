@@ -13,7 +13,7 @@ class CaravanAdminPriceTest extends DuskTestCase
     protected $dayPrice   = 12;
     protected $persons    = 5;
     protected $electric   = 2;
-    public static $counter = 0;
+
     /**
      * A Dusk test example.
      * @test
@@ -21,7 +21,6 @@ class CaravanAdminPriceTest extends DuskTestCase
      */
     public function test_caravan_price_calculation()
     {
-        $this->screenName = __FUNCTION__.'/';
         $this->browse(function (Browser $browser) {
             $today  = Carbon::today();
             $from   = $today;
@@ -32,10 +31,7 @@ class CaravanAdminPriceTest extends DuskTestCase
                 ->loginAs($this->user(), 'admin', )
                 ->assertAuthenticated('admin')
                 ->visit('/admin/caravanDates/create')
-                ->screenshot($this->screenName.static::$counter)
-                ->with('form', function (Browser $form) {
-                    static::$counter++;
-                })
+                ->stepScreenshot($this->screenDirectory)
                 ->assertRouteIs('admin.caravanDates.create')
                 ->assertInputPresent('carnumber')
                 ->assertInputPresent('country_id')
@@ -48,10 +44,7 @@ class CaravanAdminPriceTest extends DuskTestCase
                 ->assertInputPresent('price')
                 ->typeSlowly('carnumber', 'B')
                 ->waitFor('ul.autocomplete')
-                ->screenshot($this->screenName.static::$counter)
-                ->with('form', function (Browser $form) {
-                    static::$counter++;
-                })
+                ->stepScreenshot($this->screenDirectory)
                 ->click('ul.autocomplete>li:first-child')
                 ->with('form', function (Browser $form) {
                     $carnumber = $form->inputValue('carnumber');
@@ -62,37 +55,19 @@ class CaravanAdminPriceTest extends DuskTestCase
                     ;
                 })
                 ->typeDate('#from', $from)
-                ->screenshot($this->screenName.static::$counter)
-                ->with('form', function (Browser $form) {
-                    static::$counter++;
-                })
+                ->stepScreenshot($this->screenDirectory)
                 ->typeDate('#until', $until)
-                ->screenshot($this->screenName.static::$counter)
-                ->with('form', function (Browser $form) {
-                    static::$counter++;
-                })
+                ->stepScreenshot($this->screenDirectory)
                 ->check('electric', !!$this->electric)
-                ->screenshot($this->screenName.static::$counter)
-                ->with('form', function (Browser $form) {
-                    static::$counter++;
-                })
+                ->stepScreenshot($this->screenDirectory)
                 ->type('persons', $this->persons)
-                ->screenshot($this->screenName.static::$counter)
-                ->with('form', function (Browser $form) {
-                    static::$counter++;
-                })
+                ->stepScreenshot($this->screenDirectory)
                 ->click('#email')
-                ->screenshot($this->screenName.static::$counter)
-                ->with('form', function (Browser $form) {
-                    static::$counter++;
-                })
+                ->stepScreenshot($this->screenDirectory)
                 ->wait(3)
                 ->assertInputValue('price', $this->calculateExpectedPrice())
                 ->assertInputValueIsNot('prices', '')
-                ->screenshot($this->screenName.static::$counter)
-                ->with('form', function (Browser $form) {
-                    static::$counter++;
-                })
+                ->stepScreenshot($this->screenDirectory)
             ;
 //            $this->createJpeg($this->screenName);
         });
