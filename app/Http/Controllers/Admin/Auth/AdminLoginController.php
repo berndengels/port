@@ -82,13 +82,6 @@ class AdminLoginController extends DefaultLoginController
             $request->filled('remember')
         )
         ) {
-            /**
-             * @var AdminUser $user
-             */
-            $user = $this->guard()->user();
-            if(0 === $user->tokens()->count()) {
-                $user->createToken($user->email, ['api:access']);
-            }
             //Authenticated
             return redirect()
                 ->intended(route('admin.dashboard'))

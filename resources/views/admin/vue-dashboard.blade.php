@@ -1,5 +1,5 @@
 @extends('layouts.main')
 
 @section('main')
-    <div id="dashboard"></div>
+    <div id="vue"></div>
 @endsection

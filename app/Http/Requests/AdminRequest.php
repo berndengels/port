@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -11,6 +12,8 @@ class AdminRequest extends MainFormRequest
      * @var Auth
      */
     protected $auth;
+    protected $errors;
+    protected static $counter = 0;
 
     public function __construct(array $query = [], array $request = [], array $attributes = [], array $cookies = [], array $files = [], array $server = [], $content = null)
     {
@@ -27,4 +30,15 @@ class AdminRequest extends MainFormRequest
     {
         return $this->auth->check();
     }
+
+    protected function failedValidation(Validator $validator)
+    {
+        if(request()->isXmlHttpRequest() && request()->wantsJson()) {
+            $this->errors = $validator->errors();
+//            return response()->json($this->errors);
+            die(json_encode(['errors' => $this->errors]));
+        }
+        parent::failedValidation($validator);
+    }
+
 }
