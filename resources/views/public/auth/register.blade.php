@@ -37,10 +37,12 @@
                 <div class="form-group mt-4 mb-4">
                     <span class="block text-xl text-blue-900 mb-2">Captcha Text (zur Absicherung)</span>
                     <div class="captcha">
-                        <span>{!! captcha_img('flat') !!}</span>
-                        <button type="button" class="btn btn-danger" class="reload" id="reload">
+                        <span>
+                            {!! captcha_img('flat') !!}
+                        <button type="button" class="btn btn-danger inline-block" class="reload" id="reload">
                             &#x21bb;
                         </button>
+                        </span>
                     </div>
                 </div>
                 <x-form-input id="captcha" name="captcha" label="Hier den darüber angezeigten Text eintragen" placeholder="Captcha Text eintragen"/>

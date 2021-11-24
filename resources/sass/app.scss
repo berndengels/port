@@ -582,3 +582,14 @@ select.flexy {
     @apply: bg-green-400;
     background-color: #68d391;
 }
+.captcha {
+    span {
+        img, button {
+            display: inline-block;
+            clear: none;
+        }
+        button {
+            height: 46px;
+        }
+    }
+}

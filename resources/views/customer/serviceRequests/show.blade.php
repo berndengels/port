@@ -58,7 +58,7 @@
                     <td>
                         <ul class="list-disc ml-3">
                             @foreach($service->materials as $material)
-                                <li>{{ $material->name }}</li>
+                                <!--li>{{-- $material->name --}}</li-->
                                 <li>Preis: {{ $material->price_per_unit }} € pro {{ $material->priceType->unit }}</li>
                                 <li>Ergiebigkeit: {{ $material->fertility }} {{ $material->fertility_unit }} pro {{ $material->fertility_per }}</li>
                                 <li>benötigte Materialmenge: {{ round($material->getQuantity($serviceRequest->boat),1) }} {{ $material->fertility_per }}</li>
