@@ -22,19 +22,28 @@ class BoatGuestPrice extends PriceCalculator
         } else {
             $length = (int) $request->post('length', 0);
         }
+        $personsCount       = $request->post('persons');
+        $hasElectric        = (bool) $request->post('electric', false);
         $individualPrice    = (int) $request->post('day_price', 0);
 
         $base       = new Base($length);
+        $persons    = new Persons($personsCount);
+        $electric   = new Electric($hasElectric);
+
         $individual = new Individual($individualPrice);
         $dCount     = static::$daysCount;
         $dPeriod    = static::$_datePeriod;
 
         static::$priceBase          = $base->setDaysCount($dCount)->addPrice($dPeriod);
+        static::$pricePersons       = $persons->setDaysCount($dCount)->addPrice($dPeriod);
+        static::$priceElectric      = $electric->setDaysCount($dCount)->addPrice($dPeriod);
         static::$priceIndividual    = $individual->addPrice();
         static::$total = 0;
 
         $price = $this
             ->add(static::$priceBase)
+            ->add(static::$pricePersons)
+            ->add(static::$priceElectric)
             ->set(static::$priceIndividual);
         return $price->formatResult();
     }

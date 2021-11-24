@@ -69,6 +69,8 @@ class Prices {
 					formData.append(elem.name, elem.value)
 				}
 
+				formData.set('electric', frm.electric.checked ? 1 : 0)
+
 				axios.post(calcUrl, formData)
 					.then(resp => {
 						console.info(resp.data)
