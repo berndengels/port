@@ -31,7 +31,7 @@
         <div class="sidenav__close-icon">
             <i class="fas fa-times"></i>
         </div>
-        <div class="hidden md:inline-block app-logo">PORTmanager</div>
+        <div class="hidden md:inline-block app-logo"><span>port</span><span>m</span></div>
         <x-main-navigation :guard="$guard" />
         <div class="ml-3 mt-0">
             <x-form method="get" class="mt-0" name="frmLogout" action="{{ route($guard . '.logout') }}">

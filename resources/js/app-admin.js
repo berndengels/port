@@ -4,7 +4,6 @@ const axios = require('axios');
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 axios.defaults.baseURL = process.env.MIX_API_URL;
 axios.defaults.withCredentials = true;
-axios.get('/sanctum/csrf-cookie');
 window.axios = axios
 
 import MyForm from "./Libs/MyForm"
@@ -14,7 +13,8 @@ import Weather from "./Libs/Weather"
 import Car from "./Libs/Car"
 import Tooltip from "./Libs/Tooltip";
 import { createApp } from 'vue'
-import Dashboard from "./views/Dashboard";
+import AdminDashboard from "./views/AdminDashboard";
+import store from "./store"
 
 window.MyForm   = new MyForm
 window.Prices   = new Prices
@@ -35,10 +35,11 @@ $(document).ready(function () {
 	$(".sidenav__close-icon").click(() => {
 		$sideNav.removeClass('active')
 	});
-	if($("#dashboard").is(":visible")) {
-		const app = createApp(Dashboard).mount("#dashboard");
-//		var cors = require('cors');
-//		app.use(cors());
+	if($("#vue").is(":visible")) {
+		const app = createApp(AdminDashboard)
+			.use(store)
+			.mount("#vue")
+		;
 	}
 });
 

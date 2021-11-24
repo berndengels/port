@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\WeatherController;
 use App\Http\Controllers\Api\StatisticController;
+use App\Http\Controllers\Api\CaravanController;
 use App\Http\Controllers\Admin\AdminPriceController;
 
 /*
@@ -29,4 +30,13 @@ Route::group([
     Route::get('caravans',[StatisticController::class,'caravans'])->name('caravans');
     Route::get('boats',[StatisticController::class,'boats'])->name('boats');
     Route::get('guestBoats',[StatisticController::class,'guestBoats'])->name('guestBoats');
+});
+Route::group([
+    'prefix'    => 'caravans',
+    'as'        => 'caravans.',
+    'middleware' => ['auth:sanctum'],
+], function () {
+    Route::get('todayVisits',[CaravanController::class,'todayVisits'])->name('todayVisits');
+    Route::put('{caravan}',[CaravanController::class,'update'])->name('update');
+    Route::post('',[CaravanController::class,'store'])->name('store');
 });
