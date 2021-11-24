@@ -35,7 +35,7 @@
 
                 @env('production')
                 <div class="form-group mt-4 mb-4">
-                    <span class="text-xl text-blue-900">Captcha Text (zur Absicherung)</span>
+                    <span class="text-xl text-blue-900 mb-2">Captcha Text (zur Absicherung)</span>
                     <div class="captcha">
                         <span>{!! captcha_img('flat') !!}</span>
                         <button type="button" class="btn btn-danger" class="reload" id="reload">
