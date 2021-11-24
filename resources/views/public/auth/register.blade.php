@@ -35,6 +35,7 @@
 
                 @env('production')
                 <div class="form-group mt-4 mb-4">
+                    <span class="text-xl text-blue-900">Captcha Text (zur Absicherung)</span>
                     <div class="captcha">
                         <span>{!! captcha_img('flat') !!}</span>
                         <button type="button" class="btn btn-danger" class="reload" id="reload">
@@ -42,7 +43,7 @@
                         </button>
                     </div>
                 </div>
-                <x-form-input id="captcha" name="captcha" label="Enter Captcha" placeholder="Hier den darüber angezeigten Text eintragen" placeholder="Captcha Text eintragen"/>
+                <x-form-input id="captcha" name="captcha" label="Hier den darüber angezeigten Text eintragen" placeholder="Captcha Text eintragen"/>
                 @endenv
 
                 <x-form-submit class="btn btn-save h-10 mt-3 w-full md:w-1/2" icon="fas fa-sign-in-alt">
