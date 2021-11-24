@@ -42,7 +42,7 @@
                         </button>
                     </div>
                 </div>
-                <x-form-input id="captcha" name="captcha" label="Enter Captcha" placeholder="Enter Captcha" />
+                <x-form-input id="captcha" name="captcha" label="Enter Captcha" placeholder="Hier den darüber angezeigten Text eintragen" placeholder="Captcha Text eintragen"/>
                 @endenv
 
                 <x-form-submit class="btn btn-save h-10 mt-3 w-full md:w-1/2" icon="fas fa-sign-in-alt">
