@@ -16,6 +16,11 @@ class BoatGuestDatesRequest extends AdminRequest
         return $this->auth->user()->can('write BoatGuestDates');
     }
 
+    public function validationData($keys = null)
+    {
+        return array_merge($this->all($keys), ['electric' => !!$this->post('electric') ?? false]);
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -28,6 +33,8 @@ class BoatGuestDatesRequest extends AdminRequest
             'length'        => 'required|numeric',
             'from'          => 'exclude_if:until,null|required|date|before:until',
             'until'         => ['required','date','after:from'],
+            'persons'       => ['required','regex:/^[1-9]+$/i'],
+            'electric'      => '',
             'home_port'     => '',
             'day_price'     => '',
             'price'         => 'required',

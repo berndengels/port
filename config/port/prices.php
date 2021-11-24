@@ -26,9 +26,9 @@ return [
     ],
     'boat_guest' => [
         'price_per_meter'       => (float) env('BOAT_GUEST_PRICE_PER_METER', 1.5),
-        'electric_per_day'      => (float) env('BOAT_GUEST_PRICE_ELECTRIC_PER_DAY', 0),
-        'persons_inclusivce'    => (float) env('BOAT_GUEST_PRICE_PERSONS_INCLUSIVE', 0),
-        'persons_additional'    => (float) env('BOAT_GUEST_PRICE_ADDITIONAL_PERSONS_PER_DAY', 0),
+        'electric_per_day'      => (float) env('BOAT_GUEST_PRICE_ELECTRIC_PER_DAY', 2),
+        'persons_inclusivce'    => (float) env('BOAT_GUEST_PRICE_PERSONS_INCLUSIVE', 2),
+        'persons_additional'    => (float) env('BOAT_GUEST_PRICE_ADDITIONAL_PERSONS_PER_DAY', 1),
     ],
     'fertility' => [
         'types' =>
