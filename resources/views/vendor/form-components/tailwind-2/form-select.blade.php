@@ -13,7 +13,7 @@
             @endif
 
             {!! $attributes->merge([
-                'class' =>'h-10' .  (($label && !$inline) ? ' mt-1' : '')
+                'class' => (!$multiple ? 'h-10' : '')  . (($label && !$inline) ? ' mt-1' : '')
                     . ($inline ? ' inline-flex' : ' block w-full')
 //                    . (($label && $inline) ? ' sm:block sm:w-full' : '')
                     . ($class ? ' '.$class : ''),
