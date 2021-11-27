@@ -100,6 +100,7 @@ class AdminCustomerController extends AdminController
         $customer->password = null;
         $customer->password_confirmation = null;
         $confirmed = $customer->confirmed;
+
         return view('admin.customers.edit', compact('customer', 'confirmed','customerTypes', 'roles'));
     }
 
