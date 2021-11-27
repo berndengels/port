@@ -15,7 +15,6 @@ class PublicDashboardTest extends TestCase
     {
         $this->get('/')
             ->assertStatus(200)
-//            ->assertLocation('/dashboard')
         ;
     }
 

@@ -4,7 +4,7 @@ namespace Database\Factories;
 use App\Models\Role;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class RoleFactory extends Factory
+class AdminRoleFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
@@ -21,6 +21,9 @@ class RoleFactory extends Factory
 
     public function definition()
     {
-        return [];
+        return [
+            'name'          => 'admin',
+            'guard_name'    => 'admin',
+        ];
     }
 }

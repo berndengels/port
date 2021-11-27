@@ -1,6 +1,7 @@
 <?php
 namespace Tests\Feature;
 
+use App\Notifications\NewRegistrationDone;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Event;
 use Mews\Captcha\Captcha;
@@ -113,11 +114,31 @@ class CustomerRegistrationTest extends TestCase
             ->assertSuccessful()
             ->assertSeeText('Logout')
         ;
-        $this
-            ->assertAuthenticated('customer')
-        ;
-//        Event::fake()->assertDispatched(Registered::class);
-//        Notification::fake()->assertSentTo($this->user, SendRegisterEmailNotification::class);
+        $this->assertAuthenticated('customer');
         $this->assertDatabaseHas(Customer::class,['email' => $this->params['email']], 'testing');
+    }
+
+    public function testRegistrationDoneEventDispached() {
+        Event::fake([Registered::class]);
+        $this->createCustomer(confirmed: false, asRegistration: true);
+        Event::assertDispatched(Registered::class);
+    }
+
+    public function testRegistrationDoneEventNotDispached() {
+        Event::fake([Registered::class]);
+        $this->createCustomer(confirmed: true, asRegistration: false);
+        Event::assertNotDispatched(Registered::class);
+    }
+
+    public function testRegistrationDoneNotifyAdmin() {
+        Notification::fake();
+        $user = $this->user;
+        $user->update(['email' => 'engels@f50.de']);
+
+        $this->createCustomer(confirmed: false, asRegistration: true);
+
+        Notification::assertSentTo(
+            [$user], NewRegistrationDone::class
+        );
     }
 }

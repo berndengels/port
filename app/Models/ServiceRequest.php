@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
-use Database\Factories\ServiceRequestFactory;
 use Eloquent;
+use Carbon\Carbon;
+use App\Events\ServiceRequested;
+use Illuminate\Database\Eloquent\Model;
+use Database\Factories\ServiceRequestFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
@@ -52,6 +53,16 @@ class ServiceRequest extends Model
         'done_until' => 'date:Y-m-d',
     ];
 //    public $timestamps = false;
+
+    protected static function booted()
+    {
+        static::created(function (ServiceRequest $serviceRequest) {
+            event(new ServiceRequested($serviceRequest->refresh(), 'store'));
+        });
+        static::updated(function (ServiceRequest $serviceRequest) {
+            event(new ServiceRequested($serviceRequest->refresh(), 'update'));
+        });
+    }
 
     public function setDoneAttribute(bool $value) {
         $this->attributes['done'] = $value;

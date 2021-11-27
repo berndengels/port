@@ -78,7 +78,7 @@ class CustomerPasswordResetTest extends TestCase
 
     public function testShowPasswordResetPage()
     {
-        $token = Password::broker('customers')->createToken($this->customer);
+        $token = Password::broker('customers')->createToken($this->createCustomerWithoutEvents());
         $this
             ->get(route(self::ROUTE_PASSWORD_RESET, $token))
             ->assertSuccessful()
@@ -95,7 +95,7 @@ class CustomerPasswordResetTest extends TestCase
      */
     public function testSubmitPasswordResetInvalidEmail()
     {
-        $token = Password::broker('customers')->createToken($this->customer);
+        $token = Password::broker('customers')->createToken($this->createCustomerWithoutEvents());
         $password = Str::random();
         $params = [
             'token' => $token,
@@ -125,7 +125,7 @@ class CustomerPasswordResetTest extends TestCase
      */
     public function testSubmitPasswordResetEmailNotFound()
     {
-        $token = Password::broker('customers')->createToken($this->customer);
+        $token = Password::broker('customers')->createToken($this->createCustomerWithoutEvents());
         $password = Str::random();
         $params = [
             'token' => $token,
@@ -153,7 +153,7 @@ class CustomerPasswordResetTest extends TestCase
      */
     public function testSubmitPasswordResetPasswordMismatch()
     {
-        $token = Password::broker('customers')->createToken($this->customer);
+        $token = Password::broker('customers')->createToken($this->createCustomerWithoutEvents());
 
         $password = Str::random();
         $password_confirmation = Str::random();
@@ -185,7 +185,7 @@ class CustomerPasswordResetTest extends TestCase
      */
     public function testSubmitPasswordResetPasswordTooShort()
     {
-        $token = Password::broker('customers')->createToken($this->customer);
+        $token = Password::broker('customers')->createToken($this->createCustomerWithoutEvents());
         $password = Str::random(5);
         $params = [
             'token' => $token,
@@ -215,7 +215,7 @@ class CustomerPasswordResetTest extends TestCase
      */
     public function testSubmitPasswordReset()
     {
-        $token = Password::broker('customers')->createToken($this->customer);
+        $token = Password::broker('customers')->createToken($this->createCustomerWithoutEvents());
         $password = Str::random();
         $params = [
             'token' => $token,

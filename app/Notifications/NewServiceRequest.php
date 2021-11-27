@@ -45,6 +45,7 @@ class NewServiceRequest extends Notification
      */
     public function toMail($notifiable)
     {
+        dd(__METHOD__);
         $mode = 'update' === $this->mode ? 'Geänderte' : 'Neue';
         $msg = "$mode Service Anfrage für ".$this->serviceRequest->boat->boat_name;
         $message =  (new MailMessage)

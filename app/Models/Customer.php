@@ -7,6 +7,7 @@ use Database\Factories\CustomerFactory;
 use Database\Factories\RandomCustomerFactory;
 use Eloquent;
 use App\Traits\Models\ClearCache;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;

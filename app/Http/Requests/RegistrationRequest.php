@@ -11,6 +11,7 @@ class RegistrationRequest extends CustomerRequest
         'length_keel',
         'board_height',
     ];
+
     /**
      * Determine if the user is authorized to make this request.
      *

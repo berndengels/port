@@ -4,7 +4,7 @@
     <div class="w-full">
         <h1 class="sm:mt-5 m-3 text-4xl">{{ __('Registrierung für Dauerlieger') }}</h1>
         <div class="flex w-full justify-center mb-5">
-            <x-form class="w-full mx-3 md:w-1/2 register-form" method="POST" action="{{ route('register') }}">
+            <x-form class="w-full mx-3 md:w-1/2 register-form" method="post" action="{{ route('customer.register') }}">
                 <x-form-input type="hidden" name="customer_type" default="permanent" />
                 <x-form-input name="name" label="Name" required placeholder="Name" />
                 <x-form-input name="email" type="email" label="Email" required placeholder="Email" />
@@ -35,14 +35,17 @@
 
                 @env('production')
                 <div class="form-group mt-4 mb-4">
+                    <span class="block text-xl text-blue-900 mb-2">Captcha Text (zur Absicherung)</span>
                     <div class="captcha">
-                        <span>{!! captcha_img('flat') !!}</span>
-                        <button type="button" class="btn btn-danger" class="reload" id="reload">
+                        <span>
+                            {!! captcha_img('flat') !!}
+                        <button type="button" class="btn btn-danger inline-block" class="reload" id="reload">
                             &#x21bb;
                         </button>
+                        </span>
                     </div>
                 </div>
-                <x-form-input id="captcha" name="captcha" label="Enter Captcha" placeholder="Enter Captcha" />
+                <x-form-input id="captcha" name="captcha" label="Hier den darüber angezeigten Text eintragen" placeholder="Captcha Text eintragen"/>
                 @endenv
 
                 <x-form-submit class="btn btn-save h-10 mt-3 w-full md:w-1/2" icon="fas fa-sign-in-alt">

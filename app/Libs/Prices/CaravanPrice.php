@@ -15,6 +15,12 @@ class CaravanPrice extends PriceCalculator
     protected static $priceBase = 0;
     protected static $priceIndividual = 0;
 
+    public function load(): array
+    {
+        return [
+        ];
+    }
+
     public function getPrice(Request $request): array
     {
         $personsCount = $request->post('persons');

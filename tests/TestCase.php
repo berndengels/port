@@ -1,9 +1,16 @@
 <?php
 namespace Tests;
 
+use App\Models\Permission;
+use App\Models\Role;
+use App\Models\ServiceRequest;
+use Database\Factories\AdminRoleFactory;
+use Database\Factories\CustomerRoleFactory;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Event;
 use Mockery;
 use Notification;
 use Carbon\Carbon;
@@ -24,16 +31,10 @@ abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication;
 
-    /**
-     * @var AdminUser $user
-     */
-    protected $user;
-    /**
-     * @var Customer $customer
-     */
-    protected $customer;
     protected $useNotTearDown = true;
     protected $followRedirects = true;
+    protected $user;
+    protected $customer;
 
     protected function setUp(): void
     {
@@ -43,10 +44,8 @@ abstract class TestCase extends BaseTestCase
         DB::setDefaultConnection('testing');
         $this->artisan('migrate:fresh --drop-views --env=testing --path=database/migrations/testing');
         $this->artisan('db:seed --env=testing');
-        $this
-            ->createUser()
-            ->createCustomer()
-        ;
+        $this->user = $this->createUserWithoutEvents();
+        $this->customer = $this->createCustomerWithoutEvents();
     }
 
     protected function tearDown(): void
@@ -57,46 +56,71 @@ abstract class TestCase extends BaseTestCase
         parent::tearDown();
     }
 
-    protected function createUser() {
-        $this->user = AdminUser::factory()
-            ->hasRoles(1, [
-                'name'          => 'admin',
-                'guard_name'    => 'admin',
-            ])
-            ->create();
-        $this->user->guard(['admin'])->refresh();
-        return $this;
+    protected function createUser(): AdminUser {
+        $factory = AdminUser::factory();
+
+        if(0 === Role::whereName('admin')->whereGuardName('admin')->count()) {
+            $factory = $factory->has((new AdminRoleFactory())->count(1),'roles');
+        }
+
+        $user = $factory->create();
+        $user
+            ->guard(['admin'])
+            ->givePermissionTo(Permission::whereGuardName('admin')->get())
+            ->refresh()
+        ;
+        return $user;
     }
 
-    protected function createCustomer() {
-        $this->customer = Customer::factory()
+    protected function createCustomer(bool $confirmed = false, bool $asRegistration = false) {
+        Role::truncate();
+        $customer = Customer::factory()
+            ->state(fn (array $attr) => ['confirmed' => $confirmed])
             ->has(Boat::factory()
                 ->has(BoatDates::factory()->count(3),'dates')
+                ->has(ServiceRequest::factory()->count(1), 'serviceRequests')
                 ->count(1),'boats'
             )
-            ->hasRoles(1, [
-                'name'          => 'boat',
-                'guard_name'    => 'customer',
-            ])
-            ->create();
-        $this->user->guard(['customer'])->refresh();
-        return $this;
+            ->has((new CustomerRoleFactory())->count(1),'roles')
+            ->create()
+        ;
+        $customer
+            ->guard(['customer'])
+            ->givePermissionTo(Permission::whereGuardName('customer')->get())
+        ;
+
+        if($asRegistration) {
+            Event::dispatch(new Registered($customer));
+        }
+
+        return $customer;
+    }
+
+    public function createUserWithoutEvents(): AdminUser {
+        return AdminUser::withoutEvents(fn() => $this->createUser());
+    }
+
+    public function createCustomerWithoutEvents(bool $confirmed = false): Customer {
+        return Customer::withoutEvents(fn() => $this->createCustomer($confirmed));
     }
 
     public function asFakeUser(...$permission): self
     {
+        $user = $this->user;
         if($permission) {
-            $this->user->givePermissionTo($permission);
+            $user->givePermissionTo($permission);
         }
-        $this->be($this->user, 'admin');
+        $this->be($user, 'admin');
         return $this;
     }
-    public function asFakeCustomer(string $permission = null): self
+
+    public function asFakeCustomer(string $permission = null, bool $confirmed = false): self
     {
+        $customer = $this->customer;
         if($permission) {
-            $this->customer->givePermissionTo($permission);
+            $customer->givePermissionTo($permission);
         }
-        $this->be($this->customer, 'customer');
+        $this->be($customer, 'customer');
         return $this;
     }
 }

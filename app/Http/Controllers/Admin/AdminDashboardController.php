@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Admin;
 use App\Models\AdminUser;
 use Carbon\Carbon;
 use App\Models\CaravanDates;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\View;
 
 class AdminDashboardController extends AdminController
 {
-    protected $caravansFromToday;
-
+//    protected $caravansFromToday;
+/*
     public function __construct()
     {
         $today = Carbon::today()->format('Y-m-d');
@@ -23,14 +25,9 @@ class AdminDashboardController extends AdminController
             )->sort();
         }
     }
-
+*/
     public function show()
     {
-        return view(
-            'admin.vue-dashboard', [
-            'map'   => config('port.map'),
-            'caravansFromToday' => $this->caravansFromToday,
-            ]
-        );
+        return view('admin.vue-dashboard');
     }
 }

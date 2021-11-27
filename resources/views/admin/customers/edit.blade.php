@@ -8,7 +8,9 @@
             <input type="hidden" name="confirmed_old" value="{{ $confirmed ? 1 : 0 }}"/>
             @bind($customer)
             @can('confirm Registration')
-                <x-form-checkbox name="confirmed" label="Bestätigt" class=" mb-0 pb-0" />
+            <div class="mt-3 bg-green-700 p-3 text-white">
+                <x-form-checkbox name="confirmed" label="Als Kunde bestätigt" class=" mb-0 pb-0" />
+            </div>
             @endcan
             @can('write Role')
                 <x-form-select name="roles[]" label="Role" :options="$roles" many-relation multiple />

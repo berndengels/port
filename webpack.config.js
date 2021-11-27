@@ -7,6 +7,7 @@ module.exports = {
     resolve: {
         alias: {
             '@': path.resolve('resources/js'),
+            'v@': path.resolve('resources/js/vue'),
         },
     }
 };

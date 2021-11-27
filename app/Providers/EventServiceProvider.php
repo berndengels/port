@@ -7,6 +7,8 @@ use App\Listeners\SendInvoiceEmailNotification;
 use App\Listeners\SendRegisterEmailNotification;
 use App\Listeners\ServiceRequestNotification;
 use App\Models\BoatDates;
+use App\Models\Customer;
+use App\Observers\CustomerObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Database\Eloquent\Model;
@@ -47,6 +49,6 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Customer::observe(CustomerObserver::class);
     }
 }
