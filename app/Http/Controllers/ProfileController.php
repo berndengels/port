@@ -66,7 +66,7 @@ class ProfileController extends GuardedController
 
             return redirect()
                 ->route('customer.profile.show', compact('profile'))
-                ->with('success', 'Kunde erfogreich bearbeitet!')
+                ->with('success', 'Kunde erfolgreich bearbeitet!')
                 ;
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
@@ -84,7 +84,7 @@ class ProfileController extends GuardedController
         try {
             $customer->delete();
             auth('customer')->logout();
-            return redirect()->route('public.dashboard')->with('success', 'Kunde erfogreich gelöscht!');
+            return redirect()->route('public.dashboard')->with('success', 'Kunde erfolgreich gelöscht!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }

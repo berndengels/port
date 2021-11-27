@@ -45,7 +45,7 @@ class AdminPageController extends AdminController
     {
         try {
             Page::create($request->validated());
-            return redirect()->route('admin.pages.index')->with('success', 'Page erfogreich angelegt!');
+            return redirect()->route('admin.pages.index')->with('success', 'Page erfolgreich angelegt!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -73,7 +73,7 @@ class AdminPageController extends AdminController
     {
         try {
             $page->update($request->validated());
-            return redirect()->route('admin.pages.index')->with('success', 'Page erfogreich bearbeitet!');
+            return redirect()->route('admin.pages.index')->with('success', 'Page erfolgreich bearbeitet!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -89,7 +89,7 @@ class AdminPageController extends AdminController
     {
         try {
             $page->delete();
-            return back()->with('success', 'Page erfogreich gelöscht!');
+            return back()->with('success', 'Page erfolgreich gelöscht!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }

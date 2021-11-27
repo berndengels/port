@@ -165,7 +165,7 @@ class AdminBoatDatesController extends AdminController
         $modus      = $validated['modus'];
         try {
             BoatDates::create($validated);
-            return redirect()->route('admin.boatDates.'.$modus)->with('success', 'Boot Date erfogreich angelegt!');
+            return redirect()->route('admin.boatDates.'.$modus)->with('success', 'Boot Date erfolgreich angelegt!');
         } catch(Exception $e) {
             return redirect()->route('admin.boatDates.create')->with('error', $e->getMessage());
         }
@@ -206,7 +206,7 @@ class AdminBoatDatesController extends AdminController
         $modus     = $validated['modus'];
         try {
             $boatDate->update($validated);
-            return redirect()->route('admin.boatDates.'.$modus)->with('success', 'Boot Date erfogreich geändert!');
+            return redirect()->route('admin.boatDates.'.$modus)->with('success', 'Boot Date erfolgreich geändert!');
         } catch(Exception $e) {
             return redirect()->route('admin.boatDates.edit', $boatDate)->with('error', $e->getMessage());
         }
@@ -222,7 +222,7 @@ class AdminBoatDatesController extends AdminController
     {
         try {
             $boatDate->delete();
-            return redirect()->route('admin.boatDates.index')->with('success', 'Boot Date erfogreich gelöscht!');
+            return redirect()->route('admin.boatDates.index')->with('success', 'Boot Date erfolgreich gelöscht!');
         } catch(Exception $e) {
             return redirect()->route('admin.boatDates.index')->with('error', $e->getMessage());
         }
@@ -257,7 +257,7 @@ class AdminBoatDatesController extends AdminController
     {
         try {
             Mail::send(new InvoiceMail($boatDate, $this->invoice($boatDate, true)));
-            return redirect()->route('admin.boatDates.'.$boatDate->modus)->with('success', 'Rechnung erfogreich an '.$boatDate->boat->customer->email.' versand!');
+            return redirect()->route('admin.boatDates.'.$boatDate->modus)->with('success', 'Rechnung erfolgreich an '.$boatDate->boat->customer->email.' versand!');
         } catch(Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }

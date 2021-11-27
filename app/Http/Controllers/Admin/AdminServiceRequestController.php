@@ -64,7 +64,7 @@ class AdminServiceRequestController extends AdminController
     {
         try {
             ServiceRequest::create($request->validated());
-            return redirect()->route('admin.serviceRequests.index')->with('success', 'Service Anfrage erfogreich angelegt!');
+            return redirect()->route('admin.serviceRequests.index')->with('success', 'Service Anfrage erfolgreich angelegt!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -96,7 +96,7 @@ class AdminServiceRequestController extends AdminController
     {
         try {
             $serviceRequest->update($request->validated());
-            return redirect()->route('admin.serviceRequests.index')->with('success', 'Service Anfrage erfogreich bearbeitet!');
+            return redirect()->route('admin.serviceRequests.index')->with('success', 'Service Anfrage erfolgreich bearbeitet!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -122,7 +122,7 @@ class AdminServiceRequestController extends AdminController
     {
         try {
             $serviceRequest->delete();
-            return redirect()->route('admin.serviceRequests.index')->with('success', 'Service Anfrage erfogreich gelöscht!');
+            return redirect()->route('admin.serviceRequests.index')->with('success', 'Service Anfrage erfolgreich gelöscht!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }

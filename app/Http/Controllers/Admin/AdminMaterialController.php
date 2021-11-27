@@ -70,7 +70,7 @@ class AdminMaterialController extends AdminController
     {
         try {
             Material::create($request->validated());
-            return redirect()->route('admin.materials.index')->with('success', 'Material erfogreich angelegt!');
+            return redirect()->route('admin.materials.index')->with('success', 'Material erfolgreich angelegt!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -104,7 +104,7 @@ class AdminMaterialController extends AdminController
     {
         try {
             $material->update($request->validated());
-            return redirect()->route('admin.materials.index')->with('success', 'Material erfogreich bearbeitet!');
+            return redirect()->route('admin.materials.index')->with('success', 'Material erfolgreich bearbeitet!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -120,7 +120,7 @@ class AdminMaterialController extends AdminController
     {
         try {
             $material->delete();
-            return redirect()->route('admin.materials.index')->with('success', 'Material erfogreich gelöscht!');
+            return redirect()->route('admin.materials.index')->with('success', 'Material erfolgreich gelöscht!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }

@@ -87,7 +87,7 @@ class AdminBoatController extends AdminController
             $customer   = Customer::whereName($name)->first() ?? new Customer();
             $customer->fill($validated)->save();
             $customer->boats()->create($validated);
-            return redirect()->route('admin.boats.index')->with('success', 'Boot erfogreich angelegt!');
+            return redirect()->route('admin.boats.index')->with('success', 'Boot erfolgreich angelegt!');
         } catch(Exception $e) {
             return redirect()->route('admin.boats.create', $request)->with('error', $e->getMessage());
         }
@@ -125,7 +125,7 @@ class AdminBoatController extends AdminController
         try {
             $boat->update($validatedBoat);
             $boat->customer()->update($validatedCustomer);
-            return redirect()->route('admin.boats.index')->with('success', 'Boot erfogreich bearbeitet!');
+            return redirect()->route('admin.boats.index')->with('success', 'Boot erfolgreich bearbeitet!');
         } catch(Exception $e) {
             return redirect()->route('admin.boats.edit', $request)->with('error', $e->getMessage());
         }
@@ -141,7 +141,7 @@ class AdminBoatController extends AdminController
     {
         try {
             $boat->delete();
-            return redirect()->route('admin.boats.index')->with('success', 'Boot erfogreich gelöscht!');
+            return redirect()->route('admin.boats.index')->with('success', 'Boot erfolgreich gelöscht!');
         } catch(Exception $e) {
             return redirect()->route('admin.boats.index')->with('error', $e->getMessage());
         }

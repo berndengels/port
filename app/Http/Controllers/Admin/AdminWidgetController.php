@@ -52,7 +52,7 @@ class AdminWidgetController extends AdminController
     {
         try {
             Widget::create($request->validated());
-            return redirect()->route('admin.widgets.index')->with('success', 'Widget erfogreich angelegt!');
+            return redirect()->route('admin.widgets.index')->with('success', 'Widget erfolgreich angelegt!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -80,7 +80,7 @@ class AdminWidgetController extends AdminController
     {
         try {
             $widget->update($request->validated());
-            return redirect()->route('admin.widgets.index')->with('success', 'Widget erfogreich bearbeitet!');
+            return redirect()->route('admin.widgets.index')->with('success', 'Widget erfolgreich bearbeitet!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -96,7 +96,7 @@ class AdminWidgetController extends AdminController
     {
         try {
             $widget->delete();
-            return back()->with('success', 'Widget erfogreich gelöscht!');
+            return back()->with('success', 'Widget erfolgreich gelöscht!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }

@@ -66,7 +66,7 @@ class BoatController extends Controller
             $customer   = auth('customer')->user();
             $customer->fill($validated)->save();
             $customer->boats()->create($validated);
-            return redirect()->route('customer.boats.index')->with('success', 'Boot erfogreich angelegt!');
+            return redirect()->route('customer.boats.index')->with('success', 'Boot erfolgreich angelegt!');
         } catch(Exception $e) {
             return redirect()->route('customer.boats.create', $request)->with('error', $e->getMessage());
         }
@@ -100,7 +100,7 @@ class BoatController extends Controller
         $validated  = $request->validated();
         try {
             $boat->update($validated);
-            return redirect()->route('customer.boats.index')->with('success', 'Boot erfogreich bearbeitet!');
+            return redirect()->route('customer.boats.index')->with('success', 'Boot erfolgreich bearbeitet!');
         } catch(Exception $e) {
             return redirect()->route('customer.boats.edit', $request)->with('error', $e->getMessage());
         }
@@ -116,7 +116,7 @@ class BoatController extends Controller
     {
         try {
             $boat->delete();
-            return redirect()->route('customer.boats.index')->with('success', 'Boot erfogreich gelöscht!');
+            return redirect()->route('customer.boats.index')->with('success', 'Boot erfolgreich gelöscht!');
         } catch(Exception $e) {
             return redirect()->route('customer.boats.index')->with('error', $e->getMessage());
         }

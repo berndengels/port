@@ -51,7 +51,7 @@ class AdminMaterialCategoryController extends AdminController
     {
         try {
             MaterialCategory::create($request->validated());
-            return redirect()->route('admin.materialCategories.index')->with('success', 'Material Typ erfogreich angelegt!');
+            return redirect()->route('admin.materialCategories.index')->with('success', 'Material Typ erfolgreich angelegt!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -80,7 +80,7 @@ class AdminMaterialCategoryController extends AdminController
     {
         try {
             $materialCategory->update($request->validated());
-            return redirect()->route('admin.materialCategories.index')->with('success', 'Material Typ erfogreich bearbeitet!');
+            return redirect()->route('admin.materialCategories.index')->with('success', 'Material Typ erfolgreich bearbeitet!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -96,7 +96,7 @@ class AdminMaterialCategoryController extends AdminController
     {
         try {
             $materialCategory->delete();
-            return redirect()->route('admin.materialCategories.index')->with('success', 'Material Typ erfogreich gelöscht!');
+            return redirect()->route('admin.materialCategories.index')->with('success', 'Material Typ erfolgreich gelöscht!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }

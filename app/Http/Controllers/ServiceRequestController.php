@@ -102,7 +102,7 @@ class ServiceRequestController extends Controller
 
 //            event(new ServiceRequested($serviceRequest->refresh(),'store'));
 
-            return redirect()->route('customer.serviceRequests.index')->with('success', 'Service Anfrage erfogreich angelegt!');
+            return redirect()->route('customer.serviceRequests.index')->with('success', 'Service Anfrage erfolgreich angelegt!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -148,7 +148,7 @@ class ServiceRequestController extends Controller
 
 //            event(new ServiceRequested($serviceRequest->refresh(), 'update'));
 
-            return redirect()->route('customer.serviceRequests.index')->with('success', 'Service Anfrage erfogreich bearbeitet!');
+            return redirect()->route('customer.serviceRequests.index')->with('success', 'Service Anfrage erfolgreich bearbeitet!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -164,7 +164,7 @@ class ServiceRequestController extends Controller
     {
         try {
             $serviceRequest->delete();
-            return redirect()->route('customer.serviceRequests.index')->with('success', 'Service Anfrage erfogreich gelöscht!');
+            return redirect()->route('customer.serviceRequests.index')->with('success', 'Service Anfrage erfolgreich gelöscht!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }

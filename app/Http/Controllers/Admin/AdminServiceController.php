@@ -68,7 +68,7 @@ class AdminServiceController extends AdminController
             $service = Service::create($request->validated());
 //            if($request->validated()) {
 //            }
-            return redirect()->route('admin.services.index')->with('success', 'Service erfogreich angelegt!');
+            return redirect()->route('admin.services.index')->with('success', 'Service erfolgreich angelegt!');
         } catch(Exception $e) {
             dd($e->getMessage());
             return back()->with('error', $e->getMessage());
@@ -107,7 +107,7 @@ class AdminServiceController extends AdminController
             if($materials && count($materials) > 0) {
                 $service->materials()->sync($materials);
             }
-            return redirect()->route('admin.services.index')->with('success', 'Service erfogreich bearbeitet!');
+            return redirect()->route('admin.services.index')->with('success', 'Service erfolgreich bearbeitet!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -123,7 +123,7 @@ class AdminServiceController extends AdminController
     {
         try {
             $service->delete();
-            return redirect()->route('admin.services.index')->with('success', 'Service erfogreich gelöscht!');
+            return redirect()->route('admin.services.index')->with('success', 'Service erfolgreich gelöscht!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }
