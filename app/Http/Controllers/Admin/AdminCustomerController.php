@@ -98,7 +98,7 @@ class AdminCustomerController extends AdminController
         $roles = $this->roleRepository->setGuardName('customer')->options()->getSelectOptions();
         $customerTypes = $this->customerTypeOptions;
         $customer->password = null;
-//        $customer->password_repeat = null;
+        $customer->password_confirmation = null;
         $confirmed = $customer->confirmed;
         return view('admin.customers.edit', compact('customer', 'confirmed','customerTypes', 'roles'));
     }
