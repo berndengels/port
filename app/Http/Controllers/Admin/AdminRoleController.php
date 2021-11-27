@@ -72,7 +72,7 @@ class AdminRoleController extends AdminController
         try {
             $permissions = isset($request->validated()['permissions']) ? $request->validated()['permissions'] : null;
             Role::create($request->validated())->syncPermissions($permissions);
-            return redirect()->route('admin.roles.index')->with('success', 'Rolle erfogreich angelegt!');
+            return redirect()->route('admin.roles.index')->with('success', 'Rolle erfolgreich angelegt!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -103,7 +103,7 @@ class AdminRoleController extends AdminController
         try {
             $permissions = isset($request->validated()['permissions']) ? $request->validated()['permissions'] : null;
             $role->syncPermissions($permissions)->update($request->validated());
-            return redirect()->route('admin.roles.index')->with('success', 'Rolle erfogreich bearbeitet!');
+            return redirect()->route('admin.roles.index')->with('success', 'Rolle erfolgreich bearbeitet!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -119,7 +119,7 @@ class AdminRoleController extends AdminController
     {
         try {
             $role->delete();
-            return back()->with('success', 'Rolle erfogreich gelöscht!');
+            return back()->with('success', 'Rolle erfolgreich gelöscht!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }

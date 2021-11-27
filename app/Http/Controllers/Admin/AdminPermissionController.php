@@ -76,7 +76,7 @@ class AdminPermissionController extends AdminController
     {
         try {
             Permission::create($request->validated());
-            return redirect()->route('admin.permissions.index')->with('success', 'Permission erfogreich angelegt!');
+            return redirect()->route('admin.permissions.index')->with('success', 'Permission erfolgreich angelegt!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -106,7 +106,7 @@ class AdminPermissionController extends AdminController
     {
         try {
             $permission->update($request->validated());
-            return redirect()->route('admin.permissions.index')->with('success', 'Permission erfogreich bearbeitet!');
+            return redirect()->route('admin.permissions.index')->with('success', 'Permission erfolgreich bearbeitet!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -122,7 +122,7 @@ class AdminPermissionController extends AdminController
     {
         try {
             $permission->delete();
-            return back()->with('success', 'Permission erfogreich gelöscht!');
+            return back()->with('success', 'Permission erfolgreich gelöscht!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }

@@ -55,7 +55,7 @@ class AdminServiceCategoryController extends AdminController
     {
         try {
             ServiceCategory::create($request->validated());
-            return redirect()->route('admin.serviceCategories.index')->with('success', 'Service Typ erfogreich angelegt!');
+            return redirect()->route('admin.serviceCategories.index')->with('success', 'Service Typ erfolgreich angelegt!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -84,7 +84,7 @@ class AdminServiceCategoryController extends AdminController
     {
         try {
             $serviceCategory->update($request->validated());
-            return redirect()->route('admin.serviceCategories.index')->with('success', 'Service Typ erfogreich bearbeitet!');
+            return redirect()->route('admin.serviceCategories.index')->with('success', 'Service Typ erfolgreich bearbeitet!');
         } catch(Exception $e) {
             dd($e->getMessage());
             return back()->with('error', $e->getMessage());
@@ -101,7 +101,7 @@ class AdminServiceCategoryController extends AdminController
     {
         try {
             $serviceCategory->delete();
-            return redirect()->route('admin.serviceCategories.index')->with('success', 'Service Typ erfogreich gelösch!');
+            return redirect()->route('admin.serviceCategories.index')->with('success', 'Service Typ erfolgreich gelösch!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }

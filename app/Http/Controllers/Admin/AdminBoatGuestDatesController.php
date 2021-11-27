@@ -62,7 +62,7 @@ class AdminBoatGuestDatesController extends AdminController
         try {
             $boatGuest = BoatGuest::whereName($validated['name'])->first() ?? BoatGuest::create($boatValidated);
             $boatGuest->dates()->create($boatGestValidated);
-            return redirect()->route('admin.boatGuestDates.index')->with('success', 'Gastboot Buchung erfogreich angelegt!');
+            return redirect()->route('admin.boatGuestDates.index')->with('success', 'Gastboot Buchung erfolgreich angelegt!');
         } catch(Exception $e) {
             die($e->getMessage());
             return redirect()->back()->with('error', $e->getMessage());
@@ -102,7 +102,7 @@ class AdminBoatGuestDatesController extends AdminController
         try {
             $boatGuestDate->boat()->update($boatValidated);
             $boatGuestDate->update($boatGestValidated);
-            return redirect()->route('admin.boatGuestDates.index')->with('success', 'Gastboot Buchung erfogreich bearbeitet!');
+            return redirect()->route('admin.boatGuestDates.index')->with('success', 'Gastboot Buchung erfolgreich bearbeitet!');
         } catch(Exception $e) {
             return redirect()->route('admin.boatGuestDates.create', $request)->with('error', $e->getMessage());
         }
@@ -118,7 +118,7 @@ class AdminBoatGuestDatesController extends AdminController
     {
         try {
             $boatGuestDate->delete();
-            return redirect()->route('admin.boatGuestDates.index')->with('success', 'Gastboot Buchung erfogreich gelöscht!');
+            return redirect()->route('admin.boatGuestDates.index')->with('success', 'Gastboot Buchung erfolgreich gelöscht!');
         } catch(Exception $e) {
             return redirect()->route('admin.boatGuestDates.index')->with('error', $e->getMessage());
         }

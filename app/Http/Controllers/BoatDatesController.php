@@ -151,7 +151,7 @@ class BoatDatesController extends Controller
     {
         try {
             Mail::send(new InvoiceMail($boatDate, $this->invoice($boatDate)));
-            return redirect()->route('customer.boatDates.'.$boatDate->modus)->with('success', 'Rechnung erfogreich an '.$boatDate->boat->customer->email.' versand!');
+            return redirect()->route('customer.boatDates.'.$boatDate->modus)->with('success', 'Rechnung erfolgreich an '.$boatDate->boat->customer->email.' versand!');
         } catch(Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }

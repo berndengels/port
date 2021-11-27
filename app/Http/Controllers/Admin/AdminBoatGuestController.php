@@ -51,7 +51,7 @@ class AdminBoatGuestController extends AdminController
         $validated  = $request->validated();
         try {
             BoatGuest::create($validated);
-            return redirect()->route('admin.boatGuests.index')->with('success', 'Gastboot erfogreich angelegt!');
+            return redirect()->route('admin.boatGuests.index')->with('success', 'Gastboot erfolgreich angelegt!');
         } catch(Exception $e) {
             return redirect()->route('admin.boatGuests.create', $request)->with('error', $e->getMessage());
         }
@@ -80,7 +80,7 @@ class AdminBoatGuestController extends AdminController
         $validated  = $request->validated();
         try {
             $boatGuest->update($validated);
-            return redirect()->route('admin.boatGuests.index')->with('success', 'Gastboot erfogreich bearbeitet!');
+            return redirect()->route('admin.boatGuests.index')->with('success', 'Gastboot erfolgreich bearbeitet!');
         } catch(Exception $e) {
             return redirect()->route('admin.boatGuests.create', $request)->with('error', $e->getMessage());
         }
@@ -96,7 +96,7 @@ class AdminBoatGuestController extends AdminController
     {
         try {
             $boatGuest->delete();
-            return redirect()->route('admin.boatGuests.index')->with('success', 'Gastboot erfogreich gelöscht!');
+            return redirect()->route('admin.boatGuests.index')->with('success', 'Gastboot erfolgreich gelöscht!');
         } catch(Exception $e) {
             return redirect()->route('admin.boatGuests.index')->with('error', $e->getMessage());
         }

@@ -80,7 +80,7 @@ class AdminCustomerController extends AdminController
             $validated = $request->validated();
             $validated['password'] = Hash::make($validated['password']);
             Customer::create($validated)->roles()->sync($validated['roles']);
-            return redirect()->route('admin.customers.index')->with('success', 'Kunde erfogreich angelegt!');
+            return redirect()->route('admin.customers.index')->with('success', 'Kunde erfolgreich angelegt!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -127,7 +127,7 @@ class AdminCustomerController extends AdminController
                 $customer->notify(new RegistrationConfirmed($customer));
             }
 
-            return redirect()->route('admin.customers.index')->with('success', 'Kunde erfogreich bearbeitet!');
+            return redirect()->route('admin.customers.index')->with('success', 'Kunde erfolgreich bearbeitet!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -143,7 +143,7 @@ class AdminCustomerController extends AdminController
     {
         try {
             $customer->delete();
-            return back()->with('success', 'Kunde erfogreich gelöscht!');
+            return redirect()->route('admin.customers.index')->with('success', 'Kunde erfolgreich gelöscht!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }

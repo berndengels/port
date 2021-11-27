@@ -73,7 +73,7 @@ class AdminUserController extends AdminController
             $validated = $request->validated();
             $validated['password'] = Hash::make($validated['password']);
             AdminUser::create($validated)->syncRoles($validated['roles']);
-            return redirect()->route('admin.users.index')->with('success', 'User erfogreich angelegt!');
+            return redirect()->route('admin.users.index')->with('success', 'User erfolgreich angelegt!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -117,7 +117,7 @@ class AdminUserController extends AdminController
                 ->syncRoles($validated['roles'] ?? [])
                 ->update($validated)
             ;
-            return redirect()->route('admin.users.index')->with('success', 'User erfogreich bearbeitet!');
+            return redirect()->route('admin.users.index')->with('success', 'User erfolgreich bearbeitet!');
         } catch(Exception $e) {
             die($e->getMessage());
             return back()->with('error', $e->getMessage());
@@ -134,7 +134,7 @@ class AdminUserController extends AdminController
     {
         try {
             $user->delete();
-            return back()->with('success', 'User erfogreich gelöscht!');
+            return back()->with('success', 'User erfolgreich gelöscht!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }
