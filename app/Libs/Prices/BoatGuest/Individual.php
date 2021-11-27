@@ -13,6 +13,10 @@ class Individual extends Main implements IPrice
 
     public function addPrice(): Price
     {
+        return new Price(0);
+    }
+
+    public function setPrice() {
         return new Price(value: (float) $this->individualPrice ?: 0);
     }
 

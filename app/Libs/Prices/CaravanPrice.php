@@ -7,6 +7,7 @@ use App\Libs\Prices\Caravan\Base;
 use App\Libs\Prices\Caravan\Persons;
 use App\Libs\Prices\Caravan\Electric;
 use App\Libs\Prices\Caravan\Individual;
+use Illuminate\Support\Collection;
 
 class CaravanPrice extends PriceCalculator
 {
@@ -15,44 +16,24 @@ class CaravanPrice extends PriceCalculator
     protected static $priceBase = 0;
     protected static $priceIndividual = 0;
 
-    public function load(): array
+    public function params(): Collection
     {
-        return [
-        ];
+        return collect(['persons', 'electric', 'individual', 'carlength']);
     }
 
-    public function getPrice(Request $request): array
+    protected function registerAddPriceClasses(): Collection
     {
-        $personsCount = $request->post('persons');
+        return collect([
+            Base::class,
+            Electric::class,
+            Persons::class,
+        ]);
+    }
 
-        if($this->model && $this->model instanceof Caravan) {
-            $carLength = $this->model->carlength;
-        } else {
-            $carLength = $request->post('carlength');
-        }
-
-        $individualPrice    = (int) $request->post('day_price', 0);
-        $hasElectric        = (bool) $request->post('electric', false);
-
-        $base       = new Base($carLength);
-        $persons    = new Persons($personsCount);
-        $electric   = new Electric($hasElectric);
-        $individual = new Individual($individualPrice);
-        $dCount     = static::$daysCount;
-        $dPeriod    = static::$_datePeriod;
-
-        static::$priceBase        = $base->setDaysCount($dCount)->addPrice($dPeriod);
-        static::$pricePersons     = $persons->setDaysCount($dCount)->addPrice($dPeriod);
-        static::$priceElectric    = $electric->setDaysCount($dCount)->addPrice($dPeriod);
-        static::$priceIndividual  = $individual->addPrice();
-        static::$total = 0;
-
-        $price = $this
-            ->add(static::$priceBase)
-            ->add(static::$pricePersons)
-            ->add(static::$priceElectric)
-            ->set(static::$priceIndividual);
-
-        return $price->formatResult();
+    protected function registerSetPriceClasses(): Collection
+    {
+        return collect([
+            Individual::class,
+        ]);
     }
 }

@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Contracts\Models\IDatePrice;
 use Eloquent;
+use Illuminate\Http\Client\Request;
 use Illuminate\Support\Carbon;
 use App\Traits\Models\ClearCache;
 use App\Traits\Models\Filter\CaravanFilter;
@@ -51,7 +53,7 @@ use Illuminate\Database\Query\JoinClause;
  * @method static Builder|CaravanDates fromYearMonth(?string $year = null, ?string $month = null)
  * @method static Builder|CaravanDates whereDayPrice($value)
  */
-class CaravanDates extends BaseModel
+class CaravanDates extends BaseModel implements IDatePrice
 {
     use HasFactory, CaravanFilter, YearMonthFilter, ClearCache;
 
@@ -156,5 +158,10 @@ class CaravanDates extends BaseModel
     public function scopePageList(Builder $query)
     {
         return $query->with('caravan')->orderBy('id', 'DESC');
+    }
+
+    public function getPrice(Request $request): float|int
+    {
+        return 0;
     }
 }

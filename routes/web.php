@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminInfoController;
+use App\Http\Controllers\Admin\AdminScraperController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -148,6 +149,7 @@ Route::group([
     Route::get('routes', [AdminInfoController::class, 'routes'])->name('infos.routes');
     Route::get('php', [AdminInfoController::class, 'phpinfo'])->name('infos.php');
     Route::get('emojis', [AdminInfoController::class, 'emojis'])->name('infos.emojis');
+
     Route::fallback(function () {
 //        return redirect('/admin');
         return 'wrong admin route';

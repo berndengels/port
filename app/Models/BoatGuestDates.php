@@ -1,12 +1,14 @@
 <?php
 namespace App\Models;
 
+use App\Contracts\Models\IDatePrice;
 use Database\Factories\BoatGuestDatesFactory;
 use Eloquent;
 use App\Traits\Models\ClearCache;
 use App\Traits\Models\Filter\Filter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Http\Client\Request;
 use Illuminate\Support\Carbon;
 
 /**
@@ -40,7 +42,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|BoatGuestDates wherePrices($value)
  * @method static Builder|BoatGuestDates whereUntil($value)
  */
-class BoatGuestDates extends BaseModel
+class BoatGuestDates extends BaseModel implements IDatePrice
 {
     use HasFactory, ClearCache, Filter;
 
@@ -67,5 +69,10 @@ class BoatGuestDates extends BaseModel
     public function getValidUntilAttribute()
     {
         return $this->until->format('Y-m-d');
+    }
+
+    public function getPrice(Request $request): float|int
+    {
+        return 0;
     }
 }

@@ -8,7 +8,7 @@ use App\Libs\Prices\IDailyPrice;
 class Electric extends Main implements IDailyPrice
 {
 
-    public function __construct(protected bool $useElectric)
+    public function __construct(protected bool $electric)
     {
         $this->initConfg();
     }
@@ -16,7 +16,7 @@ class Electric extends Main implements IDailyPrice
     public function addPrice(DatePeriod $days): Price
     {
         $value = 0;
-        if($this->useElectric) {
+        if($this->electric) {
             $value = $this->daysCount * $this->priceElectricPerDay;
         }
         return new Price($value);
@@ -25,18 +25,18 @@ class Electric extends Main implements IDailyPrice
     /**
      * @return bool
      */
-    public function isUseElectric(): bool
+    public function isElectric(): bool
     {
-        return $this->useElectric;
+        return $this->electric;
     }
 
     /**
-     * @param  bool $useElectric
+     * @param  bool $electric
      * @return Electric
      */
-    public function setUseElectric(bool $useElectric): Electric
+    public function setElectric(bool $electric): Electric
     {
-        $this->useElectric = $useElectric;
+        $this->electric = $electric;
         return $this;
     }
 }

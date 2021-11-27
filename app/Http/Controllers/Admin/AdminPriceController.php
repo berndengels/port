@@ -7,6 +7,7 @@ use App\Libs\Prices\BoatPrice;
 use App\Libs\Prices\CaravanPrice;
 use App\Models\Boat;
 use App\Models\BoatGuest;
+use App\Models\Caravan;
 use Excel;
 use Carbon\Carbon;
 use App\Models\CaravanDates;
@@ -25,15 +26,17 @@ class AdminPriceController extends AdminController
      */
     public function calculateCaravanDates(Request $request)
     {
+        $carnumber  = $request->post('carnumber');
         $carlength  = $request->post('carlength');
         $from       = $request->post('from');
         $until      = $request->post('until');
         $response   = ['error' => true];
+        $caravan    = Caravan::whereCarnumber($carnumber)->first();
 
         if($from && $until && $carlength) {
             $from       = new Carbon($from, config('app.timezone'));
             $until      = new Carbon($until, config('app.timezone'));
-            $response   = (new CaravanPrice($from, $until))->getPrice($request);
+            $response   = (new CaravanPrice($from, $until, $caravan))->getPrice($request);
         }
         return response()->json($response);
     }
@@ -55,7 +58,7 @@ class AdminPriceController extends AdminController
         if($boat) {
             $from       = $from ? new Carbon($from, config('app.timezone')) : null;
             $until      = $until ? new Carbon($until, config('app.timezone')) : null;
-            $response   = (new BoatPrice($from, $until))->getPrice($request);
+            $response   = (new BoatPrice($from, $until, $boat))->getPrice($request);
         }
 
         return response()->json($response);
@@ -69,15 +72,17 @@ class AdminPriceController extends AdminController
      */
     public function calculateGuestBoatDates(Request $request)
     {
+        $name       = $request->post('name');
         $from       = $request->post('from');
         $until      = $request->post('until');
         $length     = $request->post('length');
         $response   = ['error' => true];
+        $guestBoat  = BoatGuest::whereName($name)->whereLength($length)->first();
 
         if($from && $until && $length) {
             $from       = new Carbon($from, config('app.timezone'));
             $until      = new Carbon($until, config('app.timezone'));
-            $response   = (new BoatGuestPrice($from, $until))->getPrice($request);
+            $response   = (new BoatGuestPrice($from, $until, $guestBoat))->getPrice($request);
         }
 
         return response()->json($response);

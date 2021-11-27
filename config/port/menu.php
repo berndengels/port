@@ -292,7 +292,7 @@ return [
                         'title' => 'Emojis',
                         'icon'  => 'fas fa-route',
                         'route' => 'admin.infos.emojis',
-                        'hide_on_mobile' => false,
+                        'hide_on_mobile' => true,
                     ],
                     [
                         'permissions'   => ['read Routes'],

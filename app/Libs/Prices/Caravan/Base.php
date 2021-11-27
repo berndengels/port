@@ -1,15 +1,14 @@
 <?php
 namespace App\Libs\Prices\Caravan;
 
-use App\Libs\Prices\CaravanPrice;
-use App\Libs\Prices\Price;
 use DatePeriod;
 use Carbon\Carbon;
+use App\Libs\Prices\Price;
 use App\Libs\Prices\IDailyPrice;
 
 class Base extends Main implements IDailyPrice
 {
-    public function __construct(protected int $carLength = 0)
+    public function __construct(protected int $carlength = 0)
     {
         $this->initConfg();
     }
@@ -23,12 +22,12 @@ class Base extends Main implements IDailyPrice
         foreach($days as $date) {
             // saison
             if($date->month >= $this->saisonFromMonth && $date->month <= $this->saisonUntilMonth) {
-                $price = isset($this->saisonPricePerDay[$this->carLength]) ? $this->saisonPricePerDay[$this->carLength] : 0;
+                $price = isset($this->saisonPricePerDay[$this->carlength]) ? $this->saisonPricePerDay[$this->carlength] : 0;
             }
             // nebensaison
             else
             {
-                $price = isset($this->defaultPricePerDay[$this->carLength]) ? $this->defaultPricePerDay[$this->carLength] : 0;
+                $price = isset($this->defaultPricePerDay[$this->carlength]) ? $this->defaultPricePerDay[$this->carlength] : 0;
             }
             $sumPrice += $price;
         }
@@ -38,18 +37,18 @@ class Base extends Main implements IDailyPrice
     /**
      * @return int
      */
-    public function getCarLength(): int
+    public function getCarlength(): int
     {
-        return $this->carLength;
+        return $this->carlength;
     }
 
     /**
-     * @param  int $carLength
+     * @param  int $carlength
      * @return Base
      */
-    public function setCarLength(int $carLength): Base
+    public function setCarlength(int $carlength): Base
     {
-        $this->carLength = $carLength;
+        $this->carlength = $carlength;
         return $this;
     }
 }

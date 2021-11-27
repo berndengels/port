@@ -1,8 +1,10 @@
 <?php
 namespace App\Models;
 
+use App\Contracts\Models\IDatePrice;
 use Database\Factories\BoatDatesFactory;
 use Eloquent;
+use Illuminate\Http\Client\Request;
 use Illuminate\Support\Carbon;
 use App\Traits\Models\ClearCache;
 use App\Traits\Models\Events\FireEvents;
@@ -46,7 +48,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property-read mixed $individual_price
  * @property-read mixed $period
  */
-class BoatDates extends BaseModel
+class BoatDates extends BaseModel implements IDatePrice
 {
     use HasFactory, ClearCache, FireEvents;
 
@@ -138,5 +140,10 @@ class BoatDates extends BaseModel
     public function getPeriodAttribute()
     {
         return $this->priceData->modusDatePeriod ?? null;
+    }
+
+    public function getPrice(Request $request): float|int
+    {
+        return 0;
     }
 }

@@ -7,7 +7,7 @@ use App\Libs\Prices\Price;
 class Cleaning extends Main implements IPrice
 {
     public function __construct(
-        protected bool $useCleaning,
+        protected bool $cleaning,
         protected int $length
     ) {
         $this->initConfig();
@@ -16,7 +16,7 @@ class Cleaning extends Main implements IPrice
 
     public function addPrice(): Price
     {
-        if($this->useCleaning && $this->length > 0) {
+        if($this->cleaning && $this->length > 0) {
             return new Price(ceil($this->priceCleaningPerLength * $this->length));
         }
         return new Price(0);

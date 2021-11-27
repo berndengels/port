@@ -63,7 +63,7 @@ class BoatPriceCalculationTest extends PriceCalculation
     {
         $request = new Request();
         $request->request->add($this->params);
-        $price = (new BoatPrice($this->from, $this->until))->getPrice($request);
+        $price = (new BoatPrice($this->from, $this->until, $this->boat))->getPrice($request);
 
         return $price['total'];
     }

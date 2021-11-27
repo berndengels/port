@@ -10,6 +10,7 @@ use App\Libs\Prices\Boat\Individual;
 use App\Models\Boat;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 class BoatPrice extends PriceCalculator
 {
@@ -20,35 +21,56 @@ class BoatPrice extends PriceCalculator
     protected static $priceCrane = 0;
     protected static $priceMastCrane = 0;
     protected static $priceCleaning = 0;
-    protected static $modusDatePeriod;
     protected static $priceIndividual = 0;
+    protected static $modusDatePeriod;
 
-    public function load(): array
+
+    public function params(): Collection
     {
-        return [
-        ];
+        return collect([
+            'crane',
+            'mast_crane',
+            'cleaning',
+            'modus',
+            'individual',
+            'length',
+            'width',
+            'weight',
+            'boat_type',
+            'board_height',
+            'mast_length',
+            'mast_weight',
+            'draft',
+            'length_waterline',
+            'length_keel',
+        ]);
+    }
+
+    protected function registerAddPriceClasses(): Collection
+    {
+        return collect([
+            Base::class,
+            Crane::class,
+            MastCrane::class,
+            Cleaning::class,
+        ]);
+    }
+
+    protected function registerSetPriceClasses(): Collection
+    {
+        return collect([
+            Individual::class,
+        ]);
     }
 
     public function getPrice(Request $request): array
     {
-        $useCrane       = $request->post('crane');
-        $useMastCrane   = $request->post('mast_crane');
-        $useCleaning    = $request->post('cleaning');
-        $modus          = $request->post('modus');
-        $specialPrice   = (int) $request->post('default_price', 0);
+        $this->calculateDateMode($request);
+        return parent::getPrice($request);
+    }
 
-        if($this->model && $this->model instanceof Boat) {
-            $length         = (int) $this->model->length;
-            $width          = (int) $this->model->width;
-            $weight         = (int) $this->model->weight;
-            $mastWeight     = (int) $this->model->mast_weight;
-        } else {
-            $length         = (int) $request->post('length', 0);
-            $width          = (int) $request->post('width', 0);
-            $weight         = (int) $request->post('weight', 0);
-            $mastWeight     = (int) $request->post('mast_weight', 0);
-        }
-
+    protected function calculateDateMode(Request $request) {
+        $modus = $request->post('modus');
         if((!static::$from || !static::$until) && $modus) {
             $today          = Carbon::today();
             $year           = $today->format('Y');
@@ -59,46 +81,20 @@ class BoatPrice extends PriceCalculator
             $winterEnd      = Carbon::make($nextYear . '-' . config('port.prices.boat.winter_end'));
 
             switch ($modus) {
-            case 'saison':
-                static::$from   = $saisonStart;
-                static::$until  = $saisonEnd;
-                static::$_datePeriod = $saisonStart->toPeriod($saisonEnd)->toDatePeriod();
-                static::$daysCount   = static::$_datePeriod->getDateInterval()->days;
-                break;
-            case 'winter':
-            default:
-                static::$from   = $winterStart;
-                static::$until  = $winterEnd;
-                static::$_datePeriod = $winterStart->toPeriod($winterEnd)->toDatePeriod();
-                static::$daysCount   = static::$_datePeriod->getDateInterval()->days;
-                break;
+                case 'saison':
+                    static::$from   = $saisonStart;
+                    static::$until  = $saisonEnd;
+                    static::$_datePeriod = $saisonStart->toPeriod($saisonEnd)->toDatePeriod();
+                    static::$daysCount   = static::$_datePeriod->getDateInterval()->days;
+                    break;
+                case 'winter':
+                default:
+                    static::$from   = $winterStart;
+                    static::$until  = $winterEnd;
+                    static::$_datePeriod = $winterStart->toPeriod($winterEnd)->toDatePeriod();
+                    static::$daysCount   = static::$_datePeriod->getDateInterval()->days;
+                    break;
             }
         }
-
-        $dCount     = static::$daysCount;
-        $dPeriod    = static::$_datePeriod;
-        $base       = new Base($modus, $length, $width);
-        $crane      = new Crane($useCrane, $weight);
-        $mastCrane  = new MastCrane($useMastCrane, $mastWeight);
-        $cleaning   = new Cleaning($useCleaning, $length);
-        $individual = new Individual($specialPrice);
-
-        static::$modusDatePeriod    = $modus;
-        static::$priceIndividual    = $individual->addPrice($specialPrice);
-        static::$priceBase          = $base->setDaysCount($dCount)->addPrice($dPeriod);
-        static::$priceCrane         = $crane->addPrice();
-        static::$priceMastCrane     = $mastCrane->addPrice();
-        static::$priceCleaning      = $cleaning->addPrice();
-        static::$total = 0;
-
-        $price = $this
-            ->add(static::$priceBase)
-            ->add(static::$priceCrane)
-            ->add(static::$priceMastCrane)
-            ->add(static::$priceCleaning)
-            ->set(static::$priceIndividual);
-
-        return $price->formatResult();
     }
-
 }

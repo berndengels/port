@@ -7,7 +7,7 @@ use App\Libs\Prices\Price;
 class Crane extends Main implements IPrice
 {
     public function __construct(
-        protected bool $useCrane,
+        protected bool $crane,
         protected int $weight
     ) {
         $this->initConfig();
@@ -15,7 +15,7 @@ class Crane extends Main implements IPrice
 
     public function addPrice(): Price
     {
-        if($this->useCrane) {
+        if($this->crane) {
             return new Price($this->pricePerTon * $this->weight / 1000);
         }
         return new Price();
