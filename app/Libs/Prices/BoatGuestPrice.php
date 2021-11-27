@@ -3,6 +3,7 @@ namespace App\Libs\Prices;
 
 use App\Libs\Prices\BoatGuest\Electric;
 use App\Libs\Prices\BoatGuest\Individual;
+use App\Libs\Prices\BoatGuest\Main;
 use App\Libs\Prices\BoatGuest\Persons;
 use App\Models\BoatGuest;
 use Illuminate\Http\Request;
@@ -14,6 +15,17 @@ class BoatGuestPrice extends PriceCalculator
     protected static $pricePersons;
     protected static $priceElectric;
     protected static $priceIndividual;
+
+    public function load(): array
+    {
+        return [
+            Base::class,
+            Electric::class,
+            Persons::class,
+            Individual::class
+        ];
+    }
+
 
     public function getPrice(Request $request): array
     {
@@ -29,8 +41,8 @@ class BoatGuestPrice extends PriceCalculator
         $base       = new Base($length);
         $persons    = new Persons($personsCount);
         $electric   = new Electric($hasElectric);
-
         $individual = new Individual($individualPrice);
+
         $dCount     = static::$daysCount;
         $dPeriod    = static::$_datePeriod;
 

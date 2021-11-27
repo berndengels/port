@@ -22,6 +22,10 @@ class ServiceFactory extends MainFactory
     public function definition()
     {
         return [
+            'service_category_id'   => 1,
+            'price_type_id'  => 1,
+            'name'  => $this->faker->text(50),
+            'price'  => $this->faker->numberBetween(5, 500),
         ];
     }
 }

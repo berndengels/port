@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminInfoController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CaptchaServiceController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PriceController;

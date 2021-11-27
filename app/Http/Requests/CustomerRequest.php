@@ -1,7 +1,6 @@
 <?php
-namespace App\Http\Requests;
 
-use Illuminate\Support\Facades\Hash;
+namespace App\Http\Requests;
 
 class CustomerRequest extends AdminRequest
 {

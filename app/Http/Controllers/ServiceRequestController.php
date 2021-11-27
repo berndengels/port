@@ -100,7 +100,7 @@ class ServiceRequestController extends Controller
                 ->sync($request->validated()['services'])
             ;
 
-            event(new ServiceRequested($serviceRequest->refresh(),'store'));
+//            event(new ServiceRequested($serviceRequest->refresh(),'store'));
 
             return redirect()->route('customer.serviceRequests.index')->with('success', 'Service Anfrage erfogreich angelegt!');
         } catch(Exception $e) {
@@ -146,7 +146,7 @@ class ServiceRequestController extends Controller
             $serviceRequest->update($request->validated());
             $serviceRequest->services()->sync($request->validated()['services']);
 
-            event(new ServiceRequested($serviceRequest->refresh(), 'update'));
+//            event(new ServiceRequested($serviceRequest->refresh(), 'update'));
 
             return redirect()->route('customer.serviceRequests.index')->with('success', 'Service Anfrage erfogreich bearbeitet!');
         } catch(Exception $e) {

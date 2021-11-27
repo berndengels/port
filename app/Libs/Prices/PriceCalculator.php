@@ -69,5 +69,7 @@ abstract class PriceCalculator
         return $prices;
     }
 
+    public abstract function load(): array;
+
     public abstract function getPrice(Request $request): array;
 }

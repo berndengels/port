@@ -41,8 +41,8 @@ class BoatRequest extends AdminRequest
         return [
             'name'     => 'required',
             'fon'      => '',
-            'email'    => '',
-            'state'    => 'required',
+            'email'    => 'nullable|email',
+            'state'    => '',
             'boat_name'         => 'required',
             'boat_type'         => 'required',
             'costomer_id'       => '',

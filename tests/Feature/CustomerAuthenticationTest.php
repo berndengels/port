@@ -16,17 +16,29 @@ class CustomerAuthenticationTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_users_can_authenticate_using_the_login_screen()
+    public function testCustumerLoginViaFakeCustomer()
     {
-        dump('customer email: '. $this->customer->email);
-        $this->post('/login', [
-                'email' => $this->customer->email,
-                'password' => 'password',
-            ])
-            ->assertOk()
-//            ->assertLocation(RouteServiceProvider::HOME)
+        $this
+            ->asFakeCustomer()
+            ->assertAuthenticated('customer')
         ;
-        $this->assertAuthenticated('customer');
+    }
+
+    public function testCostumerNotConfirmedLoginFail()
+    {
+        $params = [
+            'email' => $this->customer->email,
+            'password' => 'password',
+        ];
+        $response = $this
+            ->followingRedirects()
+            ->from(route('public.dashboard'))
+            ->post(route('customer.login', $params), $params);
+        $response
+            ->assertOk()
+            ->assertSeeText('Sorry, Ihre Kunden-Registrierung wurde noch nicht bestätigt')
+        ;
+        $this->assertGuest();
     }
 
     public function test_users_can_not_authenticate_with_invalid_password()

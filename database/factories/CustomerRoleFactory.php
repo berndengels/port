@@ -1,29 +1,29 @@
 <?php
-
 namespace Database\Factories;
 
-use App\Models\ServiceCategory;
-use Database\Factories\Ext\MainFactory;
+use App\Models\Role;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-class ServiceCategoryFactory extends MainFactory
+class CustomerRoleFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = ServiceCategory::class;
+    protected $model = Role::class;
 
     /**
      * Define the model's default state.
      *
      * @return array
      */
+
     public function definition()
     {
         return [
-            'name'  => $this->faker->text(10),
-            'modus' => 'underwater',
+            'name'          => 'boat',
+            'guard_name'    => 'customer',
         ];
     }
 }

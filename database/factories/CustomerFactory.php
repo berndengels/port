@@ -24,7 +24,7 @@ class CustomerFactory extends Factory
             'street'    => $this->faker->streetAddress,
             'postcode'  => $this->faker->postcode,
             'city'      => $this->faker->city,
-            'confirmed' => 1
+            'confirmed' => false
         ];
     }
 }

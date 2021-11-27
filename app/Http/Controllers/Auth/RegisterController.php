@@ -1,6 +1,8 @@
 <?php
 namespace App\Http\Controllers\Auth;
 
+use App\Models\Boat;
+use App\Observers\CustomerObserver;
 use Exception;
 use App\Models\Customer;
 use Illuminate\Auth\Events\Registered;
@@ -19,6 +21,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Database\Eloquent\Concerns\HasEvents;
 use App\Http\Requests\RegistrationRequest;
+use Illuminate\Support\Facades\Event;
 
 /**
  *
@@ -77,12 +80,20 @@ class RegisterController extends Controller
     public function register(RegistrationRequest $request)
     {
         try {
+            if(app()->environment(['testing'])) {
+                Customer::flushEventListeners();
+            }
             $validated = $request->validated();
             $validated['password'] = Hash::make($validated['password']);
+
+            /**
+             * @var Customer $customer
+             */
             $customer = Customer::create($validated);
             $customer->boats()->create($validated);
 
-            event(new Registered($customer));
+            Event::dispatch(new Registered($customer));
+
             $this->guard()->login($customer);
 
             return $request->wantsJson()
@@ -92,6 +103,9 @@ class RegisterController extends Controller
                     ->with('success',"Kunde '$customer->name' erfolgreich angelegt")
                 ;
         } catch(Exception $e) {
+            if(app()->environment(['testing','local'])) {
+                throw $e;
+            }
             return redirect()
                 ->back()
                 ->withInput($request->validated())

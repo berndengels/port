@@ -40,7 +40,7 @@ class CustomerRegisterMail extends Mailable
         return $this->markdown(
             'markdown/customer-register', [
                 'customer'  => $this->customer,
-                'boat'      => $this->customer->boats()->first()
+                'boat'      => $this->customer->boats->first()
             ]
         );
     }

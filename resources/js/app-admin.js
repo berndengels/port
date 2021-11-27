@@ -12,9 +12,10 @@ import Editor from "./Libs/Editor"
 import Weather from "./Libs/Weather"
 import Car from "./Libs/Car"
 import Tooltip from "./Libs/Tooltip";
-import { createApp } from 'vue'
-import AdminDashboard from "./views/AdminDashboard";
-import store from "./store"
+import { createApp } from "vue"
+import store from "./vue/store"
+import Main from "./Main"
+import AdminDashboard from "./vue/views/AdminDashboard"
 
 window.MyForm   = new MyForm
 window.Prices   = new Prices
@@ -35,14 +36,13 @@ $(document).ready(function () {
 	$(".sidenav__close-icon").click(() => {
 		$sideNav.removeClass('active')
 	});
-	if($("#vue").is(":visible")) {
-		const app = createApp(AdminDashboard)
-			.use(store)
-			.mount("#vue")
-		;
+
+	switch(true) {
+		case $("#adminDashboard").is(":visible"):
+			createApp(AdminDashboard).use(store).mount("#adminDashboard");
+			break
 	}
 });
-
 if($('[name="csrf-token"]').is(":visible")) {
 	$.ajaxSetup({
 		headers: {'X-CSRF-Token': $('[name="csrf-token"]').attr('content')},
