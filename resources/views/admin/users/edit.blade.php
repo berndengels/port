@@ -9,7 +9,8 @@
             <x-form-input name="name" label="Name" required />
             <x-form-input type="email" name="email" label="Email" required />
             <x-form-input name="fon" label="Mobiltelefon" />
-            <x-form-input type="password" name="password" label="Passwort" />
+            <x-form-input type="password" name="password" label="Passwort" :bind="false" autocomplete="off" readonly
+                onfocus="this.removeAttribute('readonly');" />
             <x-form-input type="password" name="password_repeat" label="Passwort wiederholen" />
             @can('write Role')
             <x-form-select name="roles[]" label="Role" :options="$roles" many-relation multiple />
