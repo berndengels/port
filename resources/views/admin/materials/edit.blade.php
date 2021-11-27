@@ -10,7 +10,7 @@
             <x-form-input name="name" label="Name" required />
 
             <x-form-group class="frm-group w-full" label="Preis per Maßeinheit" inline>
-                <x-form-input class="w-1/2" type="number" step="0.1" name="price_per_unit" required />
+                <x-form-input class="w-1/2" type="number" step="0.01" name="price_per_unit" required />
                 <x-form-select class="w-1/2" name="price_type_id" :options="$priceTypes" required />
             </x-form-group>
 
