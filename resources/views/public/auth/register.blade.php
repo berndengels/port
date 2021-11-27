@@ -4,7 +4,7 @@
     <div class="w-full">
         <h1 class="sm:mt-5 m-3 text-4xl">{{ __('Registrierung für Dauerlieger') }}</h1>
         <div class="flex w-full justify-center mb-5">
-            <x-form class="w-full mx-3 md:w-1/2 register-form" method="post" action="{{ route('customer.register') }}">
+            <x-form class="w-full mx-3 md:w-1/2 register-form" method="post" action="{{ route('register') }}">
                 <x-form-input type="hidden" name="customer_type" default="permanent" />
                 <x-form-input name="name" label="Name" required placeholder="Name" />
                 <x-form-input name="email" type="email" label="Email" required placeholder="Email" />
