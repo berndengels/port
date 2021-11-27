@@ -17,17 +17,17 @@
         <table class="table w-full mt-3">
             <tr>
                 <th>Art</th>
-                <th>Preis-Typ</th>
                 <th>Name</th>
                 <th>Preis per Einheit</th>
+                <th>Preis-Typ</th>
                 <th colspan="2"><br></th>
             </tr>
             @foreach($data as $item)
                 <tr>
                     <td>{{ $item->category->name }}</td>
-                    <td>{{ $item->priceType->name }}</td>
                     <td>{{ $item->name }}</td>
                     <td>{{ $item->price_per_unit }} €</td>
+                    <td>{{ $item->priceType->name }}</td>
                     <td>
                         <x-nav-link href="{{ route('admin.materials.edit', $item) }}" icon="fas fa-edit" class="btn" title="Bearbeiten">
                             <span class="hidden md:visible">Edit</span>
