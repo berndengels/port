@@ -18,8 +18,7 @@
             <tr>
                 <th>Art</th>
                 <th>Name</th>
-                <th>Preis per Einheit</th>
-                <th>Preis-Typ</th>
+                <th colspan="2">Preis</th>
                 <th colspan="2"><br></th>
             </tr>
             @foreach($data as $item)
