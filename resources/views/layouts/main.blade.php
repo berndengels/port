@@ -9,7 +9,7 @@
     <!-- Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
     <!-- Styles -->
-    <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+    <link rel="stylesheet" href="{{ mix('./css/app.css') }}">
     @stack('styles')
 <!-- Scripts -->
     @auth('admin')
@@ -21,7 +21,6 @@
 </head>
 <!--body class="font-sans antialiased" data-root="http://webapiv2.navionics.com/dist/webapi/images"-->
 <body class="font-sans antialiased">
-
     <x-flash-message />
     @auth('admin')
         <x-content guard="admin" />
