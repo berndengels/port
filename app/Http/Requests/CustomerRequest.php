@@ -47,10 +47,6 @@ class CustomerRequest extends AdminRequest
             'roles'             => [],
         ];
 
-        if(app()->environment(['production'])) {
-            $rules += ['captcha' => 'required|captcha'];
-        }
-
         return $rules;
     }
 }

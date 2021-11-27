@@ -35,7 +35,6 @@ class AdminRequest extends MainFormRequest
     {
         if(request()->isXmlHttpRequest() && request()->wantsJson()) {
             $this->errors = $validator->errors();
-//            return response()->json($this->errors);
             die(json_encode(['errors' => $this->errors]));
         }
         parent::failedValidation($validator);
