@@ -353,7 +353,10 @@ i {
             color: #ddd;
             a {
                 border: 1px solid #eee;
-                border-radius: 0.5rem;
+                border-radius: 0.6rem;
+//                border-left-top-radius: 0;
+                border-top-left-radius: 0;
+                border-bottom-right-radius: 0;
                 background-color: transparent;
                 &.active {
                     color: $bgSideNav;

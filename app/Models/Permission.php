@@ -48,49 +48,36 @@ class Permission extends BaseModel
 {
     use HasFactory, Filter, ClearCache;
 
-    protected $appends = ['actions','model','action','uniqName'];
-    public $action;
-    public $model;
+    protected $guarded = ['id'];
+//    protected $appends = ['actions', 'action', 'model', 'uniqName'];
+    protected $appends = ['actions', 'uniqName'];
 
     protected static $cacheKeys = [
         AppCache::KEY_OPTIONS_PERMISSION,
         AppCache::KEY_OPTIONS_DATA_PERMISSION,
     ];
 
-    protected static $actions = [
-        'read'  => 'read',
-        'write' => 'write'
-    ];
-
-    public function __construct(array $attributes = [])
-    {
-        parent::__construct($attributes);
-        //        $user = auth('admin')->user();
-        //        $this->connection = ($user && 'test@test.com' === $user->email) ? 'demo' : 'mysql';
-    }
-
     public static function actions()
     {
-        return self::$actions;
+        return [
+            'read'  => 'read',
+            'write' => 'write'
+        ];
     }
 
     public function getUniqNameAttribute()
     {
-        return $this->name . ' '  .$this->guard_name;
+        return $this->name . ' ' . $this->guard_name;
     }
-
-    public static function getActionsAttribute()
-    {
-        return self::actions();
-    }
-
+/*
     public function getModelAttribute()
     {
-        return $this->model;
+        return null;
     }
 
     public function getActionAttribute()
     {
-        return $this->action;
+        return null;
     }
+*/
 }

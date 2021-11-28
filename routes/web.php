@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminInfoController;
+use App\Http\Controllers\Admin\AdminSaisonDatesController;
 use App\Http\Controllers\Admin\AdminScraperController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
@@ -136,6 +137,7 @@ Route::group([
     Route::resource('materials', AdminMaterialController::class);
     Route::resource('materialCategories', AdminMaterialCategoryController::class);
     Route::resource('serviceRequests', AdminServiceRequestController::class);
+    Route::resource('saisonDates', AdminSaisonDatesController::class);
 
     Route::post('serviceRequests/done/{serviceRequest}', [AdminServiceRequestController::class, 'done'])->name('serviceRequests.done');
     Route::post('caravanDates/sendExcel', [AdminCaravanDatesController::class, 'sendExcel'])->name('caravanDates.sendExcel');

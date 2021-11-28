@@ -18,7 +18,7 @@ class Prices {
 
 				axios.post(calcUrl, formData)
 					.then(resp => {
-						frm.price.value = resp.data.total
+						frm.price.value = Math.ceil(resp.data.total)
 						frm.prices.value = JSON.stringify(resp.data)
 					})
 					.catch(err => console.error(err))

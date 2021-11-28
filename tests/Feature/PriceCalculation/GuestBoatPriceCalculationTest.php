@@ -22,6 +22,8 @@ class GuestBoatPriceCalculationTest extends PriceCalculation
             'from'          => $this->from->format('Y-m-d'),
             'until'         => $this->from->copy()->addDays($this->days)->format('Y-m-d'),
             'length'        => $this->boat->length,
+            'electric'      => true,
+            'persons'       => 2,
             'day_price'     => 0
         ];
     }

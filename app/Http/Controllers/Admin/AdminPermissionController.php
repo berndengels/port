@@ -4,11 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Helper\ModelHelper;
 use App\Models\Permission;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\PermissionRequest;
 use Illuminate\Support\Collection;
+use App\Http\Requests\PermissionRequest;
 
 class AdminPermissionController extends AdminController
 {

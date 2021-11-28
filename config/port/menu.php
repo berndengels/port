@@ -273,6 +273,21 @@ return [
                     ],
                 ],
             ],
+            'Einstellungen'   => [
+                'permissions'   => ['read SettingsMenu'],
+                'icon'  => 'fas fa-info-circle',
+                'hide_on_mobile' => false,
+                'items' => [
+                    [
+                        'permissions'   => ['read SaisonDates'],
+                        'text'  => 'Routes',
+                        'title' => 'Routes',
+                        'icon'  => 'fas fa-route',
+                        'route' => 'admin.saisonDates.index',
+                        'hide_on_mobile' => false,
+                    ],
+                ],
+            ],
             'Info'   => [
                 'permissions'   => ['read InfoMenu'],
                 'icon'  => 'fas fa-info-circle',
