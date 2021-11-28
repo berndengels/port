@@ -36,7 +36,7 @@ class DatabaseSeeder extends Seeder
                     PagesTestSeeder::class,
                     WidgetTestSeeder::class,
                     CaravanTestSeeder::class,
-                    BoatGuestTestSeeder::class,
+                    GuestBoatTestSeeder::class,
                     CustomerTestSeeder::class,
                     PriceTypeTestSeeder::class,
                     MaterialCategoryTestSeeder::class,

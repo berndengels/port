@@ -2,6 +2,7 @@
 namespace App\Models;
 
 use App\Libs\AppCache;
+use App\Traits\Models\HasDailyPrice;
 use Eloquent;
 use App\Traits\Models\ClearCache;
 use App\Traits\Models\Filter\CaravanFilter;
@@ -38,7 +39,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Caravan extends BaseModel
 {
-    use HasFactory, CaravanFilter, ClearCache;
+    use HasFactory, CaravanFilter, ClearCache, HasDailyPrice;
 
     protected $table = 'caravans';
     protected $guarded = ['id'];

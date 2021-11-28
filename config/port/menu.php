@@ -112,7 +112,7 @@ return [
                         'text'  => 'Gäste',
                         'title' => 'Gäste',
                         'icon'  => 'fas fa-concierge-bell',
-                        'route' => 'admin.boatGuests.index',
+                        'route' => 'admin.guestBoats.index',
                         'hide_on_mobile' => true,
                     ],
                     [
@@ -120,7 +120,7 @@ return [
                         'text'  => 'Gäste Rezeption',
                         'title' => 'Gäste Rezeption',
                         'icon'  => 'fas fa-concierge-bell',
-                        'route' => 'admin.boatGuestDates.index',
+                        'route' => 'admin.guestBoatDates.index',
                         'hide_on_mobile' => false,
                     ],
                     [

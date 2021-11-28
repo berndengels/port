@@ -1,14 +1,14 @@
 <?php
 namespace Tests\Feature\PriceCalculation;
 
-use App\Models\BoatGuest;
+use App\Models\GuestBoat;
 use Helmich\JsonAssert\JsonAssertions;
 
 class GuestBoatPriceCalculationTest extends PriceCalculation
 {
     use JsonAssertions;
     /**
-     * @var BoatGuest $boat
+     * @var GuestBoat $boat
      */
     protected $days = 2;
     protected $boat;
@@ -16,7 +16,7 @@ class GuestBoatPriceCalculationTest extends PriceCalculation
     protected function setUp(): void
     {
         parent::setUp();
-        $this->boat = BoatGuest::factory()->create();
+        $this->boat = GuestBoat::factory()->create();
         $this->params = [
             'boat_guest_id' => $this->boat->id,
             'from'          => $this->from->format('Y-m-d'),

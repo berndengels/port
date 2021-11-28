@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\BoatGuestsRepository;
+use App\Repositories\GuestBoatsRepository;
 use App\Repositories\BoatRepository;
 use App\Repositories\CaravanRepository;
 use App\Repositories\CountryRepository;
@@ -19,7 +19,7 @@ class Controller extends BaseController
 {
     protected $paginatorLimit;
     protected $boatRepository;
-    protected $boatGuestRepository;
+    protected $guestBoatRepository;
     protected $countryRepository;
     protected $caravanRepository;
     protected $customerRepository;
@@ -38,7 +38,7 @@ class Controller extends BaseController
         $this->customerRepository   = new CustomerRepository();
         $this->roleRepository       = new RoleRepository();
         $this->boatRepository       = new BoatRepository();
-        $this->boatGuestRepository  = new BoatGuestsRepository();
+        $this->guestBoatRepository  = new GuestBoatsRepository();
         $this->priceTypeRepository  = new PriceTypeRepository();
         $this->materialRepository   = new MaterialRepository();
         $this->materialCategoryRepository   = new MaterialCategoryRepository();

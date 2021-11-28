@@ -2,11 +2,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Libs\BoatPriceCalculator;
-use App\Libs\Prices\BoatGuestPrice;
+use App\Libs\Prices\GuestBoatPrice;
 use App\Libs\Prices\BoatPrice;
 use App\Libs\Prices\CaravanPrice;
 use App\Models\Boat;
-use App\Models\BoatGuest;
+use App\Models\GuestBoat;
 use App\Models\Caravan;
 use Excel;
 use Carbon\Carbon;
@@ -77,12 +77,12 @@ class AdminPriceController extends AdminController
         $until      = $request->post('until');
         $length     = $request->post('length');
         $response   = ['error' => true];
-        $guestBoat  = BoatGuest::whereName($name)->whereLength($length)->first();
+        $guestBoat  = GuestBoat::whereName($name)->whereLength($length)->first();
 
         if($from && $until && $length) {
             $from       = new Carbon($from, config('app.timezone'));
             $until      = new Carbon($until, config('app.timezone'));
-            $response   = (new BoatGuestPrice($from, $until, $guestBoat))->getPrice($request);
+            $response   = (new GuestBoatPrice($from, $until, $guestBoat))->getPrice($request);
         }
 
         return response()->json($response);

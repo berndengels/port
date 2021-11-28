@@ -7,8 +7,8 @@ class AppCache
     const KEY_OPTIONS_BOAT          = 'options.boat';
     const KEY_OPTIONS_DATA_BOAT     = 'options.data.boat';
 
-    const KEY_OPTIONS_BOAT_GUEST          = 'options.boatGuest';
-    const KEY_OPTIONS_DATA_BOAT_GUEST     = 'options.data.boatGuest';
+    const KEY_OPTIONS_GUEST_BOAT          = 'options.guestBoat';
+    const KEY_OPTIONS_DATA_GUEST_BOAT     = 'options.data.guestBoat';
 
     const KEY_OPTIONS_CARAVAN       = 'options.caravan';
     const KEY_OPTIONS_DATA_CARAVAN  = 'options.data.caravan';

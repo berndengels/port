@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Traits\Macroable;
 
 /**
  * App\Models\Model
@@ -18,6 +19,7 @@ use Illuminate\Support\Facades\DB;
 class BaseModel extends Model
 {
     use HasFactory;
+
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);

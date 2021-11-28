@@ -4,17 +4,15 @@ namespace Database\Seeders;
 use App\Helper\DateHelper;
 use App\Helper\RequestHelper;
 use App\Libs\Prices\GuestBoatPrice;
-use App\Libs\Prices\CaravanPrice;
-use App\Models\Caravan;
-use App\Models\CaravanDates;
-use App\Models\Country;
+use App\Models\GuestBoat;
+use App\Models\GuestBoatDates;
 use Carbon\Carbon;
 use Database\Seeders\Ext\MainTestSeeder;
-use Illuminate\Support\Facades\Schema;
+use http\Client\Request;
 
-class CaravanTestSeeder extends MainTestSeeder
+class GuestBoatTestSeeder extends MainTestSeeder
 {
-    protected $table = 'caravans';
+    protected $table = 'boat_guests';
     protected $count = 300;
     /**
      * Run the database seeds.
@@ -23,22 +21,15 @@ class CaravanTestSeeder extends MainTestSeeder
      */
     public function run()
     {
-        Caravan::factory()
-            ->hasDates(3, function(array $attribures, Caravan $caravan) {
+        GuestBoat::factory()
+            ->hasDates(3, function (array $attributes, GuestBoat $boat) {
                 $randomDateEnd = Carbon::today()->addMonths(5)->format('Y-m-d');
                 $from  = Carbon::create(DateHelper::randomDate('2020-05-01', $randomDateEnd,'Y-m-d'));
                 $until = $from->copy()->addDays(rand(1,7));
-                $electric   = mt_rand(0,1);
-                $persons    = mt_rand(1,4);
-                $params = [
-                    'electric'      => $electric,
-                    'persons'       => $persons,
-                ];
+                $price = (new GuestBoatPrice($from, $until, $boat))->getPrice(RequestHelper::build());
 
-                $price = (new CaravanPrice($from, $until, $caravan))->getPrice(RequestHelper::build($params));
-
-                return $params + [
-                    'caravan_id' => $caravan->id,
+                return [
+                    'boat_guest_id' => $boat->id,
                     'from'          => $from,
                     'until'         => $until,
                     'price'         => $price['total'],
@@ -46,6 +37,7 @@ class CaravanTestSeeder extends MainTestSeeder
                 ];
             })
             ->count($this->count)
-            ->create();
+            ->create()
+        ;
     }
 }

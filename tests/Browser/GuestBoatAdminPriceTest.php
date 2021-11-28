@@ -2,7 +2,7 @@
 namespace Tests\Browser;
 
 use Carbon\Carbon;
-use App\Models\BoatGuest;
+use App\Models\GuestBoat;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 
@@ -11,7 +11,7 @@ class GuestBoatAdminPriceTest extends DuskTestCase
     protected $days = 3;
     protected $persons = 3;
     protected $electric = true;
-    protected $model = BoatGuest::class;
+    protected $model = GuestBoat::class;
     protected $entity;
     /**
      * A Dusk test example.
@@ -29,8 +29,8 @@ class GuestBoatAdminPriceTest extends DuskTestCase
                 ->visit('/admin/login')
                 ->loginAs($this->user(), 'admin', )
                 ->assertAuthenticated('admin')
-                ->visit('/admin/boatGuestDates/create')
-                ->assertRouteIs('admin.boatGuestDates.create')
+                ->visit('/admin/guestBoatDates/create')
+                ->assertRouteIs('admin.guestBoatDates.create')
                 ->assertInputPresent('name')
                 ->assertInputPresent('home_port')
                 ->assertInputPresent('length')
@@ -45,7 +45,7 @@ class GuestBoatAdminPriceTest extends DuskTestCase
                 ->with('form', function (Browser $form) {
                     $name   = $form->inputValue('name');
                     $length = $form->inputValue('length');
-                    $this->entity = BoatGuest::whereName($name)
+                    $this->entity = GuestBoat::whereName($name)
                         ->whereLength($length)
                         ->first()
                     ;

@@ -1,7 +1,5 @@
 <?php
 
-use App\Providers\CollectionServiceProvider;
-
 return [
 
     /*
@@ -179,6 +177,7 @@ return [
         Mews\Captcha\CaptchaServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         App\Providers\DuskServiceProvider::class,
+        App\Providers\ModelServiceProvider::class,
     ],
 
     /*

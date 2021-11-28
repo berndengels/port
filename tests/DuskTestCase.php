@@ -5,7 +5,7 @@ use Exception;
 use Carbon\Carbon;
 use App\Models\AdminUser;
 use App\Models\Boat;
-use App\Models\BoatGuest;
+use App\Models\GuestBoat;
 use App\Models\Caravan;
 use App\Models\Customer;
 use Facebook\WebDriver\Chrome\ChromeOptions;
@@ -49,7 +49,7 @@ abstract class DuskTestCase extends BaseTestCase
      */
     protected $caravan;
     /**
-     * @var BoatGuest
+     * @var GuestBoat
      */
     protected $guestBoat;
     /**

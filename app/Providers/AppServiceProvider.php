@@ -2,7 +2,9 @@
 namespace App\Providers;
 
 use Debugbar;
+use Eloquent;
 use App\Http\Kernel;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Schema;
