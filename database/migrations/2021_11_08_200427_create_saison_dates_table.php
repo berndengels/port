@@ -20,8 +20,8 @@ class CreateSaisonDatesTable extends Migration
             $table->unsignedTinyInteger('from_month');
             $table->unsignedTinyInteger('until_day');
             $table->unsignedTinyInteger('until_month');
-            $table->unsignedSmallInteger('from_month_day');
-            $table->unsignedSmallInteger('until_month_day');
+            $table->unsignedSmallInteger('from_mday')->nullable();
+            $table->unsignedSmallInteger('until_mday')->nullable();
         });
         DB::statement('ALTER TABLE saison_dates CHANGE from_day from_day TINYINT(2) UNSIGNED ZEROFILL NOT NULL');
         DB::statement('ALTER TABLE saison_dates CHANGE from_month from_month TINYINT(2) UNSIGNED ZEROFILL NOT NULL');

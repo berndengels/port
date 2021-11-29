@@ -54,9 +54,8 @@ class BoatPriceCalculationTest extends PriceCalculation
             ->assertOk()
         ;
         $decoded = json_decode($response->getContent());
-        dump(__FUNCTION__." => total: expected: $expected, actual: $decoded->total");
-
-        $this->assertJsonValueEquals($response->getContent(),'total', $expected);
+        $msg = __FUNCTION__." => total: expected: $expected, actual: $decoded->total";
+        $this->assertEquals($expected, $decoded->total, $msg);
     }
 
     protected function calculatedPrice(object $data): float|int

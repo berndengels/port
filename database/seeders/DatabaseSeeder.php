@@ -18,9 +18,12 @@ class DatabaseSeeder extends Seeder
         switch(config('app.env')) {
             case 'testing':
                 $this->call([
+                    RoleTestSeeder::class,
                     PermissionTestSeeder::class,
+                    RoleHasPermissionsTestSeeder::class,
                     CountryTestSeeder::class,
                     CarLicensePlateTestSeeder::class,
+                    SaisonDatesSeeder::class,
                 ]);
                 break;
             case 'dusk.local':

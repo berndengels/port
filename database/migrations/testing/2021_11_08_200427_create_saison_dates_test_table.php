@@ -15,13 +15,13 @@ class CreateSaisonDatesTestTable extends Migration
     {
         Schema::create('saison_dates', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name', 50)->default('');
-            $table->unsignedTinyInteger('from_day');
-            $table->unsignedTinyInteger('from_month');
-            $table->unsignedTinyInteger('until_day');
-            $table->unsignedTinyInteger('until_month');
-            $table->unsignedSmallInteger('from_month_day');
-            $table->unsignedSmallInteger('until_month_day');
+            $table->string('name', 50);
+            $table->char('from_day', 2);
+            $table->char('from_month', 2);
+            $table->char('until_day', 2);
+            $table->char('until_month', 2);
+            $table->unsignedSmallInteger('from_mday')->nullable();
+            $table->unsignedSmallInteger('until_mday')->nullable();
         });
 /*
         DB::statement('ALTER TABLE saison_dates CHANGE from_day from_day TINYINT(2) UNSIGNED ZEROFILL NOT NULL');

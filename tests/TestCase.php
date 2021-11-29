@@ -39,12 +39,14 @@ abstract class TestCase extends BaseTestCase
     protected function setUp(): void
     {
         parent::setUp();
-        Cache::clear();
         Notification::fake();
+        Cache::clear();
         DB::setDefaultConnection('testing');
+
         $this->artisan('migrate:fresh --drop-views --env=testing --path=database/migrations/testing');
         $this->artisan('db:seed --env=testing');
-        $this->user = $this->createUserWithoutEvents();
+
+        $this->user     = $this->createUserWithoutEvents();
         $this->customer = $this->createCustomerWithoutEvents();
     }
 
@@ -73,7 +75,6 @@ abstract class TestCase extends BaseTestCase
     }
 
     protected function createCustomer(bool $confirmed = false, bool $asRegistration = false) {
-        Role::truncate();
         $customer = Customer::factory()
             ->state(fn (array $attr) => ['confirmed' => $confirmed])
             ->has(Boat::factory()
@@ -81,14 +82,8 @@ abstract class TestCase extends BaseTestCase
                 ->has(ServiceRequest::factory()->count(1), 'serviceRequests')
                 ->count(1),'boats'
             )
-            ->has((new CustomerRoleFactory())->count(1),'roles')
             ->create()
         ;
-        $customer
-            ->guard(['customer'])
-            ->givePermissionTo(Permission::whereGuardName('customer')->get())
-        ;
-
         if($asRegistration) {
             Event::dispatch(new Registered($customer));
         }
@@ -118,7 +113,7 @@ abstract class TestCase extends BaseTestCase
     {
         $customer = $this->customer;
         if($permission) {
-            $customer->givePermissionTo($permission);
+//            $customer->givePermissionTo($permission);
         }
         $this->be($customer, 'customer');
         return $this;

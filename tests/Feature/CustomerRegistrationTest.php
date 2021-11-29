@@ -1,7 +1,10 @@
 <?php
 namespace Tests\Feature;
 
+use App\Models\Permission;
+use App\Models\Role;
 use App\Notifications\NewRegistrationDone;
+use Database\Factories\CustomerRoleFactory;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Event;
 use Mews\Captcha\Captcha;
@@ -140,5 +143,28 @@ class CustomerRegistrationTest extends TestCase
         Notification::assertSentTo(
             [$user], NewRegistrationDone::class
         );
+    }
+
+    public function testRegistrationDoneCustomerHasRole() {
+        Event::fake([Registered::class]);
+        /**
+         * @var $customer Customer
+         */
+        $customer = $this->createCustomer(confirmed: false, asRegistration: true);
+        Event::assertDispatched(Registered::class);
+        $customer->refresh();
+        $this->assertTrue($customer->hasRole('boat'), 'Customer has no valid Role');
+    }
+
+    public function testRegistrationDoneCustomerHasPermissions() {
+        Event::fake([Registered::class]);
+        /**
+         * @var $customer Customer
+         */
+        $customer = $this->createCustomer(confirmed: false, asRegistration: true);
+        $permissions = Permission::whereGuardName('customer')->get();
+        Event::assertDispatched(Registered::class);
+        $customer->refresh();
+        $this->assertTrue($customer->hasAllPermissions($permissions), 'Customer has no valid Permissions');
     }
 }

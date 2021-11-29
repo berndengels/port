@@ -2,12 +2,11 @@
 
 namespace App\Models;
 
+use Eloquent;
 use Carbon\Carbon;
 use App\Libs\AppCache;
 use App\Traits\Models\ClearCache;
-use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
@@ -36,7 +35,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property-read string $valid_from
  * @property-read mixed $valid_until
  */
-class SaisonDates extends Model
+class SaisonDates extends BaseModel
 {
     use HasFactory,
         ClearCache;
@@ -45,22 +44,6 @@ class SaisonDates extends Model
         AppCache::KEY_OPTIONS_SAISON_DATES,
         AppCache::KEY_OPTIONS_DATA_SAISON_DATES,
     ];
-
-    protected static function booted()
-    {
-        static::created(function ($table) {
-            $table->from_month_day  = $table->from_month . $table->from_day;
-            $table->until_month_day = $table->until_month . $table->until_day;
-        });
-        static::updated(function ($table) {
-            $table->from_month_day  = $table->from_month . $table->from_day;
-            $table->until_month_day = $table->until_month . $table->until_day;
-        });
-        static::saved(function ($table) {
-            $table->from_month_day  = $table->from_month . $table->from_day;
-            $table->until_month_day = $table->until_month . $table->until_day;
-        });
-    }
 
     /**
      * @var string
@@ -76,8 +59,6 @@ class SaisonDates extends Model
     protected $appends = [
         'from',
         'until',
-        'fromMonthDay',
-        'untilMonthDay',
         'strFrom',
         'strUntil',
         'validFrom',
@@ -92,6 +73,77 @@ class SaisonDates extends Model
         'from'  => 'date:Y-m-d',
         'until' => 'date:Y-m-d',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+        self::created(fn(SaisonDates $model) => $model->setMdays($model)->saveQuietly());
+        self::updated(fn(SaisonDates $model) => $model->setMdays($model)->saveQuietly());
+//        self::retrieved(fn(SaisonDates $model) => $model->setMdays($model));
+        /*
+        self::created(function(SaisonDates $model) {
+            $from = $model->from_month . $model->from_day;
+            $until = $model->until_month . $model->until_day;
+//            $model->attributes['from_mday'] = $from;
+//            $model->attributes['until_mday'] = $until;
+            $model->from_mday = $from;
+            $model->until_mday = $until;
+            $model->save();
+        });
+                static::updated(function(SaisonDates $model) {
+                    $from = $model->from_month . $model->from_day;
+                    $until = $model->until_month . $model->until_day;
+        //            $model->attributes['from_month_day'] = $from;
+        //            $model->attributes['until_month_day'] = $until;
+                    $model->from_month_day = $from;
+                    $model->until_month_day = $until;
+                });
+                static::retrieved(function(SaisonDates $model) {
+                    $from = $model->from_month . $model->from_day;
+                    $until = $model->until_month . $model->until_day;
+        //            $model->attributes['from_month_day'] = $from;
+        //            $model->attributes['until_month_day'] = $until;
+                    $model->from_month_day = $from;
+                    $model->until_month_day = $until;
+                });
+        */
+    }
+
+    public function setMdays(SaisonDates $model): self
+    {
+        $model
+            ->setFromMday($model)
+            ->setUntilMday($model)
+        ;
+        return $model;
+    }
+
+    public function setFromMday($model): self
+    {
+//        $table->attributes['from_month_day'] = $table->from_month . $table->from_day;
+        $model->from_mday = $model->from_month . $model->from_day;
+        return $model;
+    }
+
+    public function setUntilMday(SaisonDates $model): self
+    {
+//        $table->attributes['until_month_day'] = $table->until_month . $table->until_day;
+        $model->until_mday = $model->until_month . $model->until_day;
+        return $model;
+    }
+
+    public function setFromDayAttribute(string $val): self
+    {
+        $this->attributes['from_day'] = (strlen($val) < 2) ? "0$val" : $val;
+        return $this;
+    }
+
+    public function setUntilDayAttribute($val): self
+    {
+        $this->attributes['until_day'] = (strlen($val) < 2) ? "0$val" : $val;
+        return $this;
+    }
+
     /**
      * @param $key
      * @return string

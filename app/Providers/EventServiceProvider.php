@@ -6,6 +6,7 @@ use App\Events\ServiceRequested;
 use App\Listeners\SendInvoiceEmailNotification;
 use App\Listeners\SendRegisterEmailNotification;
 use App\Listeners\ServiceRequestNotification;
+use App\Listeners\SetCustomerRegistredPermissions;
 use App\Models\BoatDates;
 use App\Models\Customer;
 use App\Observers\CustomerObserver;
@@ -25,6 +26,7 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendRegisterEmailNotification::class,
+            SetCustomerRegistredPermissions::class,
         ],
         ServiceRequested::class => [
             ServiceRequestNotification::class,
