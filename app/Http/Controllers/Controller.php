@@ -11,6 +11,7 @@ use App\Repositories\MaterialRepository;
 use App\Repositories\MaterialCategoryRepository;
 use App\Repositories\PriceTypeRepository;
 use App\Repositories\RoleRepository;
+use App\Repositories\SaisonDatesRepository;
 use App\Repositories\ServiceCategoryRepository;
 use App\Repositories\ServiceRepository;
 use Illuminate\Routing\Controller as BaseController;
@@ -29,6 +30,7 @@ class Controller extends BaseController
     protected $materialCategoryRepository;
     protected $serviceCategoryRepository;
     protected $serviceRepository;
+    protected $saisonDatesRepository;
 
     public function __construct()
     {
@@ -44,5 +46,6 @@ class Controller extends BaseController
         $this->materialCategoryRepository   = new MaterialCategoryRepository();
         $this->serviceCategoryRepository    = new ServiceCategoryRepository();
         $this->serviceRepository    = new ServiceRepository();
+        $this->saisonDatesRepository = new SaisonDatesRepository();
     }
 }

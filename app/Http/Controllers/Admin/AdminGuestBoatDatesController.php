@@ -77,6 +77,7 @@ class AdminGuestBoatDatesController extends AdminController
      */
     public function edit(GuestBoatDates $guestBoatDate)
     {
+        dd($guestBoatDate->dailyPrices()->get()->toArray());
         $options = $this->guestBoatRepository->options();
         return view(
             'admin.guestBoatDates.edit', [

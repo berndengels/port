@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Contracts\Models\IDatePrice;
+use App\Traits\Models\HasDailyPrice;
 use Eloquent;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Carbon;
@@ -52,10 +53,12 @@ use Illuminate\Database\Query\JoinClause;
  * @method static Builder|CaravanDates dublicates()
  * @method static Builder|CaravanDates fromYearMonth(?string $year = null, ?string $month = null)
  * @method static Builder|CaravanDates whereDayPrice($value)
+ * @property-read int|null $prices_count
+ * @method static Builder|CaravanDates caravan(?int $caravanId = null)
  */
 class CaravanDates extends BaseModel implements IDatePrice
 {
-    use HasFactory, CaravanFilter, YearMonthFilter, ClearCache;
+    use HasFactory, CaravanFilter, YearMonthFilter, ClearCache, HasDailyPrice;
 
     protected $table = 'caravan_dates';
     protected $guarded = ['id'];

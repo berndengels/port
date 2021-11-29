@@ -39,7 +39,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Caravan extends BaseModel
 {
-    use HasFactory, CaravanFilter, ClearCache, HasDailyPrice;
+    use HasFactory, CaravanFilter, ClearCache;
 
     protected $table = 'caravans';
     protected $guarded = ['id'];

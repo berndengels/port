@@ -7,14 +7,20 @@ use Illuminate\Database\Eloquent\Builder;
 
 trait HasDailyPrice
 {
-    /**
-     * Get all of the models's translations.
-     *
-     * @return Builder
-     */
-    public function dailyPrices()
+    public function scopeDailyPrices()
     {
-        return $this->morphMany(DailyPrice::class, 'affordable');
+        $fromDay = $this->from->format('d');
+        $fromMonth = $this->from->format('m');
+        $untilDay = $this->until->format('d');
+        $untilMonth = $this->until->format('m');
+
+        return DailyPrice::whereModel(static::class)
+            ->whereHas('saison', fn(Builder $q) =>
+                $q->where('from_month','<=', $fromMonth)
+                && $q->where('until_month','>=', $untilMonth)
+                && $q->where('from_day','<=', $fromDay)
+                && $q->where('until_day','>=', $untilDay)
+            );
     }
 
 }

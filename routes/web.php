@@ -44,6 +44,8 @@ use App\Http\Controllers\Admin\AdminServiceCategoryController;
 use App\Http\Controllers\Admin\AdminMaterialController;
 use App\Http\Controllers\Admin\AdminMaterialCategoryController;
 use App\Http\Controllers\Admin\AdminServiceRequestController;
+use App\Http\Controllers\Admin\AdminBoatPriceController;
+use App\Http\Controllers\Admin\AdminDailyPriceController;
 
 Auth::routes();
 //dd(Route::getRoutes());
@@ -138,6 +140,8 @@ Route::group([
     Route::resource('materialCategories', AdminMaterialCategoryController::class);
     Route::resource('serviceRequests', AdminServiceRequestController::class);
     Route::resource('saisonDates', AdminSaisonDatesController::class);
+    Route::resource('boatPrices', AdminBoatPriceController::class);
+    Route::resource('dailyPrices', AdminDailyPriceController::class);
 
     Route::post('serviceRequests/done/{serviceRequest}', [AdminServiceRequestController::class, 'done'])->name('serviceRequests.done');
     Route::post('caravanDates/sendExcel', [AdminCaravanDatesController::class, 'sendExcel'])->name('caravanDates.sendExcel');

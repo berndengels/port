@@ -2,11 +2,13 @@
 namespace App\Models;
 
 use App\Contracts\Models\IDatePrice;
+use App\Traits\Models\HasDailyPrice;
 use Database\Factories\GuestBoatDatesFactory;
 use Eloquent;
 use App\Traits\Models\ClearCache;
 use App\Traits\Models\Filter\Filter;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Concerns\HasRelationships;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Carbon;
@@ -41,10 +43,13 @@ use Illuminate\Support\Carbon;
  * @method static Builder|GuestBoatDates wherePrice($value)
  * @method static Builder|GuestBoatDates wherePrices($value)
  * @method static Builder|GuestBoatDates whereUntil($value)
+ * @property int $guest_boat_id
+ * @property-read int|null $prices_count
+ * @method static Builder|GuestBoatDates whereGuestBoatId($value)
  */
 class GuestBoatDates extends BaseModel implements IDatePrice
 {
-    use HasFactory, ClearCache, Filter;
+    use HasFactory, ClearCache, Filter, HasDailyPrice;
 
     protected $table = 'guest_boat_dates';
     protected $guarded = ['id'];

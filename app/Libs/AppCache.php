@@ -48,4 +48,8 @@ class AppCache
 
     const KEY_OPTIONS_SERVICE       = 'options.service';
     const KEY_OPTIONS_DATA_SERVICE  = 'options.data.service';
+
+    const KEY_OPTIONS_SAISON_DATES       = 'options.saisonDates';
+    const KEY_OPTIONS_DATA_SAISON_DATES  = 'options.data.saisonDates';
+
 }

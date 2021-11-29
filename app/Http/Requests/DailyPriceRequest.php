@@ -12,11 +12,10 @@ class DailyPriceRequest extends AdminRequest
     public function rules()
     {
         return [
-            'affordable_id'     => 'required',
-            'affordable_type'   => 'required',
+            'model'             => 'required',
             'saison_date_id'    => 'required',
             'price_type_id'     => 'required',
-            'day_price'         => 'required',
+            'price'             => 'required',
             'from_unit'         => '',
             'until_unit'        => '',
         ];

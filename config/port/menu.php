@@ -280,10 +280,26 @@ return [
                 'items' => [
                     [
                         'permissions'   => ['read SaisonDates'],
-                        'text'  => 'Routes',
-                        'title' => 'Routes',
+                        'text'  => 'Saison Zeiten',
+                        'title' => 'Saison Zeiten',
                         'icon'  => 'fas fa-route',
                         'route' => 'admin.saisonDates.index',
+                        'hide_on_mobile' => false,
+                    ],
+                    [
+                        'permissions'   => ['read SaisonDates'],
+                        'text'  => 'Dauerlieger-Preise',
+                        'title' => 'Dauerlieger-Preise',
+                        'icon'  => 'fas fa-route',
+                        'route' => 'admin.boatPrices.index',
+                        'hide_on_mobile' => false,
+                    ],
+                    [
+                        'permissions'   => ['read SaisonDates'],
+                        'text'  => 'Tagespreise',
+                        'title' => 'Tagespreise',
+                        'icon'  => 'fas fa-route',
+                        'route' => 'admin.dailyPrices.index',
                         'hide_on_mobile' => false,
                     ],
                 ],

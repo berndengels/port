@@ -3,8 +3,12 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Libs\AppCache;
+use App\Traits\Models\ClearCache;
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * App\Models\SaisonDates
@@ -19,20 +23,44 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read mixed $str_until
  * @property Carbon $from
  * @property Carbon $until
- * @method static \Illuminate\Database\Eloquent\Builder|SaisonDates newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|SaisonDates newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|SaisonDates query()
- * @method static \Illuminate\Database\Eloquent\Builder|SaisonDates whereFromDay($value)
- * @method static \Illuminate\Database\Eloquent\Builder|SaisonDates whereFromMonth($value)
- * @method static \Illuminate\Database\Eloquent\Builder|SaisonDates whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|SaisonDates whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|SaisonDates whereUntilDay($value)
- * @method static \Illuminate\Database\Eloquent\Builder|SaisonDates whereUntilMonth($value)
- * @mixin \Eloquent
+ * @method static Builder|SaisonDates newModelQuery()
+ * @method static Builder|SaisonDates newQuery()
+ * @method static Builder|SaisonDates query()
+ * @method static Builder|SaisonDates whereFromDay($value)
+ * @method static Builder|SaisonDates whereFromMonth($value)
+ * @method static Builder|SaisonDates whereId($value)
+ * @method static Builder|SaisonDates whereName($value)
+ * @method static Builder|SaisonDates whereUntilDay($value)
+ * @method static Builder|SaisonDates whereUntilMonth($value)
+ * @mixin Eloquent
+ * @property-read string $valid_from
+ * @property-read mixed $valid_until
  */
 class SaisonDates extends Model
 {
-    use HasFactory;
+    use HasFactory,
+        ClearCache;
+
+    protected static $cacheKeys = [
+        AppCache::KEY_OPTIONS_SAISON_DATES,
+        AppCache::KEY_OPTIONS_DATA_SAISON_DATES,
+    ];
+
+    protected static function booted()
+    {
+        static::created(function ($table) {
+            $table->from_month_day  = $table->from_month . $table->from_day;
+            $table->until_month_day = $table->until_month . $table->until_day;
+        });
+        static::updated(function ($table) {
+            $table->from_month_day  = $table->from_month . $table->from_day;
+            $table->until_month_day = $table->until_month . $table->until_day;
+        });
+        static::saved(function ($table) {
+            $table->from_month_day  = $table->from_month . $table->from_day;
+            $table->until_month_day = $table->until_month . $table->until_day;
+        });
+    }
 
     /**
      * @var string
@@ -45,12 +73,25 @@ class SaisonDates extends Model
     /**
      * @var string[]
      */
-    protected $appends = ['from', 'until', 'strFrom', 'strUntil', 'validFrom', 'validUntil'];
+    protected $appends = [
+        'from',
+        'until',
+        'fromMonthDay',
+        'untilMonthDay',
+        'strFrom',
+        'strUntil',
+        'validFrom',
+        'validUntil',
+    ];
     /**
      * @var bool
      */
     public $timestamps = false;
 
+    protected $casts = [
+        'from'  => 'date:Y-m-d',
+        'until' => 'date:Y-m-d',
+    ];
     /**
      * @param $key
      * @return string
@@ -77,7 +118,7 @@ class SaisonDates extends Model
     public function getFromAttribute(): Carbon
     {
         $today = Carbon::today();
-        $year = ($this->from_month < $this->until_month) ? $today->year : $today->subYear();
+        $year = ($this->from_month < $this->until_month) ? $today->year : $today->subYear()->format('Y');
 
         return Carbon::create($year . '-' . $this->from_month . '-' . $this->from_day);
     }
@@ -88,7 +129,7 @@ class SaisonDates extends Model
     public function getUntilAttribute(): Carbon
     {
         $today = Carbon::today();
-        $year = ($this->until_month < $this->from_month) ? $today->addYear() : $today->year;
+        $year = ($this->from->month > $this->until_month) ? $this->from->addYear()->format('Y') : $this->from->year;
 
         return Carbon::create($year . '-' . $this->until_month . '-' . $this->until_day);
     }

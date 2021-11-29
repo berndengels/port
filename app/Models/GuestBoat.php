@@ -34,7 +34,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class GuestBoat extends BaseModel
 {
-    use HasFactory, ClearCache, Filter, HasDailyPrice;
+    use HasFactory, ClearCache, Filter;
 
     protected $table = 'guest_boats';
     protected $guarded = ['id'];
@@ -49,4 +49,7 @@ class GuestBoat extends BaseModel
     {
         return $this->hasMany(GuestBoatDates::class, 'guest_boat_id', 'id');
     }
+
+
+
 }
