@@ -52,4 +52,12 @@ class AppCache
     const KEY_OPTIONS_SAISON_DATES       = 'options.saisonDates';
     const KEY_OPTIONS_DATA_SAISON_DATES  = 'options.data.saisonDates';
 
+    const KEY_OPTIONS_CONFIG_SERVICE       = 'options.config.service';
+    const KEY_OPTIONS_DATA_CONFIG_SERVICE  = 'options.data.config.service';
+
+    const KEY_OPTIONS_CONFIG_PRICE_COMPONENT       = 'options.config.priceComponent';
+    const KEY_OPTIONS_DATA_CONFIG_PRICE_COMPONENT  = 'options.data.config.priceComponent';
+
+    const KEY_OPTIONS_CONFIG_ENTITY_TYPE       = 'options.config.entityTypes';
+    const KEY_OPTIONS_DATA_CONFIG_ENTITY_TYPE  = 'options.data.config.entityTypes';
 }

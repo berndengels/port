@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\DailyPrice;
+use App\Models\ConfigDailyPrice;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class DailyPriceFactory extends Factory
@@ -12,7 +12,7 @@ class DailyPriceFactory extends Factory
      *
      * @var string
      */
-    protected $model = DailyPrice::class;
+    protected $model = ConfigDailyPrice::class;
 
     /**
      * Define the model's default state.

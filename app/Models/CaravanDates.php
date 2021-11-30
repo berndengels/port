@@ -55,6 +55,7 @@ use Illuminate\Database\Query\JoinClause;
  * @method static Builder|CaravanDates whereDayPrice($value)
  * @property-read int|null $prices_count
  * @method static Builder|CaravanDates caravan(?int $caravanId = null)
+ * @method static Builder|CaravanDates dailyPrices()
  */
 class CaravanDates extends BaseModel implements IDatePrice
 {

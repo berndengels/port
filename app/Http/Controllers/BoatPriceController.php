@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\BoatPrice;
+use App\Models\ConfigBoatPrice;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -21,10 +21,10 @@ class BoatPriceController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param BoatPrice $boatPrice
+     * @param ConfigBoatPrice $boatPrice
      * @return Response
      */
-    public function show(BoatPrice $boatPrice)
+    public function show(ConfigBoatPrice $boatPrice)
     {
         //
     }
@@ -53,10 +53,10 @@ class BoatPriceController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param BoatPrice $boatPrice
+     * @param ConfigBoatPrice $boatPrice
      * @return Response
      */
-    public function edit(BoatPrice $boatPrice)
+    public function edit(ConfigBoatPrice $boatPrice)
     {
         //
     }
@@ -65,10 +65,10 @@ class BoatPriceController extends Controller
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param BoatPrice $boatPrice
+     * @param ConfigBoatPrice $boatPrice
      * @return Response
      */
-    public function update(Request $request, BoatPrice $boatPrice)
+    public function update(Request $request, ConfigBoatPrice $boatPrice)
     {
         //
     }
@@ -76,10 +76,10 @@ class BoatPriceController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param BoatPrice $boatPrice
+     * @param ConfigBoatPrice $boatPrice
      * @return Response
      */
-    public function destroy(BoatPrice $boatPrice)
+    public function destroy(ConfigBoatPrice $boatPrice)
     {
         //
     }

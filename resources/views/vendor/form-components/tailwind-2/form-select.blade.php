@@ -20,7 +20,7 @@
             ]) !!}>
             @forelse($options as $key => $option)
                 <option value="{{ $key }}" @if($isSelected($key)) selected="selected" @endif>
-                    {{ $option }}
+                    {{ __($option) }}
                 </option>
             @empty
                 {!! $slot !!}

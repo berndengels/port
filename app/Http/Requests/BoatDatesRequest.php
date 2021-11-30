@@ -45,7 +45,7 @@ class BoatDatesRequest extends AdminRequest
             'crane'         => '',
             'mast_crane'    => '',
             'cleaning'      => '',
-            'default_price' => '',
+//            'special_price' => '',
         ];
     }
 }

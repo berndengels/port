@@ -25,7 +25,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string|null $fertility_per
  * @property string|null $fertility_unit
  * @property-read MaterialCategory $category
- * @property-read PriceType $priceType
+ * @property-read ConfigPriceType $priceType
  * @method static MaterialFactory factory(...$parameters)
  * @method static Builder|Material newModelQuery()
  * @method static Builder|Material newQuery()
@@ -62,7 +62,7 @@ class Material extends Model
 
     public function priceType()
     {
-        return $this->belongsTo(PriceType::class);
+        return $this->belongsTo(ConfigPriceType::class);
     }
 
     public function getQuantity(Boat $boat)

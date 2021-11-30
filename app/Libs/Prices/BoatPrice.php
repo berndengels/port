@@ -6,7 +6,7 @@ use App\Libs\Prices\Boat\Base;
 use App\Libs\Prices\Boat\Cleaning;
 use App\Libs\Prices\Boat\Crane;
 use App\Libs\Prices\Boat\MastCrane;
-use App\Libs\Prices\Boat\Individual;
+use App\Libs\Prices\Boat\SpecialPrice;
 use App\Models\Boat;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -21,8 +21,8 @@ class BoatPrice extends PriceCalculator
     protected static $priceCrane = 0;
     protected static $priceMastCrane = 0;
     protected static $priceCleaning = 0;
-    protected static $priceIndividual = 0;
-    protected static $modusDatePeriod;
+//    protected static $priceIndividual = 0;
+//    protected static $modusDatePeriod;
 
 
     public function params(): Collection
@@ -32,7 +32,7 @@ class BoatPrice extends PriceCalculator
             'mast_crane',
             'cleaning',
             'modus',
-            'individual',
+//            'special',
             'length',
             'width',
             'weight',
@@ -55,14 +55,14 @@ class BoatPrice extends PriceCalculator
             Cleaning::class,
         ]);
     }
-
+/*
     protected function registerSetPriceClasses(): Collection
     {
         return collect([
             Individual::class,
         ]);
     }
-
+*/
     public function getPrice(Request $request): array
     {
         $this->calculateDateMode($request);

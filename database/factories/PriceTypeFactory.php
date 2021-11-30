@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\PriceType;
+use App\Models\ConfigPriceType;
 use Database\Factories\Ext\MainFactory;
 
 class PriceTypeFactory extends MainFactory
@@ -12,7 +12,7 @@ class PriceTypeFactory extends MainFactory
      *
      * @var string
      */
-    protected $model = PriceType::class;
+    protected $model = ConfigPriceType::class;
 
     /**
      * Define the model's default state.

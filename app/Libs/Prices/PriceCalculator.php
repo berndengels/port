@@ -43,7 +43,7 @@ abstract class PriceCalculator
         static::$total += (float) $price->getValue();
         return $this;
     }
-
+/*
     public function set(Price $price): self
     {
         $value = $price->getValue();
@@ -52,7 +52,7 @@ abstract class PriceCalculator
         }
         return $this;
     }
-
+*/
     protected function formatResult(): array
     {
         $vars = get_class_vars(static::class);
@@ -73,7 +73,7 @@ abstract class PriceCalculator
 
     protected abstract function registerAddPriceClasses(): Collection;
 
-    protected abstract function registerSetPriceClasses(): Collection;
+//    protected abstract function registerSetPriceClasses(): Collection;
 
     protected abstract function params(): Collection;
 
@@ -104,7 +104,7 @@ abstract class PriceCalculator
                 $this->add(static::$$staticProp);
             }
         }
-
+/*
         foreach($this->registerSetPriceClasses()  as $class) {
             if(class_exists($class)) {
                 $basename   = class_basename($class);
@@ -125,6 +125,7 @@ abstract class PriceCalculator
                 $this->set(static::$$staticProp);
             }
         }
+*/
         return $this->formatResult();
     }
 

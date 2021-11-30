@@ -13,11 +13,16 @@ class GuestBoatPrice extends PriceCalculator
     protected static $priceBase;
     protected static $pricePersons;
     protected static $priceElectric;
-    protected static $priceIndividual;
+//    protected static $priceIndividual;
 
     public function params(): Collection
     {
-        return collect(['persons', 'electric', 'day_price', 'length']);
+        return collect([
+            'persons',
+            'electric',
+            'length',
+//            'special',
+        ]);
     }
 
     public function registerAddPriceClasses(): Collection
@@ -28,11 +33,12 @@ class GuestBoatPrice extends PriceCalculator
             Persons::class,
         ]);
     }
-
+/*
     public function registerSetPriceClasses(): Collection
     {
         return collect([
             Individual::class
         ]);
     }
+*/
 }

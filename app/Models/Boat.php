@@ -54,7 +54,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property-read mixed $board_area
  * @property-read mixed $underwater_area
  * @method static Builder|Boat whereBoardHeight($value)
- * @property-read Collection|BoatPrice[] $prices
+ * @property-read Collection|ConfigBoatPrice[] $prices
  * @property-read int|null $prices_count
  */
 class Boat extends BaseModel
@@ -88,7 +88,7 @@ class Boat extends BaseModel
 
     public function prices()
     {
-        return $this->hasMany(BoatPrice::class);
+        return $this->hasMany(ConfigBoatPrice::class);
     }
 
     public function serviceRequests()

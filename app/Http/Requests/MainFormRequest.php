@@ -25,7 +25,7 @@ class MainFormRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return auth('admin')->check();
     }
 
     protected function getId()

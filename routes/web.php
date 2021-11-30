@@ -1,11 +1,10 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminConfigEntityTypeController;
+use App\Http\Controllers\Admin\AdminConfigServiceController;
 use App\Http\Controllers\Admin\AdminInfoController;
-use App\Http\Controllers\Admin\AdminSaisonDatesController;
-use App\Http\Controllers\Admin\AdminScraperController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
-use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CaptchaServiceController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PriceController;
@@ -44,8 +43,11 @@ use App\Http\Controllers\Admin\AdminServiceCategoryController;
 use App\Http\Controllers\Admin\AdminMaterialController;
 use App\Http\Controllers\Admin\AdminMaterialCategoryController;
 use App\Http\Controllers\Admin\AdminServiceRequestController;
-use App\Http\Controllers\Admin\AdminBoatPriceController;
-use App\Http\Controllers\Admin\AdminDailyPriceController;
+use App\Http\Controllers\Admin\AdminConfigBoatPriceController;
+use App\Http\Controllers\Admin\AdminConfigDailyPriceController;
+use App\Http\Controllers\Admin\AdminConfigPriceComponentController;
+use App\Http\Controllers\Admin\AdminConfigPriceTypeController;
+use App\Http\Controllers\Admin\AdminConfigSaisonDatesController;
 
 Auth::routes();
 //dd(Route::getRoutes());
@@ -139,10 +141,20 @@ Route::group([
     Route::resource('materials', AdminMaterialController::class);
     Route::resource('materialCategories', AdminMaterialCategoryController::class);
     Route::resource('serviceRequests', AdminServiceRequestController::class);
-    Route::resource('saisonDates', AdminSaisonDatesController::class);
-    Route::resource('boatPrices', AdminBoatPriceController::class);
-    Route::resource('dailyPrices', AdminDailyPriceController::class);
 
+    Route::group([
+            'prefix' => 'config',
+            'as'    => 'config.',
+        ],
+        function() {
+            Route::resource('saisonDates', AdminConfigSaisonDatesController::class);
+            Route::resource('boatPrices', AdminConfigBoatPriceController::class);
+            Route::resource('dailyPrices', AdminConfigDailyPriceController::class);
+            Route::resource('priceComponents', AdminConfigPriceComponentController::class);
+            Route::resource('priceTypes', AdminConfigPriceTypeController::class);
+            Route::resource('services', AdminConfigServiceController::class);
+            Route::resource('entityTypes', AdminConfigEntityTypeController::class);
+    });
     Route::post('serviceRequests/done/{serviceRequest}', [AdminServiceRequestController::class, 'done'])->name('serviceRequests.done');
     Route::post('caravanDates/sendExcel', [AdminCaravanDatesController::class, 'sendExcel'])->name('caravanDates.sendExcel');
 

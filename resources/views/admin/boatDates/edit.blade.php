@@ -24,7 +24,7 @@
             <div class="mt-3">
                 <x-form-checkbox class="calc" name="cleaning" label="Rumpf-Reinigung" :bind="false" :default="$boatDate->isCleaned" />
             </div>
-            <x-form-input class="calc" name="default_price" label="eigener Preis" />
+            <!--x-form-input class="calc" name="special_price" label="eigener Preis" /-->
             <x-form-input  id="price" name="price" type="number" min="0" label="Gesamt-Preis" required />
             <x-form-input type="hidden" name="prices" />
             @endbind

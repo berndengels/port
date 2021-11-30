@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\ConfigEntityTypesRepository;
+use App\Repositories\ConfigPriceComponentRepository;
+use App\Repositories\ConfigServiceRepository;
 use App\Repositories\GuestBoatsRepository;
 use App\Repositories\BoatRepository;
 use App\Repositories\CaravanRepository;
@@ -9,9 +12,9 @@ use App\Repositories\CountryRepository;
 use App\Repositories\CustomerRepository;
 use App\Repositories\MaterialRepository;
 use App\Repositories\MaterialCategoryRepository;
-use App\Repositories\PriceTypeRepository;
+use App\Repositories\ConfigPriceTypeRepository;
 use App\Repositories\RoleRepository;
-use App\Repositories\SaisonDatesRepository;
+use App\Repositories\ConfigSaisonDatesRepository;
 use App\Repositories\ServiceCategoryRepository;
 use App\Repositories\ServiceRepository;
 use Illuminate\Routing\Controller as BaseController;
@@ -25,12 +28,15 @@ class Controller extends BaseController
     protected $caravanRepository;
     protected $customerRepository;
     protected $roleRepository;
-    protected $priceTypeRepository;
+    protected $configPriceTypeRepository;
     protected $materialRepository;
     protected $materialCategoryRepository;
     protected $serviceCategoryRepository;
     protected $serviceRepository;
-    protected $saisonDatesRepository;
+    protected $configSaisonDatesRepository;
+    protected $configServiceRepository;
+    protected $configPriceComponentRepository;
+    protected $configEntityTypeRepository;
 
     public function __construct()
     {
@@ -41,11 +47,14 @@ class Controller extends BaseController
         $this->roleRepository       = new RoleRepository();
         $this->boatRepository       = new BoatRepository();
         $this->guestBoatRepository  = new GuestBoatsRepository();
-        $this->priceTypeRepository  = new PriceTypeRepository();
         $this->materialRepository   = new MaterialRepository();
         $this->materialCategoryRepository   = new MaterialCategoryRepository();
         $this->serviceCategoryRepository    = new ServiceCategoryRepository();
         $this->serviceRepository    = new ServiceRepository();
-        $this->saisonDatesRepository = new SaisonDatesRepository();
+        $this->configPriceTypeRepository  = new ConfigPriceTypeRepository();
+        $this->configSaisonDatesRepository = new ConfigSaisonDatesRepository();
+        $this->configServiceRepository = new ConfigServiceRepository();
+        $this->configPriceComponentRepository = new ConfigPriceComponentRepository();
+        $this->configEntityTypeRepository = new ConfigEntityTypesRepository();
     }
 }

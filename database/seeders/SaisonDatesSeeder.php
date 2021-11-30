@@ -2,13 +2,13 @@
 
 namespace Database\Seeders;
 
-use App\Models\SaisonDates;
+use App\Models\ConfigSaisonDates;
 use Database\Seeders\Ext\MainTestSeeder;
 
 class SaisonDatesSeeder extends MainTestSeeder
 {
     protected $table = 'saison_dates';
-    protected $model = SaisonDates::class;
+    protected $model = ConfigSaisonDates::class;
 
     /**
      * Run the database seeds.
@@ -17,6 +17,6 @@ class SaisonDatesSeeder extends MainTestSeeder
      */
     public function run()
     {
-        SaisonDates::factory()->count(2)->create();
+        ConfigSaisonDates::factory()->count(2)->create();
     }
 }

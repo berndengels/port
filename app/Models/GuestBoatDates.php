@@ -46,6 +46,7 @@ use Illuminate\Support\Carbon;
  * @property int $guest_boat_id
  * @property-read int|null $prices_count
  * @method static Builder|GuestBoatDates whereGuestBoatId($value)
+ * @method static Builder|GuestBoatDates dailyPrices()
  */
 class GuestBoatDates extends BaseModel implements IDatePrice
 {

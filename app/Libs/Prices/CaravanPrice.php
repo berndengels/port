@@ -14,11 +14,16 @@ class CaravanPrice extends PriceCalculator
     protected static $priceElectric = 0;
     protected static $pricePersons = 0;
     protected static $priceBase = 0;
-    protected static $priceIndividual = 0;
+//    protected static $priceIndividual = 0;
 
     public function params(): Collection
     {
-        return collect(['persons', 'electric', 'individual', 'carlength']);
+        return collect([
+            'persons',
+            'electric',
+            'carlength',
+//            'special',
+        ]);
     }
 
     protected function registerAddPriceClasses(): Collection
@@ -29,11 +34,12 @@ class CaravanPrice extends PriceCalculator
             Persons::class,
         ]);
     }
-
+/*
     protected function registerSetPriceClasses(): Collection
     {
         return collect([
             Individual::class,
         ]);
     }
+*/
 }

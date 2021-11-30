@@ -8,7 +8,7 @@ return array(
     |--------------------------------------------------------------------------
     |
     | Set some default values. It is possible to add all defines that can be set
-    | in dompdf_config.inc.php. You can also override the entire config file.
+    | in dompdf_config.inc.php. You can also override the entire _config file.
     |
     */
     'show_warnings' => false,   // Throw an Exception on warnings from dompdf
@@ -174,7 +174,7 @@ return array(
          * Windows Firefox and Internet Explorer:
          *   SystemControl->Display properties->FontResolution: Default:96, largefonts:120, custom:?
          * Linux Firefox:
-         *   about:config *resolution: Default:96
+         *   about:_config *resolution: Default:96
          *   (xorg screen dimension in mm and Desktop font dpi settings are ignored)
          *
          * Take care about extra font/image zoom factor of browser.

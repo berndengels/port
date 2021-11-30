@@ -75,7 +75,7 @@ class CaravanAdminPriceTest extends DuskTestCase
 
     protected function calculateExpectedPrice(): int|float
     {
-//        $personsInclusive = $this->config('port.prices.caravan.persons_inclusivce');
+//        $personsInclusive = $this->_config('port.prices.caravan.persons_inclusivce');
         $personsInclusive = 2;
         $personsPrice = ($this->persons < $personsInclusive) ? 0 : $this->persons - $personsInclusive;
         if($personsPrice < 0) {

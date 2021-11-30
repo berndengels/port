@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\BoatPrice;
+use App\Models\ConfigBoatPrice;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class BoatPriceFactory extends Factory
@@ -12,7 +12,7 @@ class BoatPriceFactory extends Factory
      *
      * @var string
      */
-    protected $model = BoatPrice::class;
+    protected $model = ConfigBoatPrice::class;
 
     /**
      * Define the model's default state.

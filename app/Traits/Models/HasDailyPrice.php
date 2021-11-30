@@ -2,7 +2,7 @@
 
 namespace App\Traits\Models;
 
-use App\Models\DailyPrice;
+use App\Models\ConfigDailyPrice;
 use Illuminate\Database\Eloquent\Builder;
 
 trait HasDailyPrice
@@ -14,7 +14,7 @@ trait HasDailyPrice
         $untilDay = $this->until->format('d');
         $untilMonth = $this->until->format('m');
 
-        return DailyPrice::whereModel(static::class)
+        return ConfigDailyPrice::whereModel(static::class)
             ->whereHas('saison', fn(Builder $q) =>
                 $q->where('from_month','<=', $fromMonth)
                 && $q->where('until_month','>=', $untilMonth)

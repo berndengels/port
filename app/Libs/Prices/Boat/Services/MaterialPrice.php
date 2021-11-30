@@ -3,7 +3,7 @@
 namespace App\Libs\Prices\Boat\Services;
 
 use App\Models\Boat;
-use App\Models\PriceType;
+use App\Models\ConfigPriceType;
 use App\Libs\Prices\Price;
 
 class MaterialPrice

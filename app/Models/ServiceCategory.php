@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int $price_type_id
  * @property string $name
  * @property string|null $price
- * @property-read PriceType $priceType
+ * @property-read ConfigPriceType $priceType
  * @method static ServiceCategoryFactory factory(...$parameters)
  * @method static Builder|ServiceCategory newModelQuery()
  * @method static Builder|ServiceCategory newQuery()
@@ -45,6 +45,6 @@ class ServiceCategory extends Model
 
     public function priceType()
     {
-        return $this->belongsTo(PriceType::class);
+        return $this->belongsTo(ConfigPriceType::class);
     }
 }

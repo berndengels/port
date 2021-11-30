@@ -53,7 +53,7 @@ class ShwitchDatabaseConnection
                     DB::purge('mysql');
                     DB::setDefaultConnection('demo');
                     app('cache')->clear();
-//                config()->set('app.env', 'dusk.local');
+//                _config()->set('app.env', 'dusk.local');
                     config()->set('app.env', 'demo');
 
                     switch($guard) {

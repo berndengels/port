@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\SaisonDates;
+use App\Models\ConfigSaisonDates;
 use Carbon\Carbon;
 use Database\Factories\Ext\MainFactory;
 use Exception;
@@ -15,7 +15,7 @@ class SaisonDatesFactory extends MainFactory
      *
      * @var string
      */
-    protected $model = SaisonDates::class;
+    protected $model = ConfigSaisonDates::class;
 
     /**
      * Define the model's default state.

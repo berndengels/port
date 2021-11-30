@@ -25,7 +25,7 @@ trait SelectOptions
         /*
         * only for tests
         $this->selectOptionsData = $query->get()->map(function ($item) use ($orderBy) {
-            $item->{$orderBy} = config('app.env').' '.$item->{$orderBy};
+            $item->{$orderBy} = _config('app.env').' '.$item->{$orderBy};
             return $item;
         });
         */

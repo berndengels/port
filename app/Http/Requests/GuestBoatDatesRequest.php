@@ -36,7 +36,7 @@ class GuestBoatDatesRequest extends AdminRequest
             'persons'       => ['required','regex:/^[1-9]+$/i'],
             'electric'      => '',
             'home_port'     => '',
-            'day_price'     => '',
+//            'special_price'     => '',
             'price'         => 'required',
             'prices'        => 'required',
         ];
