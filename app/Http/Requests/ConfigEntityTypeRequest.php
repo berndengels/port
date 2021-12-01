@@ -2,8 +2,21 @@
 
 namespace App\Http\Requests;
 
-class ConfigEntityTypeRequest extends MainFormRequest
+class ConfigEntityTypeRequest extends AdminRequest
 {
+    protected $modelName = 'ConfigEntityType';
+    protected $routeParam = 'entityType';
+
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+        return $this->auth->user()->can('write ConfigEntityType');
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -13,7 +26,8 @@ class ConfigEntityTypeRequest extends MainFormRequest
     {
         return [
             'model' => 'required',
-            'priceComponents' => [],
+//            'unit_inclusive'  => '',
+//            'unit_price'  => 'required',
         ];
     }
 }

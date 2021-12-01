@@ -6,13 +6,14 @@ use App\Models\ConfigEntityType;
 use App\Http\Requests\ConfigEntityTypeRequest;
 use App\Models\ConfigHasPriceComponent;
 use App\Models\ConfigPriceComponent;
+use Illuminate\Http\Response;
 
 class AdminConfigEntityTypeController extends AdminController
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -23,8 +24,8 @@ class AdminConfigEntityTypeController extends AdminController
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\ConfigEntityType  $entityType
-     * @return \Illuminate\Http\Response
+     * @param ConfigEntityType $entityType
+     * @return Response
      */
     public function show(ConfigEntityType $entityType)
     {
@@ -34,7 +35,7 @@ class AdminConfigEntityTypeController extends AdminController
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -47,7 +48,7 @@ class AdminConfigEntityTypeController extends AdminController
      * Store a newly created resource in storage.
      *
      * @param  ConfigEntityTypeRequest  $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function store(ConfigEntityTypeRequest $request)
     {
@@ -62,8 +63,8 @@ class AdminConfigEntityTypeController extends AdminController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\ConfigEntityType  $entityType
-     * @return \Illuminate\Http\Response
+     * @param ConfigEntityType $entityType
+     * @return Response
      */
     public function edit(ConfigEntityType $entityType)
     {
@@ -79,27 +80,13 @@ class AdminConfigEntityTypeController extends AdminController
      * Update the specified resource in storage.
      *
      * @param  ConfigEntityTypeRequest  $request
-     * @param  \App\Models\ConfigEntityType  $entityType
-     * @return \Illuminate\Http\Response
+     * @param ConfigEntityType $entityType
+     * @return Response
      */
     public function update(ConfigEntityTypeRequest $request, ConfigEntityType $entityType)
     {
         try {
-            $priceComponents = $request->validated()['priceComponents'] ?? null;
             $entityType->update($request->validated());
-
-            if($priceComponents) {
-                $priceComponents = ConfigPriceComponent::findMany($priceComponents);
-                ConfigHasPriceComponent::whereHasPriceComponentType($entityType->model)->delete();
-                $priceComponents->each(fn($c) =>
-                    ConfigHasPriceComponent::create([
-                        'has_price_component_id'    => $entityType->id,
-                        'has_price_component_type'  => ConfigEntityType::class,
-                        'config_price_component_id' => $c->id,
-                    ])
-                );
-            }
-
             return redirect()->route('admin.config.entityTypes.index')->with('success', 'Entity Typ erfolgreich bearbeitet!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
@@ -109,8 +96,8 @@ class AdminConfigEntityTypeController extends AdminController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\ConfigEntityType  $entityType
-     * @return \Illuminate\Http\Response
+     * @param ConfigEntityType $entityType
+     * @return Response
      */
     public function destroy(ConfigEntityType $entityType)
     {

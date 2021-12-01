@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
@@ -14,21 +17,21 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string $key
  * @property int|null $unit_inclusive
  * @property string $unit_price
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ConfigHasPriceComponent[] $entities
+ * @property-read Collection|ConfigHasPriceComponent[] $entities
  * @property-read int|null $entities_count
- * @property-read \App\Models\ConfigPriceType $priceType
- * @property-read \App\Models\ConfigService|null $service
- * @method static \Illuminate\Database\Eloquent\Builder|ConfigPriceComponent newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|ConfigPriceComponent newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|ConfigPriceComponent query()
- * @method static \Illuminate\Database\Eloquent\Builder|ConfigPriceComponent whereConfigServiceId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ConfigPriceComponent whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ConfigPriceComponent whereKey($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ConfigPriceComponent whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ConfigPriceComponent wherePriceTypeId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ConfigPriceComponent whereUnitInclusive($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ConfigPriceComponent whereUnitPrice($value)
- * @mixin \Eloquent
+ * @property-read ConfigPriceType $priceType
+ * @property-read ConfigService|null $service
+ * @method static Builder|ConfigPriceComponent newModelQuery()
+ * @method static Builder|ConfigPriceComponent newQuery()
+ * @method static Builder|ConfigPriceComponent query()
+ * @method static Builder|ConfigPriceComponent whereConfigServiceId($value)
+ * @method static Builder|ConfigPriceComponent whereId($value)
+ * @method static Builder|ConfigPriceComponent whereKey($value)
+ * @method static Builder|ConfigPriceComponent whereName($value)
+ * @method static Builder|ConfigPriceComponent wherePriceTypeId($value)
+ * @method static Builder|ConfigPriceComponent whereUnitInclusive($value)
+ * @method static Builder|ConfigPriceComponent whereUnitPrice($value)
+ * @mixin Eloquent
  */
 class ConfigPriceComponent extends BaseModel
 {
@@ -50,7 +53,11 @@ class ConfigPriceComponent extends BaseModel
 
     public function entities()
     {
-        return $this->morphMany(ConfigHasPriceComponent::class, 'config_price_component_id');
+        return $this->belongsToMany(
+            ConfigEntityType::class,
+            'config_has_price_components',
+            'price_component_id',
+            'entity_type_id'
+        );
     }
-
 }

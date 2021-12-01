@@ -54,7 +54,7 @@ class AdminConfigDailyPriceController extends AdminController
         return view('admin._config.dailyPrices.create', [
             'optionsModel'  => $this->optionsModel,
             'optionsSaisonDates' => $this->saisonDatesRepository->options()->getSelectOptions(),
-            'optionsPriceTypes' => $this->priceTypeRepository->options()->getSelectOptions(),
+            'optionsPriceTypes' => $this->configPriceTypeRepository->options()->getSelectOptions(),
         ]);
     }
 
@@ -68,7 +68,7 @@ class AdminConfigDailyPriceController extends AdminController
     {
         try {
             ConfigDailyPrice::create($request->validated());
-            return redirect()->route('admin._config.dailyPrices.index')->with('success', 'Tagespreis erfolgreich angelegt!');
+            return redirect()->route('admin.config.dailyPrices.index')->with('success', 'Tagespreis erfolgreich angelegt!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -86,7 +86,7 @@ class AdminConfigDailyPriceController extends AdminController
             'dailyPrice' => $dailyPrice,
             'optionsModel'  => $this->optionsModel,
             'optionsSaisonDates' => $this->saisonDatesRepository->options()->getSelectOptions(),
-            'optionsPriceTypes' => $this->priceTypeRepository->options()->getSelectOptions(),
+            'optionsPriceTypes' => $this->configPriceTypeRepository->options()->getSelectOptions(),
         ]);
     }
 
@@ -101,7 +101,7 @@ class AdminConfigDailyPriceController extends AdminController
     {
         try {
             $dailyPrice->update($request->validated());
-            return redirect()->route('admin._config.dailyPrices.index')->with('success', 'Tagespreis erfolgreich bearbeitet!');
+            return redirect()->route('admin.config.dailyPrices.index')->with('success', 'Tagespreis erfolgreich bearbeitet!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -117,7 +117,7 @@ class AdminConfigDailyPriceController extends AdminController
     {
         try {
             $dailyPrice->delete();
-            return redirect()->route('admin._config.dailyPrices.index')->with('success', 'Tagespreis erfolgreich gelöscht!');
+            return redirect()->route('admin.config.dailyPrices.index')->with('success', 'Tagespreis erfolgreich gelöscht!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }

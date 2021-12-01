@@ -17,6 +17,7 @@
         <table class="table w-full mt-3">
             <tr>
                 <th class="hidden md:table-cell">ID</th>
+                <th>Name</th>
                 <th>Saison</th>
                 <th>Preis-Typ</th>
                 <th>Preis-Faktor</th>
@@ -25,6 +26,7 @@
             @foreach($data as $item)
                 <tr>
                     <td class="hidden md:table-cell">{{ $item->id }}</td>
+                    <td>{{ $item->name }}</td>
                     <td>{{ $item->saison->name }}</td>
                     <td>{{ $item->priceType->name }}</td>
                     <td>{{ $item->price_factor }}</td>
@@ -37,7 +39,7 @@
                         <x-form action="{{ route('admin.config.boatPrices.destroy', $item) }}"
                                 class="m-0 p-0">
                             @method('delete')
-                            <x-form-submit icon="fas fa-trash-alt" inline class="mt-0 btn-red delSoft">
+                            <x-form-submit icon="fas fa-trash-alt" inline class="mt-0 mr-2 btn-red delSoft">
                                 <span class="hidden md:visible">
                                     Löschen
                                 </span>

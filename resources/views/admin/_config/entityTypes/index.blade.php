@@ -14,16 +14,26 @@
             <div></div>
         </div>
         {{ $data->links() }}
-        <table class="table w-full mt-3">
+        <table class="table w-auto mt-3 mx-2 dt-left">
             <tr>
                 <th class="hidden md:table-cell">ID</th>
                 <th>Model</th>
+                <th>Komponenten</th>
                 <th colspan="2"><br></th>
             </tr>
             @foreach($data as $item)
-                <tr>
+                <tr class="bottomBorder">
                     <td class="hidden md:table-cell">{{ $item->id }}</td>
                     <td title="{{ $item->model }}">{{ __($item->model) }}</td>
+                    <td>
+                        @if($item->priceComponents->count() > 0)
+                        <ul>
+                            @foreach ($item->priceComponents as $component)
+                                <li>{{ $component->name }}</li>
+                            @endforeach
+                        </ul>
+                        @endif
+                    </td>
                     <td>
                         <x-nav-link href="{{ route('admin.config.entityTypes.edit', $item) }}" icon="fas fa-edit" class="btn" title="Bearbeiten">
                             <span class="hidden md:visible">Edit</span>

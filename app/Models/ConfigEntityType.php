@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,16 +13,16 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int $id
  * @property string|null $model
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ConfigHasPriceComponent[] $priceComponents
+ * @property-read Collection|ConfigHasPriceComponent[] $priceComponents
  * @property-read int|null $price_components_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ConfigPriceComponent[] $prices
+ * @property-read Collection|ConfigPriceComponent[] $prices
  * @property-read int|null $prices_count
- * @method static \Illuminate\Database\Eloquent\Builder|ConfigEntityType newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|ConfigEntityType newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|ConfigEntityType query()
- * @method static \Illuminate\Database\Eloquent\Builder|ConfigEntityType whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ConfigEntityType whereModel($value)
- * @mixin \Eloquent
+ * @method static Builder|ConfigEntityType newModelQuery()
+ * @method static Builder|ConfigEntityType newQuery()
+ * @method static Builder|ConfigEntityType query()
+ * @method static Builder|ConfigEntityType whereId($value)
+ * @method static Builder|ConfigEntityType whereModel($value)
+ * @mixin Eloquent
  */
 class ConfigEntityType extends Model
 {
@@ -31,12 +34,11 @@ class ConfigEntityType extends Model
 
     public function priceComponents()
     {
-        return $this->morphMany(ConfigHasPriceComponent::class, 'has_price_component');
+        return $this->belongsToMany(
+            ConfigPriceComponent::class,
+            'config_has_price_components',
+            'entity_type_id',
+            'id'
+        );
     }
-/*
-    public function entityPriceComponents()
-    {
-        return $this->belongsToMany(ConfigPriceComponent::class);
-    }
-*/
 }

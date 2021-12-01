@@ -6,6 +6,7 @@
         <x-form method="post" :action="route('admin.config.boatPrices.update', $boatPrice)" class="w-full lg:w-1/2">
             @method('put')
             @bind($boatPrice)
+            <x-form-input id="name" name="name" label="Name" placeholder="Name" required />
             <x-form-select id="saison_date_id" name="saison_date_id" label="Saison" placeholder="Welche Saison?" :options="$optionsSaisonDates" required />
             <div class="my-3">
                 <span>Vom {{ $boatPrice->saison->strFrom }}</span>

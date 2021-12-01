@@ -2,9 +2,20 @@
 
 namespace App\Http\Requests;
 
-class ConfigPriceComponentRequest extends MainFormRequest
+class ConfigPriceComponentRequest extends AdminRequest
 {
     protected $modelName = 'ConfigPriceComponent';
+    protected $routeParam = 'priceComponent';
+
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+        return $this->auth->user()->can('write ConfigPriceComponent');
+    }
 
     /**
      * Get the validation rules that apply to the request.
@@ -14,13 +25,16 @@ class ConfigPriceComponentRequest extends MainFormRequest
     public function rules()
     {
         return [
-            'config_entity_type_id' => 'required',
+//            'name'  => !$this->getId() ? 'required|unique:config_price_components,name' : 'required',
+//            'key'  => !$this->getId() ? 'required|unique:config_price_components,key' : 'required',
+            'name'  => !$this->getId() ? 'required|unique:config_price_components,name' : 'required',
+            'key'  => 'required',
             'price_type_id'  => 'required',
             'config_service_id'  => '',
-            'name'  => !$this->getId() ? 'required|unique:config_price_components,name' : 'required',
-            'key'  => !$this->getId() ? 'required|unique:config_price_components,key' : 'required',
             'unit_inclusive'  => '',
             'unit_price'  => 'required',
+            'entities' => [],
+//            'price_component_id' => 'required',
         ];
     }
 }

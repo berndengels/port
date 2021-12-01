@@ -38,8 +38,8 @@ class AdminConfigBoatPriceController extends AdminController
     public function create()
     {
         return view('admin._config.boatPrices.create', [
-            'optionsSaisonDates' => $this->saisonDatesRepository->options()->getSelectOptions(),
-            'optionsPriceTypes' => $this->priceTypeRepository->options()->getSelectOptions(),
+            'optionsSaisonDates' => $this->configSaisonDatesRepository->options()->getSelectOptions(),
+            'optionsPriceTypes' => $this->configPriceTypeRepository->options()->getSelectOptions(),
         ]);
     }
 
@@ -53,7 +53,7 @@ class AdminConfigBoatPriceController extends AdminController
     {
         try {
             ConfigBoatPrice::create($request->validated());
-            return redirect()->route('admin._config.boatPrices.index')->with('success', 'Bootpreis erfolgreich angelegt!');
+            return redirect()->route('admin.config.boatPrices.index')->with('success', 'Bootpreis erfolgreich angelegt!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -69,8 +69,8 @@ class AdminConfigBoatPriceController extends AdminController
     {
         return view('admin._config.boatPrices.edit', [
             'boatPrice' => $boatPrice,
-            'optionsSaisonDates' => $this->saisonDatesRepository->options()->getSelectOptions(),
-            'optionsPriceTypes' => $this->priceTypeRepository->options()->getSelectOptions(),
+            'optionsSaisonDates' => $this->configSaisonDatesRepository->options()->getSelectOptions(),
+            'optionsPriceTypes' => $this->configPriceTypeRepository->options()->getSelectOptions(),
         ]);
     }
 
@@ -85,7 +85,7 @@ class AdminConfigBoatPriceController extends AdminController
     {
         try {
             $boatPrice->update($request->validated());
-            return redirect()->route('admin._config.boatPrices.index')->with('success', 'Bootpreis erfolgreich bearbeitet!');
+            return redirect()->route('admin.config.boatPrices.index')->with('success', 'Bootpreis erfolgreich bearbeitet!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -101,7 +101,7 @@ class AdminConfigBoatPriceController extends AdminController
     {
         try {
             $boatPrice->delete();
-            return redirect()->route('admin._config.boatPrices.index')->with('success', 'Bootpreis erfolgreich gelöscht!');
+            return redirect()->route('admin.config.boatPrices.index')->with('success', 'Bootpreis erfolgreich gelöscht!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }

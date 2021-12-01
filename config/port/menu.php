@@ -287,7 +287,7 @@ return [
                         'hide_on_mobile' => false,
                     ],
                     [
-                        'permissions'   => ['read ConfigSaisonDates'],
+                        'permissions'   => ['read ConfigBoatPrice'],
                         'text'  => 'Kunden',
                         'title' => 'Kunden',
                         'icon'  => 'fas fa-route',
@@ -295,7 +295,7 @@ return [
                         'hide_on_mobile' => false,
                     ],
                     [
-                        'permissions'   => ['read ConfigSaisonDates'],
+                        'permissions'   => ['read ConfigDailyPrice'],
                         'text'  => 'Gäste',
                         'title' => 'Gäste',
                         'icon'  => 'fas fa-route',
@@ -303,7 +303,7 @@ return [
                         'hide_on_mobile' => false,
                     ],
                     [
-                        'permissions'   => ['read ConfigSaisonDates'],
+                        'permissions'   => ['read ConfigPriceComponent'],
                         'text'  => 'Komponenten',
                         'title' => 'Preis-Komponenten',
                         'icon'  => 'fas fa-route',
@@ -311,7 +311,7 @@ return [
                         'hide_on_mobile' => false,
                     ],
                     [
-                        'permissions'   => ['read ConfigSaisonDates'],
+                        'permissions'   => ['read ConfigEntityType'],
                         'text'  => 'Produkte',
                         'title' => 'Preis relevante Produkte',
                         'icon'  => 'fas fa-route',

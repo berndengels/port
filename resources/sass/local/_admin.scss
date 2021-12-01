@@ -35,6 +35,38 @@ input[disabled], select[disabled], textara[disabled] {
 	background-color: #eee;
 }
 .table {
+	tr {
+		border-bottom: 1px solid #ddd;
+		padding: 0.5rem 0;
+		td {
+			text-align: left;
+//			vertical-align: top;
+//			margin: 0.1rem 0.2rem;
+			ul {
+				display: block;
+				font-size: 0.9rem;
+				margin: 0.1rem 0.5rem;
+				padding: 0.2rem 0.2rem;
+				list-style-type: circle;
+				list-style-position: inside;
+				border: 1px solid rgba(59, 130, 246, 0.5);
+				background-color: rgba(59, 130, 246, 0.1);
+				border-radius: 0.3rem;
+				li {
+					margin-left: 0;
+				}
+			}
+		}
+		&.bottomBorder {
+			border-bottom: 1px solid #bbb;
+		}
+		&.text-left {
+			td {
+				text-align: left;
+				vertical-align: top;
+			}
+		}
+	}
 	&.dt-left {
 		tr {
 			td {

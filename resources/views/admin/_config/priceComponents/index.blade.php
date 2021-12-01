@@ -14,26 +14,34 @@
             <div></div>
         </div>
         {{ $data->links() }}
-        <table class="table w-full mt-3">
+        <table class="table w-auto mt-3 mx-2 dt-left">
             <tr>
                 <th class="hidden md:table-cell">ID</th>
+                <th>Betrifft</th>
                 <th>Name</th>
                 <th>Key</th>
                 <th>Service</th>
                 <th>Preis Typ</th>
-                <th>Inklusive</th>
-                <th>Preis</th>
                 <th colspan="2"><br></th>
             </tr>
             @foreach($data as $item)
-                <tr>
+                <tr class="bottomBorder">
                     <td class="hidden md:table-cell">{{ $item->id }}</td>
+                    <td>
+                        @if($item->entities->count() > 0)
+                            <ul>
+                            @foreach($item->entities as $entity)
+                                <li title="{{ $entity->model }}">
+                                    {{ __($entity->model) }}
+                                </li>
+                            @endforeach
+                            </ul>
+                        @endif
+                    </td>
                     <td>{{ $item->name }}</td>
                     <td>{{ $item->key }}</td>
                     <td>{{ $item->service?->name }}</td>
                     <td>{{ $item->priceType->name }}</td>
-                    <td>{{ $item->unit_inclusive }}</td>
-                    <td>{{ $item->unit_price }} €</td>
                     <td>
                         <x-nav-link href="{{ route('admin.config.priceComponents.edit', $item) }}" icon="fas fa-edit" class="btn" title="Bearbeiten">
                             <span class="hidden md:visible">Edit</span>
