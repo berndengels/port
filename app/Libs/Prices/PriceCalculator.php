@@ -104,28 +104,6 @@ abstract class PriceCalculator
                 $this->add(static::$$staticProp);
             }
         }
-/*
-        foreach($this->registerSetPriceClasses()  as $class) {
-            if(class_exists($class)) {
-                $basename   = class_basename($class);
-                $staticProp = 'price' . $basename;
-                $rClass     = new ReflectionClass($class);
-
-                $obj = $this->getObject($request, $class, $rClass);
-
-                switch (true) {
-                    case $rClass->implementsInterface(IDailyPrice::class):
-                        static::$$staticProp = $obj->setDaysCount($dCount)->setPrice($dPeriod);
-                        break;
-                    case $rClass->implementsInterface(IPrice::class):
-                    default:
-                        static::$$staticProp = $obj->setPrice();
-                        break;
-                }
-                $this->set(static::$$staticProp);
-            }
-        }
-*/
         return $this->formatResult();
     }
 
