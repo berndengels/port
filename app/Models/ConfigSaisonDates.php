@@ -83,34 +83,6 @@ class ConfigSaisonDates extends BaseModel
         parent::boot();
         self::created(fn(ConfigSaisonDates $model) => $model->setMdays($model)->saveQuietly());
         self::updated(fn(ConfigSaisonDates $model) => $model->setMdays($model)->saveQuietly());
-//        self::retrieved(fn(ConfigSaisonDates $model) => $model->setMdays($model));
-        /*
-        self::created(function(ConfigSaisonDates $model) {
-            $from = $model->from_month . $model->from_day;
-            $until = $model->until_month . $model->until_day;
-//            $model->attributes['from_mday'] = $from;
-//            $model->attributes['until_mday'] = $until;
-            $model->from_mday = $from;
-            $model->until_mday = $until;
-            $model->save();
-        });
-                static::updated(function(ConfigSaisonDates $model) {
-                    $from = $model->from_month . $model->from_day;
-                    $until = $model->until_month . $model->until_day;
-        //            $model->attributes['from_month_day'] = $from;
-        //            $model->attributes['until_month_day'] = $until;
-                    $model->from_month_day = $from;
-                    $model->until_month_day = $until;
-                });
-                static::retrieved(function(ConfigSaisonDates $model) {
-                    $from = $model->from_month . $model->from_day;
-                    $until = $model->until_month . $model->until_day;
-        //            $model->attributes['from_month_day'] = $from;
-        //            $model->attributes['until_month_day'] = $until;
-                    $model->from_month_day = $from;
-                    $model->until_month_day = $until;
-                });
-        */
     }
 
     public function setMdays(ConfigSaisonDates $model): self
@@ -174,7 +146,7 @@ class ConfigSaisonDates extends BaseModel
     public function getFromAttribute(): Carbon
     {
         $today = Carbon::today();
-        $year = ($this->from_month < $this->until_month) ? $today->year : $today->subYear()->format('Y');
+        $year = ($this->from_month <= $this->until_month) ? $today->year : $today->subYear()->format('Y');
 
         return Carbon::create($year . '-' . $this->from_month . '-' . $this->from_day);
     }
@@ -184,8 +156,7 @@ class ConfigSaisonDates extends BaseModel
      */
     public function getUntilAttribute(): Carbon
     {
-        $today = Carbon::today();
-        $year = ($this->from->month > $this->until_month) ? $this->from->addYear()->format('Y') : $this->from->year;
+        $year = ($this->from->month >= $this->until_month) ? $this->from->copy()->addYear()->format('Y') : $this->from->year;
 
         return Carbon::create($year . '-' . $this->until_month . '-' . $this->until_day);
     }

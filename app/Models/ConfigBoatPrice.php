@@ -27,6 +27,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static Builder|ConfigBoatPrice wherePriceTypeId($value)
  * @method static Builder|ConfigBoatPrice whereSaisonDateId($value)
  * @mixin Eloquent
+ * @property string|null $name
+ * @method static Builder|ConfigBoatPrice whereName($value)
  */
 class ConfigBoatPrice extends Model
 {

@@ -43,17 +43,8 @@ abstract class PriceCalculator
         static::$total += (float) $price->getValue();
         return $this;
     }
-/*
-    public function set(Price $price): self
-    {
-        $value = $price->getValue();
-        if($value > 0) {
-            static::$total = (float) $value;
-        }
-        return $this;
-    }
-*/
-    protected function formatResult(): array
+
+    protected function formatResult(array $dailyPrices): array
     {
         $vars = get_class_vars(static::class);
         $prices = [];
@@ -68,6 +59,7 @@ abstract class PriceCalculator
                 $prices[$prop] = $val;
             }
         }
+        $prices['dailyPrices'] = $dailyPrices;
         return $prices;
     }
 
@@ -104,7 +96,7 @@ abstract class PriceCalculator
                 $this->add(static::$$staticProp);
             }
         }
-        return $this->formatResult();
+        return $this->formatResult($obj::$dailyPrices);
     }
 
     protected function getObject(Request $request, string $class, ReflectionClass $rClass): object {
@@ -121,10 +113,23 @@ abstract class PriceCalculator
         }
 
         $cParams    = $rClass->getConstructor()->getParameters();
+        /**
+         * @var $pNames Collection
+         */
         $pNames     = collect($cParams)->map->name;
 
         foreach ($pNames as $name) {
-            $constructParams[] = $params[$name] ?? null;
+            switch ($name) {
+                case 'from':
+                    $constructParams[] = static::$from;
+                    break;
+                case 'until':
+                    $constructParams[] = static::$until;
+                    break;
+                default:
+                    $constructParams[] = $params[$name] ?? null;
+                    break;
+            }
         }
 
         return new $class(...$constructParams);

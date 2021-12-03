@@ -60,4 +60,7 @@ class AppCache
 
     const KEY_OPTIONS_CONFIG_ENTITY_TYPE       = 'options.config.entityTypes';
     const KEY_OPTIONS_DATA_CONFIG_ENTITY_TYPE  = 'options.data.config.entityTypes';
+
+    const KEY_OPTIONS_CONFIG_BOAT_PRICE       = 'options.config.boatPrices';
+    const KEY_OPTIONS_DATA_CONFIG_BOAT_PRICE  = 'options.data.config.boatPrices';
 }

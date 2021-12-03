@@ -14,6 +14,7 @@ use Database\Factories\CaravanDatesFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Query\JoinClause;
+use Spatie\Period\Period;
 
 /**
  * App\Models\CaravanDates
@@ -54,10 +55,9 @@ use Illuminate\Database\Query\JoinClause;
  * @method static Builder|CaravanDates fromYearMonth(?string $year = null, ?string $month = null)
  * @method static Builder|CaravanDates whereDayPrice($value)
  * @property-read int|null $prices_count
- * @method static Builder|CaravanDates caravan(?int $caravanId = null)
  * @method static Builder|CaravanDates dailyPrices()
  */
-class CaravanDates extends BaseModel implements IDatePrice
+class CaravanDates extends BaseModel
 {
     use HasFactory, CaravanFilter, YearMonthFilter, ClearCache, HasDailyPrice;
 
@@ -162,10 +162,5 @@ class CaravanDates extends BaseModel implements IDatePrice
     public function scopePageList(Builder $query)
     {
         return $query->with('caravan')->orderBy('id', 'DESC');
-    }
-
-    public function getPrice(Request $request): float|int
-    {
-        return 0;
     }
 }

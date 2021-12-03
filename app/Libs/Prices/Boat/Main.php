@@ -2,17 +2,23 @@
 namespace App\Libs\Prices\Boat;
 
 use Carbon\Carbon;
+use App\Models\Boat;
+use App\Models\BoatDates;
 use App\Libs\Prices\MainPriceItem;
 
 abstract class Main extends MainPriceItem
 {
+    public static $dailyPrices = [];
+
+    protected $dateModel = BoatDates::class;
+    protected $model = Boat::class;
+
     protected static $saisonStart;
     protected static $saisonEnd;
     protected static $winterStart;
     protected static $winterEnd;
     protected static $saisonPeriod;
     protected static $winterPeriod;
-
     protected $priceSaisonFactor;
     protected $priceWinterFactor;
     protected $pricePerTon;

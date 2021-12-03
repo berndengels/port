@@ -3,6 +3,7 @@ namespace App\Repositories;
 
 use App\Entities\SaisonDatesEntity;
 use App\Libs\AppCache;
+use App\Models\ConfigBoatPrice;
 use App\Models\ConfigDailyPrice;
 use App\Models\ConfigSaisonDates;
 use App\Repositories\Ext\SelectOptions;
@@ -13,13 +14,13 @@ use Spatie\Period\PeriodCollection;
 use Spatie\Period\Visualizer;
 use Illuminate\Database\Eloquent\Builder;
 
-class ConfigSaisonDatesRepository extends Repository
+class ConfigBoatPricesRepository extends Repository
 {
     use SelectOptions;
 
-    protected static $model = ConfigSaisonDates::class;
-    protected static $cacheKeyOptions = AppCache::KEY_OPTIONS_SAISON_DATES;
-    protected static $cacheKeyOptionsData = AppCache::KEY_OPTIONS_DATA_SAISON_DATES;
+    protected static $model = ConfigBoatPrice::class;
+    protected static $cacheKeyOptions = AppCache::KEY_OPTIONS_CONFIG_BOAT_PRICE;
+    protected static $cacheKeyOptionsData = AppCache::KEY_OPTIONS_DATA_CONFIG_BOAT_PRICE;
 
     public function getSaisons(Carbon $from, Carbon $until) {
         $data = ConfigSaisonDates::all()
@@ -41,37 +42,15 @@ class ConfigSaisonDatesRepository extends Repository
                 $overlap = $itemPeriod->overlap($saisonPeriod);
                 if($overlap) {
                     $entiy->setPeriod($overlap);
-                    $dailyPrice = ConfigDailyPrice::whereModel($model)
-                        ->whereSaisonDateId($entiy->getSaisonId())
-                        ->where(function (Builder $query) use ($search) {
-                            return $query
-                                ->where('from_unit','>=', $search)
-                                ->where('until_unit','<=', $search)
-                                ->orWhereNull('from_unit')
-                                ->where('until_unit','<=', $search)
-                                ->orWhereNull('until_unit')
-                                ->where('from_unit','>=', $search)
-                                ->orWhereNull('from_unit')
-                                ->whereNull('until_unit')
-                            ;
-                        })
+                    $dailyPrice = ConfigBoatPrice::whereSaisonDateId($entiy->getSaisonId())
                         ->first()
                     ;
                     switch($dailyPrice->price_type_id) {
-                        // length
-                        case 1:
-                            $sumPrice = ($dailyPrice->from_unit && $dailyPrice->until_unit)
-                                ? $dailyPrice->price * $overlap->length()
-                                : $dailyPrice->price * $search * $overlap->length();
-                            $dayPrice = ($dailyPrice->from_unit && $dailyPrice->until_unit)
-                                ? $dailyPrice->price
-                                : $dailyPrice->price * $search;
-                            break;
-                        // absolute
-                        case 6:
+                        // area
+                        case 5:
                         default:
-                            $sumPrice = $dailyPrice->price * $overlap->length();
-                            $dayPrice = $dailyPrice->price;
+                            $sumPrice = $dailyPrice->price_factor * $overlap->length();
+                            $dayPrice = $dailyPrice->price_factor;
                     }
 
                     $entiy->setPrice($sumPrice);

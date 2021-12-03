@@ -1,36 +1,39 @@
 <?php
 namespace App\Libs\Prices\Caravan;
 
+use App\Entities\SaisonDatesEntity;
+use App\Models\ConfigDailyPrice;
+use App\Models\ConfigEntityType;
+use App\Models\ConfigPriceComponent;
+use App\Models\ConfigSaisonDates;
+use App\Repositories\ConfigSaisonDatesRepository;
 use DatePeriod;
 use Carbon\Carbon;
 use App\Libs\Prices\Price;
 use App\Libs\Prices\IDailyPrice;
+use Spatie\Period\Period;
+use Spatie\Period\PeriodCollection;
+use Spatie\Period\Visualizer;
 
 class Base extends Main implements IDailyPrice
 {
-    public function __construct(protected int $carlength = 0)
+    /**
+     * @var ConfigSaisonDatesRepository
+     */
+    protected $saisonDatesRepository;
+
+    public function __construct(protected Carbon $from, protected Carbon $until, protected int $carlength = 0)
     {
         $this->initConfg();
     }
 
     public function addPrice(DatePeriod $days): Price
     {
-        $sumPrice = 0;
-        /**
-         * @var Carbon $date
-         */
-        foreach($days as $date) {
-            // saison
-            if($date->month >= $this->saisonFromMonth && $date->month <= $this->saisonUntilMonth) {
-                $price = isset($this->saisonPricePerDay[$this->carlength]) ? $this->saisonPricePerDay[$this->carlength] : 0;
-            }
-            // nebensaison
-            else
-            {
-                $price = isset($this->defaultPricePerDay[$this->carlength]) ? $this->defaultPricePerDay[$this->carlength] : 0;
-            }
-            $sumPrice += $price;
-        }
+        $this->saisonDatesRepository = new ConfigSaisonDatesRepository();
+        $entities = $this->saisonDatesRepository->getTouchedSaisons($this->from, $this->until, $this->dateModel, $this->carlength);
+        $entities->each(fn(SaisonDatesEntity $item) => static::$dailyPrices += $item->getDailyPrices()->toArray());
+        $sumPrice = $entities->sum(fn(SaisonDatesEntity $i) => $i->getDailyPrices()->values()->sum());
+
         return new Price(value: $sumPrice);
     }
 

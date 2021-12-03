@@ -8,6 +8,7 @@ use App\Libs\Prices\IDailyPrice;
 class Electric extends Main implements IDailyPrice
 {
 
+
     public function __construct(protected bool $electric)
     {
         $this->initConfg();

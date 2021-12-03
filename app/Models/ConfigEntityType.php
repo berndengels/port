@@ -39,6 +39,14 @@ class ConfigEntityType extends Model
             'config_has_price_components',
             'entity_type_id',
             'id'
-        );
+        )->wherePivot('');
+    }
+
+    public function getPriceComponents(string $entity)
+    {
+        return $this
+            ->priceComponents()
+            ->whereHas('entities', fn($entities) => dd($entities))
+            ;
     }
 }

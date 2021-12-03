@@ -1,10 +1,17 @@
 <?php
 namespace App\Libs\Prices\GuestBoat;
 
+use App\Models\GuestBoat;
+use App\Models\GuestBoatDates;
 use App\Libs\Prices\MainPriceItem;
 
 abstract class Main extends MainPriceItem
 {
+    public static $dailyPrices = [];
+
+    protected $dateModel = GuestBoatDates::class;
+    protected $model = GuestBoat::class;
+
     protected $pricePerMeter;
     protected $priceElectricPerDay;
     protected $pricePersons = 0;
