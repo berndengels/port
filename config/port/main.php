@@ -25,6 +25,7 @@ return [
         'typeOptions'   => ['guest' => 'Gast', 'permanent' => 'Dauerlieger'],
     ],
     'boat'  => [
+        'enabled'   => env('BOAT_ENABLED', true),
         'types' => ['motor' => 'Motorboot', 'sail' => 'Segelboot'],
         'dates' => ['modi' => json_decode(env('BOAT_DATES_MODI'), true)],
         'material' => [
@@ -35,6 +36,12 @@ return [
                 'all'  => 'Irrelevant',
             ],
         ],
+    ],
+    'guestBoat' => [
+        'enabled'   => env('GUEST_BOAT_ENABLED', true),
+    ],
+    'caravan' => [
+        'enabled'   => env('CARAVAN_ENABLED', true),
     ],
     'cache' => [
         'enabled' => env('USE_CACHE', false),

@@ -6,7 +6,6 @@ use App\Models\ConfigDailyPrice;
 use App\Models\ConfigEntityType;
 use App\Models\ConfigPriceComponent;
 use App\Models\ConfigSaisonDates;
-use App\Repositories\ConfigSaisonDatesRepository;
 use DatePeriod;
 use Carbon\Carbon;
 use App\Libs\Prices\Price;
@@ -14,6 +13,7 @@ use App\Libs\Prices\IDailyPrice;
 use Spatie\Period\Period;
 use Spatie\Period\PeriodCollection;
 use Spatie\Period\Visualizer;
+use App\Repositories\ConfigSaisonDatesRepository;
 
 class Base extends Main implements IDailyPrice
 {

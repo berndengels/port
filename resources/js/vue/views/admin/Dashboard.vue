@@ -13,14 +13,14 @@
 
 <script>
 import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
-import Weather from "../components/Weather";
-import WeatherMixin from "../mixins/weather";
-import VisitsStats from "../components/VisitsStats";
-import CaravansToday from "../components/CaravansToday";
+import Weather from "../../components/Weather";
+import WeatherMixin from "../../mixins/weather";
+import VisitsStats from "../../components/VisitsStats";
+import CaravansToday from "../../components/CaravansToday";
 import {mapGetters} from "vuex";
 
 export default {
-    name: "AdminDashboard",
+    name: "Dashboard",
     components: {CaravansToday, VisitsStats, PulseLoader, Weather},
     mixins: [WeatherMixin],
     data() {
