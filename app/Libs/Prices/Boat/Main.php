@@ -4,7 +4,11 @@ namespace App\Libs\Prices\Boat;
 use Carbon\Carbon;
 use App\Models\Boat;
 use App\Models\BoatDates;
+use Illuminate\Support\Str;
+use App\Models\ConfigBoatPrice;
+use App\Models\ConfigEntityType;
 use App\Libs\Prices\MainPriceItem;
+use App\Models\ConfigPriceComponent;
 
 abstract class Main extends MainPriceItem
 {
@@ -29,28 +33,40 @@ abstract class Main extends MainPriceItem
     protected $priceCleaningPerLength;
     protected $priceMastCrane;
     protected $priceMastCraneUpperWeight;
+    /**
+     * @var ConfigPriceComponent
+     */
+    protected $priceComponents;
 
     protected function initConfig()
     {
         $today          = Carbon::today();
         $year           = $today->format('Y');
         $nextYear       = $today->copy()->addYear()->format('Y');
-        $this->priceSaisonFactor      = config('port.prices.boat.price_saison_factor');
-        $this->priceWinterFactor      = config('port.prices.boat.price_winter_factor');
 
-        static::$saisonStart          = Carbon::make($year . '-' . config('port.prices.boat.saison_start'));
-        static::$saisonEnd            = Carbon::make($year . '-' . config('port.prices.boat.saison_end'));
-        static::$winterStart          = Carbon::make($year . '-' . config('port.prices.boat.winter_start'));
-        static::$winterEnd            = Carbon::make($nextYear . '-' . config('port.prices.boat.winter_end'));
+        $boatPrices = ConfigBoatPrice::with('saison')->get();
+        $winter = $boatPrices->filter(fn(ConfigBoatPrice $p) => $p->saison->key === 'winter')->first();
+        $summer = $boatPrices->filter(fn(ConfigBoatPrice $p) => $p->saison->key === 'summer')->first();
+
+        static::$saisonStart    = Carbon::make($year . '-' . $summer->saison->from_month . '-' . $summer->saison->from_day);
+        static::$saisonEnd      = Carbon::make($year . '-' . $summer->saison->until_month . '-' . $summer->saison->until_day);
+        static::$winterStart    = Carbon::make($year . '-' . $winter->saison->from_month . '-' . $winter->saison->from_day);
+        static::$winterEnd      = Carbon::make($nextYear . '-' . $winter->saison->until_month . '-' . $winter->saison->until_day);
+
+        $this->priceSaisonFactor      = $summer->price_factor;
+        $this->priceWinterFactor      = $winter->price_factor;
+
         static::$saisonPeriod         = static::$saisonStart->toPeriod(static::$saisonEnd)->toDatePeriod();
         static::$winterPeriod         = static::$winterStart->toPeriod(static::$winterEnd)->toDatePeriod();
+
         $this->defaultSaisonDays      = static::$saisonEnd->diffInDays(static::$saisonStart);
         $this->defaultWinterDays      = static::$winterEnd->diffInDays(static::$winterStart);
 
-        $this->pricePerTon            = (int) config('port.prices.boat.crane_per_ton');
-        $this->priceCleaningPerLength = config('port.prices.boat.cleaning_per_length');
-        $this->priceMastCrane               = (int) config('port.prices.boat.mast_crane');
-        $this->priceMastCraneUpperWeight    = (int) config('port.prices.boat.mast_crane_upper_per_100kg');
+        $this->priceComponents = ConfigEntityType::whereModel($this->model)
+            ->first()
+            ->priceComponents
+            ->keyBy(fn(ConfigPriceComponent $c) => 'price' . ucfirst(Str::camel($c->key)))
+        ;
 
         return $this;
     }

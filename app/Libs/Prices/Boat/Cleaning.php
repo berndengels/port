@@ -8,16 +8,20 @@ class Cleaning extends Main implements IPrice
 {
     public function __construct(
         protected bool $cleaning,
-        protected int $length
+        protected float|int $length
     ) {
         $this->initConfig();
     }
 
-
     public function addPrice(): Price
     {
         if($this->cleaning && $this->length > 0) {
-            return new Price(ceil($this->priceCleaningPerLength * $this->length));
+            $unitPrice = $this->priceComponents
+                ->where('key','=', 'cleaning')
+                ->first()
+                ->unit_price
+            ;
+            return new Price(ceil($unitPrice * $this->length));
         }
         return new Price(0);
     }

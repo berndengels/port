@@ -18,7 +18,12 @@ class Electric extends Main implements IDailyPrice
     {
         $value = 0;
         if($this->electric) {
-            $value = $this->daysCount * $this->priceElectricPerDay;
+            $unitPrice = $this->priceComponents
+                ->where('key','=', 'electric')
+                ->first()
+                ->unit_price
+            ;
+            $value = $this->daysCount * $unitPrice;
         }
         return new Price($value);
     }

@@ -23,7 +23,7 @@ class ConfigBoatPricesRepository extends Repository
     protected static $cacheKeyOptionsData = AppCache::KEY_OPTIONS_DATA_CONFIG_BOAT_PRICE;
 
     public function getSaisons(Carbon $from, Carbon $until) {
-        $data = ConfigSaisonDates::all()
+        $data = ConfigSaisonDates::with('boatPrice')->get()
             ->map(function (ConfigSaisonDates $saison) use ($from, $until) {
                 $untilYear = ($saison->from_month > $saison->until_month) ? $until->year + 1 : $until->year;
                 $from   = Carbon::create($from->format('Y') . '-' . $saison->from_month . '-' . $saison->from_day);
@@ -31,6 +31,7 @@ class ConfigBoatPricesRepository extends Repository
                 return new SaisonDatesEntity(saison: $saison, from: $from, until: $until);
             })
         ;
+        dd($data->toArray());
         return $data;
     }
 
@@ -42,15 +43,16 @@ class ConfigBoatPricesRepository extends Repository
                 $overlap = $itemPeriod->overlap($saisonPeriod);
                 if($overlap) {
                     $entiy->setPeriod($overlap);
-                    $dailyPrice = ConfigBoatPrice::whereSaisonDateId($entiy->getSaisonId())
+                    $boatPrice = $entiy->boatPrice()->whereSaisonDateId($entiy->getSaisonId())
                         ->first()
                     ;
-                    switch($dailyPrice->price_type_id) {
+                    dd($entiy->boatPrice()->get());
+                    switch($boatPrice->price_type_id) {
                         // area
                         case 5:
                         default:
-                            $sumPrice = $dailyPrice->price_factor * $overlap->length();
-                            $dayPrice = $dailyPrice->price_factor;
+                            $sumPrice = $boatPrice->price_factor * $overlap->length();
+                            $dayPrice = $boatPrice->price_factor;
                     }
 
                     $entiy->setPrice($sumPrice);

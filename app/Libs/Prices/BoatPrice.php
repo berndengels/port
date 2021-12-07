@@ -21,9 +21,6 @@ class BoatPrice extends PriceCalculator
     protected static $priceCrane = 0;
     protected static $priceMastCrane = 0;
     protected static $priceCleaning = 0;
-//    protected static $priceIndividual = 0;
-//    protected static $modusDatePeriod;
-
 
     public function params(): Collection
     {
@@ -32,7 +29,6 @@ class BoatPrice extends PriceCalculator
             'mast_crane',
             'cleaning',
             'modus',
-//            'special',
             'length',
             'width',
             'weight',
@@ -54,47 +50,5 @@ class BoatPrice extends PriceCalculator
             MastCrane::class,
             Cleaning::class,
         ]);
-    }
-/*
-    protected function registerSetPriceClasses(): Collection
-    {
-        return collect([
-            Individual::class,
-        ]);
-    }
-*/
-    public function getPrice(Request $request): array
-    {
-        $this->calculateDateMode($request);
-        return parent::getPrice($request);
-    }
-
-    protected function calculateDateMode(Request $request) {
-        $modus = $request->post('modus');
-        if((!static::$from || !static::$until) && $modus) {
-            $today          = Carbon::today();
-            $year           = $today->format('Y');
-            $nextYear       = $today->copy()->addYear()->format('Y');
-            $saisonStart    = Carbon::make($year . '-' . config('port.prices.boat.saison_start'));
-            $saisonEnd      = Carbon::make($year . '-' . config('port.prices.boat.saison_end'));
-            $winterStart    = Carbon::make($year . '-' . config('port.prices.boat.winter_start'));
-            $winterEnd      = Carbon::make($nextYear . '-' . config('port.prices.boat.winter_end'));
-
-            switch ($modus) {
-                case 'saison':
-                    static::$from   = $saisonStart;
-                    static::$until  = $saisonEnd;
-                    static::$_datePeriod = $saisonStart->toPeriod($saisonEnd)->toDatePeriod();
-                    static::$daysCount   = static::$_datePeriod->getDateInterval()->days;
-                    break;
-                case 'winter':
-                default:
-                    static::$from   = $winterStart;
-                    static::$until  = $winterEnd;
-                    static::$_datePeriod = $winterStart->toPeriod($winterEnd)->toDatePeriod();
-                    static::$daysCount   = static::$_datePeriod->getDateInterval()->days;
-                    break;
-            }
-        }
     }
 }

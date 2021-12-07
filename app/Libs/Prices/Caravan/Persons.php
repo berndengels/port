@@ -1,8 +1,8 @@
 <?php
 namespace App\Libs\Prices\Caravan;
 
-use App\Libs\Prices\Price;
 use DatePeriod;
+use App\Libs\Prices\Price;
 use App\Libs\Prices\IDailyPrice;
 
 class Persons extends Main implements IDailyPrice
@@ -15,8 +15,13 @@ class Persons extends Main implements IDailyPrice
     public function addPrice(DatePeriod $days): Price
     {
         $value = 0;
-        if($this->persons > $this->personsInclusive) {
-            $value = ($this->persons - $this->personsInclusive) * $this->daysCount * $this->personsAdditional;
+        $pComponent = $this->priceComponents
+            ->where('key','=', 'persons')
+            ->first()
+        ;
+        $inclusive = $pComponent->unit_inclusive ?? 0;
+        if($this->persons > $inclusive) {
+            $value = ($this->persons - $inclusive) * $this->daysCount * $pComponent->unit_price;
         }
         return new Price($value);
     }

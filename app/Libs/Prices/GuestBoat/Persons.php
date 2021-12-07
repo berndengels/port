@@ -16,8 +16,14 @@ class Persons extends Main implements IDailyPrice
     public function addPrice(DatePeriod $days): Price
     {
         $value = 0;
-        if($this->persons && (int) $this->persons > $this->personsInclusive) {
-            $value = ($this->persons - $this->personsInclusive) * $this->daysCount * $this->personsAdditional;
+        $pComponent = $this->priceComponents
+            ->where('key','=', 'persons')
+            ->first()
+        ;
+        $inclusive = $pComponent->unit_inclusive ?? 0;
+
+        if($this->persons && (int) $this->persons > $inclusive) {
+            $value = ($this->persons - $inclusive) * $this->daysCount * $pComponent->unit_price;
         }
         return new Price($value);
     }

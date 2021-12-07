@@ -50,7 +50,7 @@ class AdminConfigSaisonDatesController extends AdminController
     {
         try {
             ConfigSaisonDates::create($request->validated());
-            return redirect()->route('admin._config.saisonDates.index')->with('success', 'Saison erfolgreich angelegt!');
+            return redirect()->route('admin.config.saisonDates.index')->with('success', 'Saison erfolgreich angelegt!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -78,7 +78,7 @@ class AdminConfigSaisonDatesController extends AdminController
     {
         try {
             $saisonDate->update($request->validated());
-            return redirect()->route('admin._config.saisonDates.index')->with('success', 'Saison erfolgreich bearbeitet!');
+            return redirect()->route('admin.config.saisonDates.index')->with('success', 'Saison erfolgreich bearbeitet!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -94,7 +94,7 @@ class AdminConfigSaisonDatesController extends AdminController
     {
         try {
             $saisonDate->delete();
-            return redirect()->route('admin._config.saisonDates.index')->with('success', 'Saison erfolgreich gelöscht!');
+            return redirect()->route('admin.config.saisonDates.index')->with('success', 'Saison erfolgreich gelöscht!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }

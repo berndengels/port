@@ -1,18 +1,11 @@
 <?php
 namespace App\Libs\Prices\Caravan;
 
-use App\Entities\SaisonDatesEntity;
-use App\Models\ConfigDailyPrice;
-use App\Models\ConfigEntityType;
-use App\Models\ConfigPriceComponent;
-use App\Models\ConfigSaisonDates;
 use DatePeriod;
 use Carbon\Carbon;
 use App\Libs\Prices\Price;
 use App\Libs\Prices\IDailyPrice;
-use Spatie\Period\Period;
-use Spatie\Period\PeriodCollection;
-use Spatie\Period\Visualizer;
+use App\Entities\SaisonDatesEntity;
 use App\Repositories\ConfigSaisonDatesRepository;
 
 class Base extends Main implements IDailyPrice
@@ -22,7 +15,11 @@ class Base extends Main implements IDailyPrice
      */
     protected $saisonDatesRepository;
 
-    public function __construct(protected Carbon $from, protected Carbon $until, protected int $carlength = 0)
+    public function __construct(
+        protected Carbon $from,
+        protected Carbon $until,
+        protected float|int $carlength = 0
+    )
     {
         $this->initConfg();
     }
@@ -32,6 +29,7 @@ class Base extends Main implements IDailyPrice
         $this->saisonDatesRepository = new ConfigSaisonDatesRepository();
         $entities = $this->saisonDatesRepository->getTouchedSaisons($this->from, $this->until, $this->dateModel, $this->carlength);
         $entities->each(fn(SaisonDatesEntity $item) => static::$dailyPrices += $item->getDailyPrices()->toArray());
+        ksort(static::$dailyPrices);
         $sumPrice = $entities->sum(fn(SaisonDatesEntity $i) => $i->getDailyPrices()->values()->sum());
 
         return new Price(value: $sumPrice);
@@ -40,7 +38,7 @@ class Base extends Main implements IDailyPrice
     /**
      * @return int
      */
-    public function getCarlength(): int
+    public function getCarlength(): float|int
     {
         return $this->carlength;
     }
@@ -49,7 +47,7 @@ class Base extends Main implements IDailyPrice
      * @param  int $carlength
      * @return Base
      */
-    public function setCarlength(int $carlength): Base
+    public function setCarlength(float|int $carlength): Base
     {
         $this->carlength = $carlength;
         return $this;

@@ -6,6 +6,7 @@ use App\Http\Requests\BoatDatesRequest;
 use App\Mail\InvoiceMail;
 use App\Models\Boat;
 use App\Models\BoatDates;
+use App\Models\ConfigBoatPrice;
 use App\Repositories\BoatRepository;
 use Barryvdh\DomPDF\PDF;
 use Carbon\Carbon;
@@ -132,12 +133,16 @@ class AdminBoatDatesController extends AdminController
         $year = $today->format('Y');
         $nextYear = $today->copy()->addYear()->format('Y');
 
+        $boatPrices = ConfigBoatPrice::with('saison')->get();
+
         if('saison' === $request->modus) {
-            $defaultFrom    = Carbon::create($year .'-'. config('port.prices.boat.saison_start'));
-            $defaultUntil   = Carbon::create($year .'-'. config('port.prices.boat.saison_end'));
+            $summer = $boatPrices->filter(fn(ConfigBoatPrice $p) => $p->saison->key === 'summer')->first();
+            $defaultFrom    = Carbon::make($year . '-' . $summer->saison->from_month . '-' . $summer->saison->from_day);
+            $defaultUntil   = Carbon::make($year . '-' . $summer->saison->until_month . '-' . $summer->saison->until_day);
         } else {
-            $defaultFrom    = Carbon::create($year .'-'. config('port.prices.boat.winter_start'));
-            $defaultUntil   = Carbon::create($nextYear .'-'. config('port.prices.boat.winter_end'));
+            $winter = $boatPrices->filter(fn(ConfigBoatPrice $p) => $p->saison->key === 'winter')->first();
+            $defaultFrom    = Carbon::make($year . '-' . $winter->saison->from_month . '-' . $winter->saison->from_day);
+            $defaultUntil   = Carbon::make($nextYear . '-' . $winter->saison->until_month . '-' . $winter->saison->until_day);
         }
         $options = $this->boatRepository->options('boat_name');
         $this->boatOptions = $options->getSelectOptions();

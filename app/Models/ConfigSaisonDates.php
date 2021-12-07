@@ -176,4 +176,14 @@ class ConfigSaisonDates extends BaseModel
     {
         return $this->until->format('Y-m-d');
     }
+
+    public function boatPrice()
+    {
+        return $this->hasOne(ConfigBoatPrice::class, 'saison_date_id', 'id');
+    }
+
+    public function dailyPrice()
+    {
+        return $this->hasOne(ConfigDailyPrice::class, 'saison_date_id', 'id');
+    }
 }

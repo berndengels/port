@@ -16,6 +16,7 @@ class CreateSaisonDatesTable extends Migration
         Schema::create('saison_dates', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 100)->default('');
+            $table->enum('key', ['summer','winter','main','low']);
             $table->unsignedTinyInteger('from_day');
             $table->unsignedTinyInteger('from_month');
             $table->unsignedTinyInteger('until_day');

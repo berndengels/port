@@ -3,6 +3,8 @@ namespace App\Repositories;
 
 use App\Entities\SaisonDatesEntity;
 use App\Libs\AppCache;
+use App\Models\BoatDates;
+use App\Models\CaravanDates;
 use App\Models\ConfigDailyPrice;
 use App\Models\ConfigSaisonDates;
 use App\Repositories\Ext\SelectOptions;
@@ -21,8 +23,8 @@ class ConfigSaisonDatesRepository extends Repository
     protected static $cacheKeyOptions = AppCache::KEY_OPTIONS_SAISON_DATES;
     protected static $cacheKeyOptionsData = AppCache::KEY_OPTIONS_DATA_SAISON_DATES;
 
-    public function getSaisons(Carbon $from, Carbon $until) {
-        $data = ConfigSaisonDates::all()
+    public function getSaisons(Carbon $from, Carbon $until, $byRelation) {
+        $data = ConfigSaisonDates::with($byRelation)->get()
             ->map(function (ConfigSaisonDates $saison) use ($from, $until) {
                 $untilYear = ($saison->from_month > $saison->until_month) ? $until->year + 1 : $until->year;
                 $from   = Carbon::create($from->format('Y') . '-' . $saison->from_month . '-' . $saison->from_day);
@@ -33,16 +35,16 @@ class ConfigSaisonDatesRepository extends Repository
         return $data;
     }
 
-    public function getTouchedSaisons(Carbon $from, Carbon $until, $model, $search): Collection {
-        return $this->getSaisons($from, $until)
+    public function getTouchedSaisons(Carbon $from, Carbon $until, $model, $search): Collection|null {
+        return $this->getSaisons($from, $until, 'dailyPrice')
             ->filter(function (SaisonDatesEntity $entiy) use ($from, $until, $model, $search) {
                 $itemPeriod = Period::make($from, $until);
                 $saisonPeriod = Period::make($entiy->getFrom(), $entiy->getUntil());
                 $overlap = $itemPeriod->overlap($saisonPeriod);
+
                 if($overlap) {
                     $entiy->setPeriod($overlap);
-                    $dailyPrice = ConfigDailyPrice::whereModel($model)
-                        ->whereSaisonDateId($entiy->getSaisonId())
+                    $dailyPrice = $entiy->dailyPrice()->whereModel($model)
                         ->where(function (Builder $query) use ($search) {
                             return $query
                                 ->where('from_unit','>=', $search)
@@ -57,6 +59,11 @@ class ConfigSaisonDatesRepository extends Repository
                         })
                         ->first()
                     ;
+
+                    if(!$dailyPrice) {
+                        return null;
+                    }
+
                     switch($dailyPrice->price_type_id) {
                         // length
                         case 1:
@@ -76,12 +83,15 @@ class ConfigSaisonDatesRepository extends Repository
 
                     $entiy->setPrice($sumPrice);
 
-                    foreach($overlap as $date) {
-                        $entiy->addDailyPrices($date, $dayPrice);
+                    foreach($overlap as $index => $date) {
+                        if($index > 0) {
+                            $entiy->addDailyPrices($date, $dayPrice);
+                        }
                     }
 
                     return $entiy;
                 }
+                return null;
             });
     }
 }

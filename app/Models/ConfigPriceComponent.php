@@ -38,6 +38,7 @@ class ConfigPriceComponent extends BaseModel
     use HasFactory;
 
     protected $table = 'config_price_components';
+    protected $with = ['priceType'];
     protected $guarded = ['id'];
     public $timestamps = false;
 

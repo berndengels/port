@@ -29,11 +29,11 @@
             <x-form-input type="hidden" name="prices" />
             @endbind
             @bind($boatDate->boat)
-            <x-form-input id="length" name="length" type="number" min="0" label="Länge" disabled />
-            <x-form-input id="width" name="width" type="number" min="0" step="0.1" label="Breite" disabled />
-            <x-form-input id="weight" name="weight" type="number" min="0" label="Gewicht in Kg" disabled />
-            <x-form-input id="mast_length" name="mast_length" type="number" min="0" label="Mastlänge" disabled />
-            <x-form-input id="mast_weight" name="mast_weight" type="number" min="0" label="Mastgewicht in Kg" disabled />
+            <x-form-input id="length" name="length" type="number" step="0.1" min="0" label="Länge" disabled />
+            <x-form-input id="width" name="width" type="number" step="0.1" min="0" label="Breite" disabled />
+            <x-form-input id="weight" name="weight" type="number" step="100" min="0" label="Gewicht in Kg" disabled />
+            <x-form-input id="mast_length" name="mast_length" type="number" step="0.1" min="0" label="Mastlänge" disabled />
+            <x-form-input id="mast_weight" name="mast_weight" type="number" step="1" min="0" label="Mastgewicht in Kg" disabled />
             @endbind
             <div class="mt-2">
                 <x-form-submit class="btn btn-save h-10 mt-3 w-full md:w-1/2" icon="fas fa-save">Speichern</x-form-submit>

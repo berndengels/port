@@ -44,11 +44,10 @@ abstract class PriceCalculator
         return $this;
     }
 
-    protected function formatResult(array $dailyPrices): array
+    protected function formatResult(array $props): array
     {
-        $vars = get_class_vars(static::class);
         $prices = [];
-        foreach ($vars as $prop => $val) {
+        foreach ($props as $prop => $val) {
             if(false === strpos($prop, '_', 0)) {
                 if($val instanceof Carbon) {
                     $val = $val->format('d.m.Y');
@@ -59,13 +58,10 @@ abstract class PriceCalculator
                 $prices[$prop] = $val;
             }
         }
-        $prices['dailyPrices'] = $dailyPrices;
         return $prices;
     }
 
     protected abstract function registerAddPriceClasses(): Collection;
-
-//    protected abstract function registerSetPriceClasses(): Collection;
 
     protected abstract function params(): Collection;
 
@@ -75,7 +71,7 @@ abstract class PriceCalculator
         $dCount     = static::$daysCount;
         $dPeriod    = static::$_datePeriod;
         static::$total = 0;
-
+        $props = [];
         foreach ($this->registerAddPriceClasses() as $class) {
             if(class_exists($class)) {
                 $basename  = class_basename($class);
@@ -94,15 +90,20 @@ abstract class PriceCalculator
                         break;
                 }
                 $this->add(static::$$staticProp);
+                $props[$staticProp] = static::$$staticProp;
             }
         }
-        return $this->formatResult($obj::$dailyPrices);
+
+        $props['days'] = static::$daysCount;
+        $props['total'] = static::$total;
+        $props['dailyPrices'] = $obj::$dailyPrices;
+
+        return $this->formatResult($props);
     }
 
     protected function getObject(Request $request, string $class, ReflectionClass $rClass): object {
-        $constructParams = [];
-
         $params = [];
+        $constructParams = [];
 
         foreach ($this->params() as $item) {
             if($this->model && $this->model->getAttribute($item)) {
@@ -112,11 +113,11 @@ abstract class PriceCalculator
             }
         }
 
-        $cParams    = $rClass->getConstructor()->getParameters();
+        $cParams = $rClass->getConstructor()->getParameters();
         /**
          * @var $pNames Collection
          */
-        $pNames     = collect($cParams)->map->name;
+        $pNames = collect($cParams)->map->name;
 
         foreach ($pNames as $name) {
             switch ($name) {

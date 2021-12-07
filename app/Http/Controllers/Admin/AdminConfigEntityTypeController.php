@@ -17,7 +17,8 @@ class AdminConfigEntityTypeController extends AdminController
      */
     public function index()
     {
-        $data = ConfigEntityType::paginate($this->paginatorLimit);
+        $data = ConfigEntityType::with('priceComponents')->paginate($this->paginatorLimit);
+//        dd($data->items());
         return view('admin._config.entityTypes.index', compact('data'));
     }
 

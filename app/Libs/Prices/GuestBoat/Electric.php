@@ -8,7 +8,7 @@ use App\Libs\Prices\IDailyPrice;
 
 class Electric extends Main implements IDailyPrice
 {
-    public function __construct(protected bool $electric, protected $test = null)
+    public function __construct(protected bool $electric)
     {
         $this->initConfig();
     }
@@ -17,10 +17,14 @@ class Electric extends Main implements IDailyPrice
     {
         $value = 0;
         if($this->electric) {
-            $value = $this->daysCount * $this->priceElectricPerDay;
+            $unitPrice = $this->priceComponents
+                ->where('key','=', 'electric')
+                ->first()
+                ->unit_price
+            ;
+            $value = $this->daysCount * $unitPrice;
         }
-
-        return new Price((float) $value);
+        return new Price($value);
     }
 
     /**

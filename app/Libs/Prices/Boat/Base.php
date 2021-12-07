@@ -1,8 +1,6 @@
 <?php
 namespace App\Libs\Prices\Boat;
 
-use App\Entities\SaisonDatesEntity;
-use App\Repositories\ConfigSaisonDatesRepository;
 use DatePeriod;
 use Carbon\Carbon;
 use App\Libs\Prices\Price;
@@ -14,37 +12,29 @@ class Base extends Main implements IDailyPrice
         protected Carbon|null $from = null,
         protected Carbon|null $until = null,
         protected string $modus,
-        protected int $length,
-        protected int $width
+        protected float $length,
+        protected float $width
     ) {
         $this->initConfig();
-//        $this->defaultSaisonPrice   = round($this->priceSaisonFactor * $this->length * $this->width);
-//        $this->defaultWinterPrice   = round($this->priceWinterFactor * $this->length * $this->width);
+        dd($this->length * $this->width);
+        $this->defaultSaisonPrice   = round($this->priceSaisonFactor * $this->length * $this->width);
+        $this->defaultWinterPrice   = round($this->priceWinterFactor * $this->length * $this->width);
     }
 
 
     public function addPrice(DatePeriod $days): Price
     {
-        $sumPrice = 0;
-        $this->saisonDatesRepository = new ConfigSaisonDatesRepository();
-        $entities = $this->saisonDatesRepository->getTouchedSaisons($this->dateModel, $this->length, $this->from, $this->until);
-        $entities->each(fn(SaisonDatesEntity $item) => static::$dailyPrices += $item->getDailyPrices()->toArray());
-        $sumPrice = $entities->sum(fn(SaisonDatesEntity $i) => $i->getDailyPrices()->values()->sum());
+        $from   = $days->getStartDate();
+        $until  = $days->getEndDate();
 
-        /*
-                $from   = $days->getStartDate();
-                $until  = $days->getEndDate();
-
-                switch($this->modus) {
-                    case 'saison':
-                        return $this->getSaisonPrice($from, $until);
-                    case 'winter':
-                        return $this->getWinterPrice($from, $until);
-                    default:
-                        return new Price();
-                }
-        */
-        return new Price($sumPrice);
+        switch($this->modus) {
+            case 'saison':
+                return $this->getSaisonPrice($from, $until);
+            case 'winter':
+                return $this->getWinterPrice($from, $until);
+            default:
+                return new Price();
+        }
     }
 
     public function getSaisonPrice(Carbon $from = null, Carbon $until = null): Price
@@ -55,7 +45,6 @@ class Base extends Main implements IDailyPrice
         $from   = !$from ? $this->saisonStart : $from;
         $until  = !$until ? $this->saisonEnd : $until;
         $days   = $until->diffInDays($from);
-
         return new Price(value:  round($this->defaultSaisonPrice * $days / $this->defaultSaisonDays));
     }
 

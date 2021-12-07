@@ -22,6 +22,7 @@ class SaisonDatesEntity
      * @var array
      */
     protected $dailyPrices = [];
+    protected $boatPrices = [];
     protected $price;
 
     public function __construct(protected ConfigSaisonDates $saison, protected Carbon $from, protected Carbon $until)
@@ -132,6 +133,15 @@ class SaisonDatesEntity
         return $this;
     }
 
+    public function boatPrice()
+    {
+        return $this->saison->boatPrice();
+    }
+
+    public function dailyPrice()
+    {
+        return $this->saison->dailyPrice();
+    }
 
     public function __toString(): string
     {

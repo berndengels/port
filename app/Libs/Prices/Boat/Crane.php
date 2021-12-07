@@ -16,7 +16,12 @@ class Crane extends Main implements IPrice
     public function addPrice(): Price
     {
         if($this->crane) {
-            return new Price($this->pricePerTon * $this->weight / 1000);
+            $unitPrice = $this->priceComponents
+                ->where('key','=', 'crane')
+                ->first()
+                ->unit_price
+            ;
+            return new Price($unitPrice * $this->weight / 1000);
         }
         return new Price();
     }

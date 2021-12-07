@@ -49,12 +49,7 @@ class ConfigDailyPrice extends Model
     {
         return class_basename($this->model);
     }
-/*
-    public function affordable()
-    {
-        return $this->morphTo();
-    }
-*/
+
     public function saison()
     {
         return $this->belongsTo(ConfigSaisonDates::class,'saison_date_id');

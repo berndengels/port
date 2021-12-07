@@ -8,7 +8,7 @@ class MastCrane extends Main implements IPrice
 {
     public function __construct(
         protected bool $mast_crane,
-        protected int $mast_weight
+        protected float|int $mast_weight
     ) {
         $this->initConfig();
     }
@@ -17,11 +17,13 @@ class MastCrane extends Main implements IPrice
     {
         $value = 0;
         if($this->mast_crane && $this->mast_weight > 0) {
-            if($this->mast_weight < 100) {
-                $value = $this->priceMastCrane;
-            } else {
-                $value = $this->priceMastCrane + $this->priceMastCraneUpperWeight * $this->mast_weight / 100;
-            }
+            $unitPrice = $this->priceComponents
+                ->where('key','=', 'mast_crane')
+                ->first()
+                ->unit_price
+            ;
+
+            $value = $unitPrice * $this->mast_weight;
         }
         return new Price($value);
     }
