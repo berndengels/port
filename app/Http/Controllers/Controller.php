@@ -33,7 +33,6 @@ class Controller extends BaseController
     protected $materialCategoryRepository;
     protected $serviceCategoryRepository;
     protected $serviceRepository;
-    protected $configSaisonDatesRepository;
     protected $configServiceRepository;
     protected $configPriceComponentRepository;
     protected $configEntityTypeRepository;
@@ -52,7 +51,6 @@ class Controller extends BaseController
         $this->serviceCategoryRepository    = new ServiceCategoryRepository();
         $this->serviceRepository    = new ServiceRepository();
         $this->configPriceTypeRepository  = new ConfigPriceTypeRepository();
-        $this->configSaisonDatesRepository = new ConfigSaisonDatesRepository();
         $this->configServiceRepository = new ConfigServiceRepository();
         $this->configPriceComponentRepository = new ConfigPriceComponentRepository();
         $this->configEntityTypeRepository = new ConfigEntityTypesRepository();

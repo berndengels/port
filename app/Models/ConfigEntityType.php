@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Database\Factories\ConfigEntityTypeFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -23,6 +24,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static Builder|ConfigEntityType whereId($value)
  * @method static Builder|ConfigEntityType whereModel($value)
  * @mixin Eloquent
+ * @method static ConfigEntityTypeFactory factory(...$parameters)
  */
 class ConfigEntityType extends Model
 {

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Database\Factories\ConfigSaisonDatesFactory;
 use Eloquent;
 use Carbon\Carbon;
 use App\Libs\AppCache;
@@ -38,6 +39,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int|null $until_mday
  * @method static Builder|ConfigSaisonDates whereFromMday($value)
  * @method static Builder|ConfigSaisonDates whereUntilMday($value)
+ * @property string|null $key
+ * @property string|null $mode
+ * @property-read ConfigBoatPrice|null $boatPrice
+ * @property-read ConfigDailyPrice|null $dailyPrice
+ * @method static ConfigSaisonDatesFactory factory(...$parameters)
+ * @method static Builder|ConfigSaisonDates whereKey($value)
+ * @method static Builder|ConfigSaisonDates whereMode($value)
  */
 class ConfigSaisonDates extends BaseModel
 {

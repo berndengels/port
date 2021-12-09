@@ -23,16 +23,27 @@ class ConfigSaisonDatesRepository extends Repository
     protected static $cacheKeyOptions = AppCache::KEY_OPTIONS_SAISON_DATES;
     protected static $cacheKeyOptionsData = AppCache::KEY_OPTIONS_DATA_SAISON_DATES;
     protected static $counter = 0;
+    protected $fromMonthDay;
+    protected $untilMonthDay;
 
-    public function getSaisons(Carbon $from, Carbon $until, $byRelation) {
+    public function __construct(
+        protected ?Carbon $from = null,
+        protected ?Carbon $until = null
+    ) {
+        $this->fromMonthDay     = $from->format('m').$from->format('d');
+        $this->untilMonthDay    = $until->format('m').$until->format('d');
+    }
+
+
+    public function getGuestSaisons(string $byRelation): Collection|null
+    {
         $data = ConfigSaisonDates::with($byRelation)
-            ->whereKey('guest')
+            ->where('key','=','guest')
             ->get()
-            ->map(function (ConfigSaisonDates $saison) use ($from, $until) {
-//                $untilYear = ($saison->from_month > $saison->until_month) ? $until->year + 1 : $until->year;
-                $fromYear = ($saison->from_month > $saison->until_month) ? $until->year - 1 : $until->year;
-                $from   = Carbon::create($fromYear . '-' . $saison->from_month . '-' . $saison->from_day);
-                $until  = Carbon::create($until->format('Y') . '-' . $saison->until_month . '-' . $saison->until_day);
+            ->map(function (ConfigSaisonDates $saison) {
+                $untilYear = ($saison->from_month > $saison->until_month) ? ($this->from->year + 1) : $this->until->year;
+                $from   = Carbon::create($this->from->year . '-' . $saison->from_month . '-' . $saison->from_day);
+                $until  = Carbon::create($untilYear . '-' . $saison->until_month . '-' . $saison->until_day);
 
                 return new SaisonDatesEntity(saison: $saison, from: $from, until: $until);
             })
@@ -40,15 +51,24 @@ class ConfigSaisonDatesRepository extends Repository
         return $data;
     }
 
-    public function getTouchedSaisons(Carbon $from, Carbon $until, $model, $search): Collection|null {
-        return $this->getSaisons($from, $until, 'dailyPrice')
-            ->filter(function (SaisonDatesEntity $entiy) use ($from, $until, $model, $search) {
-                $itemPeriod     = Period::make($from, $until, format: 'md');
-                $saisonPeriod   = Period::make($entiy->getFrom(), $entiy->getUntil(), format: 'md');
+    public function getTouchedGuestSaisons(string $model, string $search): Collection|null
+    {
+        return $this->getGuestSaisons('dailyPrice')
+            ->filter(function (SaisonDatesEntity $entiy) use ($model, $search) {
+
+                $from = $this->from;
+                $until = $this->until;
+
+                if(true === $entiy->untilIsNextYear()) {
+                    $from = $this->from->copy()->addYear();
+                    $until = $this->until->copy()->addYear();
+                }
+
+                $itemPeriod     = Period::make($from, $until);
+                $saisonPeriod   = Period::make($entiy->getFrom(), $entiy->getUntil());
                 $overlap        = $itemPeriod->overlap($saisonPeriod);
 
                 if($overlap) {
-//                    dump(static::$counter++ ,$itemPeriod->asString(), $saisonPeriod->asString());
 
                     $entiy->setPeriod($overlap);
                     $dailyPrice = $entiy->dailyPrice()->whereModel($model)

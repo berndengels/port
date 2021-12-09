@@ -24,13 +24,18 @@ class SaisonDatesEntity
     protected $dailyPrices = [];
     protected $boatPrices = [];
     protected $price;
+    protected $fromMonth;
+    protected $untilMonth;
 
     public function __construct(
         protected ConfigSaisonDates $saison,
         protected Carbon $from,
         protected Carbon $until
     )
-    {}
+    {
+        $this->fromMonth = $this->from->month;
+        $this->untilMonth = $this->until->month;
+    }
 
     public function getSaisonId() {
         return $this->saison->id;
@@ -144,6 +149,35 @@ class SaisonDatesEntity
     public function dailyPrice()
     {
         return $this->saison->dailyPrice();
+    }
+
+    /**
+     * @return array
+     */
+    public function getBoatPrices(): array
+    {
+        return $this->boatPrices;
+    }
+
+    /**
+     * @return int
+     */
+    public function getFromMonth(): int
+    {
+        return $this->fromMonth;
+    }
+
+    /**
+     * @return int
+     */
+    public function getUntilMonth(): int
+    {
+        return $this->untilMonth;
+    }
+
+    public function untilIsNextYear()
+    {
+        return $this->fromMonth > $this->untilMonth;
     }
 
     public function __toString(): string
