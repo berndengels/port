@@ -23,7 +23,14 @@ class DatabaseSeeder extends Seeder
                     RoleHasPermissionsTestSeeder::class,
                     CountryTestSeeder::class,
                     CarLicensePlateTestSeeder::class,
-                    SaisonDatesSeeder::class,
+                    ConfigEntityTypeTestSeeder::class,
+                    ConfigServiceTestSeeder::class,
+                    ConfigPriceTypeTestSeeder::class,
+                    ConfigSaisonDatesTestSeeder::class,
+                    ConfigBoatPriceTestSeeder::class,
+                    ConfigDailyPriceTestSeeder::class,
+                    ConfigPriceComponentTestSeeder::class,
+                    ConfigHasPriceComponentTestSeeder::class,
                 ]);
                 break;
             case 'dusk.local':
@@ -33,6 +40,16 @@ class DatabaseSeeder extends Seeder
                     PermissionTestSeeder::class,
 //                    ModelHasPermissionsTestSeeder::class,
 //                    RoleHasPermissionsTestSeeder::class,
+
+                    ConfigEntityTypeTestSeeder::class,
+                    ConfigServiceTestSeeder::class,
+                    ConfigPriceTypeTestSeeder::class,
+                    ConfigSaisonDatesTestSeeder::class,
+                    ConfigBoatPriceTestSeeder::class,
+                    ConfigDailyPriceTestSeeder::class,
+                    ConfigPriceComponentTestSeeder::class,
+                    ConfigHasPriceComponentTestSeeder::class,
+
                     AdminUserTestSeeder::class,
                     CountryTestSeeder::class,
                     CarLicensePlateTestSeeder::class,
@@ -41,7 +58,7 @@ class DatabaseSeeder extends Seeder
                     CaravanTestSeeder::class,
                     GuestBoatTestSeeder::class,
                     CustomerTestSeeder::class,
-                    PriceTypeTestSeeder::class,
+                    ConfigPriceTypeTestSeeder::class,
                     MaterialCategoryTestSeeder::class,
                     ServiceCategoryTestSeeder::class,
                     MaterialTestSeeder::class,

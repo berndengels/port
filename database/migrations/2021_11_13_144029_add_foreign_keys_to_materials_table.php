@@ -15,7 +15,7 @@ class AddForeignKeysToMaterialsTable extends Migration
     {
         Schema::table('materials', function (Blueprint $table) {
             $table->foreign('material_category_id', 'materials_ibfk_1')->references('id')->on('material_categories')->onUpdate('CASCADE')->onDelete('CASCADE');
-            $table->foreign('price_type_id', 'materials_ibfk_2')->references('id')->on('price_types')->onUpdate('CASCADE')->onDelete('CASCADE');
+            $table->foreign('price_type_id', 'materials_ibfk_2')->references('id')->on('config_price_types')->onUpdate('CASCADE')->onDelete('CASCADE');
         });
     }
 

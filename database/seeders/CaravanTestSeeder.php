@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Schema;
 class CaravanTestSeeder extends MainTestSeeder
 {
     protected $table = 'caravans';
-    protected $count = 300;
+    protected $count = 50;
     /**
      * Run the database seeds.
      *
@@ -26,21 +26,23 @@ class CaravanTestSeeder extends MainTestSeeder
         Caravan::factory()
             ->hasDates(3, function(array $attribures, Caravan $caravan) {
                 $randomDateEnd = Carbon::today()->addMonths(5)->format('Y-m-d');
-                $from  = Carbon::create(DateHelper::randomDate('2020-05-01', $randomDateEnd,'Y-m-d'));
-                $until = $from->copy()->addDays(rand(1,7));
-                $electric   = mt_rand(0,1);
-                $persons    = mt_rand(1,4);
-                $params = [
+                $from       = Carbon::create(DateHelper::randomDate('2020-05-01', $randomDateEnd,'Y-m-d'));
+                $until      = $from->copy()->addDays(rand(1,7));
+                $electric   = (bool) rand(0,1);
+                $persons    = rand(1,4);
+
+                $price = (new CaravanPrice($from, $until, $caravan))->getPrice(RequestHelper::build([
+                    'carlength'     => rand(6, 10),
                     'electric'      => $electric,
                     'persons'       => $persons,
-                ];
+                ]));
 
-                $price = (new CaravanPrice($from, $until, $caravan))->getPrice(RequestHelper::build($params));
-
-                return $params + [
+                return [
                     'caravan_id' => $caravan->id,
                     'from'          => $from,
                     'until'         => $until,
+                    'electric'      => $electric,
+                    'persons'       => $persons,
                     'price'         => $price['total'],
                     'prices'        => json_encode($price),
                 ];

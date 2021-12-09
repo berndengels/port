@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Libs\AppCache;
 use App\Traits\Models\ClearCache;
-use Database\Factories\PriceTypeFactory;
+use Database\Factories\ConfigPriceTypeFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $name
  * @property string $type
  * @property string|null $unit
- * @method static PriceTypeFactory factory(...$parameters)
+ * @method static ConfigPriceTypeFactory factory(...$parameters)
  * @method static Builder|ConfigPriceType newModelQuery()
  * @method static Builder|ConfigPriceType newQuery()
  * @method static Builder|ConfigPriceType query()

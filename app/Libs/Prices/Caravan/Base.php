@@ -10,11 +10,6 @@ use App\Repositories\ConfigSaisonDatesRepository;
 
 class Base extends Main implements IDailyPrice
 {
-    /**
-     * @var ConfigSaisonDatesRepository
-     */
-    protected $saisonDatesRepository;
-
     public function __construct(
         protected Carbon $from,
         protected Carbon $until,
@@ -24,10 +19,12 @@ class Base extends Main implements IDailyPrice
         $this->initConfg();
     }
 
-    public function addPrice(DatePeriod $days): Price
+    public function addPrice(?DatePeriod $days = null): Price
     {
-        $this->saisonDatesRepository = new ConfigSaisonDatesRepository();
-        $entities = $this->saisonDatesRepository->getTouchedSaisons($this->from, $this->until, $this->dateModel, $this->carlength);
+        $repository = new ConfigSaisonDatesRepository();
+        $entities = $repository->getTouchedSaisons($this->from, $this->until, $this->dateModel, $this->carlength);
+//        dd($entities);
+
         $entities->each(fn(SaisonDatesEntity $item) => static::$dailyPrices += $item->getDailyPrices()->toArray());
         ksort(static::$dailyPrices);
         $sumPrice = $entities->sum(fn(SaisonDatesEntity $i) => $i->getDailyPrices()->values()->sum());

@@ -19,7 +19,7 @@ class Base extends Main implements IDailyPrice
         $this->initConfig();
     }
 
-    public function addPrice(DatePeriod $days): Price
+    public function addPrice(?DatePeriod $days = null): Price
     {
         $this->saisonDatesRepository = new ConfigSaisonDatesRepository();
         $entities = $this->saisonDatesRepository->getTouchedSaisons($this->from, $this->until, $this->dateModel, $this->length);

@@ -33,12 +33,17 @@ class MainTestSeeder extends Seeder
         }
 
         if($this->model) {
-            ($this->model)::getModel()->refresh();
+            $model = ($this->model)::getModel();
+            if(!$this->table) {
+                $this->table = $model->getTable();
+            }
+            $model->refresh();
         }
         Schema::enableForeignKeyConstraints();
     }
 
     protected function inserByData($dataClass) {
+
         if(property_exists($dataClass, 'data')) {
             if ($this->table && count($dataClass::$data) > 0) {
                 foreach($dataClass::$data as $row) {

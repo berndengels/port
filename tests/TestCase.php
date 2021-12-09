@@ -35,16 +35,18 @@ abstract class TestCase extends BaseTestCase
     protected $followRedirects = true;
     protected $user;
     protected $customer;
+    protected $env = 'demo';
 
     protected function setUp(): void
     {
         parent::setUp();
         Notification::fake();
         Cache::clear();
-        DB::setDefaultConnection('testing');
+        DB::setDefaultConnection($this->env);
+        $migrationPath = 'testing' === $this->env ? '/testing' : '';
 
-        $this->artisan('migrate:fresh --drop-views --env=testing --path=database/migrations/testing');
-        $this->artisan('db:seed --env=testing');
+        $this->artisan("migrate:fresh --drop-views --env=$this->env --path=database/migrations". $migrationPath);
+        $this->artisan("db:seed --env=$this->env");
 
         $this->user     = $this->createUserWithoutEvents();
         $this->customer = $this->createCustomerWithoutEvents();

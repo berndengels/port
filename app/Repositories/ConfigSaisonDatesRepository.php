@@ -22,13 +22,18 @@ class ConfigSaisonDatesRepository extends Repository
     protected static $model = ConfigSaisonDates::class;
     protected static $cacheKeyOptions = AppCache::KEY_OPTIONS_SAISON_DATES;
     protected static $cacheKeyOptionsData = AppCache::KEY_OPTIONS_DATA_SAISON_DATES;
+    protected static $counter = 0;
 
     public function getSaisons(Carbon $from, Carbon $until, $byRelation) {
-        $data = ConfigSaisonDates::with($byRelation)->get()
+        $data = ConfigSaisonDates::with($byRelation)
+            ->whereKey('guest')
+            ->get()
             ->map(function (ConfigSaisonDates $saison) use ($from, $until) {
-                $untilYear = ($saison->from_month > $saison->until_month) ? $until->year + 1 : $until->year;
-                $from   = Carbon::create($from->format('Y') . '-' . $saison->from_month . '-' . $saison->from_day);
-                $until  = Carbon::create($untilYear . '-' . $saison->until_month . '-' . $saison->until_day);
+//                $untilYear = ($saison->from_month > $saison->until_month) ? $until->year + 1 : $until->year;
+                $fromYear = ($saison->from_month > $saison->until_month) ? $until->year - 1 : $until->year;
+                $from   = Carbon::create($fromYear . '-' . $saison->from_month . '-' . $saison->from_day);
+                $until  = Carbon::create($until->format('Y') . '-' . $saison->until_month . '-' . $saison->until_day);
+
                 return new SaisonDatesEntity(saison: $saison, from: $from, until: $until);
             })
         ;
@@ -38,11 +43,13 @@ class ConfigSaisonDatesRepository extends Repository
     public function getTouchedSaisons(Carbon $from, Carbon $until, $model, $search): Collection|null {
         return $this->getSaisons($from, $until, 'dailyPrice')
             ->filter(function (SaisonDatesEntity $entiy) use ($from, $until, $model, $search) {
-                $itemPeriod = Period::make($from, $until);
-                $saisonPeriod = Period::make($entiy->getFrom(), $entiy->getUntil());
-                $overlap = $itemPeriod->overlap($saisonPeriod);
+                $itemPeriod     = Period::make($from, $until, format: 'md');
+                $saisonPeriod   = Period::make($entiy->getFrom(), $entiy->getUntil(), format: 'md');
+                $overlap        = $itemPeriod->overlap($saisonPeriod);
 
                 if($overlap) {
+//                    dump(static::$counter++ ,$itemPeriod->asString(), $saisonPeriod->asString());
+
                     $entiy->setPeriod($overlap);
                     $dailyPrice = $entiy->dailyPrice()->whereModel($model)
                         ->where(function (Builder $query) use ($search) {

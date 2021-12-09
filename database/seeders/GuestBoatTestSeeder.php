@@ -24,14 +24,23 @@ class GuestBoatTestSeeder extends MainTestSeeder
         GuestBoat::factory()
             ->hasDates(3, function (array $attributes, GuestBoat $boat) {
                 $randomDateEnd = Carbon::today()->addMonths(5)->format('Y-m-d');
-                $from  = Carbon::create(DateHelper::randomDate('2020-05-01', $randomDateEnd,'Y-m-d'));
-                $until = $from->copy()->addDays(rand(1,7));
-                $price = (new GuestBoatPrice($from, $until, $boat))->getPrice(RequestHelper::build());
+                $from       = Carbon::create(DateHelper::randomDate('2020-05-01', $randomDateEnd,'Y-m-d'));
+                $until      = $from->copy()->addDays(rand(1,7));
+                $electric   = (bool) rand(0,1);
+                $persons    = rand(1,4);
+
+                $price = (new GuestBoatPrice($from, $until, $boat))->getPrice(RequestHelper::build([
+                    'length'    => rand(7, 12),
+                    'electric'  => $electric,
+                    'persons'   => $persons,
+                ]));
 
                 return [
-                    'boat_guest_id' => $boat->id,
+                    'guest_boat_id' => $boat->id,
                     'from'          => $from,
                     'until'         => $until,
+                    'electric'      => $electric,
+                    'persons'       => $persons,
                     'price'         => $price['total'],
                     'prices'        => json_encode($price),
                 ];

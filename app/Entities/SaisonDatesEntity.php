@@ -25,9 +25,12 @@ class SaisonDatesEntity
     protected $boatPrices = [];
     protected $price;
 
-    public function __construct(protected ConfigSaisonDates $saison, protected Carbon $from, protected Carbon $until)
-    {
-    }
+    public function __construct(
+        protected ConfigSaisonDates $saison,
+        protected Carbon $from,
+        protected Carbon $until
+    )
+    {}
 
     public function getSaisonId() {
         return $this->saison->id;

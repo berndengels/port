@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Traits\Models\ClearCache;
-use Database\Factories\BoatPriceFactory;
+use Database\Factories\ConfigBoatPriceFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property float $price_factor
  * @property-read ConfigPriceType $priceType
  * @property-read ConfigSaisonDates $saison
- * @method static BoatPriceFactory factory(...$parameters)
+ * @method static ConfigBoatPriceFactory factory(...$parameters)
  * @method static Builder|ConfigBoatPrice newModelQuery()
  * @method static Builder|ConfigBoatPrice newQuery()
  * @method static Builder|ConfigBoatPrice query()

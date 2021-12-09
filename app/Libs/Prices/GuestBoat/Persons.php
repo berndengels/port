@@ -13,7 +13,7 @@ class Persons extends Main implements IDailyPrice
         $this->initConfig();
     }
 
-    public function addPrice(DatePeriod $days): Price
+    public function addPrice(?DatePeriod $days = null): Price
     {
         $value = 0;
         $pComponent = $this->priceComponents

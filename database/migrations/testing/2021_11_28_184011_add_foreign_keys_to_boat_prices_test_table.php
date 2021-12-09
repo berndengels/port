@@ -13,9 +13,9 @@ class AddForeignKeysToBoatPricesTestTable extends Migration
      */
     public function up()
     {
-        Schema::table('boat_prices', function (Blueprint $table) {
-            $table->foreign('saison_date_id', 'boat_prices_ibfk_1')->references('id')->on('saison_dates')->onUpdate('CASCADE')->onDelete('CASCADE');
-            $table->foreign('price_type_id', 'boat_prices_ibfk_2')->references('id')->on('price_types')->onUpdate('CASCADE')->onDelete('CASCADE');
+        Schema::table('config_boat_prices', function (Blueprint $table) {
+            $table->foreign('saison_date_id', 'boat_prices_ibfk_1')->references('id')->on('config_saison_dates')->onUpdate('CASCADE')->onDelete('CASCADE');
+            $table->foreign('price_type_id', 'boat_prices_ibfk_2')->references('id')->on('config_price_types')->onUpdate('CASCADE')->onDelete('CASCADE');
         });
     }
 
@@ -26,7 +26,7 @@ class AddForeignKeysToBoatPricesTestTable extends Migration
      */
     public function down()
     {
-        Schema::table('boat_prices', function (Blueprint $table) {
+        Schema::table('config_boat_prices', function (Blueprint $table) {
             $table->dropForeign('boat_prices_ibfk_1');
             $table->dropForeign('boat_prices_ibfk_2');
         });

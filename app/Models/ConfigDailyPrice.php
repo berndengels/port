@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Traits\Models\ClearCache;
-use Database\Factories\DailyPriceFactory;
+use Database\Factories\ConfigDailyPriceFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -23,7 +23,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read mixed $basename
  * @property-read ConfigPriceType $priceType
  * @property-read ConfigSaisonDates $saison
- * @method static DailyPriceFactory factory(...$parameters)
+ * @method static ConfigDailyPriceFactory factory(...$parameters)
  * @method static Builder|ConfigDailyPrice newModelQuery()
  * @method static Builder|ConfigDailyPrice newQuery()
  * @method static Builder|ConfigDailyPrice query()

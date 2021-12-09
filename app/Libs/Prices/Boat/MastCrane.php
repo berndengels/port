@@ -7,8 +7,8 @@ use App\Libs\Prices\IPrice;
 class MastCrane extends Main implements IPrice
 {
     public function __construct(
-        protected bool $mast_crane,
-        protected float|int $mast_weight
+        protected bool $mast_crane = false,
+        protected float|null $mast_weight = null
     ) {
         $this->initConfig();
     }

@@ -1,9 +1,11 @@
 <?php
 namespace App\Libs\Prices\Boat;
 
+use App\Models\ConfigSaisonDates;
 use Carbon\Carbon;
 use App\Models\Boat;
 use App\Models\BoatDates;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 use App\Models\ConfigBoatPrice;
 use App\Models\ConfigEntityType;
@@ -44,9 +46,12 @@ abstract class Main extends MainPriceItem
         $year           = $today->format('Y');
         $nextYear       = $today->copy()->addYear()->format('Y');
 
-        $boatPrices = ConfigBoatPrice::with('saison')->get();
-        $winter = $boatPrices->filter(fn(ConfigBoatPrice $p) => $p->saison->key === 'winter')->first();
-        $summer = $boatPrices->filter(fn(ConfigBoatPrice $p) => $p->saison->key === 'summer')->first();
+        $boatPrices = ConfigBoatPrice::with('saison')
+            ->whereHas('saison', fn(Builder $query) => $query->where('key','=','customer'))
+            ->get()
+        ;
+        $winter = $boatPrices->filter(fn(ConfigBoatPrice $p) => $p->saison->mode === 'winter')->first();
+        $summer = $boatPrices->filter(fn(ConfigBoatPrice $p) => $p->saison->mode === 'summer')->first();
 
         static::$saisonStart    = Carbon::make($year . '-' . $summer->saison->from_month . '-' . $summer->saison->from_day);
         static::$saisonEnd      = Carbon::make($year . '-' . $summer->saison->until_month . '-' . $summer->saison->until_day);

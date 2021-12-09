@@ -16,16 +16,19 @@ class Base extends Main implements IDailyPrice
         protected float $width
     ) {
         $this->initConfig();
-        dd($this->length * $this->width);
         $this->defaultSaisonPrice   = round($this->priceSaisonFactor * $this->length * $this->width);
         $this->defaultWinterPrice   = round($this->priceWinterFactor * $this->length * $this->width);
     }
 
-
-    public function addPrice(DatePeriod $days): Price
+    public function addPrice(?DatePeriod $days = null): Price
     {
-        $from   = $days->getStartDate();
-        $until  = $days->getEndDate();
+        if($days) {
+            $from   = $days->getStartDate();
+            $until  = $days->getEndDate();
+        } else {
+            $from   = 'saison' === $this->modus ? static::$saisonStart : static::$winterStart;
+            $until  = 'saison' === $this->modus ? static::$saisonEnd : static::$winterEnd;
+        }
 
         switch($this->modus) {
             case 'saison':
