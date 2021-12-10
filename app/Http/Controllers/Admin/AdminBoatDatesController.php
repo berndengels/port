@@ -254,21 +254,26 @@ class AdminBoatDatesController extends AdminController
 
     public function sendExcel(Request $request, $year = null, $month = null)
     {
-        $email      = $request->post('email');
+        $year       = $request->post('year');
+        $month      = $request->post('month');
         $now        = Carbon::now()->format('Ymd-Hi');
         $fileName   = $now.'_boat_dates.xls';
-        $fullPath   = storage_path('app/temp/'.$fileName);
+        $subject    = 'Dauerlieger Daten';
 
         try {
             $export = new BoatDatesExport($year, $month);
-            if(Excel::store($export, $fileName, 'temp')) {
-                Mail::send(new SendExcel($email, $export, $fullPath));
-            }
-            unlink($fullPath);
-            return back()->with(['success' => 'Excel-Datei erfolgreich versand!']);
+            Mail::send(new SendExcel(
+                    recipient:  $request->post('email'),
+                    export: $export,
+                    fileName: $fileName,
+                    subject: $subject,
+                    year: $year,
+                    month: $month
+                )
+            );
+            return redirect()->route('admin.boatDates.index')->with(['success' => 'Excel-Datei erfolgreich versand!']);
         } catch (Exception $e) {
-            return back()->withErrors(['error' => 'Excel-Datei konnte nicht versand werden!']);
+            return redirect()->route('admin.boatDates.index')->with(['error' => 'Excel-Datei konnte nicht versand werden!']);
         }
     }
-
 }

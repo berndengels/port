@@ -33,7 +33,7 @@ class CaravanDatesExport extends ExcelExport implements WithMapping, WithColumnF
             $row->until->format('d.m.Y'),
             $row->days,
             $row->persons,
-            $row->electric,
+            $row->electric ? 'ja' : 'nein',
             $row->price,
         ];
     }
@@ -47,7 +47,7 @@ class CaravanDatesExport extends ExcelExport implements WithMapping, WithColumnF
             'D' => NumberFormat::FORMAT_DATE_DDMMYYYY,
             'E' => NumberFormat::FORMAT_NUMBER,
             'F' => NumberFormat::FORMAT_NUMBER,
-            'G' => DataType::TYPE_BOOL,
+            'G' => DataType::TYPE_STRING,
             'H' => NumberFormat::FORMAT_CURRENCY_EUR_SIMPLE,
         ];
     }

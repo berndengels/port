@@ -9,7 +9,7 @@
 - Jahr: {{ $data->year }}
 @endif
 @if($data->month)
-- Monat: {{ $data->from->monthName }}
+- Monat: {{ $data->month }}
 @endif
 - Anzahl {{ $data->count }}
 - Summe Total: {{ $data->priceTotal }} €

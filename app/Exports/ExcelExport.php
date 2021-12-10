@@ -2,7 +2,6 @@
 
 namespace App\Exports;
 
-use Illuminate\Database\Query\Builder;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -32,11 +31,7 @@ class ExcelExport implements WithHeadings, ShouldAutoSize, FromQuery
      */
     public function __construct(public $year = null, public $month = null)
     {
-/*
-        $this->data     = $this->getData();
-        $this->count    = $this->data->count();
-        $this->priceTotal = $this->data->sum(fn ($item) => $item->{$this->sumField});
-*/
+        $this->query();
     }
 
     public function headings(): array
@@ -60,10 +55,9 @@ class ExcelExport implements WithHeadings, ShouldAutoSize, FromQuery
 
         $query->orderBy($this->fromKey);
 
-        $data = $query->get();
-
-        $this->count = $data->count();
-        $this->priceTotal = $data->sum(fn ($item) => $item->{$this->sumField});
+        $this->data = $query->get();
+        $this->count = $this->data->count();
+        $this->priceTotal = $this->data->sum(fn ($item) => $item->{$this->sumField});
 
         return $query;
     }
