@@ -2,7 +2,11 @@
 namespace App\Models;
 
 use App\Contracts\Models\IDatePrice;
+use App\Traits\Models\Filter\GuestBoatFilter;
+use App\Traits\Models\Filter\HasYearMonthOptions;
+use App\Traits\Models\Filter\YearMonthFilter;
 use App\Traits\Models\HasDailyPrice;
+use App\Traits\Models\HasFromUntilDates;
 use Database\Factories\GuestBoatDatesFactory;
 use Eloquent;
 use App\Traits\Models\ClearCache;
@@ -50,7 +54,7 @@ use Illuminate\Support\Carbon;
  */
 class GuestBoatDates extends BaseModel implements IDatePrice
 {
-    use HasFactory, ClearCache, Filter, HasDailyPrice;
+    use HasFactory, ClearCache, Filter, HasFromUntilDates, GuestBoatFilter, YearMonthFilter, HasYearMonthOptions, HasDailyPrice;
 
     protected $table = 'guest_boat_dates';
     protected $guarded = ['id'];

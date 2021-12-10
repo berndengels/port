@@ -13,6 +13,19 @@
             </div>
             <div></div>
         </div>
+        <x-form class="inline-form ml-5" method="get" id="frmFilter" name="frmFilter" action="{{ route('admin.guestBoats.index') }}">
+            @csrf
+            <x-form-select
+                    name="guestBoat"
+                    class="inline-block"
+                    :options="$guestBoatOptions"
+                    :default="$id"
+                    placeholder="Filter nach Name"
+                    onchange="document.frmFilter.submit()"
+                    floating
+            />
+            <button class="btn btn-reset inline">Reset</button>
+        </x-form>
         {{ $data->links() }}
         <table class="table w-full mt-3">
             <tr>
@@ -51,3 +64,13 @@
         {{ $data->links() }}
     </div>
 @endsection
+
+@push('inline-scripts')
+    <script>
+		$(".btn-reset").click( e => {
+			e.preventDefault();
+			document.frmFilter.guestBoat.value = ''
+			document.frmFilter.submit();
+		});
+    </script>
+@endpush

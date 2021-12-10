@@ -28,8 +28,10 @@ class CaravanTestSeeder extends MainTestSeeder
                 $randomDateEnd = Carbon::today()->addMonths(5)->format('Y-m-d');
                 $from       = Carbon::create(DateHelper::randomDate('2020-05-01', $randomDateEnd,'Y-m-d'));
                 $until      = $from->copy()->addDays(rand(1,7));
-                $electric   = (bool) rand(0,1);
-                $persons    = rand(1,4);
+//                $electric   = (bool) rand(0,1);
+//                $persons    = rand(1,4);
+                $electric   = false;
+                $persons    = 2;
 
                 $price = (new CaravanPrice($from, $until, $caravan))->getPrice(RequestHelper::build([
                     'carlength'     => rand(6, 10),

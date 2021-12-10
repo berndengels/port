@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\GuestBoat;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Requests\GuestBoatRequest;
 use Illuminate\Support\Facades\DB;
@@ -13,10 +14,19 @@ class AdminGuestBoatController extends AdminController
      *
      * @return Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data = GuestBoat::paginate($this->paginatorLimit);
-        return view('admin.guestBoats.index', compact('data'));
+        $id = $request->post('guestBoat');
+        $data = GuestBoat::orderBy('name')
+            ->guestBoat($id)
+            ->paginate($this->paginatorLimit)
+        ;
+
+        return view('admin.guestBoats.index', [
+            'guestBoatOptions' => $this->guestBoatRepository->options()->getSelectOptions(),
+            'data'  => $data,
+            'id'   => $id,
+        ]);
     }
 
     /**

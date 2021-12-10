@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Excel;
+use App\Mail\SendExcel;
+use App\Exports\BoatDatesExport;
 use App\Http\Requests\BoatDatesRequest;
 use App\Mail\InvoiceMail;
-use App\Models\Boat;
 use App\Models\BoatDates;
 use App\Models\ConfigBoatPrice;
-use App\Repositories\BoatRepository;
 use Barryvdh\DomPDF\PDF;
 use Carbon\Carbon;
 use Exception;
@@ -28,6 +29,8 @@ class AdminBoatDatesController extends AdminController
     public function __construct()
     {
         parent::__construct();
+        $this->monthsByYear = BoatDates::getMonthsByYears();
+        $this->years = array_keys($this->monthsByYear);
         $this->datesModi = config('port.main.boat.dates.modi');
     }
 
@@ -36,81 +39,104 @@ class AdminBoatDatesController extends AdminController
      *
      * @return Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $uri = explode('/', $request->getRequestUri());
+        $modus  = array_pop($uri);
+        $modus  = in_array($modus, ['saison','winter']) ? $modus : null;
+        $boatId = $request->input('boat');
+        $year   = $request->input('year');
+        $month  = $request->input('month');
+
+        if($year || $month) {
+            $boatId = null;
+        }
+
+        if($boatId) {
+            $year = null;
+            $month = null;
+        }
+
         /**
          * @var $query Builder
          */
         $query = BoatDates::with('boat')
             ->orderByDesc('from');
-        $data = $query->paginate($this->paginatorLimit);
-        /**
-         * @var $priceTotal Collection
-         */
-        $priceTotal = $query->get()->sum(
-            function ($item) {
-                return $item->price;
-            }
-        );
 
-        return view('admin.boatDates.index', compact('data', 'priceTotal'));
+        if($modus) {
+            $query->whereModus($modus);
+        }
+
+        $data = $query
+            ->boatByDates($guestBoatId ?? null)
+            ->fromYearMonth($year, $month);
+
+
+        $yearOptions = BoatDates::yearOptions();
+        $monthOptions = BoatDates::monthOptions();
+        $priceTotal = $query->get()->sum(fn ($item) => $item->price);
+        $paginated  = $data->paginate($this->paginatorLimit);
+        $queryString = $request->only(['boat', 'year', 'month','modus']);
+
+        return view('admin.boatDates.index', [
+            'data'          => $paginated,
+            'priceTotal'    => $priceTotal,
+            'boatOptions'   => $this->boatRepository->options('boat_name')->getSelectOptions(),
+            'years'         => $this->years,
+            'monthsByYear'  => $this->monthsByYear,
+            'yearOptions'   => $yearOptions,
+            'monthOptions'  => $monthOptions,
+            'priceTotal'    => $priceTotal,
+            'boat'          => $boatId,
+            'year'          => $year,
+            'month'         => $month,
+            'queryString'   => $queryString,
+            'modus'         => $modus,
+        ]);
     }
-
 
     /**
      * Display a listing of the resource.
      *
      * @return Response
      */
+/*
     public function saison()
     {
         $modus = 'saison';
-        /**
-         * @var $query Builder
-         */
         $query = BoatDates::with('boat')
             ->whereModus('saison')
             ->orderByDesc('from');
         $data = $query->paginate($this->paginatorLimit);
-        /**
-         * @var $priceTotal Collection
-         */
         $priceTotal = $query->get()->sum(
             function ($item) {
                 return $item->price;
             }
         );
-
         return view('admin.boatDates.index', compact('data', 'modus', 'priceTotal'));
     }
-
+*/
     /**
      * Display a listing of the resource.
      *
      * @return Response
      */
+/*
     public function winter()
     {
         $modus = 'winter';
-        /**
-         * @var $query Builder
-         */
         $query = BoatDates::with('boat')
             ->whereModus('winter')
             ->orderByDesc('from');
         $data = $query->paginate($this->paginatorLimit);
-        /**
-         * @var $priceTotal Collection
-         */
         $priceTotal = $query->get()->sum(
             function ($item) {
                 return $item->price;
             }
         );
-
         return view('admin.boatDates.index', compact('data', 'modus', 'priceTotal'));
     }
-
+*/
     /**
      * Display the specified resource.
      *
@@ -267,4 +293,24 @@ class AdminBoatDatesController extends AdminController
             return redirect()->back()->with('error', $e->getMessage());
         }
     }
+
+    public function sendExcel(Request $request, $year = null, $month = null)
+    {
+        $email      = $request->post('email');
+        $now        = Carbon::now()->format('Ymd-Hi');
+        $fileName   = $now.'_boat_dates.xls';
+        $fullPath   = storage_path('app/temp/'.$fileName);
+
+        try {
+            $export = new BoatDatesExport($year, $month);
+            if(Excel::store($export, $fileName, 'temp')) {
+                Mail::send(new SendExcel($email, $export, $fullPath));
+            }
+            unlink($fullPath);
+            return back()->with(['success' => 'Excel-Datei erfolgreich versand!']);
+        } catch (Exception $e) {
+            return back()->withErrors(['error' => 'Excel-Datei konnte nicht versand werden!']);
+        }
+    }
+
 }

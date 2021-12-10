@@ -1,13 +1,17 @@
 <?php
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\BoatDatesExport;
+use App\Exports\GuestBoatDatesExport;
 use App\Libs\BoatPriceCalculator;
 use App\Libs\Prices\GuestBoatPrice;
 use App\Libs\Prices\BoatPrice;
 use App\Libs\Prices\CaravanPrice;
 use App\Models\Boat;
+use App\Models\BoatDates;
 use App\Models\GuestBoat;
 use App\Models\Caravan;
+use App\Models\GuestBoatDates;
 use Excel;
 use Carbon\Carbon;
 use App\Models\CaravanDates;
@@ -88,18 +92,51 @@ class AdminPriceController extends AdminController
         return response()->json($response);
     }
 
-    public function excel($year = null, $month = null)
+    public function excelCaravanDates($year = null, $month = null)
     {
         $now = Carbon::now()->format('Ymd-Hi');
         $export = new CaravanDatesExport($year, $month);
         return Excel::download($export, $now.'_caravan_dates.xlsx');
     }
 
-    public function pdf(Carbon $from)
+    public function pdfCaravanDates(Carbon $from)
     {
         $data = CaravanDates::with('caravan')
             ->whereDate('from', '>=', $from)
             ->orderBy('from')
             ->get();
+        return $data;
+    }
+
+    public function excelBoatDates($year = null, $month = null)
+    {
+        $now = Carbon::now()->format('Ymd-Hi');
+        $export = new BoatDatesExport($year, $month);
+        return Excel::download($export, $now.'_boat_dates.xlsx');
+    }
+
+    public function pdfBoatDates(Carbon $from)
+    {
+        $data = BoatDates::with('boat')
+            ->whereDate('from', '>=', $from)
+            ->orderBy('from')
+            ->get();
+        return $data;
+    }
+
+    public function excelGuestBoatDates($year = null, $month = null)
+    {
+        $now = Carbon::now()->format('Ymd-Hi');
+        $export = new GuestBoatDatesExport($year, $month);
+        return Excel::download($export, $now.'_gueat_boat_dates.xlsx');
+    }
+
+    public function pdfGuestBoatDates(Carbon $from)
+    {
+        $data = GuestBoatDates::with('boat')
+            ->whereDate('from', '>=', $from)
+            ->orderBy('from')
+            ->get();
+        return $data;
     }
 }

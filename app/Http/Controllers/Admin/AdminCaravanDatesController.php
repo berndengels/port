@@ -1,22 +1,19 @@
 <?php
 namespace App\Http\Controllers\Admin;
 
-use App\Libs\Prices\CaravanPrice;
-use App\Mail\SendExcel;
 use Excel;
+use App\Mail\SendExcel;
 use App\Exports\CaravanDatesExport;
 use App\Rules\DatesIntervalUnique;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Http;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Caravan;
 use App\Models\CaravanDates;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\CaravanDatesRequest;
 use App\Http\Requests\CaravanDatesValidationData;
 use Illuminate\Support\Facades\Mail;
@@ -60,6 +57,7 @@ class AdminCaravanDatesController extends AdminController
          */
         $query = CaravanDates::with('caravan')
             ->orderByDesc('from');
+
         $dublicateOptions = CaravanDates::dublicates()
             ->get()
             ->keyBy('caravan_id')
@@ -71,34 +69,17 @@ class AdminCaravanDatesController extends AdminController
             )
             ->prepend('Dublikat wählen', '');
 
-        $yearOptions = CaravanDates::selectRaw('YEAR(`from`) AS year')
-            ->groupByRaw('year')
-            ->get()
-            ->keyBy('year')
-            ->map
-            ->year
-            ->prepend('Jahr wählen', '');
+        $yearOptions = CaravanDates::yearOptions();
+        $monthOptions = CaravanDates::monthOptions();
 
-        $monthOptions = CaravanDates::selectRaw('MONTH(`from`) AS number, MONTHNAME(`from`) AS monthname')
-            ->groupByRaw('number')
-            ->get()
-            ->keyBy('number')
-            ->map
-            ->monthname
-            ->prepend('Monat wählen', '');
         $data = $query
             ->caravanByDates($caravanId ?? $dublicatéId)
             ->fromYearMonth($year, $month);
 
         /**
-         * @var $priceTotal \Illuminate\Database\Eloquent\Collection
+         * @var $priceTotal Collection
          */
-        $priceTotal = $data->get();
-        $priceTotal = $priceTotal->sum(
-            function ($item) {
-                return $item->price;
-            }
-        );
+        $priceTotal = $query->get()->sum(fn ($item) => $item->price);
 
         $paginated = $data->paginate($this->paginatorLimit);
         $queryString = $request->only(['caravan','dublicate','year', 'month']);
@@ -236,7 +217,6 @@ class AdminCaravanDatesController extends AdminController
 
         try {
             $export = new CaravanDatesExport($year, $month);
-
             if(Excel::store($export, $fileName, 'temp')) {
                 Mail::send(new SendExcel($email, $export, $fullPath));
             }

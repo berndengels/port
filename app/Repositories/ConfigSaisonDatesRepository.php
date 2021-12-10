@@ -41,9 +41,25 @@ class ConfigSaisonDatesRepository extends Repository
             ->where('key','=','guest')
             ->get()
             ->map(function (ConfigSaisonDates $saison) {
-                $untilYear = ($saison->from_month > $saison->until_month) ? ($this->from->year + 1) : $this->until->year;
-                $from   = Carbon::create($this->from->year . '-' . $saison->from_month . '-' . $saison->from_day);
-                $until  = Carbon::create($untilYear . '-' . $saison->until_month . '-' . $saison->until_day);
+                if($saison->from_month > $saison->until_month) {
+                    // p.e: 10 => 05
+                    if($this->from->month <= $saison->until_month ) {
+                        // p.e: 02 => 05
+                        $fromYear = ($this->from->copy()->year - 1);
+                        $from   = Carbon::create($fromYear . '-' . $saison->from_month . '-' . $saison->from_day);
+                        $until  = Carbon::create($this->until->year . '-' . $saison->until_month . '-' . $saison->until_day);
+                    }
+                    else {
+                        // p.e: 11 => 10
+                        $untilYear = $this->until->copy()->year + 1;
+                        $from   = Carbon::create($this->from->year . '-' . $saison->from_month . '-' . $saison->from_day);
+                        $until  = Carbon::create($untilYear . '-' . $saison->until_month . '-' . $saison->until_day);
+                    }
+                } else {
+                    // p.e: 06 => 09
+                    $from   = Carbon::create($this->from->year . '-' . $saison->from_month . '-' . $saison->from_day);
+                    $until  = Carbon::create($this->until->year . '-' . $saison->until_month . '-' . $saison->until_day);
+                }
 
                 return new SaisonDatesEntity(saison: $saison, from: $from, until: $until);
             })
@@ -59,17 +75,14 @@ class ConfigSaisonDatesRepository extends Repository
                 $from = $this->from;
                 $until = $this->until;
 
-                if(true === $entiy->untilIsNextYear()) {
-                    $from = $this->from->copy()->addYear();
-                    $until = $this->until->copy()->addYear();
-                }
-
                 $itemPeriod     = Period::make($from, $until);
                 $saisonPeriod   = Period::make($entiy->getFrom(), $entiy->getUntil());
                 $overlap        = $itemPeriod->overlap($saisonPeriod);
 
-                if($overlap) {
-
+                if(!$overlap) {
+//                    dd($itemPeriod->asString(), $saisonPeriod->asString());
+                }
+                else {
                     $entiy->setPeriod($overlap);
                     $dailyPrice = $entiy->dailyPrice()->whereModel($model)
                         ->where(function (Builder $query) use ($search) {

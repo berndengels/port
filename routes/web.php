@@ -117,8 +117,9 @@ Route::group([
     Route::get('boats/guests', [AdminBoatController::class,'guests'])->name('boats.guests');
     Route::get('boatDates/invoice/{boatDate}', [AdminBoatDatesController::class, 'invoice'])->name('boatDates.invoice');
     Route::get('boatDates/sendInvoice/{boatDate}', [AdminBoatDatesController::class, 'sendInvoice'])->name('boatDates.sendInvoice');
-    Route::get('boatDates/saison', [AdminBoatDatesController::class, 'saison'])->name('boatDates.saison');
-    Route::get('boatDates/winter', [AdminBoatDatesController::class, 'winter'])->name('boatDates.winter');
+
+    Route::get('boatDates/index/saison', [AdminBoatDatesController::class, 'index'])->name('boatDates.saison');
+    Route::get('boatDates/index/winter', [AdminBoatDatesController::class, 'index'])->name('boatDates.winter');
 
     Route::match(['post','put'],'caravanDates/price/calculate', [AdminPriceController::class, 'calculateCaravanDates'])->name('caravanDates.price.calculate');
     Route::match(['post','put'],'boatDates/price/calculate', [AdminPriceController::class, 'calculateBoatDates'])->name('boatDates.price.calculate');
@@ -156,10 +157,20 @@ Route::group([
             Route::resource('entityTypes', AdminConfigEntityTypeController::class);
     });
     Route::post('serviceRequests/done/{serviceRequest}', [AdminServiceRequestController::class, 'done'])->name('serviceRequests.done');
-    Route::post('caravanDates/sendExcel', [AdminCaravanDatesController::class, 'sendExcel'])->name('caravanDates.sendExcel');
 
-    Route::get('caravan/price/excel/{year?}/{month?}', [AdminPriceController::class, 'excel'])->name('caravan.price.excel');
-    Route::get('caravan/price/pdf/{year?}/{month?}', [AdminPriceController::class, 'pdf'])->name('caravan.price.pdf');
+    Route::post('caravanDates/sendExcel', [AdminCaravanDatesController::class, 'sendExcel'])->name('caravanDates.sendExcel');
+    Route::post('boatDates/sendExcel', [AdminBoatDatesController::class, 'sendExcel'])->name('boatDates.sendExcel');
+    Route::post('guestBoatDates/sendExcel', [AdminGuestBoatDatesController::class, 'sendExcel'])->name('guestBoatDates.sendExcel');
+
+    Route::get('caravan/price/excel/{year?}/{month?}', [AdminPriceController::class, 'excelCaravanDates'])->name('caravan.price.excel');
+    Route::get('caravan/price/pdf/{year?}/{month?}', [AdminPriceController::class, 'pdfCaravanDates'])->name('caravan.price.pdf');
+
+    Route::get('boat/price/excel/{year?}/{month?}', [AdminPriceController::class, 'excelBoatDates'])->name('boat.price.excel');
+    Route::get('baot/price/pdf/{year?}/{month?}', [AdminPriceController::class, 'pdfBoatDates'])->name('boat.price.pdf');
+
+    Route::get('guestBoat/price/excel/{year?}/{month?}', [AdminPriceController::class, 'excelGuestBoatDates'])->name('guestBoat.price.excel');
+    Route::get('guestBoat/price/pdf/{year?}/{month?}', [AdminPriceController::class, 'pdfGuestBoatDates'])->name('guestBoat.price.pdf');
+
     Route::get('car/info', [AdminCarLicensePlateController::class, 'info'])->name('car.info');
 //    Route::get('route/current//{currentRouteName}', [RouteController::class, 'setCurrentMenu'])->name('route.current');
     Route::post('upload/image/{paramName}', [AdminUploadController::class, 'imageUpload'])->name('upload.image');

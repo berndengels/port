@@ -1,24 +1,79 @@
 <?php
 namespace App\Http\Controllers\Admin;
 
+use Excel;
+use App\Mail\SendExcel;
+use App\Exports\GuestBoatDatesExport;
 use App\Models\GuestBoat;
 use App\Models\GuestBoatDates;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Requests\GuestBoatDatesRequest;
+use Illuminate\Support\Facades\Mail;
 
 class AdminGuestBoatDatesController extends AdminController
 {
+    public function __construct()
+    {
+        $this->monthsByYear = GuestBoatDates::getMonthsByYears();
+        $this->years = array_keys($this->monthsByYear);
+        parent::__construct();
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $query      = GuestBoatDates::with('boat')->orderByDesc('from');
+        $guestBoatId  = $request->input('guestBoat');
+        $year       = $request->input('year');
+        $month      = $request->input('month');
+
+        if($year || $month) {
+            $guestBoatId = null;
+        }
+
+        if($guestBoatId) {
+            $year = null;
+            $month = null;
+        }
+
+        /**
+         * @var $query Builder
+         */
+        $query = GuestBoatDates::with('boat')
+            ->orderByDesc('from');
+
+        $yearOptions = GuestBoatDates::yearOptions();
+        $monthOptions = GuestBoatDates::monthOptions();
+
+        $data = $query
+            ->guestBoatByDates($guestBoatId ?? null)
+            ->fromYearMonth($year, $month);
+
+
         $priceTotal = $query->get()->sum(fn ($item) => $item->price);
-        $data       = $query->paginate($this->paginatorLimit);
-        return view('admin.guestBoatDates.index', compact('data', 'priceTotal'));
+        $paginated  = $data->paginate($this->paginatorLimit);
+        $queryString = $request->only(['guestBoat', 'year', 'month']);
+
+        return view('admin.guestBoatDates.index', [
+            'data'              => $paginated,
+            'priceTotal'        => $priceTotal,
+            'guestBoatOptions'  => $this->guestBoatRepository->options()->getSelectOptions(),
+            'years'             => $this->years,
+            'monthsByYear'      => $this->monthsByYear,
+            'yearOptions'       => $yearOptions,
+            'monthOptions'      => $monthOptions,
+            'priceTotal'        => $priceTotal,
+            'guestBoat'         => $guestBoatId,
+            'year'              => $year,
+            'month'             => $month,
+            'queryString'       => $queryString,
+        ]);
     }
 
     /**
@@ -123,4 +178,25 @@ class AdminGuestBoatDatesController extends AdminController
             return redirect()->route('admin.guestBoatDates.index')->with('error', $e->getMessage());
         }
     }
+
+    public function sendExcel(Request $request, $year = null, $month = null)
+    {
+        $email      = $request->post('email');
+        $now        = Carbon::now()->format('Ymd-Hi');
+        $fileName   = $now.'_guest_boat_dates.xls';
+        $fullPath   = storage_path('app/temp/'.$fileName);
+
+        try {
+            $export = new GuestBoatDatesExport($year, $month);
+
+            if(Excel::store($export, $fileName, 'temp')) {
+                Mail::send(new SendExcel($email, $export, $fullPath));
+            }
+            unlink($fullPath);
+            return back()->with(['success' => 'Excel-Datei erfolgreich versand!']);
+        } catch (Exception $e) {
+            return back()->withErrors(['error' => 'Excel-Datei konnte nicht versand werden!']);
+        }
+    }
+
 }

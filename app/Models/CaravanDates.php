@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use App\Contracts\Models\IDatePrice;
+use App\Traits\Models\Filter\HasYearMonthOptions;
 use App\Traits\Models\HasDailyPrice;
+use App\Traits\Models\HasFromUntilDates;
 use Eloquent;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Carbon;
@@ -60,7 +62,7 @@ use Spatie\Period\Period;
  */
 class CaravanDates extends BaseModel
 {
-    use HasFactory, CaravanFilter, YearMonthFilter, ClearCache, HasDailyPrice;
+    use HasFactory, CaravanFilter, YearMonthFilter, HasYearMonthOptions, HasFromUntilDates, ClearCache, HasDailyPrice;
 
     protected $table = 'caravan_dates';
     protected $guarded = ['id'];
@@ -98,60 +100,6 @@ class CaravanDates extends BaseModel
             ->groupBy(['cd.caravan_id'])
             ->having('anzahl', '>', 1);
         return $builder;
-    }
-
-    public function getValidFromAttribute()
-    {
-        if($this->from) {
-            return $this->from->format('Y-m-d');
-        }
-        return null;
-    }
-
-    public function getValidUntilAttribute()
-    {
-        if($this->until) {
-            return $this->until->format('Y-m-d');
-        }
-        return null;
-    }
-
-    public function getDaysAttribute()
-    {
-        if($this->from && $this->until) {
-            return $this->from->diffInDays($this->until);
-        }
-        return null;
-    }
-
-    /**
-     * Scope a query to get.
-     *
-     * @param  Builder $query
-     * @return array
-     */
-    public function scopeGetMonthsByYears(Builder $query, $from = null, $until = null)
-    {
-        $query->selectRaw("DISTINCT MONTH(`from`) month, DATE_FORMAT(`from`, '%M', 'de_DE') monthname, YEAR(`from`) year");
-
-        if($from) {
-            $query->whereDate('from', '>=', $from);
-        }
-        if($until) {
-            $query->whereDate('until', '<=', $until);
-        }
-        $data = $query
-            ->orderBy('year')
-            ->orderBy('month')
-            ->get();
-        $result = [];
-        foreach($data as $date) {
-            $result[$date->year][] = [
-                'month'     => $date->month,
-                'monthname' => $date->monthname,
-            ];
-        }
-        return $result;
     }
 
     /**

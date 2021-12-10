@@ -20,17 +20,16 @@ class AdminCaravanController extends AdminController
      */
     public function index(Request $request)
     {
-        $caravanId = $request->post('caravan');
-
+        $id = $request->post('caravan');
         $data = Caravan::orderBy('carnumber')
-            ->caravan($caravanId)
+            ->caravan($id)
             ->paginate(config('port.main.default.pagination.limit'));
 
         return view(
             'admin.caravans.index', [
-            'caravanOptions' => $this->caravanRepository->options('carnumber')->getSelectOptions(),
-            'data'  => $data,
-            'id'    => $caravanId,
+                'caravanOptions' => $this->caravanRepository->options('carnumber')->getSelectOptions(),
+                'data'  => $data,
+                'id'    => $id,
             ]
         );
     }
