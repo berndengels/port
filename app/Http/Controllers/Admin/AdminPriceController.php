@@ -95,8 +95,10 @@ class AdminPriceController extends AdminController
     public function excelCaravanDates($year = null, $month = null)
     {
         $now = Carbon::now()->format('Ymd-Hi');
+        $fileName = $now.'_caravan_dates.xls';
         $export = new CaravanDatesExport($year, $month);
-        return Excel::download($export, $now.'_caravan_dates.xlsx');
+
+        return $export->download($fileName, \Maatwebsite\Excel\Excel::XLS);
     }
 
     public function pdfCaravanDates(Carbon $from)
@@ -111,8 +113,10 @@ class AdminPriceController extends AdminController
     public function excelBoatDates($year = null, $month = null)
     {
         $now = Carbon::now()->format('Ymd-Hi');
+        $fileName = $now.'_boat_dates.xls';
         $export = new BoatDatesExport($year, $month);
-        return Excel::download($export, $now.'_boat_dates.xlsx');
+
+        return $export->download($fileName, \Maatwebsite\Excel\Excel::XLS);
     }
 
     public function pdfBoatDates(Carbon $from)
@@ -127,8 +131,10 @@ class AdminPriceController extends AdminController
     public function excelGuestBoatDates($year = null, $month = null)
     {
         $now = Carbon::now()->format('Ymd-Hi');
+        $fileName = $now.'_gueat_boat_dates.xls';
         $export = new GuestBoatDatesExport($year, $month);
-        return Excel::download($export, $now.'_gueat_boat_dates.xlsx');
+
+        return $export->download($fileName, \Maatwebsite\Excel\Excel::XLS);
     }
 
     public function pdfGuestBoatDates(Carbon $from)

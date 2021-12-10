@@ -96,48 +96,6 @@ class AdminBoatDatesController extends AdminController
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
-/*
-    public function saison()
-    {
-        $modus = 'saison';
-        $query = BoatDates::with('boat')
-            ->whereModus('saison')
-            ->orderByDesc('from');
-        $data = $query->paginate($this->paginatorLimit);
-        $priceTotal = $query->get()->sum(
-            function ($item) {
-                return $item->price;
-            }
-        );
-        return view('admin.boatDates.index', compact('data', 'modus', 'priceTotal'));
-    }
-*/
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
-/*
-    public function winter()
-    {
-        $modus = 'winter';
-        $query = BoatDates::with('boat')
-            ->whereModus('winter')
-            ->orderByDesc('from');
-        $data = $query->paginate($this->paginatorLimit);
-        $priceTotal = $query->get()->sum(
-            function ($item) {
-                return $item->price;
-            }
-        );
-        return view('admin.boatDates.index', compact('data', 'modus', 'priceTotal'));
-    }
-*/
-    /**
      * Display the specified resource.
      *
      * @param  BoatDates $boatDates
