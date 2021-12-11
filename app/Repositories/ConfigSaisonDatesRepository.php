@@ -73,14 +73,14 @@ class ConfigSaisonDatesRepository extends Repository
             ->filter(function (SaisonDatesEntity $entiy) use ($model, $search) {
 
                 $from = $this->from;
-                $until = $this->until;
+                $until = $this->until->copy()->subDay();
 
                 $itemPeriod     = Period::make($from, $until);
                 $saisonPeriod   = Period::make($entiy->getFrom(), $entiy->getUntil());
                 $overlap        = $itemPeriod->overlap($saisonPeriod);
 
                 if(!$overlap) {
-//                    dd($itemPeriod->asString(), $saisonPeriod->asString());
+//                   dd($itemPeriod->asString(), $saisonPeriod->asString());
                 }
                 else {
                     $entiy->setPeriod($overlap);
@@ -120,13 +120,9 @@ class ConfigSaisonDatesRepository extends Repository
                             $sumPrice = $dailyPrice->price * $overlap->length();
                             $dayPrice = $dailyPrice->price;
                     }
-
                     $entiy->setPrice($sumPrice);
-
                     foreach($overlap as $index => $date) {
-                        if($index > 0) {
-                            $entiy->addDailyPrices($date, $dayPrice);
-                        }
+                        $entiy->addDailyPrices($date, $dayPrice);
                     }
 
                     return $entiy;

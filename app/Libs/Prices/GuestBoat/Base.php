@@ -23,11 +23,28 @@ class Base extends Main implements IDailyPrice
     {
         $repository = new ConfigSaisonDatesRepository($this->from, $this->until);
         $entities = $repository->getTouchedGuestSaisons($this->dateModel, $this->length);
-        $entities->each(fn(SaisonDatesEntity $item) =>
-            static::$dailyPrices += $item->getDailyPrices()->toArray()
-        );
+        $entities->each(fn(SaisonDatesEntity $item) => static::$dailyPrices += $item->getDailyPrices()->toArray());
         ksort(static::$dailyPrices);
         $sumPrice = $entities->sum(fn(SaisonDatesEntity $i) => $i->getDailyPrices()->values()->sum());
+
         return new Price(value: $sumPrice);
+    }
+
+    /**
+     * @return float|int
+     */
+    public function getLength(): float|int
+    {
+        return $this->length;
+    }
+
+    /**
+     * @param float|int $length
+     * @return Base
+     */
+    public function setLength(float|int $length): Base
+    {
+        $this->length = $length;
+        return $this;
     }
 }

@@ -23,8 +23,6 @@ class Base extends Main implements IDailyPrice
     {
         $repository = new ConfigSaisonDatesRepository($this->from, $this->until);
         $entities = $repository->getTouchedGuestSaisons($this->dateModel, $this->carlength);
-//        dd($entities);
-
         $entities->each(fn(SaisonDatesEntity $item) => static::$dailyPrices += $item->getDailyPrices()->toArray());
         ksort(static::$dailyPrices);
         $sumPrice = $entities->sum(fn(SaisonDatesEntity $i) => $i->getDailyPrices()->values()->sum());
