@@ -16,7 +16,7 @@ class CreateBoatDatesTestTable extends Migration
         Schema::create('boat_dates', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('boat_id')->index('boat_id');
-            $table->enum('modus', ['saison', 'winter'])->default('saison');
+            $table->enum('modus', ['summer', 'winter'])->default('summer');
             $table->date('from');
             $table->date('until');
             $table->unsignedInteger('price');

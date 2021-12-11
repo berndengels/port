@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Excel;
 use App\Mail\SendExcel;
 use App\Exports\BoatDatesExport;
 use App\Http\Requests\BoatDatesRequest;
@@ -15,10 +14,7 @@ use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Database\Eloquent\Collection;
-use GrahamCampbell\Markdown\Facades\Markdown;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
@@ -41,20 +37,19 @@ class AdminBoatDatesController extends AdminController
      */
     public function index(Request $request)
     {
-        $uri = explode('/', $request->getRequestUri());
-        $modus  = array_pop($uri);
-        $modus  = in_array($modus, ['saison','winter']) ? $modus : null;
         $boatId = $request->input('boat');
         $year   = $request->input('year');
         $month  = $request->input('month');
+        $saison  = $request->input('saison');
 
-        if($year || $month) {
+        if($year || $month || $saison) {
             $boatId = null;
         }
 
         if($boatId) {
             $year = null;
             $month = null;
+            $saison = null;
         }
 
         /**
@@ -63,8 +58,8 @@ class AdminBoatDatesController extends AdminController
         $query = BoatDates::with('boat')
             ->orderByDesc('from');
 
-        if($modus) {
-            $query->whereModus($modus);
+        if($saison) {
+            $query->whereModus($saison);
         }
 
         $data = $query
@@ -76,22 +71,23 @@ class AdminBoatDatesController extends AdminController
         $monthOptions = BoatDates::monthOptions();
         $priceTotal = $query->get()->sum(fn ($item) => $item->price);
         $paginated  = $data->paginate($this->paginatorLimit);
-        $queryString = $request->only(['boat', 'year', 'month','modus']);
+        $queryString = $request->only(['boat', 'year', 'month','saison']);
 
         return view('admin.boatDates.index', [
             'data'          => $paginated,
             'priceTotal'    => $priceTotal,
             'boatOptions'   => $this->boatRepository->options('boat_name')->getSelectOptions(),
+            'saisonOptions' => $this->boatRepository->getBoatSaisonOptions()->prepend('Alle', ''),
             'years'         => $this->years,
             'monthsByYear'  => $this->monthsByYear,
             'yearOptions'   => $yearOptions,
             'monthOptions'  => $monthOptions,
             'priceTotal'    => $priceTotal,
             'boat'          => $boatId,
+            'saison'        => $saison,
             'year'          => $year,
             'month'         => $month,
             'queryString'   => $queryString,
-            'modus'         => $modus,
         ]);
     }
 
@@ -116,28 +112,27 @@ class AdminBoatDatesController extends AdminController
         $today = Carbon::today();
         $year = $today->format('Y');
         $nextYear = $today->copy()->addYear()->format('Y');
-
         $boatPrices = ConfigBoatPrice::with('saison')->get();
 
-        if('saison' === $request->modus) {
-            $summer = $boatPrices->filter(fn(ConfigBoatPrice $p) => $p->saison->key === 'summer')->first();
-            $defaultFrom    = Carbon::make($year . '-' . $summer->saison->from_month . '-' . $summer->saison->from_day);
-            $defaultUntil   = Carbon::make($year . '-' . $summer->saison->until_month . '-' . $summer->saison->until_day);
+        $data = $boatPrices->filter(fn(ConfigBoatPrice $p) => $p->saison->mode === $request->modus)->first();
+        if($data) {
+            $defaultFrom    = Carbon::make($year . '-' . $data->saison->from_month . '-' . $data->saison->from_day);
+            $defaultUntil   = Carbon::make(('winter' === $request->modus ? $nextYear : $year) . '-' . $data->saison->until_month . '-' . $data->saison->until_day);
         } else {
-            $winter = $boatPrices->filter(fn(ConfigBoatPrice $p) => $p->saison->key === 'winter')->first();
-            $defaultFrom    = Carbon::make($year . '-' . $winter->saison->from_month . '-' . $winter->saison->from_day);
-            $defaultUntil   = Carbon::make($nextYear . '-' . $winter->saison->until_month . '-' . $winter->saison->until_day);
+            $defaultFrom = null;
+            $defaultUntil = null;
         }
+
         $options = $this->boatRepository->options('boat_name');
         $this->boatOptions = $options->getSelectOptions();
 
         return view(
             'admin.boatDates.create', [
-            'modus'         => $request->modus ?? 'saison',
+            'modus'         => $request->modus ?? 'summer',
             'datesModi'     => $this->datesModi,
             'boatOptions'   => $this->boatOptions,
-            'defaultFrom'   => $defaultFrom->format('Y-m-d'),
-            'defaultUntil'  => $defaultUntil->format('Y-m-d'),
+            'defaultFrom'   => $defaultFrom ? $defaultFrom->format('Y-m-d') : null,
+            'defaultUntil'  => $defaultUntil ? $defaultUntil->format('Y-m-d') : null,
             ]
         );
     }

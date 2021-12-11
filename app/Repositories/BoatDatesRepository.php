@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\BoatDates;
+use App\Models\ConfigSaisonDates;
 
 class BoatDatesRepository extends StatsRepository
 {

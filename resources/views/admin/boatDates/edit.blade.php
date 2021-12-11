@@ -2,7 +2,7 @@
 
 @section('main')
     <div class="p-6">
-        <x-nav-link :href="route('admin.boats.index')" icon="fas fa-backward" class="btn">zurück</x-nav-link>
+        <x-nav-link href="{{ route('admin.boatDates.index', ['saison' => $modus ?? null]) }}" icon="fas fa-backward" class="btn">zurück</x-nav-link>
         <x-form name="frm" method="post" :action="route('admin.boatDates.update', $boatDate)" class="w-full lg:w-1/2">
             @method('put')
 

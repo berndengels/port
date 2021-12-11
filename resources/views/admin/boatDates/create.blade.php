@@ -2,7 +2,7 @@
 
 @section('main')
     <div class="p-6">
-        <x-nav-link href="{{ route('admin.boatDates.'.$modus) }}" icon="fas fa-backward" class="btn">zurück</x-nav-link>
+        <x-nav-link href="{{ route('admin.boatDates.index', ['saison' => $modus ?? null]) }}" icon="fas fa-backward" class="btn">zurück</x-nav-link>
         <x-form name="frm" method="post" action="{{ route('admin.boatDates.store') }}" class="w-full lg:w-1/2">
 
             <x-form-select class="calc" class="boat" id="boat_id" name="boat_id" label="Boot" :options="$boatOptions" required />

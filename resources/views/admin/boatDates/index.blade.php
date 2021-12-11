@@ -5,7 +5,7 @@
         <div class="index-header mt-3">
             <div class="float-left">
                 <x-nav-link
-                    href="{{ route('admin.boatDates.create', ['modus' => $modus]) }}"
+                    href="{{ route('admin.boatDates.create', ['modus' => $saison ?? null]) }}"
                     class="btn"
                     icon="far fa-plus-square"
                     text="Neueintrag"
@@ -28,9 +28,6 @@
             </div>
         @endif
         </div>
-        <div class="mx-5 mt-3">
-            <span class="font-extrabold text-xl text-blue-900">{{ 'saison' === $modus ? 'Sommerliegeplatz' : 'Winterlager'}}</span>
-        </div>
 
         <x-form class="inline-form ml-5" method="get" id="frmFilter" name="frmFilter"
                 action="{{ route('admin.boatDates.index') }}"
@@ -40,6 +37,13 @@
                     class="inline-block filter"
                     :options="$boatOptions"
                     :default="$boat"
+                    floating
+            />
+            <x-form-select
+                    name="saison"
+                    class="inline-block filter"
+                    :options="$saisonOptions"
+                    :default="$saison"
                     floating
             />
             <x-form-select
@@ -149,6 +153,7 @@
 						}
 						frm.boat.value = '';
 						break
+					case 'saison':
 					case 'month':
 						frm.boat.value = '';
 						break
@@ -158,6 +163,7 @@
 			reset = (e) => {
 				e.preventDefault()
 				frm.boat.value = '';
+				frm.saison.value = '';
 				frm.year.value = '';
 				frm.month.value = '';
 				$(frm.month).hide();

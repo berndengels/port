@@ -3,9 +3,11 @@ namespace App\Repositories;
 
 use App\Models\Boat;
 use App\Libs\AppCache;
+use App\Models\ConfigSaisonDates;
 use App\Models\Customer;
 use App\Repositories\Ext\SelectOptions;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Collection;
 
 class BoatRepository extends Repository
 {
@@ -54,5 +56,15 @@ class BoatRepository extends Repository
     {
         $this->customer = $customer;
         return $this;
+    }
+
+    public function getBoatSaisonOptions(): Collection
+    {
+        return ConfigSaisonDates::where('key','=', 'customer')
+            ->get()
+            ->keyBy('mode')
+            ->map
+            ->name
+            ;
     }
 }
