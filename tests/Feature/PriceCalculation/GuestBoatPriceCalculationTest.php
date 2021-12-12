@@ -2,7 +2,10 @@
 namespace Tests\Feature\PriceCalculation;
 
 use App\Models\GuestBoat;
+use Illuminate\Http\Request;
+use App\Libs\Prices\GuestBoatPrice;
 use Helmich\JsonAssert\JsonAssertions;
+use Spatie\Period\Period;
 
 class GuestBoatPriceCalculationTest extends PriceCalculation
 {
@@ -24,7 +27,6 @@ class GuestBoatPriceCalculationTest extends PriceCalculation
             'length'        => $this->boat->length,
             'electric'      => true,
             'persons'       => 2,
-            'day_price'     => 0
         ];
     }
 
@@ -42,16 +44,32 @@ class GuestBoatPriceCalculationTest extends PriceCalculation
             ->assertOk()
         ;
         $decoded = json_decode($response->getContent());
-        $msg = __FUNCTION__." => total: expected: $expected, actual: $decoded->total";
-        $this->assertEquals($expected, $decoded->total, $msg);
+        $msg = __FUNCTION__." => total: expected: $expected[total], actual: $decoded->total";
+        $this->assertEquals($expected['total'], $decoded->total, $msg);
+
+        $dailyPrices = collect($expected['dailyPrices']);
+        $dailyPricesDays = $dailyPrices->keys();
+        $countDailyPrices = $dailyPrices->count();
+
+        $msg = __FUNCTION__." => dailyPrices count: expected: $this->days, actual: $countDailyPrices";
+        $this->assertEquals($countDailyPrices, $this->days, $msg);
+
+        $expectedDatePeriod = Period::make($this->from, $this->until);
+        $dailyPricesDatePeriod = Period::make($dailyPricesDays->first(), $dailyPricesDays->last());
+        $msg = __FUNCTION__.' => dailyPrices DatePeriod: expected: '.$expectedDatePeriod->asString().', actual: '.$dailyPricesDatePeriod->asString();
+        $this->assertEquals($countDailyPrices, $this->days, $msg);
+
+        $dailyPricesSum = $dailyPrices->values()->sum();
+        $msg = __FUNCTION__." => dailyPrices summe: expected: $dailyPricesSum, actual: $decoded->priceBase";
+        $this->assertEquals($dailyPricesSum, $decoded->priceBase, $msg);
     }
 
-    protected function calculatedPrice(object $boat): float|int
+    protected function calculatedPrice(object $boat): array
     {
-        $pricePerMeter = config('port.prices.boat_guest.price_per_meter');
-        $electric = $this->params['electric'] ? 2 : 0;
-        $persons = $this->params['persons'] > 3 ? 1: 0;
-        $price = (($boat->length * $pricePerMeter + $electric + $persons) * $this->days) * 10 / 10;
+        $request = new Request();
+        $request->request->add($this->params);
+        $price = (new GuestBoatPrice($this->from, $this->until, $this->boat))->getPrice($request);
+
         return $price;
     }
 }

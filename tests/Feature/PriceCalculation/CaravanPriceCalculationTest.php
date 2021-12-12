@@ -4,6 +4,8 @@ namespace Tests\Feature\PriceCalculation;
 use App\Models\Caravan;
 use App\Libs\Prices\CaravanPrice;
 use Illuminate\Http\Request;
+use Spatie\Period\Period;
+use Spatie\Period\PeriodCollection;
 
 class CaravanPriceCalculationTest extends PriceCalculation
 {
@@ -42,16 +44,33 @@ class CaravanPriceCalculationTest extends PriceCalculation
             ->assertOk()
         ;
         $decoded = json_decode($response->getContent());
-        $msg = __FUNCTION__." => total: expected: $expected, actual: $decoded->total";
-        $this->assertEquals($expected, $decoded->total, $msg);
+        $msg = __FUNCTION__." => total: expected: $expected[total], actual: $decoded->total";
+        $this->assertEquals($expected['total'], $decoded->total, $msg);
+
+        $dailyPrices = collect($expected['dailyPrices']);
+        $dailyPricesDays = $dailyPrices->keys();
+        $countDailyPrices = $dailyPrices->count();
+
+        $msg = __FUNCTION__." => dailyPrices count: expected: $this->days, actual: $countDailyPrices";
+        $this->assertEquals($countDailyPrices, $this->days, $msg);
+
+        $expectedDatePeriod = Period::make($this->from, $this->until);
+        $dailyPricesDatePeriod = Period::make($dailyPricesDays->first(), $dailyPricesDays->last());
+        $msg = __FUNCTION__.' => dailyPrices DatePeriod: expected: '.$expectedDatePeriod->asString().', actual: '.$dailyPricesDatePeriod->asString();
+        $this->assertEquals($countDailyPrices, $this->days, $msg);
+
+        $dailyPricesSum = $dailyPrices->values()->sum();
+        $msg = __FUNCTION__." => dailyPrices summe: expected: $dailyPricesSum, actual: $decoded->priceBase";
+        $this->assertEquals($dailyPricesSum, $decoded->priceBase, $msg);
     }
 
-    protected function calculatedPrice(object $data): float|int
+
+    protected function calculatedPrice(object $data): array
     {
         $request = new Request();
         $request->request->add($this->params);
         $price = (new CaravanPrice($this->from, $this->until))->getPrice($request);
 
-        return $price['total'];
+        return $price;
     }
 }

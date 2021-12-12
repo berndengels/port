@@ -54,17 +54,17 @@ class BoatPriceCalculationTest extends PriceCalculation
             ->assertOk()
         ;
         $decoded = json_decode($response->getContent());
-        $msg = __FUNCTION__." => total: expected: $expected, actual: $decoded->total";
-        $this->assertEquals($expected, $decoded->total, $msg);
+        $msg = __FUNCTION__." => total: expected: $expected[total], actual: $decoded->total";
+        $this->assertEquals($expected['total'], $decoded->total, $msg);
     }
 
-    protected function calculatedPrice(object $data): float|int
+    protected function calculatedPrice(object $data): array
     {
         $request = new Request();
         $request->request->add($this->params);
         $price = (new BoatPrice($this->from, $this->until, $this->boat))->getPrice($request);
 
-        return $price['total'];
+        return $price;
     }
 
 }

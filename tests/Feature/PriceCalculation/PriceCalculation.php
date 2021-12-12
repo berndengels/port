@@ -21,6 +21,6 @@ abstract class PriceCalculation extends TestCase
         $this->until    = $today->copy()->addDays($this->days);
     }
 
-    abstract protected function calculatedPrice(object $data): float|int;
+    abstract protected function calculatedPrice(object $data): array;
 
 }
