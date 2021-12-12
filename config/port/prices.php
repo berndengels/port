@@ -1,6 +1,10 @@
 <?php
 
 return [
+    'tax'   => [
+        'enabled'   => (bool) env('PORT_TAX_ENABLED', false),
+        'rate'   => (float) env('PORT_TAX_RATE', 0),
+    ],
     'caravan' => [
         'electric_per_day'      => (float) env('CARAVAN_PRICE_ELECTRIC_PER_DAY', 2),
         'persons_inclusivce'    => (float) env('CARAVAN_PRICE_PERSONS_INCLUSIVE', 2),

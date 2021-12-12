@@ -1,6 +1,7 @@
 <?php
 namespace App\Libs\Prices;
 
+use App\Traits\Models\HasTaxRate;
 use DatePeriod;
 use Carbon\Carbon;
 use ReflectionClass;
@@ -9,6 +10,7 @@ use Illuminate\Support\Collection;
 
 abstract class PriceCalculator
 {
+    use HasTaxRate;
     /**
      * @var Carbon
      */
@@ -100,7 +102,12 @@ abstract class PriceCalculator
         }
 
         $props['days'] = static::$daysCount;
+        if(config('port.prices.tax.enabled')) {
+            $props['tax'] = $this->taxRate();
+            $props['netto'] = $this->nettoPrice(static::$total);
+        }
         $props['total'] = static::$total;
+
 //        $props['dailyPrices'] = $obj::$dailyPrices;
 
         return $this->formatResult($props);

@@ -51,6 +51,11 @@ use Illuminate\Support\Carbon;
  * @property-read int|null $prices_count
  * @method static Builder|GuestBoatDates whereGuestBoatId($value)
  * @method static Builder|GuestBoatDates dailyPrices()
+ * @property-read mixed $days
+ * @method static Builder|GuestBoatDates fromYearMonth(?string $year = null, ?string $month = null)
+ * @method static Builder|GuestBoatDates getMonthsByYears($from = null, $until = null)
+ * @method static Builder|GuestBoatDates guestBoat(?int $id = null)
+ * @method static Builder|GuestBoatDates guestBoatByDates(?int $id = null)
  */
 class GuestBoatDates extends BaseModel implements IDatePrice
 {

@@ -32,6 +32,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @method static Builder|GuestBoat whereId($value)
  * @method static Builder|GuestBoat whereLength($value)
  * @method static Builder|GuestBoat whereName($value)
+ * @method static Builder|GuestBoat guestBoat(?int $id = null)
+ * @method static Builder|GuestBoat guestBoatByDates(?int $id = null)
  */
 class GuestBoat extends BaseModel
 {

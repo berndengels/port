@@ -7,8 +7,10 @@
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <title>{{ config('app.name', 'Laravel') }}</title>
     <!-- Fonts -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
+    {{-- Loads IBM Plex Mono --}}
+    @googlefonts('poppins')
     <!-- Styles -->
+    <!--link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet"-->
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
     @stack('styles')
 <!-- Scripts -->
@@ -20,7 +22,7 @@
     @stack('scripts')
 </head>
 <!--body class="font-sans antialiased" data-root="http://webapiv2.navionics.com/dist/webapi/images"-->
-<body class="font-sans antialiased">
+<body>
     <x-flash-message />
     @auth('admin')
         <x-content guard="admin" />

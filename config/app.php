@@ -1,5 +1,7 @@
 <?php
 
+use Spatie\GoogleFonts\GoogleFontsServiceProvider;
+
 return [
 
     /*
@@ -178,6 +180,7 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         App\Providers\DuskServiceProvider::class,
         App\Providers\ModelServiceProvider::class,
+        GoogleFontsServiceProvider::class,
     ],
 
     /*

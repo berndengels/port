@@ -51,6 +51,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property-read mixed $has_individual_price
  * @property-read mixed $individual_price
  * @property-read mixed $period
+ * @property-read mixed $days
+ * @method static Builder|BoatDates boat(?int $id = null)
+ * @method static Builder|BoatDates boatByDates(?int $id = null)
+ * @method static Builder|BoatDates fromYearMonth(?string $year = null, ?string $month = null)
+ * @method static Builder|BoatDates getMonthsByYears($from = null, $until = null)
  */
 class BoatDates extends BaseModel implements IDatePrice
 {

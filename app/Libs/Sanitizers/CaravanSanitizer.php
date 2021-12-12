@@ -17,16 +17,14 @@ class CaravanSanitizer extends Sanitizer
             $params = [
                 'from'      => $caravanDate->from->format('Y-m-d'),
                 'until'     => $caravanDate->until->format('Y-m-d'),
-                'carlength' => $caravanDate->caravan->carlength,
                 'persons'   => $caravanDate->persons,
                 'electric'  => $caravanDate->electric,
-                'day_price' => $caravanDate->day_price,
             ];
 
             $request = new Request();
             $request->request->add($params);
             try {
-                $response = (new CaravanPrice($from, $until))->getPrice($request);
+                $response = (new CaravanPrice($from, $until, $caravanDate->caravan))->getPrice($request);
                 $caravanDate->prices = json_encode($response);
                 $caravanDate->save();
                 return true;
