@@ -22,7 +22,7 @@ class UnAuthorizedAction
          */
         $response = $next($request);
         // action is unauthorized
-        if(403 === $response->status() ) {
+        if($response instanceof Response && method_exists($response, 'status') && 403 === $response->status() ) {
             $user = $request->user();
             return redirect()->back()->with('error', "Sorry, diese Aktion ist für User: $user->name nicht erlaubt!");
         }

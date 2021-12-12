@@ -17,7 +17,7 @@ class BoatTestSeeder extends MainTestSeeder
     {
         Boat::factory()
             ->hasServiceRequests(2)
-            ->count($this->count)
+            ->count(30)
             ->create();
     }
 }

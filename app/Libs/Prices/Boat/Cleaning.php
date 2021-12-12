@@ -7,17 +7,21 @@ use App\Libs\Prices\Price;
 class Cleaning extends Main implements IPrice
 {
     public function __construct(
-        protected bool $useCleaning,
-        protected int $length
+        protected bool $cleaning,
+        protected float|int $length
     ) {
         $this->initConfig();
     }
 
-
     public function addPrice(): Price
     {
-        if($this->useCleaning && $this->length > 0) {
-            return new Price(ceil($this->priceCleaningPerLength * $this->length));
+        if($this->cleaning && $this->length > 0) {
+            $unitPrice = $this->priceComponents
+                ->where('key','=', 'cleaning')
+                ->first()
+                ->unit_price
+            ;
+            return new Price(ceil($unitPrice * $this->length));
         }
         return new Price(0);
     }

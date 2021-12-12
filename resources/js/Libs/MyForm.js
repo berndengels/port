@@ -3,7 +3,6 @@ class MyForm {
 	autofill(calcUrl, binds) {
 		axios.get(calcUrl)
 			.then(resp => {
-				console.info(resp.data)
 				for(let key in binds) {
 					$(binds[key]).val(resp.data[key]);
 				}

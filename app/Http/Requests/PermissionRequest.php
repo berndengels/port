@@ -21,9 +21,7 @@ class PermissionRequest extends AdminRequest
     public function validationData()
     {
         return $this->merge(
-            [
-            'name' => $this->name ?? $this->action . ' ' . $this->model,
-            ]
+            ['name' => $this->name ?? $this->action . ' ' . $this->model]
         )->toArray();
     }
 
@@ -43,7 +41,7 @@ class PermissionRequest extends AdminRequest
                 }
             ) : '',
             'guard_name'    => 'required',
-            'model'         => 'required',
+            'model'         => '',
             'action'        => 'required',
         ];
     }

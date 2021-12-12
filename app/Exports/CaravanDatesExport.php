@@ -3,87 +3,52 @@
 namespace App\Exports;
 
 use App\Models\CaravanDates;
-use Carbon\Carbon;
-use Illuminate\Contracts\View\View;
-use Maatwebsite\Excel\Concerns\FromView;
+use Maatwebsite\Excel\Concerns\WithMapping;
+use PhpOffice\PhpSpreadsheet\Cell\DataType;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
+use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 
-class CaravanDatesExport implements FromView
+class CaravanDatesExport extends ExcelExport implements WithMapping, WithColumnFormatting
 {
-    public $data;
-    public $count;
-    public $priceTotal;
-    public $year;
-    public $month;
+    protected $view  = 'admin.caravanDates.export';
+    protected $model = CaravanDates::class;
+    protected $with = 'caravan';
+    protected $headings = [
+        'Kennzeichen',
+        'Länge',
+        'Von',
+        'Bis',
+        'Tage',
+        'Personen',
+        'Strom',
+        'Preis',
+    ];
 
-    public function __construct($year = null, $month = null)
+    public function map($row): array
     {
-        $this->year     = $year;
-        $this->month    = $month;
-        $this->data     = $this->getData();
-        $this->count    = $this->data->count();
-        $this->priceTotal = $this->data->sum(
-            function ($item) {
-                return $item->price; 
-            }
-        );
+        return [
+            $row->caravan->carnumber,
+            $row->caravan->carlength,
+            $row->from->format('d.m.Y'),
+            $row->until->format('d.m.Y'),
+            $row->days,
+            $row->persons,
+            $row->electric ? 'ja' : 'nein',
+            $row->price,
+        ];
     }
 
-    public function getData()
+    public function columnFormats(): array
     {
-        $query = CaravanDates::with('caravan');
-
-        if($this->year) {
-            $query->whereRaw('YEAR(`from`) = ?', [$this->year]);
-            if($this->month) {
-                $query->whereRaw('MONTH(`from`) = ?', [$this->month]);
-            }
-        }
-
-        $data = $query
-            ->orderBy('from')
-            ->get();
-        return $data;
-    }
-
-    public function view(): View
-    {
-        return view(
-            'caravanDates.export', [
-            'data'          => $this->data,
-            'priceTotal'    => $this->priceTotal,
-            ]
-        );
-    }
-
-    /**
-     * @return int
-     */
-    public function getCount(): int
-    {
-        return $this->count;
-    }
-
-    /**
-     * @return mixed|null
-     */
-    public function getYear()
-    {
-        return $this->year;
-    }
-
-    /**
-     * @return mixed|null
-     */
-    public function getMonth()
-    {
-        return $this->month;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getPriceTotal()
-    {
-        return $this->priceTotal;
+        return [
+            'A' => DataType::TYPE_STRING,
+            'B' => NumberFormat::FORMAT_NUMBER,
+            'C' => NumberFormat::FORMAT_DATE_DDMMYYYY,
+            'D' => NumberFormat::FORMAT_DATE_DDMMYYYY,
+            'E' => NumberFormat::FORMAT_NUMBER,
+            'F' => NumberFormat::FORMAT_NUMBER,
+            'G' => DataType::TYPE_STRING,
+            'H' => NumberFormat::FORMAT_CURRENCY_EUR_SIMPLE,
+        ];
     }
 }

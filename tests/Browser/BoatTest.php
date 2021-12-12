@@ -19,7 +19,7 @@ class BoatTest extends DuskTestCase
             $browser
                 ->loginAs($this->user(), 'admin', )
                 ->assertAuthenticated('admin')
-                ->visit(route('admin.boatGuests.index'))
+                ->visit(route('admin.guestBoats.index'))
                 ->assertSee('Bootsname')
                 ->screenshot($this->screenName);
             $this->createJpeg($this->screenName);

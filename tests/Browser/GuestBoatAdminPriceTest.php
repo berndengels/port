@@ -2,15 +2,17 @@
 namespace Tests\Browser;
 
 use Carbon\Carbon;
-use App\Models\BoatGuest;
+use App\Models\GuestBoat;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 
 class GuestBoatAdminPriceTest extends DuskTestCase
 {
     protected $days = 3;
-    protected $model = BoatGuest::class;
-
+    protected $persons = 3;
+    protected $electric = true;
+    protected $model = GuestBoat::class;
+    protected $entity;
     /**
      * A Dusk test example.
      * @test
@@ -23,55 +25,67 @@ class GuestBoatAdminPriceTest extends DuskTestCase
             $today  = Carbon::today();
             $from   = $today;
             $until  = $today->copy()->addDays($this->days);
-
             $browser
                 ->visit('/admin/login')
                 ->loginAs($this->user(), 'admin', )
                 ->assertAuthenticated('admin')
-                ->visit('/admin/boatGuestDates/create')
-                ->assertRouteIs('admin.boatGuestDates.create')
+                ->visit('/admin/guestBoatDates/create')
+                ->wait(3)
+                ->assertRouteIs('admin.guestBoatDates.create')
                 ->assertInputPresent('name')
                 ->assertInputPresent('home_port')
                 ->assertInputPresent('length')
                 ->assertInputPresent('from')
                 ->assertInputPresent('until')
+                ->assertInputPresent('electric')
+                ->assertInputPresent('persons')
                 ->assertInputPresent('price')
                 ->typeSlowly('name', 'E')
                 ->waitFor('ul.autocomplete')
-                ->stepScreenshot($this->screenDirectory)
-            ;
-//            $this->createJpeg($this->screenName);
-/*
                 ->click('ul.autocomplete>li:first-child')
                 ->with('form', function (Browser $form) {
-                    $name = $form->inputValue('name');
-                    $this->entity = $this->model
-//                        ::on($this->dbConnectionName)
-                        ::whereName($name)
-                        ->first();
-                    dump($name);
+                    $name   = $form->inputValue('name');
+                    $length = $form->inputValue('length');
+                    $this->entity = GuestBoat::whereName($name)
+                        ->whereLength($length)
+                        ->first()
+                    ;
+                    echo "entity name: ".$this->entity->name."\n";
+                    echo "found name: $name\n";
                 })
+                ->stepScreenshot($this->screenDirectory)
                 ->typeDate('#from', $from)
                 ->typeDate('#until', $until)
+                ->type('persons', $this->persons);
+
+            if($this->electric) {
+                $browser->check('electric');
+            }
+
+            $browser->check('electric')
                 ->click('#home_port')
                 ->wait(3)
+                ->stepScreenshot($this->screenDirectory)
                 ->with('form', function (Browser $form) {
                     $price = $form->inputValue('price');
-                    echo "price: $price\n";
+//                    echo "price: $price\n";
                 })
                 ->assertInputValue('price', $this->calculateExpectedPrice())
                 ->assertInputValueIsNot('prices', '')
-                ->screenshot($this->screenName)
+                ->stepScreenshot($this->screenDirectory)
             ;
-*/
         });
     }
 
     protected function calculateExpectedPrice(): int|float
     {
-//        $dayPricePerMeter = $this->config('port.prices.boat_guest.price_per_meter');
         $dayPricePerMeter = 1.5;
-        $price = (float) ($this->entity->length * $dayPricePerMeter * $this->days);
-        return $price;
+        $electricPricePerDay = $this->electric ? 2 : 0;
+        $personsInclusice = 2;
+        $personsPrice = $this->persons - $personsInclusice;
+        $personsPrice = ($personsPrice > 0) ? $personsPrice : 0;
+        $price = (float) (($this->entity['length'] * $dayPricePerMeter + $electricPricePerDay + $personsPrice) * $this->days);
+
+        return ceil($price);
     }
 }

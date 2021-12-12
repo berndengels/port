@@ -33,6 +33,9 @@ class BoatFactory extends MainFactory
             'draft'             => mt_rand(3, 10) / 10,
             'length_waterline'  => $length - 1,
             'home_port'         => $this->faker->city(),
+            'mast_length'       => 0,
+            'mast_weight'       => 0,
+            'length_keel'       => 0,
         ];
         if('sail' === $this->type) {
             $arr = array_merge($arr, [

@@ -9,13 +9,13 @@
     <!-- Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
     <!-- Styles -->
-    <link rel="stylesheet" href="{{ mix('./css/app.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/app.css') }}">
     @stack('styles')
 <!-- Scripts -->
     @auth('admin')
-        <script src="{{ mix('js/app-admin.js') }}" type="text/javascript"></script>
+        <script src="{{ mix('js/app-admin.js') }}"></script>
     @else
-        <script src="{{ mix('js/app.js') }}" type="text/javascript"></script>
+        <script src="{{ mix('js/app.js') }}"></script>
     @endauth
     @stack('scripts')
 </head>

@@ -1,9 +1,10 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminConfigEntityTypeController;
+use App\Http\Controllers\Admin\AdminConfigServiceController;
 use App\Http\Controllers\Admin\AdminInfoController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
-use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CaptchaServiceController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PriceController;
@@ -32,8 +33,8 @@ use App\Http\Controllers\Admin\AdminBoatController;
 use App\Http\Controllers\Admin\AdminWidgetController;
 use App\Http\Controllers\Admin\AdminUploadController;
 use App\Http\Controllers\Admin\AdminBoatDatesController;
-use App\Http\Controllers\Admin\AdminBoatGuestController;
-use App\Http\Controllers\Admin\AdminBoatGuestDatesController;
+use App\Http\Controllers\Admin\AdminGuestBoatController;
+use App\Http\Controllers\Admin\AdminGuestBoatDatesController;
 use App\Http\Controllers\Admin\Auth\AdminLoginController;
 use App\Http\Controllers\Admin\Auth\AdminForgotPasswordController;
 use App\Http\Controllers\Admin\Auth\AdminResetPasswordController;
@@ -42,6 +43,11 @@ use App\Http\Controllers\Admin\AdminServiceCategoryController;
 use App\Http\Controllers\Admin\AdminMaterialController;
 use App\Http\Controllers\Admin\AdminMaterialCategoryController;
 use App\Http\Controllers\Admin\AdminServiceRequestController;
+use App\Http\Controllers\Admin\AdminConfigBoatPriceController;
+use App\Http\Controllers\Admin\AdminConfigDailyPriceController;
+use App\Http\Controllers\Admin\AdminConfigPriceComponentController;
+use App\Http\Controllers\Admin\AdminConfigPriceTypeController;
+use App\Http\Controllers\Admin\AdminConfigSaisonDatesController;
 
 Auth::routes();
 //dd(Route::getRoutes());
@@ -111,8 +117,9 @@ Route::group([
     Route::get('boats/guests', [AdminBoatController::class,'guests'])->name('boats.guests');
     Route::get('boatDates/invoice/{boatDate}', [AdminBoatDatesController::class, 'invoice'])->name('boatDates.invoice');
     Route::get('boatDates/sendInvoice/{boatDate}', [AdminBoatDatesController::class, 'sendInvoice'])->name('boatDates.sendInvoice');
-    Route::get('boatDates/saison', [AdminBoatDatesController::class, 'saison'])->name('boatDates.saison');
-    Route::get('boatDates/winter', [AdminBoatDatesController::class, 'winter'])->name('boatDates.winter');
+
+    Route::get('boatDates/index/saison', [AdminBoatDatesController::class, 'index'])->name('boatDates.saison');
+    Route::get('boatDates/index/winter', [AdminBoatDatesController::class, 'index'])->name('boatDates.winter');
 
     Route::match(['post','put'],'caravanDates/price/calculate', [AdminPriceController::class, 'calculateCaravanDates'])->name('caravanDates.price.calculate');
     Route::match(['post','put'],'boatDates/price/calculate', [AdminPriceController::class, 'calculateBoatDates'])->name('boatDates.price.calculate');
@@ -128,19 +135,42 @@ Route::group([
     Route::resource('widgets', AdminWidgetController::class);
     Route::resource('boats', AdminBoatController::class);
     Route::resource('boatDates', AdminBoatDatesController::class);
-    Route::resource('boatGuests', AdminBoatGuestController::class);
-    Route::resource('boatGuestDates', AdminBoatGuestDatesController::class);
+    Route::resource('guestBoats', AdminGuestBoatController::class);
+    Route::resource('guestBoatDates', AdminGuestBoatDatesController::class);
     Route::resource('services', AdminServiceController::class);
     Route::resource('serviceCategories', AdminServiceCategoryController::class);
     Route::resource('materials', AdminMaterialController::class);
     Route::resource('materialCategories', AdminMaterialCategoryController::class);
     Route::resource('serviceRequests', AdminServiceRequestController::class);
 
+    Route::group([
+            'prefix' => 'config',
+            'as'    => 'config.',
+        ],
+        function() {
+            Route::resource('saisonDates', AdminConfigSaisonDatesController::class);
+            Route::resource('boatPrices', AdminConfigBoatPriceController::class);
+            Route::resource('dailyPrices', AdminConfigDailyPriceController::class);
+            Route::resource('priceComponents', AdminConfigPriceComponentController::class);
+            Route::resource('priceTypes', AdminConfigPriceTypeController::class);
+            Route::resource('services', AdminConfigServiceController::class);
+            Route::resource('entityTypes', AdminConfigEntityTypeController::class);
+    });
     Route::post('serviceRequests/done/{serviceRequest}', [AdminServiceRequestController::class, 'done'])->name('serviceRequests.done');
-    Route::post('caravanDates/sendExcel', [AdminCaravanDatesController::class, 'sendExcel'])->name('caravanDates.sendExcel');
 
-    Route::get('caravan/price/excel/{year?}/{month?}', [AdminPriceController::class, 'excel'])->name('caravan.price.excel');
-    Route::get('caravan/price/pdf/{year?}/{month?}', [AdminPriceController::class, 'pdf'])->name('caravan.price.pdf');
+    Route::post('caravanDates/sendExcel', [AdminCaravanDatesController::class, 'sendExcel'])->name('caravanDates.sendExcel');
+    Route::post('boatDates/sendExcel', [AdminBoatDatesController::class, 'sendExcel'])->name('boatDates.sendExcel');
+    Route::post('guestBoatDates/sendExcel', [AdminGuestBoatDatesController::class, 'sendExcel'])->name('guestBoatDates.sendExcel');
+
+    Route::get('caravan/price/excel/{year?}/{month?}', [AdminPriceController::class, 'excelCaravanDates'])->name('caravan.price.excel');
+    Route::get('caravan/price/pdf/{year?}/{month?}', [AdminPriceController::class, 'pdfCaravanDates'])->name('caravan.price.pdf');
+
+    Route::get('boat/price/excel/{year?}/{month?}', [AdminPriceController::class, 'excelBoatDates'])->name('boat.price.excel');
+    Route::get('baot/price/pdf/{year?}/{month?}', [AdminPriceController::class, 'pdfBoatDates'])->name('boat.price.pdf');
+
+    Route::get('guestBoat/price/excel/{year?}/{month?}', [AdminPriceController::class, 'excelGuestBoatDates'])->name('guestBoat.price.excel');
+    Route::get('guestBoat/price/pdf/{year?}/{month?}', [AdminPriceController::class, 'pdfGuestBoatDates'])->name('guestBoat.price.pdf');
+
     Route::get('car/info', [AdminCarLicensePlateController::class, 'info'])->name('car.info');
 //    Route::get('route/current//{currentRouteName}', [RouteController::class, 'setCurrentMenu'])->name('route.current');
     Route::post('upload/image/{paramName}', [AdminUploadController::class, 'imageUpload'])->name('upload.image');
@@ -148,6 +178,7 @@ Route::group([
     Route::get('routes', [AdminInfoController::class, 'routes'])->name('infos.routes');
     Route::get('php', [AdminInfoController::class, 'phpinfo'])->name('infos.php');
     Route::get('emojis', [AdminInfoController::class, 'emojis'])->name('infos.emojis');
+
     Route::fallback(function () {
 //        return redirect('/admin');
         return 'wrong admin route';

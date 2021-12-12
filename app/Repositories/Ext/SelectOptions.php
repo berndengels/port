@@ -16,7 +16,7 @@ trait SelectOptions
      */
     protected $selectOptionsData;
 
-    public function getOptionsData($orderBy = 'name', $relations = [])
+    public function getOptionsData($orderBy = 'name', $relations = []): Collection|null
     {
         $query = (static::$model)::on(app('db.connection')->getName())
             ->with($relations)
@@ -25,7 +25,7 @@ trait SelectOptions
         /*
         * only for tests
         $this->selectOptionsData = $query->get()->map(function ($item) use ($orderBy) {
-            $item->{$orderBy} = config('app.env').' '.$item->{$orderBy};
+            $item->{$orderBy} = _config('app.env').' '.$item->{$orderBy};
             return $item;
         });
         */
@@ -33,7 +33,7 @@ trait SelectOptions
         return $this->selectOptionsData;
     }
 
-    public function optionsData($orderBy = 'name', $relations = []): Collection
+    public function optionsData($orderBy = 'name', $relations = []): Collection|null
     {
         return Cache::remember(
             static::$cacheKeyOptionsData, AppCache::TTL, fn() => $this->getOptionsData(
@@ -50,12 +50,10 @@ trait SelectOptions
             relations: $relations
         );
         $this->selectOptions = Cache::remember(
-            static::$cacheKeyOptions, AppCache::TTL, function () use ($keyFieldName, $textFieldName) {
-                return $this->selectOptionsData
+            static::$cacheKeyOptions, AppCache::TTL, fn () =>
+                $this->selectOptionsData
                     ->keyBy($keyFieldName)
                     ->map->{$textFieldName}
-                ;
-            }
         );
         return $this;
     }
@@ -63,7 +61,7 @@ trait SelectOptions
     /**
      * @return Collection
      */
-    public function getSelectOptions(): Collection
+    public function getSelectOptions(): Collection|null
     {
         return $this->selectOptions;
     }
@@ -71,7 +69,7 @@ trait SelectOptions
     /**
      * @return Collection
      */
-    public function getSelectOptionsData(): Collection
+    public function getSelectOptionsData(): Collection|null
     {
         return $this->selectOptionsData;
     }

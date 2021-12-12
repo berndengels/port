@@ -6,7 +6,6 @@ use Database\Seeders\Ext\MainTestSeeder;
 
 class BoatDatesTestSeeder extends MainTestSeeder
 {
-    protected $count = 50;
     protected $table = 'boat_dates';
 
     /**
@@ -17,7 +16,7 @@ class BoatDatesTestSeeder extends MainTestSeeder
     public function run()
     {
         BoatDates::factory()
-            ->count($this->count)
+            ->count(4)
             ->create();
     }
 }

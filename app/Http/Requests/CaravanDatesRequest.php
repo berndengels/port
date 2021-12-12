@@ -76,7 +76,7 @@ class CaravanDatesRequest extends AdminRequest
             'until.after'           => 'Das Anreise-Datum liegt vor einem vorhandenen Abreise-Datum',
             'persons.required'      => 'Bitte die Anzahl der Personen angeben.',
             'persons.regex'         => 'Die Anzahl der Personen muß eine ganza Zahl sein.',
-            'day_price.numeric'     => 'Der Tages-Preis muß numerisch sein.',
+//            'special_price.numeric'     => 'Der Tages-Preis muß numerisch sein.',
             'price.required'        => 'Bitte einen Preis angeben.',
             'price.numeric'         => 'Der Preis muß eine ganze Zahl sein.',
             'email.email'           => 'Bitte eine korrekte oder keine Email-Adresse angeben.',

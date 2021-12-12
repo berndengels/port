@@ -15,7 +15,7 @@ import Tooltip from "./Libs/Tooltip";
 import { createApp } from "vue"
 import store from "./vue/store"
 import Main from "./Main"
-import AdminDashboard from "./vue/views/AdminDashboard"
+import AdminDashboard from "./vue/views/admin/Dashboard"
 
 window.MyForm   = new MyForm
 window.Prices   = new Prices

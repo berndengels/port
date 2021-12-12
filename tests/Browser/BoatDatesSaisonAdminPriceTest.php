@@ -17,7 +17,7 @@ class BoatDatesSaisonAdminPriceTest extends DuskTestCase
     protected $fromDate   = '2022-05-01';
     protected $untilDate  = '2022-10-31';
     protected $boatId     = 3;
-    protected $modus      = 'saison';
+    protected $modus      = 'summer';
 
     /**
      * A Dusk test example.

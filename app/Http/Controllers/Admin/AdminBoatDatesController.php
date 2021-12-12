@@ -2,21 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Mail\SendExcel;
+use App\Exports\BoatDatesExport;
 use App\Http\Requests\BoatDatesRequest;
 use App\Mail\InvoiceMail;
-use App\Models\Boat;
 use App\Models\BoatDates;
-use App\Repositories\BoatRepository;
+use App\Models\ConfigBoatPrice;
 use Barryvdh\DomPDF\PDF;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Database\Eloquent\Collection;
-use GrahamCampbell\Markdown\Facades\Markdown;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
@@ -27,6 +25,8 @@ class AdminBoatDatesController extends AdminController
     public function __construct()
     {
         parent::__construct();
+        $this->monthsByYear = BoatDates::getMonthsByYears();
+        $this->years = array_keys($this->monthsByYear);
         $this->datesModi = config('port.main.boat.dates.modi');
     }
 
@@ -35,79 +35,60 @@ class AdminBoatDatesController extends AdminController
      *
      * @return Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $boatId = $request->input('boat');
+        $year   = $request->input('year');
+        $month  = $request->input('month');
+        $saison  = $request->input('saison');
+
+        if($year || $month || $saison) {
+            $boatId = null;
+        }
+
+        if($boatId) {
+            $year = null;
+            $month = null;
+            $saison = null;
+        }
+
         /**
          * @var $query Builder
          */
         $query = BoatDates::with('boat')
             ->orderByDesc('from');
-        $data = $query->paginate($this->paginatorLimit);
-        /**
-         * @var $priceTotal Collection
-         */
-        $priceTotal = $query->get()->sum(
-            function ($item) {
-                return $item->price;
-            }
-        );
 
-        return view('admin.boatDates.index', compact('data', 'priceTotal'));
-    }
+        if($saison) {
+            $query->whereModus($saison);
+        }
+
+        $data = $query
+            ->boatByDates($guestBoatId ?? null)
+            ->fromYearMonth($year, $month);
 
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
-    public function saison()
-    {
-        $modus = 'saison';
-        /**
-         * @var $query Builder
-         */
-        $query = BoatDates::with('boat')
-            ->whereModus('saison')
-            ->orderByDesc('from');
-        $data = $query->paginate($this->paginatorLimit);
-        /**
-         * @var $priceTotal Collection
-         */
-        $priceTotal = $query->get()->sum(
-            function ($item) {
-                return $item->price;
-            }
-        );
+        $yearOptions = BoatDates::yearOptions();
+        $monthOptions = BoatDates::monthOptions();
+        $priceTotal = $query->get()->sum(fn ($item) => $item->price);
+        $paginated  = $data->paginate($this->paginatorLimit);
+        $queryString = $request->only(['boat', 'year', 'month','saison']);
 
-        return view('admin.boatDates.index', compact('data', 'modus', 'priceTotal'));
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
-    public function winter()
-    {
-        $modus = 'winter';
-        /**
-         * @var $query Builder
-         */
-        $query = BoatDates::with('boat')
-            ->whereModus('winter')
-            ->orderByDesc('from');
-        $data = $query->paginate($this->paginatorLimit);
-        /**
-         * @var $priceTotal Collection
-         */
-        $priceTotal = $query->get()->sum(
-            function ($item) {
-                return $item->price;
-            }
-        );
-
-        return view('admin.boatDates.index', compact('data', 'modus', 'priceTotal'));
+        return view('admin.boatDates.index', [
+            'data'          => $paginated,
+            'priceTotal'    => $priceTotal,
+            'boatOptions'   => $this->boatRepository->options('boat_name')->getSelectOptions(),
+            'saisonOptions' => $this->boatRepository->getBoatSaisonOptions()->prepend('Alle', ''),
+            'years'         => $this->years,
+            'monthsByYear'  => $this->monthsByYear,
+            'yearOptions'   => $yearOptions,
+            'monthOptions'  => $monthOptions,
+            'priceTotal'    => $priceTotal,
+            'boat'          => $boatId,
+            'saison'        => $saison,
+            'year'          => $year,
+            'month'         => $month,
+            'queryString'   => $queryString,
+        ]);
     }
 
     /**
@@ -131,24 +112,27 @@ class AdminBoatDatesController extends AdminController
         $today = Carbon::today();
         $year = $today->format('Y');
         $nextYear = $today->copy()->addYear()->format('Y');
+        $boatPrices = ConfigBoatPrice::with('saison')->get();
 
-        if('saison' === $request->modus) {
-            $defaultFrom    = Carbon::create($year .'-'. config('port.prices.boat.saison_start'));
-            $defaultUntil   = Carbon::create($year .'-'. config('port.prices.boat.saison_end'));
+        $data = $boatPrices->filter(fn(ConfigBoatPrice $p) => $p->saison->mode === $request->modus)->first();
+        if($data) {
+            $defaultFrom    = Carbon::make($year . '-' . $data->saison->from_month . '-' . $data->saison->from_day);
+            $defaultUntil   = Carbon::make(('winter' === $request->modus ? $nextYear : $year) . '-' . $data->saison->until_month . '-' . $data->saison->until_day);
         } else {
-            $defaultFrom    = Carbon::create($year .'-'. config('port.prices.boat.winter_start'));
-            $defaultUntil   = Carbon::create($nextYear .'-'. config('port.prices.boat.winter_end'));
+            $defaultFrom = null;
+            $defaultUntil = null;
         }
+
         $options = $this->boatRepository->options('boat_name');
         $this->boatOptions = $options->getSelectOptions();
 
         return view(
             'admin.boatDates.create', [
-            'modus'         => $request->modus ?? 'saison',
+            'modus'         => $request->modus ?? 'summer',
             'datesModi'     => $this->datesModi,
             'boatOptions'   => $this->boatOptions,
-            'defaultFrom'   => $defaultFrom->format('Y-m-d'),
-            'defaultUntil'  => $defaultUntil->format('Y-m-d'),
+            'defaultFrom'   => $defaultFrom ? $defaultFrom->format('Y-m-d') : null,
+            'defaultUntil'  => $defaultUntil ? $defaultUntil->format('Y-m-d') : null,
             ]
         );
     }
@@ -260,6 +244,31 @@ class AdminBoatDatesController extends AdminController
             return redirect()->route('admin.boatDates.'.$boatDate->modus)->with('success', 'Rechnung erfolgreich an '.$boatDate->boat->customer->email.' versand!');
         } catch(Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
+        }
+    }
+
+    public function sendExcel(Request $request, $year = null, $month = null)
+    {
+        $year       = $request->post('year');
+        $month      = $request->post('month');
+        $now        = Carbon::now()->format('Ymd-Hi');
+        $fileName   = $now.'_boat_dates.xls';
+        $subject    = 'Dauerlieger Daten';
+
+        try {
+            $export = new BoatDatesExport($year, $month);
+            Mail::send(new SendExcel(
+                    recipient:  $request->post('email'),
+                    export: $export,
+                    fileName: $fileName,
+                    subject: $subject,
+                    year: $year,
+                    month: $month
+                )
+            );
+            return redirect()->route('admin.boatDates.index')->with(['success' => 'Excel-Datei erfolgreich versand!']);
+        } catch (Exception $e) {
+            return redirect()->route('admin.boatDates.index')->with(['error' => 'Excel-Datei konnte nicht versand werden!']);
         }
     }
 }

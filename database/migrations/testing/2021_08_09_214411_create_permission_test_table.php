@@ -17,7 +17,7 @@ class CreatePermissionTestTable extends Migration
         $columnNames = config('permission.column_names');
 
         if (empty($tableNames)) {
-            throw new Exception('Error: config/permission.php not loaded. Run [php artisan config:clear] and try again.');
+            throw new Exception('Error: _config/permission.php not loaded. Run [php artisan _config:clear] and try again.');
         }
 
         Schema::create($tableNames['permissions'], function (Blueprint $table) {
@@ -26,7 +26,7 @@ class CreatePermissionTestTable extends Migration
             $table->string('guard_name'); // For MySQL 8.0 use string('guard_name', 125);
             $table->timestamps();
 
-            $table->unique(['name', 'guard_name']);
+//            $table->unique(['name', 'guard_name']);
         });
 
         Schema::create($tableNames['roles'], function (Blueprint $table) {
@@ -35,7 +35,7 @@ class CreatePermissionTestTable extends Migration
             $table->string('guard_name'); // For MySQL 8.0 use string('guard_name', 125);
             $table->timestamps();
 
-            $table->unique(['name', 'guard_name']);
+//            $table->unique(['name', 'guard_name']);
         });
 
         Schema::create($tableNames['model_has_permissions'], function (Blueprint $table) use ($tableNames, $columnNames) {
@@ -102,7 +102,7 @@ class CreatePermissionTestTable extends Migration
         $tableNames = config('permission.table_names');
 
         if (empty($tableNames)) {
-            throw new Exception('Error: config/permission.php not found and defaults could not be merged. Please publish the package configuration before proceeding, or drop the tables manually.');
+            throw new Exception('Error: _config/permission.php not found and defaults could not be merged. Please publish the package configuration before proceeding, or drop the tables manually.');
         }
 
         Schema::drop($tableNames['role_has_permissions']);

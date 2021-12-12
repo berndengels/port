@@ -37,7 +37,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Service whereUpdatedAt($value)
  * @mixin Eloquent
  * @property int $price_type_id
- * @property-read PriceType $priceType
+ * @property-read ConfigPriceType $priceType
  * @method static Builder|Service wherePriceTypeId($value)
  */
 class Service extends Model
@@ -55,7 +55,7 @@ class Service extends Model
 
     public function priceType(): BelongsTo
     {
-        return $this->belongsTo(PriceType::class);
+        return $this->belongsTo(ConfigPriceType::class);
     }
 
     public function materials(): BelongsToMany

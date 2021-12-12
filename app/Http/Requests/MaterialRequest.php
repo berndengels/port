@@ -4,6 +4,10 @@ namespace App\Http\Requests;
 class MaterialRequest extends AdminRequest
 {
     protected $modelName = 'Material';
+    protected $floats = [
+        'price_per_unit',
+        'fertility',
+    ];
 
     /**
      * Determine if the user is authorized to make this request.
@@ -13,6 +17,15 @@ class MaterialRequest extends AdminRequest
     public function authorize()
     {
         return $this->auth->user()->can('write Material');
+    }
+
+    protected function prepareForValidation()
+    {
+        foreach($this->floats as $item) {
+            if(isset($this->$item)) {
+                $this->$item = str_replace(',', '.', $item);
+            }
+        }
     }
 
     /**

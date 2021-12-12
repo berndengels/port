@@ -25,7 +25,9 @@ class RegistrationRequest extends CustomerRequest
     protected function prepareForValidation()
     {
         foreach($this->floats as $item) {
-            $this->$item = str_replace(',', '.', $item);
+            if(isset($this->$item)) {
+                $this->$item = str_replace(',', '.', $item);
+            }
         }
     }
 

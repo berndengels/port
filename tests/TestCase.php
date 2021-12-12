@@ -35,16 +35,20 @@ abstract class TestCase extends BaseTestCase
     protected $followRedirects = true;
     protected $user;
     protected $customer;
+    protected $env = 'testing';
 
     protected function setUp(): void
     {
         parent::setUp();
-        Cache::clear();
         Notification::fake();
-        DB::setDefaultConnection('testing');
-        $this->artisan('migrate:fresh --drop-views --env=testing --path=database/migrations/testing');
-        $this->artisan('db:seed --env=testing');
-        $this->user = $this->createUserWithoutEvents();
+        Cache::clear();
+        DB::setDefaultConnection($this->env);
+        $migrationPath = 'testing' === $this->env ? '/testing' : '';
+
+        $this->artisan("migrate:fresh --drop-views --env=$this->env --path=database/migrations". $migrationPath);
+        $this->artisan("db:seed --env=$this->env");
+
+        $this->user     = $this->createUserWithoutEvents();
         $this->customer = $this->createCustomerWithoutEvents();
     }
 
@@ -56,11 +60,16 @@ abstract class TestCase extends BaseTestCase
         parent::tearDown();
     }
 
-    protected function createUser(): AdminUser {
+    protected function createUser($force = false): AdminUser {
         $factory = AdminUser::factory();
 
         if(0 === Role::whereName('admin')->whereGuardName('admin')->count()) {
             $factory = $factory->has((new AdminRoleFactory())->count(1),'roles');
+        }
+
+        $email = $factory->definition()['email'];
+        if(!$force && $user = AdminUser::whereEmail($email)->first()) {
+            return $user;
         }
 
         $user = $factory->create();
@@ -72,22 +81,24 @@ abstract class TestCase extends BaseTestCase
         return $user;
     }
 
-    protected function createCustomer(bool $confirmed = false, bool $asRegistration = false) {
-        Role::truncate();
-        $customer = Customer::factory()
+    protected function createCustomer(bool $confirmed = false, bool $asRegistration = false, $force = false) {
+
+
+        $factory =  Customer::factory()
             ->state(fn (array $attr) => ['confirmed' => $confirmed])
             ->has(Boat::factory()
                 ->has(BoatDates::factory()->count(3),'dates')
                 ->has(ServiceRequest::factory()->count(1), 'serviceRequests')
                 ->count(1),'boats'
             )
-            ->has((new CustomerRoleFactory())->count(1),'roles')
-            ->create()
         ;
-        $customer
-            ->guard(['customer'])
-            ->givePermissionTo(Permission::whereGuardName('customer')->get())
-        ;
+
+        $email = $factory->definition()['email'];
+        if(!$force && $customer = Customer::whereEmail($email)->first()) {
+            return $customer;
+        }
+
+        $customer = $factory->create();
 
         if($asRegistration) {
             Event::dispatch(new Registered($customer));
@@ -118,7 +129,7 @@ abstract class TestCase extends BaseTestCase
     {
         $customer = $this->customer;
         if($permission) {
-            $customer->givePermissionTo($permission);
+//            $customer->givePermissionTo($permission);
         }
         $this->be($customer, 'customer');
         return $this;

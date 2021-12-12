@@ -20,8 +20,8 @@
                 ><i class="far fa-file-excel"></i>Excel Download</a>
 
                 <x-form method="post" :action="route('admin.caravanDates.sendExcel')" class="mt-0 pt-0">
-                    <x-form-input type="hidden" name="year" :bind="$year" />
-                    <x-form-input type="hidden" name="month" :bind="$month" />
+                    <x-form-input type="hidden" name="year" :default="$year" />
+                    <x-form-input type="hidden" name="month" :default="$month" />
                     <x-form-input type="email" name="email" required autocomplete="email" placeholder="Email-Adresse" />
                     <x-form-submit name="submit" inline class="btn btn-second mt-3" icon="fas fa-shipping-fast">Sende Excel</x-form-submit>
                 </x-form>

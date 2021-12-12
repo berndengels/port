@@ -1,8 +1,14 @@
 <?php
 namespace App\Models;
 
+use App\Contracts\Models\IDatePrice;
+use App\Traits\Models\Filter\BoatFilter;
+use App\Traits\Models\Filter\HasYearMonthOptions;
+use App\Traits\Models\Filter\YearMonthFilter;
+use App\Traits\Models\HasFromUntilDates;
 use Database\Factories\BoatDatesFactory;
 use Eloquent;
+use Illuminate\Http\Client\Request;
 use Illuminate\Support\Carbon;
 use App\Traits\Models\ClearCache;
 use App\Traits\Models\Events\FireEvents;
@@ -46,9 +52,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property-read mixed $individual_price
  * @property-read mixed $period
  */
-class BoatDates extends BaseModel
+class BoatDates extends BaseModel implements IDatePrice
 {
-    use HasFactory, ClearCache, FireEvents;
+    use HasFactory, ClearCache, FireEvents, BoatFilter, HasFromUntilDates, HasYearMonthOptions, YearMonthFilter;
 
     protected $table = 'boat_dates';
     protected $with = 'boat';
@@ -80,16 +86,6 @@ class BoatDates extends BaseModel
     public function getPriceDataAttribute()
     {
         return json_decode($this->prices);
-    }
-
-    public function getValidFromAttribute()
-    {
-        return $this->from->format('Y-m-d');
-    }
-
-    public function getValidUntilAttribute()
-    {
-        return $this->until->format('Y-m-d');
     }
 
     public function getIsCranedAttribute()
@@ -138,5 +134,10 @@ class BoatDates extends BaseModel
     public function getPeriodAttribute()
     {
         return $this->priceData->modusDatePeriod ?? null;
+    }
+
+    public function getPrice(Request $request): float|int
+    {
+        return 0;
     }
 }

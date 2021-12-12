@@ -250,7 +250,7 @@ return [
         | When using the "illuminate" caching driver, it will automatically use
         | your default cache store. However if you prefer to have the cell
         | cache on a separate store, you can configure the store name here.
-        | You can use any store defined in your cache config. When leaving
+        | You can use any store defined in your cache _config. When leaving
         | at "null" it will use the default store.
         |
         */
@@ -318,7 +318,7 @@ return [
         | cleanup the server that the last AfterImportJob runs on. The rest of the server
         | would still have the local temporary file stored on it. In this case your
         | local storage limits can be exceeded and future imports won't be processed.
-        | To mitigate this you can set this config value to be true, so that after every
+        | To mitigate this you can set this _config value to be true, so that after every
         | queued chunk is processed the local temporary file is deleted on the server that
         | processed it.
         |

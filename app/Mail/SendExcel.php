@@ -2,32 +2,37 @@
 
 namespace App\Mail;
 
-use App\Exports\CaravanDatesExport;
+use App\Exports\ExcelExport;
+use Exception;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Maatwebsite\Excel\Excel;
+
+//use Illuminate\Contracts\Queue\ShouldQueue;
 
 class SendExcel extends Mailable
 {
     use Queueable, SerializesModels;
-
-    protected $data;
-    protected $file;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($to, CaravanDatesExport $export, $file)
+    public function __construct(
+        public $recipient,
+        public ExcelExport $export,
+        public $fileName,
+        public $subject,
+        public $year = null,
+        public $month = null
+    )
     {
         $this->to[] = [
-            'address'   => $to,
-            'name'      => $to,
+            'address'   => $this->recipient,
+            'name'      => $this->recipient,
         ];
-        $this->data = $export;
-        $this->file = $file;
     }
 
     /**
@@ -37,14 +42,18 @@ class SendExcel extends Mailable
      */
     public function build()
     {
-        return $this
-            ->from(config('port.main.mail.sender.address'), config('port.main.mail.sender.name'))
-            ->attach($this->file)
-            ->subject("Caravan Rezeptions Daten")
-            ->markdown(
-                'email.excel', [
-                'data' => $this->data
-                ]
-            );
+        try {
+            return $this
+                ->from(config('port.main.mail.sender.address'), config('port.main.mail.sender.name'))
+                ->attachData($this->export->raw(Excel::XLS), $this->fileName)
+                ->subject($this->subject)
+                ->markdown(
+                    'email.excel', [
+                        'data' => $this->export
+                    ]
+                );
+        } catch(Exception $e) {
+            throw $e;
+        }
     }
 }

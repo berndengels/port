@@ -1,55 +1,53 @@
 <?php
 namespace App\Libs\Prices\Caravan;
 
-use App\Libs\Prices\CaravanPrice;
-use App\Libs\Prices\Price;
 use DatePeriod;
 use Carbon\Carbon;
+use App\Libs\Prices\Price;
 use App\Libs\Prices\IDailyPrice;
+use App\Entities\SaisonDatesEntity;
+use App\Repositories\ConfigSaisonDatesRepository;
 
 class Base extends Main implements IDailyPrice
 {
-    public function __construct(protected int $carLength = 0)
+    public static $dailyPrices;
+
+    public function __construct(
+        protected Carbon $from,
+        protected Carbon $until,
+        protected float|int $carlength = 0
+    )
     {
         $this->initConfg();
     }
 
-    public function addPrice(DatePeriod $days): Price
+    public function addPrice(?DatePeriod $days = null): Price
     {
-        $sumPrice = 0;
-        /**
-         * @var Carbon $date
-         */
-        foreach($days as $date) {
-            // saison
-            if($date->month >= $this->saisonFromMonth && $date->month <= $this->saisonUntilMonth) {
-                $price = isset($this->saisonPricePerDay[$this->carLength]) ? $this->saisonPricePerDay[$this->carLength] : 0;
-            }
-            // nebensaison
-            else
-            {
-                $price = isset($this->defaultPricePerDay[$this->carLength]) ? $this->defaultPricePerDay[$this->carLength] : 0;
-            }
-            $sumPrice += $price;
-        }
+        static::$dailyPrices = [];
+        $repository = new ConfigSaisonDatesRepository($this->from, $this->until);
+        $entities = $repository->getTouchedGuestSaisons($this->dateModel, $this->carlength);
+        $entities->each(fn(SaisonDatesEntity $item) => static::$dailyPrices += $item->getDailyPrices()->toArray());
+        ksort(static::$dailyPrices,  SORT_NATURAL);
+        $sumPrice = $entities->sum(fn(SaisonDatesEntity $i) => $i->getDailyPrices()->values()->sum());
+
         return new Price(value: $sumPrice);
     }
 
     /**
      * @return int
      */
-    public function getCarLength(): int
+    public function getCarlength(): float|int
     {
-        return $this->carLength;
+        return $this->carlength;
     }
 
     /**
-     * @param  int $carLength
+     * @param  int $carlength
      * @return Base
      */
-    public function setCarLength(int $carLength): Base
+    public function setCarlength(float|int $carlength): Base
     {
-        $this->carLength = $carLength;
+        $this->carlength = $carlength;
         return $this;
     }
 }

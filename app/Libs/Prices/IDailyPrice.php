@@ -5,5 +5,5 @@ use DatePeriod;
 
 interface IDailyPrice
 {
-    public function addPrice(DatePeriod $days): Price;
+    public function addPrice(?DatePeriod $days = null): Price;
 }

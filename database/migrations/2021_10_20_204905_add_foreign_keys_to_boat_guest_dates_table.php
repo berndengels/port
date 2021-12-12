@@ -13,8 +13,8 @@ class AddForeignKeysToBoatGuestDatesTable extends Migration
      */
     public function up()
     {
-        Schema::table('boat_guest_dates', function (Blueprint $table) {
-            $table->foreign('boat_guest_id', 'boat_guest_dates_ibfk_1')->references('id')->on('boat_guests')->onUpdate('CASCADE')->onDelete('CASCADE');
+        Schema::table('guest_boat_dates', function (Blueprint $table) {
+            $table->foreign('guest_boat_id', 'guest_boat_dates_ibfk_1')->references('id')->on('guest_boats')->onUpdate('CASCADE')->onDelete('CASCADE');
         });
     }
 
@@ -25,8 +25,8 @@ class AddForeignKeysToBoatGuestDatesTable extends Migration
      */
     public function down()
     {
-        Schema::table('boat_guest_dates', function (Blueprint $table) {
-            $table->dropForeign('boat_guest_dates_ibfk_1');
+        Schema::table('guest_boat_dates', function (Blueprint $table) {
+            $table->dropForeign('guest_boat_dates_ibfk_1');
         });
     }
 }

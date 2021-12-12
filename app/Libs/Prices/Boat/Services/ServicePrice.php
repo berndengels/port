@@ -4,7 +4,7 @@ namespace App\Libs\Prices\Boat\Services;
 
 use App\Libs\Prices\Price;
 use App\Models\Boat;
-use App\Models\PriceType;
+use App\Models\ConfigPriceType;
 
 class ServicePrice
 {
@@ -12,10 +12,10 @@ class ServicePrice
     protected $targetValue;
 
     public function __construct(
-        protected Boat $boat,
-        protected string $modus,
-        protected PriceType $priceType,
-        protected float $pricePerUntit
+        protected Boat            $boat,
+        protected string          $modus,
+        protected ConfigPriceType $priceType,
+        protected float           $pricePerUntit
     ) {
         switch ($this->priceType->type) {
             case 'area':

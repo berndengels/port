@@ -1,31 +1,37 @@
 <?php
 namespace App\Libs\Prices\Boat;
 
-use App\Libs\Prices\Price;
 use DatePeriod;
 use Carbon\Carbon;
+use App\Libs\Prices\Price;
 use App\Libs\Prices\IDailyPrice;
 
 class Base extends Main implements IDailyPrice
 {
     public function __construct(
+        protected Carbon|null $from = null,
+        protected Carbon|null $until = null,
         protected string $modus,
-        protected int $length,
-        protected int $width
+        protected float $length,
+        protected float $width
     ) {
         $this->initConfig();
         $this->defaultSaisonPrice   = round($this->priceSaisonFactor * $this->length * $this->width);
         $this->defaultWinterPrice   = round($this->priceWinterFactor * $this->length * $this->width);
     }
 
-
-    public function addPrice(DatePeriod $days): Price
+    public function addPrice(?DatePeriod $days = null): Price
     {
-        $from   = $days->getStartDate();
-        $until  = $days->getEndDate();
+        if($days) {
+            $from   = $days->getStartDate();
+            $until  = $days->getEndDate();
+        } else {
+            $from   = 'summer' === $this->modus ? static::$saisonStart : static::$winterStart;
+            $until  = 'summer' === $this->modus ? static::$saisonEnd : static::$winterEnd;
+        }
 
         switch($this->modus) {
-            case 'saison':
+            case 'summer':
                 return $this->getSaisonPrice($from, $until);
             case 'winter':
                 return $this->getWinterPrice($from, $until);
@@ -42,7 +48,6 @@ class Base extends Main implements IDailyPrice
         $from   = !$from ? $this->saisonStart : $from;
         $until  = !$until ? $this->saisonEnd : $until;
         $days   = $until->diffInDays($from);
-
         return new Price(value:  round($this->defaultSaisonPrice * $days / $this->defaultSaisonDays));
     }
 

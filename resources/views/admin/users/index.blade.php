@@ -14,7 +14,7 @@
             <div></div>
         </div>
         {{ $data->links() }}
-        <table class="table w-full mt-3">
+        <table class="table w-auto mt-3">
             <tr>
                 <th class="hidden md:table-cell">ID</th>
                 <th>Name</th>

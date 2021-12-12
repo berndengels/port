@@ -3,7 +3,9 @@ namespace App\Libs\Prices;
 
 use DatePeriod;
 use Carbon\Carbon;
+use ReflectionClass;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 abstract class PriceCalculator
 {
@@ -42,20 +44,10 @@ abstract class PriceCalculator
         return $this;
     }
 
-    public function set(Price $price): self
+    protected function formatResult(array $props): array
     {
-        $value = $price->getValue();
-        if($value > 0) {
-            static::$total = (float) $value;
-        }
-        return $this;
-    }
-
-    protected function formatResult(): array
-    {
-        $vars = get_class_vars(static::class);
         $prices = [];
-        foreach ($vars as $prop => $val) {
+        foreach ($props as $prop => $val) {
             if(false === strpos($prop, '_', 0)) {
                 if($val instanceof Carbon) {
                     $val = $val->format('d.m.Y');
@@ -69,7 +61,83 @@ abstract class PriceCalculator
         return $prices;
     }
 
-    public abstract function load(): array;
+    protected abstract function registerAddPriceClasses(): Collection;
 
-    public abstract function getPrice(Request $request): array;
+    protected abstract function params(): Collection;
+
+//    public abstract function getPrice(Request $request): array;
+    public function getPrice(Request $request): array
+    {
+        $dCount     = static::$daysCount;
+        $dPeriod    = static::$_datePeriod;
+        static::$total = 0;
+        $props = [];
+
+        foreach ($this->registerAddPriceClasses() as $class) {
+            if(class_exists($class)) {
+                $basename  = class_basename($class);
+                $staticProp = 'price' . $basename;
+                $rClass     = new ReflectionClass($class);
+
+                $obj = $this->getObject($request, $class, $rClass);
+
+                switch (true) {
+                    case $rClass->implementsInterface(IDailyPrice::class):
+                        static::$$staticProp = $obj->setDaysCount($dCount)->addPrice($dPeriod);
+                        break;
+                    case $rClass->implementsInterface(IPrice::class):
+                    default:
+                        static::$$staticProp = $obj->addPrice();
+                        break;
+                }
+                $this->add(static::$$staticProp);
+                $props[$staticProp] = static::$$staticProp;
+
+                if( property_exists($obj, 'dailyPrices') ) {
+                    $props['dailyPrices'] = $obj::$dailyPrices;
+                }
+            }
+        }
+
+        $props['days'] = static::$daysCount;
+        $props['total'] = static::$total;
+//        $props['dailyPrices'] = $obj::$dailyPrices;
+
+        return $this->formatResult($props);
+    }
+
+    protected function getObject(Request $request, string $class, ReflectionClass $rClass): object {
+        $params = [];
+        $constructParams = [];
+
+        foreach ($this->params() as $item) {
+            if($this->model && $this->model->getAttribute($item)) {
+                $params[$item] = $this->model->{$item};
+            } else {
+                $params[$item] = $request->post($item);
+            }
+        }
+
+        $cParams = $rClass->getConstructor()->getParameters();
+        /**
+         * @var $pNames Collection
+         */
+        $pNames = collect($cParams)->map->name;
+
+        foreach ($pNames as $name) {
+            switch ($name) {
+                case 'from':
+                    $constructParams[] = static::$from;
+                    break;
+                case 'until':
+                    $constructParams[] = static::$until;
+                    break;
+                default:
+                    $constructParams[] = $params[$name] ?? null;
+                    break;
+            }
+        }
+
+        return new $class(...$constructParams);
+    }
 }

@@ -2,7 +2,7 @@
 
 @section('main')
     <div class="p-6">
-        <x-nav-link href="{{ route('admin.boatDates.'.$modus) }}" icon="fas fa-backward" class="btn">zurück</x-nav-link>
+        <x-nav-link href="{{ route('admin.boatDates.index', ['saison' => $modus ?? null]) }}" icon="fas fa-backward" class="btn">zurück</x-nav-link>
         <x-form name="frm" method="post" action="{{ route('admin.boatDates.store') }}" class="w-full lg:w-1/2">
 
             <x-form-select class="calc" class="boat" id="boat_id" name="boat_id" label="Boot" :options="$boatOptions" required />
@@ -20,7 +20,7 @@
             <div class="mt-3">
                 <x-form-checkbox class="calc" name="cleaning" label="Rumpf-Reinigung" />
             </div>
-            <x-form-input class="calc" id="default_price" name="default_price" label="eigener Preis" />
+            <!--x-form-input class="calc" name="special_price" label="eigener Preis" /-->
             <x-form-input  id="price" name="price" type="number" min="0" label="Gesamt-Preis" required />
             <x-form-input type="hidden" name="prices" />
 

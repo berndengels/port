@@ -1,22 +1,19 @@
 <?php
 namespace App\Http\Controllers\Admin;
 
-use App\Libs\Prices\CaravanPrice;
-use App\Mail\SendExcel;
 use Excel;
+use App\Mail\SendExcel;
 use App\Exports\CaravanDatesExport;
 use App\Rules\DatesIntervalUnique;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Http;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Caravan;
 use App\Models\CaravanDates;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\CaravanDatesRequest;
 use App\Http\Requests\CaravanDatesValidationData;
 use Illuminate\Support\Facades\Mail;
@@ -60,6 +57,7 @@ class AdminCaravanDatesController extends AdminController
          */
         $query = CaravanDates::with('caravan')
             ->orderByDesc('from');
+
         $dublicateOptions = CaravanDates::dublicates()
             ->get()
             ->keyBy('caravan_id')
@@ -71,34 +69,17 @@ class AdminCaravanDatesController extends AdminController
             )
             ->prepend('Dublikat wählen', '');
 
-        $yearOptions = CaravanDates::selectRaw('YEAR(`from`) AS year')
-            ->groupByRaw('year')
-            ->get()
-            ->keyBy('year')
-            ->map
-            ->year
-            ->prepend('Jahr wählen', '');
+        $yearOptions = CaravanDates::yearOptions();
+        $monthOptions = CaravanDates::monthOptions();
 
-        $monthOptions = CaravanDates::selectRaw('MONTH(`from`) AS number, MONTHNAME(`from`) AS monthname')
-            ->groupByRaw('number')
-            ->get()
-            ->keyBy('number')
-            ->map
-            ->monthname
-            ->prepend('Monat wählen', '');
         $data = $query
             ->caravanByDates($caravanId ?? $dublicatéId)
             ->fromYearMonth($year, $month);
 
         /**
-         * @var $priceTotal \Illuminate\Database\Eloquent\Collection
+         * @var $priceTotal Collection
          */
-        $priceTotal = $data->get();
-        $priceTotal = $priceTotal->sum(
-            function ($item) {
-                return $item->price;
-            }
-        );
+        $priceTotal = $query->get()->sum(fn ($item) => $item->price);
 
         $paginated = $data->paginate($this->paginatorLimit);
         $queryString = $request->only(['caravan','dublicate','year', 'month']);
@@ -227,24 +208,28 @@ class AdminCaravanDatesController extends AdminController
         return back()->with(['success' => "Caravan-Eintrag mit ID: $id erfolgreich gelöscht!"]);
     }
 
-    public function sendExcel(Request $request, $year = null, $month = null)
+    public function sendExcel(Request $request)
     {
-        $email      = $request->post('email');
+        $year       = $request->post('year');
+        $month      = $request->post('month');
         $now        = Carbon::now()->format('Ymd-Hi');
         $fileName   = $now.'_caravan_dates.xls';
-        $fullPath   = storage_path('app/temp/'.$fileName);
+        $subject    = 'Caravan Daten';
 
         try {
             $export = new CaravanDatesExport($year, $month);
-
-            if(Excel::store($export, $fileName, 'temp')) {
-                Mail::send(new SendExcel($email, $export, $fullPath));
-            }
-            unlink($fullPath);
-            //            return response()->json(['success' => true, 'error' => null]);
-            return back()->with(['success' => 'Excel-Datei erfolgreich versand!']);
+            Mail::send(new SendExcel(
+                recipient:  $request->post('email'),
+                export: $export,
+                fileName: $fileName,
+                subject: $subject,
+                year: $year,
+                month: $month
+                )
+            );
+            return redirect()->route('admin.caravanDates.index')->with(['success' => 'Excel-Datei erfolgreich versand!']);
         } catch (Exception $e) {
-            return back()->withErrors(['error' => 'Excel-Datei konnte nicht versand werden!']);
+            return redirect()->route('admin.caravanDates.index')->with(['error' => 'Excel-Datei konnte nicht versand werden!']);
         }
     }
 }

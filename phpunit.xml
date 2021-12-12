@@ -15,8 +15,15 @@
         <testsuite name="Unit">
             <directory suffix="Test.php">./tests/Unit</directory>
         </testsuite>
-        <testsuite name="Feature">
-            <directory suffix="Test.php">./tests/Feature</directory>
+        <testsuite name="Models">
+            <directory suffix="Test.php">./tests/Feature/Models</directory>
+        </testsuite>
+        <testsuite name="Default">
+            <directory suffix="Test.php">./tests/Feature/Default</directory>
+        </testsuite>
+        <testsuite name="PriceCalculation">
+            <directory suffix="Test.php">./tests/Feature/PriceCalculation</directory>
+            <!--file>./tests/Feature/PriceCalculation/BoatPriceCalculationTest.php</file-->
         </testsuite>
     </testsuites>
     <coverage processUncoveredFiles="true">

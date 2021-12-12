@@ -12,5 +12,10 @@
 	"priceMastCrane": "Preis Mastkranen",
 	"saison": "Sommerliegeplatz",
 	"winter": "Winterlager",
-	"modusDatePeriod": "Zeit"
+	"modusDatePeriod": "Zeit",
+	"CaravanDates": "Caravan Besuche",
+	"GuestBoatDates": "Gast-Boote",
+	"App\\Models\\Boat": "Dauerlieger-Boote",
+	"App\\Models\\GuestBoat": "Gast-Boote",
+	"App\\Models\\Caravan": "Caravans"
 }

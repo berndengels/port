@@ -1,7 +1,7 @@
 <?php
 namespace App\Libs\Sanitizers;
 
-use App\Libs\Prices\BoatGuestPrice;
+use App\Libs\Prices\GuestBoatPrice;
 use App\Libs\Prices\BoatPrice;
 use App\Models\BoatDates;
 use App\Models\BoatGuestDates;
@@ -28,7 +28,7 @@ class GuestBoatSanitizer extends Sanitizer
         $request = new Request();
         $request->request->add($params);
         try {
-            $response = (new BoatGuestPrice($from, $until))->getPrice($request);
+            $response = (new GuestBoatPrice($from, $until))->getPrice($request);
             $guestBoatDate->prices = json_encode($response);
             $guestBoatDate->save();
             return true;

@@ -29,4 +29,13 @@ abstract class MainFactory extends Factory
         }
         return $ret;
     }
+
+    public function zeroFill($val)
+    {
+        $val = (string) $val;
+        if(strlen($val) < 2 && $val > 0) {
+            $val = '0'.$val;
+        }
+        return $val;
+    }
 }

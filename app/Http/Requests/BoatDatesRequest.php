@@ -21,9 +21,9 @@ class BoatDatesRequest extends AdminRequest
     {
         return array_merge(
             $this->all(), [
-            'crane'         => !!$this->post('crane') ?? false,
-            'mast_crane'    => !!$this->post('mast_crane') ?? false,
-            'cleaning'      => !!$this->post('cleaning') ?? false,
+                'crane'         => !!$this->post('crane') ?? false,
+                'mast_crane'    => !!$this->post('mast_crane') ?? false,
+                'cleaning'      => !!$this->post('cleaning') ?? false,
             ]
         );
     }
@@ -45,7 +45,7 @@ class BoatDatesRequest extends AdminRequest
             'crane'         => '',
             'mast_crane'    => '',
             'cleaning'      => '',
-            'default_price' => '',
+//            'special_price' => '',
         ];
     }
 }

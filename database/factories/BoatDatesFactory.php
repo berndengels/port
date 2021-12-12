@@ -13,7 +13,7 @@ class BoatDatesFactory extends MainFactory
      */
     public function definition()
     {
-        $modi       = ['saison','winter'];
+        $modi       = ['summer','winter'];
         $endDate    = Carbon::today()->addMonths(1)->format('Y-m-d');
         $from       = $this->randomDate('2020-01-01', $endDate);
         $until      = Carbon::create($from)->addDays(rand(1,7));

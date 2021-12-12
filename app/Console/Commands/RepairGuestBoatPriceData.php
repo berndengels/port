@@ -2,8 +2,8 @@
 namespace App\Console\Commands;
 
 use App\Libs\Sanitizers\GuestBoatSanitizer;
-use App\Models\BoatGuest;
-use App\Models\BoatGuestDates;
+use App\Models\GuestBoat;
+use App\Models\GuestBoatDates;
 use Spatie\Emoji\Emoji;
 
 class RepairGuestBoatPriceData extends RepairPriceData
@@ -41,7 +41,7 @@ class RepairGuestBoatPriceData extends RepairPriceData
     public function handle()
     {
         if ($this->confirm('Do you wish to continue?', true)) {
-            $this->data = BoatGuestDates::all();
+            $this->data = GuestBoatDates::all();
             if($this->data && $this->data->count() > 0) {
                 $this->withProgressBar(
                     $this->data, function ($item) {
