@@ -30,6 +30,7 @@ class GuestBoatAdminPriceTest extends DuskTestCase
                 ->loginAs($this->user(), 'admin', )
                 ->assertAuthenticated('admin')
                 ->visit('/admin/guestBoatDates/create')
+                ->wait(3)
                 ->assertRouteIs('admin.guestBoatDates.create')
                 ->assertInputPresent('name')
                 ->assertInputPresent('home_port')

@@ -72,6 +72,7 @@ abstract class PriceCalculator
         $dPeriod    = static::$_datePeriod;
         static::$total = 0;
         $props = [];
+
         foreach ($this->registerAddPriceClasses() as $class) {
             if(class_exists($class)) {
                 $basename  = class_basename($class);
@@ -91,12 +92,16 @@ abstract class PriceCalculator
                 }
                 $this->add(static::$$staticProp);
                 $props[$staticProp] = static::$$staticProp;
+
+                if( property_exists($obj, 'dailyPrices') ) {
+                    $props['dailyPrices'] = $obj::$dailyPrices;
+                }
             }
         }
 
         $props['days'] = static::$daysCount;
         $props['total'] = static::$total;
-        $props['dailyPrices'] = $obj::$dailyPrices;
+//        $props['dailyPrices'] = $obj::$dailyPrices;
 
         return $this->formatResult($props);
     }

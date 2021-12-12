@@ -35,7 +35,7 @@ abstract class TestCase extends BaseTestCase
     protected $followRedirects = true;
     protected $user;
     protected $customer;
-    protected $env = 'demo';
+    protected $env = 'testing';
 
     protected function setUp(): void
     {
@@ -60,11 +60,16 @@ abstract class TestCase extends BaseTestCase
         parent::tearDown();
     }
 
-    protected function createUser(): AdminUser {
+    protected function createUser($force = false): AdminUser {
         $factory = AdminUser::factory();
 
         if(0 === Role::whereName('admin')->whereGuardName('admin')->count()) {
             $factory = $factory->has((new AdminRoleFactory())->count(1),'roles');
+        }
+
+        $email = $factory->definition()['email'];
+        if(!$force && $user = AdminUser::whereEmail($email)->first()) {
+            return $user;
         }
 
         $user = $factory->create();
@@ -76,16 +81,25 @@ abstract class TestCase extends BaseTestCase
         return $user;
     }
 
-    protected function createCustomer(bool $confirmed = false, bool $asRegistration = false) {
-        $customer = Customer::factory()
+    protected function createCustomer(bool $confirmed = false, bool $asRegistration = false, $force = false) {
+
+
+        $factory =  Customer::factory()
             ->state(fn (array $attr) => ['confirmed' => $confirmed])
             ->has(Boat::factory()
                 ->has(BoatDates::factory()->count(3),'dates')
                 ->has(ServiceRequest::factory()->count(1), 'serviceRequests')
                 ->count(1),'boats'
             )
-            ->create()
         ;
+
+        $email = $factory->definition()['email'];
+        if(!$force && $customer = Customer::whereEmail($email)->first()) {
+            return $customer;
+        }
+
+        $customer = $factory->create();
+
         if($asRegistration) {
             Event::dispatch(new Registered($customer));
         }

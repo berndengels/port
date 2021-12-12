@@ -14,8 +14,6 @@ use App\Models\ConfigPriceComponent;
 
 abstract class Main extends MainPriceItem
 {
-    public static $dailyPrices = [];
-
     protected $dateModel = BoatDates::class;
     protected $model = Boat::class;
 

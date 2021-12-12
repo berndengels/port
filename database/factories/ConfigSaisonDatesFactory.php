@@ -36,7 +36,8 @@ class ConfigSaisonDatesFactory extends MainFactory
 
             return [
                 'name'          => $this->faker->text(20),
-                'key'           => 'main',
+                'key'           => 'guest',
+                'mode'           => null,
                 'from_day'      => $this->zeroFill($fromDay),
                 'from_month'    => $this->zeroFill($fromMonth),
                 'until_day'     => $this->zeroFill($untilDay),

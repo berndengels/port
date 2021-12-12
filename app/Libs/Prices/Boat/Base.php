@@ -26,12 +26,12 @@ class Base extends Main implements IDailyPrice
             $from   = $days->getStartDate();
             $until  = $days->getEndDate();
         } else {
-            $from   = 'saison' === $this->modus ? static::$saisonStart : static::$winterStart;
-            $until  = 'saison' === $this->modus ? static::$saisonEnd : static::$winterEnd;
+            $from   = 'summer' === $this->modus ? static::$saisonStart : static::$winterStart;
+            $until  = 'summer' === $this->modus ? static::$saisonEnd : static::$winterEnd;
         }
 
         switch($this->modus) {
-            case 'saison':
+            case 'summer':
                 return $this->getSaisonPrice($from, $until);
             case 'winter':
                 return $this->getWinterPrice($from, $until);

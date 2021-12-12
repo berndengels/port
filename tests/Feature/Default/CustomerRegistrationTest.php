@@ -123,13 +123,13 @@ class CustomerRegistrationTest extends TestCase
 
     public function testRegistrationDoneEventDispached() {
         Event::fake([Registered::class]);
-        $this->createCustomer(confirmed: false, asRegistration: true);
+        $this->createCustomer(confirmed: false, asRegistration: true, force: true);
         Event::assertDispatched(Registered::class);
     }
 
     public function testRegistrationDoneEventNotDispached() {
         Event::fake([Registered::class]);
-        $this->createCustomer(confirmed: true, asRegistration: false);
+        $this->createCustomer(confirmed: true, asRegistration: false, force: true);
         Event::assertNotDispatched(Registered::class);
     }
 
@@ -138,7 +138,7 @@ class CustomerRegistrationTest extends TestCase
         $user = $this->user;
         $user->update(['email' => 'engels@f50.de']);
 
-        $this->createCustomer(confirmed: false, asRegistration: true);
+        $this->createCustomer(confirmed: false, asRegistration: true, force: true);
 
         Notification::assertSentTo(
             [$user], NewRegistrationDone::class
@@ -150,7 +150,7 @@ class CustomerRegistrationTest extends TestCase
         /**
          * @var $customer Customer
          */
-        $customer = $this->createCustomer(confirmed: false, asRegistration: true);
+        $customer = $this->createCustomer(confirmed: false, asRegistration: true, force: true);
         Event::assertDispatched(Registered::class);
         $customer->refresh();
         $this->assertTrue($customer->hasRole('boat'), 'Customer has no valid Role');
@@ -161,7 +161,7 @@ class CustomerRegistrationTest extends TestCase
         /**
          * @var $customer Customer
          */
-        $customer = $this->createCustomer(confirmed: false, asRegistration: true);
+        $customer = $this->createCustomer(confirmed: false, asRegistration: true, force: true);
         $permissions = Permission::whereGuardName('customer')->get();
         Event::assertDispatched(Registered::class);
         $customer->refresh();

@@ -11,8 +11,6 @@ use Illuminate\Support\Str;
 
 abstract class Main extends MainPriceItem
 {
-    public static $dailyPrices = [];
-
     protected $dateModel = GuestBoatDates::class;
     protected $model = GuestBoat::class;
     /**

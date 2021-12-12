@@ -10,6 +10,8 @@ use App\Repositories\ConfigSaisonDatesRepository;
 
 class Base extends Main implements IDailyPrice
 {
+    public static $dailyPrices;
+
     public function __construct(
         protected Carbon $from,
         protected Carbon $until,
@@ -21,10 +23,11 @@ class Base extends Main implements IDailyPrice
 
     public function addPrice(?DatePeriod $days = null): Price
     {
+        static::$dailyPrices = [];
         $repository = new ConfigSaisonDatesRepository($this->from, $this->until);
         $entities = $repository->getTouchedGuestSaisons($this->dateModel, $this->length);
         $entities->each(fn(SaisonDatesEntity $item) => static::$dailyPrices += $item->getDailyPrices()->toArray());
-        ksort(static::$dailyPrices);
+        ksort(static::$dailyPrices, SORT_NATURAL);
         $sumPrice = $entities->sum(fn(SaisonDatesEntity $i) => $i->getDailyPrices()->values()->sum());
 
         return new Price(value: $sumPrice);

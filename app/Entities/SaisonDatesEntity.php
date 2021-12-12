@@ -110,7 +110,8 @@ class SaisonDatesEntity
      */
     public function getDailyPrices(): Collection
     {
-        return collect($this->dailyPrices)->sortKeysDesc();
+//        return collect($this->dailyPrices)->sortKeysDesc();
+        return collect($this->dailyPrices)->sortKeys();
     }
 
     /**

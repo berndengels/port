@@ -25,11 +25,11 @@ class CustomerTestSeeder extends MainTestSeeder
         $customer = Customer::factory()->create();
 
         Boat::factory()
-            ->hasDates(5, function (array $attributes, Boat $boat) {
+            ->hasDates(10, function (array $attributes, Boat $boat) {
                 $randomDateEnd = Carbon::today()->addMonths(5)->format('Y-m-d');
                 $from  = Carbon::create(DateHelper::randomDate('2020-05-01', $randomDateEnd,'Y-m-d'));
                 $until = $from->copy()->addMonths(rand(4,8));
-                $modus  = ['saison','winter'][mt_rand(0,1)];
+                $modus  = ['summer','winter'][mt_rand(0,1)];
 
                 $price = (new BoatPrice(null, null, $boat))->getPrice(RequestHelper::build([
                     'cleaning'      => (bool) rand(0,1),
