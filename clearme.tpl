@@ -1,4 +1,4 @@
-#!/bin/bash
+.#!/bin/bash
 php="/usr/local/bin/php"
 composer="/usr/local/bin/composer"
 #php="/opt/plesk/php/8.0/bin/php"
