@@ -53,7 +53,7 @@ class AdminConfigDailyPriceController extends AdminController
     {
         return view('admin._config.dailyPrices.create', [
             'optionsModel'  => $this->optionsModel,
-            'optionsSaisonDates' => $this->saisonDatesRepository->options()->getSelectOptions(),
+            'optionsSaisonDates' => $this->configSaisonDatesRepository->options()->getSelectOptions(),
             'optionsPriceTypes' => $this->configPriceTypeRepository->options()->getSelectOptions(),
         ]);
     }
@@ -85,7 +85,7 @@ class AdminConfigDailyPriceController extends AdminController
         return view('admin._config.dailyPrices.edit', [
             'dailyPrice' => $dailyPrice,
             'optionsModel'  => $this->optionsModel,
-            'optionsSaisonDates' => $this->saisonDatesRepository->options()->getSelectOptions(),
+            'optionsSaisonDates' => $this->configSaisonDatesRepository->options()->getSelectOptions(),
             'optionsPriceTypes' => $this->configPriceTypeRepository->options()->getSelectOptions(),
         ]);
     }

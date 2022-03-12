@@ -17,7 +17,7 @@ class AdminServiceController extends AdminController
         parent::__construct();
         $this->categories   = $this->serviceCategoryRepository->options()->getSelectOptions();
         $this->materials    = $this->materialRepository->options()->getSelectOptions();
-        $this->priceTypes   = $this->priceTypeRepository->options()->getSelectOptions();
+        $this->priceTypes   = $this->configPriceTypeRepository->options()->getSelectOptions();
     }
 
     /**

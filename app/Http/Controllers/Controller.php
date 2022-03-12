@@ -28,7 +28,6 @@ class Controller extends BaseController
     protected $caravanRepository;
     protected $customerRepository;
     protected $roleRepository;
-    protected $configPriceTypeRepository;
     protected $materialRepository;
     protected $materialCategoryRepository;
     protected $serviceCategoryRepository;
@@ -36,6 +35,8 @@ class Controller extends BaseController
     protected $configServiceRepository;
     protected $configPriceComponentRepository;
     protected $configEntityTypeRepository;
+    protected $configPriceTypeRepository;
+    protected $configSaisonDatesRepository;
 
     public function __construct()
     {
@@ -54,5 +55,6 @@ class Controller extends BaseController
         $this->configServiceRepository = new ConfigServiceRepository();
         $this->configPriceComponentRepository = new ConfigPriceComponentRepository();
         $this->configEntityTypeRepository = new ConfigEntityTypesRepository();
+        $this->configSaisonDatesRepository = new ConfigSaisonDatesRepository();
     }
 }

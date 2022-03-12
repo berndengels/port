@@ -30,8 +30,12 @@ class ConfigSaisonDatesRepository extends Repository
         protected ?Carbon $from = null,
         protected ?Carbon $until = null
     ) {
-        $this->fromMonthDay     = $from->format('m').$from->format('d');
-        $this->untilMonthDay    = $until->format('m').$until->format('d');
+        if($this->from) {
+            $this->fromMonthDay = $this->from->format('m').$from->format('d');
+        }
+        if($this->until) {
+            $this->untilMonthDay    = $this->until->format('m').$until->format('d');
+        }
     }
 
 

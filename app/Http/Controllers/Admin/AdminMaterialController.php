@@ -18,7 +18,7 @@ class AdminMaterialController extends AdminController
     {
         parent::__construct();
         $this->categories = $this->materialCategoryRepository->options()->getSelectOptions();
-        $this->priceTypes = $this->priceTypeRepository->options()->getSelectOptions();
+        $this->priceTypes = $this->configPriceTypeRepository->options()->getSelectOptions();
         $this->fertilityUnits = config('port.prices.fertility.units');
         $this->fertilityPers = config('port.prices.fertility.per');
     }
