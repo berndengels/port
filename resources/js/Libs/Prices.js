@@ -81,5 +81,29 @@ class Prices {
 			}
 		}
 	}
+	houseboatDates = {
+		calculate(frm, calcUrl) {
+			const $elObserve = $('.calc', frm);
+
+			$elObserve.change(() => {
+				this.calc(frm, calcUrl)
+			})
+		},
+		calc(frm, calcUrl) {
+			if(frm.from.value && frm.until.value && "" !== frm.houseboat_id.value) {
+				let formData = new FormData(),elem;
+				for(elem of frm.elements) {
+					formData.append(elem.name, elem.value)
+				}
+				axios.post(calcUrl, formData)
+					.then(resp => {
+						frm.price.value = Math.ceil(resp.data.total)
+						frm.prices.value = JSON.stringify(resp.data)
+					})
+					.catch(err => console.error(err))
+				;
+			}
+		}
+	}
 }
 export default Prices;

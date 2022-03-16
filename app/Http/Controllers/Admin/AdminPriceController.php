@@ -7,11 +7,13 @@ use App\Libs\BoatPriceCalculator;
 use App\Libs\Prices\GuestBoatPrice;
 use App\Libs\Prices\BoatPrice;
 use App\Libs\Prices\CaravanPrice;
+use App\Libs\Prices\HouseboatPrice;
 use App\Models\Boat;
 use App\Models\BoatDates;
 use App\Models\GuestBoat;
 use App\Models\Caravan;
 use App\Models\GuestBoatDates;
+use App\Models\Houseboat;
 use Excel;
 use Carbon\Carbon;
 use App\Models\CaravanDates;
@@ -63,6 +65,29 @@ class AdminPriceController extends AdminController
             $from       = $from ? new Carbon($from, config('app.timezone')) : null;
             $until      = $until ? new Carbon($until, config('app.timezone')) : null;
             $response   = (new BoatPrice($from, $until, $boat))->getPrice($request);
+        }
+
+        return response()->json($response);
+    }
+
+    /**
+     * Calculate boat dates price.
+     *
+     * @param  Request $request
+     * @return Response
+     */
+    public function calculateHouseboatDates(Request $request)
+    {
+        $boatId     = $request->post('houseboat_id');
+        $from       = $request->post('from');
+        $until      = $request->post('until');
+        $houseboat  = Houseboat::find($boatId);
+        $response   = ['error' => true];
+
+        if($houseboat) {
+            $from       = $from ? new Carbon($from, config('app.timezone')) : null;
+            $until      = $until ? new Carbon($until, config('app.timezone')) : null;
+            $response   = (new HouseboatPrice($from, $until, $houseboat))->getPrice($request);
         }
 
         return response()->json($response);

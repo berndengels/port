@@ -65,9 +65,7 @@ class AdminServiceController extends AdminController
     public function store(ServiceRequest $request)
     {
         try {
-            $service = Service::create($request->validated());
-//            if($request->validated()) {
-//            }
+            Service::create($request->validated());
             return redirect()->route('admin.services.index')->with('success', 'Service erfolgreich angelegt!');
         } catch(Exception $e) {
             dd($e->getMessage());

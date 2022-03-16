@@ -2,7 +2,7 @@
 namespace App\Models;
 
 use App\Libs\AppCache;
-use App\Traits\Models\UseBooeanlIcon;
+use App\Traits\Models\UseBooleanIcon;
 use Database\Factories\CustomerFactory;
 use Database\Factories\RandomCustomerFactory;
 use Eloquent;
@@ -68,7 +68,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Customer extends Authenticatable
 {
-    use HasFactory, HasRoles, Notifiable, CanResetPassword, ThrottlesLogins, Dispatchable, ClearCache, UseBooeanlIcon;
+    use HasFactory, HasRoles, Notifiable, CanResetPassword, ThrottlesLogins, Dispatchable, ClearCache, UseBooleanIcon;
 
     protected $table = 'customers';
     protected $guard_name = 'customer';

@@ -1,0 +1,35 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateHouseboatModelsTestTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('houseboat_models', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name', 50);
+            $table->text('description');
+            $table->unsignedInteger('space');
+            $table->unsignedTinyInteger('floors');
+            $table->unsignedTinyInteger('sleeping_places');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('houseboat_models');
+    }
+}

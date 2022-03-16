@@ -71,9 +71,13 @@ class AdminRoleController extends AdminController
     {
         try {
             $permissions = isset($request->validated()['permissions']) ? $request->validated()['permissions'] : null;
-            Role::create($request->validated())->syncPermissions($permissions);
+            $role = Role::create(collect($request->validated())->except(['permissions'])->toArray());
+            if($permissions) {
+                $role->syncPermissions($permissions);
+            }
             return redirect()->route('admin.roles.index')->with('success', 'Rolle erfolgreich angelegt!');
         } catch(Exception $e) {
+
             return back()->with('error', $e->getMessage());
         }
     }

@@ -1,8 +1,14 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminConfigEntityTypeController;
+use App\Http\Controllers\Admin\AdminConfigSaisonRentController;
+use App\Http\Controllers\Admin\AdminConfigSaisonRentDatesController;
 use App\Http\Controllers\Admin\AdminConfigServiceController;
+use App\Http\Controllers\Admin\AdminHouseboatController;
+use App\Http\Controllers\Admin\AdminHouseboatDatesController;
+use App\Http\Controllers\Admin\AdminHouseboatModelController;
 use App\Http\Controllers\Admin\AdminInfoController;
+use App\Http\Controllers\Admin\AdminConfigOfferController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\CaptchaServiceController;
@@ -124,6 +130,7 @@ Route::group([
     Route::match(['post','put'],'caravanDates/price/calculate', [AdminPriceController::class, 'calculateCaravanDates'])->name('caravanDates.price.calculate');
     Route::match(['post','put'],'boatDates/price/calculate', [AdminPriceController::class, 'calculateBoatDates'])->name('boatDates.price.calculate');
     Route::match(['post','put'],'guestBoatDates/price/calculate', [AdminPriceController::class, 'calculateGuestBoatDates'])->name('guestBoatDates.price.calculate');
+    Route::match(['post','put'],'houseboatDates/price/calculate', [AdminPriceController::class, 'calculateHouseboatDates'])->name('houseboatDates.price.calculate');
 
     Route::resource('customers', AdminCustomerController::class);
     Route::resource('caravans', AdminCaravanController::class);
@@ -136,6 +143,9 @@ Route::group([
     Route::resource('boats', AdminBoatController::class);
     Route::resource('boatDates', AdminBoatDatesController::class);
     Route::resource('guestBoats', AdminGuestBoatController::class);
+    Route::resource('houseboatModels', AdminHouseboatModelController::class);
+    Route::resource('houseboats', AdminHouseboatController::class);
+    Route::resource('houseboatDates', AdminHouseboatDatesController::class);
     Route::resource('guestBoatDates', AdminGuestBoatDatesController::class);
     Route::resource('services', AdminServiceController::class);
     Route::resource('serviceCategories', AdminServiceCategoryController::class);
@@ -148,6 +158,7 @@ Route::group([
             'as'    => 'config.',
         ],
         function() {
+            Route::resource('offers', AdminConfigOfferController::class);
             Route::resource('saisonDates', AdminConfigSaisonDatesController::class);
             Route::resource('boatPrices', AdminConfigBoatPriceController::class);
             Route::resource('dailyPrices', AdminConfigDailyPriceController::class);
@@ -155,7 +166,11 @@ Route::group([
             Route::resource('priceTypes', AdminConfigPriceTypeController::class);
             Route::resource('services', AdminConfigServiceController::class);
             Route::resource('entityTypes', AdminConfigEntityTypeController::class);
+            Route::resource('saisonRents', AdminConfigSaisonRentController::class);
+            Route::resource('saisonRentDates', AdminConfigSaisonRentDatesController::class);
     });
+
+    Route::post('offers/toggle/{offer}', [AdminConfigOfferController::class, 'toggle'])->name('offers.toggle');
     Route::post('serviceRequests/done/{serviceRequest}', [AdminServiceRequestController::class, 'done'])->name('serviceRequests.done');
 
     Route::post('caravanDates/sendExcel', [AdminCaravanDatesController::class, 'sendExcel'])->name('caravanDates.sendExcel');

@@ -1,7 +1,7 @@
 const mix = require('laravel-mix');
 
 mix.autoload({
-		'jquery': ['jQuery', '$']
+		'jquery': ['jQuery', '$'],
 	})
 	.js('resources/js/app.js', 'public/js')
 	.js('resources/js/app-admin.js', 'public/js')

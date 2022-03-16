@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Repositories\ConfigEntityTypesRepository;
 use App\Repositories\ConfigPriceComponentRepository;
+use App\Repositories\ConfigSaisonRentRepository;
 use App\Repositories\ConfigServiceRepository;
 use App\Repositories\GuestBoatsRepository;
 use App\Repositories\BoatRepository;
 use App\Repositories\CaravanRepository;
 use App\Repositories\CountryRepository;
 use App\Repositories\CustomerRepository;
+use App\Repositories\HouseboatModelRepository;
 use App\Repositories\MaterialRepository;
 use App\Repositories\MaterialCategoryRepository;
 use App\Repositories\ConfigPriceTypeRepository;
@@ -23,6 +25,7 @@ class Controller extends BaseController
 {
     protected $paginatorLimit;
     protected $boatRepository;
+    protected $houseboatModelRepository;
     protected $guestBoatRepository;
     protected $countryRepository;
     protected $caravanRepository;
@@ -37,6 +40,7 @@ class Controller extends BaseController
     protected $configEntityTypeRepository;
     protected $configPriceTypeRepository;
     protected $configSaisonDatesRepository;
+    protected $configSaisonRentRepository;
 
     public function __construct()
     {
@@ -46,6 +50,7 @@ class Controller extends BaseController
         $this->customerRepository   = new CustomerRepository();
         $this->roleRepository       = new RoleRepository();
         $this->boatRepository       = new BoatRepository();
+        $this->houseboatModelRepository = new HouseboatModelRepository();
         $this->guestBoatRepository  = new GuestBoatsRepository();
         $this->materialRepository   = new MaterialRepository();
         $this->materialCategoryRepository   = new MaterialCategoryRepository();
@@ -56,5 +61,6 @@ class Controller extends BaseController
         $this->configPriceComponentRepository = new ConfigPriceComponentRepository();
         $this->configEntityTypeRepository = new ConfigEntityTypesRepository();
         $this->configSaisonDatesRepository = new ConfigSaisonDatesRepository();
+        $this->configSaisonRentRepository = new ConfigSaisonRentRepository();
     }
 }

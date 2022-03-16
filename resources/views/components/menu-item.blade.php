@@ -1,4 +1,4 @@
-<li class="sidenav__list-item {{ $class }}">
+<li id="{{ $name }}" class="sidenav__list-item {{ $class }}">
     <a class="btn w-full @if($currentRouteName === $route) active @endif"
        href="{{ route('route.current', [
                 'currentRouteName' => $name,

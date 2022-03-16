@@ -1,10 +1,12 @@
 <?php
 namespace App\Providers;
 
+use App\Models\ConfigOffer;
 use Debugbar;
 use App\Http\Kernel;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use App\Http\Middleware\HandleInertiaRequests;
@@ -33,5 +35,12 @@ class AppServiceProvider extends ServiceProvider
         Blade::if('adminOrCustomer', function () {
             return auth('admin')->check() || auth('customer')->check();
         });
+        $offers = ConfigOffer::all();
+        $menuConfig = config('port.menu.admin.items');
+        foreach ($offers as $offer) {
+            if(isset($menuConfig[$offer->name]) && !$offer->enabled) {
+                Config::set('port.menu.admin.items.'.$offer->name, null);
+            }
+        }
     }
 }

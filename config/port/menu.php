@@ -141,6 +141,39 @@ return [
                     ],
                 ],
             ],
+            'Hausboote'   => [
+                'permissions'   => ['read HouseboatsMenu'],
+                'icon'  => 'fas fa-house-user',
+                'hide_on_mobile' => false,
+                'items' => [
+                    [
+                        'permissions'   => ['read HouseboatModel','write HouseboatModel'],
+                        'text'  => 'Modelle',
+                        'title' => 'Modelle',
+                        'icon'  => 'fas fa-house-user',
+                        'route' => 'admin.houseboatModels.index',
+                        'hide_on_mobile' => true,
+                    ],
+                    [
+                        'permissions'   => ['read Houseboat','write Houseboat'],
+                        'text'  => 'Hausboote',
+                        'title' => 'Hausboote',
+                        'icon'  => 'fas fa-house-user',
+                        'route' => 'admin.houseboats.index',
+                        'hide_on_mobile' => true,
+                    ],
+/*
+                    [
+                        'permissions'   => ['read HouseboatDates','write HouseboatDates'],
+                        'text'  => 'Rezeption',
+                        'title' => 'Rezeption',
+                        'icon'  => 'fas fa-concierge-bell',
+                        'route' => 'admin.houseboatDates.index',
+                        'hide_on_mobile' => false,
+                    ],
+*/
+                ],
+            ],
             'Content'   => [
                 'permissions'   => ['read ContentMenu'],
                 'icon'  => 'fas fa-newspaper',
@@ -218,7 +251,7 @@ return [
                     ],
                 ],
             ],
-            'Services'   => [
+            'Bootsservice'   => [
                 'permissions'   => ['read ServiceMenu'],
                 'icon'  => 'fas fa-concierge-bell',
                 'hide_on_mobile' => false,
@@ -271,11 +304,27 @@ return [
                 'hide_on_mobile' => false,
                 'items' => [
                     [
+                        'permissions'   => ['read Offer'],
+                        'text'  => 'Angebote',
+                        'title' => 'Angebote',
+                        'icon'  => 'fas fa-route',
+                        'route' => 'admin.config.offers.index',
+                        'hide_on_mobile' => false,
+                    ],
+                    [
                         'permissions'   => ['read ConfigSaisonDates'],
                         'text'  => 'Saison',
                         'title' => 'Saison',
                         'icon'  => 'fas fa-route',
                         'route' => 'admin.config.saisonDates.index',
+                        'hide_on_mobile' => false,
+                    ],
+                    [
+                        'permissions'   => ['read ConfigSaisonDates'],
+                        'text'  => 'Rent Saison',
+                        'title' => 'Rent Saison',
+                        'icon'  => 'fas fa-route',
+                        'route' => 'admin.config.saisonRentDates.index',
                         'hide_on_mobile' => false,
                     ],
                     [

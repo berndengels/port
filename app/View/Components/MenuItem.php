@@ -20,7 +20,7 @@ class MenuItem extends Component
         public $item = null,
         public $icon = null,
         public $route = null,
-        public $class = null
+        public $class = null,
     ) {
         $this->currentRouteName = session()->get('currentRoute');
     }
