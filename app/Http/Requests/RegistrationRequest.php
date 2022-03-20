@@ -50,11 +50,8 @@ class RegistrationRequest extends CustomerRequest
             'mast_length'       => 'exclude_if:boat_type,motor|required',
             'mast_weight'       => 'exclude_if:boat_type,motor|required',
             'length_keel'       => 'exclude_if:boat_type,motor|required',
+            'captcha'           => 'required|captcha'
         ]);
-
-        if(app()->environment(['production'])) {
-            $rules += ['captcha' => 'required|captcha'];
-        }
 
         return $rules;
     }
