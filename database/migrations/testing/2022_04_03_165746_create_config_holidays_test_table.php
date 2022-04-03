@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateConfigSaisonRentDatesTable extends Migration
+class CreateConfigHolidaysTestTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateConfigSaisonRentDatesTable extends Migration
      */
     public function up()
     {
-        Schema::create('config_saison_rent_dates', function (Blueprint $table) {
+        Schema::create('config_holidays', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('config_saison_rent_id')->index('config_saison_rent_id');
-            $table->string('holiday', 50);
-            $table->date('from');
-            $table->date('until');
+            $table->string('key', 50)->default('');
+            $table->string('name', 50)->default('');
+            $table->unsignedTinyInteger('enabled')->default(0);
         });
     }
 
@@ -29,6 +28,6 @@ class CreateConfigSaisonRentDatesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('config_saison_rent_dates');
+        Schema::dropIfExists('config_holidays');
     }
 }

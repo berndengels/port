@@ -17,5 +17,10 @@
 	"GuestBoatDates": "Guest boats",
 	"App\\Models\\Boat": "customer boats",
 	"App\\Models\\GuestBoat": "Guest boats",
-	"App\\Models\\Caravan": "Caravans"
+	"App\\Models\\Caravan": "Caravans",
+	"easter": "easter",
+	"pentecost": "pentecost",
+	"chrismas": "chrismas",
+	"yearchange": "turn of the year",
+	"chrismas-yearchange": "chrismas and turn of the year"
 }

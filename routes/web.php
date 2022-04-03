@@ -54,6 +54,7 @@ use App\Http\Controllers\Admin\AdminConfigDailyPriceController;
 use App\Http\Controllers\Admin\AdminConfigPriceComponentController;
 use App\Http\Controllers\Admin\AdminConfigPriceTypeController;
 use App\Http\Controllers\Admin\AdminConfigSaisonDatesController;
+use App\Http\Controllers\Admin\AdminHolydayController;
 
 Auth::routes();
 //dd(Route::getRoutes());
@@ -193,6 +194,7 @@ Route::group([
     Route::get('routes', [AdminInfoController::class, 'routes'])->name('infos.routes');
     Route::get('php', [AdminInfoController::class, 'phpinfo'])->name('infos.php');
     Route::get('emojis', [AdminInfoController::class, 'emojis'])->name('infos.emojis');
+    Route::get('holiday', [AdminHolydayController::class, 'index'])->name('holiday.index');
 
     Route::fallback(function () {
 //        return redirect('/admin');

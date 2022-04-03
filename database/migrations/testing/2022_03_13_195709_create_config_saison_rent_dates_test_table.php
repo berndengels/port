@@ -16,6 +16,7 @@ class CreateConfigSaisonRentDatesTestTable extends Migration
         Schema::create('config_saison_rent_dates', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('config_saison_rent_id');
+            $table->string('holiday', 50);
             $table->date('from');
             $table->date('until');
         });

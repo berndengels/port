@@ -2,12 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\ConfigSaisonRent;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Models\ConfigSaisonRent;
+use App\Http\Requests\ConfigSaisonRentRequest;
 
 class AdminConfigSaisonRentController extends AdminController
 {
+    private $yearsOptions;
+
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +22,8 @@ class AdminConfigSaisonRentController extends AdminController
      */
     public function index()
     {
-        //
+        $data = ConfigSaisonRent::paginate($this->paginatorLimit);
+        return view('admin._config.saisonRents.index', compact('data'));
     }
 
     /**
@@ -24,9 +32,8 @@ class AdminConfigSaisonRentController extends AdminController
      * @param ConfigSaisonRent $configSaisonRent
      * @return Response
      */
-    public function show(ConfigSaisonRent $configSaisonRent)
-    {
-        //
+    public function show(ConfigSaisonRent $configSaisonRent) {
+        return view('admin._config.saisonRents.show', compact('configSaisonRent'));
     }
 
     /**
@@ -36,41 +43,53 @@ class AdminConfigSaisonRentController extends AdminController
      */
     public function create()
     {
-        //
+        return view('admin._config.saisonRents.create', [
+            'yearsOptions'  => $this->yearsOptions,
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param ConfigSaisonRentRequest $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(ConfigSaisonRentRequest $request)
     {
-        //
+        try {
+            ConfigSaisonRent::create($request->validated());
+            return redirect()->route('admin.saisonRents.index')->with('success', 'Rent erfolgreich angelegt!');
+        } catch(Exception $e) {
+            return redirect()->route('admin.saisonRents.create')->with('error', $e->getMessage());
+        }
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param ConfigSaisonRent $configSaisonRent
+     * @param ConfigSaisonRent $saisonRent
      * @return Response
      */
-    public function edit(ConfigSaisonRent $configSaisonRent)
+    public function edit(ConfigSaisonRent $saisonRent)
     {
-        //
+        return view('admin._config.saisonRents.edit', compact('saisonRent'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
+     * @param ConfigSaisonRentRequest $request
      * @param ConfigSaisonRent $configSaisonRent
      * @return Response
      */
-    public function update(Request $request, ConfigSaisonRent $configSaisonRent)
+    public function update(ConfigSaisonRentRequest $request, ConfigSaisonRent $configSaisonRent)
     {
-        //
+        try {
+            $configSaisonRent->update($request->validated());
+            return redirect()->route('admin.saisonRents.index')->with('success', 'Rent erfolgreich bearbeitet!');
+        } catch(Exception $e) {
+            return redirect()->route('admin.saisonRents.create')->with('error', $e->getMessage());
+        }
     }
 
     /**
@@ -81,6 +100,11 @@ class AdminConfigSaisonRentController extends AdminController
      */
     public function destroy(ConfigSaisonRent $configSaisonRent)
     {
-        //
+        try {
+            $configSaisonRent->delete();
+            return redirect()->route('admin._config.saisonRents.index')->with('success', 'Rent erfolgreich gelöscht!');
+        } catch(Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
     }
 }

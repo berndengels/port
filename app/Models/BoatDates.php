@@ -55,6 +55,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @method static Builder|BoatDates boatByDates(?int $id = null)
  * @method static Builder|BoatDates fromYearMonth(?string $year = null, ?string $month = null)
  * @method static Builder|BoatDates getMonthsByYears($from = null, $until = null)
+ * @method static Builder|BoatDates boat(?int $id = null)
  */
 class BoatDates extends BaseModel implements IDatePrice
 {

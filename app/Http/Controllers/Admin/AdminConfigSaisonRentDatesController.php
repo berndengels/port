@@ -9,11 +9,15 @@ use Illuminate\Http\Response;
 class AdminConfigSaisonRentDatesController extends AdminController
 {
     protected $saisonRents;
+    protected $holidayOptions;
 
     public function __construct()
     {
         parent::__construct();
         $this->saisonRents = $this->configSaisonRentRepository->options()->getSelectOptions();
+        $this->holidayOptions = collect($this->configHolidayRepository
+            ->getHolidayOptions())
+            ->prepend('Feiertage wählen', null);
     }
 
     /**
@@ -47,6 +51,7 @@ class AdminConfigSaisonRentDatesController extends AdminController
     {
         return view('admin._config.saisonRentDates.create', [
             'saisonRents' => $this->saisonRents,
+            'holidayOptions' => $this->holidayOptions,
         ]);
     }
 
@@ -60,9 +65,9 @@ class AdminConfigSaisonRentDatesController extends AdminController
     {
         try {
             ConfigSaisonRentDates::create($request->validated());
-            return redirect()->route('admin.saisonRentDates.index')->with('success', 'Rent Date erfolgreich angelegt!');
+            return redirect()->route('admin.config.saisonRentDates.index')->with('success', 'Rent Date erfolgreich angelegt!');
         } catch(Exception $e) {
-            return redirect()->route('admin.saisonRentDates.create')->with('error', $e->getMessage());
+            return redirect()->route('admin.config.saisonRentDates.create')->with('error', $e->getMessage());
         }
     }
 
@@ -72,11 +77,11 @@ class AdminConfigSaisonRentDatesController extends AdminController
      * @param ConfigSaisonRentDates $configSaisonRentDate
      * @return Response
      */
-    public function edit(ConfigSaisonRentDates $configSaisonRentDate)
+    public function edit(ConfigSaisonRentDates $saisonRentDate)
     {
         return view('admin._config.saisonRentDates.edit', [
-            'configSaisonRentDate'  => $configSaisonRentDate,
-            'saisonRents' => $this->saisonRents,
+            'saisonRentDate'    => $saisonRentDate,
+            'saisonRents'       => $this->saisonRents,
         ]);
     }
 
@@ -87,13 +92,13 @@ class AdminConfigSaisonRentDatesController extends AdminController
      * @param ConfigSaisonRentDates $configSaisonRentDate
      * @return Response
      */
-    public function update(ConfigSaisonRentDatesRequest $request, ConfigSaisonRentDates $configSaisonRentDate)
+    public function update(ConfigSaisonRentDatesRequest $request, ConfigSaisonRentDates $saisonRentDate)
     {
         try {
-            $configSaisonRentDate->update($request->validated());
-            return redirect()->route('admin.saisonRentDates.index')->with('success', 'Rent Date erfolgreich bearbeitet!');
+            $saisonRentDate->update($request->validated());
+            return redirect()->route('admin.config.saisonRentDates.index')->with('success', 'Rent Date erfolgreich bearbeitet!');
         } catch(Exception $e) {
-            return redirect()->route('admin.saisonRentDates.create')->with('error', $e->getMessage());
+            return redirect()->route('admin.config.saisonRentDates.create')->with('error', $e->getMessage());
         }
     }
 
@@ -103,11 +108,11 @@ class AdminConfigSaisonRentDatesController extends AdminController
      * @param ConfigSaisonRentDates $configSaisonRentDate
      * @return Response
      */
-    public function destroy(ConfigSaisonRentDates $configSaisonRentDate)
+    public function destroy(ConfigSaisonRentDates $saisonRentDate)
     {
         try {
-            $configSaisonRentDate->delete();
-            return redirect()->route('admin._config.saisonRentDates.index')->with('success', 'Rent Date erfolgreich gelöscht!');
+            $saisonRentDate->delete();
+            return redirect()->route('admin.config.saisonRentDates.index')->with('success', 'Rent Date erfolgreich gelöscht!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }

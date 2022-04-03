@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\ConfigEntityTypesRepository;
+use App\Repositories\ConfigHolidayRepository;
 use App\Repositories\ConfigPriceComponentRepository;
+use App\Repositories\ConfigSaisonRentDatesRepository;
 use App\Repositories\ConfigSaisonRentRepository;
 use App\Repositories\ConfigServiceRepository;
 use App\Repositories\GuestBoatsRepository;
@@ -41,6 +43,8 @@ class Controller extends BaseController
     protected $configPriceTypeRepository;
     protected $configSaisonDatesRepository;
     protected $configSaisonRentRepository;
+    protected $configSaisonRentDatesRepository;
+    protected $configHolidayRepository;
 
     public function __construct()
     {
@@ -53,14 +57,16 @@ class Controller extends BaseController
         $this->houseboatModelRepository = new HouseboatModelRepository();
         $this->guestBoatRepository  = new GuestBoatsRepository();
         $this->materialRepository   = new MaterialRepository();
-        $this->materialCategoryRepository   = new MaterialCategoryRepository();
-        $this->serviceCategoryRepository    = new ServiceCategoryRepository();
+        $this->materialCategoryRepository       = new MaterialCategoryRepository();
+        $this->serviceCategoryRepository        = new ServiceCategoryRepository();
         $this->serviceRepository    = new ServiceRepository();
-        $this->configPriceTypeRepository  = new ConfigPriceTypeRepository();
-        $this->configServiceRepository = new ConfigServiceRepository();
-        $this->configPriceComponentRepository = new ConfigPriceComponentRepository();
-        $this->configEntityTypeRepository = new ConfigEntityTypesRepository();
-        $this->configSaisonDatesRepository = new ConfigSaisonDatesRepository();
-        $this->configSaisonRentRepository = new ConfigSaisonRentRepository();
+        $this->configPriceTypeRepository        = new ConfigPriceTypeRepository();
+        $this->configServiceRepository          = new ConfigServiceRepository();
+        $this->configPriceComponentRepository   = new ConfigPriceComponentRepository();
+        $this->configEntityTypeRepository       = new ConfigEntityTypesRepository();
+        $this->configSaisonDatesRepository      = new ConfigSaisonDatesRepository();
+        $this->configSaisonRentRepository       = new ConfigSaisonRentRepository();
+        $this->configSaisonRentDatesRepository  = new ConfigSaisonRentDatesRepository();
+        $this->configHolidayRepository          = new ConfigHolidayRepository();
     }
 }

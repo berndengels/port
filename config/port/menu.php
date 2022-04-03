@@ -162,6 +162,22 @@ return [
                         'route' => 'admin.houseboats.index',
                         'hide_on_mobile' => true,
                     ],
+                    [
+                        'permissions'   => ['read ConfigSaisonRent'],
+                        'text'  => 'RentSaison',
+                        'title' => 'RentSaison',
+                        'icon'  => 'fas fa-route',
+                        'route' => 'admin.config.saisonRents.index',
+                        'hide_on_mobile' => false,
+                    ],
+                    [
+                        'permissions'   => ['read ConfigSaisonRentDates'],
+                        'text'  => 'RentSaisonDates',
+                        'title' => 'RentSaisonDates',
+                        'icon'  => 'fas fa-route',
+                        'route' => 'admin.config.saisonRentDates.index',
+                        'hide_on_mobile' => false,
+                    ],
 /*
                     [
                         'permissions'   => ['read HouseboatDates','write HouseboatDates'],
@@ -320,14 +336,6 @@ return [
                         'hide_on_mobile' => false,
                     ],
                     [
-                        'permissions'   => ['read ConfigSaisonDates'],
-                        'text'  => 'Rent Saison',
-                        'title' => 'Rent Saison',
-                        'icon'  => 'fas fa-route',
-                        'route' => 'admin.config.saisonRentDates.index',
-                        'hide_on_mobile' => false,
-                    ],
-                    [
                         'permissions'   => ['read ConfigBoatPrice'],
                         'text'  => 'Kunden',
                         'title' => 'Kunden',
@@ -388,6 +396,14 @@ return [
                         'title' => 'PHPInfo',
                         'icon'  => 'fas fa-info',
                         'route' => 'admin.infos.php',
+                        'hide_on_mobile' => false,
+                    ],
+                    [
+                        'permissions'   => ['read Routes'],
+                        'text'  => 'Holidays',
+                        'title' => 'Holidays',
+                        'icon'  => 'fas fa-info',
+                        'route' => 'admin.holiday.index',
                         'hide_on_mobile' => false,
                     ],
                 ],

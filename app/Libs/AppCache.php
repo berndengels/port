@@ -67,6 +67,9 @@ class AppCache
     const KEY_OPTIONS_CONFIG_BOAT_PRICE       = 'options.config.boatPrices';
     const KEY_OPTIONS_DATA_CONFIG_BOAT_PRICE  = 'options.data.config.boatPrices';
 
-    const KEY_OPTIONS_CONFIG_SAISON_RENT       = 'options.config.saisonRent';
-    const KEY_OPTIONS_DATA_CONFIG_SAISON_RENT  = 'options.data.config.saisonRent';
+    const KEY_OPTIONS_CONFIG_SAISON_RENT       = 'options.config.saisonRents';
+    const KEY_OPTIONS_DATA_CONFIG_SAISON_RENT  = 'options.data.config.saisonRents';
+
+    const KEY_OPTIONS_CONFIG_SAISON_RENT_DATES       = 'options.config.saisonRentDates';
+    const KEY_OPTIONS_DATA_CONFIG_SAISON_RENT_DATES  = 'options.data.config.saisonRentDates';
 }
