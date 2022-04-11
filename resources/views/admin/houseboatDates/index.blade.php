@@ -5,47 +5,50 @@
         <div class="index-header mt-3">
             <div class="float-left">
                 <x-nav-link
-                    href="{{ route('admin.boatDates.create', ['modus' => $saison ?? null]) }}"
-                    class="btn"
-                    icon="far fa-plus-square"
-                    text="Neueintrag"
+                        href="{{ route('admin.houseboatDates.create', ['modus' => $saison ?? null]) }}"
+                        class="btn"
+                        icon="far fa-plus-square"
+                        text="Neueintrag"
                 />
             </div>
-        @if($data->count() > 0 && $year || $month)
-            <div class="float-right">
-                <a href="{{ route('admin.boat.price.excel', ['year' => $year, 'month' => $month]) }}"
-                   class="btn btn-second ml-0 my-2 no-hide-text"
-                   target="_blank"
-                   title="Excel-Datei runterladen"
-                ><i class="far fa-file-excel"></i>Excel Download</a>
+            @if($data->count() > 0 && $year || $month)
+                <div class="float-right">
+                    <a href="{{ route('admin.boat.price.excel', ['year' => $year, 'month' => $month]) }}"
+                       class="btn btn-second ml-0 my-2 no-hide-text"
+                       target="_blank"
+                       title="Excel-Datei runterladen"
+                    ><i class="far fa-file-excel"></i>Excel Download</a>
 
-                <x-form method="post" :action="route('admin.boatDates.sendExcel')" class="mt-0 pt-0">
-                    <x-form-input type="hidden" name="year" :default="$year" />
-                    <x-form-input type="hidden" name="month" :default="$month" />
-                    <x-form-input type="email" name="email" required autocomplete="email" placeholder="Email-Adresse" />
-                    <x-form-submit name="submit" inline class="btn btn-second mt-3" icon="fas fa-shipping-fast">Sende Excel</x-form-submit>
-                </x-form>
-            </div>
-        @endif
+                    <x-form method="post" :action="route('admin.boatDates.sendExcel')" class="mt-0 pt-0">
+                        <x-form-input type="hidden" name="year" :default="$year"/>
+                        <x-form-input type="hidden" name="month" :default="$month"/>
+                        <x-form-input type="email" name="email" required autocomplete="email"
+                                      placeholder="Email-Adresse"/>
+                        <x-form-submit name="submit" inline class="btn btn-second mt-3" icon="fas fa-shipping-fast">
+                            Sende Excel
+                        </x-form-submit>
+                    </x-form>
+                </div>
+            @endif
         </div>
 
         <x-form class="inline-form ml-5" method="get" id="frmFilter" name="frmFilter"
-                action="{{ route('admin.boatDates.index') }}"
+                action="{{ route('admin.houseboatDates.index') }}"
         >
             <x-form-select
-                    name="boat"
+                    name="houseboat"
                     class="inline-block filter"
-                    :options="$boatOptions"
-                    :default="$boat"
+                    :options="$houseboatOptions"
+                    :default="$houseboat"
                     floating
             />
-            <x-form-select
+            <!--x-form-select
                     name="saison"
                     class="inline-block filter"
                     :options="$saisonOptions"
                     :default="$saison"
                     floating
-            />
+            /-->
             <x-form-select
                     name="year"
                     class="inline-block filter"
@@ -68,10 +71,10 @@
         <table class="table w-full mt-3">
             <tr>
                 <th class="hidden md:table-cell">ID</th>
-                <th>Boot</th>
+                <th>Hausboot</th>
                 <th>Von</th>
                 <th>Bis</th>
-                <th class="hidden md:table-cell">Eigner</th>
+                <th class="hidden md:table-cell">Gast</th>
                 <th>Fon</th>
                 <th>Preis</th>
                 <th colspan="2"><br></th>
@@ -79,37 +82,39 @@
             @foreach($data as $item)
                 <tr>
                     <td class="hidden md:table-cell">{{ $item->id }}</td>
-                    <td><a href="{{ route('admin.boatDates.show', $item) }}">{{ $item->boat->boat_name }}</a></td>
+                    <td><a href="{{ route('admin.houseboat.show', $item) }}">{{ $item->houseboat->name }}</a></td>
                     <td>{{ $item->from->format('d.m.Y') }}</td>
                     <td>{{ $item->until->format('d.m.Y') }}</td>
                     <td class="hidden md:table-cell">
-                        @if($item->boat->customer->email)
-                            <a href="mailto:{{ $item->boat->customer->email }}" target="_blank">
+                        @if($item->customer->email)
+                            <a href="mailto:{{ $item->customer->email }}" target="_blank">
                                 <i class="fas fa-at"></i>
-                                {{ $item->boat->customer ? $item->boat->customer->name : '' }}
+                                {{ $item->customer ? $item->customer->name : '' }}
                             </a>
                         @else
-                            {{ $item->boat->customer ? $item->boat->customer->name : '' }}
+                            {{ $item->customer ? $item->customer->name : '' }}
                         @endif
                     </td>
                     <td>
-                        @if($item->boat->customer->fonLink)
-                        <a href="tel:{{ $item->boat->customer->fonLink }}" target="_blank">
-                            <i class="fas fa-phone"></i>
-                            <span>{{ $item->boat->customer->fon }}</span>
-                        </a>
+                        @if($item->customer->fonLink)
+                            <a href="tel:{{ $item->customer->fonLink }}" target="_blank">
+                                <i class="fas fa-phone"></i>
+                                <span>{{ $item->customer->fon }}</span>
+                            </a>
                         @else
-                        <br>
+                            <br>
                         @endif
                     </td>
                     <td>{{ $item->price }} €</td>
                     <td>
-                        <x-nav-link href="{{ route('admin.boatDates.edit', $item) }}" icon="fas fa-edit" class="btn" title="Bearbeiten">
+                        <x-nav-link href="{{ route('admin.houseboatDates.edit', $item) }}" icon="fas fa-edit"
+                                    class="btn"
+                                    title="Bearbeiten">
                             <span class="hidden md:visible">Edit</span>
                         </x-nav-link>
                     </td>
                     <td>
-                        <x-form action="{{ route('admin.boatDates.destroy', $item) }}"
+                        <x-form action="{{ route('admin.houseboatDates.destroy', $item) }}"
                                 class="m-0 p-0">
                             @method('delete')
                             <x-form-submit icon="fas fa-trash-alt" inline class="mt-0 btn-red delSoft">
@@ -136,34 +141,34 @@
 		const frm = document.frmFilter,
 			filter = (e) => {
 				let el = e.target;
-				console.info(el.name)
-				if('' === el.value && ['year','month'].indexOf(el.name) === -1) {
+				console.info(el.name);
+				if ('' === el.value && ['year', 'month'].indexOf(el.name) === -1) {
 					return;
 				}
 				switch (el.name) {
-					case 'boat':
+					case 'houseboat':
 						frm.year.value = '';
-						if(frm.month) {
+						if (frm.month) {
 							frm.month.value = '';
 						}
-						break
+						break;
 					case 'year':
-						if(frm.year.value === '' && frm.month) {
+						if (frm.year.value === '' && frm.month) {
 							frm.month.value = '';
 						}
 						frm.boat.value = '';
-						break
-					case 'saison':
+						break;
+//					case 'saison':
 					case 'month':
-						frm.boat.value = '';
+						frm.houseboat.value = '';
 						break
 				}
 				frm.submit()
 			},
 			reset = (e) => {
-				e.preventDefault()
-				frm.boat.value = '';
-				frm.saison.value = '';
+				e.preventDefault();
+				frm.houseboat.value = '';
+//				frm.saison.value = '';
 				frm.year.value = '';
 				frm.month.value = '';
 				$(frm.month).hide();
@@ -172,7 +177,7 @@
 
 		frm.querySelectorAll('.filter').forEach(item => {
 			item.onchange = filter
-		})
+		});
 		frm.querySelector('.btn-reset').onclick = reset
     </script>
 @endpush

@@ -15,7 +15,7 @@ class CreateCustomersTestTable extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->increments('id');
-            $table->enum('customer_type', ['guest', 'permanent'])->default('guest');
+            $table->enum('customer_type', ['guest','permanent','houseboat','tinyhouse'])->default('guest');
             $table->string('name', 50)->default('');
             $table->string('email', 50)->nullable()->default('');
             $table->string('password', 100)->nullable()->default('');

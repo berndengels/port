@@ -44,6 +44,18 @@ class AdminCustomerController extends AdminController
         return view('admin.customers.index', compact('data'));
     }
 
+    public function houseboats()
+    {
+        $data = Customer::whereCustomerType($this->customerTypes['houseboat'])->paginate($this->paginatorLimit);
+        return view('admin.customers.index', compact('data'));
+    }
+
+    public function tinyhouses()
+    {
+        $data = Customer::whereCustomerType($this->customerTypes['tinyhouse'])->paginate($this->paginatorLimit);
+        return view('admin.customers.index', compact('data'));
+    }
+
     /**
      * Display the specified resource.
      *

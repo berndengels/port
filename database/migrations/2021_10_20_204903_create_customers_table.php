@@ -15,7 +15,7 @@ class CreateCustomersTable extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->increments('id');
-            $table->enum('customer_type', ['guest', 'permanent'])->default('guest');
+            $table->enum('customer_type', ['guest','permanent','houseboat','tinyhouse'])->default('guest')->index('customer_type');
             $table->string('name', 50)->default('');
             $table->string('email', 50)->nullable()->default('');
             $table->string('password', 100)->nullable()->default('');
@@ -26,6 +26,7 @@ class CreateCustomersTable extends Migration
             $table->string('postcode', 20)->nullable();
             $table->string('city', 50)->nullable();
             $table->unsignedTinyInteger('confirmed')->nullable();
+            $table->index(['email','password'], 'email_password');
         });
     }
 

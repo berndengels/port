@@ -58,11 +58,16 @@ use Spatie\Period\Period;
  * @method static Builder|CaravanDates whereDayPrice($value)
  * @property-read int|null $prices_count
  * @method static Builder|CaravanDates dailyPrices()
- * @method static Builder|CaravanDates caravan(?int $caravanId = null)
  */
 class CaravanDates extends BaseModel
 {
-    use HasFactory, CaravanFilter, YearMonthFilter, HasYearMonthOptions, HasFromUntilDates, ClearCache, HasDailyPrice;
+    use CaravanFilter;
+    use ClearCache;
+    use HasDailyPrice;
+    use HasFactory;
+    use HasFromUntilDates;
+    use HasYearMonthOptions;
+    use YearMonthFilter;
 
     protected $table = 'caravan_dates';
     protected $guarded = ['id'];

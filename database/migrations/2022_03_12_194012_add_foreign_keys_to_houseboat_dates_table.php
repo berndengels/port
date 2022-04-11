@@ -20,6 +20,11 @@ class AddForeignKeysToHouseboatDatesTable extends Migration
                 ->onUpdate('CASCADE')
                 ->onDelete('CASCADE')
             ;
+            $table->foreign('customer_id', 'houseboat_dates_ibfk_2')
+                ->references('id')
+                ->on('customers')
+                ->onUpdate('CASCADE')
+                ->onDelete('CASCADE');
         });
     }
 
@@ -32,6 +37,7 @@ class AddForeignKeysToHouseboatDatesTable extends Migration
     {
         Schema::table('houseboats_dates', function (Blueprint $table) {
             $table->dropForeign('houseboats_dates_ibfk_1');
+            $table->dropForeign('houseboats_dates_ibfk_2');
         });
     }
 }

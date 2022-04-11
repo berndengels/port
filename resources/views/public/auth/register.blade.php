@@ -10,7 +10,7 @@
                 <x-form-input name="email" type="email" label="Email" required placeholder="Email" />
                 <x-form-input name="password" type="password" label="Passwort" required />
                 <x-form-input name="password_confirmation" type="password" label="Passwort wiederholen" required />
-                <x-form-input name="fon" label="Telefon" required  placeholder="Telefon" />
+                <x-form-input name="fon" type="tel" label="Telefon" required  placeholder="Telefon" />
                 <x-form-input name="street" label="Straße u.Hausnummer" required placeholder="Straße u.Hausnummer" />
                 <x-form-input name="postcode" label="PLZ" required placeholder="PLZ" />
                 <x-form-input name="city" label="Ort" required placeholder="Ort" />
@@ -59,10 +59,10 @@
         $('#boat_type').change(e => {
 			switch (e.target.value) {
 				case 'sail':
-					$('.sail').fadeIn()
+					$('.sail').fadeIn();
 					break;
 				case 'motor':
-					$('.sail').fadeOut()
+					$('.sail').fadeOut();
 					break;
             }
         });

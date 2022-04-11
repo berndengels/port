@@ -147,6 +147,14 @@ return [
                 'hide_on_mobile' => false,
                 'items' => [
                     [
+                        'permissions'   => ['read HouseboatDates','write HouseboatDates'],
+                        'text'  => 'Dates',
+                        'title' => 'Dates',
+                        'icon'  => 'fas fa-house-user',
+                        'route' => 'admin.houseboatDates.index',
+                        'hide_on_mobile' => false,
+                    ],
+                    [
                         'permissions'   => ['read HouseboatModel','write HouseboatModel'],
                         'text'  => 'Modelle',
                         'title' => 'Modelle',
@@ -168,15 +176,15 @@ return [
                         'title' => 'RentSaison',
                         'icon'  => 'fas fa-route',
                         'route' => 'admin.config.saisonRents.index',
-                        'hide_on_mobile' => false,
+                        'hide_on_mobile' => true,
                     ],
                     [
                         'permissions'   => ['read ConfigSaisonRentDates'],
-                        'text'  => 'RentSaisonDates',
-                        'title' => 'RentSaisonDates',
+                        'text'  => 'SaisonDates',
+                        'title' => 'SaisonDates',
                         'icon'  => 'fas fa-route',
                         'route' => 'admin.config.saisonRentDates.index',
-                        'hide_on_mobile' => false,
+                        'hide_on_mobile' => true,
                     ],
 /*
                     [
@@ -259,10 +267,26 @@ return [
                     ],
                     [
                         'permissions'   => ['read Customer', 'write Customer'],
-                        'text'  => 'Gäste',
-                        'title' => 'Gäste',
+                        'text'  => 'Boot',
+                        'title' => 'Boot',
                         'icon'  => 'fas fa-concierge-bell',
                         'route' => 'admin.customers.guests',
+                        'hide_on_mobile' => false,
+                    ],
+                    [
+                        'permissions'   => ['read Customer','write Customer'],
+                        'text'  => 'Hausboot',
+                        'title' => 'Hausboot',
+                        'icon'  => 'fas fa-house-user',
+                        'route' => 'admin.customers.houseboats',
+                        'hide_on_mobile' => false,
+                    ],
+                    [
+                        'permissions'   => ['read Customer','write Customer'],
+                        'text'  => 'Tinyhouse',
+                        'title' => 'Tinyhouse',
+                        'icon'  => 'fas fa-house-user',
+                        'route' => 'admin.customers.tinyhouses',
                         'hide_on_mobile' => false,
                     ],
                 ],

@@ -121,6 +121,9 @@ Route::group([
     Route::post('logout', [AdminLoginController::class,'logout'])->name('logout');
 
     Route::get('customers/guests', [AdminCustomerController::class,'guests'])->name('customers.guests');
+    Route::get('customers/houseboats', [AdminCustomerController::class,'houseboats'])->name('customers.houseboats');
+    Route::get('customers/tinyhouses', [AdminCustomerController::class,'tinyhouses'])->name('customers.tinyhouses');
+
     Route::get('boats/guests', [AdminBoatController::class,'guests'])->name('boats.guests');
     Route::get('boatDates/invoice/{boatDate}', [AdminBoatDatesController::class, 'invoice'])->name('boatDates.invoice');
     Route::get('boatDates/sendInvoice/{boatDate}', [AdminBoatDatesController::class, 'sendInvoice'])->name('boatDates.sendInvoice');

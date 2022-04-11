@@ -2,6 +2,7 @@
 namespace App\Repositories\Ext;
 
 use App\Libs\AppCache;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 
@@ -16,12 +17,21 @@ trait SelectOptions
      */
     protected $selectOptionsData;
 
-    public function getOptionsData($orderBy = 'name', $relations = []): Collection|null
+    public function getOptionsData($orderBy = 'name', $relations = [], array $where = []): Collection|null
     {
+        /**
+         * @var $query Builder
+         */
         $query = (static::$model)::on(app('db.connection')->getName())
             ->with($relations)
             ->select()
             ->orderBy($orderBy);
+
+        if($where && count($where)) {
+            foreach ($query as $c => $v) {
+                $query->where($c,'=', $v);
+            }
+        }
         /*
         * only for tests
         $this->selectOptionsData = $query->get()->map(function ($item) use ($orderBy) {

@@ -21,8 +21,18 @@ return [
         ],
     ],
     'customer'  => [
-        'types'         => ['guest' => 'guest', 'permanent' => 'permanent'],
-        'typeOptions'   => ['guest' => 'Gast', 'permanent' => 'Dauerlieger'],
+        'types'         => [
+            'guest' => 'guest',
+            'permanent' => 'permanent',
+            'houseboat'  => 'houseboat',
+            'tinyhouse'  => 'tinyhouse',
+        ],
+        'typeOptions'   => [
+            'guest' => 'Gast',
+            'permanent' => 'Dauerlieger',
+            'houseboat'  => 'Hausboot',
+            'tinyhouse'  => 'TinyHouse',
+        ],
     ],
     'boat'  => [
         'enabled'   => env('BOAT_ENABLED', true),

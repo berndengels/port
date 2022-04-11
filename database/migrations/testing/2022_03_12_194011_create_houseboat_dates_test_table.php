@@ -15,7 +15,8 @@ class CreateHouseboatDatesTestTable extends Migration
     {
         Schema::create('houseboat_dates', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('houseboat_id')->index('houseboat_id');
+            $table->unsignedInteger('houseboat_id');
+            $table->unsignedInteger('customer_id')->index('customer_id');
             $table->date('from');
             $table->date('until');
             $table->unsignedInteger('price');

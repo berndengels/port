@@ -68,7 +68,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Customer extends Authenticatable
 {
-    use HasFactory, HasRoles, Notifiable, CanResetPassword, ThrottlesLogins, Dispatchable, ClearCache, UseBooleanIcon;
+    use CanResetPassword;
+    use ClearCache;
+    use Dispatchable;
+    use HasFactory;
+    use HasRoles;
+    use Notifiable;
+    use ThrottlesLogins;
+    use UseBooleanIcon;
 
     protected $table = 'customers';
     protected $guard_name = 'customer';
@@ -90,10 +97,19 @@ class Customer extends Authenticatable
         return $this->hasMany(Boat::class);
     }
 
+    public function houseboatDates()
+    {
+        return $this->hasMany(HouseboatDates::class);
+    }
+
     public function getFonLinkAttribute()
     {
-        if($this->fon) {
-            return '+49' . preg_replace('/^0|[ \t]+/i', '', $this->fon);
+        if($this->fon && !str_starts_with($this->fon, '+49')) {
+            $sanitized = preg_replace('/^0|[ \t]+/i', '', $this->fon);
+            if(!str_starts_with($this->fon, '49')) {
+                return '49' . $sanitized;
+            }
+            return $sanitized;
         }
         return null;
     }
