@@ -27,8 +27,8 @@ trait SelectOptions
             ->select()
             ->orderBy($orderBy);
 
-        if($where && count($where)) {
-            foreach ($query as $c => $v) {
+        if($where) {
+            foreach ($where as $c => $v) {
                 $query->where($c,'=', $v);
             }
         }
@@ -43,21 +43,23 @@ trait SelectOptions
         return $this->selectOptionsData;
     }
 
-    public function optionsData($orderBy = 'name', $relations = []): Collection|null
+    public function optionsData($orderBy = 'name', $relations = [], array $where = []): Collection|null
     {
         return Cache::remember(
             static::$cacheKeyOptionsData, AppCache::TTL, fn() => $this->getOptionsData(
                 orderBy: $orderBy,
-                relations: $relations
+                relations: $relations,
+                where: $where
             )
         );
     }
 
-    public function options($textFieldName = 'name', $keyFieldName = 'id', $relations = []): self
+    public function options($textFieldName = 'name', $keyFieldName = 'id', $relations = [], array $where = []): self
     {
         $this->selectOptionsData = $this->optionsData(
             orderBy: $textFieldName,
-            relations: $relations
+            relations: $relations,
+            where: $where
         );
         $this->selectOptions = Cache::remember(
             static::$cacheKeyOptions, AppCache::TTL, fn () =>

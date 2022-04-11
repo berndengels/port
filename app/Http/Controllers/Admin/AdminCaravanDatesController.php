@@ -140,7 +140,7 @@ class AdminCaravanDatesController extends AdminController
     {
         $carnumber  = $request->post('carnumber');
         $caravan    = Caravan::whereCarnumber($carnumber)->first() ?? new Caravan();
-        $validationData = new CaravanDatesValidationData($request, $caravan);
+        $validationData = new CaravanDatesValidationData($request);
         $request    = $validationData->getRequest();
 
         $rules  = $validationData->rules();

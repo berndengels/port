@@ -82,7 +82,7 @@
             @foreach($data as $item)
                 <tr>
                     <td class="hidden md:table-cell">{{ $item->id }}</td>
-                    <td><a href="{{ route('admin.houseboat.show', $item) }}">{{ $item->houseboat->name }}</a></td>
+                    <td><a href="{{ route('admin.houseboatDates.show', $item) }}">{{ $item->houseboat->name }}</a></td>
                     <td>{{ $item->from->format('d.m.Y') }}</td>
                     <td>{{ $item->until->format('d.m.Y') }}</td>
                     <td class="hidden md:table-cell">

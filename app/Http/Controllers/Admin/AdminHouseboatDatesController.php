@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Acaronlex\LaravelCalendar\Calendar;
+use App\Http\Requests\HouseboatDatesRequest;
 use App\Models\HouseboatDates;
+use App\Repositories\CalendarRepository;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
@@ -13,6 +16,9 @@ class AdminHouseboatDatesController extends AdminController
     private $years;
     private $monthsByYear;
     private $houseboatOptions;
+    private $customerOptions;
+    private $calendar;
+    private $dates;
 
     public function __construct()
     {
@@ -20,6 +26,11 @@ class AdminHouseboatDatesController extends AdminController
         $this->monthsByYear = HouseboatDates::getMonthsByYears();
         $this->years = array_keys($this->monthsByYear);
         $this->houseboatOptions = $this->houseboatRepository->options()->getSelectOptions();
+        $this->customerOptions = $this->customerRepository
+            ->options(where: ['customer_type' => 'houseboat'])
+            ->getSelectOptions();
+        $this->dates = HouseboatDates::orderBy('from')->get();
+        $this->calendar = (new CalendarRepository('houseboat', $this->dates))->getCalendar();
     }
 
     /**
@@ -99,6 +110,8 @@ class AdminHouseboatDatesController extends AdminController
     public function create()
     {
         return view('admin.houseboatDates.create', [
+            'calendar'  => $this->calendar,
+            'customerOptions'  => $this->customerOptions,
             'houseboatOptions'  => $this->houseboatOptions,
         ]);
     }
@@ -106,12 +119,17 @@ class AdminHouseboatDatesController extends AdminController
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param HouseboatDatesRequest $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(HouseboatDatesRequest $request)
     {
-        //
+        try {
+            HouseboatDates::create($request->validated());
+            return redirect()->route('admin.houseboatDates.index')->with('success', 'Hausboot Buchung erfolgreich angelegt!');
+        } catch(Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
     }
 
     /**
@@ -122,7 +140,11 @@ class AdminHouseboatDatesController extends AdminController
      */
     public function edit(HouseboatDates $houseboatDate)
     {
+        $calendar = new Calendar();
+
         return view('admin.houseboatDates.create', [
+            'calendar'  => $calendar,
+            'customerOptions'  => $this->customerOptions,
             'houseboatDate'     => $houseboatDate,
             'houseboatOptions'  => $this->houseboatOptions,
         ]);
@@ -131,23 +153,33 @@ class AdminHouseboatDatesController extends AdminController
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
-     * @param HouseboatDates $houseboatDates
+     * @param HouseboatDatesRequest $request
+     * @param HouseboatDates $houseboatDate
      * @return Response
      */
-    public function update(Request $request, HouseboatDates $houseboatDates)
+    public function update(HouseboatDatesRequest $request, HouseboatDates $houseboatDate)
     {
-        //
+        try {
+            $houseboatDate->update($request->validated());
+            return redirect()->route('admin.houseboatDates.index')->with('success', 'Hausboot Buchung erfolgreich bearbeitet!');
+        } catch(Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param HouseboatDates $houseboatDates
+     * @param HouseboatDates $houseboatDate
      * @return Response
      */
-    public function destroy(HouseboatDates $houseboatDates)
+    public function destroy(HouseboatDates $houseboatDate)
     {
-        //
+        try {
+            $houseboatDate->delete();
+            return redirect()->route('admin.houseboatDates.index')->with('success', 'Hausboot Buchung erfolgreich gelöscht!');
+        } catch(Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
     }
 }
