@@ -10,28 +10,17 @@ class CalendarRepository
     private $calendar;
     private $calendarDates;
     private $options = [
-        'locale' => 'de',
-        'firstDay' => 1,
-        'displayEventTime' => false,
-        'selectable' => true,
-        'initialView' => 'dayGridMonth',
-        'headerToolbar' => [
-//            'left' => 'prev,next today myCustomButton',
+        'selectable'        => true,
+        'selectOverlap'     => true,
+        'locale'            => 'de',
+        'firstDay'          => 1,
+        'displayEventTime'  => false,
+        'initialView'       => 'dayGridMonth',
+        'headerToolbar'     => [
             'left' => 'prev,next today',
             'center' => 'title',
-//            'right' => 'dayGridMonth,timeGridWeek,timeGridDay',
             'right' => null,
         ],
-/*
-        'customButtons' => [
-            'myCustomButton' => [
-                'text'=> 'custom!',
-                'click' => 'function() {
-                alert(\'clicked the custom button!\');
-            }'
-            ]
-        ]
-*/
     ];
 
     public function __construct(private string $type, private ?Collection $dates = null)

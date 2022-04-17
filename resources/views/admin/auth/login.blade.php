@@ -16,8 +16,10 @@
                     Logindaten merken
                 </x-form-checkbox>
             </div>
-
+<!--
             <x-form-submit value="submit" class="btn btn-save h-10 mt-3 w-full md:w-1/2" icon="fas fa-sign-in-alt">Login</x-form-submit>
+-->
+            <x-form-submit value="submit" class="btn btn-save h-10 w-full md:w-1/2" icon="fas fa-sign-in-alt">Login</x-form-submit>
             <div class="mt-3">
                 @if (Route::has('admin.password.request'))
                     <a class="btn-link blue" href="{{ route('admin.password.request') }}">

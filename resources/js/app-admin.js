@@ -6,7 +6,8 @@ axios.defaults.baseURL = process.env.MIX_API_URL;
 axios.defaults.withCredentials = true;
 window.axios = axios;
 //window.moment = require('moment');
-require('moment');
+var moment = require('moment'); // require
+window.moment = moment;
 
 import MyForm from "./Libs/MyForm"
 import Prices from "./Libs/Prices"
