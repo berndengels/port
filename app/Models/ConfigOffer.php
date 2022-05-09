@@ -24,9 +24,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class ConfigOffer extends Model
 {
-    use HasFactory, UseBooleanIcon;
+    use HasFactory;
+    use UseBooleanIcon;
 
-    protected $table = 'config_offers';
+//    protected $table = 'config_offers';
     protected $guarded = ['id'];
     public $timestamps = false;
     protected $casts = [
