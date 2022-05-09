@@ -16,7 +16,7 @@ class CustomerLoginController extends DefaultLoginController
 
     public function __construct()
     {
-        $this->middleware(['guest','guest:customer'])->except('logout');
+        $this->middleware('guest, guest:customer')->except('logout');
     }
 
     public function showLoginForm()

@@ -3,9 +3,9 @@
 namespace App\View\Components;
 
 use Closure;
+use Illuminate\View\Component;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Session;
-use Illuminate\View\Component;
 
 class FlashMessage extends Component
 {

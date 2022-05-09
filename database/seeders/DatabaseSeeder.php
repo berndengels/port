@@ -31,6 +31,7 @@ class DatabaseSeeder extends Seeder
                     ConfigDailyPriceTestSeeder::class,
                     ConfigPriceComponentTestSeeder::class,
                     ConfigHasPriceComponentTestSeeder::class,
+                    ConfigOfferTestSeeder::class,
                 ]);
                 break;
             case 'dusk.local':
@@ -49,6 +50,7 @@ class DatabaseSeeder extends Seeder
                     ConfigDailyPriceTestSeeder::class,
                     ConfigPriceComponentTestSeeder::class,
                     ConfigHasPriceComponentTestSeeder::class,
+                    ConfigOfferTestSeeder::class,
 
                     AdminUserTestSeeder::class,
                     CountryTestSeeder::class,
