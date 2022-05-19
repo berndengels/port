@@ -83,17 +83,17 @@
                     <td>{{ $item->from->format('d.m.Y') }}</td>
                     <td>{{ $item->until->format('d.m.Y') }}</td>
                     <td class="hidden md:table-cell">
-                        @if($item->boat->customer->email)
+                        @if($item->boat && $item->boat->customer->email)
                             <a href="mailto:{{ $item->boat->customer->email }}" target="_blank">
                                 <i class="fas fa-at"></i>
                                 {{ $item->boat->customer ? $item->boat->customer->name : '' }}
                             </a>
                         @else
-                            {{ $item->boat->customer ? $item->boat->customer->name : '' }}
+                            {{ $item->boat ? ($item->boat->customer ? $item->boat->customer->name : '') : null }}
                         @endif
                     </td>
                     <td>
-                        @if($item->boat->customer->fonLink)
+                        @if($item->boat && $item->boat->customer->fonLink)
                         <a href="tel:{{ $item->boat->customer->fonLink }}" target="_blank">
                             <i class="fas fa-phone"></i>
                             <span>{{ $item->boat->customer->fon }}</span>
