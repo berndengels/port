@@ -79,7 +79,7 @@
             @foreach($data as $item)
                 <tr>
                     <td class="hidden md:table-cell">{{ $item->id }}</td>
-                    <td><a href="{{ route('admin.boatDates.show', $item) }}">{{ $item->boat->boat_name }}</a></td>
+                    <td><a href="{{ route('admin.boatDates.show', $item) }}">{{ $item->boat ? $item->boat->boat_name : null }}</a></td>
                     <td>{{ $item->from->format('d.m.Y') }}</td>
                     <td>{{ $item->until->format('d.m.Y') }}</td>
                     <td class="hidden md:table-cell">
@@ -136,7 +136,7 @@
 		const frm = document.frmFilter,
 			filter = (e) => {
 				let el = e.target;
-				console.info(el.name)
+				console.info(el.name);
 				if('' === el.value && ['year','month'].indexOf(el.name) === -1) {
 					return;
 				}
@@ -146,13 +146,13 @@
 						if(frm.month) {
 							frm.month.value = '';
 						}
-						break
+						break;
 					case 'year':
 						if(frm.year.value === '' && frm.month) {
 							frm.month.value = '';
 						}
 						frm.boat.value = '';
-						break
+						break;
 					case 'saison':
 					case 'month':
 						frm.boat.value = '';
@@ -161,7 +161,7 @@
 				frm.submit()
 			},
 			reset = (e) => {
-				e.preventDefault()
+				e.preventDefault();
 				frm.boat.value = '';
 				frm.saison.value = '';
 				frm.year.value = '';
@@ -172,7 +172,7 @@
 
 		frm.querySelectorAll('.filter').forEach(item => {
 			item.onchange = filter
-		})
+		});
 		frm.querySelector('.btn-reset').onclick = reset
     </script>
 @endpush
