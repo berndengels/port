@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Libs\Prices\BoatPrice;
 use App\Mail\SendExcel;
 use App\Exports\BoatDatesExport;
 use App\Http\Requests\BoatDatesRequest;
@@ -40,15 +41,15 @@ class AdminBoatDatesController extends AdminController
         $boatId = $request->input('boat');
         $year   = $request->input('year');
         $month  = $request->input('month');
-        $saison  = $request->input('saison');
+        $saison = $request->input('saison');
 
         if($year || $month || $saison) {
             $boatId = null;
         }
 
         if($boatId) {
-            $year = null;
-            $month = null;
+            $year   = null;
+            $month  = null;
             $saison = null;
         }
 
@@ -109,12 +110,21 @@ class AdminBoatDatesController extends AdminController
      */
     public function create(Request $request)
     {
-        $today = Carbon::today();
-        $year = $today->format('Y');
-        $nextYear = $today->copy()->addYear()->format('Y');
+        $today      = Carbon::today();
+        $year       = $today->format('Y');
+        $nextYear   = $today->copy()->addYear()->format('Y');
         $boatPrices = ConfigBoatPrice::with('saison')->get();
 
-        $data = $boatPrices->filter(fn(ConfigBoatPrice $p) => $p->saison->mode === $request->modus)->first();
+        //$data = $boatPrices->filter(fn(ConfigBoatPrice $p) => $p->saison->mode === $request->modus)->first();
+        $winter = $boatPrices->filter(fn(ConfigBoatPrice $p) => $p->saison->mode === 'winter')->first();
+        $summer = $boatPrices->filter(fn(ConfigBoatPrice $p) => $p->saison->mode === 'summer')->first();
+
+        $defaultFromWinter    = Carbon::make($year . '-' . $winter->saison->from_month . '-' . $winter->saison->from_day);
+        $defaultUntilWinter   = Carbon::make($nextYear . '-' . $winter->saison->until_month . '-' . $winter->saison->until_day);
+        $defaultFromSummer    = Carbon::make($year . '-' . $summer->saison->from_month . '-' . $summer->saison->from_day);
+        $defaultUntilSummer   = Carbon::make($year . '-' . $summer->saison->until_month . '-' . $summer->saison->until_day);
+
+/*
         if($data) {
             $defaultFrom    = Carbon::make($year . '-' . $data->saison->from_month . '-' . $data->saison->from_day);
             $defaultUntil   = Carbon::make(('winter' === $request->modus ? $nextYear : $year) . '-' . $data->saison->until_month . '-' . $data->saison->until_day);
@@ -122,17 +132,19 @@ class AdminBoatDatesController extends AdminController
             $defaultFrom = null;
             $defaultUntil = null;
         }
-
+*/
         $options = $this->boatRepository->options('boat_name');
         $this->boatOptions = $options->getSelectOptions();
 
         return view(
             'admin.boatDates.create', [
-            'modus'         => $request->modus ?? 'summer',
-            'datesModi'     => $this->datesModi,
-            'boatOptions'   => $this->boatOptions,
-            'defaultFrom'   => $defaultFrom ? $defaultFrom->format('Y-m-d') : null,
-            'defaultUntil'  => $defaultUntil ? $defaultUntil->format('Y-m-d') : null,
+                'modus'         => $request->modus ?? 'summer',
+                'datesModi'     => $this->datesModi,
+                'boatOptions'   => $this->boatOptions,
+                'defaultFromWinter'   => $defaultFromWinter->format('Y-m-d'),
+                'defaultUntilWinter'  => $defaultUntilWinter->format('Y-m-d'),
+                'defaultFromSummer'   => $defaultFromSummer->format('Y-m-d'),
+                'defaultUntilSummer'  => $defaultUntilSummer->format('Y-m-d'),
             ]
         );
     }
@@ -147,8 +159,19 @@ class AdminBoatDatesController extends AdminController
     {
         $validated  = $request->validated();
         $modus      = $validated['modus'];
+        $request    = new Request();
+        $request->request->add($validated);
+
         try {
             BoatDates::create($validated);
+/*
+            $boatDates = BoatDates::create($validated);
+            if($boatDates->boat) {
+                $from       = new Carbon($validated['from'], config('app.timezone'));
+                $until      = new Carbon($validated['until'], config('app.timezone'));
+                $response   = (new BoatPrice($from, $until, $boatDates->boat))->getPrice($request);
+            }
+*/
             return redirect()->route('admin.boatDates.'.$modus)->with('success', 'Boot Date erfolgreich angelegt!');
         } catch(Exception $e) {
             return redirect()->route('admin.boatDates.create')->with('error', $e->getMessage());

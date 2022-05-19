@@ -4,13 +4,13 @@ Content-Type: application/json
 
 {
     "boat_id": 1,
-    "from": "2022-05-01",
-	"until": "2022-10-31",
+    "from": "2022-06-01",
+	"until": "2022-09-30",
 	"crane": 1,
 	"mast_crane": 1,
 	"cleaning": 0,
 	"modus": "saison",
-	"length": 9,
+	"length": 8.5,
     "width": 2.5,
     "weight": 3000,
     "mast_length": 9,

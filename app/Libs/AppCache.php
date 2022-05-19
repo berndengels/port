@@ -7,6 +7,9 @@ class AppCache
     public const KEY_OPTIONS_BOAT = 'options.boat';
     public const KEY_OPTIONS_DATA_BOAT = 'options.data.boat';
 
+    public const KEY_OPTIONS_BOAT_DATES = 'options.boatDates';
+    public const KEY_OPTIONS_DATA_BOAT_DATES = 'options.data.boatDates';
+
     public const KEY_OPTIONS_HOUSEBOAT_MODEL = 'options.houseboatModel';
     public const KEY_OPTIONS_DATA_HOUSEBOAT_MODEL = 'options.data.houseboatModel';
 

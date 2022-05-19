@@ -17,7 +17,7 @@ trait SelectOptions
      */
     protected $selectOptionsData;
 
-    public function getOptionsData($orderBy = 'name', $relations = [], array $where = []): Collection|null
+    public function getOptionsData($orderBy = 'name', $relations = [], ?array $where = []): Collection|null
     {
         /**
          * @var $query Builder
@@ -43,23 +43,23 @@ trait SelectOptions
         return $this->selectOptionsData;
     }
 
-    public function optionsData($orderBy = 'name', $relations = [], array $where = []): Collection|null
+    public function optionsData($orderBy = 'name', $relations = [], ?array $where = []): Collection|null
     {
         return Cache::remember(
             static::$cacheKeyOptionsData, AppCache::TTL, fn() => $this->getOptionsData(
-                orderBy: $orderBy,
-                relations: $relations,
-                where: $where
+                $orderBy,
+                $relations,
+                $where
             )
         );
     }
 
-    public function options($textFieldName = 'name', $keyFieldName = 'id', $relations = [], array $where = []): self
+    public function options($textFieldName = 'name', $keyFieldName = 'id', $relations = [], ?array $where = []): self
     {
         $this->selectOptionsData = $this->optionsData(
-            orderBy: $textFieldName,
-            relations: $relations,
-            where: $where
+            $textFieldName,
+            $relations,
+            $where
         );
         $this->selectOptions = Cache::remember(
             static::$cacheKeyOptions, AppCache::TTL, fn () =>

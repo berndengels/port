@@ -8,6 +8,7 @@ use Helmich\JsonAssert\JsonAssertions;
 abstract class PriceCalculation extends TestCase
 {
     use JsonAssertions;
+
     protected $days = 2;
     protected $from;
     protected $until;

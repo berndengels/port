@@ -1,6 +1,7 @@
 <?php
 namespace Tests\Feature\PriceCalculation;
 
+use Carbon\Carbon;
 use App\Models\Boat;
 use App\Libs\Prices\BoatPrice;
 use Illuminate\Http\Request;
@@ -11,14 +12,14 @@ class BoatPriceCalculationTest extends PriceCalculation
      * @var Boat $boat
      */
     protected $boat;
-    protected $modus = 'saison';
+    protected $modus = 'summer';
 
     protected function setUp(): void
     {
         parent::setUp();
         $this->boat     = $this->customer->boats->first();
-//        $this->from     = Carbon::create('2022-05-01');
-//        $this->until    = Carbon::create('2022-10-31');
+//        $this->from     = Carbon::create('2022-06-01');
+//        $this->until    = Carbon::create('2022-09-30');
         $this->from     = null;
         $this->until    = null;
 
@@ -56,6 +57,7 @@ class BoatPriceCalculationTest extends PriceCalculation
         $decoded = json_decode($response->getContent());
         $msg = __FUNCTION__." => total: expected: $expected[total], actual: $decoded->total";
         $this->assertEquals($expected['total'], $decoded->total, $msg);
+        echo $msg;
     }
 
     protected function calculatedPrice(object $data): array

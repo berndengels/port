@@ -65,6 +65,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @method static Builder|Customer whereConfirmed($value)
  * @method static CustomerFactory factory(...$parameters)
  * @property-read mixed $str_roles
+ * @property-read Collection|HouseboatDates[] $houseboatDates
+ * @property-read int|null $houseboat_dates_count
  */
 class Customer extends Authenticatable
 {

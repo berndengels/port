@@ -58,6 +58,7 @@ use Spatie\Period\Period;
  * @method static Builder|CaravanDates whereDayPrice($value)
  * @property-read int|null $prices_count
  * @method static Builder|CaravanDates dailyPrices()
+ * @method static Builder|CaravanDates caravan(?int $caravanId = null)
  */
 class CaravanDates extends BaseModel
 {

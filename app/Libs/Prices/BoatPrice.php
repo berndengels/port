@@ -7,9 +7,6 @@ use App\Libs\Prices\Boat\Cleaning;
 use App\Libs\Prices\Boat\Crane;
 use App\Libs\Prices\Boat\MastCrane;
 use App\Libs\Prices\Boat\SpecialPrice;
-use App\Models\Boat;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 
 class BoatPrice extends PriceCalculator

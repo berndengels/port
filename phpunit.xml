@@ -12,7 +12,7 @@
          stopOnFailure="false"
 >
     <testsuites>
-        <testsuite name="Unit">
+        <!--testsuite name="Unit">
             <directory suffix="Test.php">./tests/Unit</directory>
         </testsuite>
         <testsuite name="Models">
@@ -20,10 +20,10 @@
         </testsuite>
         <testsuite name="Default">
             <directory suffix="Test.php">./tests/Feature/Default</directory>
-        </testsuite>
+        </testsuite-->
         <testsuite name="PriceCalculation">
-            <directory suffix="Test.php">./tests/Feature/PriceCalculation</directory>
-            <!--file>./tests/Feature/PriceCalculation/BoatPriceCalculationTest.php</file-->
+            <!--directory suffix="Test.php">./tests/Feature/PriceCalculation</directory-->
+            <file>./tests/Feature/PriceCalculation/BoatPriceCalculationTest.php</file>
         </testsuite>
     </testsuites>
     <coverage processUncoveredFiles="true">

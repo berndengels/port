@@ -1,11 +1,11 @@
 <?php
 namespace App\Libs\Prices;
 
-use App\Traits\Models\HasTaxRate;
 use DatePeriod;
 use Carbon\Carbon;
 use ReflectionClass;
 use Illuminate\Http\Request;
+use App\Traits\Models\HasTaxRate;
 use Illuminate\Support\Collection;
 
 abstract class PriceCalculator
@@ -32,7 +32,7 @@ abstract class PriceCalculator
      */
     protected static $total = 0;
 
-    public function __construct(Carbon $from = null,  Carbon $until = null, protected $model = null)
+    public function __construct(?Carbon $from = null, ?Carbon $until = null, protected $model = null)
     {
         static::$from           = $from;
         static::$until          = $until;
@@ -63,9 +63,9 @@ abstract class PriceCalculator
         return $prices;
     }
 
-    protected abstract function registerAddPriceClasses(): Collection;
+    abstract protected function registerAddPriceClasses(): Collection;
 
-    protected abstract function params(): Collection;
+    abstract protected function params(): Collection;
 
 //    public abstract function getPrice(Request $request): array;
     public function getPrice(Request $request): array
@@ -77,11 +77,10 @@ abstract class PriceCalculator
 
         foreach ($this->registerAddPriceClasses() as $class) {
             if(class_exists($class)) {
-                $basename  = class_basename($class);
+                $basename   = class_basename($class);
                 $staticProp = 'price' . $basename;
                 $rClass     = new ReflectionClass($class);
-
-                $obj = $this->getObject($request, $class, $rClass);
+                $obj        = $this->getObject($request, $class, $rClass);
 
                 switch (true) {
                     case $rClass->implementsInterface(IDailyPrice::class):
@@ -102,6 +101,7 @@ abstract class PriceCalculator
         }
 
         $props['days'] = static::$daysCount;
+
         if(config('port.prices.tax.enabled')) {
             $props['tax'] = $this->taxRate();
             $props['netto'] = $this->nettoPrice(static::$total);

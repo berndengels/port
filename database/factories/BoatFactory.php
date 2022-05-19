@@ -22,12 +22,12 @@ class BoatFactory extends MainFactory
     public function definition()
     {
         $this->type = $this->types[rand(0,1)];
-        $length = mt_rand(5, 15);
+        $length = mt_rand(8, 15);
         $arr = [
             'boat_name'         => $this->faker->name(['female']),
             'boat_type'         => $this->type,
             'length'            => $length,
-            'width'             => mt_rand(20, 40) / 10,
+            'width'             => mt_rand(20, 35) / 10,
             'weight'            => mt_rand(1000, 10000),
             'board_height'      => mt_rand(5, 20) / 10,
             'draft'             => mt_rand(3, 10) / 10,

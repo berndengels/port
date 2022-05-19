@@ -18,10 +18,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 /**
  * App\Models\BoatDates
  *
- * @method static Builder|BoatDates newModelQuery()
- * @method static Builder|BoatDates newQuery()
- * @method static Builder|BoatDates query()
- * @mixin Eloquent
  * @property int $id
  * @property int $boat_id
  * @property string $modus
@@ -30,11 +26,28 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int $price
  * @property string $prices
  * @property-read Boat $boat
+ * @property-read mixed $base_price
+ * @property-read mixed $cleaning
+ * @property-read mixed $crane
+ * @property-read mixed $days
+ * @property-read mixed $has_individual_price
+ * @property-read mixed $individual_price
  * @property-read mixed $is_cleaned
  * @property-read mixed $is_craned
  * @property-read mixed $is_mast_craned
+ * @property-read mixed $mast_crane
+ * @property-read mixed $period
+ * @property-read mixed $price_data
  * @property-read mixed $valid_from
  * @property-read mixed $valid_until
+ * @method static Builder|BoatDates boat(?int $id = null)
+ * @method static Builder|BoatDates boatByDates(?int $id = null)
+ * @method static BoatDatesFactory factory(...$parameters)
+ * @method static Builder|BoatDates fromYearMonth(?string $year = null, ?string $month = null)
+ * @method static Builder|BoatDates getMonthsByYears($from = null, $until = null)
+ * @method static Builder|BoatDates newModelQuery()
+ * @method static Builder|BoatDates newQuery()
+ * @method static Builder|BoatDates query()
  * @method static Builder|BoatDates whereBoatId($value)
  * @method static Builder|BoatDates whereFrom($value)
  * @method static Builder|BoatDates whereId($value)
@@ -42,29 +55,26 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @method static Builder|BoatDates wherePrice($value)
  * @method static Builder|BoatDates wherePrices($value)
  * @method static Builder|BoatDates whereUntil($value)
- * @property-read mixed $base_price
- * @property-read mixed $cleaning
- * @property-read mixed $crane
- * @property-read mixed $mast_crane
- * @property-read mixed $price_data
- * @method static BoatDatesFactory factory(...$parameters)
- * @property-read mixed $has_individual_price
- * @property-read mixed $individual_price
- * @property-read mixed $period
- * @property-read mixed $days
- * @method static Builder|BoatDates boatByDates(?int $id = null)
- * @method static Builder|BoatDates fromYearMonth(?string $year = null, ?string $month = null)
- * @method static Builder|BoatDates getMonthsByYears($from = null, $until = null)
- * @method static Builder|BoatDates boat(?int $id = null)
+ * @mixin Eloquent
  */
 class BoatDates extends BaseModel implements IDatePrice
 {
-    use HasFactory, ClearCache, FireEvents, BoatFilter, HasFromUntilDates, HasYearMonthOptions, YearMonthFilter;
+    use BoatFilter;
+    use ClearCache;
+    use FireEvents;
+    use HasFactory;
+    use HasFromUntilDates;
+    use HasYearMonthOptions;
+    use YearMonthFilter;
 
     protected $table = 'boat_dates';
     protected $with = 'boat';
     protected $guarded = ['id'];
     protected $dates = ['from', 'until'];
+    protected $casts = [
+        'from'  => 'date:Y-m-d',
+        'until'  => 'date:Y-m-d',
+    ];
     protected $dateFormat = 'Y-m-d';
     protected $appends = [
         'validFrom',

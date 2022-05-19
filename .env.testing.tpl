@@ -50,7 +50,7 @@ DEFAULT_COUNTRY_ID=55
 PAGINATIN_LIMIT=20
 CUSTOMER_TYPES='{"guest": "Gast", "permanent": "Dauerlieger"}'
 BOAT_TYPES='{"motor": "Motorboot", "sail": "Segelboot"}'
-BOAT_DATES_MODI='{"": "Art wählen", "saison": "Sommerliegeplatz", "winter": "Winterlager"}'
+BOAT_DATES_MODI='{"": "Art wählen", "summer": "Sommerliegeplatz", "winter": "Winterlager"}'
 
 BOAT_GUEST_PRICE_PER_METER=1.5
 BOAT_GUEST_PRICE_ELECTRIC_PER_DAY=2

@@ -46,6 +46,11 @@ use Illuminate\Database\Eloquent\Model;
  * @method static Builder|HouseboatDates wherePrices($value)
  * @method static Builder|HouseboatDates whereUntil($value)
  * @mixin Eloquent
+ * @property int $customer_id
+ * @property-read Customer $customer
+ * @method static Builder|HouseboatDates houseboat(?int $id = null)
+ * @method static Builder|HouseboatDates houseboatByDates(?int $id = null)
+ * @method static Builder|HouseboatDates whereCustomerId($value)
  */
 class HouseboatDates extends Model
 {

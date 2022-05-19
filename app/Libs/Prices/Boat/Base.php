@@ -27,9 +27,8 @@ class Base extends Main implements IDailyPrice
             $until  = $days->getEndDate();
         } else {
             $from   = 'summer' === $this->modus ? static::$saisonStart : static::$winterStart;
-            $until  = 'summer' === $this->modus ? static::$saisonEnd : static::$winterEnd;
+            $until  = 'winter' === $this->modus ? static::$saisonEnd : static::$winterEnd;
         }
-
         switch($this->modus) {
             case 'summer':
                 return $this->getSaisonPrice($from, $until);
@@ -45,9 +44,10 @@ class Base extends Main implements IDailyPrice
         if(!$from && !$until) {
             return new Price(value: $this->defaultSaisonPrice);
         }
-        $from   = !$from ? $this->saisonStart : $from;
-        $until  = !$until ? $this->saisonEnd : $until;
+        $from   = !$from ? static::$saisonStart : $from;
+        $until  = !$until ? static::$saisonEnd : $until;
         $days   = $until->diffInDays($from);
+
         return new Price(value:  round($this->defaultSaisonPrice * $days / $this->defaultSaisonDays));
     }
 
@@ -56,8 +56,8 @@ class Base extends Main implements IDailyPrice
         if(!$from && !$until) {
             return new Price(value: $this->defaultWinterPrice);
         }
-        $from   = !$from ? $this->winterStart : $from;
-        $until  = !$until ? $this->winterEnd : $until;
+        $from   = !$from ? static::$winterStart : $from;
+        $until  = !$until ? static::$winterEnd : $until;
         $days   = $until->diffInDays($from);
 
         return new Price(value: round($this->defaultWinterPrice * $days / $this->defaultWinterDays));

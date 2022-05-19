@@ -8,6 +8,7 @@ use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 /**
  * App\Models\ConfigSaisonRentDates
@@ -34,10 +35,20 @@ use Illuminate\Database\Eloquent\Model;
  * @method static Builder|ConfigSaisonRentDates whereUntilMday($value)
  * @method static Builder|ConfigSaisonRentDates whereUntilMonth($value)
  * @mixin Eloquent
+ * @property string|null $holiday
+ * @property Carbon $from
+ * @property Carbon $until
+ * @property-read mixed $days
+ * @property-read mixed $valid_from
+ * @property-read mixed $valid_until
+ * @method static Builder|ConfigSaisonRentDates whereFrom($value)
+ * @method static Builder|ConfigSaisonRentDates whereHoliday($value)
+ * @method static Builder|ConfigSaisonRentDates whereUntil($value)
  */
 class ConfigSaisonRentDates extends Model
 {
-    use HasFactory, HasFromUntilDates;
+    use HasFactory;
+    use HasFromUntilDates;
 
     protected $table = 'config_saison_rent_dates';
     protected $guarded = ['id'];

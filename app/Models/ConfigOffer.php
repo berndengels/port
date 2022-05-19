@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\Models\UseBooleanIcon;
+use Database\Factories\ConfigOfferFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -21,6 +22,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @method static Builder|ConfigOffer whereId($value)
  * @method static Builder|ConfigOffer whereName($value)
  * @mixin Eloquent
+ * @method static ConfigOfferFactory factory(...$parameters)
  */
 class ConfigOffer extends Model
 {
