@@ -9,8 +9,7 @@
 
             <x-form-select class="calc" class="boat" id="boat_id" name="boat_id" label="Boot" :options="$boatOptions"
                            required/>
-            <x-form-select class="calc" id="modus" name="modus" label="Art" :options="$datesModi" :default="$modus"
-                           required/>
+            <x-form-select class="calc" id="modus" name="modus" label="Art" :options="$datesModi" required/>
 
             <x-form-input class="calc" id="from" name="from" type="date" label="Von" required/>
             <x-form-input class="calc" id="until" name="until" type="date" label="Bis" required/>
