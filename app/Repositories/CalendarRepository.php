@@ -52,6 +52,10 @@ class CalendarRepository
         }
     }
 
+    /**
+     * @param Collection $dates
+     * @return Collection|null
+     */
     private function parseDates(Collection $dates): Collection|null
     {
         if($dates && $dates->count() > 0) {
