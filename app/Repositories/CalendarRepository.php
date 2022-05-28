@@ -2,15 +2,27 @@
 
 namespace App\Repositories;
 
-use Acaronlex\LaravelCalendar\Calendar;
 use App\Models\Houseboat;
 use App\Models\HouseboatDates;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection;
+use Acaronlex\LaravelCalendar\Calendar;
 
+/**
+ * class CalendarRepository
+ */
 class CalendarRepository
 {
+    /**
+     * @var Calendar
+     */
     private $calendar;
+    /**
+     * @var Collection|null
+     */
     private $calendarDates;
+    /**
+     * @var array
+     */
     private $options = [
         'selectable'        => true,
         'selectOverlap'     => true,
@@ -25,35 +37,43 @@ class CalendarRepository
         ],
     ];
 
+    /**
+     * @param string $type
+     * @param Collection|null $dates
+     */
     public function __construct(private string $type, private ?Collection $dates = null)
     {
         $this->calendar = new Calendar();
         $this->calendar->setOptions($this->options);
 
         if($this->dates && $this->dates->count() > 0) {
-            $this->calendarDates = $this->parseDates();
+            $this->calendarDates = $this->parseDates($this->dates);
             $this->calendar->addEvents($this->calendarDates);
         }
     }
 
-    private function parseDates() {
-        switch ($this->type) {
-            case 'houseboat':
-                return $this->dates->map(function(HouseboatDates $date) {
-                    if($date->houseboat && $date->houseboat instanceof Houseboat) {
-                        return Calendar::event(
-                            title: $date->houseboat->name .' - '.$date->customer->name,
-                            isAllDay: false,
-                            start: $date->from,
-                            end: $date->until,
-                            id: $date->id,
-                        );
-                    }
+    private function parseDates(Collection $dates): Collection|null
+    {
+        if($dates && $dates->count() > 0) {
+            switch ($this->type) {
+                case 'houseboat':
+                    return $dates->map(function(HouseboatDates $date) {
+                        if( $date->houseboat ) {
+                            return Calendar::event(
+                                title: $date->houseboat->name .' - '.$date->customer->name,
+                                isAllDay: false,
+                                start: $date->from,
+                                end: $date->until,
+                                id: $date->id,
+                            );
+                        }
+                        return null;
+                    });
+                default:
                     return null;
-                });
-            default:
-                return null;
+            }
         }
+        return null;
     }
 
     /**
@@ -67,7 +87,7 @@ class CalendarRepository
     /**
      * @return null
      */
-    public function getCalendarDates()
+    public function getCalendarDates(): Collection|null
     {
         return $this->calendarDates;
     }
