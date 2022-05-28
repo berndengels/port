@@ -27,7 +27,8 @@ class CalendarRepository
     {
         $this->calendar = new Calendar();
         $this->calendar->setOptions($this->options);
-        if($this->dates) {
+
+        if($this->dates && $this->dates->count() > 0) {
             $this->calendarDates = $this->parseDates();
             $this->calendar->addEvents($this->calendarDates);
         }
@@ -37,6 +38,9 @@ class CalendarRepository
         switch ($this->type) {
             case 'houseboat':
                 return $this->dates->map(function($date) {
+                    if(!$date->houseboat) {
+                        return null;
+                    }
                     return Calendar::event(
                         title: $date->houseboat->name .' - '.$date->customer->name,
                         isAllDay: false,
@@ -45,7 +49,6 @@ class CalendarRepository
                         id: $date->id,
                     );
                 });
-                break;
             default:
                 return null;
         }
