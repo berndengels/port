@@ -11,7 +11,7 @@
                         text="Neueintrag"
                 />
             </div>
-            @if($data->count() > 0 && $year || $month)
+            @if($data && $data->count() > 0 && $year || $month)
                 <div class="float-right">
                     <a href="{{ route('admin.boat.price.excel', ['year' => $year, 'month' => $month]) }}"
                        class="btn btn-second ml-0 my-2 no-hide-text"
@@ -67,6 +67,7 @@
             @endif
             <button class="btn btn-reset inline">Reset</button>
         </x-form>
+    @if($data && $data->count() > 0)
         {{ $data->appends($queryString)->links() }}
         <table class="table w-full mt-3">
             <tr>
@@ -133,6 +134,9 @@
             </tr>
         </table>
         {{ $data->appends($queryString)->links() }}
+    @else
+        <h3>No Data</h3>
+    @endif
     </div>
 @endsection
 
