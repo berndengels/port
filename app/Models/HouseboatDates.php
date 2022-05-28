@@ -10,10 +10,12 @@ use App\Traits\Models\HasDailyPrice;
 use App\Traits\Models\HasFromUntilDates;
 use Carbon\Carbon;
 use Database\Factories\HouseboatDatesFactory;
+use DateTime;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Acaronlex\LaravelCalendar\Event;
 
 /**
  * App\Models\HouseboatDates
@@ -51,7 +53,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static Builder|HouseboatDates houseboatByDates(?int $id = null)
  * @method static Builder|HouseboatDates whereCustomerId($value)
  */
-class HouseboatDates extends Model
+class HouseboatDates extends Model implements Event
 {
     use ClearCache;
     use HasDailyPrice;
@@ -100,5 +102,25 @@ class HouseboatDates extends Model
     public function getValidUntilAttribute()
     {
         return $this->until->format('Y-m-d');
+    }
+
+    public function getTitle()
+    {
+        return $this->houseboat->name . ' - ' . $this->customer->name;
+    }
+
+    public function isAllDay()
+    {
+        return true;
+    }
+
+    public function getStart()
+    {
+        return $this->from;
+    }
+
+    public function getEnd()
+    {
+        return $this->until;
     }
 }
