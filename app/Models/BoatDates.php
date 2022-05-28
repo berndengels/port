@@ -40,7 +40,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property-read mixed $price_data
  * @property-read mixed $valid_from
  * @property-read mixed $valid_until
- * @method static Builder|BoatDates boat(?int $id = null)
  * @method static Builder|BoatDates boatByDates(?int $id = null)
  * @method static BoatDatesFactory factory(...$parameters)
  * @method static Builder|BoatDates fromYearMonth(?string $year = null, ?string $month = null)
@@ -75,7 +74,7 @@ class BoatDates extends BaseModel implements IDatePrice
         'from'  => 'date:Y-m-d',
         'until'  => 'date:Y-m-d',
     ];
-    protected $dateFormat = 'Y-m-d';
+//    protected $dateFormat = 'Y-m-d';
     protected $appends = [
         'validFrom',
         'validUntil',

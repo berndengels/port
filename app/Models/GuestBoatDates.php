@@ -64,7 +64,11 @@ class GuestBoatDates extends BaseModel implements IDatePrice
     protected $table = 'guest_boat_dates';
     protected $guarded = ['id'];
     protected $dates = ['from', 'until'];
-    protected $dateFormat = 'Y-m-d';
+    protected $casts = [
+        'from'      => 'date:Y-m-d',
+        'until'     => 'date:Y-m-d',
+    ];
+//    protected $dateFormat = 'Y-m-d';
     protected $appends = [
         'validFrom',
         'validUntil',

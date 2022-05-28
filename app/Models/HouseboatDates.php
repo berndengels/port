@@ -48,7 +48,6 @@ use Illuminate\Database\Eloquent\Model;
  * @mixin Eloquent
  * @property int $customer_id
  * @property-read Customer $customer
- * @method static Builder|HouseboatDates houseboat(?int $id = null)
  * @method static Builder|HouseboatDates houseboatByDates(?int $id = null)
  * @method static Builder|HouseboatDates whereCustomerId($value)
  */
@@ -65,17 +64,16 @@ class HouseboatDates extends Model
     protected $table = 'houseboat_dates';
     protected $guarded = ['id'];
     protected $dates = ['from','until'];
-    protected $dateFormat = 'Y-m-d';
+    protected $casts = [
+        'from'      => 'date:Y-m-d',
+        'until'     => 'date:Y-m-d',
+    ];
+//    protected $dateFormat = 'Y-m-d';
     public $timestamps = false;
     protected $appends = [
         'days',
         'validFrom',
         'validUntil',
-    ];
-
-    protected $casts = [
-        'from'      => 'date:Y-m-d',
-        'until'     => 'date:Y-m-d',
     ];
 
     public function houseboat()
