@@ -64,7 +64,7 @@ class CalendarRepository
                     return $dates->map(function(HouseboatDates $date) {
                         if( $date->houseboat ) {
                             return Calendar::event(
-                                title: $date->houseboat->name .' - '.$date->customer->name,
+                                title: ($date->houseboat ? $date->houseboat->name : 'null') .' - '.$date->customer->name,
                                 isAllDay: false,
                                 start: $date->from,
                                 end: $date->until,
