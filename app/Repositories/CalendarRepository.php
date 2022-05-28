@@ -40,16 +40,16 @@ class CalendarRepository
         switch ($this->type) {
             case 'houseboat':
                 return $this->dates->map(function(HouseboatDates $date) {
-                    if(!$date->houseboat instanceof Houseboat) {
-                        return null;
+                    if($date->houseboat && $date->houseboat instanceof Houseboat) {
+                        return Calendar::event(
+                            title: $date->houseboat->name .' - '.$date->customer->name,
+                            isAllDay: false,
+                            start: $date->from,
+                            end: $date->until,
+                            id: $date->id,
+                        );
                     }
-                    return Calendar::event(
-                        title: $date->houseboat->name .' - '.$date->customer->name,
-                        isAllDay: false,
-                        start: $date->from,
-                        end: $date->until,
-                        id: $date->id,
-                    );
+                    return null;
                 });
             default:
                 return null;
