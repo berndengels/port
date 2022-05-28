@@ -2,8 +2,8 @@
 
 @section('main')
     <div class="p-6">
-        <x-nav-link :href="route('admin.config.saisonDates.index')" icon="fas fa-backward" class="btn">zurück</x-nav-link>
-        <x-form method="post" :action="route('admin.config.saisonDates.update', $saisonRentDate)" class="w-full lg:w-1/2">
+        <x-nav-link :href="route('admin.config.saisonRentDates.index')" icon="fas fa-backward" class="btn">zurück</x-nav-link>
+        <x-form method="post" :action="route('admin.config.saisonRentDates.update', $saisonRentDate)" class="w-full lg:w-1/2">
             @method('put')
             @bind($saisonRentDate)
             <x-form-select name="config_saison_rent_id" label="Rent Saison" :options="$saisonRents" required />
