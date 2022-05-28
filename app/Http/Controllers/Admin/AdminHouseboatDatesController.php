@@ -144,7 +144,7 @@ class AdminHouseboatDatesController extends AdminController
     public function edit(HouseboatDates $houseboatDate)
     {
         $calendar = new Calendar();
-        $calendar->addEvent($houseboatDate)->setOptions([]);
+        $calendar->addEvent($houseboatDate)->setOptions(['initialDate' => $houseboatDate->from]);
 
         return view('admin.houseboatDates.edit', [
             'calendar'  => $calendar,

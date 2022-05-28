@@ -68,7 +68,7 @@ class CalendarRepository
                                 isAllDay: false,
                                 start: $date->from,
                                 end: $date->until,
-                                id: $date->id,
+                                id: $date->id
                             );
                         }
                         return null;

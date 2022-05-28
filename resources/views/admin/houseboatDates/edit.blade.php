@@ -15,8 +15,8 @@
         </x-nav-link>
     </div>
     <div class="p-6 flex">
-        <div class="flex-auto w-64">
-            <x-form name="frm" method="post" :action="route('admin.houseboatDates.update', $houseboatDate)" class="w-full lg:w-1/2">
+        <div class="flex-auto w-3/12">
+            <x-form name="frm" method="post" :action="route('admin.houseboatDates.update', $houseboatDate)" class="w-full">
                 @method('put')
                 <div class="mt-5">
                     <span class="text-2xl text-blue-900">Hausboot: {{ $houseboatDate->houseboat->name }}</span>
@@ -36,10 +36,13 @@
                 </div>
             </x-form>
         </div>
-        <div class="flex-auto w-64">
+        <div class="flex-auto w-9/12 ml-5">
             <div id="calendar">
                 {!! $calendar->calendar() !!}
                 {!! $calendar->script() !!}
+                <script>
+                    calendar.initialDate = "{{ $houseboatDate->from->format('Y-m-d') }}";
+                </script>
             </div>
         </div>
     </div>
