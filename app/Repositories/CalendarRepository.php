@@ -3,6 +3,8 @@
 namespace App\Repositories;
 
 use Acaronlex\LaravelCalendar\Calendar;
+use App\Models\Houseboat;
+use App\Models\HouseboatDates;
 use Illuminate\Database\Eloquent\Collection;
 
 class CalendarRepository
@@ -37,8 +39,8 @@ class CalendarRepository
     private function parseDates() {
         switch ($this->type) {
             case 'houseboat':
-                return $this->dates->map(function($date) {
-                    if(!$date->houseboat) {
+                return $this->dates->map(function(HouseboatDates $date) {
+                    if(!$date->houseboat instanceof Houseboat) {
                         return null;
                     }
                     return Calendar::event(
