@@ -87,6 +87,7 @@
                     <td>{{ $item->from->format('d.m.Y') }}</td>
                     <td>{{ $item->until->format('d.m.Y') }}</td>
                     <td class="hidden md:table-cell">
+                        @if($item->customer)
                         @if($item->customer->email)
                             <a href="mailto:{{ $item->customer->email }}" target="_blank">
                                 <i class="fas fa-at"></i>
@@ -95,9 +96,10 @@
                         @else
                             {{ $item->customer ? $item->customer->name : '' }}
                         @endif
+                        @endif
                     </td>
                     <td>
-                        @if($item->customer->fonLink)
+                        @if($item->customer && $item->customer->fonLink)
                             <a href="tel:{{ $item->customer->fonLink }}" target="_blank">
                                 <i class="fas fa-phone"></i>
                                 <span>{{ $item->customer->fon }}</span>
