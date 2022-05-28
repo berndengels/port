@@ -30,7 +30,10 @@ class AdminHouseboatDatesController extends AdminController
             ->options(where: ['customer_type' => 'houseboat'])
             ->getSelectOptions();
         $this->dates = HouseboatDates::orderBy('from')->get();
-        $this->calendar = (new CalendarRepository('houseboat', $this->dates))->getCalendar();
+
+        if($this->dates->count() > 0) {
+            $this->calendar = (new CalendarRepository('houseboat', $this->dates))->getCalendar();
+        }
     }
 
     /**
