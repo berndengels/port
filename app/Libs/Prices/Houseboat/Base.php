@@ -31,10 +31,7 @@ class Base extends Main implements IDailyPrice
         $days = collect($days)->map(fn($d) => $d->format('Y-m-d'))->toArray();
         sort($days);
 
-        $configSaisonRentDates = ConfigSaisonRentDates::with('saison')
-            ->containsDates($this->from, $this->until)
-            ->get()
-        ;
+        $configSaisonRentDates = ConfigSaisonRentDates::with('saison')->get();
         static::$dailyPrices = [];
         /**
          * @var ConfigSaisonRentDates $d

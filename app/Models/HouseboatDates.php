@@ -6,18 +6,14 @@ use App\Traits\Models\ClearCache;
 use App\Traits\Models\Filter\HasYearMonthOptions;
 use App\Traits\Models\Filter\HouseboatFilter;
 use App\Traits\Models\Filter\YearMonthFilter;
-use App\Traits\Models\HasDailyPrice;
-use App\Traits\Models\HasDailyPriceHouseboat;
-use App\Traits\Models\HasFromUntilDates;
+//use App\Traits\Models\HasDailyPriceHouseboat;
 use Carbon\Carbon;
 use Database\Factories\HouseboatDatesFactory;
-use DateTime;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Acaronlex\LaravelCalendar\Event;
-use Spatie\Period\Period;
 
 /**
  * App\Models\HouseboatDates
@@ -58,7 +54,7 @@ use Spatie\Period\Period;
 class HouseboatDates extends Model implements Event
 {
     use ClearCache;
-    use HasDailyPriceHouseboat;
+//    use HasDailyPriceHouseboat;
     use HasFactory;
     use HasYearMonthOptions;
     use HouseboatFilter;
@@ -71,9 +67,7 @@ class HouseboatDates extends Model implements Event
         'from'      => 'date:Y-m-d',
         'until'     => 'date:Y-m-d',
     ];
-//    protected $dateFormat = 'Y-m-d';
     public $timestamps = false;
-    protected $appends = ['days'];
 
     public function houseboat()
     {
@@ -103,15 +97,5 @@ class HouseboatDates extends Model implements Event
     public function getEnd()
     {
         return $this->until;
-    }
-
-    public function getDaysAttribute()
-    {
-        return Period::make($this->from, $this->until);
-    }
-
-    public function getPriceAttribute()
-    {
-        $period = Period::make($this->from, $this->until);
     }
 }

@@ -82,22 +82,17 @@ class ConfigSaisonRentDates extends Model
     public function scopeContainsDates(Builder $query, Carbon $from, Carbon $until): Builder
     {
 //        $days = collect($from->toPeriod($until)->toDatePeriod()->getIterator())->map(fn($d) => $d->format('Y-m-d'))->toArray();
-        $fFrom = $from->format('Y-m-d');
-        $fUntil = $until->format('Y-m-d');
-        $range = [$fFrom, $fUntil];
+//        $fFrom = $from->format('Y-m-d');
+//        $fUntil = $until->format('Y-m-d');
         return $query
-//            ->whereIn('from', $days)
-//            ->orWhereIn('until', $days)
-//            ->whereDate('from', '<=', $from)
-//            ->whereDate('until', '>', $until)
+            ->whereDate('from', '>=', $from)
+            ->whereDate('until', '<=', $until)
 
-//            ->orWhereDate('until', '<', $until)
-//            ->whereDate('from', '<=', $from)
+            ->orWhereDate('from', '<=', $from)
+            ->whereDate('until', '<=', $until)
 
-//            ->orWhereDate('from', '>', $from)
-//            ->whereDate('until', '<=', $until)
-            ->whereBetween('from', $range)
-            ->orWhereBetween('until', $range)
+            ->orWhereDate('until', '>=', $until)
+            ->whereDate('from', '<=', $until)
             ;
     }
 }
