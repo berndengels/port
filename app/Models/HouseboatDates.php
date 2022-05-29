@@ -7,6 +7,7 @@ use App\Traits\Models\Filter\HasYearMonthOptions;
 use App\Traits\Models\Filter\HouseboatFilter;
 use App\Traits\Models\Filter\YearMonthFilter;
 use App\Traits\Models\HasDailyPrice;
+use App\Traits\Models\HasDailyPriceHouseboat;
 use App\Traits\Models\HasFromUntilDates;
 use Carbon\Carbon;
 use Database\Factories\HouseboatDatesFactory;
@@ -16,6 +17,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Acaronlex\LaravelCalendar\Event;
+use Spatie\Period\Period;
 
 /**
  * App\Models\HouseboatDates
@@ -56,9 +58,8 @@ use Acaronlex\LaravelCalendar\Event;
 class HouseboatDates extends Model implements Event
 {
     use ClearCache;
-    use HasDailyPrice;
+    use HasDailyPriceHouseboat;
     use HasFactory;
-    use HasFromUntilDates;
     use HasYearMonthOptions;
     use HouseboatFilter;
     use YearMonthFilter;
@@ -72,11 +73,7 @@ class HouseboatDates extends Model implements Event
     ];
 //    protected $dateFormat = 'Y-m-d';
     public $timestamps = false;
-    protected $appends = [
-        'days',
-        'validFrom',
-        'validUntil',
-    ];
+    protected $appends = ['days'];
 
     public function houseboat()
     {
@@ -86,22 +83,6 @@ class HouseboatDates extends Model implements Event
     public function customer()
     {
         return $this->belongsTo(Customer::class);
-    }
-
-    /**
-     * @return string
-     */
-    public function getValidFromAttribute()
-    {
-        return $this->from->format('Y-m-d');
-    }
-
-    /**
-     * @return string
-     */
-    public function getValidUntilAttribute()
-    {
-        return $this->until->format('Y-m-d');
     }
 
     public function getTitle()
@@ -122,5 +103,15 @@ class HouseboatDates extends Model implements Event
     public function getEnd()
     {
         return $this->until;
+    }
+
+    public function getDaysAttribute()
+    {
+        return Period::make($this->from, $this->until);
+    }
+
+    public function getPriceAttribute()
+    {
+        $period = Period::make($this->from, $this->until);
     }
 }

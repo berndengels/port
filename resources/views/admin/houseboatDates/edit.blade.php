@@ -41,7 +41,7 @@
                 {!! $calendar->calendar() !!}
                 {!! $calendar->script() !!}
                 <script>
-                    calendar.initialDate = "{{ $houseboatDate->from->format('Y-m-d') }}";
+//                    calendar.initialDate = "{{ $houseboatDate->from->format('Y-m-d') }}";
                 </script>
             </div>
         </div>

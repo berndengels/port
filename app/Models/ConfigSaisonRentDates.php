@@ -2,13 +2,15 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use App\Traits\Models\HasFromUntilDates;
 use Database\Factories\ConfigSaisonRentDatesFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Carbon;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Spatie\Period\Period;
 
 /**
  * App\Models\ConfigSaisonRentDates
@@ -44,6 +46,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|ConfigSaisonRentDates whereFrom($value)
  * @method static Builder|ConfigSaisonRentDates whereHoliday($value)
  * @method static Builder|ConfigSaisonRentDates whereUntil($value)
+ * @property-read Period $period
  */
 class ConfigSaisonRentDates extends Model
 {
@@ -53,10 +56,48 @@ class ConfigSaisonRentDates extends Model
     protected $table = 'config_saison_rent_dates';
     protected $guarded = ['id'];
     protected $dates = ['from','until'];
+    protected $appends = ['period'];
+    protected $casts = [
+        'from'  => 'date:Y-m-d',
+        'until' => 'date:Y-m-d',
+    ];
     public $timestamps = false;
 
+    /**
+     * @return BelongsTo
+     */
     public function saison()
     {
         return $this->belongsTo(ConfigSaisonRent::class, 'config_saison_rent_id', 'id');
+    }
+
+    /**
+     * @return Period
+     */
+    public function getPeriodAttribute():Period
+    {
+        return Period::make($this->from, $this->until);
+    }
+
+    public function scopeContainsDates(Builder $query, Carbon $from, Carbon $until): Builder
+    {
+//        $days = collect($from->toPeriod($until)->toDatePeriod()->getIterator())->map(fn($d) => $d->format('Y-m-d'))->toArray();
+        $fFrom = $from->format('Y-m-d');
+        $fUntil = $until->format('Y-m-d');
+        $range = [$fFrom, $fUntil];
+        return $query
+//            ->whereIn('from', $days)
+//            ->orWhereIn('until', $days)
+//            ->whereDate('from', '<=', $from)
+//            ->whereDate('until', '>', $until)
+
+//            ->orWhereDate('until', '<', $until)
+//            ->whereDate('from', '<=', $from)
+
+//            ->orWhereDate('from', '>', $from)
+//            ->whereDate('until', '<=', $until)
+            ->whereBetween('from', $range)
+            ->orWhereBetween('until', $range)
+            ;
     }
 }

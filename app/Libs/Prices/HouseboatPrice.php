@@ -2,10 +2,9 @@
 
 namespace App\Libs\Prices;
 
-use App\Libs\Prices\Boat\Base;
-use App\Libs\Prices\Boat\Cleaning;
-use App\Libs\Prices\Boat\SpecialPrice;
 use Illuminate\Support\Collection;
+use App\Libs\Prices\Houseboat\Base;
+use App\Libs\Prices\Boat\SpecialPrice;
 
 class HouseboatPrice extends PriceCalculator
 {
@@ -13,6 +12,7 @@ class HouseboatPrice extends PriceCalculator
      * @var int
      */
     protected static $priceBase = 0;
+    public static $dailyPrices;
 
     public function params(): Collection
     {

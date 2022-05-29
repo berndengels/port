@@ -81,7 +81,7 @@ abstract class PriceCalculator
                 $staticProp = 'price' . $basename;
                 $rClass     = new ReflectionClass($class);
                 $obj        = $this->getObject($request, $class, $rClass);
-
+//                dd($obj);
                 switch (true) {
                     case $rClass->implementsInterface(IDailyPrice::class):
                         static::$$staticProp = $obj->setDaysCount($dCount)->addPrice($dPeriod);
@@ -140,9 +140,14 @@ abstract class PriceCalculator
                     $constructParams[] = static::$until;
                     break;
                 default:
-                    $constructParams[] = $params[$name] ?? null;
+                    if(isset($params[$name])) {
+                        $constructParams[] = $params[$name] ?? null;
+                    }
                     break;
             }
+        }
+        if($this->model) {
+            $constructParams[] = $this->model;
         }
 
         return new $class(...$constructParams);

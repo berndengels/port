@@ -9,6 +9,7 @@ mix.autoload({
 	.js('node_modules/leaflet-providers', 'public/js')
 	.css('node_modules/leaflet/dist/leaflet.css', 'public/css')
 	.sass('resources/sass/app.scss', 'public/css')
+	.sass('resources/sass/print.scss', 'public/css')
 	.sass('resources/sass/pdf.scss', 'public/css')
 	.postCss('resources/css/app.css', 'public/css', [
 		require('postcss-import'),

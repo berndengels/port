@@ -1,8 +1,6 @@
 <?php
 namespace App\Libs\Prices;
 
-use App\Models\Caravan;
-use Illuminate\Http\Request;
 use App\Libs\Prices\Caravan\Base;
 use App\Libs\Prices\Caravan\Persons;
 use App\Libs\Prices\Caravan\Electric;

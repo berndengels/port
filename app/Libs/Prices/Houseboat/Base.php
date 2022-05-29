@@ -1,64 +1,66 @@
 <?php
 namespace App\Libs\Prices\Houseboat;
 
+use App\Models\ConfigSaisonRentDates;
+use App\Models\HouseboatModel;
 use DatePeriod;
 use Carbon\Carbon;
 use App\Models\Houseboat;
 use App\Libs\Prices\Price;
 use App\Libs\Prices\IDailyPrice;
+use Spatie\Period\Period;
 
 class Base extends Main implements IDailyPrice
 {
+    public static $dailyPrices;
+
     public function __construct(
         protected Carbon|null $from = null,
         protected Carbon|null $until = null,
         protected Houseboat $houseboat,
     ) {
         $this->initConfig();
-        $this->defaultSaisonPrice   = round($this->priceSaisonFactor * $this->length * $this->width);
-        $this->defaultWinterPrice   = round($this->priceWinterFactor * $this->length * $this->width);
     }
 
     public function addPrice(?DatePeriod $days = null): Price
     {
-        if($days) {
-            $from   = $days->getStartDate();
-            $until  = $days->getEndDate();
-        } else {
-            $from   = 'summer' === $this->modus ? static::$saisonStart : static::$winterStart;
-            $until  = 'summer' === $this->modus ? static::$saisonEnd : static::$winterEnd;
-        }
+        /**
+         * @var HouseboatModel $model
+         */
+        $model = $this->houseboat->model;
+        $days = collect($days)->map(fn($d) => $d->format('Y-m-d'))->toArray();
+        sort($days);
 
-        switch($this->modus) {
-            case 'summer':
-                return $this->getSaisonPrice($from, $until);
-            case 'winter':
-                return $this->getWinterPrice($from, $until);
-            default:
-                return new Price();
+        $configSaisonRentDates = ConfigSaisonRentDates::with('saison')
+            ->containsDates($this->from, $this->until)
+            ->get()
+        ;
+        static::$dailyPrices = [];
+        /**
+         * @var ConfigSaisonRentDates $d
+         */
+        foreach ($days as $day) {
+            foreach ($configSaisonRentDates as $d) {
+                if($d->period->contains(Carbon::make($day))) {
+                    $saison = $d->saison->key;
+                    if('peak' === $saison) {
+                        static::$dailyPrices[$day] = $model->peak_season_price;
+                        continue 2;
+                    }
+                    elseif('mid' === $saison) {
+                        static::$dailyPrices[$day] = $model->mid_season_price;
+                        continue 2;
+                    }
+                    elseif('low' === $saison) {
+                        static::$dailyPrices[$day] = $model->low_season_price;
+                        continue 2;
+                    } else {
+                        static::$dailyPrices[$day] = 0;
+                        continue 2;
+                    }
+                }
+            }
         }
-    }
-
-    public function getSaisonPrice(Carbon $from = null, Carbon $until = null): Price
-    {
-        if(!$from && !$until) {
-            return new Price(value: $this->defaultSaisonPrice);
-        }
-        $from   = !$from ? $this->saisonStart : $from;
-        $until  = !$until ? $this->saisonEnd : $until;
-        $days   = $until->diffInDays($from);
-        return new Price(value:  round($this->defaultSaisonPrice * $days / $this->defaultSaisonDays));
-    }
-
-    public function getWinterPrice(Carbon $from = null, Carbon $until = null): Price
-    {
-        if(!$from && !$until) {
-            return new Price(value: $this->defaultWinterPrice);
-        }
-        $from   = !$from ? $this->winterStart : $from;
-        $until  = !$until ? $this->winterEnd : $until;
-        $days   = $until->diffInDays($from);
-
-        return new Price(value: round($this->defaultWinterPrice * $days / $this->defaultWinterDays));
+        return new Price(array_sum(array_values(static::$dailyPrices)));
     }
 }

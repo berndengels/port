@@ -78,10 +78,10 @@ class AdminPriceController extends AdminController
      */
     public function calculateHouseboatDates(Request $request)
     {
-        $boatId     = $request->post('houseboat_id');
+        $houseboatId     = $request->post('houseboat_id');
         $from       = $request->post('from');
         $until      = $request->post('until');
-        $houseboat  = Houseboat::find($boatId);
+        $houseboat  = Houseboat::find($houseboatId);
         $response   = ['error' => true];
 
         if($houseboat) {
