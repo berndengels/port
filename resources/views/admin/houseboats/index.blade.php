@@ -23,7 +23,7 @@
                 <th colspan="2"><br></th>
             </tr>
             @foreach($data as $item)
-                <tr>
+                <tr style="color: #fff;background-color: {{ $item->calendar_color }}">
                     <td class="hidden md:table-cell">{{ $item->id }}</td>
                     <td>{{ $item->name }}</td>
                     <td class="hidden md:table-cell">{{ $item->model->name }}</td>
