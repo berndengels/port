@@ -40,9 +40,6 @@
             <div id="calendar">
                 {!! $calendar->calendar() !!}
                 {!! $calendar->script() !!}
-                <script>
-//                    calendar.initialDate = "{{ $houseboatDate->from->format('Y-m-d') }}";
-                </script>
             </div>
         </div>
     </div>

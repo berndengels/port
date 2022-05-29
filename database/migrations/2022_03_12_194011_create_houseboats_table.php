@@ -17,6 +17,7 @@ class CreateHouseboatsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('houseboat_model_id')->index('houseboat_model_id');
             $table->string('name', 50);
+            $table->string('calendar_color', 20)->nullable();
             $table->foreign('houseboat_model_id', 'houseboat_model_ibfk_1')
                 ->references('id')->on('houseboat_models')
                 ->onUpdate('CASCADE')

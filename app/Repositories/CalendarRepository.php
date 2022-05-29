@@ -30,6 +30,7 @@ class CalendarRepository
         'firstDay'          => 1,
         'displayEventTime'  => false,
         'initialView'       => 'dayGridMonth',
+        'aspectRatio'       => 1,
         'headerToolbar'     => [
             'left' => 'prev,next today',
             'center' => 'title',
@@ -63,12 +64,19 @@ class CalendarRepository
                 case 'houseboat':
                     return $dates->map(function(HouseboatDates $date) {
                         if( $date->houseboat ) {
+                            $email = $date->customer->email;
+                            $fon = $date->customer->fon;
                             return Calendar::event(
-                                title: ($date->houseboat ? $date->houseboat->name : 'null') .' - '.$date->customer->name,
+                                title: $date->houseboat->name .' - '.$date->customer->name,
                                 isAllDay: false,
                                 start: $date->from,
                                 end: $date->until,
-                                id: $date->id
+                                id: $date->id,
+                                options: [
+                                    'color' => $date->houseboat->calendar_color ?? '#3788d8',
+//                                    'url'   => "mailto:$email",
+                                    'url'   => "tel:$fon",
+                                ]
                             );
                         }
                         return null;

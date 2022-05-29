@@ -24,8 +24,9 @@ class HouseboatRequest extends AdminRequest
     public function rules()
     {
         $rules = [
-            'name'          => 'required|min:3',
             'houseboat_model_id'   => 'required',
+            'name'              => 'required|min:3',
+            'calendar_color'    => '',
         ];
 
         return $rules;

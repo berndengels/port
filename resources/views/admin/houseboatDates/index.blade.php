@@ -1,5 +1,13 @@
 @extends('layouts.main')
 
+@push('styles')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.css"/>
+@endpush
+@push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/locales-all.min.js"></script>
+@endpush
+
 @section('main')
     <div>
         <div class="index-header mt-3">
@@ -68,7 +76,12 @@
             <button class="btn btn-reset inline">Reset</button>
         </x-form>
     @if($data && $data->count() > 0)
-        {{ $data->appends($queryString)->links() }}
+        <div class="w-8/12 m-5">
+            {!! $calendar->calendar() !!}
+            {!! $calendar->script() !!}
+        </div>
+
+            {{ $data->appends($queryString)->links() }}
         <table class="table w-full mt-3">
             <tr>
                 <th class="hidden md:table-cell">ID</th>

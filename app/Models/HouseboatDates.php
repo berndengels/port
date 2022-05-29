@@ -98,4 +98,16 @@ class HouseboatDates extends Model implements Event
     {
         return $this->until;
     }
+
+    /**
+    * Optional FullCalendar.io settings for this event
+    * @return array
+    */
+    public function getEventOptions()
+    {
+        return [
+            'color' => $this->houseboat->calendar_color ?? '#3788d8',
+            'aspectRatio'   => 1,
+        ];
+    }
 }

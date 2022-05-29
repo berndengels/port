@@ -18,6 +18,9 @@ class AdminHouseboatDatesController extends AdminController
     private $houseboatOptions;
     private $customerOptions;
     private $calendar;
+    private $calendarOptions = [
+
+    ];
     private $dates;
 
     public function __construct()
@@ -79,6 +82,7 @@ class AdminHouseboatDatesController extends AdminController
 
         return view(
             'admin.houseboatDates.index', [
+                'calendar'          => $this->calendar,
                 'houseboat'         => $houseboat,
                 'data'              => $paginated,
                 'years'             => $this->years,
@@ -144,7 +148,11 @@ class AdminHouseboatDatesController extends AdminController
     public function edit(HouseboatDates $houseboatDate)
     {
         $calendar = new Calendar();
-        $calendar->addEvent($houseboatDate)->setOptions(['initialDate' => $houseboatDate->from]);
+        $calendar->addEvent($houseboatDate)->setOptions([
+            'initialDate' => $houseboatDate->from,
+            'color'       => '#c00',
+            'aspectRatio' => 1,
+        ]);
 
         return view('admin.houseboatDates.edit', [
             'calendar'  => $calendar,
