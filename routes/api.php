@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\WeatherController;
 use App\Http\Controllers\Api\StatisticController;
 use App\Http\Controllers\Api\CaravanController;
-use App\Http\Controllers\Admin\AdminPriceController;
+use App\Http\Controllers\Api\HouseboatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,4 +39,11 @@ Route::group([
     Route::get('todayVisits',[CaravanController::class,'todayVisits'])->name('todayVisits');
     Route::put('{caravan}',[CaravanController::class,'update'])->name('update');
     Route::post('',[CaravanController::class,'store'])->name('store');
+});
+Route::group([
+    'prefix'    => 'houseboats',
+    'as'        => 'houseboats.',
+//    'middleware' => ['auth:sanctum'],
+], function () {
+    Route::get('',[HouseboatController::class,'index'])->name('index');
 });

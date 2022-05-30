@@ -31,3 +31,4 @@ yarn-error.log
 /.env.demo
 /.env.dusk.demo
 /_ide_helper_models.php
+/yarn.lock

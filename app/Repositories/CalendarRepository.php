@@ -64,20 +64,58 @@ class CalendarRepository
                 case 'houseboat':
                     return $dates->map(function(HouseboatDates $date) {
                         if( $date->houseboat ) {
-                            $email = $date->customer->email;
+//                            $email = $date->customer->email;
                             $fon = $date->customer->fon;
                             return Calendar::event(
+                                id: $date->id,
                                 title: $date->houseboat->name .' - '.$date->customer->name,
                                 isAllDay: false,
                                 start: $date->from,
                                 end: $date->until,
-                                id: $date->id,
                                 options: [
+                                    'selectable'        => true,
+                                    'selectOverlap'     => true,
+                                    'locale'            => 'de',
+                                    'firstDay'          => 1,
+                                    'displayEventTime'  => false,
                                     'color' => $date->houseboat->calendar_color ?? '#3788d8',
 //                                    'url'   => "mailto:$email",
                                     'url'   => "tel:$fon",
                                 ]
                             );
+                        }
+                        return null;
+                    });
+                default:
+                    return null;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * @param Collection $dates
+     * @return Collection|null
+     */
+    public function getDates(): Collection|null
+    {
+        if($this->dates && $this->dates->count() > 0) {
+            switch ($this->type) {
+                case 'houseboat':
+                    return $this->dates->map(function(HouseboatDates $date) {
+                        if( $date->houseboat ) {
+//                            $email = $date->customer->email;
+                            $fon = $date->customer->fon;
+                            return [
+                                'id'                => $date->id,
+                                'groupId'           => $date->id,
+                                'title'             => $date->houseboat->name .' - '.$date->customer->name,
+                                'allDay'            => false,
+                                'start'             => $date->from,
+                                'end'               => $date->until,
+                                'backgroundColor'   => $date->houseboat->calendar_color ?? '#3788d8',
+                                'url'               => "tel:$fon",
+                            ];
                         }
                         return null;
                     });
