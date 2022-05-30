@@ -18,7 +18,8 @@ class NavLink extends Component
         public $text = null,
         public $icon = null,
         public $class = null,
-        public $title = null
+        public $title = null,
+        public $target = null
     ) {
     }
 

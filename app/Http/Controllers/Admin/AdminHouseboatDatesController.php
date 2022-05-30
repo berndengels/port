@@ -106,7 +106,13 @@ class AdminHouseboatDatesController extends AdminController
      */
     public function show(HouseboatDates $houseboatDate)
     {
-        //
+        $prices         = json_decode($houseboatDate->prices);
+        $days           = $prices->days;
+        $dailyPrices    = $prices->dailyPrices;
+        $basePrice      = $prices->priceBase;
+        $priceTotal     = $prices->total;
+
+        return view('admin.houseboatDates.show', compact('houseboatDate','days', 'dailyPrices','basePrice', 'priceTotal'));
     }
 
     /**
@@ -193,5 +199,21 @@ class AdminHouseboatDatesController extends AdminController
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }
+    }
+
+    public function printPage(HouseboatDates $houseboatDate)
+    {
+        $prices         = json_decode($houseboatDate->prices);
+        $days           = $prices->days;
+        $dailyPrices    = $prices->dailyPrices;
+        $basePrice      = $prices->priceBase;
+        $priceTotal     = $prices->total;
+
+        return view('admin.houseboatDates.print', compact('houseboatDate','days', 'dailyPrices','basePrice', 'priceTotal'));
+    }
+
+    public function sendInvoice(HouseboatDates $houseboatDate)
+    {
+        return 'work in progress';
     }
 }

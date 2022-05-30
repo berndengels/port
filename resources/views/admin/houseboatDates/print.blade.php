@@ -1,22 +1,8 @@
-@extends('layouts.main')
+@extends('layouts.print')
 
 @section('main')
-    <div class="m-5 content-center w-10/12">
-        <div class="w-full block">
-            <div class="float-left">
-                <x-nav-link href="{{ route('admin.houseboatDates.index') }}" icon="fas fa-backward" class="btn">zur Liste</x-nav-link>
-            </div>
-            <div class="float-right">
-                <x-nav-link target="_blank" href="{{ route('admin.houseboatDates.print', $houseboatDate) }}" icon="fas fa-print" class="btn" title="Drucken">
-                    <span class="hidden md:visible">Drucken</span>
-                </x-nav-link>
-                <x-nav-link target="_blank" href="{{ route('admin.houseboatDates.sendInvoice', $houseboatDate) }}" icon="fas fa-edit" class="btn ml-2" title="Rechnung senden">
-                    <span class="hidden md:visible">Rechnung senden</span>
-                </x-nav-link>
-            </div>
-        </div>
-
-        <div class=" show-page mt-3">
+    <div class="m-5 content-center w-full">
+        <div class="show-page mt-3">
             <div>
                 <div>Hausboot</div>
                 <div>{{ $houseboatDate->houseboat->name }}</div>
@@ -27,19 +13,16 @@
             </div>
             <div>
                 <div>Email</div>
-                <div><a href="mailto:{{ $houseboatDate->customer->email }}" target="_blank">{{ $houseboatDate->customer->email }}</a></div>
+                <div>{{ $houseboatDate->customer->email }}</div>
             </div>
+
+            @if($houseboatDate->customer->fon)
             <div>
                 <div>Fon</div>
-                <div>
-                    @if($houseboatDate->customer->fon)
-                        <a href="tel:{{ $houseboatDate->customer->fon }}" target="_blank">
-                            <i class="fas fa-phone"></i>
-                            {{ $houseboatDate->customer->fon }}
-                        </a>
-                    @endif
-                </div>
+                <div>{{ $houseboatDate->customer->fon }}</div>
             </div>
+            @endif
+
             <div>
                 <div>Von</div>
                 <div>{{ $houseboatDate->from->format('d.m.Y') }}</div>
@@ -82,3 +65,12 @@
         </div>
     </div>
 @endsection
+
+@push('inline-scripts')
+    <script>
+        window.onload = function() {
+	        this.print();
+			history.back();
+        }
+    </script>
+@endpush

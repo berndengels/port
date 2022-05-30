@@ -33,31 +33,58 @@ class Base extends Main implements IDailyPrice
 
         $configSaisonRentDates = ConfigSaisonRentDates::with('saison')->get();
         static::$dailyPrices = [];
+        $locale = app()->getLocale();
+        Carbon::setLocale($locale);
         /**
          * @var ConfigSaisonRentDates $d
          */
         foreach ($days as $day) {
             foreach ($configSaisonRentDates as $d) {
                 if($d->period->contains(Carbon::make($day))) {
-                    $saison = $d->saison->key;
-                    if('peak' === $saison) {
-                        static::$dailyPrices[$day] = $model->peak_season_price;
+                    $fDay = Carbon::make($day)
+                        ->locale($locale)
+                        ->translatedFormat('D d.m.Y')
+                    ;
+                    $saison = $d->saison;
+                    if('peak' === $saison->key) {
+                        static::$dailyPrices[$day] = [
+                            'date'      => $fDay,
+                            'saison'    => $saison->name,
+                            'holiday'   => $d->holiday ?? '',
+                            'price'     => $model->peak_season_price,
+                        ];
                         continue 2;
                     }
-                    elseif('mid' === $saison) {
-                        static::$dailyPrices[$day] = $model->mid_season_price;
+                    elseif('mid' === $saison->key) {
+                        static::$dailyPrices[$day] = [
+                            'date'      => $fDay,
+                            'saison'    => $saison->name,
+                            'holiday'   => $d->holiday,
+                            'price'     => $model->mid_season_price,
+                        ];
                         continue 2;
                     }
-                    elseif('low' === $saison) {
-                        static::$dailyPrices[$day] = $model->low_season_price;
+                    elseif('low' === $saison->key) {
+                        static::$dailyPrices[$day] = [
+                            'date'      => $fDay,
+                            'saison'    => $saison->name,
+                            'holiday'   => $d->holiday,
+                            'price'     => $model->low_season_price,
+                        ];
                         continue 2;
                     } else {
-                        static::$dailyPrices[$day] = 0;
+                        static::$dailyPrices[$day] = [
+                            'date'      => $fDay,
+                            'saison'    => $saison->name,
+                            'holiday'   => $d->holiday,
+                            'price'     => 0,
+                        ];
                         continue 2;
                     }
                 }
             }
         }
-        return new Price(array_sum(array_values(static::$dailyPrices)));
+
+        return new Price(collect(static::$dailyPrices)->sum('price'));
     }
 }

@@ -10,7 +10,8 @@
 	div {
 		width: 100%;
 		display: grid;
-		grid-template-columns: 1fr 1fr;
+//		grid-template-columns: 1fr 1fr;
+		grid-template-columns: 150px auto;
 		grid-template-rows: 1fr;
 		gap: 10px 10px;
 		grid-auto-flow: row;
@@ -23,6 +24,21 @@
 			font-weight: bold;
 		}
 		div:last-child {
+			table {
+				width: 100%;
+				tr {
+					&:nth-child(odd) {
+						background-color: rgba(59, 130, 246, 0.1);
+					}
+					border-bottom: 1px solid #ddd;
+					padding: 0.5rem 0;
+					th, td {
+						font-size: 0.8rem;
+						width: auto;
+						min-width: 150px;
+					}
+				}
+			}
 			a {
 				display: inline-block;
 				white-space: nowrap;
@@ -34,9 +50,10 @@
 input[disabled], select[disabled], textara[disabled] {
 	background-color: #eee;
 }
-.table {
+.admin-table {
+	width: 100%;
 	margin: 0 1.0rem 0 1.0rem;
-	border-collapse: collapse;
+	//border-collapse: collapse;
 
 	@include media('<tablet') {
 		margin: 0;

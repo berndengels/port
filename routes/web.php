@@ -174,6 +174,9 @@ Route::group([
             Route::resource('saisonRentDates', AdminConfigSaisonRentDatesController::class);
     });
 
+    Route::get('houseboatDates/sendInvoice/{houseboatDate}', [AdminHouseboatDatesController::class, 'sendInvoice'])->name('houseboatDates.sendInvoice');
+    Route::get('houseboatDates/print/{houseboatDate}', [AdminHouseboatDatesController::class, 'printPage'])->name('houseboatDates.print');
+
     Route::post('offers/toggle/{offer}', [AdminConfigOfferController::class, 'toggle'])->name('offers.toggle');
     Route::post('serviceRequests/done/{serviceRequest}', [AdminServiceRequestController::class, 'done'])->name('serviceRequests.done');
 
