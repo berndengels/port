@@ -1,9 +1,10 @@
 @extends('layouts.main')
 
 @section('main')
-    <div>
+    <div class="mt-5">
+        <h1 class="m-5">Angebote freischalten</h1>
         {{ $data->links() }}
-        <table class="table w-full mt-3">
+        <table class="table w-full mt-5">
             <tr>
                 <th>ID</th>
                 <th>Angebot</th>
