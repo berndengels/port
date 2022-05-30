@@ -18,6 +18,7 @@
 	"App\\Models\\Boat": "Dauerlieger-Boote",
 	"App\\Models\\GuestBoat": "Gast-Boote",
 	"App\\Models\\Caravan": "Caravans",
+	"App\\Models\\Houseboat": "Hausboote",
 	"easter": "Ostern",
 	"pentecost": "Pfingsten",
 	"chrismas": "Weihnachten",

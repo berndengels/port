@@ -18,6 +18,7 @@
 	"App\\Models\\Boat": "customer boats",
 	"App\\Models\\GuestBoat": "Guest boats",
 	"App\\Models\\Caravan": "Caravans",
+	"App\\Models\\Houseboat": "Houseboats",
 	"easter": "easter",
 	"pentecost": "pentecost",
 	"chrismas": "chrismas",

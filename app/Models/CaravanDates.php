@@ -72,7 +72,6 @@ class CaravanDates extends BaseModel
     protected $table = 'caravan_dates';
     protected $guarded = ['id'];
     protected $dates = ['from','until'];
-//    protected $dateFormat = 'Y-m-d';
     protected $appends = ['days','validFrom','validUntil'];
 
     public $timestamps = false;
