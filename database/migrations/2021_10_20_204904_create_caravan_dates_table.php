@@ -20,8 +20,8 @@ class CreateCaravanDatesTable extends Migration
             $table->date('until');
             $table->unsignedTinyInteger('persons');
             $table->unsignedTinyInteger('electric')->nullable();
-//            $table->unsignedInteger('special_price')->nullable();
             $table->unsignedInteger('price');
+            $table->boolean('is_paid')->unsigned()->default(0);
             $table->longText('prices');
         });
     }

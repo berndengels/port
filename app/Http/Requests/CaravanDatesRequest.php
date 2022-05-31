@@ -27,17 +27,18 @@ class CaravanDatesRequest extends AdminRequest
 
     public function prepareForValidation()
     {
-        $this->merge(
-            [
+        $this->merge([
             'carnumber' => $this->fixCarNumber($this->carnumber),
-            ]
-        );
+        ]);
         return $this;
     }
 
     public function validationData($keys = null)
     {
-        return array_merge($this->all($keys), ['electric' => !!$this->post('electric') ?? false]);
+        return array_merge($this->all($keys), [
+            'electric' => !!$this->post('electric') ?? false,
+            'is_paid'  => !!$this->post('is_paid') ?? false,
+        ]);
     }
 
     /**
@@ -60,6 +61,7 @@ class CaravanDatesRequest extends AdminRequest
             'caravan_id' => '',
             'electric'  => '',
             'prices'    => '',
+            'is_paid'   => '',
         ];
 
         return $rules;
@@ -76,7 +78,6 @@ class CaravanDatesRequest extends AdminRequest
             'until.after'           => 'Das Anreise-Datum liegt vor einem vorhandenen Abreise-Datum',
             'persons.required'      => 'Bitte die Anzahl der Personen angeben.',
             'persons.regex'         => 'Die Anzahl der Personen muß eine ganza Zahl sein.',
-//            'special_price.numeric'     => 'Der Tages-Preis muß numerisch sein.',
             'price.required'        => 'Bitte einen Preis angeben.',
             'price.numeric'         => 'Der Preis muß eine ganze Zahl sein.',
             'email.email'           => 'Bitte eine korrekte oder keine Email-Adresse angeben.',

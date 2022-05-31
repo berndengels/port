@@ -74,6 +74,7 @@
                 <th class="hidden md:table-cell">Eigner</th>
                 <th>Fon</th>
                 <th>Preis</th>
+                <th>Bezahlt</th>
                 <th colspan="2"><br></th>
             </tr>
             @foreach($data as $item)
@@ -103,6 +104,7 @@
                         @endif
                     </td>
                     <td>{{ $item->price }} €</td>
+                    <td rel="{{ $item->id }}">{!! $item->icon('is_paid') !!}</td>
                     <td>
                         <x-nav-link href="{{ route('admin.boatDates.edit', $item) }}" icon="fas fa-edit" class="btn" title="Bearbeiten">
                             <span class="hidden md:visible">Edit</span>
@@ -133,7 +135,8 @@
 
 @push('inline-scripts')
     <script>
-		const frm = document.frmFilter,
+	    Edit.toggle("/admin/boatDates/toggle","is_paid");
+	    const frm = document.frmFilter,
 			filter = (e) => {
 				let el = e.target;
 				console.info(el.name);

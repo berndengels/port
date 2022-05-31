@@ -23,6 +23,7 @@ class CreateGuestBoatDatesTestTable extends Migration
 //            $table->unsignedInteger('special_price')->nullable();
             $table->unsignedInteger('price');
             $table->longText('prices');
+            $table->boolean('is_paid')->unsigned()->default(0);
             $table->foreign('guest_boat_id', 'guest_boats_fk')->references('id')->on('guest_boats')->onUpdate('CASCADE')->onDelete('CASCADE');
         });
     }

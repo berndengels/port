@@ -23,6 +23,7 @@ class CreateCaravanDatesTestTable extends Migration
 //            $table->unsignedInteger('special_price')->nullable();
             $table->unsignedInteger('price');
             $table->longText('prices');
+            $table->boolean('is_paid')->unsigned()->default(0);
         });
     }
 

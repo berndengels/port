@@ -216,4 +216,16 @@ class AdminHouseboatDatesController extends AdminController
     {
         return 'work in progress';
     }
+
+    public function toggle(HouseboatDates $houseboatDate, Request $request)
+    {
+        if($request->isXmlHttpRequest()) {
+            $attribute  = $request->post('attribute');
+            $value      = (bool) $request->post('value');
+            $houseboatDate->update([$attribute => $value]);
+            $houseboatDate->refresh();
+            return response()->json($houseboatDate);
+        }
+        return response()->json(['error' => 'no ajax request']);
+    }
 }

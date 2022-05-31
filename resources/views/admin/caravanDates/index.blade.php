@@ -72,6 +72,7 @@
                 <th>Bis</th>
                 <th class="hidden md:table-cell">Tage</th>
                 <th class="hidden md:table-cell">Preis</th>
+                <th>Bezahlt</th>
                 <th colspan="2"><br></th>
             </tr>
             @foreach($data as $item)
@@ -86,6 +87,7 @@
                             {{ $item->price }} €
                         </a>
                     </td>
+                    <td rel="{{ $item->id }}">{!! $item->icon('is_paid') !!}</td>
                     <td>
                         <x-nav-link href="{{ route('admin.caravanDates.edit', $item) }}" icon="fas fa-edit" class="btn" title="Bearbeiten">
                             <span class="hidden md:visible">Edit</span>
@@ -116,10 +118,11 @@
 
 @push('inline-scripts')
     <script>
+	    Edit.toggle("/admin/caravanDates/toggle","is_paid");
 	    const frm = document.frmFilter,
 		    filter = (e) => {
 			    let el = e.target;
-			    console.info(el.name)
+			    console.info(el.name);
 				if('' === el.value && ['year','month'].indexOf(el.name) === -1) {
 					return;
 				}
@@ -130,21 +133,21 @@
 						if(frm.month) {
 							frm.month.value = '';
                         }
-						break
+						break;
 					case 'dublicate':
 						frm.caravan.value = '';
 						frm.year.value = '';
 						if(frm.month) {
 							frm.month.value = '';
 						}
-						break
+						break;
 					case 'year':
 						if(frm.year.value === '' && frm.month) {
 							frm.month.value = '';
 						}
 						frm.caravan.value = '';
 						frm.dublicate.value = '';
-						break
+						break;
 					case 'month':
 						frm.caravan.value = '';
 						frm.dublicate.value = '';
@@ -153,7 +156,7 @@
 				frm.submit()
             },
             reset = (e) => {
-			    e.preventDefault()
+			    e.preventDefault();
                 frm.caravan.value = '';
                 frm.dublicate.value = '';
                 frm.year.value = '';
@@ -164,10 +167,10 @@
 
 		frm.querySelectorAll('.filter').forEach(item => {
 			item.onchange = filter
-        })
-	    frm.querySelector('.btn-reset').onclick = reset
+        });
+	    frm.querySelector('.btn-reset').onclick = reset;
 
-	    const routePrefix = "{{ route('admin.car.info') }}"
+	    const routePrefix = "{{ route('admin.car.info') }}";
 	    Car.info(routePrefix, '.carnumber', '#tooltip')
     </script>
 @endpush

@@ -232,4 +232,16 @@ class AdminCaravanDatesController extends AdminController
             return redirect()->route('admin.caravanDates.index')->with(['error' => 'Excel-Datei konnte nicht versand werden!']);
         }
     }
+
+    public function toggle(CaravanDates $caravanDate, Request $request)
+    {
+        if($request->isXmlHttpRequest()) {
+            $attribute  = $request->post('attribute');
+            $value      = (bool) $request->post('value');
+            $caravanDate->update([$attribute => $value]);
+            $caravanDate->refresh();
+            return response()->json($caravanDate);
+        }
+        return response()->json(['error' => 'no ajax request']);
+    }
 }

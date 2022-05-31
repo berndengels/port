@@ -12,17 +12,29 @@ use App\Models\ConfigBoatPrice;
 use Barryvdh\DomPDF\PDF;
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Config\Repository;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
+/**
+ *
+ */
 class AdminBoatDatesController extends AdminController
 {
+    /**
+     * @var Repository|Application|mixed
+     */
     protected $datesModi;
 
+    /**
+     *
+     */
     public function __construct()
     {
         parent::__construct();
@@ -235,6 +247,11 @@ class AdminBoatDatesController extends AdminController
         }
     }
 
+    /**
+     * @param BoatDates $boatDate
+     * @param $sendAsMail
+     * @return Response|string
+     */
     public function invoice(BoatDates $boatDate, $sendAsMail = false)
     {
         $text = view(
@@ -260,6 +277,10 @@ class AdminBoatDatesController extends AdminController
         return $pdf->download($fileName);
     }
 
+    /**
+     * @param BoatDates $boatDate
+     * @return RedirectResponse
+     */
     public function sendInvoice(BoatDates $boatDate)
     {
         try {
@@ -270,6 +291,12 @@ class AdminBoatDatesController extends AdminController
         }
     }
 
+    /**
+     * @param Request $request
+     * @param $year
+     * @param $month
+     * @return RedirectResponse
+     */
     public function sendExcel(Request $request, $year = null, $month = null)
     {
         $year       = $request->post('year');
@@ -293,5 +320,22 @@ class AdminBoatDatesController extends AdminController
         } catch (Exception $e) {
             return redirect()->route('admin.boatDates.index')->with(['error' => 'Excel-Datei konnte nicht versand werden!']);
         }
+    }
+
+    /**
+     * @param BoatDates $boatDate
+     * @param Request $request
+     * @return void
+     */
+    public function toggle(BoatDates $boatDate, Request $request)
+    {
+        if($request->isXmlHttpRequest()) {
+            $attribute  = $request->post('attribute');
+            $value      = (bool) $request->post('value');
+            $boatDate->update([$attribute => $value]);
+            $boatDate->refresh();
+            return response()->json($boatDate);
+        }
+        return response()->json(['error' => 'no ajax request']);
     }
 }

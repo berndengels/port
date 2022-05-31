@@ -91,6 +91,7 @@
                 <th class="hidden md:table-cell">Gast</th>
                 <th>Fon</th>
                 <th>Preis</th>
+                <th>Bezahlt</th>
                 <th colspan="2"><br></th>
             </tr>
             @foreach($data as $item)
@@ -122,6 +123,7 @@
                         @endif
                     </td>
                     <td>{{ $item->price }} €</td>
+                    <td rel="{{ $item->id }}">{!! $item->icon('is_paid') !!}</td>
                     <td>
                         <x-nav-link href="{{ route('admin.houseboatDates.edit', $item) }}" icon="fas fa-edit"
                                     class="btn"
@@ -157,6 +159,7 @@
 
 @push('inline-scripts')
     <script>
+        Edit.toggle("/admin/houseboatDates/toggle","is_paid");
 		const frm = document.frmFilter,
 			filter = (e) => {
 				let el = e.target;
@@ -187,7 +190,6 @@
 			reset = (e) => {
 				e.preventDefault();
 				frm.houseboat.value = '';
-//				frm.saison.value = '';
 				frm.year.value = '';
 				frm.month.value = '';
 				$(frm.month).hide();

@@ -16,6 +16,13 @@ class HouseboatDatesRequest extends AdminRequest
         return $this->auth->user()->can('write HouseboatDates');
     }
 
+    public function validationData($keys = null)
+    {
+        return array_merge($this->all($keys), [
+            'is_paid'  => !!$this->post('is_paid') ?? false,
+        ]);
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -30,6 +37,7 @@ class HouseboatDatesRequest extends AdminRequest
             'until'         => ['required','date','after:from'],
             'price'         => '',
             'prices'        => '',
+            'is_paid'       => '',
         ];
     }
 }

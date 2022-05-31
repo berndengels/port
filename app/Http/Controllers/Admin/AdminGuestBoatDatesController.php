@@ -203,4 +203,16 @@ class AdminGuestBoatDatesController extends AdminController
             return redirect()->route('admin.guestBoatDates.index')->with(['error' => 'Excel-Datei konnte nicht versand werden!']);
         }
     }
+
+    public function toggle(GuestBoatDates $guestBoatDate, Request $request)
+    {
+        if($request->isXmlHttpRequest()) {
+            $attribute  = $request->post('attribute');
+            $value      = (bool) $request->post('value');
+            $guestBoatDate->update([$attribute => $value]);
+            $guestBoatDate->refresh();
+            return response()->json($guestBoatDate);
+        }
+        return response()->json(['error' => 'no ajax request']);
+    }
 }

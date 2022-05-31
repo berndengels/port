@@ -6,6 +6,7 @@ use App\Traits\Models\Filter\BoatFilter;
 use App\Traits\Models\Filter\HasYearMonthOptions;
 use App\Traits\Models\Filter\YearMonthFilter;
 use App\Traits\Models\HasFromUntilDates;
+use App\Traits\Models\UseBooleanIcon;
 use Database\Factories\BoatDatesFactory;
 use Eloquent;
 use Illuminate\Http\Client\Request;
@@ -64,6 +65,7 @@ class BoatDates extends BaseModel implements IDatePrice
     use HasFactory;
     use HasFromUntilDates;
     use HasYearMonthOptions;
+    use UseBooleanIcon;
     use YearMonthFilter;
 
     protected $table = 'boat_dates';
@@ -81,10 +83,8 @@ class BoatDates extends BaseModel implements IDatePrice
         'isCraned',
         'isMastCraned',
         'isCleaned',
-        'hasIndividualPrice',
         'priceData',
         'basePrice',
-        'priceIndividual',
         'crane',
         'mastCrane',
         'cleaning',
@@ -111,11 +111,8 @@ class BoatDates extends BaseModel implements IDatePrice
     {
         return (isset($this->priceData->priceMastCrane) && $this->priceData->priceMastCrane > 0) ? true : false;
     }
+
     public function getIsCleanedAttribute()
-    {
-        return (isset($this->priceData->priceCleaning) && $this->priceData->priceCleaning > 0) ? true : false;
-    }
-    public function getHasIndividualPriceAttribute()
     {
         return (isset($this->priceData->priceCleaning) && $this->priceData->priceCleaning > 0) ? true : false;
     }
@@ -138,11 +135,6 @@ class BoatDates extends BaseModel implements IDatePrice
     public function getBasePriceAttribute()
     {
         return $this->priceData->priceBase ?? null;
-    }
-
-    public function getIndividualPriceAttribute()
-    {
-        return $this->priceData->priceIndividual ?? null;
     }
 
     public function getPeriodAttribute()

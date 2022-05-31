@@ -64,6 +64,7 @@
                 <th>Von</th>
                 <th>Bis</th>
                 <th>Preis</th>
+                <th>Bezahlt</th>
                 <th colspan="2"><br></th>
             </tr>
             @foreach($data as $item)
@@ -73,6 +74,7 @@
                     <td>{{ $item->from->format('d.m.Y') }}</td>
                     <td>{{ $item->until->format('d.m.Y') }}</td>
                     <td>{{ $item->price }} €</td>
+                    <td rel="{{ $item->id }}">{!! $item->icon('is_paid') !!}</td>
                     <td>
                         <x-nav-link href="{{ route('admin.guestBoatDates.edit', $item) }}" icon="fas fa-edit" class="btn" title="Bearbeiten">
                             <span class="hidden md:visible">Edit</span>
@@ -103,10 +105,11 @@
 
 @push('inline-scripts')
     <script>
-		const frm = document.frmFilter,
+	    Edit.toggle("/admin/guestBoatDates/toggle","is_paid");
+	    const frm = document.frmFilter,
 			filter = (e) => {
 				let el = e.target;
-				console.info(el.name)
+				console.info(el.name);
 				if('' === el.value && ['year','month'].indexOf(el.name) === -1) {
 					return;
 				}
@@ -116,13 +119,13 @@
 						if(frm.month) {
 							frm.month.value = '';
 						}
-						break
+						break;
 					case 'year':
 						if(frm.year.value === '' && frm.month) {
 							frm.month.value = '';
 						}
 						frm.guestBoat.value = '';
-						break
+						break;
 					case 'month':
 						frm.guestBoat.value = '';
 						break
@@ -130,7 +133,7 @@
 				frm.submit()
 			},
 			reset = (e) => {
-				e.preventDefault()
+				e.preventDefault();
 				frm.guestBoat.value = '';
 				frm.year.value = '';
 				frm.month.value = '';
@@ -140,7 +143,7 @@
 
 		frm.querySelectorAll('.filter').forEach(item => {
 			item.onchange = filter
-		})
+		});
 		frm.querySelector('.btn-reset').onclick = reset
     </script>
 @endpush

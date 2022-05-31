@@ -15,6 +15,7 @@ import Editor from "./Libs/Editor"
 import Weather from "./Libs/Weather"
 import Car from "./Libs/Car"
 import Tooltip from "./Libs/Tooltip";
+import Edit from "./Libs/Edit";
 import { createApp } from "vue"
 import store from "./vue/store"
 //import Main from "./Main"
@@ -23,6 +24,7 @@ import AdminDashboard from "./vue/views/admin/Dashboard"
 window.MyForm   = new MyForm;
 window.Prices   = new Prices;
 window.Editor   = new Editor;
+window.Edit     = new Edit;
 window.Weather  = new Weather;
 window.Car      = new Car;
 window.Tooltip  = new Tooltip;

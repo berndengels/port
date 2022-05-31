@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use Eloquent;
 use App\Traits\Models\UseBooleanIcon;
 use Database\Factories\ConfigOfferFactory;
-use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

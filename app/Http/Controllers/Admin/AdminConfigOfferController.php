@@ -108,6 +108,7 @@ class AdminConfigOfferController extends AdminController
             $attribute  = $request->post('attribute');
             $value      = (bool) $request->post('value');
             $offer->update([$attribute => $value]);
+            $offer->refresh();
             return response()->json($offer);
         }
         return response()->json(['error' => 'no ajax request']);

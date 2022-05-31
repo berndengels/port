@@ -21,6 +21,7 @@ class CreateHouseboatDatesTable extends Migration
             $table->date('until')->index('until');
             $table->unsignedInteger('price');
             $table->longText('prices');
+            $table->boolean('is_paid')->unsigned()->default(0);
         });
     }
 

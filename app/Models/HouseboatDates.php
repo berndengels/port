@@ -6,7 +6,7 @@ use App\Traits\Models\ClearCache;
 use App\Traits\Models\Filter\HasYearMonthOptions;
 use App\Traits\Models\Filter\HouseboatFilter;
 use App\Traits\Models\Filter\YearMonthFilter;
-//use App\Traits\Models\HasDailyPriceHouseboat;
+use App\Traits\Models\UseBooleanIcon;
 use Carbon\Carbon;
 use Database\Factories\HouseboatDatesFactory;
 use Eloquent;
@@ -54,10 +54,10 @@ use Acaronlex\LaravelCalendar\Event;
 class HouseboatDates extends Model implements Event
 {
     use ClearCache;
-//    use HasDailyPriceHouseboat;
     use HasFactory;
     use HasYearMonthOptions;
     use HouseboatFilter;
+    use UseBooleanIcon;
     use YearMonthFilter;
 
     protected $table = 'houseboat_dates';

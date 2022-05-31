@@ -18,7 +18,10 @@ class GuestBoatDatesRequest extends AdminRequest
 
     public function validationData($keys = null)
     {
-        return array_merge($this->all($keys), ['electric' => !!$this->post('electric') ?? false]);
+        return array_merge($this->all($keys), [
+            'electric' => !!$this->post('electric') ?? false,
+            'is_paid'  => !!$this->post('is_paid') ?? false,
+        ]);
     }
 
     /**
@@ -36,9 +39,9 @@ class GuestBoatDatesRequest extends AdminRequest
             'persons'       => ['required','regex:/^[1-9]+$/i'],
             'electric'      => '',
             'home_port'     => '',
-//            'special_price'     => '',
             'price'         => 'required',
             'prices'        => 'required',
+            'is_paid'       => '',
         ];
     }
 }

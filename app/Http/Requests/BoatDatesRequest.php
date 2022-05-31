@@ -24,6 +24,7 @@ class BoatDatesRequest extends AdminRequest
                 'crane'         => !!$this->post('crane') ?? false,
                 'mast_crane'    => !!$this->post('mast_crane') ?? false,
                 'cleaning'      => !!$this->post('cleaning') ?? false,
+                'is_paid'       => !!$this->post('is_paid') ?? false,
             ]
         );
     }
@@ -45,7 +46,7 @@ class BoatDatesRequest extends AdminRequest
             'crane'         => '',
             'mast_crane'    => '',
             'cleaning'      => '',
-//            'special_price' => '',
+            'is_paid'       => '',
         ];
     }
 }

@@ -3,13 +3,13 @@
 @section('main')
     <div class="p-6">
         <x-nav-link href="{{ route('admin.boatDates.index', ['saison' => $modus ?? null]) }}" icon="fas fa-backward" class="btn">zurück</x-nav-link>
-        <x-form name="frm" method="post" :action="route('admin.boatDates.update', $boatDate)" class="w-full lg:w-1/2">
+        <div class="mt-5">
+            <span class="text-xl text-blue-900">Boot: {{ $boatDate->boat->boat_name }} ({{ $boatDate->modus }})</span>
+        </div>
+        <x-form name="frm" method="post" :action="route('admin.boatDates.update', $boatDate)" class="w-full lg:w-1/2 mt-5">
             @method('put')
-
-            <div class="mt-5">
-                <span class="text-2xl text-blue-900">Boot: {{ $boatDate->boat->boat_name }} ({{ $boatDate->modus }})</span>
-            </div>
             @bind($boatDate)
+            <x-form-checkbox id="is_paid" name="is_paid" label="Ist Bezahlt" class="mb-0 pb-0" />
             <x-form-input  class="calc" type="hidden" name="modus" required />
             <x-form-input  class="calc" type="hidden" name="boat_id" required />
             <x-form-input class="calc" id="from" name="from" type="date" label="Von" :bind="false" :default="$boatDate->validFrom" required />
@@ -45,7 +45,7 @@
 @push('inline-scripts')
     <script>
 	    $(document).ready(() => {
-		    const calcUrl = "{{ route("admin.boatDates.price.calculate") }}";
+		    const calcUrl = "{{ route('admin.boatDates.price.calculate') }}";
 		    Prices.boatDates.calculate(document.frm, calcUrl);
 	    })
     </script>

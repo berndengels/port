@@ -57,7 +57,6 @@ use App\Http\Controllers\Admin\AdminConfigSaisonDatesController;
 use App\Http\Controllers\Admin\AdminHolydayController;
 
 Auth::routes();
-//dd(Route::getRoutes());
 
 Route::group([
     'as'  => 'customer.',
@@ -88,7 +87,6 @@ Route::group([
     Route::resource('boats', BoatController::class);
     Route::resource('boatDates', BoatDatesController::class);
     Route::resource('serviceRequests', ServiceRequestController::class);
-
     Route::get('boatDates/invoice/{boatDate}', [BoatDatesController::class, 'invoice'])->name('boatDates.invoice');
 });
 
@@ -128,7 +126,7 @@ Route::group([
     Route::get('boatDates/invoice/{boatDate}', [AdminBoatDatesController::class, 'invoice'])->name('boatDates.invoice');
     Route::get('boatDates/sendInvoice/{boatDate}', [AdminBoatDatesController::class, 'sendInvoice'])->name('boatDates.sendInvoice');
 
-    Route::get('boatDates/index/saison', [AdminBoatDatesController::class, 'index'])->name('boatDates.saison');
+    Route::get('boatDates/index/summer', [AdminBoatDatesController::class, 'index'])->name('boatDates.summer');
     Route::get('boatDates/index/winter', [AdminBoatDatesController::class, 'index'])->name('boatDates.winter');
 
     Route::match(['post','put'],'caravanDates/price/calculate', [AdminPriceController::class, 'calculateCaravanDates'])->name('caravanDates.price.calculate');
@@ -178,6 +176,11 @@ Route::group([
     Route::get('houseboatDates/print/{houseboatDate}', [AdminHouseboatDatesController::class, 'printPage'])->name('houseboatDates.print');
 
     Route::post('offers/toggle/{offer}', [AdminConfigOfferController::class, 'toggle'])->name('offers.toggle');
+    Route::post('caravanDates/toggle/{caravanDate}', [AdminCaravanDatesController::class, 'toggle'])->name('caravanDates.toggle');
+    Route::post('boatDates/toggle/{boatDate}', [AdminBoatDatesController::class, 'toggle'])->name('boatDates.toggle');
+    Route::post('guestBoatDates/toggle/{guestBoatDate}', [AdminGuestBoatDatesController::class, 'toggle'])->name('guestBoatDates.toggle');
+    Route::post('houseboatDates/toggle/{houseboatDate}', [AdminHouseboatDatesController::class, 'toggle'])->name('houseboatDates.toggle');
+
     Route::post('serviceRequests/done/{serviceRequest}', [AdminServiceRequestController::class, 'done'])->name('serviceRequests.done');
 
     Route::post('caravanDates/sendExcel', [AdminCaravanDatesController::class, 'sendExcel'])->name('caravanDates.sendExcel');

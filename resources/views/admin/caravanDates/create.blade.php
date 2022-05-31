@@ -4,7 +4,8 @@
     <div class="p-6">
         <x-nav-link :href="route('admin.caravanDates.index')" icon="fas fa-backward" class="btn">zurück</x-nav-link>
 
-        <x-form name="frm" method="post" action="{{ route('admin.caravanDates.store') }}" class="w-full lg:w-1/2">
+        <x-form name="frm" method="post" action="{{ route('admin.caravanDates.store') }}" class="w-full lg:w-1/2 mt-5">
+			<x-form-checkbox id="is_paid" name="is_paid" label="Ist Bezahlt" class="mb-0 pb-0" />
             <x-form-input name="prices" type="hidden" />
 			<x-form-input id="carnumber" name="carnumber" type="text" label="Kennzeichen" autocomplete="off" required />
 			<ul class="hidden w-full autocomplete"></ul>
@@ -30,7 +31,7 @@
 @push('inline-scripts')
     <script>
 		$(document).ready(() => {
-			const calcUrl = "{{ route("admin.caravanDates.price.calculate") }}",
+			const calcUrl = "{{ route('admin.caravanDates.price.calculate') }}",
 					frm = document.frm,
 					options = {!! $caravanOptions !!},
 					bindings = {

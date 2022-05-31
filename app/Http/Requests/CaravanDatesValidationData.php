@@ -22,12 +22,11 @@ class CaravanDatesValidationData
 
     public function __construct(Request $request)
     {
-        $request->merge(
-            [
+        $request->merge([
             'carnumber' => $this->fixCarNumber($request->carnumber),
-            'electric' => !!$request->post('electric') ?? false,
-            ]
-        );
+            'electric'  => !!$request->post('electric') ?? false,
+            'is_paid'   => !!$request->post('is_paid') ?? false,
+        ]);
         $this->request = $request;
     }
 
@@ -49,8 +48,9 @@ class CaravanDatesValidationData
             'day_price' => 'numeric|nullable',
             'price'     => 'required|numeric',
             'caravan_id' => '',
-            'electric'  => '',
+            'electric'   => '',
             'prices'    => '',
+            'is_paid'   => '',
         ];
 
         return $rules;

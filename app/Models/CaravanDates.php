@@ -6,6 +6,7 @@ use App\Contracts\Models\IDatePrice;
 use App\Traits\Models\Filter\HasYearMonthOptions;
 use App\Traits\Models\HasDailyPrice;
 use App\Traits\Models\HasFromUntilDates;
+use App\Traits\Models\UseBooleanIcon;
 use Eloquent;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Carbon;
@@ -67,6 +68,7 @@ class CaravanDates extends BaseModel
     use HasFactory;
     use HasFromUntilDates;
     use HasYearMonthOptions;
+    use UseBooleanIcon;
     use YearMonthFilter;
 
     protected $table = 'caravan_dates';

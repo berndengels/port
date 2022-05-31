@@ -3,8 +3,9 @@
 @section('main')
     <div class="p-6">
         <x-nav-link :href="route('admin.guestBoatDates.index')" icon="fas fa-backward" class="btn">zurück</x-nav-link>
-        <x-form name="frm" method="post" :action="route('admin.guestBoatDates.update', $guestBoatDate)" class="w-full lg:w-1/2">
+        <x-form name="frm" method="post" :action="route('admin.guestBoatDates.update', $guestBoatDate)" class="w-full lg:w-1/2 mt-5">
             @method('put')
+            <x-form-checkbox id="is_paid" name="is_paid" label="Ist Bezahlt" :bind="$guestBoatDate" class="mb-0 pb-0" />
             @bind($guestBoatDate->boat)
             <x-form-input id="name" name="name" label="Boots Name" placeholder="Boots Name" required autocomplete="off" />
             <ul class="hidden w-full autocomplete"></ul>
@@ -32,7 +33,7 @@
 
 @push('inline-scripts')
     <script>
-	    const calcUrl = "{{ route("admin.guestBoatDates.price.calculate") }}";
+	    const calcUrl = "{{ route('admin.guestBoatDates.price.calculate') }}";
 	    $(document).ready(() => {
 		    const frm = document.frm,
 			    options = {!! $guestBoatOptionsAutocomplete !!},

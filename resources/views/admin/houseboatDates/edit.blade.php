@@ -18,13 +18,14 @@
         <div class="flex-auto w-3/12">
             <x-form name="frm" method="post" :action="route('admin.houseboatDates.update', $houseboatDate)" class="w-full">
                 @method('put')
-                <div class="mt-5">
-                    <span class="text-2xl text-blue-900">Hausboot: {{ $houseboatDate->houseboat->name }}</span>
+                <div class="mt-1">
+                    <span class="text-xl text-blue-900">Hausboot: {{ $houseboatDate->houseboat->name }}</span>
                 </div>
-                <div class="mt-5">
-                    <span class="text-2xl text-blue-900">Gast: {{ $houseboatDate->customer->name }}, {{ $houseboatDate->customer->email }}</span>
+                <div class="mt-5 mb-5">
+                    <span class="text-xl text-blue-900">Gast: {{ $houseboatDate->customer->name }}, {{ $houseboatDate->customer->email }}</span>
                 </div>
                 @bind($houseboatDate)
+                <x-form-checkbox id="is_paid" name="is_paid" label="Ist Bezahlt" class="mb-0 pb-0" />
                 <x-form-select class="calc" class="houseboat" id="houseboat_id" name="houseboat_id" label="Hausboot" :options="$houseboatOptions" required />
                 <x-form-input class="calc" id="from" name="from" type="date" label="Von" required />
                 <x-form-input class="calc" id="until" name="until" type="date" label="Bis" required />

@@ -17,6 +17,7 @@
     <div class="p-6 flex">
         <div class="flex-auto w-64">
             <x-form name="frm" method="post" action="{{ route('admin.houseboatDates.store') }}" class="w-full lg:w-1/2">
+                <x-form-checkbox id="is_paid" name="is_paid" label="Ist Bezahlt" class="mb-0 pb-0" />
                 <x-form-select class="calc" class="houseboat" id="houseboat_id" name="houseboat_id" label="Hausboot"
                                :options="$houseboatOptions" required/>
                 <x-form-select class="calc" class="customer" id="customer_id" name="customer_id" label="Gast"
