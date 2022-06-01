@@ -1,13 +1,5 @@
 @extends('layouts.main')
 
-@push('styles')
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.css"/>
-@endpush
-@push('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/locales-all.min.js"></script>
-@endpush
-
 @section('main')
     <div>
         <div class="index-header mt-3">
@@ -50,13 +42,6 @@
                     :default="$houseboat"
                     floating
             />
-            <!--x-form-select
-                    name="saison"
-                    class="inline-block filter"
-                    :options="$saisonOptions"
-                    :default="$saison"
-                    floating
-            /-->
             <x-form-select
                     name="year"
                     class="inline-block filter"
@@ -74,11 +59,11 @@
                 />
             @endif
             <button class="btn btn-reset inline">Reset</button>
+            <a id="toggleCalendar" role="button" class="btn inline ml-1 py-2">Kalender</a>
         </x-form>
     @if($data && $data->count() > 0)
-        <div class="w-8/12 m-5">
-            {!! $calendar->calendar() !!}
-            {!! $calendar->script() !!}
+        <div id="calendarWrapper" class="w-full mt-3 px-5">
+            <div id="calendar"></div>
         </div>
 
             {{ $data->appends($queryString)->links() }}
@@ -159,6 +144,12 @@
 
 @push('inline-scripts')
     <script>
+        $("#toggleCalendar").click(() => $("#calendarWrapper").toggle());
+        const elCalendar = document.getElementById('calendar'),
+            dates = {!! $calendarDates !!},
+            initialDate = "{{ $initialDate }}",
+            calendar = MyCalendar.houseboats(elCalendar, dates, {initialDate: initialDate});
+
         Edit.toggle("/admin/houseboatDates/toggle","is_paid");
 		const frm = document.frmFilter,
 			filter = (e) => {

@@ -1,18 +1,25 @@
 #calendar {
-	width: 40rem;
-	table {
-		width: 40rem;
-		table {
-			tr {
-				td {
-					width: 4.0rem;
-					height: 4.0rem;
-					.fc-daygrid-day-frame {
-						width: 4.0rem;
-						height: 4.0rem;
-					}
+	width: auto;
+	min-width: 350px;
+	max-width: 100%;
+	height: auto;
+	min-height: 350px;
+	max-height: 400px;
+	@include media('>tablet') {
+		&.fc {
+			.fc-header-toolbar {
+				.fc-button {
+					padding: 0.1em 0.2em;
+					font-size: 0.7rem !important;
 				}
+				h2.fc-toolbar-title {
+					font-size: 1.0rem  !important;
+				}
+			}
+			table {
+				font-size: 0.7rem !important;
 			}
 		}
 	}
 }
+

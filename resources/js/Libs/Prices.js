@@ -87,14 +87,14 @@ class Prices {
 		calculate(frm, calcUrl) {
 			const $elObserve = $('.calc', frm);
 
-			$elObserve.change(() => {
-				this.calc(frm, calcUrl)
+			$elObserve.change(e => {
+				this.calc(e.target, frm, calcUrl)
 			})
 		},
-		calc(frm, calcUrl) {
-			if(frm.from.value && frm.until.value && "" !== frm.houseboat_id.value) {
+		calc(target, frm, calcUrl) {
+			if(frm.from.value && frm.until.value) {
 				let formData = new FormData(),elem;
-				for(elem of frm.elements) {
+				for(let elem of frm.elements) {
 					formData.append(elem.name, elem.value)
 				}
 				axios.post(calcUrl, formData)

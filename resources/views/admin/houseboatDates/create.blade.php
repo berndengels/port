@@ -1,13 +1,5 @@
 @extends('layouts.main')
 
-@push('styles')
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.css"/>
-@endpush
-@push('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/locales-all.min.js"></script>
-@endpush
-
 @section('main')
     <div class="mt-5 ml-5 w-1/4">
         <x-nav-link href="{{ route('admin.houseboatDates.index', ['saison' => $modus ?? null]) }}"
@@ -15,12 +7,12 @@
         </x-nav-link>
     </div>
     <div class="p-6 flex">
-        <div class="flex-auto w-64">
-            <x-form name="frm" method="post" action="{{ route('admin.houseboatDates.store') }}" class="w-full lg:w-1/2">
+        <div class="flex-auto w-3/12">
+            <x-form name="frm" method="post" action="{{ route('admin.houseboatDates.store') }}" class="w-full">
                 <x-form-checkbox id="is_paid" name="is_paid" label="Ist Bezahlt" class="mb-0 pb-0" />
-                <x-form-select class="calc" class="houseboat" id="houseboat_id" name="houseboat_id" label="Hausboot"
+                <x-form-select class="calc" id="houseboat_id" name="houseboat_id" label="Hausboot"
                                :options="$houseboatOptions" required/>
-                <x-form-select class="calc" class="customer" id="customer_id" name="customer_id" label="Gast"
+                <x-form-select id="customer_id" name="customer_id" label="Gast"
                                :options="$customerOptions" required/>
                 <x-form-input class="calc" id="from" name="from" type="date" label="Von" required/>
                 <x-form-input class="calc" id="until" name="until" type="date" label="Bis" required/>
@@ -33,16 +25,51 @@
                 </div>
             </x-form>
         </div>
-        <div class="flex-auto w-64">
-            <div id="calendar">
-                {!! $calendar->calendar() !!}
-                {!! $calendar->script() !!}
-            </div>
+        <div class="flex-auto w-9/12 ml-5">
+            <div id="calendar"></div>
         </div>
     </div>
 @endsection
 
 @push('inline-scripts')
     <script>
+	    const elCalendar = document.getElementById('calendar'),
+		    dates       = {!! $calendarDates !!},
+		    calendar    = MyCalendar.houseboats(elCalendar, dates),
+		    events      = calendar.getOption('events'),
+            id          = (new Date()).getTime()
+        ;
+
+	    let $from   = $('#from'),
+		    $until  = $('#until'),
+            event = null;
+	    console.info(event);
+
+	    if($from.is(':visible')) {
+		    $from.change(e => {
+			    let val = $(e.target).val();
+                val = moment(val).add(12, 'hours').format('YYYY-MM-DD HH:00:00');
+				if(!event) {
+					event = calendar.addEvent({
+						allDay: false,
+						title: "Neueintrag",
+						color: '#0a0',
+						start: val,
+					});
+                }
+			    event.setStart(val)
+		    })
+	    }
+	    if($until.is(':visible')) {
+		    $until.change(e => {
+			    let val = $(e.target).val();
+				val = moment(val).add(12, 'hours').format('YYYY-MM-DD HH:00:00');
+				if(event) {
+					event.setEnd(val)
+                }
+		    })
+	    }
+	    const calcUrl = "{{ route('admin.houseboatDates.price.calculate') }}";
+	    Prices.houseboatDates.calculate(document.frm, calcUrl);
     </script>
 @endpush

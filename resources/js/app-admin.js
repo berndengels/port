@@ -1,14 +1,5 @@
 require('./bootstrap');
 
-const axios = require('axios');
-axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-axios.defaults.baseURL = process.env.MIX_API_URL;
-axios.defaults.withCredentials = true;
-window.axios = axios;
-//window.moment = require('moment');
-var moment = require('moment'); // require
-window.moment = moment;
-
 import MyForm from "./Libs/MyForm"
 import Prices from "./Libs/Prices"
 import Editor from "./Libs/Editor"
@@ -16,6 +7,7 @@ import Weather from "./Libs/Weather"
 import Car from "./Libs/Car"
 import Tooltip from "./Libs/Tooltip";
 import Edit from "./Libs/Edit";
+import MyCalendar from "./Libs/MyCalendar";
 import { createApp } from "vue"
 import store from "./vue/store"
 //import Main from "./Main"
@@ -28,6 +20,7 @@ window.Edit     = new Edit;
 window.Weather  = new Weather;
 window.Car      = new Car;
 window.Tooltip  = new Tooltip;
+window.MyCalendar = new MyCalendar;
 
 $(document).ready(function () {
 	const $sideNav = $('.sidenav');

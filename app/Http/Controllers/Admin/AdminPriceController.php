@@ -10,10 +10,12 @@ use App\Libs\Prices\CaravanPrice;
 use App\Libs\Prices\HouseboatPrice;
 use App\Models\Boat;
 use App\Models\BoatDates;
+use App\Models\Customer;
 use App\Models\GuestBoat;
 use App\Models\Caravan;
 use App\Models\GuestBoatDates;
 use App\Models\Houseboat;
+use App\Models\HouseboatDates;
 use Excel;
 use Carbon\Carbon;
 use App\Models\CaravanDates;
@@ -78,11 +80,10 @@ class AdminPriceController extends AdminController
      */
     public function calculateHouseboatDates(Request $request)
     {
-        $houseboatId     = $request->post('houseboat_id');
-        $from       = $request->post('from');
-        $until      = $request->post('until');
-        $houseboat  = Houseboat::find($houseboatId);
-        $response   = ['error' => true];
+        $from           = $request->post('from');
+        $until          = $request->post('until');
+        $houseboatId    = $request->post('houseboat_id');
+        $houseboat      = Houseboat::find($houseboatId);
 
         if($houseboat) {
             $from       = $from ? new Carbon($from, config('app.timezone')) : null;

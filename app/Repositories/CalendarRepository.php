@@ -13,84 +13,11 @@ use Acaronlex\LaravelCalendar\Calendar;
 class CalendarRepository
 {
     /**
-     * @var Calendar
-     */
-    private $calendar;
-    /**
-     * @var Collection|null
-     */
-    private $calendarDates;
-    /**
-     * @var array
-     */
-    private $options = [
-        'selectable'        => true,
-        'selectOverlap'     => true,
-        'locale'            => 'de',
-        'firstDay'          => 1,
-        'displayEventTime'  => false,
-        'initialView'       => 'dayGridMonth',
-        'aspectRatio'       => 1,
-        'headerToolbar'     => [
-            'left' => 'prev,next today',
-            'center' => 'title',
-            'right' => null,
-        ],
-    ];
-
-    /**
      * @param string $type
      * @param Collection|null $dates
      */
-    public function __construct(private string $type, private ?Collection $dates = null)
+    public function __construct(private string $type, private ?Collection $dates)
     {
-        $this->calendar = new Calendar();
-        $this->calendar->setOptions($this->options);
-
-        if($this->dates && $this->dates->count() > 0) {
-            $this->calendarDates = $this->parseDates($this->dates);
-            $this->calendar->addEvents($this->calendarDates);
-        }
-    }
-
-    /**
-     * @param Collection $dates
-     * @return Collection|null
-     */
-    private function parseDates(Collection $dates): Collection|null
-    {
-        if($dates && $dates->count() > 0) {
-            switch ($this->type) {
-                case 'houseboat':
-                    return $dates->map(function(HouseboatDates $date) {
-                        if( $date->houseboat ) {
-//                            $email = $date->customer->email;
-                            $fon = $date->customer->fon;
-                            return Calendar::event(
-                                id: $date->id,
-                                title: $date->houseboat->name .' - '.$date->customer->name,
-                                isAllDay: false,
-                                start: $date->from,
-                                end: $date->until,
-                                options: [
-                                    'selectable'        => true,
-                                    'selectOverlap'     => true,
-                                    'locale'            => 'de',
-                                    'firstDay'          => 1,
-                                    'displayEventTime'  => false,
-                                    'color' => $date->houseboat->calendar_color ?? '#3788d8',
-//                                    'url'   => "mailto:$email",
-                                    'url'   => "tel:$fon",
-                                ]
-                            );
-                        }
-                        return null;
-                    });
-                default:
-                    return null;
-            }
-        }
-        return null;
     }
 
     /**
@@ -104,17 +31,14 @@ class CalendarRepository
                 case 'houseboat':
                     return $this->dates->map(function(HouseboatDates $date) {
                         if( $date->houseboat ) {
-//                            $email = $date->customer->email;
-                            $fon = $date->customer->fon;
                             return [
                                 'id'                => $date->id,
-                                'groupId'           => $date->id,
                                 'title'             => $date->houseboat->name .' - '.$date->customer->name,
                                 'allDay'            => false,
-                                'start'             => $date->from,
-                                'end'               => $date->until,
+                                'start'             => $date->from->addHours(12),
+                                'end'               => $date->until->addHours(12),
                                 'backgroundColor'   => $date->houseboat->calendar_color ?? '#3788d8',
-                                'url'               => "tel:$fon",
+                                'url'               => route('admin.houseboatDates.show', $date),
                             ];
                         }
                         return null;
@@ -126,37 +50,8 @@ class CalendarRepository
         return null;
     }
 
-    /**
-     * @return Calendar
-     */
-    public function getCalendar(): Calendar
+    public function getJsonDates()
     {
-        return $this->calendar;
-    }
-
-    /**
-     * @return null
-     */
-    public function getCalendarDates(): Collection|null
-    {
-        return $this->calendarDates;
-    }
-
-    /**
-     * @return array
-     */
-    public function getOptions(): array
-    {
-        return $this->options;
-    }
-
-    /**
-     * @param array $options
-     * @return CalendarRepository
-     */
-    public function setOptions(array $options): CalendarRepository
-    {
-        $this->options += $options;
-        return $this;
+        return $this->getDates()->toJson();
     }
 }

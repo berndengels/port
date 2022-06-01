@@ -5,12 +5,13 @@
         <div class="w-full block">
             <div class="float-left">
                 <x-nav-link href="{{ route('admin.houseboatDates.index') }}" icon="fas fa-backward" class="btn">zur Liste</x-nav-link>
+                <x-nav-link href="{{ route('admin.houseboatDates.edit', $houseboatDate) }}" icon="fas fa-edit" class="btn bg-blue-500 ml-3">Edit</x-nav-link>
             </div>
             <div class="float-right">
                 <x-nav-link target="_blank" href="{{ route('admin.houseboatDates.print', $houseboatDate) }}" icon="fas fa-print" class="btn" title="Drucken">
                     <span class="hidden md:visible">Drucken</span>
                 </x-nav-link>
-                <x-nav-link target="_blank" href="{{ route('admin.houseboatDates.sendInvoice', $houseboatDate) }}" icon="fas fa-edit" class="btn ml-2" title="Rechnung senden">
+                <x-nav-link target="_blank" href="{{ route('admin.houseboatDates.sendInvoice', $houseboatDate) }}" icon="fas fa-edit" class="btn ml-3" title="Rechnung senden">
                     <span class="hidden md:visible">Rechnung senden</span>
                 </x-nav-link>
             </div>

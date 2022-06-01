@@ -3,13 +3,19 @@
 namespace App\Http\Controllers\Admin;
 
 use Acaronlex\LaravelCalendar\Calendar;
+use App\Http\Requests\CaravanDatesValidationData;
 use App\Http\Requests\HouseboatDatesRequest;
+use App\Http\Requests\HouseboatDatesValidationData;
+use App\Models\Houseboat;
 use App\Models\HouseboatDates;
 use App\Repositories\CalendarRepository;
+use App\Rules\CaravanDatesIntervalUnique;
+use App\Rules\HouseboatDatesIntervalUnique;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Validator;
 
 class AdminHouseboatDatesController extends AdminController
 {
@@ -17,10 +23,10 @@ class AdminHouseboatDatesController extends AdminController
     private $monthsByYear;
     private $houseboatOptions;
     private $customerOptions;
-    private $calendar;
-    private $calendarOptions = [
-
-    ];
+    private $calendarDates;
+    /**
+     * @var HouseboatDates[]|Collection|\Illuminate\Support\Collection
+     */
     private $dates;
 
     public function __construct()
@@ -28,15 +34,17 @@ class AdminHouseboatDatesController extends AdminController
         parent::__construct();
         $this->monthsByYear = HouseboatDates::getMonthsByYears();
         $this->years = array_keys($this->monthsByYear);
-        $this->houseboatOptions = $this->houseboatRepository->options()->getSelectOptions();
+        $this->houseboatOptions = $this->houseboatRepository
+            ->options()
+            ->getSelectOptions()
+            ->prepend('Hausboot wählen', null);
+
         $this->customerOptions = $this->customerRepository
             ->options(where: ['customer_type' => 'houseboat'])
-            ->getSelectOptions();
+            ->getSelectOptions()
+            ->prepend('Kunde wählen', null);
         $this->dates = HouseboatDates::orderBy('from')->get();
-
-        if($this->dates && $this->dates->count() > 0) {
-            $this->calendar = (new CalendarRepository('houseboat', $this->dates))->getCalendar();
-        }
+        $this->calendarDates = (new CalendarRepository('houseboat', $this->dates))->getJsonDates();
     }
 
     /**
@@ -77,12 +85,16 @@ class AdminHouseboatDatesController extends AdminController
          */
         $priceTotal = $query->get()->sum(fn ($item) => $item->price);
 
+        $this->dates = $data->get();
+        $this->calendarDates = (new CalendarRepository('houseboat', $this->dates))->getJsonDates();
+
         $paginated = $data->paginate($this->paginatorLimit);
         $queryString = $request->only(['houseboat','year', 'month']);
 
         return view(
             'admin.houseboatDates.index', [
-                'calendar'          => $this->calendar,
+                'calendarDates'     => $this->calendarDates,
+                'initialDate'       => $this->dates->first()->from->format('Y-m-d'),
                 'houseboat'         => $houseboat,
                 'data'              => $paginated,
                 'years'             => $this->years,
@@ -123,8 +135,9 @@ class AdminHouseboatDatesController extends AdminController
     public function create()
     {
         return view('admin.houseboatDates.create', [
-            'calendar'  => $this->calendar,
-            'customerOptions'  => $this->customerOptions,
+            'calendarDates'     => $this->calendarDates,
+            'initialDate'       => $this->dates->first()->from->format('Y-m-d'),
+            'customerOptions'   => $this->customerOptions,
             'houseboatOptions'  => $this->houseboatOptions,
         ]);
     }
@@ -135,11 +148,23 @@ class AdminHouseboatDatesController extends AdminController
      * @param HouseboatDatesRequest $request
      * @return Response
      */
-    public function store(HouseboatDatesRequest $request)
+    public function store(Request $request)
     {
         try {
-            HouseboatDates::create($request->validated());
-            return redirect()->route('admin.houseboatDates.index')->with('success', 'Hausboot Buchung erfolgreich angelegt!');
+            $houseboatId    = $request->post('houseboat_id');
+            $houseboat      = Houseboat::find($houseboatId);
+            $validationData = new HouseboatDatesValidationData($request);
+            $request        = $validationData->getRequest();
+
+            $rules  = $validationData->rules();
+            $rules['until']  = array_merge($rules['until'], [new HouseboatDatesIntervalUnique($houseboat)]);
+
+            $validator  = Validator::make($request->all(), $rules, $validationData->messages());
+            $validator->validate();
+
+            $houseboatDate = $houseboat->dates()->create($validator->validated());
+
+            return redirect()->route('admin.houseboatDates.show', $houseboatDate)->with('success', 'Hausboot Buchung erfolgreich angelegt!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -153,16 +178,15 @@ class AdminHouseboatDatesController extends AdminController
      */
     public function edit(HouseboatDates $houseboatDate)
     {
-        $calendar = new Calendar();
-        $calendar->addEvent($houseboatDate)->setOptions([
-            'initialDate' => $houseboatDate->from,
-            'color'       => '#c00',
-            'aspectRatio' => 1,
-        ]);
+        $this->dates = HouseboatDates::whereHouseboatId($houseboatDate->houseboat->id)
+            ->orderBy('from', 'desc')
+            ->get();
+        $this->calendarDates = (new CalendarRepository('houseboat', $this->dates))->getJsonDates();
 
         return view('admin.houseboatDates.edit', [
-            'calendar'  => $calendar,
-            'customerOptions'  => $this->customerOptions,
+            'calendarDates'     => $this->calendarDates,
+            'initialDate'       => $houseboatDate->from,
+            'customerOptions'   => $this->customerOptions,
             'houseboatDate'     => $houseboatDate,
             'houseboatOptions'  => $this->houseboatOptions,
         ]);

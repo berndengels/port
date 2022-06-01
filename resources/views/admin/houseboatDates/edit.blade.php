@@ -1,13 +1,5 @@
 @extends('layouts.main')
 
-@push('styles')
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.css"/>
-@endpush
-@push('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/locales-all.min.js"></script>
-@endpush
-
 @section('main')
     <div class="mt-5 ml-5 w-1/4">
         <x-nav-link href="{{ route('admin.houseboatDates.index', ['saison' => $modus ?? null]) }}"
@@ -24,9 +16,9 @@
                 <div class="mt-5 mb-5">
                     <span class="text-xl text-blue-900">Gast: {{ $houseboatDate->customer->name }}, {{ $houseboatDate->customer->email }}</span>
                 </div>
+                <input type="hidden" class="calc" id="houseboat_id" name="houseboat_id" value="{{ $houseboatDate->houseboat_id }}" />
                 @bind($houseboatDate)
                 <x-form-checkbox id="is_paid" name="is_paid" label="Ist Bezahlt" class="mb-0 pb-0" />
-                <x-form-select class="calc" class="houseboat" id="houseboat_id" name="houseboat_id" label="Hausboot" :options="$houseboatOptions" required />
                 <x-form-input class="calc" id="from" name="from" type="date" label="Von" required />
                 <x-form-input class="calc" id="until" name="until" type="date" label="Bis" required />
                 <x-form-input  id="price" name="price" type="number" min="0" label="Gesamt-Preis" required />
@@ -38,19 +30,43 @@
             </x-form>
         </div>
         <div class="flex-auto w-9/12 ml-5">
-            <div id="calendar">
-                {!! $calendar->calendar() !!}
-                {!! $calendar->script() !!}
-            </div>
+            <div id="calendar"></div>
         </div>
     </div>
 @endsection
 
 @push('inline-scripts')
     <script>
-	    $(document).ready(() => {
-		    const calcUrl = "{{ route('admin.houseboatDates.price.calculate') }}";
-		    Prices.houseboatDates.calculate(document.frm, calcUrl);
-	    })
+        const elCalendar = document.getElementById('calendar'),
+	        id          = {{ $houseboatDate->id }},
+	        dates       = {!! $calendarDates !!},
+	        initialDate = "{{ $initialDate }}",
+	        calendar    = MyCalendar.houseboats(elCalendar, dates, {
+				initialDate: initialDate,
+                dateId: id,
+			}),
+	        events      = calendar.getOption('events'),
+	        event       = calendar.getEventById(id);
+
+        let $from   = $('#from'),
+	        $until  = $('#until');
+
+        if($from.is(':visible')) {
+            $from.change(e => {
+				let val = $(e.target).val();
+	            val = moment(val).add(12, 'hours').format('YYYY-MM-DD HH:00:00');
+                event.setStart(val)
+            })
+        }
+        if($until.is(':visible')) {
+            $until.change(e => {
+	            let val = $(e.target).val();
+				val = moment(val).add(12, 'hours').format('YYYY-MM-DD HH:00:00');
+				console.info(val);
+	            event.setEnd(val)
+            })
+        }
+        const calcUrl = "{{ route('admin.houseboatDates.price.calculate') }}";
+        Prices.houseboatDates.calculate(document.frm, calcUrl);
     </script>
 @endpush

@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\Admin;
 
+use App\Rules\CaravanDatesIntervalUnique;
 use Excel;
 use App\Mail\SendExcel;
 use App\Exports\CaravanDatesExport;
@@ -144,7 +145,7 @@ class AdminCaravanDatesController extends AdminController
         $request    = $validationData->getRequest();
 
         $rules  = $validationData->rules();
-        $rules['until']  = array_merge($rules['until'], [new DatesIntervalUnique($caravan)]);
+        $rules['until']  = array_merge($rules['until'], [new CaravanDatesIntervalUnique($caravan)]);
 
         $validator  = Validator::make($request->all(), $rules, $validationData->messages());
         $validator->validate();
@@ -155,7 +156,6 @@ class AdminCaravanDatesController extends AdminController
         $validated  = collect($validator->validated())->except(['country_id','carnumber','carlength','email'])->toArray();
         $caravanDate = $caravan->dates()->create($validated);
 
-        //        return back()->with(['success' => "Caravan-Eintrag mit ID: $caravanDate->id erfolgreich angelegt"]);
         return $this->show($caravanDate);
     }
 

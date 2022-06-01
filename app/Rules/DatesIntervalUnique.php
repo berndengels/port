@@ -2,26 +2,30 @@
 
 namespace App\Rules;
 
-use App\Models\Caravan;
-use App\Models\CaravanDates;
-use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Validation\Rule;
-use Illuminate\Support\Facades\DB;
-use phpDocumentor\Reflection\Types\Boolean;
 
 class DatesIntervalUnique implements Rule
 {
-    private $caravan;
-    private $existing;
+    protected $model;
+    protected $classDates;
+    protected $relation;
+    protected $foreignKey;
+    protected $routeKey;
+    protected $existing;
 
     /**
      * Create a new rule instance.
      *
      * @return void
      */
-    public function __construct(Caravan $caravan)
+    public function __construct(Model $model)
     {
-        $this->caravan = $caravan;
+        $this->model        = $model;
+        $this->classDates   = get_class($this->model). 'Dates';
+        $this->relation     = strtolower(class_basename($this->model));
+        $this->foreignKey   = $this->relation . '_id';
+        $this->routeKey     = $this->relation . 'Dates';
     }
 
     /**
@@ -33,20 +37,13 @@ class DatesIntervalUnique implements Rule
      */
     public function passes($attribute, $value)
     {
-        $sql = <<< SQL
-SELECT * FROM `caravan_dates`
-WHERE `caravan_id` = ?
-AND (DATE(?) BETWEEN `from` AND `until` OR DATE(?) BETWEEN `from` AND `until`)
-SQL;
-        //        $this->existing = DB::select(DB::raw($sql), [$this->caravan->id, request('from'), $value]);
-        $this->existing = CaravanDates::with(['caravan'])
+        $this->existing = $this->classDates::with([$this->relation])
             ->whereRaw(
-                'caravan_id = ? AND (DATE(?) BETWEEN `from` AND `until` OR DATE(?) BETWEEN `from` AND `until`)', [
-                $this->caravan->id,
+                $this->foreignKey . ' = ? AND (DATE(?) BETWEEN `from` AND `until` OR DATE(?) BETWEEN `from` AND `until`)', [
+                $this->model->id,
                 request('from'),
                 $value
-                ]
-            )
+            ])
             ->get();
         if($this->existing->count() > 0) {
             return false;
@@ -63,14 +60,14 @@ SQL;
     {
         $msg = $this->existing->map(
             function ($item) {
-                $carnumber  = $item->caravan->carnumber;
-                $from       = $item->from->format('d.m.Y');
-                $until      = $item->until->format('d.m.Y');
-                $url        = route('admin.caravanDates.edit', ['caravanDate' => $item->id]);
-                return "<li><a class='btn btn-red mt-3' href='$url'>$carnumber: $from bis $until</a></li>";
+                $name   = $this->model->name ?? '';
+                $from   = $item->from->format('d.m.Y');
+                $until  = $item->until->format('d.m.Y');
+                $url    = route('admin.'.$this->routeKey.'.edit', $item);
+                return "<li><a class='btn btn-red mt-3 text-xs p-1' href='$url'>$name $from bis $until</a></li>";
             }
         )->toArray();
         $msg = implode('', $msg);
-        return "Es existieren schon ein Einträge für diesen Zeitraum: <br><ul>$msg</ul>";
+        return "Es existieren schon Einträge für diesen Zeitraum: <br><ul>$msg</ul>";
     }
 }
