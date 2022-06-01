@@ -4,11 +4,11 @@
     </div>
     <div v-else class="flex-container-dashboard admin">
         <Weather :weather-data="weatherData" />
-        <CaravansToday v-if="caravansToday" :caravans="caravansToday" />
-        <VisitsStats v-if="caravans" title="Caravan Besucher" :data="caravans" color="#ff025d" />
-        <VisitsStats v-if="boats" title="Boots Termine" :data="boats" color="#377cff" />
-        <VisitsStats v-if="guestBoats" title="Gastboot Besuche" :data="guestBoats" color="#03926e" />
-        <HouseboatsCalendar v-if="houseboatDates" title="Hausboot Belegung" :dates="houseboatDates" color="#a3013e" />
+        <CaravansToday v-if="caravansToday && caravansEnabled" :caravans="caravansToday" />
+        <VisitsStats v-if="caravans && caravansEnabled" title="Caravan Besucher" :data="caravans" color="#ff025d" />
+        <VisitsStats v-if="boats && boatsEnabled" title="Boots Termine" :data="boats" color="#377cff" />
+        <VisitsStats v-if="guestBoats && boatsEnabled" title="Gastboot Besuche" :data="guestBoats" color="#03926e" />
+        <HouseboatsCalendar v-if="houseboatDates && houseboatsEnabled" title="Hausboot Belegung" :dates="houseboatDates" color="#a3013e" />
     </div>
 </template>
 
@@ -35,22 +35,35 @@ export default {
         }
     },
     created() {
-        this.$store.dispatch("stats/get", "caravans")
-        this.$store.dispatch("stats/get", "boats")
-        this.$store.dispatch("stats/get", "guestBoats")
-        this.$store.dispatch("houseboat/fetchDates")
+        this.$store.dispatch("stats/get", "caravans");
+        this.$store.dispatch("stats/get", "boats");
+        this.$store.dispatch("stats/get", "guestBoats");
+        this.$store.dispatch("houseboat/fetchDates");
+        this.$store.dispatch("offers/fetch")
     },
     computed: {
+        houseboatsEnabled() {
+            return this.$store.state.offers.enabled.Hausboote;
+        },
+        boatsEnabled() {
+            return this.$store.state.offers.enabled.Boote;
+        },
+        caravansEnabled() {
+            return this.$store.state.offers.enabled.Caravans;
+        },
+        bootservicesEnabled() {
+            return this.$store.state.offers.enabled.Bootsservice;
+        },
+        loaded() {
+            return true;
+        },
         ...mapGetters({
             caravansToday: "caravan/todayVisits",
             caravans: "stats/caravans",
             boats: "stats/boats",
             guestBoats: "stats/guestBoats",
-            houseboatDates: "houseboat/dates"
+            houseboatDates: "houseboat/dates",
         }),
-        loaded() {
-            return true;
-        }
     }
 }
 </script>

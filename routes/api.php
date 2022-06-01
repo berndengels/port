@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\WeatherController;
 use App\Http\Controllers\Api\StatisticController;
 use App\Http\Controllers\Api\CaravanController;
 use App\Http\Controllers\Api\HouseboatController;
+use App\Http\Controllers\Api\ConfigOfferController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,7 +44,14 @@ Route::group([
 Route::group([
     'prefix'    => 'houseboats',
     'as'        => 'houseboats.',
-//    'middleware' => ['auth:sanctum'],
+    'middleware' => ['auth:sanctum'],
 ], function () {
     Route::get('',[HouseboatController::class,'index'])->name('index');
+});
+Route::group([
+    'prefix'    => 'configOffers',
+    'as'        => 'configOffers.',
+    'middleware' => ['auth:sanctum'],
+], function () {
+    Route::get('',[ConfigOfferController::class,'index'])->name('index');
 });
