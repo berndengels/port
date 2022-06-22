@@ -10,9 +10,6 @@ use App\Repositories\Ext\SelectOptions;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Spatie\Period\Period;
-use Spatie\Period\PeriodCollection;
-use Spatie\Period\Visualizer;
-use Illuminate\Database\Eloquent\Builder;
 
 class ConfigBoatPricesRepository extends Repository
 {

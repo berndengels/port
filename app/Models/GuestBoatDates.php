@@ -88,6 +88,11 @@ class GuestBoatDates extends BaseModel implements IDatePrice
         return $this->belongsTo(GuestBoat::class, 'guest_boat_id', 'id');
     }
 
+    public function berth()
+    {
+        return $this->belongsTo(GuestBoatBerth::class, 'guest_boat_berth_id', 'id');
+    }
+
     public function getValidFromAttribute()
     {
         return $this->from->format('Y-m-d');

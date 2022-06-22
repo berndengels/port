@@ -7,6 +7,7 @@ import Weather from "./Libs/Weather"
 import Car from "./Libs/Car"
 import Tooltip from "./Libs/Tooltip";
 import Edit from "./Libs/Edit";
+import Geo from "./Libs/Geo";
 import MyCalendar from "./Libs/MyCalendar";
 import { createApp } from "vue"
 import store from "./vue/store"
@@ -20,6 +21,7 @@ window.Edit     = new Edit;
 window.Weather  = new Weather;
 window.Car      = new Car;
 window.Tooltip  = new Tooltip;
+window.Geo  = new Geo;
 window.MyCalendar = new MyCalendar;
 
 $(document).ready(function () {

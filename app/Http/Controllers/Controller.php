@@ -22,6 +22,7 @@ use App\Repositories\RoleRepository;
 use App\Repositories\ConfigSaisonDatesRepository;
 use App\Repositories\ServiceCategoryRepository;
 use App\Repositories\ServiceRepository;
+use App\Repositories\GuestBoatBerthRepository;
 use Illuminate\Routing\Controller as BaseController;
 
 class Controller extends BaseController
@@ -30,6 +31,7 @@ class Controller extends BaseController
     protected $boatRepository;
     protected $houseboatModelRepository;
     protected $houseboatRepository;
+    protected $guestBoatBerthRepository;
     protected $guestBoatRepository;
     protected $countryRepository;
     protected $caravanRepository;
@@ -57,6 +59,7 @@ class Controller extends BaseController
         $this->roleRepository       = new RoleRepository();
         $this->boatRepository       = new BoatRepository();
         $this->serviceRepository    = new ServiceRepository();
+        $this->guestBoatBerthRepository         = new GuestBoatBerthRepository();
         $this->houseboatModelRepository         = new HouseboatModelRepository();
         $this->houseboatRepository              = new HouseboatRepository();
         $this->guestBoatRepository              = new GuestBoatsRepository();
