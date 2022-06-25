@@ -23,6 +23,11 @@ class CreateHouseboatsTestTable extends Migration
                 ->onUpdate('CASCADE')
                 ->onDelete('CASCADE')
             ;
+            $table->foreign('houseboat_owner_id', 'houseboat_owner_ibfk_1')
+                ->references('id')->on('houseboat_owners')
+                ->onUpdate('CASCADE')
+                ->onDelete('CASCADE')
+            ;
         });
     }
 

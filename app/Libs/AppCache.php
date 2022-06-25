@@ -13,6 +13,9 @@ class AppCache
     public const KEY_OPTIONS_HOUSEBOAT_MODEL = 'options.houseboatModel';
     public const KEY_OPTIONS_DATA_HOUSEBOAT_MODEL = 'options.data.houseboatModel';
 
+    public const KEY_OPTIONS_HOUSEBOAT_OWNER = 'options.houseboatOwner';
+    public const KEY_OPTIONS_DATA_HOUSEBOAT_OWNER = 'options.data.houseboatOwner';
+
     public const KEY_OPTIONS_HOUSEBOAT = 'options.houseboat';
     public const KEY_OPTIONS_DATA_HOUSEBOAT = 'options.data.houseboat';
 

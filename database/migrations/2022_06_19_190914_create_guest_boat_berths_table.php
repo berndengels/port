@@ -16,9 +16,9 @@ class CreateGuestBoatBerthsTable extends Migration
         Schema::create('guest_boat_berths', function (Blueprint $table) {
             $table->increments('id');
             $table->string('number', 10)->default('')->index();
-            $table->unsignedInteger('width')->nullable();
-            $table->unsignedInteger('length')->nullable();
-            $table->decimal('daily_price', 5)->unsigned()->nullable()->index();
+            $table->decimal('width', 3, 1)->unsigned()->nullable();
+            $table->decimal('length', 3, 1)->unsigned()->nullable();
+            $table->decimal('daily_price', 5, 2)->unsigned()->nullable()->index();
             $table->float('lat', 10, 0)->unsigned()->nullable();
             $table->float('lng', 10, 0)->nullable();
             $table->boolean('enabled')->default(1)->index();

@@ -14,6 +14,7 @@ use App\Repositories\CaravanRepository;
 use App\Repositories\CountryRepository;
 use App\Repositories\CustomerRepository;
 use App\Repositories\HouseboatModelRepository;
+use App\Repositories\HouseboatOwnerRepository;
 use App\Repositories\HouseboatRepository;
 use App\Repositories\MaterialRepository;
 use App\Repositories\MaterialCategoryRepository;
@@ -30,6 +31,7 @@ class Controller extends BaseController
     protected $paginatorLimit;
     protected $boatRepository;
     protected $houseboatModelRepository;
+    protected $houseboatOwnerRepository;
     protected $houseboatRepository;
     protected $guestBoatBerthRepository;
     protected $guestBoatRepository;
@@ -61,6 +63,7 @@ class Controller extends BaseController
         $this->serviceRepository    = new ServiceRepository();
         $this->guestBoatBerthRepository         = new GuestBoatBerthRepository();
         $this->houseboatModelRepository         = new HouseboatModelRepository();
+        $this->houseboatOwnerRepository         = new HouseboatOwnerRepository();
         $this->houseboatRepository              = new HouseboatRepository();
         $this->guestBoatRepository              = new GuestBoatsRepository();
         $this->materialRepository               = new MaterialRepository();

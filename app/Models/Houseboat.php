@@ -44,4 +44,9 @@ class Houseboat extends Model
     {
         return $this->belongsTo(HouseboatModel::class, 'houseboat_model_id', 'id');
     }
+
+    public function owner()
+    {
+        return $this->belongsTo(HouseboatOwner::class, 'houseboat_owner_id', 'id');
+    }
 }

@@ -186,16 +186,14 @@ return [
                         'route' => 'admin.config.saisonRentDates.index',
                         'hide_on_mobile' => true,
                     ],
-/*
                     [
-                        'permissions'   => ['read HouseboatDates','write HouseboatDates'],
-                        'text'  => 'Rezeption',
-                        'title' => 'Rezeption',
-                        'icon'  => 'fas fa-concierge-bell',
-                        'route' => 'admin.houseboatDates.index',
+                        'permissions'   => ['read HouseboatOwner','write HouseboatOwner'],
+                        'text'  => 'Eigentümer',
+                        'title' => 'Hausboot-Eigentümer',
+                        'icon'  => 'fas fa-house-user',
+                        'route' => 'admin.houseboatOwners.index',
                         'hide_on_mobile' => false,
                     ],
-*/
                 ],
             ],
             'Content'   => [
@@ -389,6 +387,14 @@ return [
                         'title' => 'Preis relevante Produkte',
                         'icon'  => 'fas fa-route',
                         'route' => 'admin.config.entityTypes.index',
+                        'hide_on_mobile' => false,
+                    ],
+                    [
+                        'permissions'   => ['read GuestBoatBerth'],
+                        'text'  => 'Liegeplätze',
+                        'title' => 'Boots Liegeplätze',
+                        'icon'  => 'fas fa-route',
+                        'route' => 'admin.guestboatBerth.index',
                         'hide_on_mobile' => false,
                     ],
                 ],

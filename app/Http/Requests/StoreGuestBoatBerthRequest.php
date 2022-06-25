@@ -2,10 +2,12 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Models\GuestBoatBerth;
 
-class StoreGuestBoatBerthRequest extends FormRequest
+class StoreGuestBoatBerthRequest extends AdminRequest
 {
+    protected $modelName = GuestBoatBerth::class;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -13,7 +15,7 @@ class StoreGuestBoatBerthRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return $this->auth->user()->can('write GuestBoatBerth');
     }
 
     public function validationData($keys = null)

@@ -9,11 +9,13 @@ use Illuminate\Http\Response;
 class AdminHouseboatController extends AdminController
 {
     protected $models;
+    protected $owners;
 
     public function __construct()
     {
         parent::__construct();
         $this->models  = $this->houseboatModelRepository->options()->getSelectOptions();
+        $this->owners  = $this->houseboatOwnerRepository->options()->getSelectOptions();
     }
 
     /**
@@ -23,7 +25,7 @@ class AdminHouseboatController extends AdminController
      */
     public function index()
     {
-        $data = Houseboat::with('model')->paginate($this->paginatorLimit);
+        $data = Houseboat::with(['model','owner'])->paginate($this->paginatorLimit);
         return view('admin.houseboats.index', compact('data'));
     }
 
@@ -47,6 +49,7 @@ class AdminHouseboatController extends AdminController
     {
         return view('admin.houseboats.create', [
             'models'    => $this->models,
+            'owners'    => $this->owners,
         ]);
     }
 
@@ -77,6 +80,7 @@ class AdminHouseboatController extends AdminController
         return view('admin.houseboats.edit', [
             'houseboat' => $houseboat,
             'models'    => $this->models,
+            'owners'    => $this->owners,
         ]);
     }
 
