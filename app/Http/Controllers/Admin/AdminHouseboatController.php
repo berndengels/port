@@ -15,7 +15,7 @@ class AdminHouseboatController extends AdminController
     {
         parent::__construct();
         $this->models  = $this->houseboatModelRepository->options()->getSelectOptions();
-        $this->owners  = $this->houseboatOwnerRepository->options()->getSelectOptions();
+        $this->owners  = $this->houseboatOwnerRepository->options()->getSelectOptions()->prepend('Bitte wählen', '');
     }
 
     /**

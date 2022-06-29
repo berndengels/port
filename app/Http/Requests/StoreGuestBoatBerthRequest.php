@@ -33,13 +33,13 @@ class StoreGuestBoatBerthRequest extends AdminRequest
     public function rules()
     {
         return [
-            'number'  => 'required|unique:guest_boat_berths,number',
-            'width'  => '',
-            'length'  => 'required',
-            'daily_price'  => '',
-            'lat'  => '',
-            'lng'  => '',
-            'enabled'  => '',
+            'number'        => 'required|unique:guest_boat_berths,number',
+            'width'         => '',
+            'length'        => '',
+            'daily_price'   => '',
+            'lat'           => '',
+            'lng'           => '',
+            'enabled'       => '',
         ];
     }
 }

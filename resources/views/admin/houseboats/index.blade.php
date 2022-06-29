@@ -20,6 +20,7 @@
                 <th class="hidden md:table-cell">ID</th>
                 <th>Name</th>
                 <th class="hidden md:table-cell">Modell</th>
+                <th class="hidden md:table-cell">Eigentümer</th>
                 <th colspan="2"><br></th>
             </tr>
             @foreach($data as $item)
@@ -27,6 +28,7 @@
                     <td class="hidden md:table-cell">{{ $item->id }}</td>
                     <td>{{ $item->name }}</td>
                     <td class="hidden md:table-cell">{{ $item->model->name }}</td>
+                    <td class="hidden md:table-cell">{{ $item->owner->name ?? '' }}</td>
                     <td>
                         <x-nav-link href="{{ route('admin.houseboats.edit', $item) }}" icon="fas fa-edit" class="btn" title="Bearbeiten">
                             <span class="hidden md:visible">Edit</span>

@@ -5,11 +5,14 @@
 @import '~@fortawesome/fontawesome-free/scss/solid';
 @import '~@fortawesome/fontawesome-free/scss/brands';
 @import "~include-media";
-@import "~leaflet/dist/leaflet.css";
+@import "~leaflet/dist/leaflet";
+@import "~leaflet-draw/dist/leaflet.draw";
+@import '~mapbox-gl/dist/mapbox-gl.css';
+
 @import 'local/variables';
 @import 'local';
-
 @tailwind utilities;
+
 html, body {
     width: 100%;
     max-width:100%;
@@ -103,6 +106,7 @@ tr {
     }
 }
 .btn {
+//    display: block;
     padding: 0.2rem 1.0rem;
     border-radius: 0.3rem;
     color: #fff;
@@ -112,6 +116,8 @@ tr {
 
     &.inline {
         display: inline-block;
+        float: left;
+        margin-right: 1.0rem;
         clear: none;
     }
     &.btn-save {

@@ -26,6 +26,11 @@ use Illuminate\Database\Eloquent\Model;
  * @method static Builder|Houseboat whereId($value)
  * @method static Builder|Houseboat whereName($value)
  * @mixin Eloquent
+ * @property int|null $houseboat_owner_id
+ * @property string|null $calendar_color
+ * @property-read HouseboatOwner|null $owner
+ * @method static Builder|Houseboat whereCalendarColor($value)
+ * @method static Builder|Houseboat whereHouseboatOwnerId($value)
  */
 class Houseboat extends Model
 {

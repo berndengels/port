@@ -7,7 +7,7 @@ USE_CACHE=false
 APP_URL=http://port.test
 MIX_API_URL=http://port.test
 SHOW_ENV=false
-
+MIX_MAPBOX_TOKEN=
 NEXMO_KEY=
 NEXMO_SECRET=
 

@@ -149,6 +149,7 @@ Route::group([
     Route::resource('guestBoats', AdminGuestBoatController::class);
     Route::resource('houseboats', AdminHouseboatController::class);
     Route::resource('houseboatOwners', AdminHouseboatOwnerController::class);
+    Route::resource('houseboatModels', AdminHouseboatModelController::class);
     Route::resource('houseboats', AdminHouseboatController::class);
     Route::resource('houseboatDates', AdminHouseboatDatesController::class);
     Route::resource('guestBoatDates', AdminGuestBoatDatesController::class);
@@ -183,6 +184,7 @@ Route::group([
     Route::post('caravanDates/toggle/{caravanDate}', [AdminCaravanDatesController::class, 'toggle'])->name('caravanDates.toggle');
     Route::post('boatDates/toggle/{boatDate}', [AdminBoatDatesController::class, 'toggle'])->name('boatDates.toggle');
     Route::post('guestBoatDates/toggle/{guestBoatDate}', [AdminGuestBoatDatesController::class, 'toggle'])->name('guestBoatDates.toggle');
+    Route::post('guestBoatBerths/toggle/{guestBoatBerth}', [AdminGuestBoatBerthController::class, 'toggle'])->name('guestBoatBerths.toggle');
     Route::post('houseboatDates/toggle/{houseboatDate}', [AdminHouseboatDatesController::class, 'toggle'])->name('houseboatDates.toggle');
 
     Route::post('serviceRequests/done/{serviceRequest}', [AdminServiceRequestController::class, 'done'])->name('serviceRequests.done');

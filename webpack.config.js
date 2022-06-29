@@ -9,5 +9,5 @@ module.exports = {
             '@': path.resolve('resources/js'),
             'v@': path.resolve('resources/js/vue'),
         },
-    }
+    },
 };

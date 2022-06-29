@@ -7,10 +7,10 @@
 <script>
 export default {
     name: "MyFormErrors",
-    props: ['errors','name'],
+    props: ['errors', 'name'],
     data() {
         return {
-            message: this.errors && this.errors['name'] ? this.errors['name'].message : null,
+            message: this.errors && this.errors[this.name] ? this.errors[this.name].message : null,
         }
     }
 }

@@ -3,6 +3,9 @@
 /public/js
 /public/css
 /public/storage
+/public/webfonts/
+/public/froala-editor/
+/public/gicons/
 /public/mix-manifest.json
 /storage/*.key
 /vendor
@@ -25,8 +28,6 @@ yarn-error.log
 /perms
 /composer.lock
 /package-lock.json
-/public/webfonts/
-/public/froala-editor/
 /.env.dusk.local
 /.env.demo
 /.env.dusk.demo

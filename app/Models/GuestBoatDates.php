@@ -56,6 +56,11 @@ use Illuminate\Support\Carbon;
  * @method static Builder|GuestBoatDates getMonthsByYears($from = null, $until = null)
  * @method static Builder|GuestBoatDates guestBoat(?int $id = null)
  * @method static Builder|GuestBoatDates guestBoatByDates(?int $id = null)
+ * @property int|null $guest_boat_berth_id
+ * @property int $is_paid
+ * @property-read GuestBoatBerth|null $berth
+ * @method static Builder|GuestBoatDates whereGuestBoatBerthId($value)
+ * @method static Builder|GuestBoatDates whereIsPaid($value)
  */
 class GuestBoatDates extends BaseModel implements IDatePrice
 {

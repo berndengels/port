@@ -14,12 +14,12 @@
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
     @stack('styles')
 <!-- Scripts -->
+    @stack('scripts')
     @auth('admin')
         <script src="{{ mix('js/app-admin.js') }}"></script>
     @else
         <script src="{{ mix('js/app.js') }}"></script>
     @endauth
-    @stack('scripts')
 </head>
 <!--body class="font-sans antialiased" data-root="http://webapiv2.navionics.com/dist/webapi/images"-->
 <body>

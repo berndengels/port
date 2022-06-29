@@ -19,9 +19,8 @@ mix.autoload({
 	])
 	.copy('node_modules/fullcalendar/main.min.js', 'public/js/fullcalendar')
 	.copy('node_modules/fullcalendar/locales-all.min.js', 'public/js/fullcalendar')
-
 	.copy('node_modules/@fortawesome/fontawesome-free/webfonts', 'public/webfonts')
-	.copy('node_modules/material-design-icons', 'public/gicons')
+//	.copy('node_modules/material-design-icons', 'public/gicons')
 	.copy('node_modules/froala-editor', 'public/froala-editor')
 	.webpackConfig(require('./webpack.config'))
 	.vue({version: 3})

@@ -4,36 +4,41 @@
             <span v-if="inline">{{ label }}</span>
             <div v-else class="block"><span>{{ label }}</span></div>
             <div :class="{'inline': inline}">
-                <input :type="type ?? 'text'"
+                <input v-if="data && undefined !== data[name]"
+                       type="checkbox"
                        :name="name"
                        :class="css"
-                       :placeholder="placeholder"
-                       v-model="data[name]"
+                       :value="data[name]"
+                       :checked="data[name]"
+                />
+                <input v-else
+                       type="checkbox"
+                       :name="name"
+                       :class="css"
                 />
             </div>
-            <div v-if="message" class="w-full error text-red-500 text-xs italic py-2">
-                {{ message }}
-            </div>
+            <MyFormErrors v-if="errors" :errors="errors" :name="name" />
         </label>
     </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex"
+import MyFormErrors from "v@/components/form/MyFormErrors";
 
 export default {
-    name: "MyInput",
-    props: ['name', 'label', 'type', 'css', 'inline', 'placeholder'],
+    name: "MyCheckbox",
+    components: [MyFormErrors],
+    props: ['name', 'label', 'css', 'inline'],
     data() {
         return {
             data: this.$parent.$props.data ?? null,
+            errors: this.$parent.$props.errors ?? null,
         }
     },
     computed: {
-        ...mapGetters({errors: "caravan/errors"}),
         message() {
-            console.info(this.errors)
             if(this.errors && undefined !== this.errors[this.name]) {
+                console.info("errors", this.errors);
                 return this.errors[this.name][0]
             }
             return null

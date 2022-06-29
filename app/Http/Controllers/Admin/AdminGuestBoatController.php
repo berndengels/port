@@ -58,9 +58,8 @@ class AdminGuestBoatController extends AdminController
      */
     public function store(GuestBoatRequest $request)
     {
-        $validated  = $request->validated();
         try {
-            GuestBoat::create($validated);
+            GuestBoat::create($request->validated());
             return redirect()->route('admin.guestBoats.index')->with('success', 'Gastboot erfolgreich angelegt!');
         } catch(Exception $e) {
             return redirect()->route('admin.guestBoats.create', $request)->with('error', $e->getMessage());

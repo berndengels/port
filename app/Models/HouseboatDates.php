@@ -50,6 +50,9 @@ use Acaronlex\LaravelCalendar\Event;
  * @property-read Customer $customer
  * @method static Builder|HouseboatDates houseboatByDates(?int $id = null)
  * @method static Builder|HouseboatDates whereCustomerId($value)
+ * @property int $is_paid
+ * @method static Builder|HouseboatDates houseboat(?int $id = null)
+ * @method static Builder|HouseboatDates whereIsPaid($value)
  */
 class HouseboatDates extends Model implements Event
 {

@@ -47,6 +47,7 @@ use Spatie\Period\Period;
  * @method static Builder|ConfigSaisonRentDates whereHoliday($value)
  * @method static Builder|ConfigSaisonRentDates whereUntil($value)
  * @property-read Period $period
+ * @method static Builder|ConfigSaisonRentDates containsDates(Carbon $from, Carbon $until)
  */
 class ConfigSaisonRentDates extends Model
 {

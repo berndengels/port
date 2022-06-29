@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\StatisticController;
 use App\Http\Controllers\Api\CaravanController;
 use App\Http\Controllers\Api\HouseboatController;
 use App\Http\Controllers\Api\ConfigOfferController;
+use App\Http\Controllers\Api\GuestboatBerthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,4 +55,16 @@ Route::group([
     'middleware' => ['auth:sanctum'],
 ], function () {
     Route::get('',[ConfigOfferController::class,'index'])->name('index');
+});
+Route::group([
+    'prefix'    => 'guestboatBerths',
+    'as'        => 'guestboatBerths.',
+    'middleware' => ['auth:sanctum'],
+], function () {
+    Route::post('refill', [GuestboatBerthController::class,'refill'])->name('refill');
+    Route::get('', [GuestboatBerthController::class,'index'])->name('index');
+    Route::get('{guestBoatBerth}', [GuestboatBerthController::class,'show'])->name('show');
+    Route::post('', [GuestboatBerthController::class,'store'])->name('store');
+    Route::put('{guestBoatBerth}', [GuestboatBerthController::class,'update'])->name('update');
+    Route::delete('{guestBoatBerth}', [GuestboatBerthController::class,'destroy'])->name('destroy');
 });

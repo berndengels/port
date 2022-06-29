@@ -394,7 +394,7 @@ return [
                         'text'  => 'Liegeplätze',
                         'title' => 'Boots Liegeplätze',
                         'icon'  => 'fas fa-route',
-                        'route' => 'admin.guestboatBerth.index',
+                        'route' => 'admin.guestBoatBerths.index',
                         'hide_on_mobile' => false,
                     ],
                 ],

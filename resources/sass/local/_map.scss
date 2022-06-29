@@ -1,0 +1,28 @@
+
+.leaflet-tooltip-pane {
+	.text {
+		color: red;
+		background: transparent;
+		box-shadow: none;
+		font-weight: bold;
+		font-size:0.6rem;
+		border: none;
+
+		&.selected {
+			color: white;
+			background: red;
+		}
+		ul {
+			padding: 0.5rem;
+			margin: 1.0rem;
+			background: #fff;
+			li {
+				color: #666;
+				font-size:0.8rem;
+			}
+		}
+	}
+}
+#frm {
+	display: none;
+}

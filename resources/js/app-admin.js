@@ -11,8 +11,12 @@ import Geo from "./Libs/Geo";
 import MyCalendar from "./Libs/MyCalendar";
 import { createApp } from "vue"
 import store from "./vue/store"
-//import Main from "./Main"
+import mitt from 'mitt';
+const emitter = mitt();
+window.emitter = emitter;
+
 import AdminDashboard from "./vue/views/admin/Dashboard"
+import AdminGuestboatBerths from "./vue/views/admin/GuestboatBerths"
 
 window.MyForm   = new MyForm;
 window.Prices   = new Prices;
@@ -21,7 +25,7 @@ window.Edit     = new Edit;
 window.Weather  = new Weather;
 window.Car      = new Car;
 window.Tooltip  = new Tooltip;
-window.Geo  = new Geo;
+window.Geo      = new Geo;
 window.MyCalendar = new MyCalendar;
 
 $(document).ready(function () {
@@ -37,9 +41,17 @@ $(document).ready(function () {
 		$sideNav.removeClass('active')
 	});
 
+	let app;
 	switch(true) {
 		case $("#adminDashboard").is(":visible"):
-			createApp(AdminDashboard).use(store).mount("#adminDashboard");
+			app = createApp(AdminDashboard).use(store);
+			app.config.globalProperties.emitter = emitter;
+			app.mount("#adminDashboard");
+			break;
+		case $("#adminGuestboatBerths").is(":visible"):
+			app = createApp(AdminGuestboatBerths).use(store);
+			app.config.globalProperties.emitter = emitter;
+			app.mount("#adminGuestboatBerths");
 			break
 	}
 });

@@ -35,6 +35,7 @@ export default {
     name: "CaravanStats",
     components: {VChart},
     props: ['caravans'],
+
     setup(props) {
         const option = ref({
             title: {
@@ -97,7 +98,7 @@ export default {
             ]
         });
 
-        return {option};
+        return { option };
     },
 }
 </script>

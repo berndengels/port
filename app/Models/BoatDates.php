@@ -56,6 +56,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @method static Builder|BoatDates wherePrices($value)
  * @method static Builder|BoatDates whereUntil($value)
  * @mixin Eloquent
+ * @property int $is_paid
+ * @method static Builder|BoatDates boat(?int $id = null)
+ * @method static Builder|BoatDates whereIsPaid($value)
  */
 class BoatDates extends BaseModel implements IDatePrice
 {

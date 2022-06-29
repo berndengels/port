@@ -44,9 +44,8 @@ export default {
     methods: {
         handleDateClick(e)
         {
-//            console.info("handleDateClick", e)
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' },
-                date = (new Date(e.date)).toLocaleDateString('de-DE', options);
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+//                date = (new Date(e.date)).toLocaleDateString('de-DE', options);
 //            alert(date);
         }
     }

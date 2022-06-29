@@ -1,6 +1,23 @@
 @extends('layouts.main')
 
 @section('main')
+    <div class="mb-5">
+        <div id="frm">
+            <div>
+                <h5>Liegeplatz Gruppen Eingeschaften</h5>
+                <x-form class="m-3">
+                    <x-form-input id="prefix" name="prefix" label="Prefix" />
+                    <x-form-input id="start" name="start" type="number" step="1" min="1" label="Startnummer" />
+                    <x-form-input id="end" name="end" type="number" step="1" min="1" label="Endnummer" />
+                    <x-form-input id="width" name="width" type="number" step="0.1" min="1" label="Breite" />
+                    <x-form-input id="length" name="length" type="number" step="0.1" min="1" label="Länge" />
+                    <x-form-input id="dailyPrice" name="dailyPrice" type="number" step="1" min="1" label="Tagespreis" />
+                </x-form>
+            </div>
+        </div>
+        <div id="mapBerths"></div>
+        <button id="storeBerths" class="btn btn-save">Alle Daten Speichern</button>
+    </div>
     <div>
         <div class="index-header mt-3">
             <div>
@@ -35,7 +52,8 @@
                     <td>{{ $item->daily_price }}</td>
                     <td class="hidden md:table-cell">{{ $item->lat }}</td>
                     <td class="hidden md:table-cell">{{ $item->lng }}</td>
-                    <td>{{ $item->enabled }}</td>
+                    <td rel="{{ $item->id }}">{!! $item->icon('enabled') !!}</td>
+
                     <td>
                         <x-nav-link href="{{ route('admin.guestBoatBerths.edit', $item) }}" icon="fas fa-edit" class="btn" title="Bearbeiten">
                             <span class="hidden md:visible">Edit</span>
@@ -62,5 +80,9 @@
 
 @push('inline-scripts')
     <script>
+        window.onload = () => {
+	        Edit.toggle("/admin/guestBoatBerths/toggle","enabled");
+	        Geo.berthMap('mapBerths','#storeBerths');
+        }
     </script>
 @endpush

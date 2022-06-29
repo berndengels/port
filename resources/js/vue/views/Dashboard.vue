@@ -9,8 +9,8 @@
 
 <script type="module">
 import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
-import Weather from "../../components/Weather";
-import WeatherMixin from "../../mixins/weather";
+import Weather from "v@/components/Weather";
+import WeatherMixin from "v@/mixins/weather";
 
 export default {
     name: "Dashboard",

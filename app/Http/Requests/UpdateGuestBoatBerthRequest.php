@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Models\GuestBoatBerth;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateGuestBoatBerthRequest extends FormRequest
+class UpdateGuestBoatBerthRequest extends AdminRequest
 {
     protected $modelName = GuestBoatBerth::class;
     /**
@@ -33,13 +33,13 @@ class UpdateGuestBoatBerthRequest extends FormRequest
     public function rules()
     {
         return [
-            'number'  => 'required',
-            'width'  => '',
-            'length'  => '',
-            'daily_price'  => '',
-            'lat'  => '',
-            'lng'  => '',
-            'enabled'  => '',
+            'number'        => 'required',
+            'width'         => '',
+            'length'        => '',
+            'daily_price'   => '',
+            'lat'           => '',
+            'lng'           => '',
+            'enabled'       => '',
         ];
     }
 }

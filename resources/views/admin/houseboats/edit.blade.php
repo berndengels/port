@@ -8,6 +8,7 @@
             @bind($houseboat)
             <x-form-input name="name" label="Name" placeholder="Hausboot Name" required />
             <x-form-select name="houseboat_model_id" label="Modell" :options="$models" required />
+            <x-form-select name="houseboat_owner_id" label="Eigentümer" :options="$owners" />
             <x-form-input name="calendar_color" type="color" label="Calender Farbe" placeholder="Calender Farbe" />
             @endbind
             <div class="mt-2">

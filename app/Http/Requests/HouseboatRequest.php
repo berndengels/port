@@ -25,6 +25,7 @@ class HouseboatRequest extends AdminRequest
     {
         $rules = [
             'houseboat_model_id'   => 'required',
+            'houseboat_owner_id'   => '',
             'name'              => 'required|min:3',
             'calendar_color'    => '',
         ];

@@ -7,7 +7,7 @@ use App\Http\Requests\StoreHouseboatOwnerRequest;
 use App\Http\Requests\UpdateHouseboatOwnerRequest;
 use Illuminate\Http\Response;
 
-class AdminHouseboatOwnerController extends Controller
+class AdminHouseboatOwnerController extends AdminController
 {
     /**
      * Display a listing of the resource.

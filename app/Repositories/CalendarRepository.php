@@ -16,9 +16,10 @@ class CalendarRepository
      * @param string $type
      * @param Collection|null $dates
      */
-    public function __construct(private string $type, private ?Collection $dates)
-    {
-    }
+    public function __construct(
+        private string $type,
+        private ?Collection $dates
+    ) {}
 
     /**
      * @param Collection $dates
