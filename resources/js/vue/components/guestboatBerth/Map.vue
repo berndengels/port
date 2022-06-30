@@ -49,12 +49,7 @@ export default {
             this.map = this.getMap();
             const drawControl = this.getDrawControl();
             this.map.addControl(drawControl);
-/*
-            const oImage = this.imageOverlay()
-            if(oImage) {
-                oImage.addTo(this.map);
-            }
-*/
+
             this.overlayData = this.getDataOverlay(this.data);
             if(this.overlayData) {
                 this.overlayData.addTo(this.map)

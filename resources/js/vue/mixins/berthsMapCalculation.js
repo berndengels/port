@@ -12,7 +12,7 @@ const BerthsMapCalculationMixin = {
 			mainLat: 54.025907,
 			mainLng: 13.911250,
 			mainZoom: 18,
-			minLayerZoom: 16,
+			minLayerZoom: 17,
 			pointRadius: 12,
 			overlayData: null,
 			tooltips: [],
@@ -40,12 +40,13 @@ const BerthsMapCalculationMixin = {
 				id: 'mapbox/satellite-v9',
 			};
 			let mapbox = L.tileLayer.provider('MapBox', mapboxOptions),
-				osm = L.tileLayer.provider('OpenSeaMap');
-			osm.addTo(map);
+				openseamap = L.tileLayer.provider('OpenSeaMap');
 
+			const oImage = this.imageOverlay();
 			var baseLayers = {
 				"Mapbox": mapbox,
-//				"OpenSeeMap": osm,
+				"OpenSeeMap": openseamap,
+				"PortImage": oImage,
 			};
 			L.control.layers(baseLayers).addTo(map);
 
@@ -246,14 +247,17 @@ const BerthsMapCalculationMixin = {
 		handleZoomChange({map: map, oData: oData, oImage: oImage} = {}) {
 			map.on('zoomend', () => {
 				if(map.getZoom() < this.minLayerZoom) {
+					alert('hide');
 					if(oData) {
-						alert('ok');
-						oData.removeFrom(map)
+						map.removeLayer(oData)
+						//oData.removeFrom(map)
 					}
 					if(oImage) {
-						oImage.removeFrom(map)
+						map.removeLayer(oImage)
+//						oImage.removeFrom(map)
 					}
 				} else {
+					alert('show');
 					if(oData) {
 						oData.addTo(map)
 					}
