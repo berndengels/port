@@ -42,11 +42,11 @@ const BerthsMapCalculationMixin = {
 				openseamap = L.tileLayer.provider('OpenSeaMap');
 
 			const oImage = this.imageOverlay();
-			oImage.addTo(map);
 
 			var baseLayers = {
 				"Mapbox": mapbox,
 				"OpenSeeMap": openseamap,
+				"PortImage": oImage,
 			};
 			L.control.layers(baseLayers).addTo(map);
 
