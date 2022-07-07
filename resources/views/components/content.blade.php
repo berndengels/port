@@ -4,6 +4,7 @@
         <i class="fas fa-bars"></i>
     </div>
 
+    @section('header')
     <header class="header">
         <div class="header__left">
             @if($guard)
@@ -25,6 +26,7 @@
             @endif
         </div>
     </header>
+    @show
 
     @if( $guard && auth($guard)->check() )
     <aside class="sidenav mt-0">
