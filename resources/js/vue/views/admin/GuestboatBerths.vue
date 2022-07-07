@@ -50,7 +50,7 @@ export default {
             loaderSize: '40px',
         }
     },
-    created() {
+    beforeCreate() {
         this.$store.dispatch("guestboatBerth/fetchData");
         this.$store.dispatch("guestboatBerth/fetchDocks")
     },
@@ -62,8 +62,7 @@ export default {
             errors: "guestboatBerth/errors",
         }),
         loaded() {
-            return true;
-//            return !!this.$store.state.guestboatBerth.data;
+            return !!this.$store.state.guestboatBerth.data || null === !this.$store.state.guestboatBerth.data;
         }
     },
     methods: {

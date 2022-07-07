@@ -218,6 +218,11 @@ Route::group([
         return 'wrong admin route';
     });
 });
+Route::get('hausboot', function() {
+    $file = database_path('gpx').'/hausboot.gpx';
+    $data = file_get_contents($file);
+    return view('public.pages.gpx', compact('data'));
+})->name('hausboot');
 
 Route::fallback(function () {
     return redirect('');

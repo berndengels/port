@@ -11,7 +11,7 @@ const BerthsMapCalculationMixin = {
 			mainZoom: 18,
 			minLayerZoom: 17,
 			pointRadius: 12,
-			overlayData: null,
+			overlayData: [],
 			tooltips: [],
 			mainOptions: {
 //		        drawControl: true,
@@ -53,33 +53,30 @@ const BerthsMapCalculationMixin = {
 			return map
 		},
 
-/*
-		DrawControl(map) {
-
-			return L.Control.extend({
-				options: {position: 'topleft'},
-				onAdd: (map) => {
-					let container = this._container = L.DomUtil.create('div', 'drawLine');
-					container.innerHTML = "<h2>&equiv; draw line</h2>";
-					container.title = "Draw Line";
-					L.DomEvent.on(container, "click", this.handleDrawClick )
-					return container;
-				},
-				onRemove: function(map) {
-					// Nothing to do here
-					L.DomEvent.off(this._container, "click", this.handleDrawClick )
-				}
-			});
-		},
-*/
-		getDataOverlay(data) {
-			if (data && data.length > 0) {
-				return L.geoJson(data, {
+		getDataOverlay() {
+			if (this.data && this.data.length > 0) {
+				return L.geoJson(this.data, {
 					pointToLayer: (feature, latlng) => this.handlePointToLayer(feature, latlng),
 					onEachFeature: (feature, layer) => this.handleEachFeature(feature, layer),
 				})
 			}
 			return null
+		},
+
+		getDataOverlayItem(item) {
+			if (item) {
+				return L.geoJson(item, {
+					pointToLayer: (feature, latlng) => this.handlePointToLayer(feature, latlng),
+					onEachFeature: (feature, layer) => this.handleEachFeature(feature, layer),
+				})
+			}
+			return null
+		},
+
+		updateDataOverlay(data) {
+			if(this.overlayData && data) {
+				this.overlayData.addData(data)
+			}
 		},
 
 		handlePointToLayer(feature, latlng) {
@@ -186,52 +183,73 @@ const BerthsMapCalculationMixin = {
 			return d * 1000; // meters
 		},
 
-		findEquidistantPoints({
-	          latLng1,
-	          latLng2,
-	          start,
-	          end,
-	          boat_dock_id = "",
-	          width = null,
-	          length,
-	          daily_price
-	      } = {}) {
+		findEquidistantPoints(
+			latLng1,
+	        latLng2,
+			calcData
+		) {
 			let data = [],
-				pointCount = end - start + 1,
 				distance = this.getDistance(latLng1, latLng2),
+				start = parseInt(calcData.start),
+				end = parseInt(calcData.end),
+				pointCount = end - start + 1,
 				distanceBetweenPoints = distance / pointCount,
+				lat1 = parseFloat(latLng1.lat),
+				lng1 = parseFloat(latLng1.lng),
+				lat2 = parseFloat(latLng2.lat),
+				lng2 = parseFloat(latLng2.lng),
 				i, k;
-
+/*
+			console.info("distance", distance)
+			console.info("pointCount", pointCount)
+			console.info("distanceBetweenPoints", distanceBetweenPoints)
+			console.info("start", calcData.start)
+			console.info("end", calcData.end)
+*/
 			for (i = start, k = 1; i <= end; i++, k++) {
+//				console.info("loop", i)
 				let t = (distanceBetweenPoints * k - distanceBetweenPoints / 2) / distance,
-					latLng = new L.LatLng(
-						(1 - t) * latLng1.lat + t * latLng2.lat,
-						(1 - t) * latLng1.lng + t * latLng2.lng
-					);
-
+					latitude = (1 - t) * lat1 + t * lat2,
+					longitude = (1 - t) * lng1 + t * lng2,
+					latLng;
+				try {
+					latLng = new L.LatLng(latitude, longitude);
+				} catch(err) {
+					console.info("latLng Error", err.toString());
+					console.info("t", t);
+					console.info("latitude", latitude);
+					console.info("longitude", longitude);
+					return null;
+				}
 				data.push(this.toFeatures({
 					point: latLng,
 					number: i,
-					boat_dock_id: boat_dock_id,
-					start: start,
-					end: end,
-					width: width ?? parseFloat(distanceBetweenPoints).toFixed(1),
-					length: length,
-					daily_price: daily_price,
+					boat_dock_id: calcData.boat_dock_id,
+					width: calcData.width ?? parseFloat(distanceBetweenPoints).toFixed(1),
+					length: calcData.length,
+					daily_price: calcData.daily_price,
+					enabled: calcData.end,
 				}));
 			}
+
+//			console.info("toFeatures", data)
 			return data;
 		},
 
 		toFeatures({
 	           point,
 	           number,
-	           boat_dock_id = "",
+	           boat_dock_id = 0,
 	           width,
 	           length,
-	           daily_price
+	           daily_price,
+			   enabled = true,
            } = {}) {
-			const dock = this.docks.filter(d => d.id === boat_dock_id);
+			let dock = null;
+			if(boat_dock_id > 0) {
+				dock = this.docks.filter(d => d.id === boat_dock_id);
+				dock = dock ? dock[0] : null;
+			}
 			const feature = {
 				"type": "Feature",
 				"geometry": {
@@ -241,14 +259,13 @@ const BerthsMapCalculationMixin = {
 				"properties": {
 					"boat_dock_id": boat_dock_id,
 					"number": number,
-					"dock": dock,
-					"text": dock ? dock.name + number : number,
+					"text": (dock && undefined !== dock.name) ? dock.name + number.toString() : number.toString(),
 					"lat": point.lat,
 					"lng": point.lng,
 					"width": width,
 					"length": length,
 					"daily_price": daily_price,
-					"enabled": true,
+					"enabled": enabled,
 				}
 			};
 			return feature

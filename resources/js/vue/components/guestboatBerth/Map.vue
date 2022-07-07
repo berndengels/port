@@ -35,7 +35,7 @@ export default {
             map: null,
             sidebar: null,
             showCalcForm: false,
-            overlayData: null,
+            overlayData: [],
             tooltips: [],
         }
     },
@@ -54,7 +54,7 @@ export default {
         initMap() {
             this.map = this.getMap();
 
-            this.overlayData = this.getDataOverlay(this.data);
+            this.overlayData = this.getDataOverlay();
             if(this.overlayData) {
                 this.overlayData.addTo(this.map)
             }
@@ -67,15 +67,26 @@ export default {
             this.map.addControl(L.control.drawLine({
                 sidebar: this.sidebar,
                 calcData: this.calcData,
-                featureHandler: this.handleFeature()
+                featureHandler: (p) => this.handleFeature(p)
             }));
 
 //            this.handleZoomChange({map: this.map, oData: this.overlayData, oImage: oImage})
-//            this.handleZoomChange({map: this.map, oData: this.overlayData});
-//            this.handleDrawControlEvents(this.map)
+            this.handleZoomChange({map: this.map, oData: this.overlayData})
         },
-        handleFeature() {
-//            alert('handleFeature')
+        handleFeature(points) {
+            if(points && 2 === points.length) {
+                let data = this.findEquidistantPoints(points[0], points[1], this.calcData);
+                console.info("new data", data);
+                if(data) {
+                    data.forEach(el => {
+//                        this.addData(el);
+//                        let item = this.getDataOverlayItem(el)
+//                        console.info("item", item)
+//                        this.overlayData.addData(item)
+                    });
+//                    this.refill(data);
+                }
+            }
         },
 
         closeCalcForm() {

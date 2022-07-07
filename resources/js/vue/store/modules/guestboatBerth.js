@@ -10,11 +10,11 @@ const namespaced = true,
 				boat_dock_id: 1,
 				dock: null,
 				enabled: true,
-				start: 46,
-				end: 76,
+				start: 20,
+				end: 35,
 				width: null,
-				length: 14,
-				daily_price: 14,
+				length: 12,
+				daily_price: 12,
 			},
 		}
 	},
@@ -32,8 +32,18 @@ const namespaced = true,
 		mSetData: (state, data) => { state.data = data },
 		mSetDocks: (state, data) => { state.docks = data },
 		setCalcData: (state, data) => { state.calcData = data },
-		mPushSelected: (state, data) => { state.data.push(data) },
-		destroySelected: (state, data) => { state.data = state.data.filter(b => b !== data) },
+		mPushSelected: (state, data) => {
+			if(state.data && state.data.length > 0) {
+				state.data.push(data)
+			} else {
+				state.data = data
+			}
+		},
+		destroySelected: (state, data) => {
+			if(state.data && state.data.length > 0) {
+				state.data = state.data.filter(b => b !== data)
+			}
+		},
 		updateSelected: (state, data) => {
 			state.data = state.data.map(b => b.properties.id === data.properties.id ? data : b)
 		},
@@ -70,7 +80,6 @@ const namespaced = true,
 						commit("errors", null);
 					}
 				}).catch(err => console.info("error", err));
-
 		},
 		fetchDocks({ commit }) {
 			axios.get('/api/guestboatBerths/docks')
