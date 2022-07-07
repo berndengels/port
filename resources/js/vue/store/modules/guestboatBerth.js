@@ -43,11 +43,14 @@ const namespaced = true,
 		data: (state) => state.data,
 		docks: (state) => state.docks,
 		docksOptions: (state) => {
-			let data = state.docks.map(i => {
-				return {"id": i.id, "name": i.name}
-			});
-			data.unshift({id: "", name: "bitte wählen"});
-			return data;
+			if(state.docks && state.docks.length > 0) {
+				let data = state.docks.map(i => {
+					return {"id": i.id, "name": i.name}
+				});
+				data.unshift({id: "", name: "bitte wählen"});
+				return data;
+			}
+			return null;
 		},
 		calcData: (state) => state.calcData,
 		selected: (state) => state.selected ?? null,
