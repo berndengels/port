@@ -36,7 +36,6 @@
         window.onload = () => {
 	        const gpxData = '{!! $data !!}',
 		        map = L.map('map');
-	        popup = null,
 
 		        L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 			        attribution: 'Map data &copy; <a href="http://www.osm.org">OpenStreetMap</a>'
