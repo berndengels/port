@@ -3,6 +3,7 @@
         <form
             :id="id"
             :data="data"
+            :docksOptions="docksOptions"
             :class="css"
             :errors="errors"
         >
@@ -14,7 +15,7 @@
 <script>
 export default {
     name: "BerthsCalculationForm",
-    props: ['id', 'data', 'errors', 'css'],
+    props: ['id', 'data', 'docksOptions', 'errors', 'css'],
 }
 </script>
 

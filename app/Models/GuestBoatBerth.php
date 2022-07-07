@@ -36,6 +36,9 @@ use Illuminate\Database\Eloquent\Model;
  * @method static Builder|GuestBoatBerth whereNumber($value)
  * @method static Builder|GuestBoatBerth whereWidth($value)
  * @mixin Eloquent
+ * @property int|null $boat_dock_id
+ * @property-read BoatDock|null $dock
+ * @method static Builder|GuestBoatBerth whereBoatDockId($value)
  */
 class GuestBoatBerth extends Model
 {
@@ -52,8 +55,14 @@ class GuestBoatBerth extends Model
         'length'        => 'float',
         'daily_price'   => 'float',
     ];
+
     public function guestBoatDates()
     {
         return $this->hasMany(GuestBoatDates::class);
+    }
+
+    public function dock()
+    {
+        return $this->belongsTo(BoatDock::class, 'boat_dock_id', 'id');
     }
 }

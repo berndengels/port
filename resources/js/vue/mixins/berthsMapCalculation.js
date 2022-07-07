@@ -1,14 +1,11 @@
-import * as L from "leaflet";
-//require('mapbox-gl/dist/mapbox-gl')
 import mapboxgl from '!mapbox-gl';
-require('leaflet-providers');
-require('leaflet-imageoverlay-rotated');
-require('leaflet-draw/dist/leaflet.draw');
+import * as L from "leaflet";
 
 const BerthsMapCalculationMixin = {
 	data() {
 		return {
 			map: null,
+			sidebar: null,
 			mainLat: 54.025907,
 			mainLng: 13.911250,
 			mainZoom: 18,
@@ -25,7 +22,9 @@ const BerthsMapCalculationMixin = {
 	},
 	methods: {
 		getMap() {
-			const map = L.map(this.id, this.mainOptions).setView([this.mainLat, this.mainLng], this.mainZoom);
+			const map = L.map(this.id, this.mainOptions).setView([this.mainLat, this.mainLng], this.mainZoom, {
+				doubleClickZoom: false,
+			});
 			L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 				maxZoom: 19,
 				attribution: '© OpenStreetMap'
@@ -37,47 +36,44 @@ const BerthsMapCalculationMixin = {
 				tileSize: 512,
 				maxZoom: this.maxZoom,
 				zoomOffset: -1,
-				id: 'mapbox/satellite-v9',
+				id: 'mapbox/satellite-streets-v11',
 			};
 			let mapbox = L.tileLayer.provider('MapBox', mapboxOptions),
 				openseamap = L.tileLayer.provider('OpenSeaMap');
 
 			const oImage = this.imageOverlay();
+			oImage.addTo(map);
+
 			var baseLayers = {
 				"Mapbox": mapbox,
 				"OpenSeeMap": openseamap,
-				"PortImage": oImage,
 			};
 			L.control.layers(baseLayers).addTo(map);
 
 			return map
 		},
 
-		getDrawControl() {
-			const drawnItems = new L.FeatureGroup();
-			this.map.addLayer(drawnItems);
+/*
+		DrawControl(map) {
 
-			return new L.Control.Draw({
-				draw: {
-					polyline: {
-						guidelineDistance: 10,
-					},
-					polygon: null,
-					rectangle: null,
-					point: null,
-					circle: null,
-					circlemarker: null,
-					marker: null,
-					edit: null,
+			return L.Control.extend({
+				options: {position: 'topleft'},
+				onAdd: (map) => {
+					let container = this._container = L.DomUtil.create('div', 'drawLine');
+					container.innerHTML = "<h2>&equiv; draw line</h2>";
+					container.title = "Draw Line";
+					L.DomEvent.on(container, "click", this.handleDrawClick )
+					return container;
 				},
-				edit: {
-					featureGroup: drawnItems
+				onRemove: function(map) {
+					// Nothing to do here
+					L.DomEvent.off(this._container, "click", this.handleDrawClick )
 				}
 			});
 		},
-
+*/
 		getDataOverlay(data) {
-			if(data && data.length > 0) {
+			if (data && data.length > 0) {
 				return L.geoJson(data, {
 					pointToLayer: (feature, latlng) => this.handlePointToLayer(feature, latlng),
 					onEachFeature: (feature, layer) => this.handleEachFeature(feature, layer),
@@ -95,16 +91,18 @@ const BerthsMapCalculationMixin = {
 				fillColor: "#fff",
 				fillOpacity: 1,
 			};
-			emitter.on("geoDataSelected", item => {
-				if(feature.properties.id === item.properties.id) {
-					options = {
-						...options,
-						color: "#d00",
-						fillColor: "#d00",
-					}
-				}
-			});
-			const cMarker = L.circleMarker([latlng.lat, latlng.lng], options);
+			/*
+						emitter.on("geoDataSelected", item => {
+							if(feature.properties.id === item.properties.id) {
+								options = {
+									...options,
+									color: "#d00",
+									fillColor: "#d00",
+								}
+							}
+						});
+			*/
+			let cMarker = L.circleMarker([latlng.lat, latlng.lng], options);
 			cMarker.on('click', () => {
 				this.select(feature);
 				this.$emit('showEditForm', true)
@@ -114,11 +112,13 @@ const BerthsMapCalculationMixin = {
 
 		handleEachFeature(feature, layer) {
 			let tooltip = this.getPointTooltip(feature, layer);
-			emitter.on("geoDataChanged", item => {
-				if(feature.properties.id === item.properties.id) {
-					tooltip.setContent(item.properties.number)
-				}
-			});
+			/*
+						emitter.on("geoDataChanged", item => {
+							if(feature.properties.id === item.properties.id) {
+								tooltip.setContent(item.properties.number)
+							}
+						});
+			*/
 			tooltip.addTo(this.map);
 
 			let popup = this.getPointPopup(feature, layer);
@@ -127,37 +127,39 @@ const BerthsMapCalculationMixin = {
 
 		getPointTooltip(feature, layer) {
 			let cls = 'text';
-			emitter.on("geoDataSelected", item => {
-				if(feature.properties.id === item.properties.id) {
-					cls += " selected";
-					console.info("geoDataSelected", cls)
-				}
-			});
-
+			/*
+						emitter.on("geoDataSelected", item => {
+							if(feature.properties.id === item.properties.id) {
+								cls += " selected";
+								console.info("geoDataSelected", cls)
+							}
+						});
+			*/
 			return L.tooltip({
-					permanent: true,
-					direction: 'center',
-					className: cls,
-				})
+				permanent: true,
+				direction: 'center',
+				className: cls,
+			})
 				.setContent(feature.properties.number)
 				.setLatLng(layer.getLatLng());
 		},
 
 		getPointPopup(feature, layer) {
 			let html = "<ul>";
+			html += "<li>Steg: " + feature.properties.dock ?? '' + "</li>";
 			html += "<li>Nummer: " + feature.properties.number + "</li>";
 			html += "<li>Breite: " + feature.properties.width + "m</li>";
 			html += "<li>Länge: " + feature.properties.length + "m</li>";
 
-			if(feature.properties.daily_price) {
+			if (feature.properties.daily_price) {
 				html += "<li>Tagespreis: " + feature.properties.daily_price + " €</li>";
 			}
 			html += "</ul>";
 
 			return new L.tooltip({
-					direction: 'top',
-					className: 'text'
-				})
+				direction: 'top',
+				className: 'text'
+			})
 				.setContent(html)
 				.setLatLng(layer.getLatLng());
 		},
@@ -169,27 +171,36 @@ const BerthsMapCalculationMixin = {
 				lat2 = latLng2.lat,
 				lng2 = latLng2.lng,
 
-				R  = 6378.137, // Radius of earth in KM
+				R = 6378.137, // Radius of earth in KM
 				PI = Math.PI,
 				dLat = lat2 * PI / 180 - lat1 * PI / 180,
 				dLng = lng2 * PI / 180 - lng1 * PI / 180,
-				sinDLat = Math.sin(dLat/2),
-				sinDLng = Math.sin(dLng/2),
+				sinDLat = Math.sin(dLat / 2),
+				sinDLng = Math.sin(dLng / 2),
 				a = sinDLat * sinDLat +
 					Math.cos(lat1 * PI / 180) * Math.cos(lat2 * PI / 180) *
 					sinDLng * sinDLng,
-				c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)),
+				c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)),
 				d = R * c;
 
 			return d * 1000; // meters
 		},
 
-		findEquidistantPoints({ latLng1, latLng2, start, end, prefix = "", width = null, length, daily_price } = {}) {
+		findEquidistantPoints({
+	          latLng1,
+	          latLng2,
+	          start,
+	          end,
+	          boat_dock_id = "",
+	          width = null,
+	          length,
+	          daily_price
+	      } = {}) {
 			let data = [],
 				pointCount = end - start + 1,
 				distance = this.getDistance(latLng1, latLng2),
 				distanceBetweenPoints = distance / pointCount,
-				i,k;
+				i, k;
 
 			for (i = start, k = 1; i <= end; i++, k++) {
 				let t = (distanceBetweenPoints * k - distanceBetweenPoints / 2) / distance,
@@ -201,7 +212,7 @@ const BerthsMapCalculationMixin = {
 				data.push(this.toFeatures({
 					point: latLng,
 					number: i,
-					prefix: prefix,
+					boat_dock_id: boat_dock_id,
 					start: start,
 					end: end,
 					width: width ?? parseFloat(distanceBetweenPoints).toFixed(1),
@@ -212,16 +223,26 @@ const BerthsMapCalculationMixin = {
 			return data;
 		},
 
-		toFeatures({point, number, id= null, prefix = "", width, length, daily_price } = {}) {
-			return {
+		toFeatures({
+	           point,
+	           number,
+	           boat_dock_id = "",
+	           width,
+	           length,
+	           daily_price
+           } = {}) {
+			const dock = this.docks.filter(d => d.id === boat_dock_id);
+			const feature = {
 				"type": "Feature",
 				"geometry": {
 					"type": "Point",
 					"coordinates": [point.lng, point.lat]
 				},
 				"properties": {
-					"id": id,
-					"number": prefix + number,
+					"boat_dock_id": boat_dock_id,
+					"number": number,
+					"dock": dock,
+					"text": dock ? dock.name + number : number,
 					"lat": point.lat,
 					"lng": point.lng,
 					"width": width,
@@ -229,15 +250,16 @@ const BerthsMapCalculationMixin = {
 					"daily_price": daily_price,
 					"enabled": true,
 				}
-			}
+			};
+			return feature
 		},
 
 		imageOverlay() {
-			const topLeft  = L.latLng(54.02663557205177, 13.910246860670147),
-				topRight   = L.latLng(54.02554842560438, 13.913025141712534),
+			const topLeft = L.latLng(54.02663557205177, 13.910246860670147),
+				topRight = L.latLng(54.02554842560438, 13.913025141712534),
 				bottomLeft = L.latLng(54.02617235660544, 13.909715788931882);
 
-			return L.imageOverlay.rotated(this.mainImage, topLeft, topRight, bottomLeft,{
+			return L.imageOverlay.rotated(this.mainImage, topLeft, topRight, bottomLeft, {
 				opacity: this.mainImageOpacity,
 				interactive: true,
 				attribution: "&copy; Yachtlieger Netzelkow"
@@ -246,22 +268,22 @@ const BerthsMapCalculationMixin = {
 
 		handleZoomChange({map: map, oData: oData, oImage: oImage} = {}) {
 			map.on('zoomend', () => {
-				if(map.getZoom() < this.minLayerZoom) {
-					alert('hide');
-					if(oData) {
-						map.removeLayer(oData)
+				if (map.getZoom() < this.minLayerZoom) {
+					if (oData) {
+						map.removeLayer(oData);
+						oData.clearLayers()
 						//oData.removeFrom(map)
 					}
-					if(oImage) {
-						map.removeLayer(oImage)
+					if (oImage) {
+						map.removeLayer(oImage);
+						oImage.clearLayers()
 //						oImage.removeFrom(map)
 					}
 				} else {
-					alert('show');
-					if(oData) {
+					if (oData) {
 						oData.addTo(map)
 					}
-					if(oImage) {
+					if (oImage) {
 						oImage.addTo(map)
 					}
 				}

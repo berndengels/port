@@ -1,10 +1,21 @@
 const mix = require('laravel-mix');
 
+const vueCustomsComponents = [
+	'Sidebar',
+//	'MyButton',
+//	'MyFormErrors',
+];
 mix.autoload({
 		'jquery': ['jQuery', '$'],
 	})
 	.js('resources/js/app.js', 'public/js')
-	.js('resources/js/app-admin.js', 'public/js')
+	.js('resources/js/app-admin.js', 'public/js').vue({
+		options: {
+			compilerOptions: {
+				isCustomElement: (tag) => vueCustomsComponents.includes(tag),
+			},
+		},
+	})
 	.js('node_modules/leaflet', 'public/js')
 	.js('node_modules/leaflet-providers', 'public/js')
 	.css('node_modules/leaflet/dist/leaflet.css', 'public/css')

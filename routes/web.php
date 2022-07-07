@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminBothDockController;
 use App\Http\Controllers\Admin\AdminConfigEntityTypeController;
 use App\Http\Controllers\Admin\AdminConfigSaisonRentController;
 use App\Http\Controllers\Admin\AdminConfigSaisonRentDatesController;
@@ -159,6 +160,7 @@ Route::group([
     Route::resource('materials', AdminMaterialController::class);
     Route::resource('materialCategories', AdminMaterialCategoryController::class);
     Route::resource('serviceRequests', AdminServiceRequestController::class);
+    Route::resource('boatDocks', AdminBothDockController::class);
 
     Route::group([
             'prefix' => 'config',

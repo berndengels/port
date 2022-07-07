@@ -5,7 +5,6 @@
         </div>
         <div v-else>
             <Map
-                id="mapBerths"
                 :data="data"
                 @showEditForm="handleEditForm"
             />
@@ -13,13 +12,16 @@
                 v-if="selected"
                 v-show="showEditForm"
                 :data="selected.properties"
+                :docksOptions="docksOptions"
                 :errors="errors"
                 @showEditForm="handleEditForm"
             />
-            <FormCalculateBerths
+
+            <!--FormCalculateBerths
                 v-show="showCalculationForm"
+                :docksOptions="docksOptions"
                 @showCalculationForm="handleCalculationForm"
-            />
+            /-->
             <Table
                 :data="data"
                 @showEditForm="handleEditForm"
@@ -34,11 +36,11 @@ import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
 import Map from "v@/components/guestboatBerth/Map";
 import Table from "v@/components/guestboatBerth/Table";
 import Edit from "v@/components/guestboatBerth/Edit";
-import FormCalculateBerths from "v@/components/guestboatBerth/FormCalculateBerths";
+//import FormCalculateBerths from "v@/components/guestboatBerth/FormCalculateBerths";
 
 export default {
     name: "GuestboatBerths",
-    components: {FormCalculateBerths, Edit, Table, Map, PulseLoader},
+    components: {Edit, Table, Map, PulseLoader},
     data() {
         return {
             showCalculationForm: false,
@@ -49,10 +51,12 @@ export default {
         }
     },
     created() {
-        this.$store.dispatch("guestboatBerth/fetchData")
+        this.$store.dispatch("guestboatBerth/fetchData");
+        this.$store.dispatch("guestboatBerth/fetchDocks")
     },
     computed: {
         ...mapGetters({
+            docksOptions: "guestboatBerth/docksOptions",
             data: "guestboatBerth/data",
             selected: "guestboatBerth/selected",
             errors: "guestboatBerth/errors",

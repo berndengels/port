@@ -390,6 +390,14 @@ return [
                         'hide_on_mobile' => false,
                     ],
                     [
+                        'permissions'   => ['read BoatDock'],
+                        'text'  => 'Stege',
+                        'title' => 'Boots Stege',
+                        'icon'  => 'fas fa-route',
+                        'route' => 'admin.boatDocks.index',
+                        'hide_on_mobile' => false,
+                    ],
+                    [
                         'permissions'   => ['read GuestBoatBerth'],
                         'text'  => 'Liegeplätze',
                         'title' => 'Boots Liegeplätze',

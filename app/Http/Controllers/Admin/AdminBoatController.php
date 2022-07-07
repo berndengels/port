@@ -17,7 +17,6 @@ class AdminBoatController extends AdminController
 
     public function __construct()
     {
-        parent::__construct();
         $this->boatTypes = config('port.main.boat.types');
     }
 

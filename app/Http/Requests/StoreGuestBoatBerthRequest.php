@@ -34,6 +34,7 @@ class StoreGuestBoatBerthRequest extends AdminRequest
     {
         return [
             'number'        => 'required|unique:guest_boat_berths,number',
+            'boat_dock_id'  => '',
             'width'         => '',
             'length'        => '',
             'daily_price'   => '',

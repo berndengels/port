@@ -61,6 +61,7 @@ use Spatie\Period\Period;
  * @method static Builder|CaravanDates dailyPrices()
  * @property int $is_paid
  * @method static Builder|CaravanDates whereIsPaid($value)
+ * @method static Builder|CaravanDates caravan(?int $caravanId = null)
  */
 class CaravanDates extends BaseModel
 {

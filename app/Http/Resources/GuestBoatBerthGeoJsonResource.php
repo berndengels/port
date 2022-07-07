@@ -27,6 +27,8 @@ class GuestBoatBerthGeoJsonResource extends JsonResource
             ],
             'properties' => [
                 'id'            => $this->id,
+                'boat_dock_id'  => $this->boat_dock_id,
+                'dock'          => $this->dock ? $this->dock->name : null,
                 'number'        => $this->number,
                 'width'         => $this->width,
                 'length'        => $this->length,

@@ -4,6 +4,7 @@
         <table class="table w-full mt-5">
             <tr>
                 <th class="hidden md:table-cell">ID</th>
+                <th>Steg</th>
                 <th>Nummer</th>
                 <th class="hidden md:table-cell">Länge</th>
                 <th class="hidden md:table-cell">Breite</th>
@@ -13,6 +14,7 @@
             </tr>
             <tr v-for="item in data" :key="item.properties.id">
                 <td class="hidden md:table-cell">{{ item.properties.id }}</td>
+                <td class="hidden md:table-cell">{{ item.properties.dock }}</td>
                 <td ><a href="#" @click.prevent="selectItem(item)">{{ item.properties.number }}</a></td>
                 <td class="hidden md:table-cell">{{ item.properties.length }} m</td>
                 <td class="hidden md:table-cell">{{ item.properties.width }} m</td>

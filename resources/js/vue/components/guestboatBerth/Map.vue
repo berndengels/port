@@ -1,10 +1,11 @@
 <template>
     <div>
         <div id="mapBerths"></div>
-        <FormCalculateBerths
-            v-show="showCalcForm"
-            @closeCalcForm="closeCalcForm"
-        />
+        <Sidebar id="sidebar">
+            <FormCalculateBerths
+                @closeCalcForm="closeCalcForm"
+            />
+        </Sidebar>
         <div class="m-5">
             <MyButton inline="true">update all</MyButton>
             <MyButton inline="true">remove all</MyButton>
@@ -13,20 +14,27 @@
 </template>
 
 <script>
+import * as L from "leaflet";
+require('leaflet-providers');
+require('leaflet-imageoverlay-rotated');
+require('leaflet-draw/dist/leaflet.draw');
+require('leaflet-sidebar/src/L.Control.Sidebar');
 import {mapActions, mapGetters} from "vuex";
 import MyButton from "v@/components/form/MyButton";
 import BerthsMapCalculationMixin from "v@/mixins/berthsMapCalculation";
 import FormCalculateBerths from "v@/components/guestboatBerth/FormCalculateBerths";
+require('v@/controls/drawline');
 
 export default {
     name: "Map",
     components: {FormCalculateBerths, MyButton},
     mixins: [BerthsMapCalculationMixin],
-    props: ['id', 'data'],
+    props: ['data'],
     data() {
         return {
-            id: this.id,
+            id: "mapBerths",
             map: null,
+            sidebar: null,
             showCalcForm: false,
             overlayData: null,
             tooltips: [],
@@ -37,49 +45,45 @@ export default {
     },
     computed: {
         ...mapGetters({
+            docks: "guestboatBerth/docks",
             calcData: "guestboatBerth/calcData",
             selected: "guestboatBerth/selected",
+            selectedDock: "guestboatBerth/selectedDock",
         }),
-    },
-    watch() {
-
     },
     methods: {
         initMap() {
             this.map = this.getMap();
-            const drawControl = this.getDrawControl();
-            this.map.addControl(drawControl);
 
             this.overlayData = this.getDataOverlay(this.data);
             if(this.overlayData) {
                 this.overlayData.addTo(this.map)
             }
 
-//            this.handleZoomChange({map: this.map, oData: this.overlayData, oImage: oImage})
-            this.handleZoomChange({map: this.map, oData: this.overlayData});
-            this.handleDrawControlEvents(this.map)
-        },
-        handleDrawControlEvents(map) {
-            map.on('draw:drawstart', () => {
-                this.showCalcForm = true
+            this.sidebar = L.control.sidebar('sidebar', {
+                closeButton: false,
+                position: 'right'
             });
-            map.on('draw:created', ({layer}) => {
-                const pointStart = layer.getLatLngs()[0],
-                    pointEnd = layer.getLatLngs()[1],
-                    params = {
-                        ...this.calcData,
-                        latLng1: pointStart,
-                        latLng2: pointEnd,
-                    };
-                let data = this.findEquidistantPoints(params);
+            this.map.addControl(this.sidebar);
+            this.map.addControl(L.control.drawLine({
+                sidebar: this.sidebar,
+                calcData: this.calcData,
+                featureHandler: this.handleFeature()
+            }));
 
-                data.forEach(el => this.addData(el));
-                this.refill(data);
-                this.showCalcForm = false
-            });
+//            this.handleZoomChange({map: this.map, oData: this.overlayData, oImage: oImage})
+//            this.handleZoomChange({map: this.map, oData: this.overlayData});
+//            this.handleDrawControlEvents(this.map)
         },
+        handleFeature() {
+//            alert('handleFeature')
+        },
+
         closeCalcForm() {
-            this.showCalcForm = false
+            this.sidebar.hide()
+        },
+        saveCalcForm() {
+            this.sidebar.hide()
         },
         ...mapActions({
             select: "guestboatBerth/select",

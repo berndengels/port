@@ -7,6 +7,7 @@
                 :errors="errors"
         >
             <MyCheckbox name="enabled" label="Aktiv" @change="onChange" />
+            <MySelect name="boat_dock_id" label="Steg" :options="docksOptions" @change="onChange" />
             <MyInput name="number" label="Nummer" @change="onChange" />
             <MyInputNumber name="width" label="Breite" placeholder="Breite"
                 type="number"
@@ -41,11 +42,12 @@ import MyCheckbox from "v@/components/form/berth/elements/MyCheckbox";
 import MyButton from "v@/components/form/MyButton";
 import MyInputNumber from "v@/components/form/berth/elements/MyInputNumber";
 import MyBerthForm from "v@/components/form/berth/MyBerthForm";
+import MySelect from "v@/components/form/berth/elements/MySelect";
 
 export default {
     name: "Edit",
-    components: {MyBerthForm, MyInput, MyInputNumber, MyCheckbox, MyButton},
-    props: ['data'],
+    components: {MySelect, MyBerthForm, MyInput, MyInputNumber, MyCheckbox, MyButton},
+    props: ['data', 'docksOptions'],
     data() {
         return {
             overlayData: null,
@@ -59,6 +61,12 @@ export default {
     },
     methods: {
         onChange(e) {
+            if("boat_dock_id" === e.target.name) {
+                this.selectDock({
+                    id: e.target.value,
+                    name: e.target.innerText,
+                });
+            }
             const data = {
                 type: this.selected.type,
                 geometry: this.selected.geometry,

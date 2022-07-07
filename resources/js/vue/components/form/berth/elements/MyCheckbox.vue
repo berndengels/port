@@ -6,6 +6,7 @@
             <div :class="{'inline': inline}">
                 <input v-if="data && undefined !== data[name]"
                        type="checkbox"
+                       :id="id ?? name"
                        :name="name"
                        :class="css"
                        :value="data[name]"
@@ -14,6 +15,7 @@
                 />
                 <input v-else
                        type="checkbox"
+                       :id="id ?? name"
                        :name="name"
                        :class="css"
                        @change="handleChange"
@@ -30,7 +32,7 @@ import MyFormErrors from "v@/components/form/MyFormErrors";
 export default {
     name: "MyCheckbox",
     components: [MyFormErrors],
-    props: ['name', 'label', 'css', 'inline'],
+    props: ['id', 'name', 'label', 'css', 'inline'],
     data() {
         return {
             data: this.$parent.$props.data ?? null,

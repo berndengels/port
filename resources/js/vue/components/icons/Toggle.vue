@@ -3,25 +3,30 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import {mapActions, mapGetters} from "vuex";
 
 export default {
     name: "Toggle",
     props: ['item', 'field'],
     data() {
         return {
-            css: this.item[this.field] ? "text-xl text-green-600 fas fa-check-circle on" : "text-xl text-red-600 fas fa-times off",
+            css: this.item.properties[this.field] ? "text-xl text-green-600 fas fa-check-circle on" : "text-xl text-red-600 fas fa-times off",
         }
     },
     computed: {
-
+        ...mapGetters({
+//            selected: "guestboatBerth/selected",
+        }),
     },
     methods: {
         toggle(item) {
-            const data = { ...item };
-            data[this.field] = !item[this.field];
+            let data = {
+                type: item.type,
+                geometry: item.geometry,
+                properties: { ...item.properties, [this.field]: !item.properties[this.field] }
+            };
             this.update(data);
-            this.css = data[this.field] ? "text-xl text-green-600 fas fa-check-circle on" : "text-xl text-red-600 fas fa-times off"
+            this.css = !item.properties[this.field] ? "text-xl text-green-600 fas fa-check-circle on" : "text-xl text-red-600 fas fa-times off"
         },
         ...mapActions({
             update: "guestboatBerth/update",

@@ -6,8 +6,7 @@
                 id="frmBerthCalculate"
         >
             <MyCheckbox name="enabled" label="Aktiv" @change="onChange" />
-            <MyInput name="prefix" label="Prefix" @change="onChange" />
-
+            <MySelect name="boat_dock_id" label="Steg" :options="docksOptions" @change="onChange" />
             <MyInputNumber name="start" label="Startnummer" placeholder="Startnummer"
                  type="number"
                  step="1"
@@ -38,9 +37,7 @@
                 min="1"
                 @change="onChange"
             />
-            <div class="mt-5">
-                <MyButton inline="true" @click.prevent="$emit('showCalculationForm', false)">Schliessen</MyButton>
-            </div>
+            <MyButton css="btn btn-save" name="btnClose" @click.prevent="$emit('closeCalcForm', false)">Schliessen</MyButton>
         </BerthsCalculationForm>
     </div>
 </template>
@@ -49,20 +46,28 @@
 import { mapActions, mapGetters } from "vuex";
 import MyInput from "v@/components/form/berthsCalculation/elements/MyInput";
 import MyCheckbox from "v@/components/form/berthsCalculation/elements/MyCheckbox";
-import MyButton from "v@/components/form/MyButton";
 import MyInputNumber from "v@/components/form/berthsCalculation/elements/MyInputNumber";
 import BerthsCalculationForm from "v@/components/form/berthsCalculation/BerthsCalculationForm";
+import MySelect from "v@/components/form/berthsCalculation/elements/MySelect";
+import MyButton from "v@/components/form/MyButton";
 
 export default {
     name: "FormCalculateBerths",
-    components: {BerthsCalculationForm, MyInput, MyInputNumber, MyCheckbox, MyButton},
+    components: {MyButton, MySelect, BerthsCalculationForm, MyInput, MyInputNumber, MyCheckbox},
     computed: {
         ...mapGetters({
             calcData: "guestboatBerth/calcData",
+            docksOptions: "guestboatBerth/docksOptions",
         }),
     },
     methods: {
         onChange(e) {
+            if("boat_dock_id" === e.target.name) {
+                this.selectDock({
+                    id: e.target.value,
+                    name: e.target.innerText,
+                });
+            }
             this.setCalcData({ ...this.calcData, [e.target.name]: e.target.value });
         },
         close() {
@@ -70,6 +75,7 @@ export default {
         },
         ...mapActions({
             setCalcData: "guestboatBerth/setCalcData",
+            selectDock: "guestboatBerth/selectDock",
         }),
     }
 }

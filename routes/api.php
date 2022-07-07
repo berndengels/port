@@ -63,7 +63,8 @@ Route::group([
 ], function () {
     Route::post('refill', [GuestboatBerthController::class,'refill'])->name('refill');
     Route::get('', [GuestboatBerthController::class,'index'])->name('index');
-    Route::get('{guestBoatBerth}', [GuestboatBerthController::class,'show'])->name('show');
+    Route::get('docks', [GuestboatBerthController::class,'docks'])->name('docks');
+    Route::get('', [GuestboatBerthController::class,'index'])->name('index');
     Route::post('', [GuestboatBerthController::class,'store'])->name('store');
     Route::put('{guestBoatBerth}', [GuestboatBerthController::class,'update'])->name('update');
     Route::delete('{guestBoatBerth}', [GuestboatBerthController::class,'destroy'])->name('destroy');

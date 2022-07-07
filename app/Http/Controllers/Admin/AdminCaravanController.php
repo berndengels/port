@@ -53,9 +53,8 @@ class AdminCaravanController extends AdminController
      */
     public function create()
     {
-        return view(
-            'admin.caravans.create', [
-            'countries' => $this->countryRepository->options('de')->getSelectOptions(),
+        return view('admin.caravans.create', [
+                'countries' => $this->countryRepository->options('de')->getSelectOptions(),
             ]
         );
     }

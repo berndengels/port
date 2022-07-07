@@ -34,6 +34,7 @@ class UpdateGuestBoatBerthRequest extends AdminRequest
     {
         return [
             'number'        => 'required',
+            'boat_dock_id'  => '',
             'width'         => '',
             'length'        => '',
             'daily_price'   => '',

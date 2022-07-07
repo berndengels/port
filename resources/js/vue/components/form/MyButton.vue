@@ -1,11 +1,13 @@
 <template>
-    <button v-if="inline" :class="css ?? 'btn inline'" :name="name" :id="id ?? name">
-        <slot>Click</slot>
-    </button>
-    <div v-else class="mt-2">
-        <button :class="css ?? 'btn'" :name="name" :id="id ?? name">
+    <div>
+        <button v-if="inline" :class="css ?? 'btn inline'" :name="name" :id="id ?? name">
             <slot>Click</slot>
         </button>
+        <div v-else class="mt-2">
+            <button :class="css ?? 'btn'" :name="name" :id="id ?? name">
+                <slot>Click</slot>
+            </button>
+        </div>
     </div>
 </template>
 

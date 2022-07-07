@@ -7,6 +7,7 @@
 @import "~include-media";
 @import "~leaflet/dist/leaflet";
 @import "~leaflet-draw/dist/leaflet.draw";
+@import "~leaflet-sidebar/src/L.Control.Sidebar";
 @import '~mapbox-gl/dist/mapbox-gl.css';
 
 @import 'local/variables';
@@ -48,7 +49,7 @@ nav {
     min-height: 75px;
 }
 .bg-main {
-    background-image: url(/img/nebel_morgen.jpg);
+    background-image: url("/img/nebel_morgen.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: 0 -15rem;

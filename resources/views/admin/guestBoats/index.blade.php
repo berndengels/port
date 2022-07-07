@@ -14,7 +14,6 @@
             <div></div>
         </div>
         <x-form class="inline-form ml-5" method="get" id="frmFilter" name="frmFilter" action="{{ route('admin.guestBoats.index') }}">
-            @csrf
             <x-form-select
                     name="guestBoat"
                     class="inline-block"

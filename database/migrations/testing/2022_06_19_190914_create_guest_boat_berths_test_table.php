@@ -15,6 +15,7 @@ class CreateGuestBoatBerthsTestTable extends Migration
     {
         Schema::create('guest_boat_berths', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedInteger('boat_dock_id');
             $table->string('number', 10)->default('');
             $table->decimal('width', 3, 1)->unsigned()->nullable();
             $table->decimal('length', 3, 1)->unsigned()->nullable();
@@ -22,6 +23,12 @@ class CreateGuestBoatBerthsTestTable extends Migration
             $table->double('lat')->unsigned()->nullable();
             $table->double('lng')->nullable();
             $table->boolean('enabled')->default(1);
+            $table->foreign('boat_dock_id', 'boat_dock_id_ibfk_1')
+                ->references('id')
+                ->on('boat_docks')
+                ->onUpdate('CASCADE')
+                ->onDelete('CASCADE')
+            ;
         });
     }
 
