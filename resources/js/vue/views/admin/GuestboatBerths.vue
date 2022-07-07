@@ -62,7 +62,8 @@ export default {
             errors: "guestboatBerth/errors",
         }),
         loaded() {
-            return !!this.$store.state.guestboatBerth.data;
+            return true;
+//            return !!this.$store.state.guestboatBerth.data;
         }
     },
     methods: {
