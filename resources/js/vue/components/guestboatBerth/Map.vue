@@ -17,7 +17,6 @@
 import * as L from "leaflet";
 require('leaflet-providers');
 require('leaflet-imageoverlay-rotated');
-require('leaflet-draw/dist/leaflet.draw');
 require('leaflet-sidebar/src/L.Control.Sidebar');
 import {mapActions, mapGetters} from "vuex";
 import MyButton from "v@/components/form/MyButton";

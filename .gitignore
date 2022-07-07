@@ -33,3 +33,7 @@ yarn-error.log
 /.env.dusk.demo
 /_ide_helper_models.php
 /yarn.lock
+/public/fonts/
+/public/images/
+/public/webfonts/
+/public/vendor/
