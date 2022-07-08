@@ -34,10 +34,11 @@ const namespaced = true,
 		setCalcData: (state, data) => { state.calcData = data },
 		mPushSelected: (state, data) => {
 			if(state.data && state.data.length > 0) {
-				state.data.push(data)
+				data.forEach(el => state.data.push(el));
 			} else {
 				state.data = data
 			}
+			emitter.emit('data:updated', {data: state.data})
 		},
 		destroySelected: (state, data) => {
 			if(state.data && state.data.length > 0) {

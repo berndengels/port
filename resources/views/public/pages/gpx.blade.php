@@ -41,12 +41,20 @@
 			        attribution: 'Map data &copy; <a href="http://www.osm.org">OpenStreetMap</a>'
 		        }).addTo(map);
 
-	        const gpx = new L.GPX(gpxData, {async: true})
-		        .on('loaded', function(e) {
-			        map.fitBounds(e.target.getBounds());
-					const distance = Math.round(e.target.get_distance()/1000);
-			        document.querySelector('h1').innerText = "Tourlänge " + distance + " km";
-		        }).addTo(map);
+	        const gpx = new L.GPX(gpxData, {
+				async: true,
+		        marker_options: {
+			        clickable: true,
+			        parseElements: ['track', 'route', 'waypoint'],
+                },
+		        gpx_options: {
+			        joinTrackSegments: false
+		        }
+            }).on('loaded', function(e) {
+                map.fitBounds(e.target.getBounds());
+                const distance = Math.round(e.target.get_distance()/1000);
+                document.querySelector('h1').innerText = "Tourlänge " + distance + " km";
+            }).addTo(map);
         }
     </script>
 @endpush

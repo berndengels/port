@@ -37,6 +37,7 @@ export default {
             showCalcForm: false,
             overlayData: [],
             tooltips: [],
+            markers: [],
         }
     },
     mounted() {
@@ -71,20 +72,23 @@ export default {
             }));
 
 //            this.handleZoomChange({map: this.map, oData: this.overlayData, oImage: oImage})
-            this.handleZoomChange({map: this.map, oData: this.overlayData})
+            this.handleZoomChange({map: this.map, oData: this.overlayData});
+            emitter.on('data:updated', ({data}) => {
+                if(this.overlayData) {
+//                    this.map.removeLayer(this.overlayData);
+//                    this.overlayData.clearLayers()
+//                    this.markers.forEach(el => el.removeFrom(this.map))
+//                    this.overlayData = [];
+                }
+                this.refill(data);
+            })
         },
         handleFeature(points) {
             if(points && 2 === points.length) {
                 let data = this.findEquidistantPoints(points[0], points[1], this.calcData);
                 console.info("new data", data);
                 if(data) {
-                    data.forEach(el => {
-//                        this.addData(el);
-//                        let item = this.getDataOverlayItem(el)
-//                        console.info("item", item)
-//                        this.overlayData.addData(item)
-                    });
-//                    this.refill(data);
+                    this.addData(data);
                 }
             }
         },

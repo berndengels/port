@@ -13,8 +13,9 @@ const BerthsMapCalculationMixin = {
 			pointRadius: 12,
 			overlayData: [],
 			tooltips: [],
+			markers: [],
 			mainOptions: {
-//		        drawControl: true,
+				doubleClickZoom: false,
 			},
 			mainImage: '/img/steg_netzelkow.png',
 			mainImageOpacity: 0.4,
@@ -22,9 +23,7 @@ const BerthsMapCalculationMixin = {
 	},
 	methods: {
 		getMap() {
-			const map = L.map(this.id, this.mainOptions).setView([this.mainLat, this.mainLng], this.mainZoom, {
-				doubleClickZoom: false,
-			});
+			const map = L.map(this.id, this.mainOptions).setView([this.mainLat, this.mainLng], this.mainZoom);
 			L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 				maxZoom: 19,
 				attribution: '© OpenStreetMap'
@@ -53,19 +52,33 @@ const BerthsMapCalculationMixin = {
 			return map
 		},
 
-		getDataOverlay() {
-			if (this.data && this.data.length > 0) {
-				return L.geoJson(this.data, {
-					pointToLayer: (feature, latlng) => this.handlePointToLayer(feature, latlng),
-					onEachFeature: (feature, layer) => this.handleEachFeature(feature, layer),
-				})
+		setDataOverlay(data) {
+			if(data) {
+				return data.map(el => {
+					const options = {
+						radius: this.pointRadius,
+						weight: 1,
+						stroke: true,
+						color: "#c00",
+						fillColor: "#fff",
+						fillOpacity: 1,
+					};
+					let cMarker = L.circleMarker([el.lat, el.lng], options);
+					cMarker.on('click', () => {
+						this.select(el);
+						this.$emit('showEditForm', {data: el})
+					});
+					this.markers.push(cMarker);
+					cMarker.addTo(this.map);
+					return cMarker;
+				});
 			}
-			return null
+			return null;
 		},
 
-		getDataOverlayItem(item) {
-			if (item) {
-				return L.geoJson(item, {
+		getDataOverlay() {
+			if (this.data && this.data.length > 0) {
+				return L.geoJSON(this.data, {
 					pointToLayer: (feature, latlng) => this.handlePointToLayer(feature, latlng),
 					onEachFeature: (feature, layer) => this.handleEachFeature(feature, layer),
 				})
@@ -104,6 +117,7 @@ const BerthsMapCalculationMixin = {
 				this.select(feature);
 				this.$emit('showEditForm', true)
 			});
+			this.markers.push(cMarker);
 			return cMarker;
 		},
 
