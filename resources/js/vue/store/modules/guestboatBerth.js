@@ -3,7 +3,15 @@ const namespaced = true,
 		return {
 			data: null,
 			docks: null,
-			selected: null,
+//			selected: null,
+			selected: {
+				boat_dock_id: 1,
+				number: null,
+				enabled: false,
+				width: null,
+				length: null,
+				daily_price: null,
+			},
 			selectedDock: null,
 			errors: null,
 			calcData: {
@@ -21,12 +29,11 @@ const namespaced = true,
 	mutations = {
 		setSelected: (state, data) => {
 			state.selected = data;
-//			state.data = state.data.map(b => b.properties.id === data.properties.id ? data : b);
+			console.info("selected", data)
 			emitter.emit('geoDataSelected', data)
 		},
 		setSelectedDock: (state, data) => {
 			state.selectedDock = data;
-//			state.data = state.data.map(b => b.properties.boat_dock_id === data.id ? data : b);
 			emitter.emit('geoDockSelected', data)
 		},
 		mSetData: (state, data) => { state.data = data },
@@ -46,7 +53,14 @@ const namespaced = true,
 			}
 		},
 		updateSelected: (state, data) => {
-			state.data = state.data.map(b => b.properties.id === data.properties.id ? data : b)
+			console.info("updateSelected", data)
+			return;
+			state.data = state.data.map(b => b.id === data.id ? data : b)
+		},
+		updateFormSelected: (state, data) => {
+			console.info("updateFormSelected", data)
+			return;
+			state.data = state.data.map(b => b.id === data.id ? data : b)
 		},
 		errors: (state, errors) => { state.errors = errors },
 	},
@@ -110,7 +124,7 @@ const namespaced = true,
 				}).catch(err => console.error(err));
 		},
 		store({ commit }, data) {
-			axios.post('/api/guestboatBerths', { ...data.properties })
+			axios.post('/api/guestboatBerths', { ...data })
 				.then(resp => {
 					if(resp.data.errors) {
 						commit("errors", resp.data.errors);
@@ -121,7 +135,7 @@ const namespaced = true,
 				}).catch(err => console.error(err));
 		},
 		update({ commit }, data) {
-			axios.put('/api/guestboatBerths/' + data.properties.id, { ...data.properties })
+			axios.put('/api/guestboatBerths/' + data.id, { ...data })
 				.then(resp => {
 					if(resp.data.errors) {
 						commit("errors", resp.data.errors);
@@ -133,7 +147,7 @@ const namespaced = true,
 				}).catch(err => console.error(err));
 		},
 		detroy({ commit }, data) {
-			axios.delete('/api/guestboatBerths/' + data.properties.id)
+			axios.delete('/api/guestboatBerths/' + data.id)
 				.then(resp => {
 					if(resp.data.errors) {
 						commit("errors", resp.data.errors);

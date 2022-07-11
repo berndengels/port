@@ -9,6 +9,8 @@
 @import "~leaflet-draw/dist/leaflet.draw";
 @import "~leaflet-sidebar/src/L.Control.Sidebar";
 @import '~mapbox-gl/dist/mapbox-gl.css';
+@import '~leaflet.fullscreen/Control.FullScreen';
+@import '~leaflet-ruler/src/leaflet-ruler';
 
 @import 'local/variables';
 @import 'local';

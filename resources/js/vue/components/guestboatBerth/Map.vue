@@ -18,6 +18,8 @@ import * as L from "leaflet";
 require('leaflet-providers');
 require('leaflet-imageoverlay-rotated');
 require('leaflet-sidebar/src/L.Control.Sidebar');
+require('leaflet.fullscreen/Control.FullScreen');
+require('leaflet-ruler/src/leaflet-ruler');
 import {mapActions, mapGetters} from "vuex";
 import MyButton from "v@/components/form/MyButton";
 import BerthsMapCalculationMixin from "v@/mixins/berthsMapCalculation";
@@ -38,6 +40,7 @@ export default {
             overlayData: [],
             tooltips: [],
             markers: [],
+            featherGroup: null,
         }
     },
     mounted() {
@@ -54,11 +57,10 @@ export default {
     methods: {
         initMap() {
             this.map = this.getMap();
-
-            this.overlayData = this.getDataOverlay();
-            if(this.overlayData) {
-                this.overlayData.addTo(this.map)
-            }
+            this.markers = this.setDataOverlay(this.data)
+//            this.markers.forEach(el => el.addTo(this.map))
+            this.featherGroup = L.featureGroup(this.markers, {bubblingMouseEvents: false});
+            this.featherGroup.addTo(this.map);
 
             this.sidebar = L.control.sidebar('sidebar', {
                 closeButton: false,
@@ -70,11 +72,10 @@ export default {
                 calcData: this.calcData,
                 featureHandler: (p) => this.handleFeature(p)
             }));
-
 //            this.handleZoomChange({map: this.map, oData: this.overlayData, oImage: oImage})
-            this.handleZoomChange({map: this.map, oData: this.overlayData});
+//            this.handleZoomChange({map: this.map, oData: this.overlayData});
             emitter.on('data:updated', ({data}) => {
-                if(this.overlayData) {
+                if(this.data) {
 //                    this.map.removeLayer(this.overlayData);
 //                    this.overlayData.clearLayers()
 //                    this.markers.forEach(el => el.removeFrom(this.map))
@@ -82,7 +83,13 @@ export default {
                 }
                 this.refill(data);
             })
+            emitter.on('point:selected', ({data}) => {
+                this.select(data)
+                this.$emit('showEditForm', true)
+            });
+
         },
+
         handleFeature(points) {
             if(points && 2 === points.length) {
                 let data = this.findEquidistantPoints(points[0], points[1], this.calcData);

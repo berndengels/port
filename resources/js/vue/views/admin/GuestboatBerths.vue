@@ -8,20 +8,10 @@
                 :data="data"
                 @showEditForm="handleEditForm"
             />
-            <Edit
-                v-if="selected"
-                v-show="showEditForm"
-                :data="selected.properties"
-                :docksOptions="docksOptions"
-                :errors="errors"
+            <EditBerth
+                v-if="showEditForm"
                 @showEditForm="handleEditForm"
             />
-
-            <!--FormCalculateBerths
-                v-show="showCalculationForm"
-                :docksOptions="docksOptions"
-                @showCalculationForm="handleCalculationForm"
-            /-->
             <Table
                 :data="data"
                 @showEditForm="handleEditForm"
@@ -35,12 +25,11 @@ import {mapActions, mapGetters} from "vuex";
 import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
 import Map from "v@/components/guestboatBerth/Map";
 import Table from "v@/components/guestboatBerth/Table";
-import Edit from "v@/components/guestboatBerth/Edit";
-//import FormCalculateBerths from "v@/components/guestboatBerth/FormCalculateBerths";
+import EditBerth from "v@/components/guestboatBerth/EditBerth";
 
 export default {
     name: "GuestboatBerths",
-    components: {Edit, Table, Map, PulseLoader},
+    components: {EditBerth, Table, Map, PulseLoader},
     data() {
         return {
             showCalculationForm: false,
@@ -58,7 +47,6 @@ export default {
         ...mapGetters({
             docksOptions: "guestboatBerth/docksOptions",
             data: "guestboatBerth/data",
-            selected: "guestboatBerth/selected",
             errors: "guestboatBerth/errors",
         }),
         loaded() {

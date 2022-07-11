@@ -58,7 +58,9 @@
         "leaflet-imageoverlay-rotated": "^0.2.1",
         "leaflet-providers": "^1.12.0",
         "leaflet-realtime": "^2.2.0",
+        "leaflet-ruler": "^1.0.0",
         "leaflet-sidebar": "^0.2.4",
+        "leaflet.fullscreen": "^2.4.0",
         "mapbox-gl": "^2.9.1",
         "material-design-icons": "^3.0.1",
         "mitt": "^3.0.0",
@@ -71,6 +73,7 @@
         "vue-echarts": "^6.1.0",
         "vue-router": "^4.0.16",
         "vue-spinner": "^1.0.4",
-        "vuex": "^4.0.2"
+        "vuex": "^4.0.2",
+        "vuex-map-fields": "^1.4.1"
     }
 }

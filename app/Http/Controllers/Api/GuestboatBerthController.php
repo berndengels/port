@@ -23,7 +23,8 @@ class GuestboatBerthController extends Controller
     public function index()
     {
         $data = GuestBoatBerth::all()->sortBy('number', SORT_NATURAL);
-        $data = GuestBoatBerthGeoJsonResource::collection($data);
+//        $data = GuestBoatBerthGeoJsonResource::collection($data);
+        $data = GuestBoatBerthResource::collection($data);
         return response()->json($data);
     }
 
@@ -42,7 +43,8 @@ class GuestboatBerthController extends Controller
      */
     public function show(GuestBoatBerth $guestBoatBerth)
     {
-        $data = new GuestBoatBerthGeoJsonResource($guestBoatBerth);
+//        $data = new GuestBoatBerthGeoJsonResource($guestBoatBerth);
+        $data = new GuestBoatBerthResource($guestBoatBerth);
         return response()->json($data);
     }
 
@@ -89,7 +91,8 @@ class GuestboatBerthController extends Controller
     public function update(UpdateGuestBoatBerthRequest $request, GuestBoatBerth $guestBoatBerth)
     {
         $guestBoatBerth->update($request->validated());
-        $data = new GuestBoatBerthGeoJsonResource($guestBoatBerth->refresh());
+//        $data = new GuestBoatBerthGeoJsonResource($guestBoatBerth->refresh());
+        $data = new GuestBoatBerthResource($guestBoatBerth->refresh());
         return response()->json($data);
     }
 
@@ -99,7 +102,8 @@ class GuestboatBerthController extends Controller
      */
     public function destroy(GuestBoatBerth $guestBoatBerth)
     {
-        $data = new GuestBoatBerthGeoJsonResource($guestBoatBerth);
+//        $data = new GuestBoatBerthGeoJsonResource($guestBoatBerth);
+        $data = new GuestBoatBerthResource($guestBoatBerth);
         $guestBoatBerth->delete();
         return response()->json($data);
     }

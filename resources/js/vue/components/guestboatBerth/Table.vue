@@ -12,13 +12,13 @@
                 <th>Aktiv</th>
                 <th colspan="2"><br></th>
             </tr>
-            <tr v-for="item in data" :key="item.properties.id">
-                <td class="hidden md:table-cell">{{ item.properties.id }}</td>
-                <td class="hidden md:table-cell">{{ item.properties.dock }}</td>
-                <td ><a href="#" @click.prevent="selectItem(item)">{{ item.properties.number }}</a></td>
-                <td class="hidden md:table-cell">{{ item.properties.length }} m</td>
-                <td class="hidden md:table-cell">{{ item.properties.width }} m</td>
-                <td>{{ item.properties.daily_price ? item.properties.daily_price + " €" : "" }}</td>
+            <tr v-for="item in data" :key="item.id">
+                <td class="hidden md:table-cell">{{ item.id }}</td>
+                <td class="hidden md:table-cell">{{ item.dock.name }}</td>
+                <td ><a href="#" @click.prevent="selectItem(item)">{{ item.number }}</a></td>
+                <td class="hidden md:table-cell">{{ item.length }} m</td>
+                <td class="hidden md:table-cell">{{ item.width }} m</td>
+                <td>{{ item.daily_price ? item.daily_price + " €" : "" }}</td>
                 <td><Toggle :item="item" field="enabled" /></td>
                 <td>
                     <MyButton class="btn btn-save" @click.prevent="selectItem(item)">

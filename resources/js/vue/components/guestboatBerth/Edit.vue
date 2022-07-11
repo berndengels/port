@@ -1,9 +1,9 @@
 <template>
     <div class="mb-5">
-        <h5>Liegeplatz {{ data.number ?? '' }}</h5>
+        <h5>Liegeplatz {{ selected.number ?? '' }}</h5>
         <MyBerthForm class="m-3"
                 id="frmEdit"
-                :data="data"
+                :data="selected"
                 :errors="errors"
         >
             <MyCheckbox name="enabled" label="Aktiv" @change="onChange" />
@@ -47,16 +47,11 @@ import MySelect from "v@/components/form/berth/elements/MySelect";
 export default {
     name: "Edit",
     components: {MySelect, MyBerthForm, MyInput, MyInputNumber, MyCheckbox, MyButton},
-    props: ['data', 'docksOptions'],
-    data() {
-        return {
-            overlayData: null,
-        }
-    },
     computed: {
         ...mapGetters({
             selected: "guestboatBerth/selected",
             errors: "guestboatBerth/errors",
+            docksOptions: "guestboatBerth/docksOptions",
         }),
     },
     methods: {
@@ -67,11 +62,7 @@ export default {
                     name: e.target.innerText,
                 });
             }
-            const data = {
-                type: this.selected.type,
-                geometry: this.selected.geometry,
-                properties: { ...this.selected.properties, [e.target.name]: e.target.value  }
-            };
+            const data = { ...this.selected, [e.target.name]: e.target.value };
             this.select(data);
             emitter.emit('geoDataChanged', data);
         },
