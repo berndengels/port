@@ -73,7 +73,8 @@ L.Control.DrawLine = L.Control.extend({
 			alert('line complete');
 			map.off('mousemove');
 			this._featureHandler(points);
-			map.removeLayer(this._line);
+			this._line.removeFrom(this.map)
+//			map.removeLayer(this._line);
 
 		});
 		map.on('mousedown', (e) => {

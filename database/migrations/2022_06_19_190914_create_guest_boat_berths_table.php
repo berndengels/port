@@ -30,6 +30,12 @@ class CreateGuestBoatBerthsTable extends Migration
                 ->onUpdate('CASCADE')
                 ->onDelete('CASCADE')
             ;
+            $table->foreign('berth_category_id', 'berth_category_id_ibfk_1')
+                ->references('id')
+                ->on('berth_categories')
+                ->onUpdate('CASCADE')
+                ->onDelete('CASCADE')
+            ;
         });
     }
 

@@ -14,7 +14,13 @@ class AddForeignKeysToConfigSaisonRentDatesTable extends Migration
     public function up()
     {
         Schema::table('config_saison_rent_dates', function (Blueprint $table) {
-            $table->foreign('config_saison_rent_id', 'config_saison_rent_dates_ibfk_1')->references('id')->on('config_saison_rents')->onUpdate('CASCADE')->onDelete('CASCADE');
+            $table
+                ->foreign('config_saison_rent_id', 'config_saison_rent_dates_ibfk_1')
+                ->references('id')
+                ->on('config_saison_rents')
+                ->onUpdate('CASCADE')
+                ->onDelete('CASCADE')
+            ;
         });
     }
 

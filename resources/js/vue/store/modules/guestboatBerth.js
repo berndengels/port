@@ -3,6 +3,8 @@ const namespaced = true,
 		return {
 			data: null,
 			docks: null,
+			portData: null,
+			categories: null,
 //			selected: null,
 			selected: {
 				boat_dock_id: 1,
@@ -15,11 +17,13 @@ const namespaced = true,
 			selectedDock: null,
 			errors: null,
 			calcData: {
+				modus: null,
+				berth_category_id: 1,
 				boat_dock_id: 1,
 				dock: null,
 				enabled: true,
-				start: 20,
-				end: 35,
+				start: 2,
+				count: 20,
 				width: null,
 				length: 12,
 				daily_price: 12,
@@ -29,7 +33,7 @@ const namespaced = true,
 	mutations = {
 		setSelected: (state, data) => {
 			state.selected = data;
-			console.info("selected", data)
+			console.info("selected", data);
 			emitter.emit('geoDataSelected', data)
 		},
 		setSelectedDock: (state, data) => {
@@ -37,6 +41,8 @@ const namespaced = true,
 			emitter.emit('geoDockSelected', data)
 		},
 		mSetData: (state, data) => { state.data = data },
+		mSetCategories: (state, data) => { state.categories = data },
+		mSetPortData: (state, data) => { state.portData = data },
 		mSetDocks: (state, data) => { state.docks = data },
 		setCalcData: (state, data) => { state.calcData = data },
 		mPushSelected: (state, data) => {
@@ -45,7 +51,7 @@ const namespaced = true,
 			} else {
 				state.data = data
 			}
-			emitter.emit('data:updated', {data: state.data})
+//			emitter.emit('data:updated', {data: state.data})
 		},
 		destroySelected: (state, data) => {
 			if(state.data && state.data.length > 0) {
@@ -53,12 +59,12 @@ const namespaced = true,
 			}
 		},
 		updateSelected: (state, data) => {
-			console.info("updateSelected", data)
+			console.info("updateSelected", data);
 			return;
 			state.data = state.data.map(b => b.id === data.id ? data : b)
 		},
 		updateFormSelected: (state, data) => {
-			console.info("updateFormSelected", data)
+			console.info("updateFormSelected", data);
 			return;
 			state.data = state.data.map(b => b.id === data.id ? data : b)
 		},
@@ -66,6 +72,17 @@ const namespaced = true,
 	},
 	getters = {
 		data: (state) => state.data,
+		categories: (state) => {
+			if(state.categories && state.categories.length > 0) {
+				let data = state.categories.map(i => {
+					return {"id": i.id, "name": i.name}
+				});
+				data.unshift({id: "", name: "bitte wählen"});
+				return data;
+			}
+			return null;
+		},
+		portData: (state) => state.portData,
 		docks: (state) => state.docks,
 		docksOptions: (state) => {
 			if(state.docks && state.docks.length > 0) {
@@ -95,6 +112,33 @@ const namespaced = true,
 						commit("errors", null);
 					}
 				}).catch(err => console.info("error", err));
+		},
+		fetchCategories({ commit }) {
+			axios.get('/api/guestboatBerths/categories')
+				.then(resp => {
+					if(resp.data.errors) {
+						commit("errors", resp.data.errors);
+					} else if (resp.data) {
+						commit("errors", null);
+						commit("mSetCategories", resp.data);
+					} else {
+						commit("errors", null);
+					}
+				}).catch(err => console.info("error", err));
+		},
+		fetchPortData({ commit }) {
+			axios.get('/api/guestboatBerths/port')
+				.then(resp => {
+					if(resp.data.errors) {
+						commit("errors", resp.port.errors);
+					} else if (resp.data) {
+						commit("errors", null);
+						commit("mSetPortData", resp.data);
+					} else {
+						commit("errors", null);
+					}
+				}).catch(err => console.info("error", err));
+
 		},
 		fetchDocks({ commit }) {
 			axios.get('/api/guestboatBerths/docks')

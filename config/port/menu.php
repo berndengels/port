@@ -336,6 +336,21 @@ return [
                     ],
                 ],
             ],
+            'Port' => [
+                'permissions'   => ['read SettingsMenu'],
+                'icon'  => 'fas fa-info-circle',
+                'hide_on_mobile' => false,
+                'items' => [
+                    [
+                        'permissions'   => ['read ConfigPort'],
+                        'text'  => 'Hafen',
+                        'title' => 'Hafen',
+                        'icon'  => 'fas fa-route',
+                        'route' => 'admin.config.port.index',
+                        'hide_on_mobile' => false,
+                    ],
+                ],
+            ],
             'Einstellungen'   => [
                 'permissions'   => ['read SettingsMenu'],
                 'icon'  => 'fas fa-info-circle',

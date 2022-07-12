@@ -6,14 +6,8 @@ const BerthsMapCalculationMixin = {
 		return {
 			map: null,
 			sidebar: null,
-			mainLat: 54.025907,
-			mainLng: 13.911250,
-			mainZoom: 18,
-			minLayerZoom: 17,
-			pointRadius: 12,
-			overlayData: [],
-			tooltips: [],
 			markers: [],
+			line: null,
 			featherGroup: null,
 			mainOptions: {
 				doubleClickZoom: false,
@@ -50,7 +44,7 @@ const BerthsMapCalculationMixin = {
 		}
 	},
 	methods: {
-		getMap() {
+		getMap(latlng) {
 			const map = L.map(this.id, this.mainOptions).setView([this.mainLat, this.mainLng], this.mainZoom);
 			L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 				maxZoom: 19,
@@ -93,99 +87,41 @@ const BerthsMapCalculationMixin = {
 				};
 
 				return data.map(el => {
-					let m = L.circleMarker([el.lat, el.lng], options),
-						text = L.tooltip({
-							permanent: true,
-							direction: 'center',
-							className: 'circle-marker-text'
-						})
-						.setContent(el.number)
-						.setLatLng([el.lat, el.lng]);
+					try {
+						let m = L.circleMarker([el.lat, el.lng], options),
+							text = (new L.tooltip({
+								permanent: true,
+								direction: 'center',
+								className: 'circle-marker-text'
+							}))
+							.setLatLng([el.lat, el.lng])
+							.setContent("<span>" + el.number ?? 'X' + "</span>")
+						;
 
-					m.bindTooltip(text)
-
-					m.on('click', (e) => {
-						e.target.off("click");
-//						this.select(el);
-						emitter.emit('point:selected', {data: el})
-					});
-					return m;
+						if(text) {
+							m.bindTooltip(text)
+						}
+						/*
+											m.on('click', (e) => {
+												e.target.off("click");
+						//						this.select(el);
+												emitter.emit('point:selected', {data: el})
+											});
+						*/
+						return m;
+					} catch(err) {
+						console.error(err);
+						return false
+					}
 				});
 			}
 			return null;
-		},
-
-		getDataOverlay() {
-			if (this.data && this.data.length > 0) {
-				return L.geoJSON(this.data, {
-					pointToLayer: (feature, latlng) => this.handlePointToLayer(feature, latlng),
-					onEachFeature: (feature, layer) => this.handleEachFeature(feature, layer),
-				})
-			}
-			return null
 		},
 
 		updateDataOverlay(data) {
 			if(this.overlayData && data) {
 				this.overlayData.addData(data)
 			}
-		},
-
-		handlePointToLayer(feature, latlng) {
-			let options = {
-				radius: this.pointRadius,
-				weight: 1,
-				stroke: true,
-				color: "#c00",
-				fillColor: "#fff",
-				fillOpacity: 1,
-			};
-			let cMarker = L.circleMarker([latlng.lat, latlng.lng], options);
-			cMarker.on('click', () => {
-				this.select(feature);
-				this.$emit('showEditForm', true)
-			});
-			this.markers.push(cMarker);
-			return cMarker;
-		},
-
-		handleEachFeature(feature, layer) {
-			let tooltip = this.getPointTooltip(feature, layer);
-			tooltip.addTo(this.map);
-
-			let popup = this.getPointPopup(feature, layer);
-			layer.bindTooltip(popup);
-		},
-
-		getPointTooltip(feature, layer) {
-			let cls = 'text';
-			return L.tooltip({
-				permanent: true,
-				direction: 'center',
-				className: cls,
-			})
-				.setContent(feature.number)
-				.setLatLng(layer.getLatLng());
-		},
-
-		getPointPopup(feature, layer) {
-			let html = "<ul>";
-			html += "<li>Steg: " + feature.dock ?? '' + "</li>";
-			html += "<li>Nummer: " + feature.number + "</li>";
-			html += "<li>Breite: " + feature.width + "m</li>";
-			html += "<li>Länge: " + feature.length + "m</li>";
-
-			if (feature.daily_price) {
-				html += "<li>Tagespreis: " + feature.daily_price + " €</li>";
-			}
-			html += "</ul>";
-
-			return new L.tooltip({
-				direction: 'top',
-				className: 'text'
-			})
-				.setContent(html)
-				.setLatLng(layer.getLatLng());
 		},
 
 		getDistance(latLng1, latLng2) {
@@ -218,14 +154,15 @@ const BerthsMapCalculationMixin = {
 			let data = [],
 				distance = this.getDistance(latLng1, latLng2),
 				start = parseInt(calcData.start),
-				end = parseInt(calcData.end),
-				pointCount = end - start + 1,
+				pointCount = parseInt(calcData.count),
+				end = start + pointCount,
+				modus = calcData.modus,
 				distanceBetweenPoints = distance / pointCount,
 				lat1 = parseFloat(latLng1.lat),
 				lng1 = parseFloat(latLng1.lng),
 				lat2 = parseFloat(latLng2.lat),
 				lng2 = parseFloat(latLng2.lng),
-				i, k;
+				i, k, c;
 /*
 			console.info("distance", distance)
 			console.info("pointCount", pointCount)
@@ -233,7 +170,21 @@ const BerthsMapCalculationMixin = {
 			console.info("start", calcData.start)
 			console.info("end", calcData.end)
 */
-			for (i = start, k = 1; i <= end; i++, k++) {
+			for (i = start, k = 1, c = 0; i <= end; i++, k++, c++) {
+				if(modus && c > 0) {
+					switch(modus) {
+						case 'even':
+							if( c%2 === 1) {
+								continue;
+							}
+							break;
+						case 'odd':
+							if( c%2 === 0) {
+								continue;
+							}
+							break;
+					}
+				}
 //				console.info("loop", i)
 				let t = (distanceBetweenPoints * k - distanceBetweenPoints / 2) / distance,
 					latitude = (1 - t) * lat1 + t * lat2,
@@ -257,7 +208,7 @@ const BerthsMapCalculationMixin = {
 					width: calcData.width ?? parseFloat(distanceBetweenPoints).toFixed(1),
 					length: calcData.length,
 					daily_price: calcData.daily_price,
-					enabled: calcData.end,
+					enabled: calcData.enabled,
 				});
 			}
 

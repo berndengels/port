@@ -7,13 +7,15 @@
         >
             <MyCheckbox name="enabled" label="Aktiv" @change="onChange" />
             <MySelect name="boat_dock_id" label="Steg" :options="docksOptions" @change="onChange" />
+            <MySelect v-if="categories" name="berth_category_id" label="Kategorie" :options="categories" @change="onChange" />
+            <MySelect name="modus" label="gerade/ungerade Zählung" :options="optionsModus" @change="onChange" />
             <MyInputNumber name="start" label="Startnummer" placeholder="Startnummer"
                  type="number"
                  step="1"
                  min="1"
                  @change="onChange"
             />
-            <MyInputNumber name="end" label="Endnummer" placeholder="Endnummer"
+            <MyInputNumber name="count" label="Anzahl" placeholder="Anzahl Liegeplätze"
                 type="number"
                 step="1"
                 min="1"
@@ -54,10 +56,20 @@ import MyButton from "v@/components/form/MyButton";
 export default {
     name: "FormCalculateBerths",
     components: {MyButton, MySelect, BerthsCalculationForm, MyInput, MyInputNumber, MyCheckbox},
+    data() {
+        return {
+            optionsModus: [
+                {id: null, name: 'Zählart wählen'},
+                {id: 'even', name: 'gerade'},
+                {id: 'odd', name: 'ungerade'},
+            ],
+        }
+    },
     computed: {
         ...mapGetters({
             calcData: "guestboatBerth/calcData",
             docksOptions: "guestboatBerth/docksOptions",
+            categories: "guestboatBerth/categories",
         }),
     },
     methods: {

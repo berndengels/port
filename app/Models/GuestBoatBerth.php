@@ -65,4 +65,9 @@ class GuestBoatBerth extends Model
     {
         return $this->belongsTo(BoatDock::class, 'boat_dock_id', 'id');
     }
+
+    public function category()
+    {
+        return $this->belongsTo(BerthCategory::class);
+    }
 }

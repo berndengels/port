@@ -63,6 +63,8 @@ Route::group([
 ], function () {
     Route::post('refill', [GuestboatBerthController::class,'refill'])->name('refill');
     Route::get('', [GuestboatBerthController::class,'index'])->name('index');
+    Route::get('port', [GuestboatBerthController::class,'port'])->name('port');
+    Route::get('categories', [GuestboatBerthController::class,'categories'])->name('categories');
     Route::get('docks', [GuestboatBerthController::class,'docks'])->name('docks');
     Route::get('', [GuestboatBerthController::class,'index'])->name('index');
     Route::post('', [GuestboatBerthController::class,'store'])->name('store');

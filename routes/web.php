@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminBerthCategoryController;
 use App\Http\Controllers\Admin\AdminBothDockController;
 use App\Http\Controllers\Admin\AdminConfigEntityTypeController;
+use App\Http\Controllers\Admin\AdminConfigPortController;
 use App\Http\Controllers\Admin\AdminConfigSaisonRentController;
 use App\Http\Controllers\Admin\AdminConfigSaisonRentDatesController;
 use App\Http\Controllers\Admin\AdminConfigServiceController;
@@ -155,6 +157,7 @@ Route::group([
     Route::resource('houseboatDates', AdminHouseboatDatesController::class);
     Route::resource('guestBoatDates', AdminGuestBoatDatesController::class);
     Route::resource('guestBoatBerths', AdminGuestBoatBerthController::class);
+    Route::resource('berthCategories', AdminBerthCategoryController::class);
     Route::resource('services', AdminServiceController::class);
     Route::resource('serviceCategories', AdminServiceCategoryController::class);
     Route::resource('materials', AdminMaterialController::class);
@@ -167,6 +170,7 @@ Route::group([
             'as'    => 'config.',
         ],
         function() {
+            Route::resource('port', AdminConfigPortController::class)->except(['show']);
             Route::resource('offers', AdminConfigOfferController::class);
             Route::resource('saisonDates', AdminConfigSaisonDatesController::class);
             Route::resource('boatPrices', AdminConfigBoatPriceController::class);

@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\Http\Requests\StoreGuestBoatBerthRequest;
 use App\Http\Requests\UpdateGuestBoatBerthRequest;
 use App\Http\Resources\GuestBoatBerthGeoJsonResource;
+use App\Models\BerthCategory;
 use App\Models\BoatDock;
+use App\Models\ConfigPort;
 use App\Models\GuestBoatBerth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
@@ -34,6 +36,24 @@ class GuestboatBerthController extends Controller
     public function docks()
     {
         $data = BoatDock::all()->sortBy('name', SORT_NATURAL);
+        return response()->json($data);
+    }
+
+    /**
+     * @return JsonResponse
+     */
+    public function port()
+    {
+        $data = ConfigPort::firstOrFail();
+        return response()->json($data);
+    }
+
+    /**
+     * @return JsonResponse
+     */
+    public function categories()
+    {
+        $data = BerthCategory::all();
         return response()->json($data);
     }
 

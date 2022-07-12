@@ -4,7 +4,8 @@
             <PulseLoader :size="loaderSize" :color="loaderColor" />
         </div>
         <div v-else>
-            <Map
+            <Map v-if="portData"
+                :port-data="portData"
                 :data="data"
                 @showEditForm="handleEditForm"
             />
@@ -40,17 +41,19 @@ export default {
         }
     },
     beforeCreate() {
+        this.$store.dispatch("guestboatBerth/fetchPortData");
         this.$store.dispatch("guestboatBerth/fetchData");
-        this.$store.dispatch("guestboatBerth/fetchDocks")
+        this.$store.dispatch("guestboatBerth/fetchDocks");
+        this.$store.dispatch("guestboatBerth/fetchCategories")
     },
     computed: {
         ...mapGetters({
-            docksOptions: "guestboatBerth/docksOptions",
             data: "guestboatBerth/data",
+            portData: "guestboatBerth/portData",
             errors: "guestboatBerth/errors",
         }),
         loaded() {
-            return !!this.$store.state.guestboatBerth.data || null === !this.$store.state.guestboatBerth.data;
+            return !!this.$store.state.guestboatBerth.data || null === this.$store.state.guestboatBerth.data;
         }
     },
     methods: {

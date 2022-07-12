@@ -14,7 +14,7 @@
             </tr>
             <tr v-for="item in data" :key="item.id">
                 <td class="hidden md:table-cell">{{ item.id }}</td>
-                <td class="hidden md:table-cell">{{ item.dock.name }}</td>
+                <td class="hidden md:table-cell">{{ item.dock ? item.dock.name : '' }}</td>
                 <td ><a href="#" @click.prevent="selectItem(item)">{{ item.number }}</a></td>
                 <td class="hidden md:table-cell">{{ item.length }} m</td>
                 <td class="hidden md:table-cell">{{ item.width }} m</td>
