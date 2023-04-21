@@ -1,0 +1,16 @@
+### Send request with dynamic variables in request's body
+POST https://port.test/api/price/rentalDates
+Content-Type: application/json
+
+{
+    "from": "2023-02-01",
+	"until": "2023-02-02",
+    "customer_id": 16,
+    "rentable_id": 2,
+	"rentable_type": "apartment",
+    "rental_cleaning": true,
+    "kilowatt": true,
+	"kilowatt_value": 2
+}
+
+###

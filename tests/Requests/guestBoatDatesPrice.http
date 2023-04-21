@@ -1,0 +1,14 @@
+### Send request with dynamic variables in request's body
+POST https://port.test/api/price/guestBoatDates
+Content-Type: application/json
+
+{
+    "from": "2023-05-30",
+	"until": "2023-06-02",
+	"length": 9,
+	"persons": 2,
+	"electric": true,
+	"transport": false
+}
+
+###

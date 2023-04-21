@@ -1,0 +1,109 @@
+@import 'bootstrap';
+@import 'variables';
+
+@media screen {
+	.closer {
+		button {
+			margin: 0 auto;
+		}
+	}
+}
+@media print {
+	@page {
+		margin-top: 1.5cm;
+		padding: 0;
+	}
+	html, body {
+		font: 10pt Verdana, Arial, "Helvetica Neue";
+		background: #fff !important;
+		color: #000;
+	}
+	.main {
+		.closer {
+			display: none !important;
+		}
+		.container {
+			a {
+				page-break-inside:avoid
+			}
+			h1, h2, h3, h4, h5, h6 {
+				page-break-after:avoid;
+				page-break-inside:avoid;
+			}
+			img {
+				page-break-inside:avoid;
+				page-break-after:avoid;
+			}
+			pre {
+				page-break-inside:avoid;
+			}
+			.table {
+				width: 100%;
+				margin: 0;
+				padding: 0;
+				tr {
+					th, td {
+						text-align: left;
+						padding: 1.0rem 1.0rem;
+						white-space: nowrap !important;
+					}
+				}
+				&.table-striped {
+					tr {
+						th, td {
+							text-align: left;
+							padding: 1.0rem 1.0rem;
+						}
+					}
+				}
+				&.table-sm {
+					tr {
+						th, td {
+							margin: 0;
+							padding: 0.1rem 0.5rem;
+						}
+					}
+				}
+			}
+			.recipient {
+				font-size: 12pt;
+			}
+			ul, ol, dl  { page-break-before:avoid }
+			.header {
+				vertical-align: middle;
+				.app-logo {
+					text-align: center;
+					margin: 0;
+					padding: 0;
+					line-height: 1.2rem;
+					span {
+						//					font-family: "Arial Black";
+						padding: 0;
+						margin: 0;
+						letter-spacing: 0;
+					}
+					span:first-child {
+						color: #00a;
+						//					font-size: 1.5rem;
+						font-weight: bold;
+					}
+					span:last-child {
+						//					font-size: 1.7rem;
+						color: #fc0;
+						text-transform: uppercase;
+						font-style: italic;
+						margin-left: -0.2rem;
+					}
+				}
+				h2 {
+					line-height: 1.5rem;
+					margin-left: 0;
+				}
+			}
+			footer {
+				page-break-after:avoid;
+				page-break-inside:avoid;
+			}
+		}
+	}
+}

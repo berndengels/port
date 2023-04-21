@@ -1,0 +1,21 @@
+### Send request with dynamic variables in request's body
+POST https://port.test/api/price/boatDates
+Content-Type: application/json
+
+{
+    "boat_id": 1,
+    "from": "2021-10-16",
+	"until": "2022-04-31",
+	"crane": 0,
+	"mast_crane": 0,
+	"cleaning": 0,
+	"modus": "winter",
+	"length": 9,
+    "width": 2.5,
+    "weight": 3000,
+    "mast_length": 9,
+    "mast_weight": 70,
+    "default_price": 0
+}
+
+###

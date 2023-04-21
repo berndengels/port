@@ -1,0 +1,51 @@
+.calendar {
+	width: 50%;
+	height: auto;
+	min-height: 400px;
+	max-height: 100%;
+
+	@include media('<tablet') {
+		width: 100%;
+	}
+
+	.fc-toolbar-title {
+		color: #fff;
+	}
+
+	.card-body {
+		table {
+			td {
+				.fc-daygrid-day-number {
+					color: #fff;
+					font-size: 1.0rem;
+					font-weight: bold;
+				}
+
+				.fc-event-title {
+					margin-left: 5px;
+					font-weight: bold;
+				}
+			}
+		}
+
+		@include media('>tablet') {
+			&.fc {
+				.fc-header-toolbar {
+					.fc-button {
+						padding: 0.1em 0.2em;
+						font-size: 0.7rem !important;
+					}
+
+					h2.fc-toolbar-title {
+						font-size: 1.0rem !important;
+					}
+				}
+
+				table {
+					font-size: 0.7rem !important;
+				}
+			}
+		}
+	}
+}
+

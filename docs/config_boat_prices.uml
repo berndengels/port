@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>DATABASE</ID>
+  <OriginalElement>53c71ff5-d753-4448-960b-cff77241c00e.TABLE:port.config_boat_prices</OriginalElement>
+  <nodes>
+    <node x="52.38333333333344" y="0.0">53c71ff5-d753-4448-960b-cff77241c00e.TABLE:port.config_saison_dates</node>
+    <node x="354.38333333333344" y="44.0">53c71ff5-d753-4448-960b-cff77241c00e.TABLE:port.config_price_types</node>
+    <node x="441.1833333333334" y="260.0">53c71ff5-d753-4448-960b-cff77241c00e.TABLE:port.config_daily_prices</node>
+    <node x="881.3833333333334" y="55.0">53c71ff5-d753-4448-960b-cff77241c00e.TABLE:port.config_services</node>
+    <node x="337.0" y="493.0">53c71ff5-d753-4448-960b-cff77241c00e.TABLE:port.config_entity_types</node>
+    <node x="759.7916666666667" y="260.0">53c71ff5-d753-4448-960b-cff77241c00e.TABLE:port.config_price_components</node>
+    <node x="44.25000000000006" y="282.0">53c71ff5-d753-4448-960b-cff77241c00e.TABLE:port.config_boat_prices</node>
+    <node x="0.0" y="493.0">53c71ff5-d753-4448-960b-cff77241c00e.TABLE:port.config_has_price_components</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="53c71ff5-d753-4448-960b-cff77241c00e.TABLE:port.config_daily_prices" target="53c71ff5-d753-4448-960b-cff77241c00e.TABLE:port.config_price_types" relationship="REFERENCES">
+      <point x="59.75" y="-94.0" />
+      <point x="620.4333333333334" y="230.0" />
+      <point x="607.8833333333334" y="230.0" />
+      <point x="0.0" y="61.0" />
+    </edge>
+    <edge source="53c71ff5-d753-4448-960b-cff77241c00e.TABLE:port.config_price_components" target="53c71ff5-d753-4448-960b-cff77241c00e.TABLE:port.config_services" relationship="REFERENCES">
+      <point x="63.5" y="-94.0" />
+      <point x="950.2916666666667" y="240.0" />
+      <point x="965.3833333333334" y="240.0" />
+      <point x="0.0" y="50.0" />
+    </edge>
+    <edge source="53c71ff5-d753-4448-960b-cff77241c00e.TABLE:port.config_price_components" target="53c71ff5-d753-4448-960b-cff77241c00e.TABLE:port.config_price_types" relationship="REFERENCES">
+      <point x="-63.5" y="-94.0" />
+      <point x="823.2916666666667" y="230.0" />
+      <point x="607.8833333333334" y="230.0" />
+      <point x="0.0" y="61.0" />
+    </edge>
+    <edge source="53c71ff5-d753-4448-960b-cff77241c00e.TABLE:port.config_boat_prices" target="53c71ff5-d753-4448-960b-cff77241c00e.TABLE:port.config_price_types" relationship="REFERENCES">
+      <point x="59.75" y="-72.0" />
+      <point x="223.50000000000006" y="230.0" />
+      <point x="607.8833333333334" y="230.0" />
+      <point x="0.0" y="61.0" />
+    </edge>
+    <edge source="53c71ff5-d753-4448-960b-cff77241c00e.TABLE:port.config_boat_prices" target="53c71ff5-d753-4448-960b-cff77241c00e.TABLE:port.config_saison_dates" relationship="REFERENCES">
+      <point x="-59.75" y="-72.0" />
+      <point x="104.00000000000006" y="240.0" />
+      <point x="193.38333333333344" y="240.0" />
+      <point x="0.0" y="105.0" />
+    </edge>
+    <edge source="53c71ff5-d753-4448-960b-cff77241c00e.TABLE:port.config_daily_prices" target="53c71ff5-d753-4448-960b-cff77241c00e.TABLE:port.config_saison_dates" relationship="REFERENCES">
+      <point x="-59.75" y="-94.0" />
+      <point x="500.9333333333334" y="240.0" />
+      <point x="193.38333333333344" y="240.0" />
+      <point x="0.0" y="105.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="1.0" showDependencies="false" x="541.0" y="296.5" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Columns</Category>
+    <Category>Key columns</Category>
+    <Category>Virtual foreign keys</Category>
+  </Categories>
+</Diagram>
+

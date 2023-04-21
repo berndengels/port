@@ -1,0 +1,136 @@
+form {
+	&#frmBerthCalculate {
+		input[type=text],input[type=number] {
+			padding: 0;
+			height: 25px;
+			min-height: 25px;
+		}
+	}
+	input[disabled], select[disabled], textara[disabled] {
+		background-color: #eee;
+	}
+	&.w-half {
+		input, textarea {
+			&.form-control {
+				width: 400px !important;
+			}
+		}
+		select {
+			&.form-select {
+				width: 428px !important;
+			}
+		}
+		@include media('<tablet') {
+			margin-left: 1.0rem;
+		}
+		.row {
+			input, textarea {
+				&.form-control {
+					display: inline-block;
+					width: 100px !important;
+					clear: none;
+				}
+			}
+			select {
+				&.form-select {
+					display: inline-block;
+					width: 150px !important;
+					clear: none;
+				}
+			}
+		}
+	}
+	&:not(&.inline-form, &.w-full, &.w-half) {
+		input, select, textarea, label {
+			max-width: 50%;
+		}
+	}
+	.form-control-sm {
+		height: 1.0rem !important;
+	}
+	.frm-group {
+		div {
+			div {
+				margin-left: 1.0rem;
+				label {
+					width: 100%;
+					.label {
+						margin-right: 0.5rem;
+						line-height: 2.5;
+						white-space: nowrap;
+					}
+					i.help{
+						line-height: 2.0;
+					}
+				}
+			}
+			div:first-child {
+				margin-left: 0;
+			}
+			@include media('<tablet') {
+				div {
+					width: 100%;
+					margin-left: 0;
+				}
+			}
+		}
+	}
+	@include media('<tablet') {
+		input, select, textarea, label {
+			max-width: 95%;
+		}
+	}
+}
+.captcha {
+	span {
+		img, button {
+			display: inline-block;
+			clear: none;
+		}
+		button {
+			height: 46px;
+		}
+	}
+}
+.list-group-sm {
+	li {
+		&.list-group-item {
+			font-size: 0.8rem;
+			margin: 0;
+			padding: 0.01rem 1.0rem;
+		}
+	}
+}
+.autocomplete {
+	position: absolute;
+	width: auto;
+	max-width: 200px;
+	margin: 0;
+	padding: 0.5rem 1.0rem;
+	list-style: none;
+	background-color: #fff;
+	border: 2px solid #ccc;
+	box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+	li {
+		width: 100%;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		cursor: pointer;
+	}
+}
+.form-control::placeholder {color:#666 !important;}
+input[readonly] {
+	color: #666;
+	background-color: #ddd;
+}
+input, select ,textarea {
+	&.calc {
+		&:not(input[type=checkbox], input[readonly]) {
+			border: 2px solid #0b0;
+		}
+	}
+}
+.calc-info {
+	color: #0b0;
+}

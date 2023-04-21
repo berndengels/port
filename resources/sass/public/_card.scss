@@ -1,0 +1,22 @@
+.card {
+	min-height: 300px;
+	background: transparent;
+	box-shadow: 4px 4px 8px $bgSideNav;
+	.card-header {
+		color: #fff;
+		background-color: $bgSideNav;
+		padding: 0.3rem 1.0rem;
+	}
+	.card-body {
+		color: #605949;
+		&.loader-wrapper {
+			width: 100%;
+			height: 100%;
+			text-align: center;
+			.v-spinner {
+				display: inline-block;
+				margin-top: 100px;
+			}
+		}
+	}
+}

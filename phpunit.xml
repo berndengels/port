@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="./vendor/phpunit/phpunit/phpunit.xsd"
+         bootstrap="vendor/autoload.php"
+         colors="true"
+         backupGlobals="false"
+         backupStaticAttributes="false"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="false"
+         convertWarningsToExceptions="false"
+         processIsolation="false"
+         stopOnFailure="false"
+>
+    <testsuites>
+        <testsuite name="Unit">
+            <directory suffix="Test.php">./tests/Unit</directory>
+        </testsuite>
+        <testsuite name="Models">
+            <directory suffix="Test.php">./tests/Feature/Models</directory>
+        </testsuite>
+        <testsuite name="Default">
+            <directory suffix="Test.php">./tests/Feature/Default</directory>
+        </testsuite>
+        <testsuite name="PriceCalculation">
+            <directory suffix="Test.php">./tests/Feature/PriceCalculation</directory>
+            <!--file>./tests/Feature/PriceCalculation/CaravanPriceCalculationTest.php</file-->
+        </testsuite>
+        <testsuite name="Routes">
+            <file>./tests/Feature/RouteRequestTest.php</file>
+        </testsuite>
+    </testsuites>
+    <coverage processUncoveredFiles="true">
+        <include>
+            <directory suffix=".php">./app</directory>
+        </include>
+        <!--report>
+            <html outputDirectory="reports/coverage"/>
+        </report-->
+    </coverage>
+    <php>
+        <env name="APP_ENV" value="testing" force="true" />
+        <env name="DB_DATABASE" value="port_testing" force="true" />
+
+        <server name="APP_ENV" value="testing" force="true" />
+        <server name="DB_DATABASE" value="port_testing" force="true" />
+
+        <server name="BCRYPT_ROUNDS" value="4"/>
+        <server name="CACHE_DRIVER" value="array"/>
+        <server name="MAIL_MAILER" value="array"/>
+        <server name="QUEUE_CONNECTION" value="sync"/>
+        <server name="SESSION_DRIVER" value="array"/>
+        <server name="QUEUE_CONNECTION" value="sync"/>
+        <server name="TELESCOPE_ENABLED" value="false"/>
+        <ini name="error_reporting" value="-1" />
+    </php>
+</phpunit>

@@ -1,0 +1,145 @@
+table {
+	.table {
+		border: none;
+		--bs-table-color {
+			color: $dark-grey !important;
+		}
+		tr {
+			border: none;
+			th, td {
+				color: $dark-grey !important;
+			}
+		}
+		&.table-striped {
+			tr {
+				border: none;
+				td {
+					border: none;
+				}
+			}
+		}
+	}
+	.port-table {
+		thead {
+			border: none;
+		}
+		tbody {
+			tr {
+				th {
+					border: none;
+					padding: 0 0.2rem;
+				}
+				td:first-child, th:first-child {
+					padding-left: 1rem;
+				}
+			}
+			tr:nth-child(odd) {
+				td {
+					border: none;
+					line-height: 2.3rem;
+					padding: 0 0.2rem;
+					i.switch {
+						line-height: 2.3rem;
+						margin-bottom: 0;
+					}
+				}
+				td:first-child {
+					padding-left: 1rem;
+					border-top-left-radius: 20px;
+					border-bottom-left-radius: 20px;
+				}
+				td:last-child {
+					padding-right: 1rem;
+					border-top-right-radius: 20px;
+					border-bottom-right-radius: 20px;
+				}
+			}
+			tr {
+				td {
+					&.table-action {
+						width: auto;
+						max-width: 150px !important;
+					}
+				}
+			}
+		}
+	}
+	@include media('<tablet') {
+		&.w-auto {
+			width: 95% !important;
+			margin: 0.5rem .5rem;
+		}
+	}
+}
+#phpinfo {
+	table {
+		width: 60rem;
+		margin-bottom: 1rem;
+		tr {
+			background-color: #ddd;
+			th {
+				text-align: center;
+				background-color: #99c;
+			}
+			td {
+				font-size: 75%;
+				text-align: left;
+				vertical-align: baseline;
+				padding: 4px 5px;
+				border: 1px solid #666;
+				&.e {
+					width: 300px;
+					font-weight: bold;
+					background-color: #ccf;
+				}
+				&.v {
+					max-width: 300px;
+				}
+				a {
+					display: block;
+					float: right;
+					clear: none;
+				}
+			}
+		}
+	}
+	h1 {
+		width: 60rem;
+		display: block;
+		font-size: 1.4rem;
+		color: $white;
+		padding: 1.0rem 1.0rem;
+		background-color: $bgSideNav;
+	}
+	h2 {
+		width: 60rem;
+		display: block;
+		text-align: center;
+		padding: 1.0rem 1.0rem;
+		font-size: 1.2rem;
+	}
+	table:first-child {
+		tr {
+			background-color: $bgSideNav;
+			td {
+				max-width: 50rem;
+				a {
+					display: block;
+					width: 100px;
+					float: right;
+					clear: none;
+					margin-right: 1.5rem;
+				}
+				h1 {
+					color: $white;
+					display: block;
+					height: 100%;
+					max-width: 70%;
+					margin: auto;
+					float: left;
+					clear: none;
+				}
+			}
+		}
+	}
+}

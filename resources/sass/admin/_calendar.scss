@@ -1,0 +1,33 @@
+:root {
+	--fc-border-color: black;
+	--fc-daygrid-event-dot-width: 5px;
+}
+#calendar {
+	width: auto;
+	min-width: 350px;
+	max-width: 100%;
+	height: auto;
+	min-height: 350px;
+	max-height: 400px;
+	@include media('>tablet') {
+		&.fc {
+			.fc-header-toolbar {
+				.fc-button {
+					padding: 0.1em 0.2em;
+					font-size: 0.7rem !important;
+				}
+				h2.fc-toolbar-title {
+					font-size: 1.0rem  !important;
+				}
+			}
+			table {
+				font-size: 0.7rem !important;
+			}
+		}
+	}
+}
+.fc {
+	.fc-daygrid-day-top {
+		flex-direction: row !important;
+	}
+}

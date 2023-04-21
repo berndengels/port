@@ -1,0 +1,35 @@
+.card {
+	min-height: 200px;
+	box-shadow: 4px 4px 8px $bgSideNav;
+	.card-header {
+		color: #fff;
+		background-color: $bgSideNav;
+		padding: 0.3rem 1.0rem;
+	}
+	&.draggable {
+		@include media('>tablet') {
+			position: absolute;
+			right: 20px;
+			z-index: 2000;
+		}
+		.card-header {
+			cursor: move;
+		}
+	}
+	&.sum-price, &.rentals {
+		width: 270px;
+		height: 150px;
+		min-height: 150px;
+		@include media('<tablet') {
+			width: 100%;
+		}
+		@include media('>tablet') {
+			top: 110px;
+		}
+	}
+	&.rentals {
+		@include media('>tablet') {
+			top: 520px;
+		}
+	}
+}

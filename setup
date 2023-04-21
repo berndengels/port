@@ -1,0 +1,53 @@
+#!/bin/bash
+
+echo "set permissions"
+chmod -R 777 bootstrap/cache
+chmod -R 777 storage
+
+if [ ! -d vendor ]; then
+    echo "create php vendors"
+    composer install
+fi
+
+if [ ! -d node_modules ]; then
+    echo "create js node_modules"
+    npm install
+fi
+
+npm run dev
+
+if [ ! -f .env ]; then
+    echo "create .env file"
+    cp .env.example .env
+fi
+# check for APP_KEY
+appKey=$(grep ^APP_KEY .env|awk -F "=" '{print $2}')
+if [ "$appKey" == "" ]; then
+    echo "no APP_KEY found, will generate the key"
+    php artisan key:generate
+else
+    echo "APP_KEY seems to be valid: $appKey"
+fi
+# init db test-data (user, roles, caravans, caravanDates)
+#php artisan migrate:fresh --env=demo
+#php artisan db:seed --env=demo
+
+php artisan storage:link
+
+# clear caches
+echo "clear all caches"
+php artisan cache:clear
+php artisan config:clear
+php artisan route:clear
+php artisan view:clear
+printf 'all done \360\237\230\216\n'
+
+echo "admin test login"
+echo "route /admin/login"
+echo "email: admin@test.loc"
+echo "password: password"
+
+echo "customer test login"
+echo "route /login"
+echo "email: kunde@test.loc"
+echo "password: password"
