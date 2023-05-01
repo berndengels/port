@@ -25,7 +25,7 @@ class Edit {
 					$("#"+resp.name).hide();
 				}
 				if(reload) {
-					location.reload()
+					location.reload();
 				}
 			});
 		});

@@ -33,7 +33,7 @@
             <div class="row mt-3">
                 <div class="col-sm-11 col-lg-9">
                     <x-table :items="$data"
-                             :fields="['Boot','Von','Bis','Eigner:md','Fon','Preis in €:md','Bezahlt']"
+                             :fields="['Boot','Saison','Von','Bis','Eigner:md','Fon','Preis in €:md','Bezahlt']"
                              :sortable="['boat.name'=>'Boot','from'=>'Von','until'=>'Bis']"
                              hasActions isSmall>
                         @foreach($data as $item)

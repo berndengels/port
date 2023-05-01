@@ -4,7 +4,6 @@ namespace App\Providers;
 use App\Events\OnStart;
 use App\Repositories\ConfigSettingsRepository;
 use App\View\Components\SumPrice;
-use Debugbar;
 use Exception;
 use Carbon\Carbon;
 use App\Http\Kernel;
@@ -63,7 +62,6 @@ class AppServiceProvider extends ServiceProvider
         setlocale(LC_TIME, $locale, 'de_DE.utf8', 'de');
         URL::forceScheme(env('FORCE_SCHEME', 'http'));
         Schema::defaultStringLength(191);
-        env('APP_DEBUG_BAR') ? Debugbar::enable() : Debugbar::disable();
         Paginator::useBootstrap();
         Blade::if('adminOrCustomer', function () {
             return auth('admin')->check() || auth('customer')->check();
