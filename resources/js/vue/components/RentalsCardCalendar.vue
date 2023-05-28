@@ -77,17 +77,15 @@ export default {
 */
     },
     created() {
-        setTimeout(() => {
-            if(this.onlyFromToday) {
-                this.options.validRange = (nowDate) => {
-                    return {
-                        start: nowDate,
-                    };
-                }
-            }
-            this.options.events = this.dates;
-            this.loading = false;
-        }, 1000);
+		if(this.onlyFromToday) {
+			this.options.validRange = (nowDate) => {
+				return {
+					start: nowDate,
+				};
+			}
+		}
+		this.options.events = this.dates;
+		this.loading = false;
     },
 }
 </script>
