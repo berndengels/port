@@ -85,9 +85,10 @@ export default {
             for (r in this.filter) {
                 data[r] = {name: r, val: this.filter[r]};
             }
-            this.options.events = this.dates
-                .filter(el => el.relation === data[el.relation]['name'] && true === data[el.relation]['val'])
-            ;
+            try {
+				this.options.events = this.dates
+					.filter(el => el.relation === data[el.relation]['name'] && true === data[el.relation]['val']);
+            } catch(e) {}
         }
     },
     created() {

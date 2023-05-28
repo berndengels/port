@@ -26,7 +26,7 @@ class RentalsController extends RentableController
 
     public function reservations() {
         $today = Carbon::today()->format('Y-m-d');
-        $data = Rentable::whereDate('from','>=', $today)
+        $data = Rentable::whereDate('until','>=', $today)
             ->whereHasMorph('rentable', $this->configOffers)
             ->orderBy('from')
             ->get();
