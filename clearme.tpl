@@ -1,11 +1,11 @@
 .#!/bin/bash
 if [ "$1" == "sail" ]; then
 	php="sail php"
-	redis-cli FLUSHALL
+	sail redis-cli FLUSHALL
 	composer="sail composer"
 else
 	php="/usr/local/bin/php"
-	sail redis-cli FLUSHALL
+	redis-cli FLUSHALL
 	composer="/usr/local/bin/composer"
 fi
 #php="/opt/plesk/php/8.0/bin/php"
