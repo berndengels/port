@@ -97,6 +97,7 @@ Route::group([
     Route::get('reload-captcha', [CaptchaServiceController::class, 'reloadCaptcha'])->name('reload.captcha');
     Route::get('pages/{slug}', [PageController::class,'show'])->name('pages');
     Route::get('rentals/reservation', fn() => view('public.rentals.index'))->name('rentals.reservation');
+	Route::get('documentation', fn() => response()->download(public_path('docs').'/doku-portm.pdf'))->name('documentation');
     Route::resource('contacts', ContactController::class)->only(['show','create','store']);
 });
 /*
