@@ -77,10 +77,10 @@ class AdminCustomerController extends AdminController
         switch ($type) {
             case 'permanent':
             case 'guest':
-                $role = Role::whereName('boat')->first()->id;
+                $role = Role::whereName('boat')->first() ? Role::whereName('boat')->first()->id : null;
                 break;
             case 'renter':
-                $role = Role::whereName('renter')->first()->id;
+                $role = Role::whereName('renter')->first() ? Role::whereName('renter')->first()->id : null;
                 break;
             default:
                 break;
