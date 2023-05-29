@@ -8,6 +8,7 @@ Content-Type: application/json
 	"until": "2022-04-31",
 	"crane": 0,
 	"mast_crane": 0,
+	"duration_mast_crane": 1,
 	"cleaning": 0,
 	"modus": "winter",
 	"length": 9,

@@ -1,10 +1,24 @@
 
 class MyForm {
-	autofill(calcUrl, binds) {
+	autofill(calcUrl, binds, toHide = []) {
 		axios.get(calcUrl)
 			.then(resp => {
-				for(let key in binds) {
+				let key;
+				for(key in binds) {
 					$(binds[key]).val(resp.data[key]);
+				}
+				if(toHide.length > 0) {
+					if(undefined !== resp.data.type) {
+						if("motor" === resp.data.type) {
+							for(key in toHide) {
+								$(toHide[key]).hide();
+							}
+						} else {
+							for(key in toHide) {
+								$(toHide[key]).show();
+							}
+						}
+					}
 				}
 			})
 			.catch(err => console.error(err))
@@ -32,17 +46,6 @@ class MyForm {
 				}
 			}
 		});
-/*
-		if(0 === $elSelect.find('li').length) {
-			$elSelect.addClass('d-none').hide();
-			return null;
-		}
-*/
-/*
-		$(triggerSelector).blur(e => {
-			$elSelect.addClass('d-none').hide()
-		});
-*/
 		$elSelect.click(e => {
 			let $el = $(e.target),key,
 				item = data[$el.data('id')];
