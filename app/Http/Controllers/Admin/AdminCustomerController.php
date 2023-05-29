@@ -86,7 +86,7 @@ class AdminCustomerController extends AdminController
                 break;
         }
         return view('admin.customers.create', [
-            'roles' => $this->roleRepository->setGuardName('customer')->options()->getSelectOptions(),
+            'roles' => $this->roleRepository->setGuardName('customer')->options()->translate()->getSelectOptions(),
             'type'  => $type,
             'route' => $route,
             'role'  => $role,
