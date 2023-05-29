@@ -20,7 +20,8 @@ class MastCrane extends Main implements IPrice
     public function __construct(
         protected bool $mast_crane = false,
         protected ?int $mast_weight = null,
-        protected ?int $mast_length = null
+        protected ?int $mast_length = null,
+		protected ?float $duration_mast_crane = null
     ) {
         $this->initConfig();
     }
@@ -34,8 +35,9 @@ class MastCrane extends Main implements IPrice
             try {
                 $value = match($this->priceType) {
                     'ton' => $this->unitPrice * $this->mast_weight / 1000,
-                    'kilogram' => $this->unitPrice * $this->mast_weight,
-                    'length' => $this->unitPrice * $this->mast_length,
+                    'kilogram' 	=> $this->unitPrice * $this->mast_weight,
+                    'length' 	=> $this->unitPrice * $this->mast_length,
+					'hour'		=> $this->unitPrice * $this->duration_mast_crane,
                     default => $this->unitPrice,
                 };
                 return new Price($value);

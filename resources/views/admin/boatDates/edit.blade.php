@@ -20,6 +20,9 @@
                 @foreach($priceComponents as $pc)
                     <div class="mt-3">
                         <x-form-checkbox class="calc" id="{{ $pc->key }}" name="{{ $pc->key }}" label="{{ $pc->name }}" default="{{ $pc->{'has'.Str::ucfirst($pc->key)} }}"/>
+                        @if($pc->priceType->is_time)
+                            <x-form-input class="calc" id="duration" name="duration" type="number" step="1" min="0" label="Arbeitsdauer ({{ $pc->priceType->name }})" placeholder="Arbeitsdauer ({{ $pc->priceType->name }})" />
+                        @endif
                     </div>
                 @endforeach
             @endif
