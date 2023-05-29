@@ -201,7 +201,7 @@ class AdminBoatDatesController extends AdminController
      */
     public function edit(BoatDates $boatDate)
     {
-        $boatDate->load('boat');
+//        $boatDate->load('boat');
         $options = $this->boatRepository->options('name');
         $this->boatOptions = $options->getSelectOptions();
 

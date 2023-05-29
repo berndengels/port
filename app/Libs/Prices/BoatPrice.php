@@ -19,6 +19,8 @@ class BoatPrice extends PriceCalculator
     protected static $priceMastCrane = 0;
     protected static $priceCleaning = 0;
     protected static $priceTransport = 0;
+	protected static $duration_mast_crane = 0;
+	protected static $duration_cleaning = 0;
 
     public function params(): Collection
     {

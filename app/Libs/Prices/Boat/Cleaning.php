@@ -10,7 +10,7 @@ class Cleaning extends Main implements IPrice
         protected bool $cleaning = false,
         protected ?float $length = null,
         protected ?float $width = null,
-		protected ?int $duration_cleaning = null
+		protected ?float $duration_cleaning = null
     ) {
         $this->initConfig();
     }

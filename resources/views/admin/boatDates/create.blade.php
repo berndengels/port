@@ -52,7 +52,23 @@ const defaultFromWinter = "{{ $defaultFromWinter }}",
 	defaultUntilWinter  = "{{ $defaultUntilWinter }}",
 	defaultFromSummer   = "{{ $defaultFromSummer }}",
 	defaultUntilSummer  = "{{ $defaultUntilSummer }}",
-	toHides = ['.wrapperMastCrane','#mast_length','#mast_weight']
+	toHides = ['.wrapperMastCrane','#mast_length','#mast_weight'],
+	handleCheck = (e) => {
+		let $el = $(e.target),
+			$wrapper = $el.parent().next('.durationWrapper'),
+			$duratiun = $wrapper.find('.duration')
+		;
+
+		if($wrapper.length > 0) {
+			if($el.is(':checked')) {
+				$wrapper.removeClass('d-none');
+				$duratiun.removeAttr('disabled')
+			} else {
+				$wrapper.addClass('d-none');
+				$duratiun.attr('disabled', true)
+			}
+		}
+	}
 ;
 
 $(document).ready(() => {
@@ -89,22 +105,8 @@ $(document).ready(() => {
 			MyForm.autofill("/admin/boats/" + $el.val(), autofillParams, toHides);
 		}
 	});
-
 	$('.calc[type="checkbox"]').change(e => {
-		let $el = $(e.target),
-			$wrapper = $el.parent().next('.durationWrapper'),
-			$duratiun = $wrapper.find('.duration')
-		;
-
-		if($wrapper.length > 0) {
-			if($el.is(':checked')) {
-				$wrapper.removeClass('d-none');
-				$duratiun.removeAttr('disabled')
-			} else {
-				$wrapper.addClass('d-none');
-				$duratiun.attr('disabled', true)
-			}
-		}
+		handleCheck(e);
 	})
 
 	Prices.calculate(document.frm, calcUrl);
