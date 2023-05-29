@@ -34,6 +34,9 @@ class ConfigPriceType extends Model
     protected $table = 'config_price_types';
     protected $guarded = ['id'];
     public $timestamps = false;
+	protected $casts = [
+		'is_time'	=> 'bool',
+	];
 
     protected static $cacheKeys = [
         AppCache::KEY_OPTIONS_PRICE_TYPE,

@@ -16,6 +16,11 @@ class Prices {
 				}
 			}
 		}
+/*
+		for (let el of formData.entries()) {
+			console.info("formData", el);
+		}
+*/
 		axios.post(calcUrl, formData)
 			.then(resp => {
 				frm.price.value = Math.ceil(resp.data.total);

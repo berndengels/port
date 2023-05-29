@@ -78,7 +78,6 @@ class AdminPriceController extends AdminController
 
             return response()->json($response);
         }
-
     }
 
     /**

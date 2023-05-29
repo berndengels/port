@@ -4,6 +4,7 @@ namespace App\Libs\Prices;
 use App\Models\ConfigSetting;
 use DatePeriod;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 use ReflectionClass;
 use Illuminate\Http\Request;
 use App\Traits\Models\HasTaxRate;
@@ -71,7 +72,7 @@ abstract class PriceCalculator
         $props['total'] = static::$total;
 
 //        $props['dailyPrices'] = $obj::$dailyPrices;
-
+//		dd($props);
         return $this->formatResult($props);
     }
 
@@ -83,32 +84,36 @@ abstract class PriceCalculator
                 if($this->model && $this->model->getAttribute($item)) {
                     $params[$item] = $this->model->{$item};
                 } else {
-                    $params[$item] = $request->post($item);
+					if($request->has($item)) {
+						$params[$item] = $request->post($item);
+					}
                 }
             }
             $cParams = $rClass->getConstructor()->getParameters();
             /**
              * @var $pNames Collection
              */
-            $pNames = collect($cParams)->map->name;
 
-            foreach ($pNames as $name) {
-                switch ($name) {
-                    case 'from':
-                        $args[] = static::$from;
-                        break;
-                    case 'until':
-                        $args[] = static::$until;
-                        break;
-                    default:
-                        if(isset($params[$name])) {
-                            $args[] = $params[$name] ?? null;
-                        }
-                        break;
-                }
-            }
+			foreach ($cParams as $p) {
+				$name = $p->getName();
+				$type = $p->getType();
 
-            if($this->model) {
+				switch ($name) {
+					case 'from':
+						$args[] = static::$from;
+						break;
+					case 'until':
+						$args[] = static::$until;
+						break;
+					default:
+						if(isset($params[$name])) {
+							$args[] = $params[$name] ?? null;
+						}
+						break;
+				}
+			}
+
+            if($this->model instanceof $type) {
                 $args[] = $this->model;
             }
 
@@ -121,17 +126,22 @@ abstract class PriceCalculator
     protected function formatResult(array $props): array
     {
         $prices = [];
+
         foreach ($props as $prop => $val) {
-            if(false === strpos($prop, '_', 0)) {
+            if(false === strpos($prop, '_')) {
                 if($val instanceof Carbon) {
                     $val = $val->format('d.m.Y');
                 }
                 if($val instanceof Price) {
                     $val = (float) $val->getValue();
                 }
-                $prices[$prop] = $val;
+				$prices[$prop] = $val;
             }
+			elseif (0 === strpos($prop, 'duration_')) {
+				$prices[$prop] = $val;
+			}
         }
+
         return $prices;
     }
 
@@ -151,6 +161,7 @@ abstract class PriceCalculator
             if(class_exists($class)) {
                 $basename   = class_basename($class);
                 $staticProp = 'price' . $basename;
+				$staticDurationProp = 'duration_' . Str::snake($basename, '_');
                 $rClass     = new ReflectionClass($class);
 
                 try {
@@ -170,14 +181,21 @@ abstract class PriceCalculator
                         static::$$staticProp = $obj->addPrice();
                         break;
                 }
+
                 $this->add(static::$$staticProp);
                 $props[$staticProp] = static::$$staticProp;
+
+				if($request->has($staticDurationProp) && property_exists($obj, $staticDurationProp)) {
+					static::$$staticDurationProp = $request->input($staticDurationProp);
+					$props[$staticDurationProp] = static::$$staticDurationProp;
+				}
 
                 if( property_exists($obj, 'dailyPrices') ) {
                     $props['dailyPrices'] = $obj::$dailyPrices;
                 }
             }
         }
+
         return $props;
     }
 }

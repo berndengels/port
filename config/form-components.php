@@ -2,6 +2,7 @@
 
 use App\View\Components\Form\FormInput;
 use App\View\Components\Form\FormSelect;
+use App\View\Components\Form\FormCheckbox;
 use ProtoneMedia\LaravelFormComponents\Components;
 
 return [
@@ -17,8 +18,10 @@ return [
             'class' => Components\Form::class,
         ],
         'form-checkbox' => [
-            'view'  => 'form-components::{framework}.form-checkbox',
-            'class' => Components\FormCheckbox::class,
+//            'view'  => 'form-components::{framework}.form-checkbox',
+			'view'  => 'vendor.form-components.{framework}.form-checkbox',
+//			'class' => Components\FormCheckbox::class,
+            'class' => FormCheckbox::class,
         ],
         'form-errors' => [
 //            'view'  => 'form-components::{framework}.form-errors',
