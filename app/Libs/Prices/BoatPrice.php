@@ -25,8 +25,11 @@ class BoatPrice extends PriceCalculator
         return collect([
             'crane',
             'mast_crane',
+			'duration_mast_crane',
             'cleaning',
+			'duration_cleaning',
             'transport',
+			'duration_transport',
             'modus',
             'length',
             'width',

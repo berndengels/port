@@ -2,7 +2,6 @@
 
 namespace App\View\Components\Form;
 
-use Illuminate\Contracts\Support\MessageBag;
 use ProtoneMedia\LaravelFormComponents\Components\FormInput as BaseFormInput;
 use ProtoneMedia\LaravelFormComponents\Components\HandlesDefaultAndOldValue;
 use ProtoneMedia\LaravelFormComponents\Components\HandlesValidationErrors;

@@ -9,6 +9,7 @@ Content-Type: application/json
 	"until": "2021-09-30",
 	"crane": true,
 	"mast_crane": true,
+	"duration_mast_crane": 1,
 	"cleaning": false,
 	"transport": true,
 	"length": 8.5,

@@ -156,7 +156,7 @@ class AdminBoatDatesController extends AdminController
         $defaultUntilSummer   = Carbon::make($year . '-' . $summer->saison->until_month . '-' . $summer->saison->until_day);
 
         $options = $this->boatRepository->options('name');
-        $this->boatOptions = $options->getSelectOptions();
+        $this->boatOptions = $options->getSelectOptions()->prepend('Boot wählen','');
 
         return view(
             'admin.boatDates.create', [

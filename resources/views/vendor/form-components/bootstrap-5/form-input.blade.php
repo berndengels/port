@@ -1,5 +1,9 @@
     @if($label)
-        <label class="form-label @if($inline) inline @else mt-2 @endif" :for="$attributes->get('id') ?: $id()">
+        <!--label class="form-label @if($inline) inline @else mt-2 @endif" :for="$attributes->get('id') ?: $id()"-->
+        <label {!! $attributes->merge([
+            'class' => 'form-label ' . $class
+            . ($inline ? ' inline' : 'mt-2')
+            ]) !!} :for="$attributes->get('id') ?: $id()">
             {!! $label !!}
         </label>
     @endif

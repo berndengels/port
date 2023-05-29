@@ -83,32 +83,36 @@ abstract class PriceCalculator
                 if($this->model && $this->model->getAttribute($item)) {
                     $params[$item] = $this->model->{$item};
                 } else {
-                    $params[$item] = $request->post($item);
+					if($request->has($item)) {
+						$params[$item] = $request->post($item);
+					}
                 }
             }
             $cParams = $rClass->getConstructor()->getParameters();
             /**
              * @var $pNames Collection
              */
-            $pNames = collect($cParams)->map->name;
 
-            foreach ($pNames as $name) {
-                switch ($name) {
-                    case 'from':
-                        $args[] = static::$from;
-                        break;
-                    case 'until':
-                        $args[] = static::$until;
-                        break;
-                    default:
-                        if(isset($params[$name])) {
-                            $args[] = $params[$name] ?? null;
-                        }
-                        break;
-                }
-            }
+			foreach ($cParams as $p) {
+				$name = $p->getName();
+				$type = $p->getType();
 
-            if($this->model) {
+				switch ($name) {
+					case 'from':
+						$args[] = static::$from;
+						break;
+					case 'until':
+						$args[] = static::$until;
+						break;
+					default:
+						if(isset($params[$name])) {
+							$args[] = $params[$name] ?? null;
+						}
+						break;
+				}
+			}
+
+            if($this->model instanceof $type) {
                 $args[] = $this->model;
             }
 
@@ -178,6 +182,7 @@ abstract class PriceCalculator
                 }
             }
         }
+
         return $props;
     }
 }
