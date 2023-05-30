@@ -6,6 +6,20 @@
             <h1 class="m-3 fs-3 dark-grey">{{ __('Admin Login') }}</h1>
             <div>
                 <x-form class="mx-3 frm-login" method="POST" action="{{ route('admin.login') }}">
+                    <div class="row">
+                        <div class="col-11 col-lg-3">Demo Login:</div>
+                        <div class="col-11 col-lg-auto bold">admin@test.loc</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-11 col-lg-3">Demo Passwort:</div>
+                        <div class="col-11 col-lg-auto bold">password</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-11">
+                            Im Demo Modus können keine Daten verändert werden.
+                            Bei Fragen bitte <a href="{{ route('public.contacts.create') }}">hier Kontakt aufnehmen</a>.
+                        </div>
+                    </div>
                     @if( isset($redirectTo) )
                         <x-form-input type="hidden" name="redirectTo" :default="$redirectTo" />
                     @endif
