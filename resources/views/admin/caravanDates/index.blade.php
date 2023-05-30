@@ -17,6 +17,8 @@
             </div>
             @endif
         </div>
+
+		@if($data->count() > 0)
         <x-form class="inline-form ms-0 my-3" method="get" id="frmFilter" name="frmFilter"
                 action="{{ route('admin.caravanDates.index') }}"
         >
@@ -59,6 +61,9 @@
             </div>
         </div>
         {{ $data->appends($queryString)->links() }}
+		@else
+			<h5>Keine Daten vorhanden</h5>
+		@endif
     </div>
     <x-tooltip id="tooltip" />
 @endsection
