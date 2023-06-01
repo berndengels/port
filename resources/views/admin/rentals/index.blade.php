@@ -18,6 +18,7 @@
             @endif
         </div>
 
+		@if($data && $data->count() > 0)
         <x-form class="inline-form ml-5" method="get" id="frmFilter" name="frmFilter"
                 action="{{ route('admin.'.$routeName.'.index') }}"
         >
@@ -27,8 +28,6 @@
             <button class="btn btn-secondary reset btn-sm inline ms-2">Reset</button>
             <button role="link" id="toggleCalendar" class="btn btn-secondary reset btn-sm inline ms-2">Kalender</button>
         </x-form>
-
-    @if($data && $data->count() > 0)
 
         <div id="calendarWrapper" class="bg-light">
 			<div id="calendar" class="pe-3"></div>

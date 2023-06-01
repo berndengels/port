@@ -11,7 +11,7 @@ use App\Repositories\RentableRepository;
 use App\Repositories\GuestBoatDatesRepository;
 use Illuminate\Support\Facades\Config;
 
-class StatisticController extends Controller
+class ApiStatisticController extends Controller
 {
     /**
      * Handle the incoming request.

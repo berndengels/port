@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Repositories\CalendarRepository;
 use Carbon\Carbon;
 
-class HouseboatController extends Controller
+class ApiHouseboatController extends Controller
 {
     public function index() {
         $data = HouseboatRentals::with(['houseboat','customer'])->orderBy('from')->get();

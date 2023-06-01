@@ -7,7 +7,7 @@ use App\Models\Rentable;
 use App\Repositories\CalendarRentableRepository;
 use App\Http\Controllers\RentableController;
 
-class RentalsController extends RentableController
+class ApiRentalsController extends RentableController
 {
     public function index() {
         $data = Rentable::with(['customer'])

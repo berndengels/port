@@ -35,6 +35,7 @@
         "@fullcalendar/moment-timezone": "^6.1.8",
         "@fullcalendar/rrule": "^6.1.8",
         "@fullcalendar/timegrid": "^6.1.8",
+        "@fullcalendar/vue3": "^6.1.8",
         "@jridgewell/sourcemap-codec": "^1.4.15",
         "@popperjs/core": "^2.11.8",
         "@turf/turf": "^6.5.0",

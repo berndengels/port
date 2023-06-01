@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Models\ConfigOffer;
 use App\Http\Controllers\Controller;
 
-class ConfigOfferController extends Controller
+class ApiConfigOfferController extends Controller
 {
     public function index() {
 

@@ -99,6 +99,11 @@ class Boat extends BaseModel
         return $this->hasMany(BoatDates::class);
     }
 
+    public function craneDates()
+    {
+        return $this->morphMany(CraneDate::class, 'cranable');
+    }
+
     public function prices()
     {
         return $this->hasMany(ConfigBoatPrice::class);
