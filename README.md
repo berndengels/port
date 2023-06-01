@@ -16,7 +16,8 @@ Test URL: [https://port.segel-helden.de](https://port.segel-helden.de)
 - set all credentials, tokens, passwords, urls in .env (DB, EMAIL)
 - set app url in .env APP_URL/MIX_API_URL (use https)
 - create MySql database 'port'
-- import port.sql file in port db
+- unzip database/port-demo.sql.zip to database/port-demo.sql 
+- import database/port-demo.sql file in port db
 
 ### For actual weather data:
 Create a free account on openweathermap: [openweathermap](https://home.openweathermap.org/users/sign_up)\
