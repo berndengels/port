@@ -228,6 +228,15 @@ return [
                         'help'  => null,
                     ],
                     [
+                        'permissions'   => ['read CraneDate'],
+                        'text'  => 'Krantermine',
+                        'title' => 'Krantermine',
+                        'icon'  => 'fas fa-gear',
+                        'route' => 'admin.craneDates.index',
+                        'hide_on_mobile' => true,
+                        'help'  => null,
+                    ],
+                    [
                         'permissions'   => ['read ConfigSaisonDates'],
                         'text'  => 'Saison-Daten',
                         'title' => 'Saison-Daten',

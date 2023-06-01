@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Schema;
 /**
  *
  */
-class BerthController extends Controller
+class ApiBerthController extends Controller
 {
     /**
      * @return JsonResponse

@@ -34,6 +34,7 @@ window.emitter = emitter;
 
 import AdminDashboard from "v@/views/admin/Dashboard"
 import AdminBerths from "v@/views/admin/Berths"
+import AdminCraneDates from "v@/views/admin/CraneDates"
 //import AdminHarborDesigner from "v@/views/admin/harborDesigner"
 
 window.MyForm   = new MyForm;
@@ -100,6 +101,11 @@ $(document).ready(function () {
 			app = createApp(AdminBerths).use(store);
 			app.config.globalProperties.emitter = emitter;
 			app.mount("#adminBerths");
+			break
+		case $("#adminCraneDates").is(":visible"):
+			app = createApp(AdminCraneDates).use(store);
+			app.config.globalProperties.emitter = emitter;
+			app.mount("#adminCraneDates");
 			break
 	}
 	$('.btn-print').click((e)=>{

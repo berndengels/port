@@ -60,4 +60,9 @@ class GuestBoat extends BaseModel
     {
         return $this->hasMany(GuestBoatDates::class, 'guest_boat_id', 'id');
     }
+
+    public function craneDates()
+    {
+        return $this->morphMany(CraneDate::class, 'cranable');
+    }
 }

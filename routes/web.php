@@ -26,6 +26,7 @@ use App\Http\Controllers\Admin\AdminQrCodeController;
 use App\Http\Controllers\Admin\AdminRentalsController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\Admin\AdminCraneDateController;
 use App\Http\Controllers\CaptchaServiceController;
 use App\Http\Controllers\ContactController;
 use Illuminate\Support\Facades\Route;
@@ -73,6 +74,7 @@ use App\Http\Controllers\Admin\AdminConfigPriceTypeController;
 use App\Http\Controllers\Admin\AdminConfigSaisonDatesController;
 use App\Http\Controllers\Admin\AdminHolydayController;
 use App\Http\Controllers\Admin\AdminAccessLogController;
+use App\Http\Controllers\CraneDateController;
 
 Auth::routes();
 
@@ -146,6 +148,7 @@ Route::group([
     Route::resource('profile', ProfileController::class);
     Route::resource('boats', BoatController::class);
     Route::resource('boatDates', BoatDatesController::class);
+    Route::resource('craneDates', CraneDateController::class);
     Route::resource('serviceRequests', ServiceRequestController::class);
     Route::get('boatDates/invoice/{boatDate}', [BoatDatesController::class, 'invoice'])->name('boatDates.invoice');
     Route::get('boatDates/print/{boatDate}', [BoatDatesController::class, 'printPage'])->name('boatDates.print');
@@ -190,8 +193,9 @@ Route::group([
     Route::get('customers/guests', [AdminCustomerController::class,'guest'])->name('customers.guests');
     Route::get('customers/renters', [AdminCustomerController::class,'renter'])->name('customers.renters');
 
-    Route::resource('customers', AdminCustomerController::class)->except(['create']);
+    Route::post('craneDates/cranable', [AdminCraneDateController::class, 'cranable'])->name('boatCraneDates.cranable');
 
+    Route::resource('customers', AdminCustomerController::class)->except(['create']);
     Route::resource('contacts', AdminContactController::class)->only(['index','show','destroy']);
     Route::resource('caravans', AdminCaravanController::class);
     Route::resource('caravanDates', AdminCaravanDatesController::class);
@@ -202,6 +206,7 @@ Route::group([
     Route::resource('widgets', AdminWidgetController::class);
     Route::resource('boats', AdminBoatController::class);
     Route::resource('boatDates', AdminBoatDatesController::class);
+    Route::resource('craneDates', AdminCraneDateController::class);
     Route::resource('guestBoats', AdminGuestBoatController::class);
     Route::resource('houseboats', AdminHouseboatController::class);
     Route::resource('houseboatOwners', AdminHouseboatOwnerController::class);

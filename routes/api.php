@@ -3,12 +3,13 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminPriceController;
-use App\Http\Controllers\Api\WeatherController;
-use App\Http\Controllers\Api\StatisticController;
-use App\Http\Controllers\Api\CaravanController;
-use App\Http\Controllers\Api\RentalsController;
-use App\Http\Controllers\Api\ConfigOfferController;
-use App\Http\Controllers\Api\BerthController;
+use App\Http\Controllers\Api\ApiWeatherController;
+use App\Http\Controllers\Api\ApiStatisticController;
+use App\Http\Controllers\Api\ApiCaravanController;
+use App\Http\Controllers\Api\ApiRentalsController;
+use App\Http\Controllers\Api\ApiConfigOfferController;
+use App\Http\Controllers\Api\ApiBerthController;
+use App\Http\Controllers\Api\ApiCraneDateController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,61 +25,86 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('weather',WeatherController::class)->name('weather');
+Route::get('weather',ApiWeatherController::class)->name('weather');
 Route::group([
     'prefix'    => 'stats',
     'as'        => 'stats.',
     'middleware' => ['auth:sanctum'],
 ], function () {
-    Route::get('caravans',[StatisticController::class,'caravans'])->name('caravans');
-    Route::get('boats',[StatisticController::class,'boats'])->name('boats');
-    Route::get('guestBoats',[StatisticController::class,'guestBoats'])->name('guestBoats');
-    Route::get('rentals',[StatisticController::class,'rentals'])->name('rentals');
-    Route::get('rentalSalesVolumes',[StatisticController::class,'rentalSalesVolumes'])->name('rentalSalesVolumes');
+    Route::get('caravans',[ApiStatisticController::class,'caravans'])->name('caravans');
+    Route::get('boats',[ApiStatisticController::class,'boats'])->name('boats');
+    Route::get('guestBoats',[ApiStatisticController::class,'guestBoats'])->name('guestBoats');
+    Route::get('rentals',[ApiStatisticController::class,'rentals'])->name('rentals');
+    Route::get('rentalSalesVolumes',[ApiStatisticController::class,'rentalSalesVolumes'])->name('rentalSalesVolumes');
 });
 Route::group([
     'prefix'    => 'caravans',
     'as'        => 'caravans.',
     'middleware' => ['auth:sanctum'],
 ], function () {
-    Route::get('todayVisits',[CaravanController::class,'todayVisits'])->name('todayVisits');
-    Route::put('{caravan}',[CaravanController::class,'update'])->name('update');
-    Route::post('',[CaravanController::class,'store'])->name('store');
+    Route::get('todayVisits',[ApiCaravanController::class,'todayVisits'])->name('todayVisits');
+    Route::put('{caravan}',[ApiCaravanController::class,'update'])->name('update');
+    Route::post('',[ApiCaravanController::class,'store'])->name('store');
 });
 Route::group([
     'prefix'    => 'rentals',
     'as'        => 'rentals.',
 //    'middleware' => ['auth:sanctum'],
 ], function () {
-    Route::get('',[RentalsController::class,'index'])->name('index');
-    Route::get('reservations',[RentalsController::class,'reservations'])->name('reservations');
+    Route::get('',[ApiRentalsController::class,'index'])->name('index');
+    Route::get('reservations',[ApiRentalsController::class,'reservations'])->name('reservations');
 });
 Route::group([
     'prefix'    => 'configOffers',
     'as'        => 'configOffers.',
 //    'middleware' => ['auth:sanctum'],
 ], function () {
-    Route::get('',[ConfigOfferController::class,'index'])->name('index');
+    Route::get('',[ApiConfigOfferController::class,'index'])->name('index');
 });
 Route::group([
     'prefix'    => 'berths',
     'as'        => 'berths.',
     'middleware' => ['auth:sanctum'],
 ], function () {
-    Route::post('refill', [BerthController::class,'refill'])->name('refill');
-    Route::post('setPoints', [BerthController::class,'setPoints'])->name('setPoints');
-    Route::get('', [BerthController::class,'index'])->name('index');
-    Route::get('laodBackup', [BerthController::class,'loadBackup'])->name('loadBackup');
-    Route::get('saveBackup', [BerthController::class,'saveBackup'])->name('saveBackup');
-    Route::get('port', [BerthController::class,'port'])->name('port');
-    Route::get('categories', [BerthController::class,'categories'])->name('categories');
-    Route::get('docks', [BerthController::class,'docks'])->name('docks');
-    Route::get('', [BerthController::class,'index'])->name('index');
-    Route::post('', [BerthController::class,'store'])->name('store');
-    Route::put('{berth}', [BerthController::class,'update'])->name('update');
-    Route::delete('{berth}', [BerthController::class,'destroy'])->name('destroy');
-    Route::delete('', [BerthController::class,'destroyAll'])->name('destroyAll');
-    Route::post('batchDestroy', [BerthController::class,'destroyAny'])->name('destroyAny');
+    Route::post('refill', [ApiBerthController::class,'refill'])->name('refill');
+    Route::post('setPoints', [ApiBerthController::class,'setPoints'])->name('setPoints');
+    Route::get('', [ApiBerthController::class,'index'])->name('index');
+    Route::get('laodBackup', [ApiBerthController::class,'loadBackup'])->name('loadBackup');
+    Route::get('saveBackup', [ApiBerthController::class,'saveBackup'])->name('saveBackup');
+    Route::get('port', [ApiBerthController::class,'port'])->name('port');
+    Route::get('categories', [ApiBerthController::class,'categories'])->name('categories');
+    Route::get('docks', [ApiBerthController::class,'docks'])->name('docks');
+    Route::get('', [ApiBerthController::class,'index'])->name('index');
+    Route::post('', [ApiBerthController::class,'store'])->name('store');
+    Route::put('{berth}', [ApiBerthController::class,'update'])->name('update');
+    Route::delete('{berth}', [ApiBerthController::class,'destroy'])->name('destroy');
+    Route::delete('', [ApiBerthController::class,'destroyAll'])->name('destroyAll');
+    Route::post('batchDestroy', [ApiBerthController::class,'destroyAny'])->name('destroyAny');
+});
+
+Route::group([
+//    'prefix'    => 'craneDates',
+    'as'        => 'craneDates.',
+    'middleware' => ['auth:sanctum'],
+], function () {
+    Route::resource('craneDates', ApiCraneDateController::class);
+    Route::post('craneDates/cranable', [ApiCraneDateController::class, 'cranable']);
+/*
+    Route::post('refill', [ApiBerthController::class,'refill'])->name('refill');
+    Route::post('setPoints', [ApiBerthController::class,'setPoints'])->name('setPoints');
+    Route::get('', [ApiBerthController::class,'index'])->name('index');
+    Route::get('laodBackup', [ApiBerthController::class,'loadBackup'])->name('loadBackup');
+    Route::get('saveBackup', [ApiBerthController::class,'saveBackup'])->name('saveBackup');
+    Route::get('port', [ApiBerthController::class,'port'])->name('port');
+    Route::get('categories', [ApiBerthController::class,'categories'])->name('categories');
+    Route::get('docks', [ApiBerthController::class,'docks'])->name('docks');
+    Route::get('', [ApiBerthController::class,'index'])->name('index');
+    Route::post('', [ApiBerthController::class,'store'])->name('store');
+    Route::put('{berth}', [ApiBerthController::class,'update'])->name('update');
+    Route::delete('{berth}', [ApiBerthController::class,'destroy'])->name('destroy');
+    Route::delete('', [ApiBerthController::class,'destroyAll'])->name('destroyAll');
+    Route::post('batchDestroy', [ApiBerthController::class,'destroyAny'])->name('destroyAny');
+*/
 });
 
 if(!app()->environment('production')) {

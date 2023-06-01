@@ -75,11 +75,6 @@ class AdminRentalsController extends RentableController
      */
     public function index(Request $request)
     {
-        if(0 === Rentable::count()) {
-            $message = 'Leider keine Daten vorhanden!';
-            return view('message', compact('message'));
-        }
-
         $filter = $request->input('filter');
         $from   = $request->input('from');
         $until  = $request->input('until');
@@ -120,10 +115,8 @@ class AdminRentalsController extends RentableController
         /**
          * @var $priceTotal Collection
          */
-//        $this->dates = $query->get();
         $priceTotal = $this->dates->sum(fn ($item) => (int) $item->price);
-//        $this->calendarDates = (new CalendarRentableRepository($this->dates))->getJsonDates();
-//        $query = $query->sortable();
+
         if($sort) {
             $query->orderBy($sort, $direction);
         }
@@ -137,7 +130,7 @@ class AdminRentalsController extends RentableController
             'initialDate'       => Carbon::today()->format('Y-m-d'),
             'relationOptions'   => $this->relationOptions,
             'filter'            => $filter,
-            'data'              => $data,
+            'data'              => $data ?? [],
             'priceTotal'        => $priceTotal,
             'routeName'         => $this->routeName,
             'from'              => $from,

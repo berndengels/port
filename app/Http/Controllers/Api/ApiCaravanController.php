@@ -7,7 +7,7 @@ use App\Http\Requests\CaravanRequest;
 use App\Models\Caravan;
 use Carbon\Carbon;
 
-class CaravanController extends Controller
+class ApiCaravanController extends Controller
 {
     public function todayVisits() {
         $today = Carbon::today()->format('Y-m-d');

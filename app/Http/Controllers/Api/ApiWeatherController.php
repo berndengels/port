@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
 
-class WeatherController extends Controller
+class ApiWeatherController extends Controller
 {
     /**
      * Handle the incoming request.
