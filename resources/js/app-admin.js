@@ -108,7 +108,7 @@ $(document).ready(function () {
 			app.mount("#adminCraneDates");
 			break
 	}
-	$('.btn-print').click((e)=>{
+	$('.btn-print').click((e)=> {
 		e.preventDefault();
 		const $target = $(e.target),
 			link = $target.parent().attr('href'),

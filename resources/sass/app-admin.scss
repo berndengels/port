@@ -212,6 +212,7 @@ nav {
     }
     /* Mobile-first side nav styles */
     .sidenav {
+        position: fixed;
         display: flex; /* Will be hidden on mobile */
         z-index: 1001; /* Needs to set above the hamburger menu icon and map */
         grid-area: sidenav;
@@ -219,7 +220,6 @@ nav {
         height: 100%;
         min-height: 100vh;
         width: 240px;
-        position: fixed;
         overflow-y: auto;
         box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
         background-color: $bgSideNav;

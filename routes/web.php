@@ -247,7 +247,7 @@ Route::group([
             Route::resource('entities', AdminConfigEntityController::class);
             Route::resource('saisonRents', AdminConfigSaisonRentController::class);
             Route::resource('saisonRentDates', AdminConfigSaisonRentDatesController::class);
-            Route::resource('holidays', AdminConfigHolidayController::class);
+            Route::resource('holidays', AdminConfigHolidayController::class)->only(['index']);
             Route::post('holidays/toggle/{configHoliday}', [AdminConfigHolidayController::class, 'toggle'])->name('holidays.toggle');
     });
 

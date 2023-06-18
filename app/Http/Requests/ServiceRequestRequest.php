@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 class ServiceRequestRequest extends MainFormRequest
 {
     protected $modelName = 'ServiceRequest';
+	protected $booleanFields = ['done'];
 
     /**
      * Determine if the user is authorized to make this request.

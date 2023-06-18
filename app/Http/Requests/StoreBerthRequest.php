@@ -7,6 +7,7 @@ use App\Models\Berth;
 class StoreBerthRequest extends AdminRequest
 {
     protected $modelName = Berth::class;
+	protected $booleanFields = ['enabled'];
 
     /**
      * Determine if the user is authorized to make this request.
@@ -16,13 +17,6 @@ class StoreBerthRequest extends AdminRequest
     public function authorize()
     {
         return $this->auth->user()->can('write Berth');
-    }
-
-    public function validationData($keys = null)
-    {
-        return array_merge($this->all($keys), [
-            'enabled' => !!$this->post('enabled') ?? false,
-        ]);
     }
 
     /**

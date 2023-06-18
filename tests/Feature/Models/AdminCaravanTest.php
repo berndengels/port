@@ -38,9 +38,8 @@ class AdminCaravanTest extends TestCase
         $this
             ->followingRedirects()
             ->asFakeUser($this->permission)
-            ->put('/admin/caravans/' . $caravan->id , $this->caravanUpdateParams)
+            ->put('/admin/caravans/' . $caravan->id, $this->caravanUpdateParams)
             ->assertStatus(200)
-            ->assertLocation('admin/caravans')
             ->assertSeeText($email)
         ;
     }

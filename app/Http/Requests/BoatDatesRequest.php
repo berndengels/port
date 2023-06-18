@@ -6,6 +6,7 @@ class BoatDatesRequest extends AdminRequest
 {
     protected $modelName = 'BoatDates';
     protected $routeParam = 'boatDate';
+	protected $booleanFields = ['crane', 'mast_crane', 'cleaning', 'transport', 'is_paid'];
 
     /**
      * Determine if the user is authorized to make this request.
@@ -15,19 +16,6 @@ class BoatDatesRequest extends AdminRequest
     public function authorize()
     {
         return $this->auth->user()->can('write BoatDates');
-    }
-
-    public function validationData()
-    {
-        return array_merge(
-            $this->all(), [
-                'crane'         => !!$this->post('crane') ?? false,
-                'mast_crane'    => !!$this->post('mast_crane') ?? false,
-                'cleaning'      => !!$this->post('cleaning') ?? false,
-                'transport'     => !!$this->post('transport') ?? false,
-                'is_paid'       => !!$this->post('is_paid') ?? false,
-            ]
-        );
     }
 
     /**

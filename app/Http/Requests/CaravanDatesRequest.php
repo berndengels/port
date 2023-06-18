@@ -14,6 +14,7 @@ class CaravanDatesRequest extends AdminRequest
     protected $caravan;
     protected $routeParam = 'caravanDate';
     protected $modelName = 'CaravanDates';
+	protected $booleanFields = ['electric', 'is_paid'];
 
     /**
      * Determine if the user is authorized to make this request.
@@ -31,14 +32,6 @@ class CaravanDatesRequest extends AdminRequest
             'carnumber' => $this->fixCarNumber($this->carnumber),
         ]);
         return $this;
-    }
-
-    public function validationData($keys = null)
-    {
-        return array_merge($this->all($keys), [
-            'electric' => !!$this->post('electric') ?? false,
-            'is_paid'  => !!$this->post('is_paid') ?? false,
-        ]);
     }
 
     /**

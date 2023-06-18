@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 class StoreCustomerBoatRequest extends MainFormRequest
 {
     protected $modelName = 'Boat';
-    private $floats = ['length','width','draft','length_waterline','length_keel'];
+    protected $floats = ['length','width','draft','length_waterline','length_keel'];
 
     /**
      * Determine if the user is authorized to make this request.

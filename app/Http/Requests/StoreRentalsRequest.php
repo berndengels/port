@@ -6,6 +6,7 @@ class StoreRentalsRequest extends AdminRequest
 {
     protected $modelName = 'HouseboatRentals';
     protected $routeParam = 'houseboatDate';
+	protected $booleanFields = ['is_paid'];
 
     /**
      * Determine if the user is authorized to make this request.
@@ -15,13 +16,6 @@ class StoreRentalsRequest extends AdminRequest
     public function authorize()
     {
         return $this->auth->user()->can('write HouseboatRentals');
-    }
-
-    public function validationData($keys = null)
-    {
-        return array_merge($this->all($keys), [
-            'is_paid'  => !!$this->post('is_paid') ?? false,
-        ]);
     }
 
     /**
