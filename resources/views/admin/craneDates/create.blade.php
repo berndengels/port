@@ -8,7 +8,8 @@ use Illuminate\Support\Str;
         <x-form name="frm" method="post" action="{{ route('admin.craneDates.store') }}" class="w-half mt-3">
             <x-form-select class="calc" class="boat" id="cranable_type" name="cranable_type" label="Art" :options="$cranableTypeOptions"/>
 			<x-form-select id="cranable_id" name="cranable_id" type="text" label="Boot" />
-			<x-form-input id="crane_date" name="crane_date" type="time" label="Datum/Zeitpunkt"/>
+			<x-form-input id="crane_date" name="crane_date" type="date" label="Datum"/>
+			<x-form-input id="crane_time" name="crane_time" type="time" label="Uhrzeit"/>
             <div class="mt-2">
                 <x-form-submit class="btn-sm btn-primary" icon="fas fa-save">
                     Speichern

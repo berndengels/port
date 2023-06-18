@@ -1,12 +1,8 @@
 <button
     {!! $attributes->merge([
-        'class' => 'btn ' . $attributes['class'],
-        'type' => 'submit',
-        'icon'  => isset($attributes['icon']) ? $attributes['icon'] : '',
+        'class' => 'btn btn-primary',
+        'type' => 'submit'
     ]) !!}
 >
-    @if(isset($attributes['icon']))
-        <i class="{{ $attributes['icon'] }}"></i>
-    @endif
     {!! trim($slot) ?: __('Submit') !!}
 </button>

@@ -10,6 +10,8 @@ use App\Http\Controllers\Api\ApiRentalsController;
 use App\Http\Controllers\Api\ApiConfigOfferController;
 use App\Http\Controllers\Api\ApiBerthController;
 use App\Http\Controllers\Api\ApiCraneDateController;
+use App\Http\Controllers\Api\ApiBoatController;
+use App\Http\Controllers\Api\ApiGuestBoatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -105,6 +107,11 @@ Route::group([
     Route::delete('', [ApiBerthController::class,'destroyAll'])->name('destroyAll');
     Route::post('batchDestroy', [ApiBerthController::class,'destroyAny'])->name('destroyAny');
 */
+});
+
+Route::group([], function () {
+	Route::resource('boats', ApiBoatController::class);
+	Route::resource('gestBoats', ApiGuestBoatController::class);
 });
 
 if(!app()->environment('production')) {

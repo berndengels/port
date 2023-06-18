@@ -1,19 +1,12 @@
-    @if($label)
-        <!--label class="form-label @if($inline) inline @else mt-2 @endif" :for="$attributes->get('id') ?: $id()"-->
-        <label {!! $attributes->merge([
-            'class' => 'form-label ' . $class
-            . ($inline ? ' inline' : 'mt-2')
-            ]) !!} :for="$attributes->get('id') ?: $id()">
-            {!! $label !!}
-        </label>
+@if($type === 'hidden') <div class="d-none"> @endif
+@if($floating) <div class="form-floating"> @endif
+
+    @if(!$floating)
+        <x-form-label :label="$label" :for="$attributes->get('id') ?: $id()" />
     @endif
+
     <input
-        {!! $attributes->merge([
-            'class' => 'form-control ' . $class
-            . ($inline ? ' inline' : '')
-            . ($type === 'color' ? ' form-control-color' : '')
-            . ($hasError($name) ? ' is-invalid' : '')
-            ]) !!}
+        {!! $attributes->merge(['class' => 'form-control' . ($type === 'color' ? ' form-control-color' : '') . ($hasError($name) ? ' is-invalid' : '')]) !!}
 
         type="{{ $type }}"
 
@@ -34,10 +27,17 @@
             placeholder="&nbsp;"
         @endif
     />
-    @if($help)
-        <!--i class="fa-solid fa-circle-question fs-4 help"></i-->
+
+    @if($floating)
+        <x-form-label :label="$label" :for="$attributes->get('id') ?: $id()" />
     @endif
+
+@if($floating) </div> @endif
+
+{!! $help ?? null !!}
 
 @if($hasErrorAndShow($name))
     <x-form-errors :name="$name" />
 @endif
+
+@if($type === 'hidden') </div> @endif

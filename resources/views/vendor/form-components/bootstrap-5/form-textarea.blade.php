@@ -2,9 +2,6 @@
 
     @if(!$floating)
         <x-form-label :label="$label" :for="$attributes->get('id') ?: $id()" />
-        @isset($help)
-            <i class="fa-solid fa-circle-question fs-6 help"></i>
-        @endisset
     @endif
 
     <textarea
@@ -31,6 +28,8 @@
     @endif
 
 @if($floating) </div> @endif
+
+{!! $help ?? null !!}
 
 @if($hasErrorAndShow($name))
     <x-form-errors :name="$name" />

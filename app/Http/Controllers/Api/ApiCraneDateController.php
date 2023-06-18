@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorCraneDateRequest;
+use App\Http\Resources\CraneDatesResource;
 use App\Models\CraneDate;
 use Illuminate\Http\Request;
 
@@ -22,8 +23,10 @@ class ApiCraneDateController extends Controller
      */
     public function index()
     {
+        $data = CraneDate::with(['cranable'])->orderBy('crane_date')->get();
+        $data = CraneDatesResource::collection($data);
         $response = [
-            'dates' => CraneDate::orderBy('crane_date')->get(),
+            'dates' => $data,
             'cranableTypeOptions' => $this->cranableTypeOptions,
         ];
 

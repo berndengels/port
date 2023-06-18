@@ -37,7 +37,7 @@ import MyFormErrors from "v@/components/form/MyFormErrors";
 export default {
     name: "MyInputNumber",
     components: [MyFormErrors],
-    props: ['name', 'id', 'label', 'css', 'inline', 'placeholder', 'min', 'max', 'step'],
+    props: ['name', 'id', 'label', 'css', 'inline', 'placeholder', 'min', 'max', 'step', 'floating'],
     data() {
         return {
             data: this.$parent.$props.data ?? null,

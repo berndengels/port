@@ -31,7 +31,7 @@ import MyFormErrors from "v@/components/form/MyFormErrors";
 export default {
     name: "MyCheckbox",
     components: [MyFormErrors],
-    props: ['id', 'name', 'label', 'css', 'inline'],
+    props: ['id', 'name', 'label', 'css', 'inline', 'floating'],
     data() {
         return {
             data: this.$parent.$props.data ?? null,

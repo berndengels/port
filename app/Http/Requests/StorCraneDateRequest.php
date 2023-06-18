@@ -2,17 +2,8 @@
 
 namespace App\Http\Requests;
 
-class StorCraneDateRequest extends AdminRequest
+class StorCraneDateRequest extends CraneDateRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return false;
-    }
 
     /**
      * Get the validation rules that apply to the request.
@@ -21,10 +12,8 @@ class StorCraneDateRequest extends AdminRequest
      */
     public function rules()
     {
-        return [
-            'cranable_type' => 'required',
-            'cranable_id' => 'required',
-            'crane_date' => 'required|unique:boat_crane_dates,crane_date',
-        ];
+        $rules = parent::rules();
+        $rules['crane_date'] = 'required|unique:crane_dates,crane_date';
+        return $rules;
     }
 }
