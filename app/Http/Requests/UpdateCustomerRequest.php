@@ -12,7 +12,7 @@ class UpdateCustomerRequest extends AdminRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize() : bool
     {
         return ($this->user('customer') && $this->user('customer')->id === $this->getId())
             || auth()->user()->can('write Customer');

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StorCraneDateRequest;
+use App\Http\Requests\StoreCraneDateRequest;
 use App\Http\Requests\UpdateCraneDateRequest;
 use App\Models\Boat;
 use App\Models\CraneDate;
@@ -60,10 +60,10 @@ class AdminCraneDateController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  StorCraneDateRequest  $request
+     * @param  StoreCraneDateRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StorCraneDateRequest $request)
+    public function store(StoreCraneDateRequest $request)
     {
         try {
             CraneDate::create($request->validated());

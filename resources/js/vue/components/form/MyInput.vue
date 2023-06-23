@@ -16,7 +16,7 @@
 					   @change="handleChange"
 				/>
 			</div>
-			<MyFormErrors v-if="errors" :errors="errors" :name="name" />
+			<MyFormErrors v-if="errors" :errors="errors" :name="name"/>
 			<label v-if="floating || inline" class="form-label">
 				<span v-if="inline">{{ label }}</span>
 				<div v-else class="block"><span>{{ label }}</span></div>
@@ -43,7 +43,7 @@
 						   @change="handleChange"
 					/>
 				</div>
-				<MyFormErrors v-if="errors" :errors="errors" :name="name" />
+				<MyFormErrors v-if="errors" :errors="errors" :name="name"/>
 			</label>
 		</div>
 	</div>
@@ -53,23 +53,23 @@
 import MyFormErrors from "v@/components/form/MyFormErrors";
 
 export default {
-    name: "MyInput",
-    components: [MyFormErrors],
-    props: ['name', 'id', 'label', 'type', 'css', 'inline', 'placeholder', 'floating'],
-    data() {
-        return {
-            data: this.$parent.$props.data ?? null,
-            errors: this.$parent.$props.errors ?? null,
-        }
-    },
-    computed: {
-        message() {
-            if(this.errors && undefined !== this.errors[this.name]) {
-                return this.errors[this.name][0]
-            }
-            return null
-        }
-    },
+	name: "MyInput",
+	components: [MyFormErrors],
+	props: ['name', 'id', 'label', 'type', 'css', 'inline', 'placeholder', 'floating'],
+	data() {
+		return {
+			data: this.$parent.$props.data ?? null,
+			errors: this.$parent.$props.errors ?? null,
+		}
+	},
+	computed: {
+		message() {
+			if (this.errors && undefined !== this.errors[this.name]) {
+				return this.errors[this.name][0]
+			}
+			return null
+		}
+	},
 }
 </script>
 

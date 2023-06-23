@@ -1,4 +1,3 @@
-
 class Draggable {
 
 	constructor(selector = ".draggable", trigger = ".trigger") {
@@ -22,8 +21,8 @@ class Draggable {
 					e.preventDefault();
 					var itop = e.pageY + ypos - height,
 						ileft = e.pageX + xpos - width;
-					if($el.hasClass(cls)){
-						$el.offset({top: itop,left: ileft});
+					if ($el.hasClass(cls)) {
+						$el.offset({top: itop, left: ileft});
 					}
 				}).mouseup(() => {
 					$el.removeClass(cls)
@@ -31,4 +30,5 @@ class Draggable {
 			});
 	}
 }
+
 export default Draggable

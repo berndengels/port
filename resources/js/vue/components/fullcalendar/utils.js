@@ -3,14 +3,14 @@
 works with objects and arrays
 */
 export function shallowCopy(val) {
-    if (typeof val === 'object') {
-        if (Array.isArray(val)) {
-            val = Array.prototype.slice.call(val);
-        }
-        else if (val) { // non-null
-            val = { ...val };
-        }
-    }
-    return val;
+	if (typeof val === 'object') {
+		if (Array.isArray(val)) {
+			val = Array.prototype.slice.call(val);
+		} else if (val) { // non-null
+			val = {...val};
+		}
+	}
+	return val;
 }
+
 //# sourceMappingURL=utils.js.map

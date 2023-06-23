@@ -10,7 +10,7 @@ const TinyMCE = function (options) {
 		{
 			selector: options.selector,
 			content_style: options.content_style ? options.content_style : '',
-			plugins:  options.plugins,
+			plugins: options.plugins,
 			toolbar: options.toolbar,
 			width: options.width,
 			height: options.height,
@@ -22,7 +22,7 @@ const TinyMCE = function (options) {
 					'media-dialog-open', function () {
 						var msg = 'Hier unter "Source" nur die URL des Objekts eintragen (z.B: https://youtu.be/vUU2HCaXtbQ).',
 							$msg = $('<div class="text-danger">').html(msg);
-						$('.tox-form','.tox-dialog').append($msg);
+						$('.tox-form', '.tox-dialog').append($msg);
 					}
 				);
 			},
@@ -37,28 +37,28 @@ const TinyMCE = function (options) {
 			content_css: '/css/tiny.css',
 			body_class: 'eventContent',
 			formats: {
-				alignleft: { selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', classes: 'left' },
-				aligncenter: { selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', classes: 'center' },
-				alignright: { selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', classes: 'right' },
-				alignfull: { selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', classes: 'full' },
-				bold: { inline: 'b' },
-				italic: { inline: 'i' },
+				alignleft: {selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', classes: 'left'},
+				aligncenter: {selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', classes: 'center'},
+				alignright: {selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', classes: 'right'},
+				alignfull: {selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', classes: 'full'},
+				bold: {inline: 'b'},
+				italic: {inline: 'i'},
 				//            underline: { inline: 'span', 'classes': 'underline', exact: true },
-				underline: { inline: 'u' },
-				strikethrough: { inline: 'del' },
+				underline: {inline: 'u'},
+				strikethrough: {inline: 'del'},
 				//            customformat: { inline: 'span', styles: { color: '#00ff00', fontSize: '20px' }, attributes: { title: 'My custom format' }, classes: 'example1' }
 			},
 			style_formats: [
-				{ title: 'Custom format', format: 'customformat' },
-				{ title: 'Align left', format: 'alignleft' },
-				{ title: 'Align center', format: 'aligncenter' },
-				{ title: 'Align right', format: 'alignright' },
-				{ title: 'Align full', format: 'alignfull' },
-				{ title: 'Bold text', inline: 'strong' },
-				{ title: 'Table row 1', selector: 'tr', classes: 'tablerow1' },
-				{ title: 'Image formats' },
-				{ title: 'Image Left', selector: 'img', styles: { 'float': 'left', 'margin': '0 10px 0 10px' } },
-				{ title: 'Image Right', selector: 'img', styles: { 'float': 'right', 'margin': '0 0 10px 10px' } },
+				{title: 'Custom format', format: 'customformat'},
+				{title: 'Align left', format: 'alignleft'},
+				{title: 'Align center', format: 'aligncenter'},
+				{title: 'Align right', format: 'alignright'},
+				{title: 'Align full', format: 'alignfull'},
+				{title: 'Bold text', inline: 'strong'},
+				{title: 'Table row 1', selector: 'tr', classes: 'tablerow1'},
+				{title: 'Image formats'},
+				{title: 'Image Left', selector: 'img', styles: {'float': 'left', 'margin': '0 10px 0 10px'}},
+				{title: 'Image Right', selector: 'img', styles: {'float': 'right', 'margin': '0 0 10px 10px'}},
 			],
 			media_live_embeds: false,
 			media_dimensions: false,
@@ -88,7 +88,7 @@ const TinyMCE = function (options) {
 			init_instance_callback: function (editor) {
 				editor.on('ExecCommand', e => {
 						console.info(e.command, e.value)
-						switch(e.command) {
+						switch (e.command) {
 							case 'mceMedia':
 								tinymce.fire('media-dialog-open', {
 									'editor': tinymce.EditorManager.activeEditor
@@ -106,12 +106,12 @@ const TinyMCE = function (options) {
 						}
 					)
 					.on('GetContent', function (e) {
-							console.info('GetContent',e.type)
+							console.info('GetContent', e.type)
 						}
 					);
 			},
 			external_filemanager_path: "/filemanager/",
-			external_plugins: { "filemanager" : "/filemanager/plugin.min.js"},
+			external_plugins: {"filemanager": "/filemanager/plugin.min.js"},
 			filemanager_title: "Responsive Filemanager",
 		}
 	);

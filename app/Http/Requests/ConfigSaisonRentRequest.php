@@ -11,7 +11,7 @@ class ConfigSaisonRentRequest extends AdminRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize() : bool
     {
         return auth()->user()->can('write ConfigSaisonRent');
     }

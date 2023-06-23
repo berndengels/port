@@ -1,6 +1,7 @@
 # Calendar Heat Map
 
-This [jQuery] plugin allows to conveniently display data like contributions on a day by day basis, indicating the count by colors.
+This [jQuery] plugin allows to conveniently display data like contributions on a day by day basis, indicating the count
+by colors.
 
 ![Calendar Heat Map](https://user-images.githubusercontent.com/6181737/33098032-04143994-ceda-11e7-9a05-47dbef561a70.png)
 
@@ -21,11 +22,14 @@ bower install jquery-calendar-heatmap
 ### Manual
 
 + Download the latest release from [here](https://github.com/SeBassTian23/CalendarHeatmap/releases/latest).
-+ Copy the `jquery.CalendarHeatmap.js` and the `jquery.CalendarHeatmap.css` into your project. Of cause you can use the minified versions, indicated by `.min.js` and `.min.css` as well.
++ Copy the `jquery.CalendarHeatmap.js` and the `jquery.CalendarHeatmap.css` into your project. Of cause you can use the
+  minified versions, indicated by `.min.js` and `.min.css` as well.
 
 ### Moment.js
 
-Past releases required [Moment.js] to function. With the release of `v1.3.0`, Moment.js is no longer required as an dependency, as development has been stopped and it has been deprecated. Of cause it can still be used, or other packages for that matter, to format the labels as described below.
+Past releases required [Moment.js] to function. With the release of `v1.3.0`, Moment.js is no longer required as an
+dependency, as development has been stopped and it has been deprecated. Of cause it can still be used, or other packages
+for that matter, to format the labels as described below.
 
 ## Usage
 
@@ -50,7 +54,8 @@ Past releases required [Moment.js] to function. With the release of `v1.3.0`, Mo
 ## Dates (Data)
 
 The provided date needs to be a valid [date format] that can be interpreted by [Moment.js].
-The date needs to provide at least with year month and day, e.g. `YYYY-MM-DD` or as a unix timestamp e.g. `1578518342658`.
+The date needs to provide at least with year month and day, e.g. `YYYY-MM-DD` or as a unix timestamp
+e.g. `1578518342658`.
 
 ```JavaScript
 // Provide dates as an array of objects.
@@ -68,11 +73,13 @@ var data = { "2017-09-23": 2, ...}
 
 ## Interactions (Functions)
 
-After the plugin is initialized for the element, the following options are available to interact with the calendar heatmap.
+After the plugin is initialized for the element, the following options are available to interact with the calendar
+heatmap.
 
 ### Get Dates
 
-The currently displayed data from the calendar heatmap can be received using the `getDates` argument. This is not the original data provided, but the data format internally used.
+The currently displayed data from the calendar heatmap can be received using the `getDates` argument. This is not the
+original data provided, but the data format internally used.
 
 ```JavaScript
 // Get current data from the calendar heatmap
@@ -81,7 +88,9 @@ $("#element").CalendarHeatmap( "getDates" );
 
 ### Update Dates
 
-The data displayed in the calendar heatmap can be updated/replaced using the `updateDates` argument and providing new data. In case data should be added to the existing, use the `appendDates` argument. The data provided can be in any format described above.
+The data displayed in the calendar heatmap can be updated/replaced using the `updateDates` argument and providing new
+data. In case data should be added to the existing, use the `appendDates` argument. The data provided can be in any
+format described above.
 
 ```JavaScript
 // Update/Replace the current data with a new data
@@ -90,7 +99,9 @@ $("#element").CalendarHeatmap( "updateDates", data );
 
 ### Append Dates
 
-Dates can be added to the currently displayed data in the calendar heatmap using the `appendDates` argument and providing the data to be added. The counts are added to existing dates. The data provided can be in any format described above.
+Dates can be added to the currently displayed data in the calendar heatmap using the `appendDates` argument and
+providing the data to be added. The counts are added to existing dates. The data provided can be in any format described
+above.
 
 ```JavaScript
 // Append data to the current data
@@ -99,7 +110,8 @@ $("#element").CalendarHeatmap( "appendDates", data );
 
 ### Get Options
 
-The options object with the current settings can be received using the `getOptions` argument. It contains all options, not just the ones initially set.
+The options object with the current settings can be received using the `getOptions` argument. It contains all options,
+not just the ones initially set.
 
 ```JavaScript
 // Get the calendar heatmap's current options
@@ -108,7 +120,8 @@ $("#element").CalendarHeatmap( "getOptions" );
 
 ### Update Options
 
-The options object with the current settings can be updated using the `getOptions` argument. Individual options can be provided, the full object as returned by `getOptions` is not required.
+The options object with the current settings can be updated using the `getOptions` argument. Individual options can be
+provided, the full object as returned by `getOptions` is not required.
 
 ```JavaScript
 // Set the calendar heatmap's title option
@@ -165,15 +178,18 @@ The number of months to display. If not set, the default number of months to be 
 
 ### lastMonth
 
-The last month shown in the calendar heatmap. Set the month by setting the value between `1 - 12`. If not set, the default is the current month.
+The last month shown in the calendar heatmap. Set the month by setting the value between `1 - 12`. If not set, the
+default is the current month.
 
 ### lastYear
 
-The year of the last month shown. Use the four letter notation, e.g. `2017`. If not set, the default is the current year.
+The year of the last month shown. Use the four letter notation, e.g. `2017`. If not set, the default is the current
+year.
 
 ### weekStartDay
 
-The first day of the week. Set the day by setting the value between `1 - 7`, where `1` is Monday, `2` is Tuesday and so on. If not defined, Monday is the start day.
+The first day of the week. Set the day by setting the value between `1 - 7`, where `1` is Monday, `2` is Tuesday and so
+on. If not defined, Monday is the start day.
 
 ### coloring
 
@@ -181,11 +197,14 @@ There is a set of different color gradients available. By default `standard` is 
 
 #### Available Color Gradients
 
-The following gradients are available based of [Matplotlib] for Python: `blue`, `earth`, `electric`, `green`, `picknick`, `red`, `teal`, `standard`, `viridis`. If you want to define your own color gradient, use `custom` and add the classes defining the colors to your css stylesheet as described below.
+The following gradients are available based of [Matplotlib] for
+Python: `blue`, `earth`, `electric`, `green`, `picknick`, `red`, `teal`, `standard`, `viridis`. If you want to define
+your own color gradient, use `custom` and add the classes defining the colors to your css stylesheet as described below.
 
 #### Custom Gradient
 
-Just add the colors to be used for the 4 steps as in the example. In this case the name set for `coloring` would be the base class name `custom`.
+Just add the colors to be used for the 4 steps as in the example. In this case the name set for `coloring` would be the
+base class name `custom`.
 
 ```css
 .custom-1 {
@@ -204,11 +223,15 @@ Just add the colors to be used for the 4 steps as in the example. In this case t
 
 ### labels
 
-The calendar heatmap has two sets of labels. One for week days and one for months. By default only the month labels are shown. The visibility can be set for either by setting them to `true` or `false`.
+The calendar heatmap has two sets of labels. One for week days and one for months. By default only the month labels are
+shown. The visibility can be set for either by setting them to `true` or `false`.
 
 #### Custom format
 
-Week day and month labels can be formatted using the [Moment.js] format (e.g. `MM` for the month number or `MMMM` for the full month name). Use an array, to provide custom labels. For months the array needs to contain 12 elements, e.g. `["janv", "févr", ..., "déc."]` and for the week days 7 elements starting with `Sunday`, e.g. `["Dim", "Lun", ..., "Sam"]`.
+Week day and month labels can be formatted using the [Moment.js] format (e.g. `MM` for the month number or `MMMM` for
+the full month name). Use an array, to provide custom labels. For months the array needs to contain 12 elements,
+e.g. `["janv", "févr", ..., "déc."]` and for the week days 7 elements starting with `Sunday`,
+e.g. `["Dim", "Lun", ..., "Sam"]`.
 
 ```JavaScript
 labels: {
@@ -224,7 +247,7 @@ labels: {
 #### Supported Formats
 
 | Input    | Example       | Description               |
-| :------- | :------------ | :------------------------ |
+|:---------|:--------------|:--------------------------|
 | YYYY     | 2014          | 4 digit year              |
 | YY       | 14            | 2 digit year              |
 | M MM     | 1..12         | Month number              |
@@ -240,7 +263,9 @@ labels: {
 
 #### Function
 
-In some cases, you might want to use libraries like [Moment.js] for naming your months and weekdays, even though [Moment.js] is no longer a required dependency for the plugin. In this case you can simply use a function to modify the label.
+In some cases, you might want to use libraries like [Moment.js] for naming your months and weekdays, even
+though [Moment.js] is no longer a required dependency for the plugin. In this case you can simply use a function to
+modify the label.
 
 The example below is changing the weekday and month labels using [Moment.js].
 
@@ -260,7 +285,7 @@ labels: {
 ```
 
 | Label   | Function                           | Available Variables                          |
-| :------ | :--------------------------------- | :------------------------------------------- |
+|:--------|:-----------------------------------|:---------------------------------------------|
 | Weekday | `function ( weekday ) { ... }`     | weekday <int>, ranging from 0..6 (Sun..Sat)  |
 | Month   | `function ( year, month ) { ... }` | year <int> and day <int>, ranging from 1..12 |
 
@@ -276,7 +301,10 @@ tiles: {
 
 ### `legend`
 
-The legend for the calendar heatmap is located below the heatmap and visible by default. The visibility can be set by setting `show` to `true` or `false`. Set the alignment using `align`. Options are `right`, `center` or `left`. Labels for min and max can be set using `minLabel` and `maxLabel`. Use `null` to hide the labels. Use the divider to change the word between the numbers in the legends tooltips. By default it is ` to ` (e.g. 1 to 10).
+The legend for the calendar heatmap is located below the heatmap and visible by default. The visibility can be set by
+setting `show` to `true` or `false`. Set the alignment using `align`. Options are `right`, `center` or `left`. Labels
+for min and max can be set using `minLabel` and `maxLabel`. Use `null` to hide the labels. Use the divider to change the
+word between the numbers in the legends tooltips. By default it is ` to ` (e.g. 1 to 10).
 
 ```JavaScript
 legend: {
@@ -290,7 +318,9 @@ legend: {
 
 ### `tooltips`
 
-Tooltips require the [Bootstrap] library. Regardless of using the library, the tiles with representing data counts have a title element with count and date. This example is using `Bootstrap 4.x`, but the plugin will work with `Bootstrap 3.x` as well.
+Tooltips require the [Bootstrap] library. Regardless of using the library, the tiles with representing data counts have
+a title element with count and date. This example is using `Bootstrap 4.x`, but the plugin will work
+with `Bootstrap 3.x` as well.
 
 ```html
 <!-- Latest compiled and minified CSS -->
@@ -301,7 +331,8 @@ Tooltips require the [Bootstrap] library. Regardless of using the library, the t
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 ```
 
-To enable the tooltips just set `show` to `true`. By default it is set to `false`. All settings for tooltips are available as [documented][tooltip-documentation] and can be passed on using `options`.
+To enable the tooltips just set `show` to `true`. By default it is set to `false`. All settings for tooltips are
+available as [documented][tooltip-documentation] and can be passed on using `options`.
 
 ```JavaScript
 tooltips: {
@@ -313,8 +344,13 @@ tooltips: {
 This plugin is based on the [jQuery Boilerplate](https://github.com/jquery-boilerplate/jquery-boilerplate).
 
 [Moment.js]: https://momentjs.com/
+
 [date format]: https://momentjs.com/docs/#/parsing/string/
+
 [jQuery]: https://jquery.com/
+
 [Bootstrap]: https://getbootstrap.com/
+
 [tooltip-documentation]: https://getbootstrap.com/docs/4.4/components/tooltips/
+
 [Matplotlib]: https://matplotlib.org/tutorials/colors/colormaps.html?highlight=gradients#miscellaneous

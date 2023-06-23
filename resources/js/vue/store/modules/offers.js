@@ -6,11 +6,11 @@ const namespaced = true,
 	},
 	mutations = {
 		mEnabled: (state, data) => {
-			const rentals = ['Apartment','House','Houseboat'];
+			const rentals = ['Apartment', 'House', 'Houseboat'];
 			let k;
-			for(k in data) {
+			for (k in data) {
 				state.enabled[k] = !!data[k];
-				if(undefined !== rentals.find(el => el === k)) {
+				if (undefined !== rentals.find(el => el === k)) {
 					state.countEnabled++;
 				}
 			}
@@ -23,10 +23,10 @@ const namespaced = true,
 		loading: (state) => state.loading,
 	},
 	actions = {
-		fetch({ commit }) {
+		fetch({commit}) {
 			axios.get('/api/configOffers')
 				.then(resp => {
-					if(resp.data) {
+					if (resp.data) {
 						commit("mEnabled", resp.data);
 					}
 				}).catch(err => console.error(err));

@@ -12,7 +12,7 @@ class CustomerBoatRequest extends MainFormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize() : bool
     {
         return auth('customer')->user()->can('write Boat');
     }

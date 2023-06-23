@@ -1,4 +1,3 @@
-
 require('./bootstrap');
 toastr.options = {
 	"closeButton": true,
@@ -26,9 +25,10 @@ import Edit from "./Libs/Edit";
 import Geo from "./Libs/Geo";
 import Draggable from "./Libs/Draggable";
 import MyCalendar from "./Libs/MyCalendar";
-import { createApp } from "vue"
+import {createApp} from "vue"
 import store from "./vue/store"
 import mitt from 'mitt';
+
 const emitter = mitt();
 window.emitter = emitter;
 
@@ -37,14 +37,14 @@ import AdminBerths from "v@/views/admin/Berths"
 import AdminCraneDates from "v@/views/admin/CraneDates"
 //import AdminHarborDesigner from "v@/views/admin/harborDesigner"
 
-window.MyForm   = new MyForm;
-window.Prices   = new Prices;
-window.Editor   = new Editor;
-window.Edit     = new Edit;
-window.Weather  = new Weather;
-window.Car      = new Car;
-window.Tooltip  = new Tooltip;
-window.Geo      = Geo;
+window.MyForm = new MyForm;
+window.Prices = new Prices;
+window.Editor = new Editor;
+window.Edit = new Edit;
+window.Weather = new Weather;
+window.Car = new Car;
+window.Tooltip = new Tooltip;
+window.Geo = Geo;
 window.MyCalendar = new MyCalendar;
 
 $(document).ready(function () {
@@ -70,7 +70,7 @@ $(document).ready(function () {
 		};
 		toastr.info(help);
 	});
-	if($("form .calc").is(":visible")) {
+	if ($("form .calc").is(":visible")) {
 		toastr.options = {
 			escapeHtml: false,
 			closeButton: true,
@@ -91,7 +91,7 @@ $(document).ready(function () {
 	});
 
 	let app;
-	switch(true) {
+	switch (true) {
 		case $("#adminDashboard").is(":visible"):
 			app = createApp(AdminDashboard).use(store);
 			app.config.globalProperties.emitter = emitter;
@@ -108,7 +108,7 @@ $(document).ready(function () {
 			app.mount("#adminCraneDates");
 			break
 	}
-	$('.btn-print').click((e)=> {
+	$('.btn-print').click((e) => {
 		e.preventDefault();
 		const $target = $(e.target),
 			link = $target.parent().attr('href'),
@@ -122,11 +122,11 @@ $(document).ready(function () {
 		})
 	});
 });
-if($('[name="csrf-token"]').is(":visible")) {
+if ($('[name="csrf-token"]').is(":visible")) {
 	$.ajaxSetup({
 		headers: {'X-CSRF-Token': $('[name="csrf-token"]').attr('content')},
 	});
 }
-$(document).ajaxError(function( event, xhr, settings, thrownError ) {
+$(document).ajaxError(function (event, xhr, settings, thrownError) {
 	console.error(xhr);
 });

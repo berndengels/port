@@ -1,4 +1,3 @@
-
 class Edit {
 	toggle(route, attribute, reload = false, switchSelector = 'i.switch') {
 		const token = $('[name="csrf-token"]').attr('content'),
@@ -9,7 +8,7 @@ class Edit {
 			var $t = $(e.target),
 				toggle = $t.hasClass('on') ? 0 : 1,
 				id = $t.parent('td').attr('rel'),
-				url = route.replace(/\/$/,"") + "/" + id,
+				url = route.replace(/\/$/, "") + "/" + id,
 				data = {
 					"attribute": attribute,
 					"value": toggle,
@@ -17,18 +16,19 @@ class Edit {
 				}
 			;
 			$.post(url, data).done(resp => {
-				if(resp[attribute]) {
+				if (resp[attribute]) {
 					$t.removeClass(clOff).addClass(clOn);
-					$("#"+resp.name).show();
+					$("#" + resp.name).show();
 				} else {
 					$t.removeClass(clOn).addClass(clOff);
-					$("#"+resp.name).hide();
+					$("#" + resp.name).hide();
 				}
-				if(reload) {
+				if (reload) {
 					location.reload();
 				}
 			});
 		});
 	}
 }
+
 export default Edit

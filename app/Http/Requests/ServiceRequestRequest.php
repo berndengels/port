@@ -11,7 +11,7 @@ class ServiceRequestRequest extends MainFormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize() : bool
     {
         return (
             ($this->user('admin') && $this->user('admin')->can('write ServiceRequest'))

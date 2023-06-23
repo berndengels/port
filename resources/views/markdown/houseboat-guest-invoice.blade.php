@@ -8,9 +8,9 @@
 - Adresse: {{ $houseboatDate->customer->street }}, {{ $houseboatDate->customer->poszcode }} {{ $houseboatDate->customer->city }}
 
 @if($days > 1)
-    - {{ $days }} Übernachtungen
+	- {{ $days }} Übernachtungen
 @else
-    - {{ $days }} Übernachtung
+	- {{ $days }} Übernachtung
 @endif
 
 ### Tages Preise
@@ -18,12 +18,12 @@
 | ----------- | ----------- | ----------- | ----------- |
 
 @foreach($dailyPrices as $item)
-| {{ $item->date }} | {{ __($item->saison) }} | {{ $item->holiday ?? '' }} | {{ $item->price }} € |
+	| {{ $item->date }} | {{ __($item->saison) }} | {{ $item->holiday ?? '' }} | {{ $item->price }} € |
 @endforeach
 
 @if(config('port.prices.tax.enabled'))
-Netto-Preis:
-MWSt: {{ config('port.prices.tax.rate') }} %
+	Netto-Preis:
+	MWSt: {{ config('port.prices.tax.rate') }} %
 @endif
 Basis Preis: {{ $basePrice }} €
 Summe Preis: {{ $priceTotal }} €

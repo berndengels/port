@@ -4,16 +4,16 @@ namespace App\Http\Requests;
 
 class CraneDateRequest extends AdminRequest
 {
-    protected function prepareForValidation()
-    {
-        parent::prepareForValidation();
-        $this->merge([
-            'crane_date' => $this->crane_date .' ' . $this->crane_time,
-        ]);
-    }
+	protected $permission = 'write CraneDate';
+
+	protected function prepareForValidation()
+	{
+		parent::prepareForValidation();
+		$this->merge(['date' => $this->crane_date . ' ' . $this->crane_time]);
+	}
 
 
-    /**
+	/**
      * Get the validation rules that apply to the request.
      *
      * @return array
@@ -23,7 +23,8 @@ class CraneDateRequest extends AdminRequest
         return [
             'cranable_type' => 'required',
             'cranable_id' => 'required',
-            'crane_date' => 'required',
+			'date' => '',
+            'crane_date' => 'required:date',
             'crane_time' => 'required',
         ];
     }

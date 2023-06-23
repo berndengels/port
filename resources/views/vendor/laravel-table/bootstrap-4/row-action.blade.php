@@ -4,5 +4,5 @@
    href=""
    title="{{ $title }}"
    data-toggle="tooltip">
-    {!! $icon !!}
+	{!! $icon !!}
 </a>

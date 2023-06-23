@@ -12,320 +12,436 @@
 @import 'public';
 
 $grid-breakpoints: (
-        xs: 0,
-        sm: 480px,
-        md: 768px,
-        lg: 1024px
+		xs: 0,
+		sm: 480px,
+		md: 768px,
+		lg: 1024px
 );
 
 html, body {
-    width: 100%;
-    max-width:100%;
-    height: 100vh;
-    padding: 0;
-    margin: 0;
-    font-family: $font-family-sans-serif;
-    font-weight: $font-weight;
-    font-size: $font-size-base;
-    line-height: $line-height-base;
+	width: 100%;
+	max-width: 100%;
+	height: 100vh;
+	padding: 0;
+	margin: 0;
+	font-family: $font-family-sans-serif;
+	font-weight: $font-weight;
+	font-size: $font-size-base;
+	line-height: $line-height-base;
 }
-.white { color: #fff }
-.black { color: #000 }
-.green { color: $green }
-.red { color: $red }
-.indigo { color: $indigo }
-.cyan { color: $cyan }
-.blue { color: #009 }
-.grey { color: $grey }
-.dark-grey { color: #6c757d }
-.dark { color: $dark }
-.yellow { color: $yellow }
-.orange { color: $orange }
 
-.bg-white { background-color: #fff }
-.bg-black { background-color: #000 }
-.bg-green { background-color: $green }
-.bg-red { background-color: $red }
-.bg-indigo { background-color: $indigo }
-.bg-cyan { background-color: $cyan }
-.bg-blue { background-color: #009 }
-.bg-grey { background-color: $grey }
-.bg-dark-grey { background-color: #6c757d }
-.bg-yellow { background-color: $yellow }
-.bg-orange { background-color: $orange }
-.bg-dark { background-color: $bgDark }
+.white {
+	color: #fff
+}
+
+.black {
+	color: #000
+}
+
+.green {
+	color: $green
+}
+
+.red {
+	color: $red
+}
+
+.indigo {
+	color: $indigo
+}
+
+.cyan {
+	color: $cyan
+}
+
+.blue {
+	color: #009
+}
+
+.grey {
+	color: $grey
+}
+
+.dark-grey {
+	color: #6c757d
+}
+
+.dark {
+	color: $dark
+}
+
+.yellow {
+	color: $yellow
+}
+
+.orange {
+	color: $orange
+}
+
+.bg-white {
+	background-color: #fff
+}
+
+.bg-black {
+	background-color: #000
+}
+
+.bg-green {
+	background-color: $green
+}
+
+.bg-red {
+	background-color: $red
+}
+
+.bg-indigo {
+	background-color: $indigo
+}
+
+.bg-cyan {
+	background-color: $cyan
+}
+
+.bg-blue {
+	background-color: #009
+}
+
+.bg-grey {
+	background-color: $grey
+}
+
+.bg-dark-grey {
+	background-color: #6c757d
+}
+
+.bg-yellow {
+	background-color: $yellow
+}
+
+.bg-orange {
+	background-color: $orange
+}
+
+.bg-dark {
+	background-color: $bgDark
+}
+
 .bg-main {
-    height: 100vh;
-    background: url("/img/nebel_morgen_opt.jpg") no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-    padding: 0;
-    margin: 0;
+	height: 100vh;
+	background: url("/img/nebel_morgen_opt.jpg") no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	padding: 0;
+	margin: 0;
 }
+
 .page {
-    color: #605949;
-    font-family: "Helvetica";
+	color: #605949;
+	font-family: "Helvetica";
 }
+
 .app-logo {
-    text-align: center;
-    margin-top: 0.5rem;
-    span {
-        padding: 0;
-        margin: 0;
-        letter-spacing: 0rem;
-    }
-    span:first-child {
-        font-family: "Arial Black";
-        color: #fff;
-        font-size: 1.5rem;
-        font-weight: bold;
-    }
-    span:last-child {
-        font-family: "Arial Black";
-        font-size: 1.7rem;
-        color: #fc0;
-        text-transform: uppercase;
-        font-style: italic;
-        margin-left: -0.2rem;
-    }
-    &.public {
-        margin: auto;
-        line-height: 1.2rem;
-        //        margin-top: -0.3rem;
-    }
+	text-align: center;
+	margin-top: 0.5rem;
+
+	span {
+		padding: 0;
+		margin: 0;
+		letter-spacing: 0rem;
+	}
+
+	span:first-child {
+		font-family: "Arial Black";
+		color: #fff;
+		font-size: 1.5rem;
+		font-weight: bold;
+	}
+
+	span:last-child {
+		font-family: "Arial Black";
+		font-size: 1.7rem;
+		color: #fc0;
+		text-transform: uppercase;
+		font-style: italic;
+		margin-left: -0.2rem;
+	}
+
+	&.public {
+		margin: auto;
+		line-height: 1.2rem;
+		//        margin-top: -0.3rem;
+	}
 }
+
 a {
-    cursor:pointer;
+	cursor: pointer;
 }
+
 .btn-wrapper {
-    &.bg-red {
-        .btn {
-            background-color: #c00;
-        }
-    }
+	&.bg-red {
+		.btn {
+			background-color: #c00;
+		}
+	}
 }
+
 .index-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 16px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0 16px;
 }
+
 .nav {
-    position: fixed;
-    color: #fff;
-    background-color: #605949;
-    div {
-        ul {
-            color: #fff;
-            background-color: #605949;
-        }
-    }
+	position: fixed;
+	color: #fff;
+	background-color: #605949;
+
+	div {
+		ul {
+			color: #fff;
+			background-color: #605949;
+		}
+	}
 }
+
 .menu-icon {
-    position: fixed;
-    display: flex;
-    top: 5px;
-    left: 10px;
-    align-items: center;
-    justify-content: center;
-    border-radius: 10%;
-    z-index: 2;
-    cursor: pointer;
-    padding: 12px;
-    background-color: #DADAE3;
+	position: fixed;
+	display: flex;
+	top: 5px;
+	left: 10px;
+	align-items: center;
+	justify-content: center;
+	border-radius: 10%;
+	z-index: 2;
+	cursor: pointer;
+	padding: 12px;
+	background-color: #DADAE3;
 }
+
 // ower grid layout
 .grid-container {
-    display: grid;
-    grid-template-columns: 0 1fr; /* Side nav is hidden on mobile */
-    grid-template-rows: 50px 1fr 50px;
-    grid-template-areas:
+	display: grid;
+	grid-template-columns: 0 1fr; /* Side nav is hidden on mobile */
+	grid-template-rows: 50px 1fr 50px;
+	grid-template-areas:
     "sidenav header"
     "sidenav main"
     "sidenav footer";
-    height: 100vh;
+	height: 100vh;
 
-    &.public {
-        grid-template-columns: 1fr;
-        grid-template-areas:
+	&.public {
+		grid-template-columns: 1fr;
+		grid-template-areas:
         "header"
         "main"
         "footer";
-    }
-    &.public {
-        .menu-icon {
-            display: none;
-        }
-    }
+	}
 
-    /* Give every child element its grid name */
-    header {
-        grid-area: header;
-        top: 0;
-    }
-    footer {
-        grid-area: footer;
-        bottom: 0;
-        nav {
-            margin-bottom: -5px;
-            @include media('<tablet') {
-                margin-bottom: -12px;
-            }
-        }
-    }
-    header, footer {
-        position: fixed;
-        width: 100vw;
-        height: 50px;
-        background-color: #605949;
-        box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.75);
-        vertical-align: middle;
-        nav {
-            ul {
-                li {
-                    a {
-                        color: $white;
-                        text-decoration: none;
-                    }
-                    a:hover {
-                        color: #ffcc00;
-                    }
-                    @include media('<tablet') {
-                        margin-left: 1.0rem;
-                    }
-                }
-                margin-right: 2.5rem;
-                /* Make room for the menu icon on mobile */
-                @include media('<tablet') {
-                    margin-right: 0.5rem;
-                }
-            }
-        }
-    }
-    main {
-        grid-area: main;
-        background-color: $bgMain;
-        .main-header {
-            display: flex;
-            justify-content: space-between;
-            margin: 20px;
-            padding: 20px;
-            height: 150px; /* Force our height since we don't have actual content yet */
-            background-color: #e3e4e6;
-            color: slategray;
-        }
-        .main-cards {
-            column-count: 1;
-            column-gap: 20px;
-            margin: 20px;
-            .card {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                width: 100%;
-                background-color: #82bef6;
-                margin-bottom: 20px;
-                -webkit-column-break-inside: avoid;
-                padding: 24px;
-                box-sizing: border-box;
-            }
-            .card:first-child {
-                height: 485px;
-            }
-            .card:nth-child(2) {
-                height: 200px;
-            }
-            .card:nth-child(3) {
-                height: 265px;
-            }
-        }
-        /* Medium-sized screen breakpoint (tablet, 1050px) */
-        @include media('<=tablet') {
-            //@media only screen and (min-width: 65.625em) {
-            // Break out main cards into two columns
-            .main-cards {
-                column-count: 2;
-            }
-        }
-    }
-    header, footer {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0 16px;
-        &.public {
-            padding-left: 0;
-        }
-    }
+	&.public {
+		.menu-icon {
+			display: none;
+		}
+	}
+
+	/* Give every child element its grid name */
+	header {
+		grid-area: header;
+		top: 0;
+	}
+
+	footer {
+		grid-area: footer;
+		bottom: 0;
+
+		nav {
+			margin-bottom: -5px;
+			@include media('<tablet') {
+				margin-bottom: -12px;
+			}
+		}
+	}
+
+	header, footer {
+		position: fixed;
+		width: 100vw;
+		height: 50px;
+		background-color: #605949;
+		box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.75);
+		vertical-align: middle;
+
+		nav {
+			ul {
+				li {
+					a {
+						color: $white;
+						text-decoration: none;
+					}
+
+					a:hover {
+						color: #ffcc00;
+					}
+
+					@include media('<tablet') {
+						margin-left: 1.0rem;
+					}
+				}
+
+				margin-right: 2.5rem;
+				/* Make room for the menu icon on mobile */
+				@include media('<tablet') {
+					margin-right: 0.5rem;
+				}
+			}
+		}
+	}
+
+	main {
+		grid-area: main;
+		background-color: $bgMain;
+
+		.main-header {
+			display: flex;
+			justify-content: space-between;
+			margin: 20px;
+			padding: 20px;
+			height: 150px; /* Force our height since we don't have actual content yet */
+			background-color: #e3e4e6;
+			color: slategray;
+		}
+
+		.main-cards {
+			column-count: 1;
+			column-gap: 20px;
+			margin: 20px;
+
+			.card {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				width: 100%;
+				background-color: #82bef6;
+				margin-bottom: 20px;
+				-webkit-column-break-inside: avoid;
+				padding: 24px;
+				box-sizing: border-box;
+			}
+
+			.card:first-child {
+				height: 485px;
+			}
+
+			.card:nth-child(2) {
+				height: 200px;
+			}
+
+			.card:nth-child(3) {
+				height: 265px;
+			}
+		}
+
+		/* Medium-sized screen breakpoint (tablet, 1050px) */
+		@include media('<=tablet') {
+			//@media only screen and (min-width: 65.625em) {
+			// Break out main cards into two columns
+			.main-cards {
+				column-count: 2;
+			}
+		}
+	}
+
+	header, footer {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 0 16px;
+
+		&.public {
+			padding-left: 0;
+		}
+	}
 }
+
 .inline-form {
-    div {
-        display: inline-block;
-        clear: none;
-        label {
-            display: inline-block;
-            clear: none;
-        }
-        input,select {
-            width: 10.0rem;
-            display: inline-block;
-            clear: none;
-        }
-    }
+	div {
+		display: inline-block;
+		clear: none;
+
+		label {
+			display: inline-block;
+			clear: none;
+		}
+
+		input, select {
+			width: 10.0rem;
+			display: inline-block;
+			clear: none;
+		}
+	}
 }
+
 nav[role="navigation"] {
-    margin: 0 1.0rem;
+	margin: 0 1.0rem;
 }
+
 .autocomplete {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    li {
-        width: 100%;
-        margin: 0;
-        padding: 0;
-        list-style: none;
-        cursor: pointer;
-    }
+	margin: 0;
+	padding: 0;
+	list-style: none;
+
+	li {
+		width: 100%;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		cursor: pointer;
+	}
 }
 
 .btn-primary {
-    background-color: $bgSideNav;
-    border-width: 0;
+	background-color: $bgSideNav;
+	border-width: 0;
 }
+
 .btn-outline-primary {
-    color: $bgSideNav;
-    border-color: $bgSideNav;
+	color: $bgSideNav;
+	border-color: $bgSideNav;
 }
+
 form {
-    .form-control-sm {
-        height: 1.0rem !important;
-    }
+	.form-control-sm {
+		height: 1.0rem !important;
+	}
 }
+
 .captcha {
-    height: 46px !important;
-    img {
-        width: 120px;
-        height: 100%;
-    }
-    .btn {
-        display: inline-block;
-        clear: none;
-        margin: auto 0;
-        margin-top: -30px !important;
-    }
+	height: 46px !important;
+
+	img {
+		width: 120px;
+		height: 100%;
+	}
+
+	.btn {
+		display: inline-block;
+		clear: none;
+		margin: auto 0;
+		margin-top: -30px !important;
+	}
 }
+
 .frm-login {
-    .row {
-        div {
-            &.bold {
-                font-weight: 400;
-            }
-        }
-    }
+	.row {
+		div {
+			&.bold {
+				font-weight: 400;
+			}
+		}
+	}
 }
+
 /*
 .calendar {
     min-height: 400px;

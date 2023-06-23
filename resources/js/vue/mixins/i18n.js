@@ -1,7 +1,6 @@
 const i18n = {
 	data() {
-		return {
-		}
+		return {}
 	},
 	methods: {
 		__(txt) {

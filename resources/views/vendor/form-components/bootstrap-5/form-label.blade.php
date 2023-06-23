@@ -1,3 +1,3 @@
 @if($label)
-    <label {!! $attributes !!}>{{ $label }}</label>
+	<label {!! $attributes !!}>{{ $label }}</label>
 @endif

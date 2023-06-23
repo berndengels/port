@@ -2,5 +2,5 @@
     'class' => 'btn btn-primary',
     'type' => 'submit'
 ]) !!}>
-    {!! trim($slot) ?: __('Submit') !!}
+	{!! trim($slot) ?: __('Submit') !!}
 </button>

@@ -11,17 +11,33 @@ class AdminRequest extends MainFormRequest
      * @var Auth
      */
     protected $auth;
+	protected $guard;
+	protected $user;
     protected $errors;
 	protected $decimalFields;
 	protected $booleanFields;
 	protected $defaults;
+	protected $permission;
 	protected static $counter = 0;
 
     public function __construct(array $query = [], array $request = [], array $attributes = [], array $cookies = [], array $files = [], array $server = [], $content = null)
     {
         $this->auth = auth('admin');
+		if(auth('admin')->check()) {
+			$this->auth = auth('admin');
+			$this->guard = 'admin';
+		} elseif (auth('customer')->check()) {
+			$this->auth = auth('customer');
+			$this->guard = 'customer';
+		}
+		$this->user = $this->auth->user();
         parent::__construct($query, $request, $attributes, $cookies, $files, $server, $content);
     }
+
+	public function authorize() : bool
+	{
+		return $this->user && $this->user->can($this->permission);
+	}
 
 	protected function prepareForValidation()
 	{
@@ -32,16 +48,6 @@ class AdminRequest extends MainFormRequest
 		// Default Werte setzen
 		$this->handleDefaults();
 	}
-
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return $this->auth->check();
-    }
 
     protected function failedValidation(Validator $validator)
     {

@@ -4,5 +4,5 @@
    href=""
    title="{{ $title }}"
    data-bs-toggle="tooltip">
-    {!! $icon !!}{{ $label ? ' ' . $label : null }}
+	{!! $icon !!}{{ $label ? ' ' . $label : null }}
 </a>

@@ -7,16 +7,16 @@
 
 Preis für {{ $modus }} {{ $prices->priceBase }} €
 @if($prices->priceCrane > 0)
-- Kranen: {{ $prices->priceCrane }} €
+	- Kranen: {{ $prices->priceCrane }} €
 @endif
 @if($prices->priceMastCrane > 0)
-- Mast-Kranen: {{ $prices->priceMastCrane }} €
+	- Mast-Kranen: {{ $prices->priceMastCrane }} €
 @endif
 @if($prices->priceCleaning > 0)
-- Reinigung {{ $prices->priceCleaning }} €
+	- Reinigung {{ $prices->priceCleaning }} €
 @endif
 @if($prices->priceTransport > 0)
-- Boot-Transport: {{ $prices->priceTransport }} €
+	- Boot-Transport: {{ $prices->priceTransport }} €
 @endif
 
 MWSt Rate: {{ $prices->tax }} %\

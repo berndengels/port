@@ -1,11 +1,11 @@
-
 # FullCalendar Vue 3 Component
 
 The official [Vue 3](https://vuejs.org/) component for [FullCalendar](https://fullcalendar.io)
 
 ## Installation
 
-Install the Vue 3 connector, the core package, and any plugins (like [daygrid](https://fullcalendar.io/docs/month-view)):
+Install the Vue 3 connector, the core package, and any plugins (
+like [daygrid](https://fullcalendar.io/docs/month-view)):
 
 ```sh
 npm install @fullcalendar/vue3 @fullcalendar/core @fullcalendar/daygrid
@@ -16,46 +16,48 @@ npm install @fullcalendar/vue3 @fullcalendar/core @fullcalendar/daygrid
 Render a `FullCalendar` component, supplying an [options](https://fullcalendar.io/docs#toc) object:
 
 ```vue
+
 <script>
 import FullCalendar from '@fullcalendar/vue3'
 import dayGridPlugin from '@fullcalendar/daygrid'
 
 export default {
-  components: {
-    FullCalendar // make the <FullCalendar> tag available
-  },
-  data: function() {
-    return {
-      calendarOptions: {
-        plugins: [dayGridPlugin],
-        initialView: 'dayGridMonth',
-        weekends: false,
-        events: [
-          { title: 'Meeting', start: new Date() }
-        ]
-      }
-    }
-  }
+	components: {
+		FullCalendar // make the <FullCalendar> tag available
+	},
+	data: function () {
+		return {
+			calendarOptions: {
+				plugins: [dayGridPlugin],
+				initialView: 'dayGridMonth',
+				weekends: false,
+				events: [
+					{title: 'Meeting', start: new Date()}
+				]
+			}
+		}
+	}
 }
 </script>
 
 <template>
-  <h1>Demo App</h1>
-  <FullCalendar :options='calendarOptions' />
+	<h1>Demo App</h1>
+	<FullCalendar :options='calendarOptions'/>
 </template>
 ```
 
 You can even supply [named-slot](https://vuejs.org/guide/components/slots.html#named-slots) templates:
 
 ```vue
+
 <template>
-  <h1>Demo App</h1>
-  <FullCalendar :options='calendarOptions'>
-    <template v-slot:eventContent='arg'>
-      <b>{{ arg.timeText }}</b>
-      <i>{{ arg.event.title }}</i>
-    </template>
-  </FullCalendar>
+	<h1>Demo App</h1>
+	<FullCalendar :options='calendarOptions'>
+		<template v-slot:eventContent='arg'>
+			<b>{{ arg.timeText }}</b>
+			<i>{{ arg.event.title }}</i>
+		</template>
+	</FullCalendar>
 </template>
 ```
 

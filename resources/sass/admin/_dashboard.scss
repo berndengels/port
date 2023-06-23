@@ -6,14 +6,17 @@
 				min-height: 300px;
 				min-width: 318px;
 				box-shadow: 4px 4px 8px #394263;
+
 				.card-body {
 					min-width: 318px;
+
 					&.loader-wrapper {
 						width: 100%;
 						width: inherit;
 						height: 100%;
 						text-align: center;
 						vertical-align: middle;
+
 						.v-spinner {
 							margin: 100px auto;
 						}
@@ -22,6 +25,7 @@
 
 			}
 		}
+
 		@include media('<tablet') {
 			div.col-10 {
 				margin: 0.8rem auto 0 auto;
@@ -29,6 +33,7 @@
 		}
 	}
 }
+
 .weather {
 	div {
 		display: grid;
@@ -36,29 +41,36 @@
 		grid-template-rows: 1fr;
 		gap: 10px 10px;
 		grid-auto-flow: column;
+
 		div {
 			padding: 0.1rem;
 		}
+
 		div:last-child {
 			white-space: nowrap;
 		}
-		&.bild,&.beschreibung {
+
+		&.bild, &.beschreibung {
 			display: inline-block;
 			float: left;
+
 			div {
 				display: inline-block;
 			}
 		}
+
 		&.bild {
 			width: 50px;
 			height: 50px;
 			padding: 0;
 			margin: 0;
+
 			div {
 				width: 50px;
 				height: 50px;
 				padding: 0;
 				margin: 0;
+
 				img {
 					width: 50px;
 					height: 50px;
@@ -66,8 +78,10 @@
 				}
 			}
 		}
+
 		&.beschreibung {
 			margin-left: 1.0rem;
+
 			div {
 				font-size: 1.0rem;
 				line-height: 2.0;
@@ -75,11 +89,13 @@
 				font-weight: bold;
 			}
 		}
+
 		&.temperatur {
 			clear: both;
 		}
 	}
 }
+
 .calendar {
 	min-height: 400px;
 	@include media('>tablet') {
@@ -89,16 +105,19 @@
 					padding: 0.1em 0.2em;
 					font-size: 0.7rem !important;
 				}
+
 				h2.fc-toolbar-title {
-					font-size: 1.0rem  !important;
+					font-size: 1.0rem !important;
 				}
 			}
+
 			table {
 				font-size: 0.7rem !important;
 			}
 		}
 	}
 }
+
 .chart {
 	height: 100%;
 	width: inherit;

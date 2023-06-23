@@ -1,4 +1,3 @@
-
 class Message {
 	show(title, txt) {
 		toastr.options = {
@@ -19,4 +18,5 @@ class Message {
 		toastr.success(txt, title);
 	}
 }
+
 export default Message

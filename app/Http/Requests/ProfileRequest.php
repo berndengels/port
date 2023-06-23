@@ -14,7 +14,7 @@ class ProfileRequest extends MainFormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize() : bool
     {
         return auth('customer')->user()->id === $this->getId() || auth('admin')->check();
     }

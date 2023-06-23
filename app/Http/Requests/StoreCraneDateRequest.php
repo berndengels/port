@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-class StorCraneDateRequest extends CraneDateRequest
+class StoreCraneDateRequest extends CraneDateRequest
 {
 
     /**
@@ -13,7 +13,7 @@ class StorCraneDateRequest extends CraneDateRequest
     public function rules()
     {
         $rules = parent::rules();
-        $rules['crane_date'] = 'required|unique:crane_dates,crane_date';
+        $rules['date'] = 'required|unique:crane_dates,date';
         return $rules;
     }
 }

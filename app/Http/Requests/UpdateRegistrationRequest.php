@@ -18,7 +18,7 @@ class UpdateRegistrationRequest extends CustomerRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize() : bool
     {
         return true;
     }
