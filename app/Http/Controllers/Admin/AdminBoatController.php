@@ -124,6 +124,8 @@ class AdminBoatController extends AdminController
      */
     public function update(BoatRequest $request, Boat $boat)
     {
+
+		dd($request->file('image'));
         $validated  = $request->validated();
         try {
             $boat->update($validated);

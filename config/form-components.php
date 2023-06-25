@@ -1,7 +1,7 @@
 <?php
 
-use App\View\Components\Form\FormInput;
-use App\View\Components\Form\FormSelect;
+//use App\View\Components\Form\FormInput;
+//use App\View\Components\Form\FormSelect;
 use App\View\Components\Form\FormCheckbox;
 use ProtoneMedia\LaravelFormComponents\Components;
 
@@ -18,14 +18,14 @@ return [
             'class' => Components\Form::class,
         ],
         'form-checkbox' => [
-//            'view'  => 'form-components::{framework}.form-checkbox',
-			'view'  => 'vendor.form-components.{framework}.form-checkbox',
+            'view'  => 'form-components::{framework}.form-checkbox',
+//			'view'  => 'vendor.form-components.{framework}.form-checkbox',
 //			'class' => Components\FormCheckbox::class,
             'class' => FormCheckbox::class,
         ],
         'form-errors' => [
-//            'view'  => 'form-components::{framework}.form-errors',
-            'view'  => 'vendor.form-components.{framework}.form-errors',
+            'view'  => 'form-components::{framework}.form-errors',
+//            'view'  => 'vendor.form-components.{framework}.form-errors',
             'class' => Components\FormErrors::class,
         ],
         'form-group' => [
@@ -33,11 +33,11 @@ return [
             'class' => Components\FormGroup::class,
         ],
         'form-input' => [
-            'view'  => 'components.form.my-form-input',
-//            'view'  => 'form-components::{framework}.form-input',
+//            'view'  => 'components.form.my-form-input',
+            'view'  => 'form-components::{framework}.form-input',
 //            'view'  => 'vendor.form-components.{framework}.form-input',
-//            'class' => Components\FormInput::class,
-            'class' => FormInput::class,
+            'class' => Components\FormInput::class,
+//            'class' => FormInput::class,
         ],
         'form-input-group' => [
             'view'  => 'form-components::{framework}.form-input-group',

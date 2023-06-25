@@ -1,3 +1,32 @@
+.form-floating {
+	input, select {
+		margin-top: .5rem;
+		max-width: 20rem;
+	}
+}
+.form-select-label {
+	margin-top: .5rem;
+}
+.form-select {
+	&.floating {
+		max-width: 20rem;
+	}
+}
+.label-width-200 {
+	label {
+		width: 200px;
+		display: inline-block;
+		clear: none;
+	}
+}
+.label-width-220 {
+	label {
+		width: 220px;
+		display: inline-block;
+		clear: none;
+	}
+}
+
 form {
 	&#frmBerthCalculate {
 		input[type=text], input[type=number] {
@@ -40,7 +69,7 @@ form {
 			select {
 				&.form-select {
 					display: inline-block;
-					width: 150px !important;
+//					width: 150px !important;
 					clear: none;
 				}
 			}
@@ -49,7 +78,7 @@ form {
 
 	&:not(&.inline-form, &.w-full, &.w-half) {
 		input, select, textarea, label {
-			max-width: 50%;
+			max-width: 100%;
 		}
 	}
 
@@ -88,6 +117,18 @@ form {
 				}
 			}
 		}
+	}
+	&.w-100 {
+		.form-floating {
+			input, select {
+				margin-top: .5rem;
+				max-width: 100%;
+			}
+		}
+	}
+
+	.invalid-feedback {
+		display: block;
 	}
 
 	@include media('<tablet') {

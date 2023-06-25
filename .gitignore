@@ -43,3 +43,4 @@ yarn-error.log
 /public/tinymce/
 /docker-compose.yml
 /docker-compose.orig.yml
+/public/dropzone/

@@ -23,14 +23,17 @@ import Car from "./Libs/Car"
 import Tooltip from "./Libs/Tooltip";
 import Edit from "./Libs/Edit";
 import Geo from "./Libs/Geo";
+import MyDropzone from "./Libs/MyDropzone";
 import Draggable from "./Libs/Draggable";
 import MyCalendar from "./Libs/MyCalendar";
 import {createApp} from "vue"
 import store from "./vue/store"
-import mitt from 'mitt';
+//import mitt from 'mitt';
+//import Dropzone from "dropzone";
 
-const emitter = mitt();
-window.emitter = emitter;
+//const emitter = mitt();
+//window.emitter = emitter;
+//window.Dropzone = Dropzone;
 
 import AdminDashboard from "v@/views/admin/Dashboard"
 import AdminBerths from "v@/views/admin/Berths"
@@ -46,6 +49,7 @@ window.Car = new Car;
 window.Tooltip = new Tooltip;
 window.Geo = Geo;
 window.MyCalendar = new MyCalendar;
+window.MyDropzone = new MyDropzone;
 
 $(document).ready(function () {
 	window.Draggable = new Draggable();

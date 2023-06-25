@@ -1,0 +1,42 @@
+@import '~dropzone/src/dropzone.scss';
+
+.media-library-dropzone__dropzone {
+	width: 100%;
+	border-radius: 0.25rem;
+}
+
+.media-library-dropzone__grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	grid-gap: 1.25rem;
+	margin-top: 1.25rem;
+	margin-bottom: 1.25rem;
+	justify-content: center;
+}
+
+.media-library-dropzone__item {
+	position: relative;
+}
+
+.media-library-dropzone__close {
+	position: absolute;
+	right: 0;
+	top: 0;
+	margin-right: 0.5rem;
+	margin-top: 0.5rem;
+	cursor: pointer;
+	width: 2rem;
+	color: #fff;
+	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+	height: 2rem;
+	transition: color 100ms ease-in-out;
+}
+
+.media-library-dropzone__close:hover {
+	color: #ccc;
+}
+
+.media-library-dropzone__img {
+	border-radius: 0.25rem;
+	max-width: 100%
+}

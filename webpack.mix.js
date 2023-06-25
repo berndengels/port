@@ -11,6 +11,7 @@ mix.autoload({
 	.copy('node_modules/tinymce', 'public/tinymce')
 	.copy('node_modules/@fortawesome/fontawesome-free/webfonts', 'public/webfonts')
 	.copy('node_modules/froala-editor', 'public/froala-editor')
+	.copy('node_modules/dropzone/dist', 'public/dropzone')
 	.js('resources/js/app.js', 'public/js')
 	.js('resources/js/app-admin.js', 'public/js')
 	.js('node_modules/leaflet', 'public/js')
