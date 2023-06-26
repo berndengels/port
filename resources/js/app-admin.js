@@ -28,17 +28,14 @@ import Draggable from "./Libs/Draggable";
 import MyCalendar from "./Libs/MyCalendar";
 import {createApp} from "vue"
 import store from "./vue/store"
-//import mitt from 'mitt';
-//import Dropzone from "dropzone";
+import mitt from 'mitt';
 
-//const emitter = mitt();
-//window.emitter = emitter;
-//window.Dropzone = Dropzone;
+const emitter = mitt();
+window.emitter = emitter;
 
 import AdminDashboard from "v@/views/admin/Dashboard"
 import AdminBerths from "v@/views/admin/Berths"
 import AdminCraneDates from "v@/views/admin/CraneDates"
-//import AdminHarborDesigner from "v@/views/admin/harborDesigner"
 
 window.MyForm = new MyForm;
 window.Prices = new Prices;

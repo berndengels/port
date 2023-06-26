@@ -39,19 +39,17 @@
 					<x-form-input floating name="length_waterline" type="number" step="0.1" min="0.1" label="Länge Wasserlinie"
 								  required/>
 					<x-form-input floating name="length_keel" type="number" step="0.1" min="0" label="Kiellänge"/>
-					<!--div class="dropzone mt-3" id="dropzone">
-						<div class="dz-message needsclick">
-							<i class="bi bi-file-earmark-arrow-up text-primary fs-3x"></i>
-							<div class="ms-4">
-								<h3 class="dz-default fs-5 fw-bold text-gray-900 mb-1">Drop files here or click to upload.</h3>
-								<span class="fs-7 fw-semibold text-gray-400">Upload up to 10 files</span>
-							</div>
-						</div>
-					</div-->
-					<x-dropzone name="image" />
 					@endbind
 				</div>
 			</div>
+
+			@can('ImageUpload')
+			<div class="row">
+				<div class="col-12">
+					<x-dropzone name="image" />
+				</div>
+			</div>
+			@endcan
 
 			<div class="row mt-2 ms-2">
 				<x-form-submit class="col-1 btn-sm btn-primary" icon="fas fa-save">Speichern</x-form-submit>
@@ -66,6 +64,7 @@
 		const frm = document.frm,
 			options = {!! $customerOptions !!},
 			route = "{{ route('admin.upload.image.boat', $boat) }}",
+			files = {!! $files !!},
 			bindings = {
 				name: frm.name,
 				email: frm.email,
@@ -73,7 +72,7 @@
 				state: frm.state,
 			};
 		MyForm.autocomplete(".autocomplete", frm.name, options, 'name', bindings);
-		MyDropzone.create("#dropzone", 'image', route);
+		MyDropzone.create("#dropzone", 'image', route, files);
 	})
 </script>
 @endpush

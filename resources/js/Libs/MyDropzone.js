@@ -1,7 +1,7 @@
 import { Dropzone } from "dropzone";
 
 class MyDropzone {
-	create(selector = '#dropzone', paramName = 'image', uploadURL = "/admin/upload/image", formID = "") {
+	create(selector = '#dropzone', paramName = 'image', uploadURL = "/admin/upload/image", files = null) {
 		Dropzone.autoDiscover = false;
 
 		const dropzone = new Dropzone(selector, {
@@ -22,6 +22,12 @@ class MyDropzone {
 				})
 //				.on('complete', file => this.removeFile(file))
 				.on('addedfile', file => console.info('file', file));
+
+		if(files) {
+			$.each(files, (i, item) => {
+				dropzone.displayExistingFile(item, item.url)
+			});
+		}
 		return dropzone;
 	}
 }

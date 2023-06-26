@@ -57,7 +57,6 @@ class BoatRequest extends AdminRequest
             'length_waterline'  => 'nullable|numeric',
             'length_keel'       => 'nullable|numeric',
             'home_port'         => '',
-			'image'				=> 'nullable|image',
         ];
     }
 }
