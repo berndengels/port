@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StorCraneDateRequest;
+use App\Http\Requests\StoreCraneDateRequest;
+use App\Http\Requests\UpdateCraneDateRequest;
+use App\Http\Resources\CraneDatesResource;
 use App\Models\CraneDate;
 use Illuminate\Http\Request;
 
@@ -22,8 +24,10 @@ class ApiCraneDateController extends Controller
      */
     public function index()
     {
+        $data = CraneDate::with(['cranable'])->orderBy('crane_date')->get();
+        $data = CraneDatesResource::collection($data);
         $response = [
-            'dates' => CraneDate::orderBy('crane_date')->get(),
+            'dates' => $data,
             'cranableTypeOptions' => $this->cranableTypeOptions,
         ];
 
@@ -44,15 +48,15 @@ class ApiCraneDateController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  StorCraneDateRequest  $request
+     * @param  StoreCraneDateRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StorCraneDateRequest $request)
+    public function store(StoreCraneDateRequest $request)
     {
         try {
             $craneDate = CraneDate::create($request->validated());
             return response()->json([
-                'craneDate'  => $craneDate,
+				'craneDate'  => new CraneDatesResource($craneDate),
                 'success' => "Krantermin erfolgreich angelegt!"
             ]);
         } catch(Exception $e) {
@@ -63,16 +67,18 @@ class ApiCraneDateController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  UpdateCraneDateRequest  $request
      * @param  \App\Models\CraneDate  $craneDate
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, CraneDate $craneDate)
+    public function update(UpdateCraneDateRequest $request, CraneDate $craneDate)
     {
         try {
             $craneDate->update($request->validated());
+			$craneDate = $craneDate->refresh();
+
             return response()->json([
-                'craneDate'  => $craneDate,
+                'craneDate'  => new CraneDatesResource($craneDate),
                 'success' => "Krantermin erfolgreich bearbeitet!"
             ]);
         } catch(Exception $e) {
@@ -92,7 +98,7 @@ class ApiCraneDateController extends Controller
             $data = $craneDate;
             $craneDate->delete();
             return response()->json([
-                'craneDate' => $data,
+				'craneDate'  => new CraneDatesResource($data),
                 'success' => "Krantermin erfolgreich gelöscht!"
             ]);
         } catch(Exception $e) {

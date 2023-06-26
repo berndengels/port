@@ -1,37 +1,43 @@
-<div class="@if($inline) inline-flex @else mt-2 @endif">
-    <label class="@if($inline) inline-flex @endif">
-        <x-form-label :label="$label" />
-        <select
-            @if($isWired())
-                wire:model{!! $wireModifier() !!}="{{ $name }}"
-            @endif
+<div class="mt-4">
+	<label class="block">
+		<x-form-label :label="$label"/>
 
-            name="{{ $name }}"
+		<select
+				@if($isWired())
+					wire:model{!! $wireModifier() !!}="{{ $name }}"
+				@endif
 
-            @if($multiple)
-                multiple
-            @endif
+				name="{{ $name }}"
 
-            {!! $attributes->merge([
-                'class' => (!$multiple ? 'h-10' : '')  . (($label && !$inline) ? ' mt-1' : '')
-                    . ($inline ? ' inline-flex' : ' block w-full')
-//                    . (($label && $inline) ? ' sm:block sm:w-full' : '')
-                    . ($class ? ' '.$class : ''),
-            ]) !!}>
-            @forelse($options as $key => $option)
-                <option value="{{ $key }}" @if($isSelected($key)) selected="selected" @endif>
-                    {{ __($option) }}
-                </option>
-            @empty
-                {!! $slot !!}
-            @endforelse
-        </select>
-        @if($help)
-            <i data-info="{{ $help }}" class="help text-xl text-blue-900 right-auto ml-2 fas fa-question-circle"></i>
-        @endif
-    </label>
+				@if($multiple)
+					multiple
+				@endif
 
-    @if($hasErrorAndShow($name))
-        <x-form-errors :name="$name" />
-    @endif
+				@if($placeholder)
+					placeholder="{{ $placeholder }}"
+				@endif
+
+				{!! $attributes->merge([
+					'class' => ($label ? 'mt-1' : '') . ' block w-full'
+				]) !!}>
+
+			@if($placeholder)
+				<option value="" disabled @if($nothingSelected()) selected="selected" @endif>
+					{{ $placeholder }}
+				</option>
+			@endif
+
+			@forelse($options as $key => $option)
+				<option value="{{ $key }}" @if($isSelected($key)) selected="selected" @endif>
+					{{ $option }}
+				</option>
+			@empty
+				{!! $slot !!}
+			@endforelse
+		</select>
+	</label>
+
+	@if($hasErrorAndShow($name))
+		<x-form-errors :name="$name"/>
+	@endif
 </div>

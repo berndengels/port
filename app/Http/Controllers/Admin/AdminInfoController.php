@@ -11,7 +11,7 @@ class AdminInfoController extends AdminController
 
     public function routes(Request $request)
     {
-        $routeName = $request->post('routeName');
+        $routeName = $request->input('routeName');
         $data = collect([]);
         /**
          * @var $route \Illuminate\Routing\Route

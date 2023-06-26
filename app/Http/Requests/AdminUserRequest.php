@@ -11,7 +11,7 @@ class AdminUserRequest extends AdminRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize() : bool
     {
         return (($this->user() && $this->user()->id === $this->getId()) || (auth()->user() && auth()->user()->can('write User')));
     }

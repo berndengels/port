@@ -20,8 +20,8 @@ const BerthsMapCalculationMixin = {
 								direction: 'center',
 								className: 'circle-marker-text ' + el.category.name
 							}))
-							.setLatLng([el.lat, el.lng])
-							.setContent("<span>" + el.number ?? 'X' + "</span>")
+								.setLatLng([el.lat, el.lng])
+								.setContent("<span>" + el.number ?? 'X' + "</span>")
 						;
 
 						if (text) {
@@ -96,7 +96,7 @@ const BerthsMapCalculationMixin = {
 					latLng, point;
 				try {
 					latLng = new L.LatLng(latitude, longitude);
-					if(latLng) {
+					if (latLng) {
 						point = this.map.latLngToLayerPoint(latLng);
 					}
 

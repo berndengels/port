@@ -23,40 +23,29 @@ unter 0,3 	    unter 1 	unter 1 	Windstille 	        0
 */
 var msToBft = (ms) => {
 	var bft = 0;
-	if(ms >= 32.7) {
+	if (ms >= 32.7) {
 		bft = 12;
-	}
-	else if(ms >= 28.5) {
+	} else if (ms >= 28.5) {
 		bft = 11;
-	}
-	else if(ms >= 24.5) {
+	} else if (ms >= 24.5) {
 		bft = 10;
-	}
-	else if(ms >= 20.8) {
+	} else if (ms >= 20.8) {
 		bft = 9;
-	}
-	else if(ms >= 17.2) {
+	} else if (ms >= 17.2) {
 		bft = 8;
-	}
-	else if(ms >= 13.9) {
+	} else if (ms >= 13.9) {
 		bft = 7;
-	}
-	else if(ms >= 10.8) {
+	} else if (ms >= 10.8) {
 		bft = 6;
-	}
-	else if(ms >= 8.0) {
+	} else if (ms >= 8.0) {
 		bft = 5;
-	}
-	else if(ms >= 5.5) {
+	} else if (ms >= 5.5) {
 		bft = 4;
-	}
-	else if(ms >= 3.4) {
+	} else if (ms >= 3.4) {
 		bft = 3;
-	}
-	else if(ms >= 1.6) {
+	} else if (ms >= 1.6) {
 		bft = 2;
-	}
-	else if(ms >= 0.3) {
+	} else if (ms >= 0.3) {
 		bft = 1;
 	}
 	return bft;
@@ -65,19 +54,19 @@ var display = (selector, data) => {
 	const
 		$weatherTitle = $('.weatherTitle'),
 		$wrapper = $(selector),
-		$div=$('<div>'),
-		skipLabels=['Name','Beschreibung','Bild']
+		$div = $('<div>'),
+		skipLabels = ['Name', 'Beschreibung', 'Bild']
 	;
-	$('.weatherTitle').append(" für "+ data.Name);
-	for(const [k,v] of Object.entries(data)) {
+	$('.weatherTitle').append(" für " + data.Name);
+	for (const [k, v] of Object.entries(data)) {
 		let $row = $div.clone().addClass(k.toLowerCase()),
 			$label = $div.clone().html(k),
 			$text = $div.clone().html(v)
 		;
-		if('Name' === k) {
+		if ('Name' === k) {
 			continue;
 		}
-		if(-1 === $.inArray(k, skipLabels)) {
+		if (-1 === $.inArray(k, skipLabels)) {
 			$row.append($label)
 		}
 		$row.append($text);
@@ -87,6 +76,7 @@ var display = (selector, data) => {
 var zeroFill = (val) => {
 	return (val < 10 ? '0' : '') + val;
 }
+
 class Weather {
 	get(selector) {
 		const lat = process.env.MIX_POSITION_LAT,
@@ -98,19 +88,19 @@ class Weather {
 		;
 		$.ajax({
 			url: url,
-			success: function( r ) {
+			success: function (r) {
 				let iconUrl = iconURL.replace("%ICON%", r.weather[0].icon),
 					dateSunrise = new Date(r.sys.sunrise * 1000),
-					dateSunset  = new Date(r.sys.sunset * 1000),
+					dateSunset = new Date(r.sys.sunset * 1000),
 					result = {
-						Name:                   r.name,
-						Bild:                   $img.attr({src: iconUrl}),
-						Beschreibung:           r.weather[0].description,
-						Temperatur:             Math.round(r.main.temp) + "° Celsius",
-						Sonnenaufgang:          dateSunrise.getHours() + ":" + zeroFill(dateSunrise.getMinutes()) + " Uhr",
-						Sonnenuntergang:        dateSunset.getHours() + ":" + zeroFill(dateSunset.getMinutes()) + " Uhr",
-						Windrichtúng:           convertDegreesToWindDirection(r.wind.deg),
-						Windgeschwindigkeit:    msToBft(r.wind.speed) + " Bft",
+						Name: r.name,
+						Bild: $img.attr({src: iconUrl}),
+						Beschreibung: r.weather[0].description,
+						Temperatur: Math.round(r.main.temp) + "° Celsius",
+						Sonnenaufgang: dateSunrise.getHours() + ":" + zeroFill(dateSunrise.getMinutes()) + " Uhr",
+						Sonnenuntergang: dateSunset.getHours() + ":" + zeroFill(dateSunset.getMinutes()) + " Uhr",
+						Windrichtúng: convertDegreesToWindDirection(r.wind.deg),
+						Windgeschwindigkeit: msToBft(r.wind.speed) + " Bft",
 					};
 				display(selector, result);
 			}

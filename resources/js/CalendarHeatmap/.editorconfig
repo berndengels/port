@@ -17,6 +17,6 @@ indent_style = tab
 tab_width = 4
 
 # Json, YAML and Configuration files
-[.*rc,*.{json,yml}]
+[.*rc,*.{json, yml}]
 indent_style = space
 indent_size = 2

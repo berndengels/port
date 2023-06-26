@@ -1,44 +1,44 @@
-( function( $, QUnit ) {
+(function ($, QUnit) {
 
 	"use strict";
 
-	var $testCanvas = $( "#testCanvas" );
+	var $testCanvas = $("#testCanvas");
 	var $fixture = null;
 
-	QUnit.module( "jQuery Calenadar Heatmap", {
-		beforeEach: function() {
+	QUnit.module("jQuery Calenadar Heatmap", {
+		beforeEach: function () {
 
 			// fixture is the element where your jQuery plugin will act
-			$fixture = $( "<div/>" );
+			$fixture = $("<div/>");
 
-			$testCanvas.append( $fixture );
+			$testCanvas.append($fixture);
 		},
-		afterEach: function() {
+		afterEach: function () {
 
 			// we remove the element to reset our plugin job :)
 			$fixture.remove();
 		}
-	} );
+	});
 
-	QUnit.test( "is inside jQuery library", function( assert ) {
+	QUnit.test("is inside jQuery library", function (assert) {
 
-		assert.equal( typeof $.fn.CalendarHeatmap, "function", "has function inside jquery.fn" );
-		assert.equal( typeof $fixture.CalendarHeatmap, "function", "another way to test it" );
-	} );
+		assert.equal(typeof $.fn.CalendarHeatmap, "function", "has function inside jquery.fn");
+		assert.equal(typeof $fixture.CalendarHeatmap, "function", "another way to test it");
+	});
 
-	QUnit.test( "returns jQuery functions after called (chaining)", function( assert ) {
+	QUnit.test("returns jQuery functions after called (chaining)", function (assert) {
 		assert.equal(
 			typeof $fixture.CalendarHeatmap([]).on,
 			"function",
-			"'on' function must exist after plugin call" );
-	} );
+			"'on' function must exist after plugin call");
+	});
 
-	QUnit.test( "caches plugin instance", function( assert ) {
+	QUnit.test("caches plugin instance", function (assert) {
 		$fixture.CalendarHeatmap([]);
 		assert.ok(
-			$fixture.data( "plugin_CalendarHeatmap" ),
+			$fixture.data("plugin_CalendarHeatmap"),
 			"has cached it into a jQuery data"
 		);
-	} );
+	});
 
-}( jQuery, QUnit ) );
+}(jQuery, QUnit));

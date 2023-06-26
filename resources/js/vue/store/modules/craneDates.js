@@ -29,7 +29,7 @@ const namespaced = true,
 			state.loading = false
 		},
 		updateDate(state, date) {
-			state.dates = state.dates.filter(d => d.id === date.id ? date : d)
+			state.dates = state.dates.map(d => d.id === date.id ? date : d)
 			state.loading = false
 		},
 		destroyDate(state, date) {
@@ -41,27 +41,27 @@ const namespaced = true,
 		},
 	},
 	actions = {
-		all({ commit }) {
+		all({commit}) {
 			axios.get('/api/craneDates')
 				.then(resp => {
-					if(resp.data) {
+					if (resp.data) {
 						commit("setDates", resp.data.dates);
 						commit("setCranableTypeOptions", resp.data.cranableTypeOptions);
 					}
 				}).catch(err => console.error(err));
 		},
-		getBoats({ commit }, data) {
+		getBoats({commit}, data) {
 			axios.post('/api/craneDates/cranable', {cranable_type: data})
 				.then(resp => {
-					if(resp.data) {
+					if (resp.data) {
 						commit("setBoats", resp.data);
 					}
 				}).catch(err => console.error(err));
 		},
-		store({ commit }, date) {
-			axios.post('/api/craneDates', date)
+		store({commit}, data) {
+			axios.post('/api/craneDates', data)
 				.then(resp => {
-					if(resp.data.errors) {
+					if (resp.data.errors) {
 						commit("errors", resp.data.errors);
 					} else {
 						commit("errors", null);
@@ -69,10 +69,10 @@ const namespaced = true,
 					}
 				}).catch(err => console.error(err));
 		},
-		update({ commit }, date) {
-			axios.put('/api/craneDates', date)
+		update({commit}, data) {
+			axios.put('/api/craneDates/' + data.id, data)
 				.then(resp => {
-					if(resp.data.errors) {
+					if (resp.data.errors) {
 						commit("errors", resp.data.errors);
 					} else {
 						commit("errors", null);
@@ -80,10 +80,10 @@ const namespaced = true,
 					}
 				}).catch(err => console.error(err));
 		},
-		destroy({ commit }, date) {
-			axios.delete('/api/craneDates', date)
+		destroy({commit}, date) {
+			axios.delete('/api/craneDates' + data.id, date)
 				.then(resp => {
-					if(resp.data.errors) {
+					if (resp.data.errors) {
 						commit("errors", resp.data.errors);
 					} else {
 						commit("errors", null);

@@ -19,20 +19,20 @@ const namespaced = true,
 		},
 	},
 	actions = {
-		store({ commit }, caravan) {
+		store({commit}, caravan) {
 			axios.post('/api/caravans', caravan)
 				.then(resp => {
-					if(resp.data.errors) {
+					if (resp.data.errors) {
 						commit("errors", resp.data.errors);
 					} else {
 						commit("errors", null);
 					}
 				}).catch(err => console.error(err));
 		},
-		todayVisits({ commit }) {
+		todayVisits({commit}) {
 			axios.get('/api/caravans/todayVisits')
 				.then(resp => {
-					if(resp.data && resp.data.length > 0) {
+					if (resp.data && resp.data.length > 0) {
 						commit("todayVisits", resp.data);
 					}
 				}).catch(err => console.error(err));

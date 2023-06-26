@@ -1,10 +1,10 @@
 @extends('layouts.admin')
 
 @section('main')
-<div id="map"></div>
+	<div id="map"></div>
 @endsection
 
 @section('inline-scripts')
-    <script>
-    </script>
+	<script>
+	</script>
 @endsection

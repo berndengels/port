@@ -1,6 +1,5 @@
-
 const namespaced = true,
-	state =  {
+	state = {
 		dates: [],
 		reservations: [],
 		loading: true,
@@ -21,18 +20,18 @@ const namespaced = true,
 		},
 	},
 	actions = {
-		fetch({ commit }) {
+		fetch({commit}) {
 			axios.get('/api/rentals')
 				.then(resp => {
-					if(resp.data && resp.data.length > 0) {
+					if (resp.data && resp.data.length > 0) {
 						commit("setDates", resp.data);
 					}
 				}).catch(err => console.error(err));
 		},
-		fetchReservations({ commit }) {
+		fetchReservations({commit}) {
 			axios.get('/api/rentals/reservations')
 				.then(resp => {
-					if(resp.data && resp.data.length > 0) {
+					if (resp.data && resp.data.length > 0) {
 						commit("setReservations", resp.data);
 					}
 				}).catch(err => console.error(err));

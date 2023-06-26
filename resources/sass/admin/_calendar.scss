@@ -1,5 +1,5 @@
 :root {
-	--fc-border-color: black;
+	--fc-border-color: #394263;
 	--fc-daygrid-event-dot-width: 5px;
 }
 #calendar {
@@ -16,10 +16,12 @@
 					padding: 0.1em 0.2em;
 					font-size: 0.7rem !important;
 				}
+
 				h2.fc-toolbar-title {
-					font-size: 1.0rem  !important;
+					font-size: 1.0rem !important;
 				}
 			}
+
 			table {
 				font-size: 0.7rem !important;
 			}

@@ -19,7 +19,7 @@ class HouseboatRentalsValidationData
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize() : bool
     {
         if(!$this->auth->user()->can('write HouseboatRentals')) {
             return redirect()->back()->with('error', 'Keine Berechtigung für diese Aktion!');

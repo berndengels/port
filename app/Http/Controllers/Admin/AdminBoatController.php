@@ -6,6 +6,7 @@ use App\Http\Requests\BoatRequest;
 use App\Models\Boat;
 use App\Models\BoatType;
 use App\Models\Customer;
+use App\Models\Media;
 use App\Repositories\BerthRepository;
 use App\Repositories\CustomerRepository;
 use Exception;
@@ -92,6 +93,7 @@ class AdminBoatController extends AdminController
             $customer   = Customer::whereName($name)->first() ?? new Customer();
             $customer->fill($validated)->save();
             $customer->boats()->create($validated);
+
             return redirect()->route('admin.boats.index')->with('success', 'Boot erfolgreich angelegt!');
         } catch(Exception $e) {
             return redirect()->route('admin.boats.create', $request)->with('error', $e->getMessage());
@@ -106,9 +108,17 @@ class AdminBoatController extends AdminController
      */
     public function edit(Boat $boat)
     {
+		$boat->load(['media']);
+		$files = $boat->getMedia('boat')->map(fn(Media $m) => [
+			'id'=> $m->id,
+			'name' => $m->name,
+			'url'  => $m->getUrl('thumb')
+		])->toJson(true);
+
         return view('admin.boats.edit', [
                 'boat'  => $boat,
                 'types' => $this->boatTypes,
+				'files' => $files,
                 'customerOptions' => $this->customerOptions,
                 'berthOptions'    => $this->berthOptions,
             ]

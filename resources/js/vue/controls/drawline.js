@@ -17,13 +17,13 @@ L.Control.DrawLine = L.Control.extend({
 	_featureHandler: null,
 	_container: null,
 //	sidebar: this.sidebar,
-	initialize: function({
-		 map: map,
-         sidebar: sidebar,
-         calcData: calcData,
-         options: options = null,
-         featureHandler: callback,
-	} = {}) {
+	initialize: function ({
+							  map: map,
+							  sidebar: sidebar,
+							  calcData: calcData,
+							  options: options = null,
+							  featureHandler: callback,
+						  } = {}) {
 		this._sidebar = sidebar;
 		this._calcData = calcData;
 		this._options = L.setOptions(this, options ?? this.options);
@@ -33,22 +33,22 @@ L.Control.DrawLine = L.Control.extend({
 		this._container.innerHTML = '<i class="fas fa-edit"></i>';
 		this._container.title = "Draw Line";
 	},
-	onAdd: function(map) {
+	onAdd: function (map) {
 		map._controlContainer.insertBefore(this._container, map._controlContainer.firstChild);
 		return this._container;
 	},
-	removeFrom: function(map) {
+	removeFrom: function (map) {
 		return this;
 	},
-	_handleDraw: function(map, e) {
+	_handleDraw: function (map, e) {
 	},
 });
 
 L.control.drawLine = function ({
-   sidebar: sidebar,
-   calcData: calcData,
-   options: options = null,
-   featureHandler: callback
-} = {}) {
+								   sidebar: sidebar,
+								   calcData: calcData,
+								   options: options = null,
+								   featureHandler: callback
+							   } = {}) {
 	return new L.Control.DrawLine(...arguments);
 };

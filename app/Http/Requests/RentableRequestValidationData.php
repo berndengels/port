@@ -20,7 +20,7 @@ class RentableRequestValidationData
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize() : bool
     {
         if(!auth('admin')->user()->can('write Rentable')) {
             return redirect()->back()->with('error', 'Keine Berechtigung für diese Aktion!');

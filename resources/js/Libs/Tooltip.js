@@ -1,4 +1,3 @@
-
 class Tooltip {
 	prepare(triggerSelector, tooltipSelector = "#tooltip") {
 		$(triggerSelector).click((e) => {
@@ -8,7 +7,7 @@ class Tooltip {
 				info = $target.data('info')
 			;
 
-			if($tt.is(":visible")) {
+			if ($tt.is(":visible")) {
 				$tt.hide()
 			}
 			$tt.css({top: offset.top - 30, left: offset.left - 10, zIndex: 1000})
@@ -21,4 +20,5 @@ class Tooltip {
 		});
 	}
 }
+
 export default Tooltip

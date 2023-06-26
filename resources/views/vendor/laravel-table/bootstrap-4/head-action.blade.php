@@ -2,5 +2,5 @@
    @class($class)
    href=""
    title="{{ $title }}">
-    {!! $icon !!} {{ $title }}
+	{!! $icon !!} {{ $title }}
 </a>

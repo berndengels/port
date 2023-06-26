@@ -5,25 +5,17 @@ namespace App\Http\Requests;
 class UpdateCustomerRequest extends AdminRequest
 {
     protected $modelName = 'Customer';
+	protected $booleanFields = ['confirmed', 'confirmed_old'];
 
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize() : bool
     {
         return ($this->user('customer') && $this->user('customer')->id === $this->getId())
             || auth()->user()->can('write Customer');
-    }
-
-    public function validationData($keys = null)
-    {
-        return array_merge($this->all($keys),
-            [
-                'confirmed' => !!$this->post('confirmed') ?? false,
-                'confirmed_old' => !!$this->post('confirmed_old') ?? false,
-            ]);
     }
 
     /**

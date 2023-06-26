@@ -1,28 +1,25 @@
 <?php
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use Exception;
-use Illuminate\Http\Request;
+use App\Models\Boat;
+use App\Http\Requests\ImageRequest;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
 class AdminUploadController extends AdminController
 {
-    public function imageUpload( Request $request, string $paramName)
+    public function imageUpload( ImageRequest $request, Boat $boat )
     {
         try {
-            /**
-             * @var $file UploadedFile
-             */
-            $file = $request->$paramName;
-            $disk = Storage::disk('images');
-            $path = str_replace(config('app.url'), '', $disk->url(''));
-            $fileName = $disk->putFileAs('', $file, $file->hashName());
+			$boat
+				->addMediaFromRequest('image')
+				->toMediaCollection('boat', 'images')
+			;
             $response = [
                 'success'   => true,
                 'error'     => null,
-                'link'      => $path.$fileName,
+                'link'      => $boat->getMedia('boat')->first()->getUrl('large'),
             ];
         } catch (Exception $e) {
             $response = [

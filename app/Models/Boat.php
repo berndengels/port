@@ -10,7 +10,16 @@ use App\Traits\Models\ClearCache;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Kyslik\ColumnSortable\Sortable;
+use Spatie\MediaLibrary\Conversions\Conversion;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\FileAdder;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 /**
  * App\Models\Boat
@@ -63,9 +72,9 @@ use Kyslik\ColumnSortable\Sortable;
  * @method static Builder|Boat whereName($value)
  * @method static Builder|Boat whereType($value)
  */
-class Boat extends BaseModel
+class Boat extends Model implements HasMedia
 {
-    use HasFactory, ClearCache, IsPriceable, Sortable;
+    use HasFactory, ClearCache, IsPriceable, Sortable, InteractsWithMedia;
 
     protected $table = 'boats';
     protected $with = 'customer';
@@ -140,4 +149,79 @@ class Boat extends BaseModel
     {
         return $this->area()->getUnderwaterArea();
     }
+
+/*
+	public function media(): MorphMany
+	{
+		return $this->morphMany(Media::class, '');
+	}
+*/
+
+	/*
+	public function addMedia(string|UploadedFile $file): FileAdder
+	{
+		// TODO: Implement addMedia() method.
+	}
+
+	public function copyMedia(string|UploadedFile $file): FileAdder
+	{
+		// TODO: Implement copyMedia() method.
+	}
+
+	public function hasMedia(string $collectionName = ''): bool
+	{
+		// TODO: Implement hasMedia() method.
+	}
+
+	public function clearMediaCollection(string $collectionName = 'default'): HasMedia
+	{
+		// TODO: Implement clearMediaCollection() method.
+	}
+
+	public function clearMediaCollectionExcept(string $collectionName = 'default', array|\Illuminate\Support\Collection $excludedMedia = []): HasMedia
+	{
+		// TODO: Implement clearMediaCollectionExcept() method.
+	}
+
+	public function shouldDeletePreservingMedia(): bool
+	{
+		// TODO: Implement shouldDeletePreservingMedia() method.
+	}
+
+	public function addMediaConversion(string $name): Conversion
+	{
+		// TODO: Implement addMediaConversion() method.
+	}
+
+	public function loadMedia(string $collectionName)
+	{
+		return $this->loadMedia('');
+	}
+
+		public function getMedia(string $collectionName = 'boat', callable|array $filters = []): \Illuminate\Support\Collection
+	{
+		return $this->getMedia($collectionName)->first();
+	}
+*/
+
+	public function registerMediaConversions(Media $media = null): void
+	{
+		$this->addMediaConversion('thumb')
+			->width(100);
+
+		$this->addMediaConversion('large')
+			->width(2000);
+	}
+	public function registerMediaCollections(): void
+	{
+		$this->addMediaCollection('boat');
+	}
+
+	/*
+
+		public function registerAllMediaConversions(): void
+		{
+			// TODO: Implement registerAllMediaConversions() method.
+		}
+	*/
 }

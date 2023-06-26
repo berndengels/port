@@ -9,25 +9,18 @@ class RentableRequest extends AdminRequest
 {
     protected $modelName = 'Rentable';
     protected $routeParam = 'rentable';
+	protected $booleanFields = ['is_paid'];
 
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize() : bool
     {
         return $this->auth->user()->can('write Rentable');
     }
 
-    /*
-        public function validationData($keys = null)
-        {
-            return array_merge($this->all($keys), [
-                'is_paid'  => !!$this->post('is_paid') ?? false,
-            ]);
-        }
-    */
     /**
      * Get the validation rules that apply to the request.
      *

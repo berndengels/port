@@ -1,12 +1,11 @@
-
-import { Calendar } from '@fullcalendar/core';
+import {Calendar} from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import momentTimezonePlugin from '@fullcalendar/moment-timezone';
 import timeGridPlugin from '@fullcalendar/timegrid';
 
 class MyCalendar {
 	options = {
-		plugins: [ dayGridPlugin, timeGridPlugin, momentTimezonePlugin ],
+		plugins: [dayGridPlugin, timeGridPlugin, momentTimezonePlugin],
 		locale: 'de',
 		timeZone: 'Europe/Berlin',
 		initialView: 'dayGridMonth',
@@ -27,9 +26,10 @@ class MyCalendar {
 			right: 'dayGridMonth,timeGridWeek'
 		},
 	};
+
 	rentals(calendarSelector, dates, customOptions = null) {
-		if(customOptions) {
-			this.options = { ...this.options, ...customOptions }
+		if (customOptions) {
+			this.options = {...this.options, ...customOptions}
 		}
 		this.options.events = dates;
 
@@ -38,4 +38,5 @@ class MyCalendar {
 		return calendar;
 	}
 }
+
 export default MyCalendar

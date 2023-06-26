@@ -1,5 +1,5 @@
 @extends('layouts.main')
 
 @section('main')
-    <div id="adminBerths"></div>
+	<div id="adminBerths"></div>
 @endsection

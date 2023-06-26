@@ -4,13 +4,14 @@ namespace App\Http\Requests;
 class ServiceRequestRequest extends MainFormRequest
 {
     protected $modelName = 'ServiceRequest';
+	protected $booleanFields = ['done'];
 
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize() : bool
     {
         return (
             ($this->user('admin') && $this->user('admin')->can('write ServiceRequest'))

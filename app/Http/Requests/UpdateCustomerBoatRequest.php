@@ -5,14 +5,14 @@ namespace App\Http\Requests;
 class UpdateCustomerBoatRequest extends MainFormRequest
 {
     protected $modelName = 'Boat';
-    private $floats = ['length','width','draft','length_waterline','length_keel'];
+    protected $floats = ['length','width','draft','length_waterline','length_keel'];
 
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize() : bool
     {
         return auth('customer')->user()->can('write Boat');
     }

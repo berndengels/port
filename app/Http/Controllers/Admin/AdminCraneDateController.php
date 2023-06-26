@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StorCraneDateRequest;
+use App\Http\Requests\StoreCraneDateRequest;
 use App\Http\Requests\UpdateCraneDateRequest;
 use App\Models\Boat;
 use App\Models\CraneDate;
@@ -17,6 +17,7 @@ class AdminCraneDateController extends Controller
         'App\\Models\\GuestBoat'  => 'Gastboot',
         'App\\Models\\Boat'  => 'Dauerlieger',
     ];
+
     public function __construct()
     {
         parent::__construct();
@@ -59,14 +60,14 @@ class AdminCraneDateController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  StorCraneDateRequest  $request
+     * @param  StoreCraneDateRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StorCraneDateRequest $request)
+    public function store(StoreCraneDateRequest $request)
     {
         try {
             CraneDate::create($request->validated());
-            return redirect()->route('admin.caravans.index')->with(['success' => "Krantermin erfolgreich gelöscht!"]);
+            return redirect()->route('admin.craneDates.index')->with(['success' => "Krantermin erfolgreich gelöscht!"]);
         } catch(Exception $e) {
             return back()->with(['error' => $e->getMessage()]);
         }
@@ -97,7 +98,7 @@ class AdminCraneDateController extends Controller
     {
         try {
             $craneDate->update($request->validated());
-            return redirect()->route('admin.caravans.index')->with(['success' => "Krantermin erfolgreich bearbeitet!"]);
+            return redirect()->route('admin.craneDates.index')->with(['success' => "Krantermin erfolgreich bearbeitet!"]);
         } catch(Exception $e) {
             return back()->with(['error' => $e->getMessage()]);
         }
@@ -114,7 +115,7 @@ class AdminCraneDateController extends Controller
         try {
             $data = $craneDate;
             $craneDate->delete();
-            return redirect()->route('admin.caravans.index')->with(['success' => "Krantermin erfolgreich gelöscht!"]);
+            return redirect()->route('admin.craneDates.index')->with(['success' => "Krantermin erfolgreich gelöscht!"]);
         } catch(Exception $e) {
             return back()->with(['error' => $e->getMessage()]);
         }

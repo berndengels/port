@@ -1,41 +1,31 @@
 <div class="form-check @if(null !== $attributes->get('switch')) form-switch @endif @if(null !== $attributes->get('inline')) form-check-inline @endif">
-    <input
-        {!! $attributes->merge([
-	        'class' => 'form-check-input '
-	        . (isset($class) ? $class : '')
-	        . ($hasError($name) ? ' is-invalid' : '')
-	    ]) !!}
+	<input
+			{!! $attributes->merge(['class' => 'form-check-input' . ($hasError($name) ? ' is-invalid' : '')]) !!}
 
-        type="checkbox"
+			type="checkbox"
 
-        value="{{ $value }}"
+			value="{{ $value }}"
 
-        @if($isWired())
-            wire:model{!! $wireModifier() !!}="{{ $name }}"
-        @endif
+			@if($isWired())
+				wire:model{!! $wireModifier() !!}="{{ $name }}"
+			@endif
 
-        name="{{ $name }}"
+			name="{{ $name }}"
 
-        @if($label && !$attributes->get('id'))
-            id="{{ $id() }}"
-        @endif
+			@if($label && !$attributes->get('id'))
+				id="{{ $id() }}"
+			@endif
 
-        @if($checked)
-            checked="checked"
-        @endif
-    />
-    @isset($help)
-        <i class="fa-solid fa-circle-question fs-6 help" data-info="{{ $help }}"></i>
-    @endisset
+			@if($checked)
+				checked="checked"
+			@endif
+	/>
 
-    <label {!! $attributes->merge([
-            'class' => 'form-check-label ' . $class
-            . ($inline ? ' inline' : 'mt-2')
-            ]) !!} :for="$attributes->get('id') ?: $id()">
-        {!! $label !!}
-    </label>
+	<x-form-label :label="$label" :for="$attributes->get('id') ?: $id()" class="form-check-label"/>
 
-    @if($hasErrorAndShow($name))
-        <x-form-errors :name="$name" />
-    @endif
+	{!! $help ?? null !!}
+
+	@if($hasErrorAndShow($name))
+		<x-form-errors :name="$name"/>
+	@endif
 </div>

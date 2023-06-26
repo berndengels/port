@@ -14,7 +14,7 @@ class StoreRentableModelRequest extends AdminRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize() : bool
     {
         return $this->auth->user()->can('write RentableModel');
     }

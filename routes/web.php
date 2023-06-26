@@ -247,7 +247,7 @@ Route::group([
             Route::resource('entities', AdminConfigEntityController::class);
             Route::resource('saisonRents', AdminConfigSaisonRentController::class);
             Route::resource('saisonRentDates', AdminConfigSaisonRentDatesController::class);
-            Route::resource('holidays', AdminConfigHolidayController::class);
+            Route::resource('holidays', AdminConfigHolidayController::class)->only(['index']);
             Route::post('holidays/toggle/{configHoliday}', [AdminConfigHolidayController::class, 'toggle'])->name('holidays.toggle');
     });
 
@@ -293,7 +293,7 @@ Route::group([
 
     Route::get('car/info', [AdminCarLicensePlateController::class, 'info'])->name('car.info');
 //    Route::get('route/current//{currentRouteName}', [RouteController::class, 'setCurrentMenu'])->name('route.current');
-    Route::post('upload/image/{paramName}', [AdminUploadController::class, 'imageUpload'])->name('upload.image');
+    Route::match(['post','put'], 'upload/image/{boat}', [AdminUploadController::class, 'imageUpload'])->name('upload.image.boat');
 
     Route::get('routes', [AdminInfoController::class, 'routes'])->name('infos.routes');
     Route::get('php', [AdminInfoController::class, 'phpinfo'])->name('infos.php');

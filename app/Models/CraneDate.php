@@ -13,7 +13,8 @@ class CraneDate extends Model
     protected $guarded = ['id'];
     public $timestamps = false;
     protected $casts = [
-        'crane_data'  => 'datetime',
+		'date' => 'datetime:Y-m-d H.i',
+        'crane_date' => 'date:d.m.Y',
     ];
 
     public function cranable()

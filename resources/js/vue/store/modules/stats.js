@@ -1,4 +1,4 @@
-const availableStats = ['caravans','boats','guestBoats','rentals','rentalSalesVolumes'],
+const availableStats = ['caravans', 'boats', 'guestBoats', 'rentals', 'rentalSalesVolumes'],
 	namespaced = true,
 	minLimit = 5,
 	translations = {
@@ -56,24 +56,24 @@ const availableStats = ['caravans','boats','guestBoats','rentals','rentalSalesVo
 		rentals: (state) => state.rentals,
 		error: (state) => state.error,
 		rentalSalesVolumes: (state) => {
-			if(!state.rentalSalesVolumes) {
+			if (!state.rentalSalesVolumes) {
 				return null;
 			}
-			var dates=[],series=[],rentals={...state.rentalSalesVolumes},
-			colors = {
-				Apartment: "red",
-				House: "blue",
-				Houseboat: "green",
-			},
-			models = Object.keys(rentals);
+			var dates = [], series = [], rentals = {...state.rentalSalesVolumes},
+				colors = {
+					Apartment: "red",
+					House: "blue",
+					Houseboat: "green",
+				},
+				models = Object.keys(rentals);
 			dates = Object.keys(rentals[models[0]])
 			let trans;
-			for(let model in rentals) {
+			for (let model in rentals) {
 				trans = __(model)
 				series[trans] = {
 					type: 'bar',
 					name: trans,
-					itemStyle: { color: colors[model] },
+					itemStyle: {color: colors[model]},
 					data: Object.values(rentals[model]),
 				};
 			}
@@ -90,16 +90,16 @@ const availableStats = ['caravans','boats','guestBoats','rentals','rentalSalesVo
 		loading: (state) => state.loading,
 	},
 	actions = {
-		async get({ commit }, item) {
-			if(-1 === availableStats.indexOf(item)) {
+		async get({commit}, item) {
+			if (-1 === availableStats.indexOf(item)) {
 				return false
 			}
 			let resp;
 			try {
 				resp = await axios.get('api/stats/' + item);
-				switch(resp.status) {
+				switch (resp.status) {
 					case 200:
-						if(resp.data && resp.data.length > minLimit) {
+						if (resp.data && resp.data.length > minLimit) {
 							commit(item, resp.data)
 						} else {
 							commit("error", {model: item, msg: "zuwenig Daten vorhanden"})
@@ -112,20 +112,20 @@ const availableStats = ['caravans','boats','guestBoats','rentals','rentalSalesVo
 						commit("error", {model: item, msg: "Unbekannter Fehler"})
 						break;
 				}
-			} catch(err) {
+			} catch (err) {
 				err => console.error(err)
 			}
 		},
-		async getSalesVolumes({ commit }) {
+		async getSalesVolumes({commit}) {
 			let resp;
 			try {
 				resp = await axios.get('api/stats/rentalSalesVolumes');
-				if(200 === resp.status && resp.data) {
+				if (200 === resp.status && resp.data) {
 					commit("rentalSalesVolumes", resp.data)
 				} else if (204 === resp.status) {
 					commit("error", {model: "rentalSalesVolumes", msg: "Keine Daten vorhanden"})
 				}
-			} catch(err) {
+			} catch (err) {
 				err => console.error(err)
 			}
 		},

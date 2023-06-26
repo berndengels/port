@@ -296,8 +296,7 @@
 			if (markersLength >= 2 && !this.options.allowIntersection && this._poly.newLatLngIntersects(latlng)) {
 				this._showErrorTooltip();
 				return;
-			}
-			else if (this._errorShown) {
+			} else if (this._errorShown) {
 				this._hideErrorTooltip();
 			}
 			this._markers.push(this._createMarker(latlng));
@@ -352,7 +351,7 @@
 			// Update the guide line
 			this._updateGuide(newPos);
 			// Update the mouse marker position
-			if(this._mouseMarker) {
+			if (this._mouseMarker) {
 				this._mouseMarker.setLatLng(latlng);
 			}
 			L.DomEvent.preventDefault(e.originalEvent);
@@ -481,7 +480,7 @@
 			}
 		},
 		_updateTooltip: function (latLng) {
-			if(!this._tooltip) {
+			if (!this._tooltip) {
 				return null;
 			}
 			var text = this._getTooltipText();
@@ -1329,8 +1328,7 @@
 			if (labelText.subtext.length === 0 && !this._singleLineLabel) {
 				L.DomUtil.addClass(this._container, 'leaflet-draw-tooltip-single');
 				this._singleLineLabel = true;
-			}
-			else if (labelText.subtext.length > 0 && this._singleLineLabel) {
+			} else if (labelText.subtext.length > 0 && this._singleLineLabel) {
 				L.DomUtil.removeClass(this._container, 'leaflet-draw-tooltip-single');
 				this._singleLineLabel = false;
 			}
@@ -1750,7 +1748,7 @@
 			});
 		},
 		_updateTooltip: function () {
-			if(this._tooltip) {
+			if (this._tooltip) {
 				this._tooltip.updateContent(this._getTooltipText());
 			}
 		},

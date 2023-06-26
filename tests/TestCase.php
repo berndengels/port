@@ -56,7 +56,7 @@ abstract class TestCase extends BaseTestCase
     }
 
     protected function getCustomer() {
-        return Customer::whereName('Pamina')->first();
+        return Customer::whereName('Bernd Engels')->first();
     }
 
     public function asFakeUser(...$permission): self

@@ -1,15 +1,14 @@
-
 class Car {
 	info(url, triggerSelector, tooltipSelector) {
 		const $triggerSelector = $(triggerSelector)
 		$triggerSelector.click((e) => {
 			let $tt = $(tooltipSelector)
-			if($tt.is(":visible")) {
+			if ($tt.is(":visible")) {
 				$tt.hide()
 			}
 			axios.get(url + "?carnumber=" + e.target.innerText)
 				.then(resp => {
-					if(resp.data.data && !resp.data.error) {
+					if (resp.data.data && !resp.data.error) {
 						let info = resp.data.data,
 							txt = info.location + " (" + info.state + ")",
 							offset = $(e.target).offset(),
@@ -23,8 +22,9 @@ class Car {
 						setInterval(() => $tt.fadeOut(), 3000)
 					}
 				})
-				.catch(e=>console.error(e));
+				.catch(e => console.error(e));
 		});
 	}
 }
+
 export default Car

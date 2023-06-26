@@ -1,19 +1,19 @@
 <form method="{{ $spoofMethod ? 'POST' : $method }}" {!! $attributes->merge([
     'class' => $hasError() ? 'needs-validation' : ''
 ]) !!}>
-    <style>
+	<style>
         .inline-space > :not(template) {
             margin-right: 1.25rem;
         }
-    </style>
+	</style>
 
-@unless(in_array($method, ['HEAD', 'GET', 'OPTIONS']))
-    @csrf
-@endunless
+	@unless(in_array($method, ['HEAD', 'GET', 'OPTIONS']))
+		@csrf
+	@endunless
 
-@if($spoofMethod)
-    @method($method)
-@endif
+	@if($spoofMethod)
+		@method($method)
+	@endif
 
-    {!! $slot !!}
+	{!! $slot !!}
 </form>
