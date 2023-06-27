@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace Http\Controllers\Api;
 
+use App\Models\Media;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\BoatResource;
-use App\Models\Boat;
-use App\Models\Media;
 use Illuminate\Http\Request;
 
-class ApiBoatController extends Controller
+class ApiMediaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -65,20 +64,4 @@ class ApiBoatController extends Controller
     {
         //
     }
-
-	public function deleteMedia(Media $media)
-	{
-		$result = [
-			'success' => false,
-			'error'	=> null,
-		];
-		try {
-			$media->delete();
-			$result['success'] = true;
-		} catch (\Exception $e) {
-			$result['error'] = $e->getMessage();
-		}
-
-		return response()->json($result);
-	}
 }

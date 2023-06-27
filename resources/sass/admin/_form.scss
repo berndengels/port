@@ -28,6 +28,14 @@
 }
 
 form {
+	ul {
+		&.autocomplete {
+			z-index: 1000;
+			li {
+				padding: 3px;
+			}
+		}
+	}
 	&#frmBerthCalculate {
 		input[type=text], input[type=number] {
 			padding: 0;

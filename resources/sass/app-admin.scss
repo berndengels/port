@@ -585,3 +585,15 @@ i.switch {
 .cursor-pointer {
 	cursor: pointer !important;
 }
+
+.fullscreen {
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 10000;
+	width: 100%;
+	background-color: rgba(0,0,0,.5);
+	background-repeat: no-repeat;
+	background-size: contain;
+	cursor: zoom-out;
+}

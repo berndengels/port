@@ -20,8 +20,20 @@ class MyDropzone {
 					dictCancelUpload: 'Hochladen abbrechen',
 					dictDefaultMessage: 'Bildatei hier reinziehen',
 				})
-//				.on('complete', file => this.removeFile(file))
-				.on('addedfile', file => console.info('file', file));
+//				.on('addedfile', file => console.info('file', file))
+				.on('removedfile', file => {
+					$.ajax({
+						url: '/api/media/delete/'+ file.id,
+						type: 'delete',
+						success: function(result) {
+							if(result) {
+								console.info("resp", result)
+							}
+						}
+					});
+					console.info('delete', '/api/media/delete/'+ file.id);
+				})
+		;
 
 		if(files) {
 			$.each(files, (i, item) => {
