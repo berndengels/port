@@ -71,6 +71,7 @@
 	</div>
 </template>
 
+
 <script>
 import {mapActions, mapGetters} from "vuex";
 import FullCalendar from '@fullcalendar/vue3'
