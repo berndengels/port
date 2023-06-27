@@ -12,5 +12,4 @@ class CustomerRepository extends Repository
     protected static $model = Customer::class;
     protected static $cacheKeyOptions = AppCache::KEY_OPTIONS_CUSTOMER;
     protected static $cacheKeyOptionsData = AppCache::KEY_OPTIONS_DATA_CUSTOMER;
-
 }

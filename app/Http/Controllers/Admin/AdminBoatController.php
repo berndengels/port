@@ -22,9 +22,10 @@ class AdminBoatController extends AdminController
 
     public function __construct()
     {
+		parent::__construct();
         $this->boatTypes = config('port.main.boat.types');
-        $this->customerOptions = (new CustomerRepository())->options()->getSelectOptions()->prepend('bitte wählen', null);
-        $this->berthOptions = (new BerthRepository())->optionsData()->prepend('bitte wählen', null);
+        $this->customerOptions = $this->customerRepository->options(where: ['type' => 'permanent'])->getSelectOptionsData()->prepend('bitte wählen', null);
+        $this->berthOptions = $this->berthRepository->optionsData()->prepend('bitte wählen', null);
     }
 
     public function index()
@@ -58,6 +59,7 @@ class AdminBoatController extends AdminController
      */
     public function show(Boat $boat, Request $request)
     {
+		$boat->load('media');
         if($request->isXmlHttpRequest() && $request->wantsJson()) {
             return response()->json($boat);
         }
@@ -73,7 +75,7 @@ class AdminBoatController extends AdminController
     {
         return view('admin.boats.create', [
                 'types' => $this->boatTypes,
-                'customerOptions'   => $this->customerOptions,
+                'customerOptions'   => $this->customerOptions->toJson(),
                 'berthOptions'      => $this->berthOptions,
             ]
         );
@@ -152,6 +154,7 @@ class AdminBoatController extends AdminController
     public function destroy(Boat $boat)
     {
         try {
+			$boat->media()->each(fn(Media $m) => $boat->deleteMedia($m->id));
             $boat->delete();
             return redirect()->route('admin.boats.index')->with('success', 'Boot erfolgreich gelöscht!');
         } catch(Exception $e) {

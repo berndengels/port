@@ -16,5 +16,6 @@ class VerifyCsrfToken extends Middleware
         '/admin/*/price/calculate',
         '/admin/upload/image/*',
         '/livewire/*',
+		'/api/*',
     ];
 }

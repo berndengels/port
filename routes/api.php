@@ -112,6 +112,7 @@ Route::group([
 Route::group([], function () {
 	Route::resource('boats', ApiBoatController::class);
 	Route::resource('gestBoats', ApiGuestBoatController::class);
+	Route::delete('media/delete/{media}', [ApiBoatController::class, 'deleteMedia'])->name('boats.nedia.delete');
 });
 
 if(!app()->environment('production')) {
