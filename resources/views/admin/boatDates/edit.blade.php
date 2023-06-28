@@ -23,20 +23,20 @@
 					@if('motor' === $boatDate->boat->type && false !== strpos($pc->key, 'mast_'))
 						@continue
 					@endif
-					<div class="mt-3 wrapper{{ ucfirst(Str::camel($pc->key)) }}">
+					<div class="mt-3 wrapper wrapper{{ ucfirst(Str::camel($pc->key)) }}">
 						<x-form-checkbox class="calc" id="{{ $pc->key }}" name="{{ $pc->key }}"
 										 label="{{ $pc->name }}"/>
+						@php
+							$key = 'duration_' .  $pc->key;
+						@endphp
 						@if($pc->priceType->is_time)
-							@php
-								$key = 'duration_' .  $pc->key;
-							@endphp
-							<div class="durationWrapper">
+							<div class="durationWrapper d-none">
 								<x-form-input class="calc duration" id="duration_{{ $pc->key }}"
 											  name="duration_{{ $pc->key }}" type="number" step="0.1" min="0"
 											  label="Arbeitsdauer in {{ $pc->priceType->name_units }}"
 											  placeholder="Arbeitsdauer {{ $pc->priceType->name_units }}"
 											  :bind="false"
-											  default="{{ $boatDate->priceData->$key }}"
+											  default="{{ $boatDate->priceData->$key ?? null }}"
 								/>
 							</div>
 						@endif
@@ -70,11 +70,9 @@
 	<script>
 		$(document).ready(() => {
 			const calcUrl = "{{ route('admin.boatDates.price.calculate') }}",
-				handleCheck = (e) => {
-					let $el = $(e.target),
-						$wrapper = $el.parent().next('.durationWrapper'),
-						$duratiun = $wrapper.find('.duration')
-					;
+				handleCheck = ($el) => {
+					let $wrapper = $el.parent().next('.durationWrapper'),
+						$duratiun = $wrapper.find('.duration');
 
 					if ($wrapper.length > 0) {
 						if ($el.is(':checked')) {
@@ -88,9 +86,12 @@
 				}
 			;
 			$(document).ready(() => {
-				$('.calc[type="checkbox"]').change(e => {
-					handleCheck(e);
-				})
+				$('input[type="checkbox"]').change(e => {
+					$t = $(e.target);
+					if($t.hasClass('calc')) {
+						handleCheck($t);
+					}
+				});
 			});
 
 			Prices.calculate(document.frm, calcUrl);

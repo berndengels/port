@@ -29,7 +29,7 @@ class StoreRentalsRequest extends AdminRequest
             'rentable_type' => 'required',
             'rentable_id'   => 'required',
             'customer_id'   => '',
-            'from'          => 'exclude_if:until,null|required|date|before:until',
+	        'from'          => ['exclude_if:until,null','required','date','before:until'],
             'until'         => ['required','date','after:from'],
             'price'         => '',
             'prices'        => '',

@@ -15,7 +15,7 @@ class Base extends Main implements IDailyPrice
     public function __construct(
         protected Carbon|null $from = null,
         protected Carbon|null $until = null,
-        protected Model $rentable,
+	    protected ?Model $rentable
     ) {
         $this->model = get_class($this->rentable);
         parent::__construct();

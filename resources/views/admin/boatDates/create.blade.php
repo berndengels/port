@@ -15,15 +15,19 @@
 
 			@if($priceComponents->count() > 0)
 				@foreach($priceComponents as $pc)
-					<div class="mt-3 wrapper{{ ucfirst(Str::camel($pc->key)) }}">
+					<div class="mt-3 wrapper wrapper{{ ucfirst(Str::camel($pc->key)) }}">
 						<x-form-checkbox class="calc" id="{{ $pc->key }}" name="{{ $pc->key }}"
 										 label="{{ $pc->name }}"/>
+						@php
+							$key = 'duration_' .  $pc->key;
+						@endphp
 						@if($pc->priceType->is_time)
 							<div class="durationWrapper d-none">
-								<x-form-input class="calc duration" disabled id="duration_{{ $pc->key }}"
+								<x-form-input class="calc duration" id="duration_{{ $pc->key }}"
 											  name="duration_{{ $pc->key }}" type="number" step="0.1" min="0"
 											  label="Arbeitsdauer in {{ $pc->priceType->name_units }}"
-											  placeholder="Arbeitsdauer {{ $pc->priceType->name_units }}"/>
+											  placeholder="Arbeitsdauer {{ $pc->priceType->name_units }}"
+								/>
 							</div>
 						@endif
 					</div>
@@ -57,11 +61,9 @@
 			defaultFromSummer = "{{ $defaultFromSummer }}",
 			defaultUntilSummer = "{{ $defaultUntilSummer }}",
 			toHides = ['.wrapperMastCrane', '#mast_length', '#mast_weight'],
-			handleCheck = (e) => {
-				let $el = $(e.target),
-					$wrapper = $el.parent().next('.durationWrapper'),
-					$duratiun = $wrapper.find('.duration')
-				;
+			handleCheck = ($el) => {
+				let $wrapper = $el.parent().next('.durationWrapper'),
+					$duratiun = $wrapper.find('.duration');
 
 				if ($wrapper.length > 0) {
 					if ($el.is(':checked')) {
@@ -72,8 +74,7 @@
 						$duratiun.attr('disabled', true)
 					}
 				}
-			}
-		;
+			};
 
 		$(document).ready(() => {
 			const calcUrl = "{{ route('admin.boatDates.price.calculate') }}",
@@ -105,13 +106,17 @@
 
 			$('#boat_id').change(e => {
 				let $el = $(e.target);
-				if ($el.val() && "" !== $el.val()) {
+				if ($el.val() && '' !== $el.val()) {
 					MyForm.autofill("/admin/boats/" + $el.val(), autofillParams, toHides);
 				}
 			});
-			$('.calc[type="checkbox"]').change(e => {
-				handleCheck(e);
-			})
+
+			$('input[type="checkbox"]').change(e => {
+				$t = $(e.target);
+				if($t.hasClass('calc')) {
+					handleCheck($t);
+				}
+			});
 
 			Prices.calculate(document.frm, calcUrl);
 		});

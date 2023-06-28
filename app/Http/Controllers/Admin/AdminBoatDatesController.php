@@ -44,7 +44,8 @@ class AdminBoatDatesController extends AdminController
         $this->monthsByYear = BoatDates::getMonthsByYearsOptions();
         $this->years = array_keys($this->monthsByYear);
         $this->datesModi = config('port.main.boat.dates.modi');
-        $this->priceComponents = ConfigEntity::whereModel(Boat::class)
+        $this->priceComponents = ConfigEntity::with('priceComponents')
+	        ->whereModel(Boat::class)
             ->first()
             ->priceComponents
         ;

@@ -45,8 +45,10 @@ class AdminRentalsController extends RentableController
             $this->rentable = Rentable::whereHasMorph('rentable', $this->relation);
         } else {
             $this->rentable = Rentable::query();
-        }
-        $this->priceComponents = ConfigEntity::whereModel($this->relationModel)
+		}
+
+        $this->priceComponents = ConfigEntity::with('priceComponents')
+	        ->whereModel($this->relationModel)
             ->first()
             ->priceComponents
         ;
@@ -216,8 +218,6 @@ class AdminRentalsController extends RentableController
     {
         try {
             $rules = $request->rules();
-            $rules['from']  = array_merge($rules['from'], [new RuleRentDateValidFrom($rental->rentable, $this->relation)]);
-            $rules['until'] = array_merge($rules['until'], [new RuleRentDateValidUntil($rental->rentable, $this->relation)]);
             $validator  = Validator::make($request->all(), $rules, $request->messages());
             $validator->validate();
             $rental->update($request->validated());

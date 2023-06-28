@@ -33,6 +33,7 @@ class RuleRentDateValidFrom extends RuleRentDate implements Rule
                     return $item;
                 }
             });
+
         if($this->existing->count() > 0) {
             return false;
         }

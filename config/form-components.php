@@ -18,14 +18,14 @@ return [
             'class' => Components\Form::class,
         ],
         'form-checkbox' => [
-            'view'  => 'form-components::{framework}.form-checkbox',
-//			'view'  => 'vendor.form-components.{framework}.form-checkbox',
-//			'class' => Components\FormCheckbox::class,
-            'class' => FormCheckbox::class,
+//            'view'  => 'form-components::{framework}.form-checkbox',
+			'view'  => 'vendor.form-components.{framework}.form-checkbox',
+			'class' => Components\FormCheckbox::class,
+//            'class' => FormCheckbox::class,
         ],
         'form-errors' => [
-            'view'  => 'form-components::{framework}.form-errors',
-//            'view'  => 'vendor.form-components.{framework}.form-errors',
+//            'view'  => 'form-components::{framework}.form-errors',
+            'view'  => 'vendor.form-components.{framework}.form-errors',
             'class' => Components\FormErrors::class,
         ],
         'form-group' => [
