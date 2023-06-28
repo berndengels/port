@@ -71,8 +71,6 @@ abstract class PriceCalculator
         }
         $props['total'] = static::$total;
 
-//        $props['dailyPrices'] = $obj::$dailyPrices;
-//		dd($props);
         return $this->formatResult($props);
     }
 
