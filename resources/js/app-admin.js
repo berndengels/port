@@ -26,6 +26,7 @@ import Geo from "./Libs/Geo";
 import MyDropzone from "./Libs/MyDropzone";
 import Draggable from "./Libs/Draggable";
 import MyCalendar from "./Libs/MyCalendar";
+import Fullscreen from "./Libs/Fullscreen";
 import {createApp} from "vue"
 import store from "./vue/store"
 import mitt from 'mitt';
@@ -47,6 +48,7 @@ window.Tooltip = new Tooltip;
 window.Geo = Geo;
 window.MyCalendar = new MyCalendar;
 window.MyDropzone = new MyDropzone;
+window.Fullscreen = new Fullscreen;
 
 $(document).ready(function () {
 	window.Draggable = new Draggable();

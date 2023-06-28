@@ -207,7 +207,7 @@ class Boat extends Model implements HasMedia
 	public function registerMediaConversions(Media $media = null): void
 	{
 		$this->addMediaConversion('thumb')
-			->width(100);
+			->height(150);
 
 		$this->addMediaConversion('large')
 			->width(2000);

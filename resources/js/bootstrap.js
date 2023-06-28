@@ -1,7 +1,10 @@
 try {
 	window.$ = window.jQuery = require('jquery');
 	window.toastr = require('toastr');
-//	require('bootstrap');
+	window.axios = require('axios');
+	window.moment = require('moment');
+
+	//	require('bootstrap');
 	require('bootstrap/js/dist/carousel');
 	require('bootstrap/js/dist/offcanvas');
 // require('bootstrap/js/dist/alert');
@@ -15,15 +18,10 @@ try {
 // require('bootstrap/js/dist/toast');
    require('bootstrap/js/dist/tooltip');
 
-	const axios = require('axios');
-	const moment = require('moment');
-
 	axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 	axios.defaults.baseURL = process.env.MIX_API_URL;
 //	axios.defaults.withCredentials = false;
 
-	window.axios = axios;
-	window.moment = moment;
 } catch (e) {
 	console.error(e)
 }

@@ -47,50 +47,13 @@ $delay = 15000;
 			</div>
 		</div-->
 
-		<!--div class="row"-->
-			<!--div id="carousel"
-				 class="carousel carousel-fade"
-				 data-bs-ride="carousel"
-			>
-				<div class="carousel-indicators">
-					@foreach($images as $index => $media)
-						<button type="button" data-bs-target="#carousel" data-bs-slide-to="{{ $index }}" aria-label="{{ $media->name }}"></button>
-					@endforeach
-				</div>
-				<div class="carousel-inner">
-					@foreach($images as $index => $media)
-						<div class="carousel-item @if($loop->first) @endif" data-bs-interval="{{ $delay }}">
-							<div class="">
-								<div class="carousel-caption">
-									<h5>{{ $media->name }}</h5>
-									<p>
-										<img src="{{ $media->getUrl('large')}}" alt="{{ $media->name }}" title="{{ $media->name }}" height="800" />
-									</p>
-								</div>
-							</div>
-						</div>
-					@endforeach
-				</div>
-				<div class="carousel-control">
-					<button class="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">
-						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-						<span class="visually-hidden">Zurück</span>
-					</button>
-					<button class="carousel-control-next" type="button" data-bs-target="#carousel" data-bs-slide="next">
-						<span class="carousel-control-next-icon" aria-hidden="true"></span>
-						<span class="visually-hidden">Nächste</span>
-					</button>
-				</div>
-			</div>
-		</div-->
+		<div class="row">
 		@foreach($images as $index => $media)
-			<div class="row">
-				<div class="col-12">
-					<h5>{{ $media->name }}</h5>
-					<img data-enlargable src="{{ $media->getUrl('large')}}" alt="{{ $media->name }}" title="{{ $media->name }}" style="width:100%" />
-				</div>
+			<div class="col-sm-12 col-lg-auto p-2 bg-dark me-3 rounded-3 shadow">
+				<img data-large="{{ asset($media->getUrl('large')) }}" src="{{ asset($media->getUrl('thumb')) }}" alt="{{ $media->name }}" title="{{ $media->name }}" class="enlargable rounded-3" />
 			</div>
 		@endforeach
+		</div>
 
 	</div>
 @endsection
@@ -98,18 +61,7 @@ $delay = 15000;
 @push('inline-scripts')
 <script>
 $(document).ready(() => {
-	$('img[data-enlargable]').click(e => {
-		let src = $(e.target).attr('src');
-		$('<div>')
-			.attr('class', 'fullscreen')
-			.css({backgroundImage: 'url(' + src + ')'})
-			.click(e => {
-				$(e.target)
-					.removeClass('fullscreen')
-					.remove();
-			})
-			.appendTo('body');
-	});
+	$('.enlargable').click(e => Fullscreen.init(e.target.dataset.large));
 });
 </script>
 @endpush

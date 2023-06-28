@@ -12,7 +12,7 @@ class MyDropzone {
 					},
 					maxFilesize: 10,
 					parallelUploads: 1,
-					maxFiles: 1,
+					maxFiles: 3,
 					method: 'post',
 					acceptedFiles: 'image/*',
 					addRemoveLinks: true,
