@@ -215,7 +215,7 @@ return [
                         'title' => 'Dauerlieger',
                         'icon'  => 'fas fa-ship',
                         'route' => 'admin.boats.index',
-                        'hide_on_mobile' => true,
+                        'hide_on_mobile' => false,
                         'help'  => null,
                     ],
                     [
