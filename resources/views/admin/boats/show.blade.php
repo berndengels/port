@@ -49,8 +49,8 @@ $delay = 15000;
 
 		<div class="row">
 		@foreach($images as $index => $media)
-			<div class="col-sm-12 col-lg-auto p-2 bg-dark me-3 rounded-3 shadow">
-				<img data-large="{{ asset($media->getUrl('large')) }}" src="{{ asset($media->getUrl('thumb')) }}" alt="{{ $media->name }}" title="{{ $media->name }}" class="enlargable rounded-3" />
+			<div class="col-sm-12 col-lg-auto p-2 bg-dark me-3 mt-sm-3 mt-lg-0 rounded-3 shadow">
+				<img data-large="{{ asset($media->getUrl('large')) }}" src="{{ asset($media->getUrl('thumb')) }}" alt="{{ $media->name }}" title="{{ $media->name }}" class="enlargable rounded-3 w-100" />
 			</div>
 		@endforeach
 		</div>
