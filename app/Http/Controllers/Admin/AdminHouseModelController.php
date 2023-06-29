@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\HouseModel;
 use App\Http\Requests\StoreHouseModelRequest;
 use App\Http\Requests\UpdateHouseModelRequest;
+use App\Models\Media;
 
 class AdminHouseModelController extends AdminController
 {
@@ -64,7 +65,13 @@ class AdminHouseModelController extends AdminController
      */
     public function edit(HouseModel $houseModel)
     {
-        return view('admin.houseModels.edit', compact('houseModel'));
+        $files = $houseModel->getMedia('houseModel')->map(fn(Media $m) => [
+            'id'=> $m->id,
+            'name' => $m->name,
+            'url'  => $m->getUrl('thumb')
+        ])->toJson(true);
+
+        return view('admin.houseModels.edit', compact('houseModel','files'));
     }
 
     /**

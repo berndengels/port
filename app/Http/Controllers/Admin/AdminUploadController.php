@@ -1,31 +1,42 @@
 <?php
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Media;
 use Exception;
-use App\Models\Boat;
-use App\Http\Requests\ImageRequest;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 
 class AdminUploadController extends AdminController
 {
-    public function imageUpload( ImageRequest $request, Boat $boat )
+    public function imageUpload(Request $request)
     {
+        $model = $request->post('model_type');
+        $id = $request->post('model_id');
+        $mediaName = lcfirst(class_basename($model));
+
+        $response = [
+            'success'   => false,
+            'error'     => 'error: wrong model or id!',
+        ];
+
+        if(!$model || !$id) {
+            return response()->json($response);
+        }
+
         try {
-			$boat
+            $model = app($model)->find($id);
+            $model
 				->addMediaFromRequest('image')
-				->toMediaCollection('boat', 'images')
+				->toMediaCollection($mediaName, 'images')
 			;
             $response = [
                 'success'   => true,
                 'error'     => null,
-                'link'      => $boat->getMedia('boat')->first()->getUrl('large'),
             ];
         } catch (Exception $e) {
             $response = [
                 'success'   => false,
                 'error'     => $e->getMessage(),
-                'link'      => null,
             ];
         }
         return response()->json($response);

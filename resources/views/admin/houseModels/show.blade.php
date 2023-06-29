@@ -2,7 +2,7 @@
 
 @section('main')
 	<div>
-		<x-btn-back route="{{ route('admin.houseboatModels.index') }}"/>
+		<x-btn-back route="{{ route('admin.houseModels.index') }}"/>
 	</div>
 @endsection
 

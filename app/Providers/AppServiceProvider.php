@@ -35,6 +35,7 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use App\View\Components\Navigation\PublicBottomNavbar;
 use App\View\Components\Navigation\PublicTopNavbar;
@@ -58,6 +59,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(Kernel $kernel)
     {
+        $agent = new Agent();
+        $isMobile = $agent->isPhone() || $agent->isTablet();
+
+        View::share('isMobile', fn() => $isMobile);
+        View::share('isNotMobile', fn() => !$isMobile);
+
         $locale = config('app.locale');
         Carbon::setLocale($locale);
         setlocale(LC_TIME, $locale, 'de_DE.utf8', 'de');

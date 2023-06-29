@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 /**
  * App\Models\ApartmentModel
@@ -34,9 +37,9 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|ApartmentModel whereSleepingPlaces($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ApartmentModel whereSpace($value)
  */
-class ApartmentModel extends Model
+class ApartmentModel extends Model implements HasMedia
 {
-    use HasFactory;
+    use HasFactory, InteractsWithMedia;
 
     protected $guarded = ['id'];
     public $timestamps = false;
@@ -46,4 +49,30 @@ class ApartmentModel extends Model
         return $this->hasMany(Apartment::class, 'apartment_model_id', 'id');
     }
 
+    public function registerMediaConversions(Media $media = null): void
+    {
+        $this->addMediaConversion('thumb')
+            ->height(150)
+            ->format('jpg')
+            ->optimize()
+        ;
+
+        $this->addMediaConversion('mobile')
+            ->width(768)
+            ->format('jpg')
+            ->optimize()
+            ->shouldGenerateResponsiveImages()
+        ;
+
+        $this->addMediaConversion('large')
+            ->width(2000)
+            ->format('jpg')
+            ->optimize()
+            ->shouldGenerateResponsiveImages()
+        ;
+    }
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('apartmentModel');
+    }
 }

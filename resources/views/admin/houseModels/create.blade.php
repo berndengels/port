@@ -2,8 +2,8 @@
 
 @section('main')
 	<div>
-		<x-btn-back route="{{ route('admin.houseboatModels.index') }}"/>
-		<x-form name="frm" method="post" :action="route('admin.houseboatModels.store')" class="w-half mt-3">
+		<x-btn-back route="{{ route('admin.houseModels.index') }}"/>
+		<x-form name="frm" method="post" :action="route('admin.houseModels.store')" class="w-half mt-3">
 			<x-form-input name="name" label="Name" required/>
 			<x-form-input name="space" type="number" step="1" min="1" label="Fläche" required/>
 			<x-form-input name="floors" type="number" step="1" min="1" label="Stockwerke" required/>

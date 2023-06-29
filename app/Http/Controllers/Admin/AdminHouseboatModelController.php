@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\HouseboatModel;
 use App\Http\Requests\HouseboatModelsRequest;
+use App\Models\Media;
 use Illuminate\Http\Response;
 
 class AdminHouseboatModelController extends AdminController
@@ -64,7 +65,13 @@ class AdminHouseboatModelController extends AdminController
      */
     public function edit(HouseboatModel $houseboatModel)
     {
-        return view('admin.houseboatModels.edit', compact('houseboatModel'));
+        $files = $houseboatModel->getMedia('houseboatModel')->map(fn(Media $m) => [
+            'id'=> $m->id,
+            'name' => $m->name,
+            'url'  => $m->getUrl('thumb')
+        ])->toJson(true);
+
+        return view('admin.houseboatModels.edit', compact('houseboatModel','files'));
     }
 
     /**

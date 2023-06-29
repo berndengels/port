@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 /**
  * App\Models\HouseboatModel
@@ -38,9 +41,9 @@ use Illuminate\Database\Eloquent\Model;
  * @method static Builder|HouseboatModel whereSpace($value)
  * @mixin Eloquent
  */
-class HouseboatModel extends Model
+class HouseboatModel extends Model implements HasMedia
 {
-    use HasFactory;
+    use HasFactory, InteractsWithMedia;
 
     protected $table = 'houseboat_models';
     protected $guarded = ['id'];
@@ -49,5 +52,32 @@ class HouseboatModel extends Model
     public function houseboats()
     {
         return $this->hasMany(Houseboat::class, 'houseboat_model_id', 'id');
+    }
+
+    public function registerMediaConversions(Media $media = null): void
+    {
+        $this->addMediaConversion('thumb')
+            ->height(150)
+            ->format('jpg')
+            ->optimize()
+        ;
+
+        $this->addMediaConversion('mobile')
+            ->width(768)
+            ->format('jpg')
+            ->optimize()
+            ->shouldGenerateResponsiveImages()
+        ;
+
+        $this->addMediaConversion('large')
+            ->width(2000)
+            ->format('jpg')
+            ->optimize()
+            ->shouldGenerateResponsiveImages()
+        ;
+    }
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('houseboatModel');
     }
 }

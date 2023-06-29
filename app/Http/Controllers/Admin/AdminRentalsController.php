@@ -41,17 +41,18 @@ class AdminRentalsController extends RentableController
     public function __construct()
     {
         parent::__construct();
+
         if(isset($this->rentableModels[class_basename($this->relationModel)])) {
             $this->rentable = Rentable::whereHasMorph('rentable', $this->relation);
         } else {
             $this->rentable = Rentable::query();
 		}
 
-        $this->priceComponents = ConfigEntity::with('priceComponents')
-	        ->whereModel($this->relationModel)
-            ->first()
-            ->priceComponents
-        ;
+        $priceComponents = ConfigEntity::with('priceComponents')
+            ->whereModel($this->relationModel)
+            ->first();
+
+        $this->priceComponents = $priceComponents ? $priceComponents->priceComponents : null;
 
         $this->relationOptions = ($this->relationModel)::orderBy('name')
             ->get()

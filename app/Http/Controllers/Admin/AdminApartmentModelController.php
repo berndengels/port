@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\ApartmentModel;
 use App\Http\Requests\StoreApartmentModelRequest;
 use App\Http\Requests\UpdateApartmentModelRequest;
+use App\Models\Media;
 
 class AdminApartmentModelController extends AdminController
 {
@@ -64,7 +65,13 @@ class AdminApartmentModelController extends AdminController
      */
     public function edit(ApartmentModel $apartmentModel)
     {
-        return view('admin.apartmentModels.edit', compact('apartmentModel'));
+        $files = $apartmentModel->getMedia('apartmentModel')->map(fn(Media $m) => [
+            'id'=> $m->id,
+            'name' => $m->name,
+            'url'  => $m->getUrl('thumb')
+        ])->toJson(true);
+
+        return view('admin.apartmentModels.edit', compact('apartmentModel','files'));
     }
 
     /**

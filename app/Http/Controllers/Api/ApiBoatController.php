@@ -65,20 +65,4 @@ class ApiBoatController extends Controller
     {
         //
     }
-
-	public function deleteMedia(Media $media)
-	{
-		$result = [
-			'success' => false,
-			'error'	=> null,
-		];
-		try {
-			$media->delete();
-			$result['success'] = true;
-		} catch (\Exception $e) {
-			$result['error'] = $e->getMessage();
-		}
-
-		return response()->json($result);
-	}
 }

@@ -67,16 +67,9 @@ $images = $boat->getMedia('boat');
 @push('inline-scripts')
 <script>
 $(document).ready(() => {
-	@isMobile()
-	$( ".enlargable" ).bind( "tap", (e) => Fullscreen.init(e.target.dataset.large));
-/*
-	tapHandler = (e) => {
-		Fullscreen.init(e.target.dataset.large)
-	}
-*/
-	@else
-	$('.enlargable').click(e => Fullscreen.init(e.target.dataset.large));
-	@endisMobile
+	@if($isNotMobile)
+		$('.enlargable').click(e => Fullscreen.init(e.target.dataset.large));
+	@endif
 });
 </script>
 @endpush

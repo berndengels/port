@@ -23,6 +23,7 @@
 					<x-form-input id="price" name="price" type="number" min="0" label="Gesamt-Preis" required/>
 					<x-form-input type="hidden" name="prices"/>
 					@endbind
+
 					<div class="mt-2">
 						<x-form-submit class="btn-sm btn-primary" icon="fas fa-save">Speichern</x-form-submit>
 					</div>

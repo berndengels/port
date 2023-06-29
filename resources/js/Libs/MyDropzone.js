@@ -1,7 +1,7 @@
 import { Dropzone } from "dropzone";
 
 class MyDropzone {
-	create(selector = '#dropzone', paramName = 'image', uploadURL = "/admin/upload/image", files = null) {
+	create(selector = '#dropzone', paramName = 'image', model_type, model_id, uploadURL = null, files = null) {
 		Dropzone.autoDiscover = false;
 
 		const dropzone = new Dropzone(selector, {
@@ -9,6 +9,12 @@ class MyDropzone {
 					paramName: paramName,
 					headers: {
 						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+					},
+					init: function () {
+						this.on("sending", (file, xhr, formData) => {
+							formData.append('model_type', model_type);
+							formData.append('model_id', model_id);
+						});
 					},
 					maxFilesize: 10,
 					parallelUploads: 1,
@@ -20,21 +26,19 @@ class MyDropzone {
 					dictCancelUpload: 'Hochladen abbrechen',
 					dictDefaultMessage: 'Bildatei hier reinziehen',
 				})
-//				.on('addedfile', file => console.info('file', file))
 				.on('removedfile', file => {
 					$.ajax({
-						url: '/api/media/delete/'+ file.id,
+						url: '/api/files/'+ file.id,
 						type: 'delete',
-						success: function(result) {
-							if(result) {
-								console.info("resp", result)
+						success: (resp) => {
+							if(resp) {
+								console.info("resp", resp)
 							}
-						}
+						},
+						error: (err) => console.error(err)
 					});
-					console.info('delete', '/api/media/delete/'+ file.id);
 				})
 		;
-
 		if(files) {
 			$.each(files, (i, item) => {
 				dropzone.displayExistingFile(item, item.url)

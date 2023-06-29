@@ -57,20 +57,11 @@
 @push('inline-scripts')
 <script type="module">
 	$(document).ready(() => {
-		const frm = document.frm,
-//			options = {},
-			route = "{{ route('admin.upload.image.boat', $boat) }}",
+		const route = "{{ route('admin.upload.image') }}",
+			model_type = "{{ addslashes(get_class($boat)) }}",
+			model_id = {{ $boat->id }},
 			files = {!! $files !!};
-/*
-			bindings = {
-				name: frm.name,
-				email: frm.email,
-				fon: frm.fon,
-				state: frm.state,
-			};
-*/
-//		MyForm.autocomplete(".autocomplete", frm.name, options, 'name', bindings);
-		MyDropzone.create("#dropzone", 'image', route, files);
+		MyDropzone.create("#dropzone", 'image', model_type, model_id, route, files);
 	})
 </script>
 @endpush

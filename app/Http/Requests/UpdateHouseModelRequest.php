@@ -5,19 +5,10 @@ namespace App\Http\Requests;
 use App\Models\HouseModel;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateHouseModelRequest extends FormRequest
+class UpdateHouseModelRequest extends AdminRequest
 {
     protected $modelName = HouseModel::class;
-
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize() : bool
-    {
-        return $this->auth->user()->can('write HouseModel');
-    }
+    protected $permission = 'write HouseModel';
 
     /**
      * Get the validation rules that apply to the request.

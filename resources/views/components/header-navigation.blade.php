@@ -27,9 +27,10 @@
 			@endif
 		</ul>
 	</div>
-	<div class="float-end">
-		<ul>
-			<li>
+
+	<div class="float-end align-middle">
+		<ul class="mt-3">
+			<li class="align-middle">
 				<x-form method="post" class="hidden md:inline-block align-items-center" name="frmLogout"
 						action="{{ route($guard . '.logout') }}">
 					@csrf

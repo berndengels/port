@@ -10,18 +10,22 @@ class Fullscreen {
 		if (img.requestFullscreen) {
 			img.requestFullscreen();
 		} else if (img.webkitRequestFullscreen) { /* Safari */
+			console.info("webkitRequestFullscreen")
 			img.webkitRequestFullscreen();
 		} else if (img.msRequestFullscreen) { /* IE11 */
+			console.info("msRequestFullscreen")
 			img.msRequestFullscreen();
 		}
-		img.onclick = () => {
+
+		$(img).click(() => {
 			this.closeFullscreen();
-			$(this.img).remove();
-			this.img = null;
-			delete this.img;
-		}
+		});
 	}
-	closeFullscreen () {
+	closeFullscreen (img) {
+		$(img).remove();
+		this.img = null;
+		delete this.img;
+
 		if (document.exitFullscreen) {
 			document.exitFullscreen();
 		} else if (document.webkitExitFullscreen) { /* Safari */

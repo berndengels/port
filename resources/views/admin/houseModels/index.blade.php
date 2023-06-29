@@ -4,7 +4,7 @@
 	<div>
 		<div class="index-header mt-3 p-0">
 			<div>
-				<x-btn-create route="{{ route('admin.houseboatModels.create') }}"/>
+				<x-btn-create route="{{ route('admin.houseModels.create') }}"/>
 			</div>
 			<div></div>
 		</div>
@@ -16,14 +16,14 @@
 				@foreach($data as $item)
 					<tr>
 						@bindData($item)
-						<x-td field="name" link="{{ route('admin.houseboatModels.show', $item) }}"/>
+						<x-td field="name" link="{{ route('admin.houseModels.show', $item) }}"/>
 						<x-td field="floors:md"/>
 						<x-td field="space:md"/>
 						<x-td field="sleeping_places:md"/>
 						<x-td field="peak_season_price:md" append="€"/>
 						<x-td field="mid_season_price" append="€"/>
 						<x-td field="low_season_price" append="€"/>
-						<x-action routePrefix="admin.houseboatModels" edit delete/>
+						<x-action routePrefix="admin.houseModels" edit delete/>
 						@endBindData
 					</tr>
 				@endforeach

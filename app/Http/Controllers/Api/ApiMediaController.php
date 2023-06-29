@@ -1,67 +1,35 @@
 <?php
 
-namespace Http\Controllers\Api;
+namespace App\Http\Controllers\Api;
 
 use App\Models\Media;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\BoatResource;
-use Illuminate\Http\Request;
 
 class ApiMediaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Boat  $boat
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Boat $boat)
-    {
-		$boat = new BoatResource($boat);
-        return response()->json($boat);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Boat  $boat
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Boat $boat)
-    {
-        //
-    }
-
     /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Boat  $boat
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Boat $boat)
+    public function destroy(Media $file)
     {
-        //
+//        return response()->json(['media' => $file]);
+        $result = [
+            'success' => false,
+            'error'	=> null,
+        ];
+        try {
+            $result = [
+                'success' => true,
+                'file'    => $file->first()
+            ];
+            $file->delete();
+        } catch (\Exception $e) {
+            $result['error'] = $e->getMessage();
+        }
+
+        return response()->json($result);
     }
 }
