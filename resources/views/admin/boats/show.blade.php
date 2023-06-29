@@ -61,7 +61,11 @@ $delay = 15000;
 @push('inline-scripts')
 <script>
 $(document).ready(() => {
+	@isMobile()
+	$('.enlargable').onTab(e => Fullscreen.init(e.target.dataset.large));
+	@else
 	$('.enlargable').click(e => Fullscreen.init(e.target.dataset.large));
+	@endisMobile
 });
 </script>
 @endpush

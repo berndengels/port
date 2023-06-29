@@ -38,6 +38,7 @@ use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use App\View\Components\Navigation\PublicBottomNavbar;
 use App\View\Components\Navigation\PublicTopNavbar;
+use Jenssegers\Agent\Agent;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -71,6 +72,10 @@ class AppServiceProvider extends ServiceProvider
         });
         Blade::if('isAdmin', function () {
             return auth('admin')->check();
+        });
+        Blade::if('isMobile', function () {
+            $agent = new Agent();
+            return $agent->isPhone() || $agent->isTablet();
         });
         Blade::components([
             'table'         => Table::class,
