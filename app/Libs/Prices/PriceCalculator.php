@@ -15,6 +15,7 @@ use App\Libs\Prices\Exceptions\PriceObjectException;
 abstract class PriceCalculator
 {
     use HasTaxRate;
+
     /**
      * @var Carbon
      */
@@ -40,9 +41,10 @@ abstract class PriceCalculator
     protected $taxPrice;
 
     public function __construct(
+        protected Model $model,
         ?Carbon $from = null,
-        ?Carbon $until = null,
-        protected ?Model $model = null)
+        ?Carbon $until = null
+    )
     {
         $settings = ConfigSetting::first();
         $this->useTax           = (bool) $settings->use_tax;
@@ -77,6 +79,7 @@ abstract class PriceCalculator
     protected function getObject(Request $request, string $class, ReflectionClass $rClass): object|null {
         $params = [];
         $args = [];
+
         try {
             foreach ($this->params() as $item) {
                 if($this->model && $this->model->getAttribute($item)) {
@@ -111,7 +114,7 @@ abstract class PriceCalculator
 				}
 			}
 
-            if($this->model instanceof Model) {
+            if(method_exists($this, 'useModel') && $this->model instanceof Model) {
                 $args[] = $this->model;
             }
 

@@ -6,9 +6,12 @@ use Illuminate\Support\Collection;
 use App\Libs\Prices\Rentals\Base;
 use App\Libs\Prices\Rentals\Kilowatt;
 use App\Libs\Prices\Rentals\RentalCleaning;
+use App\Libs\Prices\Traits\HasModel;
 
 class RentablePrice extends PriceCalculator
 {
+    use HasModel;
+
     /**
      * @var int
      */

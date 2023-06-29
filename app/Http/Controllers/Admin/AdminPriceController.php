@@ -1,7 +1,6 @@
 <?php
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Berth;
 use Carbon\Carbon;
 use App\Models\Boat;
 use App\Models\BoatDates;
@@ -26,6 +25,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Libs\CaravanPriceCalculator;
 use App\Exports\CaravanDatesExport;
+use Maatwebsite\Excel\Excel;
 
 class AdminPriceController extends AdminController
 {
@@ -48,7 +48,7 @@ class AdminPriceController extends AdminController
         if($from && $until && $carlength && $persons) {
             $from       = new Carbon($from, config('app.timezone'));
             $until      = new Carbon($until, config('app.timezone'));
-            $response   = (new CaravanPrice($from, $until, $caravan))->getPrice($request);
+            $response   = (new CaravanPrice($caravan, $from, $until))->getPrice($request);
         }
         return response()->json($response);
     }
@@ -70,7 +70,7 @@ class AdminPriceController extends AdminController
             $from       = $from ? new Carbon($from, config('app.timezone')) : null;
             $until      = $until ? new Carbon($until, config('app.timezone')) : null;
             try {
-                $boatPrice = new BoatPrice($from, $until, $boat);
+                $boatPrice = new BoatPrice($boat, $from, $until);
                 $response  = $boatPrice->getPrice($request);
             } catch(\Exception $e) {
                 $response = ['error' => $e->getMessage()];
@@ -100,7 +100,7 @@ class AdminPriceController extends AdminController
         if($from && $until && $length && $persons) {
             $from       = new Carbon($from, config('app.timezone'));
             $until      = new Carbon($until, config('app.timezone'));
-            $response   = (new GuestBoatPrice($from, $until, $guestBoat))->getPrice($request);
+            $response   = (new GuestBoatPrice($guestBoat, $from, $until))->getPrice($request);
         }
 
         return response()->json($response);
@@ -126,7 +126,7 @@ class AdminPriceController extends AdminController
             if($rentable && $from && $until) {
                 $from       = new Carbon($from, config('app.timezone'));
                 $until      = new Carbon($until, config('app.timezone'));
-                $response   = (new RentablePrice($from, $until, $rentable))->getPrice($request);
+                $response   = (new RentablePrice($rentable, $from, $until))->getPrice($request);
             }
         } catch(Exception $e) {
             $response = ['error' => $e->getMessage()];
@@ -141,16 +141,7 @@ class AdminPriceController extends AdminController
         $fileName = $now.'_caravan_dates.xls';
         $export = new CaravanDatesExport($from, $until);
 
-        return $export->download($fileName, \Maatwebsite\Excel\Excel::XLS);
-    }
-
-    public function pdfCaravanDates(Carbon $from, ?Carbon  $until = null)
-    {
-        $data = CaravanDates::with('caravan')
-            ->datesBetween($from, $until)
-            ->orderBy('from')
-            ->get();
-        return $data;
+        return $export->download($fileName, Excel::XLS);
     }
 
     public function excelBoatDates(?Carbon $from = null,?Carbon  $until = null)
@@ -159,16 +150,7 @@ class AdminPriceController extends AdminController
         $fileName = $now.'_boat_dates.xls';
         $export = new BoatDatesExport($from, $until);
 
-        return $export->download($fileName, \Maatwebsite\Excel\Excel::XLS);
-    }
-
-    public function pdfBoatDates(Carbon $from, ?Carbon  $until = null)
-    {
-        $data = BoatDates::with('boat')
-            ->datesBetween($from, $until)
-            ->orderBy('from')
-            ->get();
-        return $data;
+        return $export->download($fileName, Excel::XLS);
     }
 
     public function excelGuestBoatDates(?Carbon $from = null,?Carbon  $until = null)
@@ -177,7 +159,16 @@ class AdminPriceController extends AdminController
         $fileName = $now.'_gueat_boat_dates.xls';
         $export = new GuestBoatDatesExport($from, $until);
 
-        return $export->download($fileName, \Maatwebsite\Excel\Excel::XLS);
+        return $export->download($fileName, Excel::XLS);
+    }
+
+    public function excelRentalDates($rentable, ?Carbon $from = null,?Carbon  $until = null)
+    {
+        $now = Carbon::now()->format('Ymd-Hi');
+        $fileName = $now.'_'.$rentable.'_dates.xls';
+        $export = new RentalsExport($rentable, $from, $until);
+
+        return $export->download($fileName, Excel::XLS);
     }
 
     public function pdfGuestBoatDates(Carbon $from, ?Carbon  $until = null)
@@ -189,20 +180,29 @@ class AdminPriceController extends AdminController
         return $data;
     }
 
-    public function excelRentalDates($rentable, ?Carbon $from = null,?Carbon  $until = null)
-    {
-        $now = Carbon::now()->format('Ymd-Hi');
-        $fileName = $now.'_'.$rentable.'_dates.xls';
-        $export = new RentalsExport($rentable, $from, $until);
-
-        return $export->download($fileName, \Maatwebsite\Excel\Excel::XLS);
-    }
-
     public function pdfRentalDates(Carbon $from, ?Carbon  $until = null)
     {
         return Rentable::with('customer')
             ->datesBetween($from, $until)
             ->orderBy('from')
             ->get();
+    }
+
+    public function pdfBoatDates(Carbon $from, ?Carbon  $until = null)
+    {
+        $data = BoatDates::with('boat')
+            ->datesBetween($from, $until)
+            ->orderBy('from')
+            ->get();
+        return $data;
+    }
+
+    public function pdfCaravanDates(Carbon $from, ?Carbon  $until = null)
+    {
+        $data = CaravanDates::with('caravan')
+            ->datesBetween($from, $until)
+            ->orderBy('from')
+            ->get();
+        return $data;
     }
 }
