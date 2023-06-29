@@ -57,7 +57,10 @@
 		$(document).ready(() => {
 			const elCalendar = document.getElementById('calendar'),
 				dates = {!! $calendarDates !!},
-				calendar = MyCalendar.rentals(elCalendar, dates);
+				options = {
+					initialDate: "{!! $initialDate->format('Y-m-d') !!}",
+				},
+				calendar = MyCalendar.rentals(elCalendar, dates, options);
 
 			let $from = $('#from'),
 				$until = $('#until'),
