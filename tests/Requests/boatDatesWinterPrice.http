@@ -1,13 +1,16 @@
 ### Send request with dynamic variables in request's body
 POST https://port.test/api/price/boatDates
 Content-Type: application/json
+Content-Type: application/json
+X-Requested-With: XMLHttpRequest
+Accept: application/json
 
 {
-    "boat_id": 1,
-    "from": "2021-10-16",
-	"until": "2022-04-31",
-	"crane": 0,
-	"mast_crane": 0,
+    "boat_id": 35,
+    "from": "2023-11-01",
+	"until": "2024-04-30",
+	"crane": 1,
+	"mast_crane": 1,
 	"duration_mast_crane": 1,
 	"cleaning": 0,
 	"modus": "winter",
@@ -15,8 +18,7 @@ Content-Type: application/json
     "width": 2.5,
     "weight": 3000,
     "mast_length": 9,
-    "mast_weight": 70,
-    "default_price": 0
+    "mast_weight": 70
 }
 
 ###

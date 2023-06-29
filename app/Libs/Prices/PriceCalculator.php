@@ -111,7 +111,7 @@ abstract class PriceCalculator
 				}
 			}
 
-            if($this->model instanceof $type) {
+            if($this->model instanceof Model) {
                 $args[] = $this->model;
             }
 

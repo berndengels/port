@@ -6,22 +6,22 @@
 - Strom-Anschluss: {{ $data->electric ? 'Ja' : 'Nein' }}
 
 @if($prices->days > 1)
-	- {{ $prices->days }} Übernachtungen
+- {{ $prices->days }} Übernachtungen
 @else
-	- {{ $prices->days }} Übernachtung
+- {{ $prices->days }} Übernachtung
 @endif
 
 - Grund-Preis: {{ $prices->priceBase }} €
 @if($prices->priceElectric > 0)
-	- Preis Strom: {{ $prices->priceElectric }} € ({{ $prices->priceElectric/$prices->days }} € pro Tag)
+- Preis Strom: {{ $prices->priceElectric }} € ({{ $prices->priceElectric/$prices->days }} € pro Tag)
 @endif
 @if($prices->pricePersons > 0)
-	- Preis Personen: {{ $prices->pricePersons }} € ({{ $prices->pricePersons/$prices->days }} € pro Tag)
+- Preis Personen: {{ $prices->pricePersons }} € ({{ $prices->pricePersons/$prices->days }} € pro Tag)
 @endif
 
 ### Tages-Preise
 @foreach($prices->dailyPrices as $date => $d)
-	- {{ Carbon::make($date)->translatedFormat('D d.m.Y') }} ({{ $d->saison }}) {{ $d->price }} €
+- {{ Carbon::make($date)->translatedFormat('D d.m.Y') }} ({{ $d->saison }}) {{ $d->price }} €
 @endforeach
 
 MWSt Rate: {{ $prices->tax }} %\

@@ -1,6 +1,9 @@
 ### Send request with dynamic variables in request's body
 POST https://port.test/api/price/guestBoatDates
 Content-Type: application/json
+Content-Type: application/json
+X-Requested-With: XMLHttpRequest
+Accept: application/json
 
 {
     "from": "2023-05-30",
