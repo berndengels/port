@@ -4,9 +4,15 @@
 * @var $media \App\Models\Media
  */
 $images = $boat->getMedia('boat');
-$delay = 15000;
 @endphp
 @extends('layouts.main')
+
+@slot('styles')
+	<link rel="stylesheet" href="{{ mix('jquery-mobile/jquery.mobile-1.4.5.min.css') }}">
+@endslot
+@slot('scripts')
+	<link rel="stylesheet" href="{{ mix('jquery-mobile/jquery.mobile-1.4.5.min.js') }}">
+@endslot
 
 @section('main')
 	<div>
@@ -62,7 +68,12 @@ $delay = 15000;
 <script>
 $(document).ready(() => {
 	@isMobile()
-	$('.enlargable').onTab(e => Fullscreen.init(e.target.dataset.large));
+	$( ".enlargable" ).bind( "tap", (e) => Fullscreen.init(e.target.dataset.large));
+/*
+	tapHandler = (e) => {
+		Fullscreen.init(e.target.dataset.large)
+	}
+*/
 	@else
 	$('.enlargable').click(e => Fullscreen.init(e.target.dataset.large));
 	@endisMobile
