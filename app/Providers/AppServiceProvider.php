@@ -60,10 +60,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot(Kernel $kernel)
     {
         $agent = new Agent();
-        $isMobile = $agent->isPhone() || $agent->isTablet();
+        $isMobile = true === $agent->isPhone() || true === $agent->isTablet();
 
-        View::share('isMobile', fn() => $isMobile);
-        View::share('isNotMobile', fn() => !$isMobile);
+        View::share('isMobile', fn() => (bool) $isMobile);
+        View::share('isNotMobile', fn() => (bool) !$isMobile);
 
         $locale = config('app.locale');
         Carbon::setLocale($locale);
@@ -80,10 +80,7 @@ class AppServiceProvider extends ServiceProvider
         Blade::if('isAdmin', function () {
             return auth('admin')->check();
         });
-        Blade::if('isMobile', function () {
-            $agent = new Agent();
-            return $agent->isPhone() || $agent->isTablet();
-        });
+        Blade::if('isMobile', fn () => $agent->isPhone() || $agent->isTablet());
         Blade::components([
             'table'         => Table::class,
             'td'            => Td::class,
