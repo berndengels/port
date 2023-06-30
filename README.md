@@ -38,6 +38,7 @@ in working directory run:
 - npm install
 - npm run dev
 - php artisan storage:link
+- prepere your webserver: create virtual server host (https://harbor-manager.test) **important: use https** 
 - start http- and mysql-server
 - open app-url in browser
 
@@ -46,7 +47,13 @@ in working directory run:
   - login: admin@test.loc
   - password: password
 
+the default role for the admin demo test user is 'demonstration', he can only read data, but not change or create.
+  - you can change the role to admin. go into the project folder per terminal and use that command:
+  
+  php artisan auth:set-admin-permission
+
 ### Customer Test Login:
 - route /login
 - login: kunde@test.loc
 - password: password
+
