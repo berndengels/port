@@ -8,13 +8,18 @@
 </p>
 
 # PortManager project
-PHP-Version: 8.0\
-MySQL-Version: MariaDB 10.6.4\
+PHP-Version: >= 8.0\
+MySQL-Version: >= MariaDB 10.6.4\
+GitHub: [https://github.com/berndengels/harbor-manager](https://github.com/berndengels/harbor-manager)  
 Test URL: [https://port.segel-helden.de](https://port.segel-helden.de)
 
+# Installation
+- per terminal in your webroot directory  
+git clone https://github.com/berndengels/harbor-manager.git  
+- cd harbor-manager
 - copy .env.example to .env  
 - set all credentials, tokens, passwords, urls in .env (DB, EMAIL)
-- set app url in .env APP_URL/MIX_API_URL (use https)
+- set app url in .env APP_URL / MIX_API_URL (use https)
 - create MySql database 'port'
 - unzip database/port-demo.sql.zip to database/port-demo.sql 
 - import database/port-demo.sql file in port db

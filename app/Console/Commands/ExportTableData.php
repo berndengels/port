@@ -15,7 +15,7 @@ class ExportTableData extends GeneratorCommand
      *
      * @var string
      */
-    protected $signature = 'make:model-export {table}';
+    protected $signature = 'db:export {table}';
 
     /**
      * The console command description.

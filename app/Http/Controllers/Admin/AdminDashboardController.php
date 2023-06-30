@@ -5,6 +5,6 @@ class AdminDashboardController extends AdminController
 {
     public function show()
     {
-        return view('admin.vue-dashboard');
+	    return view('admin.vue-dashboard');
     }
 }
