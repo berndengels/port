@@ -47,8 +47,11 @@ class AdminPermission extends Command
 
 			if($demoUser) {
 				$demoUser->assignRole('admin');
-				$this->info("the new role is: admin");
+			} else {
+				AdminUser::with('roles')->first()->assignRole('admin');
 			}
+
+			$this->info("the new role is: admin");
 		}
     }
 }
