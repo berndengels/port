@@ -21,7 +21,7 @@
 				<div class="carousel-item active" data-bs-interval="{{ $delay }}">
 					<div class="boat">
 						<div class="carousel-caption">
-							<h3>Barhöft Boote</h3>
+							<h3>Boote</h3>
 							<p>
 								Verwaltung von Gastbooten und Dauerliegern. Tagespreis Konfiguration für Gäste.
 								Sommer- und Winterlager Preis-Konfiguration. Automatische Erstellung von Rechnungen
