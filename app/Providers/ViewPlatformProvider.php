@@ -2,9 +2,10 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\Facades\View;
 use Illuminate\View\FileViewFinder;
 use Illuminate\View\ViewServiceProvider;
+use Illuminate\Foundation\Application;
+
 class ViewPlatformProvider extends ViewServiceProvider
 {
     /**
@@ -14,12 +15,13 @@ class ViewPlatformProvider extends ViewServiceProvider
      */
     public function registerViewFinder()
     {
-        $this->app->bind('view.finder', function ($app) {
-            $paths = [];
+        $this->app->bind('view.finder', function (Application $app) {
+			$paths = [];
             if(config('app.platform')) {
                 $paths[] = resource_path('platform/' . config('app.platform'). '/views');
+	            $paths += $app['config']['view.paths'];
             }
-            $paths += $app['config']['view.paths'];
+	        $paths[] = $app->viewPath();
 
             return new FileViewFinder($app['files'], $paths);
         });
