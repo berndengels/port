@@ -45,3 +45,8 @@ yarn-error.log
 /docker-compose.orig.yml
 /public/dropzone/
 /public/jquery-mobile/
+/resources/platform/demo/views/components/
+/resources/platform/demo/views/email/
+/resources/platform/demo/views/layouts/
+/resources/platform/demo/views/markdown/
+/resources/platform/demo/views/vendor/
