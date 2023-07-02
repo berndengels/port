@@ -25,10 +25,10 @@
 				<x-filter name="filter" :options="$relationOptions" :val="$filter" inline/>
 				<x-form-input :default="$from ? $from->format('Y-m-d') : null" name="from" type="date"
 							  :min="$firstDate->format('Y-m-d')" :max="$lastDate->format('Y-m-d')" inline label="von"
-							  placeholder="Von"/>
+							  floating />
 				<x-form-input :default="$until ? $until->format('Y-m-d') : null" name="until" type="date"
 							  :min="$firstDate->format('Y-m-d')" :max="$lastDate->format('Y-m-d')" inline label="bis"
-							  placeholder="Bis"/>
+							  floating />
 				<button class="btn btn-secondary reset btn-sm inline ms-2">Reset</button>
 				<button role="link" id="toggleCalendar" class="btn btn-secondary reset btn-sm inline ms-2">Kalender
 				</button>

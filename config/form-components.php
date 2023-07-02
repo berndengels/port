@@ -34,8 +34,8 @@ return [
         ],
         'form-input' => [
 //            'view'  => 'components.form.my-form-input',
-            'view'  => 'form-components::{framework}.form-input',
-//            'view'  => 'vendor.form-components.{framework}.form-input',
+//            'view'  => 'form-components::{framework}.form-input',
+            'view'  => 'vendor.form-components.{framework}.form-input',
             'class' => Components\FormInput::class,
 //            'class' => FormInput::class,
         ],

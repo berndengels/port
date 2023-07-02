@@ -26,10 +26,10 @@
 				<x-filter name="saison" :options="$saisonOptions" :val="$saison" inline/>
 				<x-form-input :default="$from ? $from->format('Y-m-d') : null" name="from" type="date"
 							  :min="$firstDate->format('Y-m-d')" :max="$lastDate->format('Y-m-d')" inline label="von"
-							  placeholder="Von"/>
+							  floating />
 				<x-form-input :default="$until ? $until->format('Y-m-d') : null" name="until" type="date"
 							  :min="$firstDate->format('Y-m-d')" :max="$lastDate->format('Y-m-d')" inline label="bis"
-							  placeholder="Bis"/>
+							  floating/>
 				<x-btn-reset/>
 			</x-form>
 			{{ $data->appends($queryString)->links() }}
