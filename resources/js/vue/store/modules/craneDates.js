@@ -1,5 +1,12 @@
 const namespaced = true,
 	state = {
+		date: {
+			id: null,
+			cranable_type: null,
+			cranable_id: null,
+			crane_date: null,
+			crane_time: null
+		},
 		dates: null,
 		boats: null,
 		cranableTypeOptions: null,
@@ -87,7 +94,7 @@ const namespaced = true,
 						commit("errors", resp.data.errors);
 					} else {
 						commit("errors", null);
-						commit("destroyDate", resp.data.craneDate);
+						commit("destroyDate", resp.data.date);
 					}
 				}).catch(err => console.error(err));
 		},

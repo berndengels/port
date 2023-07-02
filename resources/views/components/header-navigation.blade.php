@@ -35,7 +35,8 @@
 						action="{{ route($guard . '.logout') }}">
 					@csrf
 					<span class="d-none d-md-inline-block">{{ auth($guard)->user()->name }}</span>
-					<x-form-submit class="btn btn-sm btn-primary" icon="fas fa-sign-out-alt" title="logout">
+					<x-form-submit class="btn btn-sm btn-primary" title="logout">
+						<i class="fas fa-sign-out-alt"></i>
 						<span class="d-none d-md-inline-block">Logout</span>
 					</x-form-submit>
 				</x-form>

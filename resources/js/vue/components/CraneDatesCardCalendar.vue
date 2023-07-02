@@ -1,17 +1,17 @@
 <template>
-	<div class="card align-self-center calendar">
+	<div class="card m-0 p-0 align-self-center calendar">
 		<div class="card-header">
 			<strong v-html="title"></strong>
 		</div>
-		<div v-if="loading" class="card-body p-3 loader-wrapper">
+		<!--div v-if="loading" class="card-body p-3 loader-wrapper">
 			<pulse-loader color="#394263" size="20px"/>
-		</div>
-		<div v-else class="card-body p-3">
-			<div class="row">
-				<div class="col">
-					<FullCalendar ref="fullCalendar" :options="config"/>
+		</div-->
+		<div class="card-body p-sm-0 p-lg-3">
+			<div class="row p-0">
+				<div class="col-sm-12 col-lg-6 p-0">
+					<FullCalendar ref="fullCalendar" :options="config" />
 				</div>
-				<div class="col">
+				<div class="col-sm-12 col-lg-6 p-0">
 					<div v-if="errors" class="bg-danger text-light">
 						<ul>
 							<li v-for="(err, key) in errors" :key="key">{{ err }}</li>
@@ -50,7 +50,7 @@
 								<div v-if="!craneDate.id">
 									<button class="btn btn-sm btn-primary" role="button"
 									        @click="handleStore(craneDate)">
-										Speichen
+										Anlegen
 									</button>
 								</div>
 								<div v-else>
@@ -72,18 +72,18 @@
 </template>
 
 <script>
-import {mapActions, mapGetters} from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import FullCalendar from '@fullcalendar/vue3'
+import deLocale from '@fullcalendar/core/locales/de'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timegridGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import multiMonthPlugin from '@fullcalendar/multimonth'
 import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
-import {setWith} from "lodash";
 
 export default {
 	name: "CraneDatesCardCalendar",
-	components: {FullCalendar, PulseLoader},
+	components: { FullCalendar, PulseLoader },
 	props: {
 		title: String,
 	},
@@ -101,6 +101,9 @@ export default {
 		}
 	},
 	computed: {
+		api() {
+			return this.$refs.fullCalendar.getApi()
+		},
 		...mapGetters({
 			events: "craneDates/dates",
 			boats: "craneDates/boats",
@@ -110,7 +113,7 @@ export default {
 		}),
 		config() {
 			return {
-				...this.craneDate,
+//				...this.craneDate,
 				...this.configOptions,
 				...this.eventHandlers
 			}
@@ -118,6 +121,14 @@ export default {
 		configOptions() {
 			return {
 				plugins: [dayGridPlugin, timegridGridPlugin, interactionPlugin, multiMonthPlugin],
+				locale: deLocale,
+				firstDay: 1,
+				aspectRatio: 1,
+				displayEventTime: true,
+				initialView: 'dayGridMonth',
+				eventTextColor: '#fff',
+				eventBackgroundColor: '#060',
+				eventDisplay: 'block',
 				navLinks: true,
 				dayMaxEvents: true,
 				selectable: true,
@@ -128,18 +139,10 @@ export default {
 				eventDurationEditable: false,
 				expandRows: true,
 				contentHeight: '600px',
-				locale: 'de',
-				firstDay: 1,
-				aspectRatio: 1,
-				displayEventTime: true,
-				initialView: 'dayGridMonth',
-				eventTextColor: '#fff',
-				eventBackgroundColor: '#060',
-				eventDisplay: 'block',
 				headerToolbar: {
 					left: 'prev, next, today',
 					center: 'title',
-					right: 'dayGridYear, dayGridMonth, timeGridWeek, timeGridDay',
+					right: 'dayGridYear, dayGridMonth, timeGridDay',
 				},
 				businessHours: {
 					// days of week. an array of zero-based day of week integers (0=Sunday)
@@ -160,7 +163,7 @@ export default {
 			return {
 				select: this.createDate,
 				eventDragStart: this.onDragStart,
-				eventDragStop: this.onDragStop,
+//				eventDragStop: this.onDragStop,
 				eventDrop: this.onEventDrop,
 				eventClick: this.onEventClick,
 				navLinkDayClick: this.onNavClick,
@@ -176,20 +179,19 @@ export default {
 			store: 'craneDates/store',
 			destroy: 'craneDates/destroy',
 		}),
-		createDate(args) {
-			this.selectedDate = moment(args.start).format('YYYY-MM-DD');
+		createDate({start}) {
+			this.selectedDate = moment(start).format('YYYY-MM-DD');
 			this.craneDate = {
 				id: null,
 				cranable_type: null,
 				cranable_id: null,
-				crane_date: this.selectedDate,
+				crane_date: moment(start).format('YYYY-MM-DD'),
 				crane_time: null
 			};
 			this.showForm = true;
 		},
-		handleNavChange(e) {
-			console.info('navLink change', e);
-			this.showForm = false;
+		handleNavChange({start, startStr, view}) {
+//			this.showForm = false;
 		},
 		handleUpdate(data) {
 			this.update(data);
@@ -203,8 +205,9 @@ export default {
 			this.destroy(data);
 			this.showForm = false;
 		},
-		onEventClick(e) {
-			const p = e.event.extendedProps;
+		onEventClick({event}) {
+			const p = event.extendedProps;
+			this.selectedDate = moment(event.start).format('YYYY-MM-DD');
 			this.craneDate = {
 				id: p.id,
 				cranable_type: p.cranable_type,
@@ -213,20 +216,27 @@ export default {
 				crane_time: p.crane_time,
 			};
 			this.$store.dispatch("craneDates/getBoats", p.cranable_type);
+			console.info("selectedDate", this.selectedDate);
+			this.api.gotoDate(this.selectedDate);
+			this.api.changeView('timeGridDay', {start: this.selectedDate});
 			this.showForm = true;
 		},
-		onEventDrop({event, oldEvent}) {
+		onEventDrop({event, oldEvent, view}) {
 			let props = oldEvent.extendedProps;
-			this.showForm = false;
-			const data = {
+//			this.showForm = false;
+			const startTime = moment(event.start).clone().format('HH:mm'),
+				data = {
 				id: event.id,
 				crane_date: moment(event.start).clone().format('YYYY-MM-DD'),
-				crane_time: moment(event.start).clone().format('HH:mm'),
+				crane_time: startTime,
 				cranable_type: this.addslashes(props.cranable_type),
 				cranable_id: props.cranable_id,
 			};
-			console.info("data", data);
 			this.update(data);
+
+			if("timeGridDay" === view.type) {
+				this.craneDate.crane_time = startTime;
+			}
 		},
 		onChange(e) {
 			let $el = $(e.target);

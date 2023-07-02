@@ -233,7 +233,7 @@ return [
                         'title' => 'Krantermine',
                         'icon'  => 'fas fa-gear',
                         'route' => 'admin.craneDates.index',
-                        'hide_on_mobile' => true,
+                        'hide_on_mobile' => false,
                         'help'  => null,
                     ],
                     [

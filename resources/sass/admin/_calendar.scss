@@ -27,6 +27,12 @@
 			}
 		}
 	}
+	@include media('<tablet') {
+		.fc-header-left, fc-header-center, fc-header-right {
+			width: 100%;
+			display: block;
+		}
+	}
 }
 .fc {
 	.fc-daygrid-day-top {
