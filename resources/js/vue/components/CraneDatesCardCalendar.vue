@@ -17,7 +17,7 @@
 							<li v-for="(err, key) in errors" :key="key">{{ err }}</li>
 						</ul>
 					</div>
-					<div v-show="showForm">
+					<div v-show="showForm" class="ms-sm-0 ms-lg-2">
 						<form class="mt-5" @submit.prevent>
 							<input id="id" v-model="craneDate.id" class="form-control" name="id" type="hidden"/>
 							<div class="form-floating">
