@@ -67,41 +67,41 @@ $images = $boat->getMedia('boat');
 					<div class="card-header"><strong>Maße</strong></div>
 					<div class="card-body p-3">
 						<div class="row">
-							<div class="col-4">Länge</div>
+							<div class="col-6">Länge</div>
 							<div class="col-auto">{{ $boat->length }} m</div>
 						</div>
 						<div class="row">
-							<div class="col-4">Breite</div>
+							<div class="col-6">Breite</div>
 							<div class="col-auto">{{ $boat->width }} m</div>
 						</div>
 						<div class="row">
-							<div class="col-4">Gewicht</div>
+							<div class="col-6">Gewicht</div>
 							<div class="col-auto">{{ $boat->weight }} Kg</div>
 						</div>
 						<div class="row">
-							<div class="col-4">Tiefgang</div>
+							<div class="col-6">Tiefgang</div>
 							<div class="col-auto">{{ $boat->draft }} m</div>
 						</div>
 						<div class="row">
-							<div class="col-4">Bordhöhe</div>
+							<div class="col-6">Bordhöhe</div>
 							<div class="col-auto">{{ $boat->board_height }} m</div>
 						</div>
 
 						@if('sail' === $boat->type)
 							<div class="row">
-								<div class="col-4">Mastlänge</div>
+								<div class="col-6">Mastlänge</div>
 								<div class="col-auto">{{ $boat->mast_length }} m</div>
 							</div>
 							<div class="row">
-								<div class="col-4">Mastgewicht</div>
+								<div class="col-6">Mastgewicht</div>
 								<div class="col-auto">{{ $boat->mast_weight }} Kg</div>
 							</div>
 							<div class="row">
-								<div class="col-4">Länge Wasserlinie</div>
+								<div class="col-6">Länge Wasserlinie</div>
 								<div class="col-auto">{{ $boat->length_waterline }} m</div>
 							</div>
 							<div class="row">
-								<div class="col-4">Kiellänge</div>
+								<div class="col-6">Kiellänge</div>
 								<div class="col-auto">{{ $boat->length_keel }} m</div>
 							</div>
 						@endif
