@@ -21,21 +21,41 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
  * App\Models\Boat
  *
  * @property int $id
+ * @property int|null $berth_id
  * @property int $customer_id
  * @property string $type
  * @property string $name
  * @property string|null $length
  * @property string|null $width
+ * @property int|null $weight
+ * @property int|null $board_height
+ * @property int|null $mast_length
+ * @property int|null $mast_weight
  * @property string|null $draft
  * @property string|null $length_waterline
  * @property string|null $length_keel
  * @property string|null $home_port
- * @property-read Customer $customer
+ * @property-read \App\Models\Berth|null $berth
+ * @property-read Collection<int, \App\Models\CraneDate> $craneDates
+ * @property-read int|null $crane_dates_count
+ * @property-read \App\Models\Customer $customer
+ * @property-read Collection<int, \App\Models\BoatDates> $dates
+ * @property-read int|null $dates_count
+ * @property-read mixed $board_area
+ * @property-read mixed $underwater_area
+ * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \App\Models\Media> $media
+ * @property-read int|null $media_count
+ * @property-read Collection<int, \App\Models\ConfigBoatPrice> $prices
+ * @property-read int|null $prices_count
+ * @property-read Collection<int, \App\Models\ServiceRequest> $serviceRequests
+ * @property-read int|null $service_requests_count
+ * @method static \Database\Factories\BoatFactory factory($count = null, $state = [])
  * @method static Builder|Boat newModelQuery()
  * @method static Builder|Boat newQuery()
  * @method static Builder|Boat query()
- * @method static Builder|Boat whereBoatName($value)
- * @method static Builder|Boat whereBoatType($value)
+ * @method static Builder|Boat sortable($defaultParameters = null)
+ * @method static Builder|Boat whereBerthId($value)
+ * @method static Builder|Boat whereBoardHeight($value)
  * @method static Builder|Boat whereCustomerId($value)
  * @method static Builder|Boat whereDraft($value)
  * @method static Builder|Boat whereHomePort($value)
@@ -43,30 +63,13 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
  * @method static Builder|Boat whereLength($value)
  * @method static Builder|Boat whereLengthKeel($value)
  * @method static Builder|Boat whereLengthWaterline($value)
- * @method static Builder|Boat whereWidth($value)
- * @mixin Eloquent
- * @property int|null $weight
- * @property int|null $mast_length
- * @property int|null $mast_weight
- * @property-read Collection|BoatDates[] $dates
- * @property-read int|null $dates_count
  * @method static Builder|Boat whereMastLength($value)
  * @method static Builder|Boat whereMastWeight($value)
- * @method static Builder|Boat whereWeight($value)
- * @method static BoatFactory factory(...$parameters)
- * @property-read Collection|ServiceRequest[] $serviceRequests
- * @property-read int|null $service_requests_count
- * @property int|null $board_height
- * @property-read mixed $board_area
- * @property-read mixed $underwater_area
- * @method static Builder|Boat whereBoardHeight($value)
- * @property-read Collection|ConfigBoatPrice[] $prices
- * @property-read int|null $prices_count
- * @property int|null $berth_id
- * @property-read \App\Models\Berth|null $berth
- * @method static Builder|Boat whereBerthId($value)
  * @method static Builder|Boat whereName($value)
  * @method static Builder|Boat whereType($value)
+ * @method static Builder|Boat whereWeight($value)
+ * @method static Builder|Boat whereWidth($value)
+ * @mixin Eloquent
  */
 class Boat extends Model implements HasMedia
 {

@@ -13,19 +13,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * App\Models\ConfigEntity
  *
  * @property int $id
- * @property string|null $model
- * @property-read Collection|ConfigHasPriceComponent[] $priceComponents
+ * @property string $model
+ * @property-read Collection<int, \App\Models\ConfigPriceComponent> $priceComponents
  * @property-read int|null $price_components_count
- * @property-read Collection|ConfigPriceComponent[] $prices
- * @property-read int|null $prices_count
+ * @method static \Database\Factories\ConfigEntityFactory factory($count = null, $state = [])
  * @method static Builder|ConfigEntity newModelQuery()
  * @method static Builder|ConfigEntity newQuery()
  * @method static Builder|ConfigEntity query()
  * @method static Builder|ConfigEntity whereId($value)
  * @method static Builder|ConfigEntity whereModel($value)
  * @mixin Eloquent
- * @method static ConfigEntityFactory factory(...$parameters)
- * @method static Builder|ConfigEntity getPriceComponents(string $entity)
  */
 class ConfigEntity extends Model
 {

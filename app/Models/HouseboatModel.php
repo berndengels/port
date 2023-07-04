@@ -24,9 +24,11 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
  * @property int|null $peak_season_price
  * @property int|null $mid_season_price
  * @property int|null $low_season_price
- * @property-read Collection|Houseboat[] $houseboats
+ * @property-read Collection<int, \App\Models\Houseboat> $houseboats
  * @property-read int|null $houseboats_count
- * @method static HouseboatModelFactory factory(...$parameters)
+ * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \App\Models\Media> $media
+ * @property-read int|null $media_count
+ * @method static \Database\Factories\HouseboatModelFactory factory($count = null, $state = [])
  * @method static Builder|HouseboatModel newModelQuery()
  * @method static Builder|HouseboatModel newQuery()
  * @method static Builder|HouseboatModel query()

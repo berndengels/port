@@ -10,8 +10,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  *
  * @property int $id
  * @property string $name
- * @property string $key
- * @method static \Database\Factories\ConfigServiceFactory factory(...$parameters)
+ * @property string|null $key
+ * @method static \Database\Factories\ConfigServiceFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|ConfigService newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|ConfigService newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|ConfigService query()

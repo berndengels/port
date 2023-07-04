@@ -6,9 +6,19 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Requests\GuestBoatRequest;
 
+/**
+ * @todo: neue optionale bootseigenschaften: Bootstype, gewicht, tiefgang
+ */
 class AdminGuestBoatController extends AdminController
 {
-    /**
+	protected $boatTypes;
+	public function __construct()
+	{
+		parent::__construct();
+		$this->boatTypes = config('port.main.boat.types');
+	}
+
+	/**
      * Display a listing of the resource.
      *
      * @return Response
@@ -46,7 +56,9 @@ class AdminGuestBoatController extends AdminController
      */
     public function create()
     {
-        return view('admin.guestBoats.create');
+        return view('admin.guestBoats.create', [
+			'types' => $this->boatTypes,
+		]);
     }
 
     /**
@@ -73,7 +85,10 @@ class AdminGuestBoatController extends AdminController
      */
     public function edit(GuestBoat $guestBoat)
     {
-        return view('admin.guestBoats.edit', compact('guestBoat'));
+        return view('admin.guestBoats.edit', [
+			'guestBoat'	=> $guestBoat,
+			'types' => $this->boatTypes,
+		]);
     }
 
     /**

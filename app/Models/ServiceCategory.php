@@ -14,21 +14,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * App\Models\ServiceCategory
  *
  * @property int $id
- * @property int $price_type_id
  * @property string $name
- * @property string|null $price
- * @property-read ConfigPriceType $priceType
- * @method static ServiceCategoryFactory factory(...$parameters)
+ * @property string|null $modus
+ * @property-read \App\Models\ConfigPriceType $priceType
+ * @method static \Database\Factories\ServiceCategoryFactory factory($count = null, $state = [])
  * @method static Builder|ServiceCategory newModelQuery()
  * @method static Builder|ServiceCategory newQuery()
  * @method static Builder|ServiceCategory query()
  * @method static Builder|ServiceCategory whereId($value)
- * @method static Builder|ServiceCategory whereName($value)
- * @method static Builder|ServiceCategory wherePrice($value)
- * @method static Builder|ServiceCategory wherePriceTypeId($value)
- * @mixin Eloquent
- * @property string|null $modus
  * @method static Builder|ServiceCategory whereModus($value)
+ * @method static Builder|ServiceCategory whereName($value)
+ * @mixin Eloquent
  */
 class ServiceCategory extends Model
 {

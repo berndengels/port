@@ -14,17 +14,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  *
  * @property int $id
  * @property string $name
+ * @property string|null $model
  * @property bool $enabled
+ * @method static \Database\Factories\ConfigOfferFactory factory($count = null, $state = [])
  * @method static Builder|ConfigOffer newModelQuery()
  * @method static Builder|ConfigOffer newQuery()
  * @method static Builder|ConfigOffer query()
  * @method static Builder|ConfigOffer whereEnabled($value)
  * @method static Builder|ConfigOffer whereId($value)
+ * @method static Builder|ConfigOffer whereModel($value)
  * @method static Builder|ConfigOffer whereName($value)
  * @mixin Eloquent
- * @method static ConfigOfferFactory factory(...$parameters)
- * @property string|null $model
- * @method static Builder|ConfigOffer whereModel($value)
  */
 class ConfigOffer extends Model
 {

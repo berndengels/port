@@ -17,9 +17,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int $id
  * @property string|null $key
  * @property string $name
- * @property-read Collection|ConfigSaisonRentDates[] $dates
+ * @property-read Collection<int, \App\Models\ConfigSaisonRentDates> $dates
  * @property-read int|null $dates_count
- * @method static ConfigSaisonRentFactory factory(...$parameters)
+ * @method static \Database\Factories\ConfigSaisonRentFactory factory($count = null, $state = [])
  * @method static Builder|ConfigSaisonRent newModelQuery()
  * @method static Builder|ConfigSaisonRent newQuery()
  * @method static Builder|ConfigSaisonRent query()

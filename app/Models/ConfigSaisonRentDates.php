@@ -17,40 +17,28 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  *
  * @property int $id
  * @property int $config_saison_rent_id
- * @property int|null $from_day
- * @property int|null $from_month
- * @property int|null $until_day
- * @property int|null $until_month
- * @property int|null $from_mday
- * @property int|null $until_mday
- * @property-read ConfigSaisonRent $saison
- * @method static ConfigSaisonRentDatesFactory factory(...$parameters)
+ * @property string|null $name
+ * @property string|null $holiday
+ * @property \Illuminate\Support\Carbon $from
+ * @property \Illuminate\Support\Carbon $until
+ * @property-read mixed $days
+ * @property-read Period $period
+ * @property-read mixed $valid_from
+ * @property-read mixed $valid_until
+ * @property-read \App\Models\ConfigSaisonRent $saison
+ * @method static Builder|ConfigSaisonRentDates containsDates(\Carbon\Carbon $from, \Carbon\Carbon $until)
+ * @method static Builder|ConfigSaisonRentDates datesBetween(?\Carbon\Carbon $from = null, ?\Carbon\Carbon $until = null)
+ * @method static \Database\Factories\ConfigSaisonRentDatesFactory factory($count = null, $state = [])
  * @method static Builder|ConfigSaisonRentDates newModelQuery()
  * @method static Builder|ConfigSaisonRentDates newQuery()
  * @method static Builder|ConfigSaisonRentDates query()
  * @method static Builder|ConfigSaisonRentDates whereConfigSaisonRentId($value)
- * @method static Builder|ConfigSaisonRentDates whereFromDay($value)
- * @method static Builder|ConfigSaisonRentDates whereFromMday($value)
- * @method static Builder|ConfigSaisonRentDates whereFromMonth($value)
- * @method static Builder|ConfigSaisonRentDates whereId($value)
- * @method static Builder|ConfigSaisonRentDates whereUntilDay($value)
- * @method static Builder|ConfigSaisonRentDates whereUntilMday($value)
- * @method static Builder|ConfigSaisonRentDates whereUntilMonth($value)
- * @mixin Eloquent
- * @property string|null $holiday
- * @property Carbon $from
- * @property Carbon $until
- * @property-read mixed $days
- * @property-read mixed $valid_from
- * @property-read mixed $valid_until
  * @method static Builder|ConfigSaisonRentDates whereFrom($value)
  * @method static Builder|ConfigSaisonRentDates whereHoliday($value)
- * @method static Builder|ConfigSaisonRentDates whereUntil($value)
- * @property-read Period $period
- * @method static Builder|ConfigSaisonRentDates containsDates(Carbon $from, Carbon $until)
- * @property string|null $name
+ * @method static Builder|ConfigSaisonRentDates whereId($value)
  * @method static Builder|ConfigSaisonRentDates whereName($value)
- * @method static Builder|ConfigSaisonRentDates datesBetween(?\Carbon\Carbon $from = null, ?\Carbon\Carbon $until = null)
+ * @method static Builder|ConfigSaisonRentDates whereUntil($value)
+ * @mixin Eloquent
  */
 class ConfigSaisonRentDates extends Model
 {

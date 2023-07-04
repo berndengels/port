@@ -20,34 +20,31 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string $guard_name
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property-read mixed $action
- * @property-read mixed $actions
- * @property-read mixed $model
  * @property-read mixed $uniq_name
- * @property-read Collection|Permission[] $permissions
+ * @property-read Collection<int, Permission> $permissions
  * @property-read int|null $permissions_count
- * @property-read Collection|Role[] $roles
+ * @property-read Collection<int, \App\Models\Role> $roles
  * @property-read int|null $roles_count
- * @property-read Collection|Customer[] $users
+ * @property-read Collection<int, \App\Models\Customer> $users
  * @property-read int|null $users_count
+ * @method static \Database\Factories\PermissionFactory factory($count = null, $state = [])
+ * @method static Builder|Permission filter(?string $name = null, $value = null)
+ * @method static Builder|Permission filterDateFrom(?string $name = null, $value = null)
+ * @method static Builder|Permission filterDateUntil(?string $name = null, $value = null)
+ * @method static Builder|Permission filterMonth(?string $name = null, $value = null)
+ * @method static Builder|Permission filterYear(?string $name = null, $value = null)
+ * @method static Builder|Permission likeFilter(?string $name = null, $value = null)
  * @method static Builder|Permission newModelQuery()
  * @method static Builder|Permission newQuery()
- * @method static Builder|Permission permission($permissions)
+ * @method static \Illuminate\Database\Eloquent\Builder|Permission permission($permissions)
  * @method static Builder|Permission query()
- * @method static Builder|Permission role($roles, $guard = null)
+ * @method static \Illuminate\Database\Eloquent\Builder|Permission role($roles, $guard = null)
  * @method static Builder|Permission whereCreatedAt($value)
  * @method static Builder|Permission whereGuardName($value)
  * @method static Builder|Permission whereId($value)
  * @method static Builder|Permission whereName($value)
  * @method static Builder|Permission whereUpdatedAt($value)
  * @mixin Eloquent
- * @method static Builder|Permission filter(?string $name = null)
- * @method static PermissionFactory factory(...$parameters)
- * @method static Builder|Permission filterDateFrom(?string $name = null, $value = null)
- * @method static Builder|Permission filterDateUntil(?string $name = null, $value = null)
- * @method static Builder|Permission likeFilter(?string $name = null, $value = null)
- * @method static Builder|Permission filterMonth(?string $name = null, $value = null)
- * @method static Builder|Permission filterYear(?string $name = null, $value = null)
  */
 class Permission extends BaseModel
 {

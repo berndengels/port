@@ -14,20 +14,29 @@ use Illuminate\Database\Eloquent\Model;
  * App\Models\GuestBoatBerth
  *
  * @property int $id
+ * @property int|null $dock_id
+ * @property int|null $berth_category_id
  * @property string $number
- * @property string|null $width
- * @property string|null $length
- * @property string|null $daily_price
+ * @property float|null $width
+ * @property float|null $length
+ * @property float|null $daily_price
  * @property float|null $lat
  * @property float|null $lng
- * @property int $enabled
- * @property-read Collection|GuestBoatDates[] $guestBoatDates
+ * @property bool $enabled
+ * @property-read Collection<int, \App\Models\Boat> $boats
+ * @property-read int|null $boats_count
+ * @property-read \App\Models\BerthCategory|null $category
+ * @property-read \App\Models\Dock|null $dock
+ * @property-read Collection<int, \App\Models\GuestBoatDates> $guestBoatDates
  * @property-read int|null $guest_boat_dates_count
- * @method static BerthFactory factory(...$parameters)
+ * @property-read \App\Models\BerthMap|null $map
+ * @method static \Database\Factories\BerthFactory factory($count = null, $state = [])
  * @method static Builder|Berth newModelQuery()
  * @method static Builder|Berth newQuery()
  * @method static Builder|Berth query()
+ * @method static Builder|Berth whereBerthCategoryId($value)
  * @method static Builder|Berth whereDailyPrice($value)
+ * @method static Builder|Berth whereDockId($value)
  * @method static Builder|Berth whereEnabled($value)
  * @method static Builder|Berth whereId($value)
  * @method static Builder|Berth whereLat($value)
@@ -36,17 +45,6 @@ use Illuminate\Database\Eloquent\Model;
  * @method static Builder|Berth whereNumber($value)
  * @method static Builder|Berth whereWidth($value)
  * @mixin Eloquent
- * @property int|null $boat_dock_id
- * @property-read Dock|null $dock
- * @method static Builder|Berth whereBoatDockId($value)
- * @property int|null $berth_category_id
- * @property-read BerthCategory|null $category
- * @method static Builder|Berth whereBerthCategoryId($value)
- * @property-read \App\Models\BerthMap|null $map
- * @property int|null $dock_id
- * @property-read Collection|\App\Models\Boat[] $boats
- * @property-read int|null $boats_count
- * @method static Builder|Berth whereDockId($value)
  */
 class Berth extends Model
 {

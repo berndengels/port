@@ -6,16 +6,11 @@ class GuestBoatRequest extends AdminRequest
 {
     protected $modelName = 'GuestBoat';
     protected $routeParam = 'guestBoat';
-
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize() : bool
-    {
-        return $this->auth->user()->can('write BoatGuest');
-    }
+	protected $permission = 'write GuestBoat';
+	protected $floats = [
+		'length',
+		'draft',
+	];
 
     /**
      * Get the validation rules that apply to the request.
@@ -29,6 +24,9 @@ class GuestBoatRequest extends AdminRequest
             'length'    => 'required|numeric',
             'home_port' => '',
             'email'     => 'nullable|email',
+			'weight'    => 'nullable|numeric',
+			'draft'     => 'nullable|numeric',
+			'type'      => '',
         ];
     }
 }

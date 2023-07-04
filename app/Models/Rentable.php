@@ -27,16 +27,22 @@ use Kyslik\ColumnSortable\Sortable;
  * @property bool $is_paid
  * @property-read \App\Models\Customer $customer
  * @property-read mixed $days
+ * @property-read mixed $has_kilowatt
+ * @property-read mixed $has_rental_cleaning
+ * @property-read mixed $kilowatt
  * @property-read mixed $price_data
+ * @property-read mixed $rental_cleaning
  * @property-read mixed $valid_from
  * @property-read mixed $valid_until
  * @property-read Model|\Eloquent $rentable
- * @method static \Database\Factories\RentableFactory factory(...$parameters)
+ * @method static \Illuminate\Database\Eloquent\Builder|Rentable datesBetween(?\Carbon\Carbon $from = null, ?\Carbon\Carbon $until = null)
+ * @method static \Database\Factories\RentableFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Rentable fromYearMonth(?string $year = null, ?string $month = null)
  * @method static \Illuminate\Database\Eloquent\Builder|Rentable newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Rentable newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Rentable query()
  * @method static \Illuminate\Database\Eloquent\Builder|Rentable relation(array|string $rentableType, ?int $rentableId = null)
+ * @method static \Illuminate\Database\Eloquent\Builder|Rentable sortable($defaultParameters = null)
  * @method static \Illuminate\Database\Eloquent\Builder|Rentable whereCustomerId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Rentable whereFrom($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Rentable whereId($value)
@@ -47,11 +53,6 @@ use Kyslik\ColumnSortable\Sortable;
  * @method static \Illuminate\Database\Eloquent\Builder|Rentable whereRentableType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Rentable whereUntil($value)
  * @mixin \Eloquent
- * @property-read mixed $has_kilowatt
- * @property-read mixed $has_rental_cleaning
- * @property-read mixed $kilowatt
- * @property-read mixed $rental_cleaning
- * @method static \Illuminate\Database\Eloquent\Builder|Rentable datesBetween(?\Carbon\Carbon $from = null, ?\Carbon\Carbon $until = null)
  */
 class Rentable extends Model
 {

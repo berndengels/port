@@ -28,45 +28,40 @@ use Kyslik\ColumnSortable\Sortable;
  * @property Carbon $until
  * @property int $price
  * @property string $prices
- * @property-read Boat $boat
+ * @property bool $is_paid
+ * @property-read \App\Models\Boat $boat
  * @property-read mixed $base_price
  * @property-read mixed $cleaning
  * @property-read mixed $crane
  * @property-read mixed $days
- * @property-read mixed $has_individual_price
- * @property-read mixed $individual_price
- * @property-read mixed $is_cleaned
- * @property-read mixed $is_craned
- * @property-read mixed $is_mast_craned
+ * @property-read mixed $has_cleaning
+ * @property-read mixed $has_crane
+ * @property-read mixed $has_mast_crane
+ * @property-read mixed $has_transport
  * @property-read mixed $mast_crane
  * @property-read mixed $period
  * @property-read mixed $price_data
+ * @property-read mixed $transport
  * @property-read mixed $valid_from
  * @property-read mixed $valid_until
- * @method static Builder|BoatDates boatByDates(?int $id = null)
- * @method static BoatDatesFactory factory(...$parameters)
+ * @method static Builder|BoatDates boat(?int $id = null)
+ * @method static Builder|BoatDates boatById(?int $id = null)
+ * @method static Builder|BoatDates datesBetween(?\Carbon\Carbon $from = null, ?\Carbon\Carbon $until = null)
+ * @method static \Database\Factories\BoatDatesFactory factory($count = null, $state = [])
  * @method static Builder|BoatDates fromYearMonth(?string $year = null, ?string $month = null)
- * @method static Builder|BoatDates getMonthsByYears($from = null, $until = null)
  * @method static Builder|BoatDates newModelQuery()
  * @method static Builder|BoatDates newQuery()
  * @method static Builder|BoatDates query()
+ * @method static Builder|BoatDates sortable($defaultParameters = null)
  * @method static Builder|BoatDates whereBoatId($value)
  * @method static Builder|BoatDates whereFrom($value)
  * @method static Builder|BoatDates whereId($value)
+ * @method static Builder|BoatDates whereIsPaid($value)
  * @method static Builder|BoatDates whereModus($value)
  * @method static Builder|BoatDates wherePrice($value)
  * @method static Builder|BoatDates wherePrices($value)
  * @method static Builder|BoatDates whereUntil($value)
  * @mixin Eloquent
- * @property int $is_paid
- * @method static Builder|BoatDates whereIsPaid($value)
- * @property-read mixed $has_cleaning
- * @property-read mixed $has_crane
- * @property-read mixed $has_mast_crane
- * @property-read mixed $has_transport
- * @property-read mixed $transport
- * @method static Builder|BoatDates boatById(?int $id = null)
- * @method static Builder|BoatDates datesBetween(?\Carbon\Carbon $from = null, ?\Carbon\Carbon $until = null)
  */
 class BoatDates extends BaseModel implements IDatePrice
 {

@@ -35,18 +35,20 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string|null $postcode
  * @property string|null $city
  * @property bool|null $confirmed
- * @property-read Collection|\App\Models\Boat[] $boats
+ * @property-read Collection<int, \App\Models\Boat> $boats
  * @property-read int|null $boats_count
  * @property-read mixed $address
  * @property-read mixed $fon_link
  * @property-read mixed $str_roles
- * @property-read DatabaseNotificationCollection|DatabaseNotification[] $notifications
+ * @property-read DatabaseNotificationCollection<int, DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
- * @property-read Collection|\App\Models\Permission[] $permissions
+ * @property-read Collection<int, \App\Models\Permission> $permissions
  * @property-read int|null $permissions_count
- * @property-read Collection|\App\Models\Role[] $roles
+ * @property-read Collection<int, \App\Models\Rentable> $rentals
+ * @property-read int|null $rentals_count
+ * @property-read Collection<int, \App\Models\Role> $roles
  * @property-read int|null $roles_count
- * @method static \Database\Factories\CustomerFactory factory(...$parameters)
+ * @method static \Database\Factories\CustomerFactory factory($count = null, $state = [])
  * @method static Builder|Customer newModelQuery()
  * @method static Builder|Customer newQuery()
  * @method static Builder|Customer permission($permissions)
@@ -65,8 +67,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @method static Builder|Customer whereStreet($value)
  * @method static Builder|Customer whereType($value)
  * @mixin Eloquent
- * @property-read Collection|\App\Models\Rentable[] $rentals
- * @property-read int|null $rentals_count
  */
 class Customer extends Authenticatable
 {

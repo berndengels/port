@@ -20,14 +20,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string $guard_name
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property-read mixed $roles_string
- * @property-read Collection|Permission[] $permissions
+ * @property-read mixed $str_roles
+ * @property-read Collection<int, \App\Models\Permission> $permissions
  * @property-read int|null $permissions_count
- * @property-read Collection|Customer[] $users
+ * @property-read Collection<int, \App\Models\Customer> $users
  * @property-read int|null $users_count
  * @method static Builder|Role newModelQuery()
  * @method static Builder|Role newQuery()
- * @method static Builder|Role permission($permissions)
+ * @method static \Illuminate\Database\Eloquent\Builder|Role permission($permissions)
  * @method static Builder|Role query()
  * @method static Builder|Role whereCreatedAt($value)
  * @method static Builder|Role whereGuardName($value)
@@ -35,8 +35,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @method static Builder|Role whereName($value)
  * @method static Builder|Role whereUpdatedAt($value)
  * @mixin Eloquent
- * @property-read mixed $str_roles
- * @method static AdminRoleFactory factory(...$parameters)
  */
 class Role extends BaseModel
 {

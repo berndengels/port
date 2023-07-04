@@ -14,9 +14,9 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int $id
  * @property string $name
- * @property-read Collection|Berth[] $berths
+ * @property-read Collection<int, \App\Models\Berth> $berths
  * @property-read int|null $berths_count
- * @method static BerthCategoryFactory factory(...$parameters)
+ * @method static \Database\Factories\BerthCategoryFactory factory($count = null, $state = [])
  * @method static Builder|BerthCategory newModelQuery()
  * @method static Builder|BerthCategory newQuery()
  * @method static Builder|BerthCategory query()

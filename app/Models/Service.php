@@ -18,29 +18,25 @@ use Illuminate\Support\Carbon;
  *
  * @property int $id
  * @property int $service_category_id
+ * @property int $price_type_id
  * @property string $name
+ * @property int|null $quantity
  * @property string $price
- * @property Carbon $created_at
- * @property Carbon|null $updated_at
- * @property-read ServiceCategory $category
- * @property-read Collection|Material[] $materials
+ * @property-read \App\Models\ServiceCategory $category
+ * @property-read Collection<int, \App\Models\Material> $materials
  * @property-read int|null $materials_count
- * @method static ServiceFactory factory(...$parameters)
+ * @property-read \App\Models\ConfigPriceType $priceType
+ * @method static \Database\Factories\ServiceFactory factory($count = null, $state = [])
  * @method static Builder|Service newModelQuery()
  * @method static Builder|Service newQuery()
  * @method static Builder|Service query()
- * @method static Builder|Service whereCreatedAt($value)
  * @method static Builder|Service whereId($value)
  * @method static Builder|Service whereName($value)
  * @method static Builder|Service wherePrice($value)
- * @method static Builder|Service whereServiceCategoryId($value)
- * @method static Builder|Service whereUpdatedAt($value)
- * @mixin Eloquent
- * @property int $price_type_id
- * @property-read ConfigPriceType $priceType
  * @method static Builder|Service wherePriceTypeId($value)
- * @property int $quantity
  * @method static Builder|Service whereQuantity($value)
+ * @method static Builder|Service whereServiceCategoryId($value)
+ * @mixin Eloquent
  */
 class Service extends Model
 {

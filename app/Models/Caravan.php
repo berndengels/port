@@ -16,29 +16,28 @@ use Kyslik\ColumnSortable\Sortable;
  * App\Models\Caravan
  *
  * @property int $id
+ * @property int $country_id
  * @property string $carnumber
  * @property int $carlength
- * @property-read Collection|CaravanDates[] $dates
+ * @property string|null $email
+ * @property-read \App\Models\Country|null $country
+ * @property-read Collection<int, \App\Models\CaravanDates> $dates
  * @property-read int|null $dates_count
+ * @property-read mixed $info
+ * @property-read mixed $text
+ * @method static Builder|Caravan caravan(?int $caravanId = null)
+ * @method static Builder|Caravan caravanById(?int $caravanId = null)
+ * @method static \Database\Factories\CaravanFactory factory($count = null, $state = [])
  * @method static Builder|Caravan newModelQuery()
  * @method static Builder|Caravan newQuery()
  * @method static Builder|Caravan query()
+ * @method static Builder|Caravan sortable($defaultParameters = null)
  * @method static Builder|Caravan whereCarlength($value)
  * @method static Builder|Caravan whereCarnumber($value)
+ * @method static Builder|Caravan whereCountryId($value)
+ * @method static Builder|Caravan whereEmail($value)
  * @method static Builder|Caravan whereId($value)
  * @mixin Eloquent
- * @property string|null $email
- * @method static CaravanFactory factory(...$parameters)
- * @method static Builder|Caravan whereEmail($value)
- * @property int $country_id
- * @property-read Country $country
- * @method static Builder|Caravan whereCountryId($value)
- * @property-read mixed $text
- * @method static Builder|Caravan caravan(?int $caravanId = null)
- * @method static Builder|Caravan caravanByDates(?int $caravanId = null)
- * @property-read mixed $info
- * @method static Builder|Caravan caravanById(?int $caravanId = null)
- * @method static Builder|Caravan sortable($defaultParameters = null)
  */
 class Caravan extends BaseModel
 {

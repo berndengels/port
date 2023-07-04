@@ -15,14 +15,18 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int $id
  * @property string $name
+ * @property string|null $name_units
  * @property string $type
+ * @property bool $is_time
  * @property string|null $unit
- * @method static ConfigPriceTypeFactory factory(...$parameters)
+ * @method static \Database\Factories\ConfigPriceTypeFactory factory($count = null, $state = [])
  * @method static Builder|ConfigPriceType newModelQuery()
  * @method static Builder|ConfigPriceType newQuery()
  * @method static Builder|ConfigPriceType query()
  * @method static Builder|ConfigPriceType whereId($value)
+ * @method static Builder|ConfigPriceType whereIsTime($value)
  * @method static Builder|ConfigPriceType whereName($value)
+ * @method static Builder|ConfigPriceType whereNameUnits($value)
  * @method static Builder|ConfigPriceType whereType($value)
  * @method static Builder|ConfigPriceType whereUnit($value)
  * @mixin Eloquent

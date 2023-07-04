@@ -17,22 +17,22 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string|null $slug
  * @property string $content
  * @property int $position
+ * @property string|null $class
+ * @property string|null $bgColor
+ * @property string|null $color
+ * @method static \Database\Factories\WidgetFactory factory($count = null, $state = [])
  * @method static Builder|Widget newModelQuery()
  * @method static Builder|Widget newQuery()
  * @method static Builder|Widget query()
+ * @method static Builder|Widget whereBgColor($value)
+ * @method static Builder|Widget whereClass($value)
+ * @method static Builder|Widget whereColor($value)
  * @method static Builder|Widget whereContent($value)
  * @method static Builder|Widget whereId($value)
  * @method static Builder|Widget wherePosition($value)
  * @method static Builder|Widget whereSlug($value)
  * @method static Builder|Widget whereTitle($value)
  * @mixin Eloquent
- * @method static WidgetFactory factory(...$parameters)
- * @property string|null $class
- * @property string|null $bgColor
- * @property string|null $color
- * @method static Builder|Widget whereBgColor($value)
- * @method static Builder|Widget whereClass($value)
- * @method static Builder|Widget whereColor($value)
  */
 class Widget extends BaseModel
 {

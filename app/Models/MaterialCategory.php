@@ -15,15 +15,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  *
  * @property int $id
  * @property string $name
- * @method static MaterialCategoryFactory factory(...$parameters)
+ * @property string|null $modus
+ * @method static \Database\Factories\MaterialCategoryFactory factory($count = null, $state = [])
  * @method static Builder|MaterialCategory newModelQuery()
  * @method static Builder|MaterialCategory newQuery()
  * @method static Builder|MaterialCategory query()
  * @method static Builder|MaterialCategory whereId($value)
+ * @method static Builder|MaterialCategory whereModus($value)
  * @method static Builder|MaterialCategory whereName($value)
  * @mixin Eloquent
- * @property string|null $modus
- * @method static Builder|MaterialCategory whereModus($value)
  */
 class MaterialCategory extends Model
 {

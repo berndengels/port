@@ -11,13 +11,6 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 /**
  * App\Models\ApartmentModel
  *
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Apartment[] $apartments
- * @property-read int|null $apartments_count
- * @method static \Database\Factories\ApartmentModelFactory factory(...$parameters)
- * @method static \Illuminate\Database\Eloquent\Builder|ApartmentModel newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|ApartmentModel newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|ApartmentModel query()
- * @mixin \Eloquent
  * @property int $id
  * @property string $name
  * @property string $description
@@ -27,6 +20,14 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
  * @property int|null $peak_season_price
  * @property int|null $mid_season_price
  * @property int|null $low_season_price
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Apartment> $apartments
+ * @property-read int|null $apartments_count
+ * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \App\Models\Media> $media
+ * @property-read int|null $media_count
+ * @method static \Database\Factories\ApartmentModelFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder|ApartmentModel newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|ApartmentModel newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|ApartmentModel query()
  * @method static \Illuminate\Database\Eloquent\Builder|ApartmentModel whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ApartmentModel whereFloors($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ApartmentModel whereId($value)
@@ -36,6 +37,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
  * @method static \Illuminate\Database\Eloquent\Builder|ApartmentModel wherePeakSeasonPrice($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ApartmentModel whereSleepingPlaces($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ApartmentModel whereSpace($value)
+ * @mixin \Eloquent
  */
 class ApartmentModel extends Model implements HasMedia
 {

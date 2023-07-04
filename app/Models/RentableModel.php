@@ -19,7 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int|null $peak_season_price
  * @property int|null $mid_season_price
  * @property int|null $low_season_price
- * @method static \Database\Factories\RentableModelFactory factory(...$parameters)
+ * @method static \Database\Factories\RentableModelFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|RentableModel newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|RentableModel newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|RentableModel query()

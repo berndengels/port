@@ -192,7 +192,7 @@ return [
                 'help'  => null,
                 'items' => [
                     [
-                        'permissions'   => ['read Boat','write Boat'],
+                        'permissions'   => ['read GuestBoat','write GuestBoat'],
                         'text'  => 'Gäste',
                         'title' => 'Gäste',
                         'icon'  => 'fas fa-concierge-bell',
@@ -201,7 +201,7 @@ return [
                         'help'  => null,
                     ],
                     [
-                        'permissions'   => ['read Boat','write Boat'],
+                        'permissions'   => ['read GuestBoatDates','write GuestBoatDates'],
                         'text'  => 'Gäste Rezeption',
                         'title' => 'Gäste Rezeption',
                         'icon'  => 'fas fa-concierge-bell',

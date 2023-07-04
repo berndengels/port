@@ -21,7 +21,7 @@
 			@foreach($data as $item)
 				<tr>
 					@bindData($item)
-					<x-td field="name"/>
+					<x-td field="name" link="{{ route('admin.guestBoats.show', $item) }}"/>
 					<x-td field="length"/>
 					<x-td field="home_port:md"/>
 					<x-td field="email"/>

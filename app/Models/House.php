@@ -14,10 +14,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int $house_model_id
  * @property string $name
  * @property string|null $calendar_color
- * @property-read \App\Models\HouseModel|null $model
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Rentable[] $rentables
- * @property-read int|null $rentables_count
- * @method static \Database\Factories\HouseFactory factory(...$parameters)
+ * @property-read \App\Models\HouseModel $model
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Rentable> $rentals
+ * @property-read int|null $rentals_count
+ * @method static \Database\Factories\HouseFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|House newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|House newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|House query()
@@ -26,8 +26,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @method static \Illuminate\Database\Eloquent\Builder|House whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|House whereName($value)
  * @mixin \Eloquent
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Rentable[] $rentals
- * @property-read int|null $rentals_count
  */
 class House extends Model
 {

@@ -15,37 +15,37 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  *
  * @property int $id
  * @property string $name
+ * @property string|null $key
+ * @property string|null $mode
  * @property int $from_day
  * @property int $from_month
  * @property int $until_day
  * @property int $until_month
- * @property-read mixed $str_from
- * @property-read mixed $str_until
- * @property Carbon $from
- * @property Carbon $until
+ * @property int|null $from_mday
+ * @property int|null $until_mday
+ * @property-read \App\Models\ConfigBoatPrice|null $boatPrice
+ * @property-read \App\Models\ConfigDailyPrice|null $dailyPrice
+ * @property-read Carbon $from
+ * @property-read string $str_from
+ * @property-read string $str_until
+ * @property-read Carbon $until
+ * @property-read string $valid_from
+ * @property-read mixed $valid_until
+ * @method static \Database\Factories\ConfigSaisonDatesFactory factory($count = null, $state = [])
  * @method static Builder|ConfigSaisonDates newModelQuery()
  * @method static Builder|ConfigSaisonDates newQuery()
  * @method static Builder|ConfigSaisonDates query()
  * @method static Builder|ConfigSaisonDates whereFromDay($value)
+ * @method static Builder|ConfigSaisonDates whereFromMday($value)
  * @method static Builder|ConfigSaisonDates whereFromMonth($value)
  * @method static Builder|ConfigSaisonDates whereId($value)
- * @method static Builder|ConfigSaisonDates whereName($value)
- * @method static Builder|ConfigSaisonDates whereUntilDay($value)
- * @method static Builder|ConfigSaisonDates whereUntilMonth($value)
- * @mixin Eloquent
- * @property-read string $valid_from
- * @property-read mixed $valid_until
- * @property int|null $from_mday
- * @property int|null $until_mday
- * @method static Builder|ConfigSaisonDates whereFromMday($value)
- * @method static Builder|ConfigSaisonDates whereUntilMday($value)
- * @property string|null $key
- * @property string|null $mode
- * @property-read ConfigBoatPrice|null $boatPrice
- * @property-read ConfigDailyPrice|null $dailyPrice
- * @method static ConfigSaisonDatesFactory factory(...$parameters)
  * @method static Builder|ConfigSaisonDates whereKey($value)
  * @method static Builder|ConfigSaisonDates whereMode($value)
+ * @method static Builder|ConfigSaisonDates whereName($value)
+ * @method static Builder|ConfigSaisonDates whereUntilDay($value)
+ * @method static Builder|ConfigSaisonDates whereUntilMday($value)
+ * @method static Builder|ConfigSaisonDates whereUntilMonth($value)
+ * @mixin Eloquent
  */
 class ConfigSaisonDates extends BaseModel
 {

@@ -17,11 +17,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string $name
  * @property string $key
  * @property int|null $unit_inclusive
- * @property string $unit_price
- * @property-read Collection|ConfigHasPriceComponent[] $entities
+ * @property float $unit_price
+ * @property-read Collection<int, \App\Models\ConfigEntity> $entities
  * @property-read int|null $entities_count
- * @property-read ConfigPriceType $priceType
- * @property-read ConfigService|null $service
+ * @property-read \App\Models\ConfigPriceType $priceType
+ * @property-read \App\Models\ConfigService|null $service
+ * @method static \Database\Factories\ConfigPriceComponentFactory factory($count = null, $state = [])
  * @method static Builder|ConfigPriceComponent newModelQuery()
  * @method static Builder|ConfigPriceComponent newQuery()
  * @method static Builder|ConfigPriceComponent query()
@@ -33,7 +34,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @method static Builder|ConfigPriceComponent whereUnitInclusive($value)
  * @method static Builder|ConfigPriceComponent whereUnitPrice($value)
  * @mixin Eloquent
- * @method static ConfigPriceComponentFactory factory(...$parameters)
  */
 class ConfigPriceComponent extends BaseModel
 {

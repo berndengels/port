@@ -19,11 +19,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property float|null $from_unit
  * @property float|null $until_unit
  * @property string $price
- * @property-read Model|Eloquent $affordable
  * @property-read mixed $basename
- * @property-read ConfigPriceType $priceType
- * @property-read ConfigSaisonDates $saison
- * @method static ConfigDailyPriceFactory factory(...$parameters)
+ * @property-read \App\Models\ConfigPriceType $priceType
+ * @property-read \App\Models\ConfigSaisonDates $saison
+ * @method static \Database\Factories\ConfigDailyPriceFactory factory($count = null, $state = [])
  * @method static Builder|ConfigDailyPrice newModelQuery()
  * @method static Builder|ConfigDailyPrice newQuery()
  * @method static Builder|ConfigDailyPrice query()

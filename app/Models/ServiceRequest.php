@@ -21,14 +21,17 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property int $id
  * @property int $boat_id
  * @property string $description
+ * @property \Illuminate\Support\Carbon $done_until
  * @property bool|null $done
- * @property \Illuminate\Support\Carbon|null $done_at
+ * @property string|null $done_at
+ * @property bool|null $is_paid
  * @property \Illuminate\Support\Carbon $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read Boat $boat
- * @property-read Collection|Service[] $services
+ * @property-read \App\Models\Boat $boat
+ * @property-read mixed $price_data
+ * @property-read Collection<int, \App\Models\Service> $services
  * @property-read int|null $services_count
- * @method static ServiceRequestFactory factory(...$parameters)
+ * @method static \Database\Factories\ServiceRequestFactory factory($count = null, $state = [])
  * @method static Builder|ServiceRequest newModelQuery()
  * @method static Builder|ServiceRequest newQuery()
  * @method static Builder|ServiceRequest query()
@@ -37,14 +40,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @method static Builder|ServiceRequest whereDescription($value)
  * @method static Builder|ServiceRequest whereDone($value)
  * @method static Builder|ServiceRequest whereDoneAt($value)
+ * @method static Builder|ServiceRequest whereDoneUntil($value)
  * @method static Builder|ServiceRequest whereId($value)
+ * @method static Builder|ServiceRequest whereIsPaid($value)
  * @method static Builder|ServiceRequest whereUpdatedAt($value)
  * @mixin Eloquent
- * @property mixed $done_until
- * @method static Builder|ServiceRequest whereDoneUntil($value)
- * @property bool|null $is_paid
- * @method static Builder|ServiceRequest whereIsPaid($value)
- * @property-read mixed $price_data
  */
 class ServiceRequest extends Model
 {

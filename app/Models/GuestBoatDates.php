@@ -22,56 +22,49 @@ use Kyslik\ColumnSortable\Sortable;
 /**
  * App\Models\boatGuestDates
  *
- * @method static Builder|GuestBoatDates newModelQuery()
- * @method static Builder|GuestBoatDates newQuery()
- * @method static Builder|GuestBoatDates query()
- * @mixin Eloquent
  * @property int $id
- * @property int $boat_guest_id
+ * @property int $guest_boat_id
+ * @property int|null $berth_id
  * @property Carbon $from
  * @property Carbon $until
  * @property int $persons
  * @property int|null $electric
  * @property int $price
  * @property string $prices
- * @property-read GuestBoat $boat
+ * @property bool $is_paid
+ * @property-read \App\Models\Berth|null $berth
+ * @property-read \App\Models\GuestBoat $boat
+ * @property-read mixed $days
+ * @property-read mixed $price_data
  * @property-read mixed $valid_from
  * @property-read mixed $valid_until
- * @method static GuestBoatDatesFactory factory(...$parameters)
- * @method static Builder|GuestBoatDates filter(?string $name = null)
- * @method static Builder|GuestBoatDates whereBoatGuestId($value)
- * @method static Builder|GuestBoatDates whereDayPrice($value)
+ * @method static Builder|GuestBoatDates dailyPrices()
+ * @method static Builder|GuestBoatDates datesBetween(?\Carbon\Carbon $from = null, ?\Carbon\Carbon $until = null)
+ * @method static \Database\Factories\GuestBoatDatesFactory factory($count = null, $state = [])
+ * @method static Builder|GuestBoatDates filter(?string $name = null, $value = null)
+ * @method static Builder|GuestBoatDates filterDateFrom(?string $name = null, $value = null)
+ * @method static Builder|GuestBoatDates filterDateUntil(?string $name = null, $value = null)
+ * @method static Builder|GuestBoatDates filterMonth(?string $name = null, $value = null)
+ * @method static Builder|GuestBoatDates filterYear(?string $name = null, $value = null)
+ * @method static Builder|GuestBoatDates fromYearMonth(?string $year = null, ?string $month = null)
+ * @method static Builder|GuestBoatDates guestBoat(?int $id = null)
+ * @method static Builder|GuestBoatDates guestBoatById(?int $id = null)
+ * @method static Builder|GuestBoatDates likeFilter(?string $name = null, $value = null)
+ * @method static Builder|GuestBoatDates newModelQuery()
+ * @method static Builder|GuestBoatDates newQuery()
+ * @method static Builder|GuestBoatDates query()
+ * @method static Builder|GuestBoatDates sortable($defaultParameters = null)
+ * @method static Builder|GuestBoatDates whereBerthId($value)
  * @method static Builder|GuestBoatDates whereElectric($value)
  * @method static Builder|GuestBoatDates whereFrom($value)
+ * @method static Builder|GuestBoatDates whereGuestBoatId($value)
  * @method static Builder|GuestBoatDates whereId($value)
+ * @method static Builder|GuestBoatDates whereIsPaid($value)
  * @method static Builder|GuestBoatDates wherePersons($value)
  * @method static Builder|GuestBoatDates wherePrice($value)
  * @method static Builder|GuestBoatDates wherePrices($value)
  * @method static Builder|GuestBoatDates whereUntil($value)
- * @property int $guest_boat_id
- * @property-read int|null $prices_count
- * @method static Builder|GuestBoatDates whereGuestBoatId($value)
- * @method static Builder|GuestBoatDates dailyPrices()
- * @property-read mixed $days
- * @method static Builder|GuestBoatDates fromYearMonth(?string $year = null, ?string $month = null)
- * @method static Builder|GuestBoatDates getMonthsByYears($from = null, $until = null)
- * @method static Builder|GuestBoatDates guestBoat(?int $id = null)
- * @method static Builder|GuestBoatDates guestBoatByDates(?int $id = null)
- * @property int|null $guest_boat_berth_id
- * @property int $is_paid
- * @property-read Berth|null $berth
- * @method static Builder|GuestBoatDates whereGuestBoatBerthId($value)
- * @method static Builder|GuestBoatDates whereIsPaid($value)
- * @property int|null $berth_id
- * @method static Builder|GuestBoatDates whereBerthId($value)
- * @property-read mixed $price_data
- * @method static Builder|GuestBoatDates filterDateFrom(?string $name = null, $value = null)
- * @method static Builder|GuestBoatDates filterDateUntil(?string $name = null, $value = null)
- * @method static Builder|GuestBoatDates likeFilter(?string $name = null, $value = null)
- * @method static Builder|GuestBoatDates filterMonth(?string $name = null, $value = null)
- * @method static Builder|GuestBoatDates filterYear(?string $name = null, $value = null)
- * @method static Builder|GuestBoatDates datesBetween(?\Carbon\Carbon $from = null, ?\Carbon\Carbon $until = null)
- * @method static Builder|GuestBoatDates guestBoatById(?int $id = null)
+ * @mixin Eloquent
  */
 class GuestBoatDates extends BaseModel implements IDatePrice
 {

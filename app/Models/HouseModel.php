@@ -20,9 +20,11 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
  * @property int|null $peak_season_price
  * @property int|null $mid_season_price
  * @property int|null $low_season_price
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\House[] $houses
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\House> $houses
  * @property-read int|null $houses_count
- * @method static \Database\Factories\HouseModelFactory factory(...$parameters)
+ * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \App\Models\Media> $media
+ * @property-read int|null $media_count
+ * @method static \Database\Factories\HouseModelFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|HouseModel newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|HouseModel newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|HouseModel query()

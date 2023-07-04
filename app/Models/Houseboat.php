@@ -16,27 +16,23 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int $id
  * @property int $houseboat_model_id
+ * @property int|null $houseboat_owner_id
  * @property string $name
- * @property-read Collection|HouseboatRentals[] $dates
- * @property-read int|null $dates_count
- * @property-read HouseboatModel|null $model
- * @method static HouseboatFactory factory(...$parameters)
+ * @property string|null $calendar_color
+ * @property-read \App\Models\HouseboatModel $model
+ * @property-read \App\Models\HouseboatOwner|null $owner
+ * @property-read Collection<int, \App\Models\Rentable> $rentals
+ * @property-read int|null $rentals_count
+ * @method static \Database\Factories\HouseboatFactory factory($count = null, $state = [])
  * @method static Builder|Houseboat newModelQuery()
  * @method static Builder|Houseboat newQuery()
  * @method static Builder|Houseboat query()
+ * @method static Builder|Houseboat whereCalendarColor($value)
  * @method static Builder|Houseboat whereHouseboatModelId($value)
+ * @method static Builder|Houseboat whereHouseboatOwnerId($value)
  * @method static Builder|Houseboat whereId($value)
  * @method static Builder|Houseboat whereName($value)
  * @mixin Eloquent
- * @property int|null $houseboat_owner_id
- * @property string|null $calendar_color
- * @property-read HouseboatOwner|null $owner
- * @method static Builder|Houseboat whereCalendarColor($value)
- * @method static Builder|Houseboat whereHouseboatOwnerId($value)
- * @property-read Collection|\App\Models\Rentable[] $rentables
- * @property-read int|null $rentables_count
- * @property-read Collection|\App\Models\Rentable[] $rentals
- * @property-read int|null $rentals_count
  */
 class Houseboat extends Model
 {

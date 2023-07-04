@@ -18,14 +18,21 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string $street
  * @property string $location
  * @property string $postcode
- * @property string $email
- * @property string $fon
- * @method static ConfigSettingsFactory factory(...$parameters)
+ * @property string|null $email
+ * @property string|null $fon
+ * @property string|null $bank
+ * @property string|null $bic
+ * @property string|null $iban
+ * @property float $tax
+ * @property bool $use_tax
  * @method static Builder|ConfigSetting newModelQuery()
  * @method static Builder|ConfigSetting newQuery()
  * @method static Builder|ConfigSetting query()
+ * @method static Builder|ConfigSetting whereBank($value)
+ * @method static Builder|ConfigSetting whereBic($value)
  * @method static Builder|ConfigSetting whereEmail($value)
  * @method static Builder|ConfigSetting whereFon($value)
+ * @method static Builder|ConfigSetting whereIban($value)
  * @method static Builder|ConfigSetting whereId($value)
  * @method static Builder|ConfigSetting whereLat($value)
  * @method static Builder|ConfigSetting whereLng($value)
@@ -33,17 +40,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @method static Builder|ConfigSetting whereName($value)
  * @method static Builder|ConfigSetting wherePostcode($value)
  * @method static Builder|ConfigSetting whereStreet($value)
- * @mixin Eloquent
- * @property string|null $bank
- * @property string|null $bic
- * @property string|null $iban
- * @property float|null $tax
- * @property bool|null $use_tax
- * @method static Builder|ConfigSetting whereBank($value)
- * @method static Builder|ConfigSetting whereBic($value)
- * @method static Builder|ConfigSetting whereIban($value)
  * @method static Builder|ConfigSetting whereTax($value)
  * @method static Builder|ConfigSetting whereUseTax($value)
+ * @mixin Eloquent
  */
 class ConfigSetting extends Model
 {

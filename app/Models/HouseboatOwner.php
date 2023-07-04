@@ -25,9 +25,9 @@ use Illuminate\Support\Carbon;
  * @property string $bic
  * @property Carbon $created_at
  * @property Carbon|null $updated_at
- * @property-read Collection|Houseboat[] $houseboats
+ * @property-read Collection<int, \App\Models\Houseboat> $houseboats
  * @property-read int|null $houseboats_count
- * @method static HouseboatOwnerFactory factory(...$parameters)
+ * @method static \Database\Factories\HouseboatOwnerFactory factory($count = null, $state = [])
  * @method static Builder|HouseboatOwner newModelQuery()
  * @method static Builder|HouseboatOwner newQuery()
  * @method static Builder|HouseboatOwner query()
