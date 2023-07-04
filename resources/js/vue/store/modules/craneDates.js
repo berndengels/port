@@ -87,14 +87,14 @@ const namespaced = true,
 					}
 				}).catch(err => console.error(err));
 		},
-		destroy({commit}, date) {
-			axios.delete('/api/craneDates' + data.id, date)
+		destroy({commit}, data) {
+			axios.delete('/api/craneDates/' + data.id, data)
 				.then(resp => {
 					if (resp.data.errors) {
 						commit("errors", resp.data.errors);
 					} else {
 						commit("errors", null);
-						commit("destroyDate", resp.data.date);
+						commit("destroyDate", resp.data.craneDate);
 					}
 				}).catch(err => console.error(err));
 		},

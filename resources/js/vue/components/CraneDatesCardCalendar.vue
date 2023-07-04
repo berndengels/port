@@ -202,6 +202,7 @@ export default {
 			this.showForm = false;
 		},
 		handleDestroy(data) {
+			console.info("destroy", data)
 			this.destroy(data);
 			this.showForm = false;
 		},
