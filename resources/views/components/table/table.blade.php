@@ -22,6 +22,6 @@
 	</table>
 @else
 	<div class="mt-5">
-		<h5>Keine Daten vorhanden</h5>
+		<h5 class="mt-5">Keine Daten vorhanden</h5>
 	</div>
 @endif
