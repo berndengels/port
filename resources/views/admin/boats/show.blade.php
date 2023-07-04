@@ -25,6 +25,12 @@ $images = $boat->getMedia('boat');
 				<div class="card">
 					<div class="card-header"><strong>Boot {{ $boat->name }}</strong></div>
 					<div class="card-body p-3">
+						@if($boat->berth)
+							<div class="row">
+								<div class="col-3">Liegeplatz</div>
+								<div class="col-auto">{{ $boat->berth->dock->name }} {{ $boat->berth->number }}</div>
+							</div>
+						@endif
 						<div class="row">
 							<div class="col-3">Typ</div>
 							<div class="col-auto">{{ __($boat->type) }}</div>
