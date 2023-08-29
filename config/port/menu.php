@@ -185,7 +185,7 @@ return [
                     ],
                 ],
             ],
-            'Boote'   => [
+            'Gast Boote'   => [
                 'permissions'   => ['read BoatsMenu'],
                 'icon'  => 'fas fa-ship',
                 'hide_on_mobile' => false,
@@ -209,6 +209,23 @@ return [
                         'hide_on_mobile' => false,
                         'help'  => null,
                     ],
+                    [
+                        'permissions'   => ['read ConfigSaisonDates'],
+                        'text'  => 'Saison-Daten',
+                        'title' => 'Saison-Daten',
+                        'icon'  => 'fas fa-gear',
+                        'route' => 'admin.config.saisonDates.customers',
+                        'hide_on_mobile' => true,
+                        'help'  => null,
+                    ],
+                ],
+            ],
+            'Dauerlieger'   => [
+                'permissions'   => ['read BoatsMenu'],
+                'icon'  => 'fas fa-ship',
+                'hide_on_mobile' => false,
+                'help'  => null,
+                'items' => [
                     [
                         'permissions'   => ['read Boat','write Boat'],
                         'text'  => 'Dauerlieger',
