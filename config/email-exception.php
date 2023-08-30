@@ -40,7 +40,7 @@ return [
  */
     'ErrorEmail' => [
 //         'view'                          => 'laravelEmailExceptions::email-exception',
-            'view'                          => 'email-exception.email-exception',
+            'view'                          => 'vendor.email-exception.email-exception',
             'email'                         => env('EXCEPTION_EMAIL_ENABLED', true),
             'dontEmail'                     => [],
             'throttle'                      => true,
