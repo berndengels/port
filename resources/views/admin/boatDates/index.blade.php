@@ -22,14 +22,15 @@
 			<x-form class="inline-form ms-0 my-3" method="get" id="frmFilter" name="frmFilter"
 					action="{{ route('admin.boatDates.index') }}"
 			>
-				<x-filter name="boat" :options="$boatOptions" :val="$boat" inline/>
-				<x-filter name="saison" :options="$saisonOptions" :val="$saison" inline/>
+				<x-form-select name="boat" id="boat" :options="$boatOptions" :default="$boat" floating />
+				<x-form-select name="saison" id="saison" :options="$saisonOptions" :default="$saison" floating />
+
 				<x-form-input :default="$from ? $from->format('Y-m-d') : null" name="from" type="date"
-							  :min="$firstDate->format('Y-m-d')" :max="$lastDate->format('Y-m-d')" inline label="von"
+							  :min="$firstDate->format('Y-m-d')" :max="$lastDate->format('Y-m-d')" floating label="von"
 							  floating />
 				<x-form-input :default="$until ? $until->format('Y-m-d') : null" name="until" type="date"
-							  :min="$firstDate->format('Y-m-d')" :max="$lastDate->format('Y-m-d')" inline label="bis"
-							  floating/>
+							  :min="$firstDate->format('Y-m-d')" :max="$lastDate->format('Y-m-d')" floating label="bis"
+							  floating />
 				<x-btn-reset/>
 			</x-form>
 			{{ $data->appends($queryString)->links() }}
@@ -71,37 +72,15 @@
 	<script>
 		$(document).ready(() => {
 			Edit.toggle("/admin/boatDates/toggle", "is_paid");
-			const frm = document.frmFilter,
-				filter = (e) => {
-					let el = e.target;
-					if ('' === el.value || !el.value) {
-						return;
-					}
-					switch (el.name) {
-						case 'boat':
-							frm.from.value = '';
-							frm.until.value = '';
-							break;
-						case 'from':
-						case 'saison':
-						case 'until':
-							frm.boat.value = '';
-							break
-					}
-					frm.submit()
-				},
-				reset = (e) => {
-					e.preventDefault();
-					document.frmFilter.reset();
-					document.frmFilter.boat.value = '';
-					document.frmFilter.saison.value = '';
-					document.frmFilter.from.value = '';
-					document.frmFilter.until.value = '';
-					document.frmFilter.submit()
-				};
-
-			frm.querySelectorAll('.filter').forEach(item => item.onchange = filter);
-			frm.querySelector('.reset').onclick = reset
+			$(".reset").click(() => {
+				location.href = "{{ route('admin.boatDates.index') }}";
+			});
+			$('#boat').change(() => {
+				document.frmFilter.submit();
+			});
+			$('#saison').change(() => {
+				document.frmFilter.submit();
+			});
 		});
 	</script>
 @endpush

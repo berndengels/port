@@ -10,8 +10,8 @@
 		</div>
 		<x-form class="inline-form my-2" method="get" id="frmFilter" name="frmFilter"
 				action="{{ route('admin.guestBoats.index') }}">
-			<x-filter name="guestBoat" :options="$guestBoatOptions" :val="$guestBoat" inline/>
-			<x-btn-reset/>
+			<x-form-select name="guestBoat" id="guestBoat" :options="$guestBoatOptions" :default="$guestBoat" floating />
+			<x-btn-reset />
 		</x-form>
 		{{ $data->links() }}
 		<x-table :items="$data"
@@ -36,10 +36,13 @@
 
 @push('inline-scripts')
 	<script>
-		$(".reset").click(e => {
-			e.preventDefault();
-//			document.frmFilter.guestBoat.value = '';
-			document.frmFilter.reset();
+		$(document).ready(() => {
+			$(".reset").click(() => {
+				location.href = "{{ route('admin.guestBoats.index') }}";
+			});
+			$('#guestBoat').change(() => {
+				document.frmFilter.submit();
+			});
 		});
 	</script>
 @endpush

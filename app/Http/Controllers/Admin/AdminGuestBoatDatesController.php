@@ -13,7 +13,11 @@ use App\Exports\GuestBoatDatesExport;
 use App\Models\GuestBoat;
 use App\Models\GuestBoatDates;
 use Carbon\Carbon;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -39,11 +43,11 @@ class AdminGuestBoatDatesController extends AdminController
      */
     public function index(Request $request)
     {
-        $guestBoatId  = $request->input('guestBoat');
+        $guestBoat  = $request->input('guestBoat');
         $from   = $request->input('from');
         $until  = $request->input('until');
 
-        if($from) {
+		if($from) {
             $from = Carbon::make($from);
         }
         if($until) {
@@ -51,10 +55,10 @@ class AdminGuestBoatDatesController extends AdminController
         }
 
         if($from || $until) {
-            $guestBoatId = null;
+//            $guestBoat = null;
         }
 
-        if($guestBoatId) {
+        if($guestBoat) {
             $from = null;
             $until = null;
         }
@@ -74,11 +78,11 @@ class AdminGuestBoatDatesController extends AdminController
             $until = $lastDate;
         }
 
-        $data = $query
-            ->guestBoatById($guestBoatId ?? null)
-            ->datesBetween($from, $until)
-        ;
+		if($guestBoat) {
+			$query->whereGuestBoatId($guestBoat);
+		}
 
+		$data = $query->datesBetween($from, $until);
 
         $priceTotal = $query->get()->sum(fn ($item) => $item->price);
         $paginated  = $data->paginate($this->paginatorLimit);
@@ -89,7 +93,7 @@ class AdminGuestBoatDatesController extends AdminController
             'priceTotal'        => $priceTotal,
             'guestBoatOptions'  => $this->guestBoatRepository->options()->getSelectOptions()->prepend('Bitte wählen', null),
             'priceTotal'        => $priceTotal,
-            'guestBoat'         => $guestBoatId,
+            'guestBoat'         => $guestBoat,
             'from'              => $from,
             'until'             => $until,
             'firstDate'         => $firstDate,
@@ -240,7 +244,7 @@ class AdminGuestBoatDatesController extends AdminController
 
     /**
      * @param GuestBoatDates $guestBoatDate
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return Application|Factory|View
      */
     public function printPage(GuestBoatDates $guestBoatDate)
     {
@@ -293,7 +297,7 @@ class AdminGuestBoatDatesController extends AdminController
     /**
      * @param GuestBoatDates $guestBoatDate
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function toggle(GuestBoatDates $guestBoatDate, Request $request)
     {
