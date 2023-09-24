@@ -58,7 +58,7 @@ class AdminBoatDatesController extends AdminController
      */
     public function index(Request $request)
     {
-        $boatId = $request->input('boat');
+        $boat 	= $request->input('boat');
         $saison = $request->input('saison');
         $from   = $request->input('from');
         $until  = $request->input('until');
@@ -70,14 +70,14 @@ class AdminBoatDatesController extends AdminController
             $until = Carbon::make($until);
         }
 
-        if($boatId) {
-            $from   = null;
-            $until  = null;
-            $saison = null;
+        if($boat) {
+//            $from   = null;
+//            $until  = null;
+//            $saison = null;
         }
 
         if($from || $until || $saison) {
-            $boatId = null;
+//            $boatId = null;
         }
 
         /**
@@ -98,11 +98,11 @@ class AdminBoatDatesController extends AdminController
         if($saison) {
             $query->whereModus($saison);
         }
+		if($boat) {
+			$query->whereBoatId($boat);
+		}
 
-        $query
-            ->boatById($boatId ?? null)
-            ->datesBetween($from, $until)
-        ;
+        $query->datesBetween($from, $until);
 
         $paginated  = $query->paginate($this->paginatorLimit);
         $priceTotal = $query->get()->sum(fn ($item) => $item->price);
@@ -114,7 +114,7 @@ class AdminBoatDatesController extends AdminController
             'boatOptions'   => $this->boatRepository->options('name')->getSelectOptions()->prepend('Boot wählen', null),
             'saisonOptions' => $this->boatRepository->getBoatSaisonOptions()->prepend('Alle', ''),
             'priceTotal'    => $priceTotal,
-            'boat'          => $boatId,
+            'boat'          => $boat,
             'saison'        => $saison,
             'from'          => $from,
             'until'         => $until,

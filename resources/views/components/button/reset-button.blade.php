@@ -1,1 +1,1 @@
-<button type="reset" class="{{ $css }}">Reset</button>
+<button type="reset" name="reset" class="reset {{ $css }}">Reset</button>

@@ -22,9 +22,9 @@
 			<x-form class="inline-form ms-0 my-3" method="get" id="frmFilter" name="frmFilter"
 					action="{{ route('admin.caravanDates.index') }}"
 			>
-				<x-filter name="caravan" :options="$caravanOptions" :val="$caravan" inline />
+				<x-form-select name="caravan" :options="$caravanOptions" floating />
 				@if($dublicateOptions)
-					<x-filter name="dublicate" :options="$dublicateOptions" :val="$dublicate" inline />
+					<x-filter name="dublicate" :options="$dublicateOptions" :val="$dublicate" floating />
 				@endif
 				<x-form-input :default="$from ? $from->format('Y-m-d') : null" name="from" type="date"
 							  :min="$firstDate->format('Y-m-d')" :max="$lastDate->format('Y-m-d')" label="von"

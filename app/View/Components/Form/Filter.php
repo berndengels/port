@@ -23,7 +23,8 @@ class Filter extends Component
         public ?string $id = null,
         public ?string $class = null,
         public ?string $val = null,
-        public ?bool $inline = false
+        public ?bool $inline = false,
+        public ?bool $floating = false
     )
     {
         $this->selectedKey = $val;

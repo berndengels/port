@@ -1,10 +1,11 @@
-@if($inline)
-	<div class="form-floating"> @endif
+@if($floating)
+	<div class="form-floating">
+@endif
 		<select name="{{ $name }}" id="{{ $name }}"
 				{!! $attributes->merge([
 						'class' => 'filter form-select form-select-sm h-auto p-2'
-							. (!$inline ? ' mt-1' : '')
-							. ($inline ? ' d-inline-block d-inline-flex' : '')
+							. (!$floating ? ' mt-1' : '')
+							. ($floating ? ' d-inline-block d-inline-flex mt-0' : '')
 							. ($class ? ' '.$class : ''),
 				]) !!}
 		>
@@ -16,5 +17,6 @@
 				{!! $slot !!}
 			@endforelse
 		</select>
-		@if($inline) </div>
+@if($floating)
+	</div>
 @endif

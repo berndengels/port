@@ -19,7 +19,8 @@
 		</div>
 		<x-form class="inline-form ms-0 my-3" method="get" id="frmFilter" name="frmFilter"
 				action="{{ route('admin.guestBoatDates.index') }}">
-			<x-filter name="guestBoat" :options="$guestBoatOptions" :val="$guestBoat" inline/>
+			<x-form-select name="guestBoat" id="guestBoat" :options="$guestBoatOptions" :default="$guestBoat" floating />
+
 			<x-form-input :default="$from ? $from->format('Y-m-d') : null" name="from" type="date"
 						  :min="$firstDate->format('Y-m-d')" :max="$lastDate->format('Y-m-d')" inline label="von"
 						  floating />
@@ -64,36 +65,11 @@
 @push('inline-scripts')
 	<script>
 		Edit.toggle("/admin/guestBoatDates/toggle", "is_paid");
-		const frm = document.frmFilter,
-			filter = (e) => {
-				let el = e.target;
-				if ('' === el.value || !el.name) {
-					return;
-				}
-				switch (el.name) {
-					case 'guestBoat':
-						frm.from.value = '';
-						frm.until.value = '';
-						break;
-					case 'from':
-					case 'until':
-						frm.guestBoat.value = '';
-						break
-				}
-				frm.submit()
-			},
-			reset = (e) => {
-				e.preventDefault();
-				document.frmFilter.reset();
-				document.frmFilter.guestBoat.value = '';
-				document.frmFilter.from.value = '';
-				document.frmFilter.until.value = '';
-				frm.submit()
-			};
-
-		frm.querySelectorAll('.filter').forEach(item => {
-			item.onchange = filter
+		$('#guestBoat').change(() => {
+			document.frmFilter.submit();
 		});
-		frm.querySelector('.reset').onclick = reset
+		$(".reset").click(() => {
+			location.href = "{{ route('admin.guestBoats.index') }}";
+		});
 	</script>
 @endpush
