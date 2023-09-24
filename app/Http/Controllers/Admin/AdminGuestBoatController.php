@@ -25,7 +25,7 @@ class AdminGuestBoatController extends AdminController
      */
     public function index(Request $request)
     {
-        $guestBoat = $request->post('guestBoat');
+        $guestBoat = $request->input('guestBoat');
         $data = GuestBoat::orderBy('name')
             ->guestBoat($guestBoat)
             ->paginate($this->paginatorLimit)
