@@ -181,12 +181,12 @@ export default {
 		}),
 		createDate({start}) {
 			this.selectedDate = moment(start).format('YYYY-MM-DD');
+			window.alert(moment(start).format('HH:mm'));
+
 			this.craneDate = {
-				id: null,
-				cranable_type: null,
-				cranable_id: null,
+				...this.craneDate,
 				crane_date: moment(start).format('YYYY-MM-DD'),
-				crane_time: null
+				crane_time: moment(start).format('HH:mm')
 			};
 			this.showForm = true;
 		},
