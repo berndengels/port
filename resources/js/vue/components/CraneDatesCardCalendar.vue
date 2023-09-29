@@ -181,8 +181,6 @@ export default {
 		}),
 		createDate({start}) {
 			this.selectedDate = moment(start).format('YYYY-MM-DD');
-			window.alert(moment(start).format('HH:mm'));
-
 			this.craneDate = {
 				...this.craneDate,
 				crane_date: moment(start).format('YYYY-MM-DD'),
