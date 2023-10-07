@@ -10,12 +10,12 @@
 # PortManager project
 PHP-Version: >= 8.0\
 MySQL-Version: >= MariaDB 10.6.4\
-GitHub: [https://github.com/berndengels/harbor-manager](https://github.com/berndengels/harbor-manager)  
+GitHub: [https://github.com/berndengels/port](https://github.com/berndengels/port)  
 Test URL: [https://port.segel-helden.de](https://port.segel-helden.de)
 
 # Installation
 - per terminal in your webroot directory  
-git clone https://github.com/berndengels/harbor-manager.git  
+git clone https://github.com/berndengels/port.git  
 - cd harbor-manager
 - copy .env.example to .env  
 - set all credentials, tokens, passwords, urls in .env (DB, EMAIL)
@@ -38,7 +38,7 @@ in working directory run:
 - npm install
 - npm run dev
 - php artisan storage:link
-- prepere your webserver: create virtual server host (https://harbor-manager.test) **important: use https** 
+- prepere your webserver: create virtual server host (https://port.test) **important: use https** 
 - start http- and mysql-server
 - open app-url in browser
 

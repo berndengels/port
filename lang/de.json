@@ -58,7 +58,8 @@
 	"permanent": "Dauerlieger",
 	"renter": "Mieter",
 	"guest": "Caravans",
-	"customer": "Boote",
+	"customer": "Kunde",
+	"customer-demo": "Demo-Kunde",
 	"Germany": "Deutschland",
 	"Remove file": "Datei löschen"
 }
