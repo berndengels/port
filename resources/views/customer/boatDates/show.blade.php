@@ -15,30 +15,30 @@
 				<div class="col-11 col-lg-4">
 					<div class="card">
 						<div class="card-header">
-							<trong>Boot {{ $boatDate->boat->name }}</trong>
+							<strong>Boot {{ $boatDate->boat->name }}</strong>
 						</div>
 						<div class="card-body p-3">
 							<div class="row">
-								<div class="col-2">Type</div>
+								<div class="col-3">Type</div>
 								<div class="col-auto">{{ __($boatDate->boat->type) }}</div>
 							</div>
 							<div class="row">
-								<div class="col-2">Länge</div>
+								<div class="col-3">Länge</div>
 								<div class="col-auto">{{ $boatDate->boat->length }} m</div>
 							</div>
 							<div class="row">
-								<div class="col-2">Breite</div>
+								<div class="col-3">Breite</div>
 								<div class="col-auto">{{ $boatDate->boat->width }} m</div>
 							</div>
 							<div class="row">
-								<div class="col-2">Gewicht</div>
+								<div class="col-3">Gewicht</div>
 								<div class="col-auto">{{ $boatDate->boat->weight/1000 }} T</div>
 							</div>
 						</div>
 					</div>
 				</div>
 
-				<div class="col-11 col-lg-2">
+				<div class="col-11 col-lg-4">
 					<div class="card">
 						<div class="card-header"><strong>Saison {{ __($boatDate->modus) }}</strong></div>
 						<div class="card-body p-3">

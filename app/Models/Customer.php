@@ -15,6 +15,8 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
+use Laravel\Sanctum\PersonalAccessToken;
 use Spatie\Permission\Traits\HasPermissions;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -35,20 +37,24 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string|null $postcode
  * @property string|null $city
  * @property bool|null $confirmed
- * @property-read Collection<int, \App\Models\Boat> $boats
+ * @property-read Collection<int, Boat> $boats
  * @property-read int|null $boats_count
+ * @property-read Collection<int, CraneDate> $craneDates
+ * @property-read int|null $crane_dates_count
  * @property-read mixed $address
  * @property-read mixed $fon_link
  * @property-read mixed $str_roles
  * @property-read DatabaseNotificationCollection<int, DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
- * @property-read Collection<int, \App\Models\Permission> $permissions
+ * @property-read Collection<int, Permission> $permissions
  * @property-read int|null $permissions_count
- * @property-read Collection<int, \App\Models\Rentable> $rentals
+ * @property-read Collection<int, Rentable> $rentals
  * @property-read int|null $rentals_count
- * @property-read Collection<int, \App\Models\Role> $roles
+ * @property-read Collection<int, Role> $roles
  * @property-read int|null $roles_count
- * @method static \Database\Factories\CustomerFactory factory($count = null, $state = [])
+ * @property-read Collection<int, PersonalAccessToken> $tokens
+ * @property-read int|null $tokens_count
+ * @method static CustomerFactory factory($count = null, $state = [])
  * @method static Builder|Customer newModelQuery()
  * @method static Builder|Customer newQuery()
  * @method static Builder|Customer permission($permissions)
@@ -70,15 +76,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Customer extends Authenticatable
 {
-    use CanResetPassword;
-    use ClearCache;
-    use Dispatchable;
-    use HasFactory;
-    use HasRoles;
-    use HasPermissions;
-    use Notifiable;
-    use ThrottlesLogins;
-    use UseBooleanIcon;
+    use CanResetPassword,
+    	ClearCache,
+    	Dispatchable,
+    	HasFactory,
+    	HasRoles,
+    	HasPermissions,
+    	Notifiable,
+    	ThrottlesLogins,
+    	UseBooleanIcon,
+		HasApiTokens;
 
     protected $table = 'customers';
     protected $guard_name = 'customer';
@@ -104,6 +111,11 @@ class Customer extends Authenticatable
     {
         return $this->hasMany(Rentable::class);
     }
+
+	public function craneDates()
+	{
+		return $this->boats->map(fn($d) => $d->craneDates);
+	}
 
     public function getFonLinkAttribute()
     {

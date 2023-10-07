@@ -18,16 +18,20 @@
 	<!-- Fonts -->
 	@googlefonts('poppins')
 	<!-- Styles -->
-	@auth()
+	@auth('admin')
 		<link rel="stylesheet" href="{{ mix('css/app-admin.css') }}">
+	@elseauth('customer')
+		<link rel="stylesheet" href="{{ mix('css/app-customer.css') }}">
 	@else
 		<link rel="stylesheet" href="{{ mix('css/app.css') }}">
 	@endauth
 	@stack('styles')
 	<!-- Scripts -->
 	@stack('scripts')
-	@auth()
+	@auth('admin')
 		<script src="{{ mix('js/app-admin.js') }}"></script>
+	@elseauth('customer')
+		<script src="{{ mix('js/app-customer.js') }}"></script>
 	@else
 		<script src="{{ mix('js/app.js') }}"></script>
 	@endauth

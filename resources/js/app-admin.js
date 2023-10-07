@@ -36,7 +36,7 @@ window.emitter = emitter;
 
 import AdminDashboard from "v@/views/admin/Dashboard"
 import AdminBerths from "v@/views/admin/Berths"
-import AdminCraneDates from "v@/views/admin/CraneDates"
+import CraneDates from "v@/views/admin/CraneDates"
 
 window.MyForm = new MyForm;
 window.Prices = new Prices;
@@ -94,21 +94,24 @@ $(document).ready(function () {
 	});
 
 	let app;
+	const adminDashboard = document.getElementById('adminDashboard'),
+		adminBerths = document.getElementById('adminBerths'),
+		craneDates =  document.getElementById('craneDates');
 	switch (true) {
-		case $("#adminDashboard").is(":visible"):
+		case $(adminDashboard).is(":visible"):
 			app = createApp(AdminDashboard).use(store);
 			app.config.globalProperties.emitter = emitter;
-			app.mount("#adminDashboard");
+			app.mount(adminDashboard);
 			break;
-		case $("#adminBerths").is(":visible"):
+		case $(adminBerths).is(":visible"):
 			app = createApp(AdminBerths).use(store);
 			app.config.globalProperties.emitter = emitter;
-			app.mount("#adminBerths");
+			app.mount(adminBerths);
 			break
-		case $("#adminCraneDates").is(":visible"):
-			app = createApp(AdminCraneDates).use(store);
+		case $(craneDates).is(":visible"):
+			app = createApp(CraneDates).use(store);
 			app.config.globalProperties.emitter = emitter;
-			app.mount("#adminCraneDates");
+			app.mount(craneDates);
 			break
 	}
 	$('.btn-print').click((e) => {

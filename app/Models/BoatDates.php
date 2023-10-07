@@ -27,9 +27,9 @@ use Kyslik\ColumnSortable\Sortable;
  * @property Carbon $from
  * @property Carbon $until
  * @property int $price
- * @property string $prices
+ * @property mixed $prices
  * @property bool $is_paid
- * @property-read \App\Models\Boat $boat
+ * @property-read Boat $boat
  * @property-read mixed $base_price
  * @property-read mixed $cleaning
  * @property-read mixed $crane
@@ -47,7 +47,7 @@ use Kyslik\ColumnSortable\Sortable;
  * @method static Builder|BoatDates boat(?int $id = null)
  * @method static Builder|BoatDates boatById(?int $id = null)
  * @method static Builder|BoatDates datesBetween(?\Carbon\Carbon $from = null, ?\Carbon\Carbon $until = null)
- * @method static \Database\Factories\BoatDatesFactory factory($count = null, $state = [])
+ * @method static BoatDatesFactory factory($count = null, $state = [])
  * @method static Builder|BoatDates fromYearMonth(?string $year = null, ?string $month = null)
  * @method static Builder|BoatDates newModelQuery()
  * @method static Builder|BoatDates newQuery()

@@ -75,6 +75,7 @@ use App\Http\Controllers\Admin\AdminConfigSaisonDatesController;
 use App\Http\Controllers\Admin\AdminHolydayController;
 use App\Http\Controllers\Admin\AdminAccessLogController;
 use App\Http\Controllers\CraneDateController;
+use App\Http\Controllers\TestController;
 
 Auth::routes();
 
@@ -350,6 +351,7 @@ Route::group([
     Route::delete('apartmentRentals/{rental}',[AdminApartmentRentalsController::class,'destroy'])->name('apartmentRentals.destroy');
     Route::resource('apartmentRentals', AdminApartmentRentalsController::class)->only(['index','create']);
 });
+Route::resource('test', TestController::class);
 
 
 Route::fallback(function () {

@@ -1,6 +1,8 @@
 <?php
 namespace App\Models;
 
+use App\Notifications\CraneDateRequest;
+use Database\Factories\AdminUserFactory;
 use Eloquent;
 use App\Traits\Models\ClearCache;
 use Database\Factories\CustomerFactory;
@@ -39,13 +41,13 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read mixed $str_roles
  * @property-read DatabaseNotificationCollection<int, DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
- * @property-read Collection<int, \App\Models\Permission> $permissions
+ * @property-read Collection<int, Permission> $permissions
  * @property-read int|null $permissions_count
- * @property-read Collection<int, \App\Models\Role> $roles
+ * @property-read Collection<int, Role> $roles
  * @property-read int|null $roles_count
  * @property-read Collection<int, PersonalAccessToken> $tokens
  * @property-read int|null $tokens_count
- * @method static \Database\Factories\AdminUserFactory factory($count = null, $state = [])
+ * @method static AdminUserFactory factory($count = null, $state = [])
  * @method static Builder|AdminUser newModelQuery()
  * @method static Builder|AdminUser newQuery()
  * @method static Builder|AdminUser permission($permissions)
@@ -124,13 +126,13 @@ class AdminUser extends Authenticatable
     }
 
     /**
-     * Route notifications for the Nexmo channel.
+     * Route notifications for the Vonage channel.
      *
      * @param  Notification  $notification
      * @return string
      */
-    public function routeNotificationForNexmo($notification)
-    {
-        return $this->fon;
-    }
+	public function routeNotificationForVonage(CraneDateRequest $notification): string
+	{
+		return env('MASTER_FON');
+	}
 }

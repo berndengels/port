@@ -9,6 +9,7 @@ use App\Models\Boat;
 use App\Models\CraneDate;
 use App\Models\GuestBoat;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class AdminCraneDateController extends Controller
 {
@@ -18,15 +19,10 @@ class AdminCraneDateController extends Controller
         'App\\Models\\Boat'  => 'Dauerlieger',
     ];
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -37,8 +33,8 @@ class AdminCraneDateController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\CraneDate  $craneDate
-     * @return \Illuminate\Http\Response
+     * @param CraneDate $craneDate
+     * @return Response
      */
     public function show(CraneDate $craneDate)
     {
@@ -48,7 +44,7 @@ class AdminCraneDateController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -61,13 +57,13 @@ class AdminCraneDateController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  StoreCraneDateRequest  $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function store(StoreCraneDateRequest $request)
     {
         try {
             CraneDate::create($request->validated());
-            return redirect()->route('admin.craneDates.index')->with(['success' => "Krantermin erfolgreich gelöscht!"]);
+            return redirect()->route('admin.craneDates.index')->with(['success' => "Krantermin erfolgreich erstellt!"]);
         } catch(Exception $e) {
             return back()->with(['error' => $e->getMessage()]);
         }
@@ -76,8 +72,8 @@ class AdminCraneDateController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\CraneDate  $craneDate
-     * @return \Illuminate\Http\Response
+     * @param CraneDate $craneDate
+     * @return Response
      */
     public function edit(CraneDate $craneDate)
     {
@@ -91,8 +87,8 @@ class AdminCraneDateController extends Controller
      * Update the specified resource in storage.
      *
      * @param  UpdateCraneDateRequest  $request
-     * @param  \App\Models\CraneDate  $craneDate
-     * @return \Illuminate\Http\Response
+     * @param CraneDate $craneDate
+     * @return Response
      */
     public function update(UpdateCraneDateRequest $request, CraneDate $craneDate)
     {
@@ -107,13 +103,12 @@ class AdminCraneDateController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\CraneDate  $craneDate
-     * @return \Illuminate\Http\Response
+     * @param CraneDate $craneDate
+     * @return Response
      */
     public function destroy(CraneDate $craneDate)
     {
         try {
-            $data = $craneDate;
             $craneDate->delete();
             return redirect()->route('admin.craneDates.index')->with(['success' => "Krantermin erfolgreich gelöscht!"]);
         } catch(Exception $e) {
