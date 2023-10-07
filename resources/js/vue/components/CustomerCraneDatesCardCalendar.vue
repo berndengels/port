@@ -215,7 +215,9 @@ export default {
 		},
 		onEventClick({event}) {
 			if(-1 === $.inArray(parseInt(event.id), this.customerDates)) {
-//				return false;
+				alert('Fremder Krane-Termine');
+				this.showForm = false;
+				return false;
 			}
 			this.selectedDate = moment(event.start).format('YYYY-MM-DD');
 			const p = event.extendedProps;
@@ -233,6 +235,9 @@ export default {
 			this.showForm = true;
 		},
 		onEventDrop({event, oldEvent, view}) {
+			if(-1 === $.inArray(parseInt(event.id), this.customerDates)) {
+				return false;
+			}
 			let props = oldEvent.extendedProps;
 //			this.showForm = false;
 			const startTime = moment(event.start).clone().format('HH:mm'),
