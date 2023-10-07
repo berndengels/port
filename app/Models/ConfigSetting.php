@@ -18,13 +18,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string $street
  * @property string $location
  * @property string $postcode
- * @property string|null $email
- * @property string|null $fon
+ * @property string $email
+ * @property string $fon
  * @property string|null $bank
  * @property string|null $bic
  * @property string|null $iban
- * @property float $tax
- * @property bool $use_tax
+ * @property float|null $tax
+ * @property bool|null $use_tax
  * @method static Builder|ConfigSetting newModelQuery()
  * @method static Builder|ConfigSetting newQuery()
  * @method static Builder|ConfigSetting query()

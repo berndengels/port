@@ -27,9 +27,7 @@ return [
     */
 
     'api_key' => env('VONAGE_KEY'),
-
     'api_secret' => env('VONAGE_SECRET'),
-
     'application_id' =>  env('VONAGE_APPLICATION_ID'),
 
     /*

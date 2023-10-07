@@ -82,6 +82,7 @@ class AdminLoginController extends DefaultLoginController
             $request->filled('remember')
         )
         ) {
+			// check api-token
             //Authenticated
             return redirect()
                 ->intended(route('admin.dashboard'))

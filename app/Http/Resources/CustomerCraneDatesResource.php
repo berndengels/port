@@ -6,7 +6,7 @@ use App\Models\CraneDate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CraneDatesResource extends JsonResource
+class CustomerCraneDatesResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -29,7 +29,7 @@ class CraneDatesResource extends JsonResource
             'title'     => $this->cranable->name,
             'allDay'    => false,
 			'start'     => $this->date,
-			'editable'	=> $editable,
+			'editable'	=> true,
 			'backgroundColor'	=> $editable ? 'green' : 'red',
             'extendedProps' => [
 				'id'        => $this->id,
