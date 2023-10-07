@@ -19,16 +19,8 @@
 					</div>
 					<div v-show="showForm" class="ms-sm-0 ms-lg-2">
 						<form class="mt-5" @submit.prevent>
-							<input id="id" v-model="craneDate.id" class="form-control" name="id" type="hidden"/>
-							<div class="form-floating">
-								<select id="cranable_type" v-model="craneDate.cranable_type" class="form-select"
-								        @change="getBoats(craneDate.cranable_type)">
-									<option v-for="item in cranableTypeOptions" :key="item.id" :value="item.id">
-										{{ item.name }}
-									</option>
-								</select>
-								<label for="cranable_type">Art</label>
-							</div>
+							<input v-model="craneDate.id" class="form-control" name="id" type="hidden"/>
+							<input v-model="craneDate.cranable_type" class="form-control" name="cranable_type" type="hidden"/>
 							<div class="form-floating mt-2">
 								<select id="cranable_id" v-model="craneDate.cranable_id" class="form-select">
 									<option value="">--Boot wählen--</option>
@@ -82,10 +74,11 @@ import multiMonthPlugin from '@fullcalendar/multimonth'
 import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
 
 export default {
-	name: "CraneDatesCardCalendar",
+	name: "CustomerCraneDatesCardCalendar",
 	components: { FullCalendar, PulseLoader },
 	props: {
 		title: String,
+		cranableType: String,
 	},
 	data() {
 		return {
@@ -105,9 +98,10 @@ export default {
 			return this.$refs.fullCalendar.getApi()
 		},
 		...mapGetters({
+			date: "craneDates/date",
+			customerDates: "craneDates/customerDates",
 			events: "craneDates/dates",
 			boats: "craneDates/boats",
-			cranableTypeOptions: "craneDates/cranableTypeOptions",
 			errors: "craneDates/errors",
 			loading: "craneDates/loading",
 		}),
@@ -167,6 +161,7 @@ export default {
 //				eventDragStop: this.onDragStop,
 				eventDrop: this.onEventDrop,
 				eventClick: this.onEventClick,
+//				eventAllow: this.handlePermissions,
 				navLinkDayClick: this.onNavClick,
 				navLinkWeekClick: this.onNavClick,
 				datesSet: this.handleNavChange,
@@ -182,12 +177,25 @@ export default {
 		}),
 		createDate({start}) {
 			this.selectedDate = moment(start).format('YYYY-MM-DD');
+
+			if(this.date.cranable_type) {
+				this.craneDate.cranable_type = this.date.cranable_type;
+			}
+
+			if(this.date.cranable_id) {
+				this.craneDate.cranable_id = this.date.cranable_id;
+			}
+
 			this.craneDate = {
 				...this.craneDate,
 				crane_date: moment(start).format('YYYY-MM-DD'),
 				crane_time: moment(start).format('HH:mm')
 			};
 			this.showForm = true;
+			console.info('craneDate', this.craneDate);
+		},
+		handlePermissions(info, draggedEvent) {
+			console.info('info', info);
 		},
 		handleNavChange({start, startStr, view}) {
 //			this.showForm = false;
@@ -206,8 +214,11 @@ export default {
 			this.showForm = false;
 		},
 		onEventClick({event}) {
-			const p = event.extendedProps;
+			if(-1 === $.inArray(parseInt(event.id), this.customerDates)) {
+//				return false;
+			}
 			this.selectedDate = moment(event.start).format('YYYY-MM-DD');
+			const p = event.extendedProps;
 			this.craneDate = {
 				id: p.id,
 				cranable_type: p.cranable_type,
@@ -236,12 +247,6 @@ export default {
 
 			if("timeGridDay" === view.type) {
 				this.craneDate.crane_time = startTime;
-			}
-		},
-		onChange(e) {
-			let $el = $(e.target);
-			if ('cranable_type' === $el.attr('name')) {
-				this.$store.dispatch("craneDates/getBoats", $el.val());
 			}
 		},
 		addslashes(str) {

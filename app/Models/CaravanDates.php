@@ -27,10 +27,11 @@ use Kyslik\ColumnSortable\Sortable;
  * @property Carbon $until
  * @property int $persons
  * @property int|null $electric
+ * @property int|null $day_price
  * @property int $price
- * @property string $prices
+ * @property mixed $prices
  * @property bool $is_paid
- * @property-read \App\Models\Caravan $caravan
+ * @property-read Caravan $caravan
  * @property-read mixed $days
  * @property-read mixed $price_data
  * @property-read mixed $valid_from
@@ -40,7 +41,7 @@ use Kyslik\ColumnSortable\Sortable;
  * @method static Builder|CaravanDates dailyPrices()
  * @method static Builder|CaravanDates datesBetween(?\Carbon\Carbon $from = null, ?\Carbon\Carbon $until = null)
  * @method static Builder|CaravanDates dublicates()
- * @method static \Database\Factories\CaravanDatesFactory factory($count = null, $state = [])
+ * @method static CaravanDatesFactory factory($count = null, $state = [])
  * @method static Builder|CaravanDates fromYearMonth(?string $year = null, ?string $month = null)
  * @method static Builder|CaravanDates newModelQuery()
  * @method static Builder|CaravanDates newQuery()
@@ -48,6 +49,7 @@ use Kyslik\ColumnSortable\Sortable;
  * @method static Builder|CaravanDates query()
  * @method static Builder|CaravanDates sortable($defaultParameters = null)
  * @method static Builder|CaravanDates whereCaravanId($value)
+ * @method static Builder|CaravanDates whereDayPrice($value)
  * @method static Builder|CaravanDates whereElectric($value)
  * @method static Builder|CaravanDates whereFrom($value)
  * @method static Builder|CaravanDates whereId($value)

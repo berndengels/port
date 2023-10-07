@@ -2,8 +2,12 @@
 
 namespace App\Models;
 
+use App\Traits\Models\HasCustomer;
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 /**
  * App\Models\CraneDate
@@ -11,24 +15,28 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property string $cranable_type
  * @property int $cranable_id
- * @property \Illuminate\Support\Carbon|null $date
- * @property \Illuminate\Support\Carbon $crane_date
+ * @property Carbon|null $date
+ * @property Carbon $crane_date
  * @property string|null $crane_time
- * @property-read Model|\Eloquent $cranable
- * @method static \Illuminate\Database\Eloquent\Builder|CraneDate newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|CraneDate newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|CraneDate query()
- * @method static \Illuminate\Database\Eloquent\Builder|CraneDate whereCranableId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CraneDate whereCranableType($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CraneDate whereCraneDate($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CraneDate whereCraneTime($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CraneDate whereDate($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CraneDate whereId($value)
- * @mixin \Eloquent
+ * @property int|null $created_by
+ * @property int|null $updated_by
+ * @property-read Model|Eloquent $cranable
+ * @method static Builder|CraneDate newModelQuery()
+ * @method static Builder|CraneDate newQuery()
+ * @method static Builder|CraneDate query()
+ * @method static Builder|CraneDate whereCranableId($value)
+ * @method static Builder|CraneDate whereCranableType($value)
+ * @method static Builder|CraneDate whereCraneDate($value)
+ * @method static Builder|CraneDate whereCraneTime($value)
+ * @method static Builder|CraneDate whereCreatedBy($value)
+ * @method static Builder|CraneDate whereDate($value)
+ * @method static Builder|CraneDate whereId($value)
+ * @method static Builder|CraneDate whereUpdatedBy($value)
+ * @mixin Eloquent
  */
 class CraneDate extends Model
 {
-    use HasFactory;
+    use HasFactory, HasCustomer;
 
     protected $table = 'crane_dates';
     protected $guarded = ['id'];
@@ -42,4 +50,9 @@ class CraneDate extends Model
     {
         return $this->morphTo();
     }
+
+	public function customer()
+	{
+		return app($this->cranable_type)::find($this->cranable_id)->first()->customer;
+	}
 }

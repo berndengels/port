@@ -1,6 +1,9 @@
 <?php
 
 return [
+	'master' => [
+		'email'	=> env('MASTER_EMAIL', null),
+	],
     'default'   => [
         'country_id'    => env('DEFAULT_COUNTRY_ID', 55),
         'pagination'    => [
@@ -18,6 +21,10 @@ return [
             'apartment' => 'apartment',
 */
         ],
+		'typeModels'         => [
+			'guest'     => 'guest',
+			'permanent' => 'permanent',
+		],
         'typeOptions'   => [
             'guest'     => 'Gastboot',
             'permanent' => 'Dauerlieger Boot',

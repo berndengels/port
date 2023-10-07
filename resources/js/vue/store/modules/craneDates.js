@@ -7,6 +7,7 @@ const namespaced = true,
 			crane_date: null,
 			crane_time: null
 		},
+		customerDates: null,
 		dates: null,
 		boats: null,
 		cranableTypeOptions: null,
@@ -14,6 +15,8 @@ const namespaced = true,
 		loading: true,
 	},
 	getters = {
+		date: (state) => state.date,
+		customerDates: (state) => state.customerDates,
 		dates: (state) => state.dates,
 		boats: (state) => state.boats,
 		cranableTypeOptions: (state) => state.cranableTypeOptions,
@@ -25,11 +28,21 @@ const namespaced = true,
 			state.dates = dates
 			state.loading = false
 		},
+		setCustomerDates(state, dates) {
+			state.customerDates = dates
+			state.loading = false
+		},
 		setBoats(state, boats) {
 			state.boats = boats
 		},
 		setCranableTypeOptions(state, cranableTypeOptions) {
 			state.cranableTypeOptions = cranableTypeOptions
+		},
+		setCranableType(state, cranableType) {
+			state.date.cranable_type = cranableType
+		},
+		setCranableId(state, cranableId) {
+			state.date.cranable_id = cranableId
 		},
 		storeDate(state, date) {
 			state.dates.push(date)
@@ -53,7 +66,16 @@ const namespaced = true,
 				.then(resp => {
 					if (resp.data) {
 						commit("setDates", resp.data.dates);
-						commit("setCranableTypeOptions", resp.data.cranableTypeOptions);
+						if(resp.data.cranableTypeOptions) {
+							commit("setCranableTypeOptions", resp.data.cranableTypeOptions);
+						}
+						if(resp.data.cranableType && resp.data.customerDates) {
+							commit("setCranableType", resp.data.cranableType);
+							commit("setCustomerDates", resp.data.customerDates);
+						}
+						if(resp.data.boats) {
+							commit("setBoats", resp.data.boats);
+						}
 					}
 				}).catch(err => console.error(err));
 		},

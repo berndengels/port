@@ -19,17 +19,14 @@ use Kyslik\ColumnSortable\Sortable;
  *
  * @property int $id
  * @property string $name
+ * @property string $length
  * @property string $home_port
  * @property string|null $email
- * @property string $length
- * @property int|null $weight
- * @property string|null $draft
- * @property string|null $type
- * @property-read Collection<int, \App\Models\CraneDate> $craneDates
+ * @property-read Collection<int, CraneDate> $craneDates
  * @property-read int|null $crane_dates_count
- * @property-read Collection<int, \App\Models\GuestBoatDates> $dates
+ * @property-read Collection<int, GuestBoatDates> $dates
  * @property-read int|null $dates_count
- * @method static \Database\Factories\GuestBoatFactory factory($count = null, $state = [])
+ * @method static GuestBoatFactory factory($count = null, $state = [])
  * @method static Builder|GuestBoat filter(?string $name = null, $value = null)
  * @method static Builder|GuestBoat filterDateFrom(?string $name = null, $value = null)
  * @method static Builder|GuestBoat filterDateUntil(?string $name = null, $value = null)
@@ -42,14 +39,11 @@ use Kyslik\ColumnSortable\Sortable;
  * @method static Builder|GuestBoat newQuery()
  * @method static Builder|GuestBoat query()
  * @method static Builder|GuestBoat sortable($defaultParameters = null)
- * @method static Builder|GuestBoat whereDraft($value)
  * @method static Builder|GuestBoat whereEmail($value)
  * @method static Builder|GuestBoat whereHomePort($value)
  * @method static Builder|GuestBoat whereId($value)
  * @method static Builder|GuestBoat whereLength($value)
  * @method static Builder|GuestBoat whereName($value)
- * @method static Builder|GuestBoat whereType($value)
- * @method static Builder|GuestBoat whereWeight($value)
  * @mixin Eloquent
  */
 class GuestBoat extends BaseModel

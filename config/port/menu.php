@@ -88,7 +88,7 @@ return [
                         ],
                     ],
                 ],
-                'Service Anfragen' => [
+                'Services' => [
                     'permissions'   => ['read ServiceMenu'],
                     'icon'  => 'fas fa-ship',
                     'hide_on_mobile' => false,
@@ -103,6 +103,15 @@ return [
                             'hide_on_mobile' => false,
                             'help'  => null,
                         ],
+						[
+							'permissions'   => ['read CraneDate', 'write CraneDate'],
+							'text'  => 'Kranen',
+							'title' => 'Kranen',
+							'icon'  => null,
+							'route' => 'customer.craneDates.index',
+							'hide_on_mobile' => false,
+							'help'  => null,
+						],
                     ],
                 ],
             ],
@@ -245,7 +254,7 @@ return [
                         'help'  => null,
                     ],
                     [
-                        'permissions'   => ['read CraneDate'],
+                        'permissions'   => ['read CraneDate', 'write CraneDate'],
                         'text'  => 'Krantermine',
                         'title' => 'Krantermine',
                         'icon'  => 'fas fa-gear',

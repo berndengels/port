@@ -3,9 +3,14 @@ import Weather from "./Libs/Weather";
 import Message from "./Libs/Message";
 import {createApp} from "vue"
 import store from "./vue/store"
+import mitt from 'mitt';
+
+const emitter = mitt();
+window.emitter = emitter;
+
 import BookingCalendar from "v@/views/public/BookingCalendar.vue";
 import BookingBerth from "v@/views/public/BookingBerth.vue";
-import CustomerCraneDates from "v@/views/customer/CraneDates"
+import CraneDates from "v@/views/customer/CraneDates"
 
 window.Weather = new Weather;
 window.Message = new Message;

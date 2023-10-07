@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'guard' => 'admin',
+    'guard' => ['admin','customer'],
     /*
     |--------------------------------------------------------------------------
     | Stateful Domains

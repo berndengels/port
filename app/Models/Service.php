@@ -20,13 +20,13 @@ use Illuminate\Support\Carbon;
  * @property int $service_category_id
  * @property int $price_type_id
  * @property string $name
- * @property int|null $quantity
+ * @property int $quantity
  * @property string $price
- * @property-read \App\Models\ServiceCategory $category
- * @property-read Collection<int, \App\Models\Material> $materials
+ * @property-read ServiceCategory $category
+ * @property-read Collection<int, Material> $materials
  * @property-read int|null $materials_count
- * @property-read \App\Models\ConfigPriceType $priceType
- * @method static \Database\Factories\ServiceFactory factory($count = null, $state = [])
+ * @property-read ConfigPriceType $priceType
+ * @method static ServiceFactory factory($count = null, $state = [])
  * @method static Builder|Service newModelQuery()
  * @method static Builder|Service newQuery()
  * @method static Builder|Service query()

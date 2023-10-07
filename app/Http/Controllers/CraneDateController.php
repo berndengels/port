@@ -2,84 +2,106 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AdminUser;
 use App\Models\CraneDate;
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreCraneDateRequest;
+use App\Http\Requests\UpdateCraneDateRequest;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Response;
 
 class CraneDateController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
-        //
+		return view('customer.craneDates.index');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\CraneDate  $boatCraneDate
-     * @return \Illuminate\Http\Response
+     * @param CraneDate $craneDate
+     * @return Response
      */
-    public function show(CraneDate $boatCraneDate)
+    public function show(CraneDate $craneDate)
     {
-        //
+		return view('customer.craneDates.show', compact('craneDate'));
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
-        //
+		return view('customer.craneDates.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  StoreCraneDateRequest  $request
+     * @return Response
      */
-    public function store(Request $request)
+    public function store(StoreCraneDateRequest $request)
     {
-        //
+		try {
+			CraneDate::create($request->validated());
+			return redirect()->route('customer.craneDates.index')->with(['success' => "Krantermin erfolgreich erstellt!"]);
+		} catch(Exception $e) {
+			return back()->with(['error' => $e->getMessage()]);
+		}
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\CraneDate  $boatCraneDate
-     * @return \Illuminate\Http\Response
+     * @param CraneDate $craneDate
+     * @return Response
      */
-    public function edit(CraneDate $boatCraneDate)
+    public function edit(CraneDate $craneDate)
     {
-        //
+		return view('customer.craneDates.create', [
+			'craneDate'    => $craneDate,
+		]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\CraneDate  $boatCraneDate
-     * @return \Illuminate\Http\Response
+     * @param  UpdateCraneDateRequest  $request
+     * @param CraneDate $craneDate
+     * @return Response
      */
-    public function update(Request $request, CraneDate $boatCraneDate)
+    public function update(UpdateCraneDateRequest $request, CraneDate $craneDate)
     {
-        //
+		try {
+			$craneDate->update($request->validated());
+			return redirect()->route('customer.craneDates.index')->with(['success' => "Krantermin erfolgreich bearbeitet!"]);
+		} catch(Exception $e) {
+			return back()->with(['error' => $e->getMessage()]);
+		}
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\CraneDate  $boatCraneDate
-     * @return \Illuminate\Http\Response
+     * @param CraneDate $craneDate
+     * @return Response
      */
-    public function destroy(CraneDate $boatCraneDate)
+    public function destroy(CraneDate $craneDate)
     {
-        //
+		try {
+			$craneDate->delete();
+			return redirect()->route('customer.craneDates.index')->with(['success' => "Krantermin erfolgreich gelöscht!"]);
+		} catch(Exception $e) {
+			return back()->with(['error' => $e->getMessage()]);
+		}
     }
 }

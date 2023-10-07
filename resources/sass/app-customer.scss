@@ -1,0 +1,599 @@
+//@import 'bootstrap';
+@import "bootstrap/scss/bootstrap";
+@import '~@fortawesome/fontawesome-free/scss/fontawesome';
+@import '~@fortawesome/fontawesome-free/scss/regular';
+@import '~@fortawesome/fontawesome-free/scss/solid';
+@import '~@fortawesome/fontawesome-free/scss/brands';
+@import '~toastr/toastr';
+@import "~include-media";
+@import "~leaflet/dist/leaflet";
+@import "~leaflet-draw/dist/leaflet.draw";
+@import "~leaflet-sidebar/src/L.Control.Sidebar";
+@import '~mapbox-gl/dist/mapbox-gl.css';
+@import '~leaflet.fullscreen/Control.FullScreen';
+@import '~leaflet-ruler/src/leaflet-ruler';
+@import 'variables';
+@import 'admin';
+
+$grid-breakpoints: (
+		xs: 0,
+		sm: 480px,
+		md: 768px,
+		lg: 1024px
+);
+html, body {
+	width: 100%;
+	max-width: 100%;
+	height: 100vh;
+	margin: 0;
+	padding: 0;
+	font-family: $font-family-sans-serif;
+	font-weight: $font-weight;
+	font-size: $font-size-base;
+	line-height: $line-height-base;
+	color: #000;
+	overflow-x: hidden;
+}
+
+.white {
+	color: #fff !important
+}
+
+.black {
+	color: #000 !important
+}
+
+.green {
+	color: $green !important
+}
+
+.red {
+	color: $red !important
+}
+
+.indigo {
+	color: $indigo !important
+}
+
+.cyan {
+	color: $cyan !important
+}
+
+.blue {
+	color: #009 !important
+}
+
+.grey {
+	color: $grey !important
+}
+
+.dark-grey {
+	color: $dark-grey
+}
+
+.bg-white {
+	background-color: #fff !important
+}
+
+.bg-black {
+	background-color: #000 !important
+}
+
+.bg-green {
+	background-color: $green !important;
+}
+
+.bg-red {
+	background-color: $red !important
+}
+
+.bg-indigo {
+	background-color: $indigo !important
+}
+
+.bg-cyan {
+	background-color: $cyan !important
+}
+
+.bg-blue {
+	background-color: #009 !important
+}
+
+.bg-grey {
+	background-color: $grey !important
+}
+
+.bg-dark-grey {
+	background-color: #6c757d !important
+}
+
+.app-logo {
+	text-align: center;
+	margin-top: 0.5rem;
+
+	span:first-child {
+		font-family: "Arial Black";
+		color: #fff;
+		font-size: 1.5rem;
+		font-weight: bold;
+		letter-spacing: 0.05rem;
+	}
+
+	span:last-child {
+		font-family: "Arial Black";
+		font-size: 1.7rem;
+		color: #fc0;
+		text-transform: uppercase;
+		font-style: italic;
+	}
+}
+
+a {
+	cursor: pointer;
+	text-decoration: none;
+	color: #c00;
+}
+
+nav {
+	background-color: #fff;
+
+	ul.pagination {
+		li {
+			&.page-item {
+				.page-link {
+					color: $bgSideNav;
+				}
+
+				&.active {
+					.page-link {
+						color: #fff;
+						background-color: $bgSideNav !important;
+					}
+				}
+			}
+		}
+	}
+}
+
+.btn-wrapper {
+	&.bg-red {
+		.btn {
+			background-color: #c00;
+		}
+	}
+}
+
+.paginator {
+	section {
+		div {
+			div {
+				// w-14 rounded-md border border-indigo-400 px-1 py-1
+				&.rounded-md, &.border, &border-indigo-400 {
+					border: none !important;
+				}
+			}
+		}
+	}
+}
+
+/*
+.font-montserrat {
+    font-family: Nunito, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
+}
+*/
+.index-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0 16px;
+}
+
+// ower grid layout
+.grid-container {
+	height: 100vh;
+	display: grid;
+	grid-template-columns: 0 1fr; /* Side nav is hidden on mobile */
+	grid-template-rows: 50px 1fr 50px;
+	grid-template-areas:
+    "sidenav header"
+    "sidenav main"
+    "sidenav footer";
+
+	.menu-icon {
+		position: fixed;
+		display: flex;
+		top: 5px;
+		left: 10px;
+		align-items: center;
+		justify-content: center;
+		border-radius: 10%;
+		z-index: 1001;
+		cursor: pointer;
+		padding: 12px;
+		background-color: #DADAE3;
+	}
+
+	/* Give every child element its grid name */
+	header, footer {
+		position: sticky;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 0 16px;
+		z-index: 1000;
+	}
+
+	footer {
+		grid-area: footer;
+		background-color: $bgFooter;
+		box-shadow: 10px 5px 0 0 rgba(0, 0, 0, 0.75);
+	}
+
+	header {
+		grid-area: header;
+		top: 0;
+		background-color: $bgHeader;
+		box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.75);
+		vertical-align: middle;
+
+		.header-nav {
+			.float-end {
+				ul {
+					li {
+						list-style: none;
+					}
+				}
+			}
+		}
+
+		@include media('<tablet') {
+			padding-left: 50px;
+		}
+	}
+
+	main {
+		grid-area: main;
+		font-size: 0.9rem;
+		background-color: $bgMain;
+		z-index: 1;
+
+		.main-header {
+			display: flex;
+			justify-content: space-between;
+			margin: 20px;
+			padding: 20px;
+			height: 150px;
+			background-color: #e3e4e6;
+			color: slategray;
+		}
+
+		@include media('<=tablet') {
+			margin: 0 5px 0 5px;
+			.main-cards {
+				column-count: 2;
+			}
+		}
+	}
+
+	/* Mobile-first side nav styles */
+	.sidenav {
+		position: fixed;
+		display: flex; /* Will be hidden on mobile */
+		z-index: 1001; /* Needs to set above the hamburger menu icon and map */
+		grid-area: sidenav;
+		flex-direction: column;
+		height: 100%;
+		min-height: 100vh;
+		width: 240px;
+		overflow-y: auto;
+		box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+		background-color: $bgSideNav;
+		transform: translateX(-245px);
+		//transition: all .3s ease-in-out;
+
+		/* Only visible on mobile screens */
+		.sidenav__close-icon {
+			position: absolute;
+			width: 1.5rem;
+			height: 1.5rem;
+			visibility: visible;
+			z-index: 1;
+			top: 0.5rem;
+			right: 0.2rem;
+			padding: 0;
+			margin: 0;
+			cursor: pointer;
+			font-size: 1.0rem;
+			color: #fff;
+		}
+
+		.sidenav__list {
+			padding: 0;
+			margin-top: 0.5rem;
+			list-style-type: none;
+			max-width: 200px;
+			@include media('<tablet') {
+				margin-top: 2.0rem;
+			}
+		}
+
+		.sidenav__list-item {
+			padding: 5px 10px 10px 10px;
+			color: #ddd;
+			text-align: left;
+			width: 180px;
+
+			a[role=button] {
+				&.btn {
+					font-weight: normal;
+					border: 1px solid #eee;
+					border-radius: 0.6rem;
+					//border-left-top-radius: 0;
+					border-top-left-radius: 0;
+					border-bottom-right-radius: 0;
+					background-color: transparent;
+					text-align: left;
+				}
+
+				&.active {
+					color: $bgSideNav;
+					background-color: #eee;
+				}
+			}
+		}
+
+		.sidenav__list-item:hover {
+			a:hover {
+				i, span {
+					font-weight: bold;
+				}
+			}
+
+			cursor: pointer;
+		}
+
+		&.active {
+			transform: translateX(0);
+		}
+	}
+}
+
+/* Non-mobile styles, 750px breakpoint */
+//@media only screen and (min-width: 46.875em) {
+@include media('>tablet') {
+	// Show the sidenav
+	.grid-container {
+		grid-template-columns: 240px 1fr; // Show the side nav for non-mobile screens
+		grid-template-areas:
+        "sidenav header"
+        "sidenav main"
+        "sidenav footer";
+
+		.menu-icon {
+			visibility: hidden;
+		}
+
+		.sidenav {
+			position: relative; // Fixed position on mobile
+			display: flex;
+			flex-direction: column;
+			transform: translateX(0);
+
+			.sidenav__close-icon {
+				visibility: hidden;
+			}
+		}
+	}
+}
+
+.top-menu {
+	margin-left: -2.8rem;
+	display: flex;
+	height: 100%;
+	list-style: none;
+	margin-top: 1.3rem;
+	z-index: 1000;
+
+	li {
+		background-color: $bgSideNav;
+		padding: 5px 10px;
+		border-radius: 5px;
+		margin-right: 0.5rem;
+		line-height: 1.2rem;
+		list-style: none;
+
+		&.active {
+			background-color: #f00;
+		}
+
+		a {
+			display: inline-block;
+			font-size: 1.0rem;
+			line-height: 1.2rem;
+			text-decoration: none;
+
+			i {
+				color: #fff;
+			}
+
+			span {
+				color: #fff;
+				display: inline-block;
+			}
+		}
+	}
+
+	@include media('<tablet') {
+		li {
+			margin-right: 0.2rem;
+		}
+	}
+}
+
+.left-menu {
+	margin-top: 0;
+	padding-top: 0;
+
+	li {
+		a {
+			display: inline-block;
+			width: 100%;
+		}
+	}
+}
+
+.inline-form {
+	div {
+		display: inline-block;
+		clear: none;
+
+		label {
+			display: inline-block;
+			clear: none;
+		}
+
+		input, select {
+			width: 10.0rem;
+			display: inline-block;
+			clear: none;
+		}
+	}
+}
+
+nav[role="navigation"] {
+	margin: 0 1.0rem;
+}
+.alert {
+	&.alert-block {
+		display: block;
+		width: 100%;
+		height: auto;
+		padding: 1rem 1rem;
+		font-weight: bold;
+		text-align: center;
+
+		&.alert-success {
+			background-color: #0c0;
+			span {
+				color: #fff;
+			}
+		}
+		&.alert-danger {
+			background-color: #f00;
+			span {
+				color: #900;
+			}
+		}
+		&.alert-warning {
+			background-color: #f00;
+			span {
+				color: #080;
+			}
+		}
+		&.alert-info {
+			background-color: #f60;
+			span {
+				color: #fff;
+			}
+		}
+
+		&.close {
+			positiom: absolute;
+			margin: 0.5rem 0.5rem 0 0;
+			color: #000;
+			font-weight: bold;
+			font-size: 1.5rem;
+			right: 0;
+			top: 0;
+		}
+	}
+}
+/*
+select.flexy {
+    display: -ms-inline-flexbox;
+    display: -webkit-inline-flex;
+    display: inline-flex;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-justify-content: start;
+    -ms-flex-pack: flex-start;
+    justify-content: flex-start;
+    -webkit-align-content: space-between;
+    -ms-flex-line-pack: justify;
+    align-content: flex-start;
+    -webkit-align-items: flex-start;
+    -ms-flex-align: flex-start;
+    align-items: flex-start;
+
+    option {
+        height: auto;
+        padding: 0.1rem 0.2rem;
+        -webkit-order: 0;
+        -ms-flex-order: 0;
+        order: 0;
+        -webkit-flex: 0 1 auto;
+        -ms-flex: 0 1 auto;
+        flex: 0 1 auto;
+        -webkit-align-self: auto;
+        -ms-flex-item-align: auto;
+        align-self: auto;
+        margin: 0.1rem 0 0 0.1rem;
+        color: #444;
+        border-radius: 0.2rem;
+        font-size: 0.8rem;
+
+        &:selected {
+            color: #fff;
+            background-color: #090;
+        }
+    }
+}
+*/
+
+/* CHECKBOX TOGGLE SWITCH */
+/* @apply rules for documentation, these do not work as inline style */
+.toggle-checkbox:checked {
+	@apply: right-0 border-green-400;
+	right: 0;
+	border-color: #68d391;
+}
+
+.toggle-checkbox:checked + .toggle-label {
+	@apply: bg-green-400;
+	background-color: #68d391;
+}
+
+.btn-primary {
+	color: #fff;
+	background-color: $bgSideNav;
+	border-width: 0;
+}
+
+.btn-outline-primary {
+	color: $bgSideNav;
+	border-color: $bgSideNav;
+}
+
+i.switch {
+	cursor: pointer;
+}
+
+.cursor-pointer {
+	cursor: pointer !important;
+}
+
+.fullscreen {
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 100000;
+	width: 100%;
+	background-color: rgba(0,0,0,.5);
+	background-repeat: no-repeat;
+	background-size: contain;
+	cursor: zoom-out;
+}

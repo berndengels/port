@@ -20,7 +20,7 @@ try {
 
 	axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 	axios.defaults.baseURL = process.env.MIX_API_URL;
-//	axios.defaults.withCredentials = false;
+	axios.defaults.withCredentials = true;
 
 } catch (e) {
 	console.error(e)

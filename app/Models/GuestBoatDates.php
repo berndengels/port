@@ -29,18 +29,19 @@ use Kyslik\ColumnSortable\Sortable;
  * @property Carbon $until
  * @property int $persons
  * @property int|null $electric
+ * @property int|null $day_price
  * @property int $price
- * @property string $prices
+ * @property mixed $prices
  * @property bool $is_paid
- * @property-read \App\Models\Berth|null $berth
- * @property-read \App\Models\GuestBoat $boat
+ * @property-read Berth|null $berth
+ * @property-read GuestBoat $boat
  * @property-read mixed $days
  * @property-read mixed $price_data
  * @property-read mixed $valid_from
  * @property-read mixed $valid_until
  * @method static Builder|GuestBoatDates dailyPrices()
  * @method static Builder|GuestBoatDates datesBetween(?\Carbon\Carbon $from = null, ?\Carbon\Carbon $until = null)
- * @method static \Database\Factories\GuestBoatDatesFactory factory($count = null, $state = [])
+ * @method static GuestBoatDatesFactory factory($count = null, $state = [])
  * @method static Builder|GuestBoatDates filter(?string $name = null, $value = null)
  * @method static Builder|GuestBoatDates filterDateFrom(?string $name = null, $value = null)
  * @method static Builder|GuestBoatDates filterDateUntil(?string $name = null, $value = null)
@@ -55,6 +56,7 @@ use Kyslik\ColumnSortable\Sortable;
  * @method static Builder|GuestBoatDates query()
  * @method static Builder|GuestBoatDates sortable($defaultParameters = null)
  * @method static Builder|GuestBoatDates whereBerthId($value)
+ * @method static Builder|GuestBoatDates whereDayPrice($value)
  * @method static Builder|GuestBoatDates whereElectric($value)
  * @method static Builder|GuestBoatDates whereFrom($value)
  * @method static Builder|GuestBoatDates whereGuestBoatId($value)
