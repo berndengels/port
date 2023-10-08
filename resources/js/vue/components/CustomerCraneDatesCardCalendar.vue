@@ -134,6 +134,9 @@ export default {
 				eventDurationEditable: false,
 				expandRows: true,
 				contentHeight: '600px',
+				slotMinTime: '09:00:00',
+				slotMaxTime: '19:00:00',
+				snapDuration: '00:30:00',
 				headerToolbar: {
 					left: 'prev, next, today',
 					center: 'title',
