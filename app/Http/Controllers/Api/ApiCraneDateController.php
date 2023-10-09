@@ -10,7 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCraneDateRequest;
 use App\Http\Requests\UpdateCraneDateRequest;
 use App\Http\Resources\CraneDatesResource;
-use App\Notifications\CraneDateRequest;
+use App\Notifications\CustomerCraneDateRequest;
 use Illuminate\Http\Response;
 
 class ApiCraneDateController extends Controller
@@ -92,7 +92,7 @@ class ApiCraneDateController extends Controller
 
 			if($customer) {
 				$user = AdminUser::whereEmail(config('port.main.master.email'))->first();
-				$user->notify((new CraneDateRequest($craneDate, __FUNCTION__)));
+				$user->notify(new CustomerCraneDateRequest($craneDate, __FUNCTION__));
 			}
 
             return response()->json([
@@ -120,7 +120,7 @@ class ApiCraneDateController extends Controller
 
 			if($customer) {
 				$user = AdminUser::whereEmail(config('port.main.master.email'))->first();
-				$user->notify((new CraneDateRequest($craneDate, __FUNCTION__)));
+				$user->notify(new CustomerCraneDateRequest($craneDate, __FUNCTION__));
 			}
 
 			return response()->json([
@@ -146,7 +146,7 @@ class ApiCraneDateController extends Controller
 
 			if($customer) {
 				$user = AdminUser::whereEmail(config('port.main.master.email'))->first();
-				$user->notify((new CraneDateRequest($craneDate, __FUNCTION__)));
+				$user->notify(new CustomerCraneDateRequest($craneDate, __FUNCTION__));
 			}
 
             $craneDate->delete();

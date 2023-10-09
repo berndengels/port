@@ -1,7 +1,7 @@
 <?php
 namespace App\Models;
 
-use App\Notifications\CraneDateRequest;
+use App\Notifications\CustomerCraneDateRequest;
 use Database\Factories\AdminUserFactory;
 use Eloquent;
 use App\Traits\Models\ClearCache;
@@ -131,7 +131,7 @@ class AdminUser extends Authenticatable
      * @param  Notification  $notification
      * @return string
      */
-	public function routeNotificationForVonage(CraneDateRequest $notification): string
+	public function routeNotificationForVonage(CustomerCraneDateRequest $notification): string
 	{
 		return env('MASTER_FON');
 	}

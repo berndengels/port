@@ -38,6 +38,7 @@ class AdminCraneDateController extends Controller
      */
     public function show(CraneDate $craneDate)
     {
+		$craneDate->load(['cranable']);
         return view('admin.craneDates.show', compact('craneDate'));
     }
 

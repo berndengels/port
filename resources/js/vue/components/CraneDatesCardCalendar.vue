@@ -18,6 +18,9 @@
 						</ul>
 					</div>
 					<div v-show="showForm" class="ms-sm-0 ms-lg-2">
+						<div v-show="link">
+							<a class="btn btn-sm btn-primary" :href="link" target="_blank">Termin Details</a>
+						</div>
 						<form class="mt-5" @submit.prevent>
 							<input id="id" v-model="craneDate.id" class="form-control" name="id" type="hidden"/>
 							<div class="form-floating">
@@ -89,6 +92,7 @@ export default {
 	},
 	data() {
 		return {
+			link: null,
 			selectedDate: null,
 			showForm: false,
 			craneDate: {
@@ -218,6 +222,7 @@ export default {
 				crane_date: moment(p.crane_date).format('YYYY-MM-DD'),
 				crane_time: p.crane_time,
 			};
+			this.link = '/admin/craneDates/' +  p.id;
 			this.$store.dispatch("craneDates/getBoats", p.cranable_type);
 			console.info("selectedDate", this.selectedDate);
 			this.api.gotoDate(this.selectedDate);

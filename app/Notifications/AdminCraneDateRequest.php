@@ -9,7 +9,7 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Messages\VonageMessage;
 
-class CraneDateRequest extends Notification
+class AdminCraneDateRequest extends Notification
 {
     use Queueable;
 	private $customer;
@@ -43,10 +43,17 @@ class CraneDateRequest extends Notification
      */
     public function toMail($notifiable)
     {
+		$header = $this->getHeaderByMode();
         return (new MailMessage)
-			->line('The introduction to the notification.')
-			->action('Notification Action', url('/'))
-			->line('Thank you for using our application!');
+			->line($header)
+			->line('Thank you for using our application!')
+			->action('Krane-Termin Anfrage', route('admin.craneDates.index'))
+			->line('Datum: ' . $this->craneDate->date->isoFormat('dddd D.M.Y'))
+			->line('Zeit: ' . $this->craneDate->date->format('H.i'))
+			->line('Boot: ' . $this->craneDate->cranable->name)
+			->line('Eigner: ' . $this->customer->name)
+			->action($this->customer->email, url('mailto:' . $this->customer->email))
+			->action($this->customer->fon, url('tel:' . $this->customer->fon));
     }
 
 	/**
@@ -56,7 +63,7 @@ class CraneDateRequest extends Notification
 	{
 		$content = $this->getMsgByMode();
 		return (new VonageMessage)
-//			->clientReference((string) $notifiable->customer->id)
+			->clientReference((string) $this->customer->id)
 			->content($content)
 			->from($this->customer->fon)
 			->unicode();
@@ -64,24 +71,27 @@ class CraneDateRequest extends Notification
 
 	private function getMsgByMode()
 	{
-		switch ($this->mode) {
-			case 'store':
-				$msg = 'Neue Kran-Termin-Anfrage.';
-				break;
-			case 'update':
-				$msg = 'Kran-Termin-Anfrage wurde geändert.';
-				break;
-			case 'destroy':
-				$msg = 'Kran-Termin-Anfrage gelöscht.';
-				break;
-		}
-		$date = $this->craneDate->date->format('d.m.Y');
+		$msg = $this->getHeaderByMode();
+		$date = $this->craneDate->date->isoFormat('dddd D.M.Y');
 		$time = $this->craneDate->date->format('H.i');
-		$boat = app($this->craneDate->cranable_type)->find($this->craneDate->cranable_id);
-		$name = $boat ? $boat->name : null;
-		return "$msg\nBoot: $name\nDatum: $date\nUhrzeit: $time\n\n";
+		$boat = $this->craneDate->cranable->name;
+
+		return "$msg\nBoot: $boat\nDatum: $date\nUhrzeit: $time\n\n";
 	}
 
+	private function getHeaderByMode() {
+		switch ($this->mode) {
+			case 'store':
+				return 'Neue Kran-Termin-Anfrage.';
+				break;
+			case 'update':
+				return 'Kran-Termin-Anfrage wurde geändert.';
+				break;
+			case 'destroy':
+				return 'Kran-Termin-Anfrage gelöscht.';
+				break;
+		}
+	}
 	/**
      * Get the array representation of the notification.
      *

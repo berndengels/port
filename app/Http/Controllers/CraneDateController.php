@@ -30,6 +30,8 @@ class CraneDateController extends Controller
      */
     public function show(CraneDate $craneDate)
     {
+//		Carbon::setlocale('de_DE');
+		$craneDate->load(['cranable']);
 		return view('customer.craneDates.show', compact('craneDate'));
     }
 

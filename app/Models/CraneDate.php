@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
-use App\Traits\Models\HasCustomer;
 use Eloquent;
+use App\Casts\Time;
+use Illuminate\Support\Carbon;
+use Illuminate\Database\Eloquent\Model;
+use App\Traits\Models\HasCustomer;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Carbon;
 
 /**
  * App\Models\CraneDate
@@ -44,6 +45,7 @@ class CraneDate extends Model
     protected $casts = [
 		'date' => 'datetime:Y-m-d H.i',
         'crane_date' => 'date:d.m.Y',
+		'crane_time' => Time::class,
     ];
 
     public function cranable()
@@ -54,5 +56,10 @@ class CraneDate extends Model
 	public function customer()
 	{
 		return app($this->cranable_type)::find($this->cranable_id)->first()->customer;
+	}
+
+	public function boat()
+	{
+		return app($this->cranable_type)::find($this->cranable_id)->first();
 	}
 }
