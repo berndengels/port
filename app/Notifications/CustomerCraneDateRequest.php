@@ -32,9 +32,7 @@ class CustomerCraneDateRequest extends Notification
      */
     public function via(object $notifiable)
     {
-//        return $notifiable->fon ? ['vonage'] : ['mail'];
-//        return ['vonage','mail'];
-		return ['mail'];
+        return $notifiable->fon ? ['vonage','mail'] : ['mail'];
     }
 
     /**
@@ -80,7 +78,7 @@ class CustomerCraneDateRequest extends Notification
 		$time = $this->craneDate->date->format('H.i');
 		$boat = $this->craneDate->cranable->name;
 
-		return "$msg\nBoot: $boat\nDatum: $date\nUhrzeit: $time\n\n";
+		return "$msg\nBoot: $boat\nDatum: $date\nUhrzeit: $time Uhr";
 	}
 
 	private function getHeaderByMode() {

@@ -31,8 +31,8 @@ class AdminCraneDateRequest extends Notification
      */
     public function via(object $notifiable)
     {
-//        return $notifiable->fon ? ['vonage'] : ['mail'];
-        return ['vonage'];
+        return $notifiable->fon ? ['vonage'] : ['mail'];
+//        return ['vonage'];
     }
 
     /**
