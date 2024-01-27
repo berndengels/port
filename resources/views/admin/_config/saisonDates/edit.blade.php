@@ -2,8 +2,8 @@
 
 @section('main')
 	<div>
-		<x-btn-back route="{{ route('admin.config.saisonDates.' . (isset($route) ? $route : 'index')) }}"/>
-		<x-form method="post" :action="route('admin.config.saisonDates.update', $saisonDate)" class="w-half mt-3">
+		<x-btn-back route="{{ route('admin.config-saisonDates.' . (isset($route) ? $route : 'index')) }}"/>
+		<x-form method="post" :action="route('admin.config-saisonDates.update', $saisonDate)" class="w-half mt-3">
 			@method('put')
 			@bind($saisonDate)
 			<x-form-input id="name" name="name" label="Name" placeholder="Wie heißt die Saison?" required/>

@@ -15,18 +15,19 @@ toastr.options = {
 	"showMethod": "fadeIn",
 	"hideMethod": "fadeOut"
 };
-import MyForm from "./Libs/MyForm"
-import Prices from "./Libs/Prices"
-import Editor from "./Libs/Editor"
-import Weather from "./Libs/Weather"
-import Car from "./Libs/Car"
-import Tooltip from "./Libs/Tooltip";
-import Edit from "./Libs/Edit";
-import Geo from "./Libs/Geo";
-import MyDropzone from "./Libs/MyDropzone";
-import Draggable from "./Libs/Draggable";
-import MyCalendar from "./Libs/MyCalendar";
-import Fullscreen from "./Libs/Fullscreen";
+import MyForm from "L@/MyForm"
+import Prices from "L@/Prices"
+import Editor from "L@/Editor"
+import Weather from "L@/Weather"
+import Car from "L@/Car"
+import Tooltip from "L@/Tooltip";
+import Edit from "L@/Edit";
+import Geo from "L@/Geo";
+import MyDropzone from "L@/MyDropzone";
+import Draggable from "L@/Draggable";
+import MyCalendar from "L@/MyCalendar";
+import Fullscreen from "L@/Fullscreen";
+import Navbar from "L@/Navbar";
 import {createApp} from "vue"
 import store from "./vue/store"
 import mitt from 'mitt';
@@ -49,6 +50,7 @@ window.Geo = Geo;
 window.MyCalendar = new MyCalendar;
 window.MyDropzone = new MyDropzone;
 window.Fullscreen = new Fullscreen;
+window.Navbar  = new Navbar;
 
 $(document).ready(function () {
 	window.Draggable = new Draggable();
@@ -87,10 +89,8 @@ $(document).ready(function () {
 		toastr.success("Zur Preisberechnung bitte alle grünen Felder ausfüllen. Checkbox ist natürlich optional.");
 	}
 	$(".menu-icon").click(() => {
-		$sideNav.addClass('active')
-	});
-	$(".sidenav__close-icon").click(() => {
-		$sideNav.removeClass('active')
+		$sideNav.hasClass('active') ? $sideNav.removeClass('active') : $sideNav.addClass('active');
+
 	});
 
 	let app;

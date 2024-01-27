@@ -14,6 +14,9 @@ use App\Http\Controllers\RentableController;
 use App\Http\Requests\RentableRequest;
 use App\Http\Requests\RentableRequestValidationData;
 use App\Repositories\CalendarRentableRepository;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Http\Request;
@@ -54,11 +57,15 @@ class AdminRentalsController extends RentableController
 
         $this->priceComponents = $priceComponents ? $priceComponents->priceComponents : null;
 
-        $this->relationOptions = ($this->relationModel)::orderBy('name')
-            ->get()
-            ->keyBy('id')
-            ->map->name
-            ->prepend('Bitte wählen', null);
+		if($this->relationModel) {
+			$this->relationOptions = ($this->relationModel)::orderBy('name')
+				->get()
+				->keyBy('id')
+				->map->name
+				->prepend('Bitte wählen', null);
+		} else {
+			$this->relationOptions = collect([]);
+		}
 
         $customers = $this->customerType
             ? $this->customerRepository->options(where: ['type' => $this->customerType])
@@ -74,7 +81,7 @@ class AdminRentalsController extends RentableController
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return Application|Factory|View
      */
     public function index(Request $request)
     {

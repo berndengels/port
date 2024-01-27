@@ -1,0 +1,48 @@
+.grid-container {
+	height: 100vh;
+	display: grid;
+	grid-template-columns: 0 1fr;
+	grid-template-rows: 50px 1fr 50px;
+	grid-template-areas:
+	    "sidenav header"
+    	"sidenav main"
+    	"sidenav footer";
+
+	.menu-icon {
+		position: fixed;
+		display: flex;
+		top: 5px;
+		left: 10px;
+		align-items: center;
+		justify-content: center;
+		border-radius: 10%;
+		z-index: 1001;
+		cursor: pointer;
+		padding: 12px;
+		background-color: #DADAE3;
+	}
+}
+
+@include media('>tablet') {
+	.grid-container {
+		grid-template-columns: 240px 1fr; // Show the side nav for non-mobile screens
+		grid-template-areas:
+		        "sidenav header"
+        		"sidenav main"
+        		"sidenav footer";
+		.menu-icon {
+			visibility: hidden;
+		}
+
+		aside {
+			position: relative; // Fixed position on mobile
+			display: flex;
+			flex-direction: column;
+			transform: translateX(0);
+
+			.sidenav__close-icon {
+//				visibility: hidden;
+			}
+		}
+	}
+}

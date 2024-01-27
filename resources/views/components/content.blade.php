@@ -38,21 +38,19 @@
 	@show
 
 	@if( $guard )
-		<aside class="sidenav mt-0">
-			<div class="sidenav__close-icon">
-				<i class="fas fa-times"></i>
-			</div>
+	<aside class="sidenav">
+		<div class="sidebar-navigation">
 			<div class="hidden md:inline-block app-logo"><span>port</span><span>m</span></div>
-			<x-main-navigation :guard="$guard"/>
+			<!--x-main-navigation :guard="$guard"/-->
+			<x-sidebar :guard="$guard" />
 			<div class="ms-3 mt-0">
 				<x-form method="post" class="mt-0" name="frmLogout" action="{{ route($guard . '.logout') }}">
 					@csrf
-					<x-form-submit class="btn btn-sm btn-light mt-0" icon="fas fa-sign-out-alt">
-						Logout
-					</x-form-submit>
+					<x-form-submit class="btn btn-sm btn-light mt-0" icon="fas fa-sign-out-alt">Logout</x-form-submit>
 				</x-form>
 			</div>
-		</aside>
+		</div>
+	</aside>
 	@endif
 
 	<main>

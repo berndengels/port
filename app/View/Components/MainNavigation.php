@@ -12,6 +12,7 @@ use Illuminate\Contracts\View\View;
 class MainNavigation extends Component
 {
     public $items;
+	public $user;
     /**
      * Create a new component instance.
      *
@@ -22,7 +23,7 @@ class MainNavigation extends Component
         /**
          * @var $user AdminUser|Customer
          */
-        $user = auth($this->guard)->user();
+        $this->user = auth($this->guard)->user();
         $this->items = collect([]);
         $configKey = $this->guard;
 
@@ -37,10 +38,11 @@ class MainNavigation extends Component
                     break;
             }
         }
-        if($user) {
+
+        if($this->user) {
             $this->items = collect(config('port.menu.'.$configKey.'.items'))
                 ->filter(fn ($item) => (!isset($item['permissions'])
-                    || (isset($item['permissions']) && $user->can($item['permissions']))
+                    || (isset($item['permissions']) && $this->user->can($item['permissions']))
                 ))
             ;
         }
@@ -53,6 +55,9 @@ class MainNavigation extends Component
      */
     public function render()
     {
-        return view('components.main-navigation');
+        return view('components.main-navigation', [
+			'items' => $this->items,
+			'user'	=> $this->user,
+		]);
     }
 }

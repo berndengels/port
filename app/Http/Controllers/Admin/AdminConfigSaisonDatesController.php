@@ -74,7 +74,7 @@ class AdminConfigSaisonDatesController extends AdminController
         $route = $from ? Str::plural($from) : 'index';
         try {
             ConfigSaisonDates::create($request->validated());
-            return redirect()->route('admin.config.saisonDates.'.$route)->with('success', 'Saison erfolgreich angelegt!');
+            return redirect()->route('admin.config-saisonDates.'.$route)->with('success', 'Saison erfolgreich angelegt!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -106,7 +106,7 @@ class AdminConfigSaisonDatesController extends AdminController
         $route = $from ? Str::plural($from) : 'index';
         try {
             $saisonDate->update($request->validated());
-            return redirect()->route('admin.config.saisonDates.'.$route)->with('success', 'Saison erfolgreich bearbeitet!');
+            return redirect()->route('admin.config-saisonDates.'.$route)->with('success', 'Saison erfolgreich bearbeitet!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -124,7 +124,7 @@ class AdminConfigSaisonDatesController extends AdminController
         $route = $from ? Str::plural($from) : 'index';
         try {
             $saisonDate->delete();
-            return redirect()->route('admin.config.saisonDates.'.$route)->with('success', 'Saison erfolgreich gelöscht!');
+            return redirect()->route('admin.config-saisonDates.'.$route)->with('success', 'Saison erfolgreich gelöscht!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }

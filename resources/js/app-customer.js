@@ -1,6 +1,9 @@
 require('./bootstrap');
-import Weather from "./Libs/Weather";
-import Message from "./Libs/Message";
+
+import Weather from "L@/Weather";
+import Message from "L@/Message";
+import Navbar from "L@/Navbar";
+
 import {createApp} from "vue"
 import store from "./vue/store"
 import mitt from 'mitt';
@@ -14,6 +17,7 @@ import CraneDates from "v@/views/customer/CraneDates"
 
 window.Weather = new Weather;
 window.Message = new Message;
+window.Navbar  = new Navbar;
 
 $(document).ready(function () {
 	const $sideNav = $('.sidenav');

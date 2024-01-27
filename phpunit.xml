@@ -4,10 +4,6 @@
          bootstrap="vendor/autoload.php"
          colors="true"
          backupGlobals="false"
-         backupStaticAttributes="false"
-         convertErrorsToExceptions="true"
-         convertNoticesToExceptions="false"
-         convertWarningsToExceptions="false"
          processIsolation="false"
          stopOnFailure="false"
 >
@@ -29,14 +25,14 @@
             <file>./tests/Feature/RouteRequestTest.php</file>
         </testsuite>
     </testsuites>
-    <coverage processUncoveredFiles="true">
+    <source>
         <include>
             <directory suffix=".php">./app</directory>
         </include>
         <!--report>
             <html outputDirectory="reports/coverage"/>
         </report-->
-    </coverage>
+    </source>
     <php>
         <env name="APP_ENV" value="testing" force="true" />
         <env name="DB_DATABASE" value="port_testing" force="true" />

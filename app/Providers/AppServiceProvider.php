@@ -80,6 +80,13 @@ class AppServiceProvider extends ServiceProvider
         Blade::if('isAdmin', function () {
             return auth('admin')->check();
         });
+		Blade::if('adminCan', function (string $perms) {
+			return auth('admin')->check() && auth('admin')->user()->can($perms);
+		});
+		Blade::if('customerCan', function (string $perms) {
+			return auth('customer')->check() && auth('customer')->user()->can($perms);
+		});
+
         Blade::if('isMobile', fn () => $agent->isPhone() || $agent->isTablet());
         Blade::components([
             'table'         => Table::class,
@@ -114,9 +121,10 @@ class AppServiceProvider extends ServiceProvider
             $offers = ConfigOffer::all();
             Config::set('offers', $offers->keyBy('name')->map->enabled);
             $menuConfig = config('port.menu.admin.items');
+
             foreach ($offers as $offer) {
                 if(isset($menuConfig[$offer->name]) && !$offer->enabled) {
-                    Config::set('port.menu.admin.items.'.$offer->name, null);
+					Config::offsetUnset('port.menu.admin.items.'.$offer->name);
                 }
             }
         } catch (Exception $e) {}
