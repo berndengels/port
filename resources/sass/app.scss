@@ -9,6 +9,7 @@
 @import "~leaflet/dist/leaflet";
 @import '~mapbox-gl/dist/mapbox-gl.css';
 @import 'variables';
+@import 'global';
 @import 'public';
 
 $grid-breakpoints: (

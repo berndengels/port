@@ -1,6 +1,6 @@
 <ul class="navbar-nav me-auto mb-2 mb-lg-0 mt-0">
 	<li title="Dashboard" class="navbar-brand align-middle">
-		<span class="d-none d-lg-inline-block white">DEMO</span>
+		<!--span class="d-none d-lg-inline-block white">DEMO</span-->
 		<a class="app-logo public" href="/dashboard">
 			<span>port</span>
 			<span>m</span>

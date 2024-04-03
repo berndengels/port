@@ -7,9 +7,12 @@ footer {
 			.navbar-nav {
 				.nav-item {
 					color: #fff;
-					line-height: 25px;
-					a {
+					line-height: 15px;
+					a.nav-link {
 						color: #fff;
+						span {
+							color: #fff;
+						}
 					}
 				}
 			}

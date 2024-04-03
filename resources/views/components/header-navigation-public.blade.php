@@ -1,6 +1,6 @@
 <ul class="top-menu public">
 	<li title="Boote" class="align-middle">
-		<span class="d-none d-lg-inline-block white">DEMO</span>
+		<!--span class="d-none d-lg-inline-block white">DEMO</span-->
 		<a class="app-logo public" href="/dashboard">
 			<span>port</span>
 			<span>m</span>
