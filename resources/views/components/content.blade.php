@@ -37,11 +37,10 @@
 		</header>
 	@show
 
-	@if( $guard )
+	@if($guard)
 	<aside class="sidenav">
 		<div class="sidebar-navigation">
 			<div class="hidden md:inline-block app-logo"><span>port</span><span>m</span></div>
-			<!--x-main-navigation :guard="$guard"/-->
 			<x-sidebar :guard="$guard" />
 			<div class="ms-3 mt-0">
 				<x-form method="post" class="mt-0" name="frmLogout" action="{{ route($guard . '.logout') }}">
@@ -62,7 +61,7 @@
 
 	<footer>
 		@guest()
-			<x-public-bottom-navbar/>
+			<x-public-bottom-navbar />
 		@elseguest()
 			@yield('footer')
 		@endguest

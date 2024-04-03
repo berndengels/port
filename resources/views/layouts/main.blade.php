@@ -15,16 +15,12 @@
 	<link rel="manifest" href="/fav/site.webmanifest">
 	<link rel="preload" as="image" href="{{ asset('img/nebel_morgen_opt.jpg') }}">
 	<link rel="preload" as="font">
-	<!-- Fonts -->
 	@googlefonts('poppins')
-	<!-- Styles -->
-	@auth('admin')
-		<link rel="stylesheet" href="{{ mix('css/app-admin.css') }}">
-	@elseauth('customer')
-		<link rel="stylesheet" href="{{ mix('css/app-customer.css') }}">
-	@else
+	@guest()
 		<link rel="stylesheet" href="{{ mix('css/app.css') }}">
-	@endauth
+	@else
+		<link rel="stylesheet" href="{{ mix('css/app-admin.css') }}">
+	@endguest
 	@stack('styles')
 	<!-- Scripts -->
 	@stack('scripts')

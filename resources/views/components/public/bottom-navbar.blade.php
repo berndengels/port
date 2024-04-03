@@ -1,5 +1,4 @@
-<nav class="navbar navbar-expand fixed-bottom bg-transparent white">
-	<div class="container-fluid">
+	<div class="public navbar navbar-expand fixed-bottom bg-transparent ps-3">
 		<ul class="navbar-nav me-auto mb-2 mb-lg-0 mt-1 pb-0">
 			<li class="nav-item" title="Impressum">
 				<a class="nav-link align-middle" href="{{ route('public.pages','impressum') }}">
@@ -27,4 +26,3 @@
 			</li>
 		</ul>
 	</div>
-</nav>
