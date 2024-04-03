@@ -6,13 +6,14 @@ use App\Models\ConfigService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreConfigServices;
 use App\Http\Requests\UpdateConfigServices;
+use Illuminate\Http\Response;
 
 class AdminConfigServiceController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -23,8 +24,8 @@ class AdminConfigServiceController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\ConfigService  $configService
-     * @return \Illuminate\Http\Response
+     * @param ConfigService $configService
+     * @return Response
      */
     public function show(ConfigService $service)
     {
@@ -34,7 +35,7 @@ class AdminConfigServiceController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -45,57 +46,57 @@ class AdminConfigServiceController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  StoreConfigServices  $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function store(StoreConfigServices $request)
     {
         try {
             ConfigService::create($request->validated());
-            return redirect()->route('admin.config.services.index')->with('success', 'Service erfolgreich angelegt!');
+            return redirect()->route('admin.configServices.index')->with('success', 'Service erfolgreich angelegt!');
         } catch(Exception $e) {
-            return redirect()->route('admin.config.services.create', $request)->with('error', $e->getMessage());
+            return redirect()->route('admin.configServices.create', $request)->with('error', $e->getMessage());
         }
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\ConfigService  $service
-     * @return \Illuminate\Http\Response
+     * @param ConfigService $configService
+     * @return Response
      */
-    public function edit(ConfigService $service)
+    public function edit(ConfigService $configService)
     {
-        return view('admin._config.services.edit', compact('service'));
+        return view('admin._config.services.edit', compact('configService'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  UpdateConfigServices  $request
-     * @param  \App\Models\ConfigService  $configService
-     * @return \Illuminate\Http\Response
+     * @param ConfigService $configService
+     * @return Response
      */
-    public function update(UpdateConfigServices $request, ConfigService $service)
+    public function update(UpdateConfigServices $request, ConfigService $configService)
     {
         try {
-            $service->update($request->validated());
-            return redirect()->route('admin.config.services.index')->with('success', 'Service erfolgreich bearbeitet!');
+			$configService->update($request->validated());
+            return redirect()->route('admin.configServices.index')->with('success', 'Service erfolgreich bearbeitet!');
         } catch(Exception $e) {
-            return redirect()->route('admin.config.services.edit', $request)->with('error', $e->getMessage());
+            return redirect()->route('admin.configServices.edit', $request)->with('error', $e->getMessage());
         }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\ConfigService  $configService
-     * @return \Illuminate\Http\Response
+     * @param ConfigService $configService
+     * @return Response
      */
-    public function destroy(ConfigService $service)
+    public function destroy(ConfigService $configService)
     {
         try {
-            $service->delete();
-            return redirect()->route('admin.config.services.index')->with('success', 'Service erfolgreich gelöscht!');
+			$configService->delete();
+            return redirect()->route('admin.configServices.index')->with('success', 'Service erfolgreich gelöscht!');
         } catch(Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }

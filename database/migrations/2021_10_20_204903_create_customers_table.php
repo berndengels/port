@@ -15,7 +15,7 @@ class CreateCustomersTable extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->increments('id');
-            $table->enum('type', ['guest','permanent','renter'])->default('guest')->index('type');
+            $table->enum('type', ['guest','permanent','houseboat','house','apartment'])->default('guest')->index('type');
             $table->string('name', 50)->default('');
             $table->string('email', 50)->nullable()->default('');
             $table->string('password', 100)->nullable()->default('');

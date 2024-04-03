@@ -5,16 +5,7 @@ namespace App\Http\Requests;
 class HouseboatRequest extends AdminRequest
 {
     protected $modelName = 'Rentals';
-
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize() : bool
-    {
-        return auth()->user()->can('write Rentals');
-    }
+	protected $permission = 'write Houseboat';
 
     /**
      * Get the validation rules that apply to the request.Customer

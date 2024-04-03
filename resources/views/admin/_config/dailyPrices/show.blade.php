@@ -2,7 +2,7 @@
 
 @section('main')
 	<div>
-		<x-btn-back route="{{ route('admin.config.dailyPrices.index') }}"/>
+		<x-btn-back route="{{ route('admin.configDailyPrices.index') }}"/>
 	</div>
 @endsection
 

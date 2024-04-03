@@ -2,8 +2,8 @@
 
 @section('main')
 	<div>
-		<x-btn-back route="{{ route('admin.config.priceComponents.index') }}"/>
-		<x-form method="post" :action="route('admin.config.priceComponents.store')" class="w-half mt-3">
+		<x-btn-back route="{{ route('admin.configPriceComponents.index') }}"/>
+		<x-form method="post" :action="route('admin.configPriceComponents.store')" class="w-half mt-3">
 			<x-form-select id="entities" name="entities[]" label="Betrifft was" :options="$optionsEntityTypes"
 						   size="4" class="flexy" many-relation multiple required
 			/>

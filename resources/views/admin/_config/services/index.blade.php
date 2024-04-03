@@ -4,7 +4,7 @@
 	<div>
 		<div class="index-header mt-3 p-0">
 			<div class="ms-0">
-				<x-btn-create route="{{ route('admin.config.services.create') }}"/>
+				<x-btn-create route="{{ route('admin.configServices.create') }}"/>
 			</div>
 			<div></div>
 		</div>
@@ -15,7 +15,7 @@
 					@bindData($item)
 					<x-td field="name"/>
 					<x-td field="key"/>
-					<x-action routePrefix="admin.config.services" edit delete/>
+					<x-action routePrefix="admin.configServices" edit delete/>
 					@endBindData
 				</tr>
 			@endforeach

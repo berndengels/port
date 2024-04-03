@@ -5,8 +5,8 @@ X-Requested-With: XMLHttpRequest
 Accept: application/json
 
 {
-    "from": "2023-07-01",
-	"until": "2023-07-12",
+    "from": "2024-03-25",
+	"until": "2024-04-05",
     "customer_id": 13,
     "rentable_id": 1,
 	"rentable_type": "apartment",

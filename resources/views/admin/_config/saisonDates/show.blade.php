@@ -2,7 +2,7 @@
 
 @section('main')
 	<div>
-		<x-btn-back route="{{ route('admin.config-saisonDates-' . $route) }}"/>
+		<x-btn-back route="{{ route('admin.configSaisonDates-' . $route) }}"/>
 	</div>
 @endsection
 

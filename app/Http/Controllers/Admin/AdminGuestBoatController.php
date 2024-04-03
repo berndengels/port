@@ -26,10 +26,7 @@ class AdminGuestBoatController extends AdminController
     public function index(Request $request)
     {
         $guestBoat = $request->input('guestBoat');
-        $data = GuestBoat::orderBy('name')
-            ->guestBoat($guestBoat)
-            ->paginate($this->paginatorLimit)
-        ;
+        $data = GuestBoat::orderBy('name')->guestBoat($guestBoat)->paginate($this->paginatorLimit);
 
         return view('admin.guestBoats.index', [
             'guestBoatOptions' => $this->guestBoatRepository->options()->getSelectOptions()->prepend('Bitte wählen', null),

@@ -9,4 +9,5 @@ class AdminApartmentRentalsController extends AdminRentalsController
     protected $relationModel = Apartment::class;
     protected string $relationName = 'apartment';
     protected string $routeName = 'apartmentRentals';
+	protected string $customerType = 'apartment';
 }

@@ -5,13 +5,23 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Apartment;
 use App\Http\Requests\StoreApartmentRequest;
 use App\Http\Requests\UpdateApartmentRequest;
+use App\Models\ApartmentModel;
+use Illuminate\Http\Response;
 
 class AdminApartmentController extends AdminController
 {
-    /**
+	private $modelOptions;
+
+	public function __construct()
+	{
+		parent::__construct();
+		$this->modelOptions = ApartmentModel::select('id','name')->orderBy('name')->get()->keyBy('id')->map->name;
+	}
+
+	/**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -22,8 +32,8 @@ class AdminApartmentController extends AdminController
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Apartment  $apartment
-     * @return \Illuminate\Http\Response
+     * @param Apartment $apartment
+     * @return Response
      */
     public function show(Apartment $apartment)
     {
@@ -33,18 +43,20 @@ class AdminApartmentController extends AdminController
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
-        return view('admin.apartments.create');
+        return view('admin.apartments.create', [
+			'modelOptions' => $this->modelOptions,
+		]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  StoreApartmentRequest  $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function store(StoreApartmentRequest $request)
     {
@@ -59,20 +71,23 @@ class AdminApartmentController extends AdminController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Apartment  $apartment
-     * @return \Illuminate\Http\Response
+     * @param Apartment $apartment
+     * @return Response
      */
     public function edit(Apartment $apartment)
     {
-        return view('admin.apartments.edit', compact('apartment'));
+        return view('admin.apartments.edit', [
+			'apartment'	=> $apartment,
+			'modelOptions' => $this->modelOptions,
+		]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  UpdateApartmentRequest  $request
-     * @param  \App\Models\Apartment  $apartment
-     * @return \Illuminate\Http\Response
+     * @param Apartment $apartment
+     * @return Response
      */
     public function update(UpdateApartmentRequest $request, Apartment $apartment)
     {
@@ -87,8 +102,8 @@ class AdminApartmentController extends AdminController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Apartment  $apartment
-     * @return \Illuminate\Http\Response
+     * @param Apartment $apartment
+     * @return Response
      */
     public function destroy(Apartment $apartment)
     {

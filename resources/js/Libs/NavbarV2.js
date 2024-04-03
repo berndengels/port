@@ -1,4 +1,3 @@
-import swipe from "bootstrap/js/src/util/swipe";
 
 class NavbarV2 {
 	init(routeSegments) {
@@ -17,8 +16,8 @@ class NavbarV2 {
                 currentRouteBase = routeSegments.join('.');
                 break;
         }
-        console.info('routeSegments', routeSegments);
-        console.info('currentRouteBase', currentRouteBase);
+//        console.info('routeSegments', routeSegments);
+//        console.info('currentRouteBase', currentRouteBase);
 
         $('.btn-toggle').click(e => {
             let $current = $(e.target);
@@ -29,7 +28,7 @@ class NavbarV2 {
                     $currentTarget = $current.data('bs-target');
 
                 if($target === $currentTarget) {
-                    console.info('target', $target);
+//                    console.info('target', $target);
 
                     $($currentTarget).collapse('show');
                     $($currentTarget).find('.nav-link').each((i,a) => {
@@ -38,11 +37,11 @@ class NavbarV2 {
                             $li = $a.parent('li'),
                             $collapse = $li.parent('ul').parent('div');
 
-                        console.info('collapse routes', route);
+//                        console.info('collapse routes', route);
 
                         if(currentRouteBase && route && route === currentRouteBase) {
-                            console.info('route', route);
-//                            $li.addClass('active')
+//                            console.info('route', route);
+                            $li.addClass('active')
                             $collapse.removeClass('collapse')
                         } else {
                             $li.removeClass('active')

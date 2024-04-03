@@ -36,12 +36,12 @@ class AdminConfigDailyPriceController extends AdminController
     /**
      * Display the specified resource.
      *
-     * @param ConfigDailyPrice $dailyPrice
+     * @param ConfigDailyPrice $configDailyPrice
      * @return Response
      */
-    public function show(ConfigDailyPrice $dailyPrice)
+    public function show(ConfigDailyPrice $configDailyPrice)
     {
-        return view('admin._config.dailyPrices.show', compact('dailyPrice'));
+        return view('admin._config.dailyPrices.show', compact('configDailyPrice'));
     }
 
     /**
@@ -68,7 +68,7 @@ class AdminConfigDailyPriceController extends AdminController
     {
         try {
             ConfigDailyPrice::create($request->validated());
-            return redirect()->route('admin.config.dailyPrices.index')->with('success', 'Tagespreis erfolgreich angelegt!');
+            return redirect()->route('admin.configDailyPrices.index')->with('success', 'Tagespreis erfolgreich angelegt!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -77,13 +77,13 @@ class AdminConfigDailyPriceController extends AdminController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param ConfigDailyPrice $dailyPrice
+     * @param ConfigDailyPrice $configDailyPrice
      * @return Response
      */
-    public function edit(ConfigDailyPrice $dailyPrice)
+    public function edit(ConfigDailyPrice $configDailyPrice)
     {
         return view('admin._config.dailyPrices.edit', [
-            'dailyPrice' => $dailyPrice,
+            'configDailyPrice' => $configDailyPrice,
             'optionsModel'  => $this->optionsModel,
             'optionsSaisonDates' => $this->configSaisonDatesRepository->options()->getSelectOptions(),
             'optionsPriceTypes' => $this->configPriceTypeRepository->options()->getSelectOptions(),
@@ -94,14 +94,14 @@ class AdminConfigDailyPriceController extends AdminController
      * Update the specified resource in storage.
      *
      * @param  ConfigDailyPriceRequest  $request
-     * @param ConfigDailyPrice $dailyPrice
+     * @param ConfigDailyPrice $configDailyPrice
      * @return Response
      */
-    public function update(ConfigDailyPriceRequest $request, ConfigDailyPrice $dailyPrice)
+    public function update(ConfigDailyPriceRequest $request, ConfigDailyPrice $configDailyPrice)
     {
         try {
-            $dailyPrice->update($request->validated());
-            return redirect()->route('admin.config.dailyPrices.index')->with('success', 'Tagespreis erfolgreich bearbeitet!');
+			$configDailyPrice->update($request->validated());
+            return redirect()->route('admin.configDailyPrices.index')->with('success', 'Tagespreis erfolgreich bearbeitet!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -110,14 +110,14 @@ class AdminConfigDailyPriceController extends AdminController
     /**
      * Remove the specified resource from storage.
      *
-     * @param ConfigDailyPrice $dailyPrice
+     * @param ConfigDailyPrice $configDailyPrice
      * @return Response
      */
-    public function destroy(ConfigDailyPrice $dailyPrice)
+    public function destroy(ConfigDailyPrice $configDailyPrice)
     {
         try {
-            $dailyPrice->delete();
-            return redirect()->route('admin.config.dailyPrices.index')->with('success', 'Tagespreis erfolgreich gelöscht!');
+			$configDailyPrice->delete();
+            return redirect()->route('admin.configDailyPrices.index')->with('success', 'Tagespreis erfolgreich gelöscht!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }

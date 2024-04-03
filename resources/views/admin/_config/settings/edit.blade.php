@@ -2,12 +2,12 @@
 
 @section('main')
 	<div>
-		<x-btn-back route="{{ route('admin.config.settings.index') }}"/>
+		<x-btn-back route="{{ route('admin.configSettings.index') }}"/>
 		<div class="row mt-3">
 			<div class="col-sm-12 col-md-4">
-				<x-form method="post" :action="route('admin.config.settings.update', $setting)" class="w-full">
+				<x-form method="post" :action="route('admin.configSettings.update', $configSetting)" class="w-full">
 					@method('put')
-					@bind($setting)
+					@bind($configSetting)
 					<x-form-input id="name" name="name" label="Name" placeholder="Name der Firma"/>
 					<x-form-input id="street" name="street" label="Strasse u. Hausnummer"
 								  placeholder="Strasse und Hausnummer"/>

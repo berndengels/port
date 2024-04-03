@@ -4,7 +4,7 @@
 	<div>
 		<div class="index-header mt-3 p-0">
 			<div class="float-start">
-				<x-btn-create route="{{ route('admin.config.entities.create') }}"/>
+				<x-btn-create route="{{ route('admin.configEntities.create') }}"/>
 			</div>
 			<div class="float-end"></div>
 		</div>
@@ -23,7 +23,7 @@
 							</ul>
 						@endif
 					</td>
-					<x-action routePrefix="admin.config.entities" edit delete/>
+					<x-action routePrefix="admin.configEntities" edit delete/>
 					@endBindData
 				</tr>
 			@endforeach

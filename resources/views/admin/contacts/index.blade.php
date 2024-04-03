@@ -2,12 +2,12 @@
 
 @section('main')
 	<div>
-		<x-form class="inline-form ms-0 my-3" method="get" id="frmFilter" name="frmFilter"
+		<x-form class="inline-form ms-0 my-3 inline-form" method="get" id="frmFilter" name="frmFilter"
 				action="{{ route('admin.contacts.index') }}"
 		>
-			<x-filter name="name" :options="$nameOptions" :val="$name" inline/>
-			<x-filter name="email" :options="$emailOptions" :val="$email" inline/>
-			<x-filter name="year" :options="$yearOptions" :val="$year" inline/>
+			<x-filter floating name="name" :options="$nameOptions" :val="$name" inline/>
+			<x-filter floating name="email" :options="$emailOptions" :val="$email" inline/>
+			<x-filter floating name="year" :options="$yearOptions" :val="$year" inline/>
 			@if($year)
 				<x-filter name="month" :options="$monthOptions" :val="$month" inline/>
 			@endif

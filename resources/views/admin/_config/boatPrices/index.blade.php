@@ -4,7 +4,7 @@
 	<div>
 		<div class="index-header mt-3 p-0">
 			<div class="float-start">
-				<x-btn-create route="{{ route('admin.config.boatPrices.create') }}"/>
+				<x-btn-create route="{{ route('admin.configBoatPrices.create') }}"/>
 			</div>
 			<div class="float-end"></div>
 		</div>
@@ -17,7 +17,7 @@
 					<x-td field="saison.name"/>
 					<x-td field="priceType.name"/>
 					<x-td field="price_factor"/>
-					<x-action routePrefix="admin.config.boatPrices" edit delete/>
+					<x-action routePrefix="admin.configBoatPrices" edit delete/>
 					@endBindData
 				</tr>
 			@endforeach

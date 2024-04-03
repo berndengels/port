@@ -45,7 +45,7 @@ class ConfigHolidayRepository extends Repository
         'repentance_and_prayer_day',
         'labor_day',
     ];
-    public function __construct(private int $addYears = 1)
+    public function __construct(private int $addYears = 2)
     {
         $this->setYears($this->addYears);
         $this->exceptHolidays = ConfigHoliday::whereEnabled(false)->get()->map->key;

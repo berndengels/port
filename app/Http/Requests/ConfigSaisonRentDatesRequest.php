@@ -5,18 +5,9 @@ namespace App\Http\Requests;
 class ConfigSaisonRentDatesRequest extends AdminRequest
 {
     protected $modelName = 'ConfigSaisonRentDates';
+	protected $permission = 'write ConfigSaisonRentDates';
 
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize() : bool
-    {
-        return auth()->user()->can('write ConfigSaisonRentDates');
-    }
-
-    /**
+	/**
      * Get the validation rules that apply to the request.Customer
      *
      * @return array
@@ -28,7 +19,7 @@ class ConfigSaisonRentDatesRequest extends AdminRequest
             'from'      => 'exclude_if:until,null|required|date|before:until',
             'until'     => ['required','date','after:from'],
             'name'      => 'nullable|max:50',
-            'holiday'   => 'nullable|max:25',
+            'holiday'   => 'nullable|max:50',
         ];
 
         return $rules;

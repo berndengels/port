@@ -1,11 +1,12 @@
 <?php
 namespace App\Libs\Prices;
 
-use App\Models\ConfigSetting;
+use Exception;
 use DatePeriod;
 use Carbon\Carbon;
-use Illuminate\Support\Str;
 use ReflectionClass;
+use Illuminate\Support\Str;
+use App\Models\ConfigSetting;
 use Illuminate\Http\Request;
 use App\Traits\Models\HasTaxRate;
 use Illuminate\Support\Collection;
@@ -97,31 +98,36 @@ abstract class PriceCalculator
 
 			foreach ($cParams as $p) {
 				$name = $p->getName();
-				$type = $p->getType();
+//				$type = $p->getType();
 
 				switch ($name) {
 					case 'from':
-						$args[] = static::$from;
+						$args['from'] = static::$from;
 						break;
 					case 'until':
-						$args[] = static::$until;
+						$args['until'] = static::$until;
 						break;
 					default:
 						if(isset($params[$name])) {
-							$args[] = $params[$name] ?? null;
+							$args[$name] = $params[$name] ?? null;
 						}
 						break;
 				}
 			}
 
             if(method_exists($this, 'useModel') && $this->model instanceof Model) {
-                $args[] = $this->model;
+				$args['rentable'] = $this->model;
             }
-
-            return new $class(...$args);
-        } catch(\Exception $e) {
+            $obj = new $class(...$args);
+			return $obj;
+        }
+		catch(PriceObjectException $e) {
             throw new PriceObjectException($e);
         }
+		catch (Exception $e) {
+//			die($e->getTraceAsString());
+			throw new Exception($e->getTraceAsString());
+		}
     }
 
     protected function formatResult(array $props): array
@@ -169,7 +175,7 @@ abstract class PriceCalculator
                     $obj = $this->getObject($request, $class, $rClass);
                 } catch(PriceObjectException $e) {
                     return response()->json(['error' => $e->getMessage()]);
-                } catch (\Exception $e) {
+                } catch (Exception $e) {
                     return response()->json(['error' => $e->getMessage()]);
                 }
 

@@ -25,9 +25,9 @@ class AdminConfigBoatPriceController extends AdminController
      * @param ConfigBoatPrice $boatPrice
      * @return Response
      */
-    public function show(ConfigBoatPrice $boatPrice)
+    public function show(ConfigBoatPrice $configBoatPrice)
     {
-        return view('admin._config.boatPrices.show', compact('boatPrice'));
+        return view('admin._config.boatPrices.show', compact('configBoatPrice'));
     }
 
     /**
@@ -53,7 +53,7 @@ class AdminConfigBoatPriceController extends AdminController
     {
         try {
             ConfigBoatPrice::create($request->validated());
-            return redirect()->route('admin.config.boatPrices.index')->with('success', 'Bootpreis erfolgreich angelegt!');
+            return redirect()->route('admin.configBoatPrices.index')->with('success', 'Bootpreis erfolgreich angelegt!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -65,10 +65,10 @@ class AdminConfigBoatPriceController extends AdminController
      * @param ConfigBoatPrice $boatPrice
      * @return Response
      */
-    public function edit(ConfigBoatPrice $boatPrice)
+    public function edit(ConfigBoatPrice $configBoatPrice)
     {
         return view('admin._config.boatPrices.edit', [
-            'boatPrice' => $boatPrice,
+            'configBoatPrice' => $configBoatPrice,
             'optionsSaisonDates' => $this->configSaisonDatesRepository->options()->getSelectOptions(),
             'optionsPriceTypes' => $this->configPriceTypeRepository->options()->getSelectOptions(),
         ]);
@@ -81,11 +81,11 @@ class AdminConfigBoatPriceController extends AdminController
      * @param ConfigBoatPrice $boatPrice
      * @return Response
      */
-    public function update(ConfigBoatPriceRequest $request, ConfigBoatPrice $boatPrice)
+    public function update(ConfigBoatPriceRequest $request, ConfigBoatPrice $configBoatPrice)
     {
         try {
-            $boatPrice->update($request->validated());
-            return redirect()->route('admin.config.boatPrices.index')->with('success', 'Bootpreis erfolgreich bearbeitet!');
+			$configBoatPrice->update($request->validated());
+            return redirect()->route('admin.configBoatPrices.index')->with('success', 'Bootpreis erfolgreich bearbeitet!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -97,11 +97,11 @@ class AdminConfigBoatPriceController extends AdminController
      * @param ConfigBoatPrice $boatPrice
      * @return Response
      */
-    public function destroy(ConfigBoatPrice $boatPrice)
+    public function destroy(ConfigBoatPrice $configBoatPrice)
     {
         try {
-            $boatPrice->delete();
-            return redirect()->route('admin.config.boatPrices.index')->with('success', 'Bootpreis erfolgreich gelöscht!');
+			$configBoatPrice->delete();
+            return redirect()->route('admin.configBoatPrices.index')->with('success', 'Bootpreis erfolgreich gelöscht!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }

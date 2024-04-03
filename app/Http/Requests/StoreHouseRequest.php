@@ -2,22 +2,8 @@
 
 namespace App\Http\Requests;
 
-use App\Models\House;
-
-class StoreHouseRequest extends AdminRequest
+class StoreHouseRequest extends HouseRequest
 {
-    protected $modelName = House::class;
-
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize() : bool
-    {
-        return $this->auth->user()->can('write House');
-    }
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -25,11 +11,9 @@ class StoreHouseRequest extends AdminRequest
      */
     public function rules()
     {
-        return [
-            'house_model_id'   => 'required',
-            'house_owner_id'   => '',
-            'name'              => 'required|min:3|unique:houses,name',
-            'calendar_color'    => '',
-        ];
+		$rules = parent::rules();
+		$rules['name'] 	= 'required|min:3|unique:houses,name';
+
+		return $rules;
     }
 }

@@ -176,8 +176,8 @@ Route::group([
     Route::get('', [AdminDashboardController::class, 'show'])->name('dashboard')->middleware(['check-settings']);
     Route::post('logout', [AdminLoginController::class,'logout'])->name('logout');
 
-    Route::get('customers/guest', [AdminCustomerController::class,'guest'])->name('customers.guest');
-    Route::get('customers/renter', [AdminCustomerController::class,'renter'])->name('customers.renter');
+    Route::get('customersGuest', [AdminCustomerController::class,'guest'])->name('customers.guest');
+    Route::get('customersRenter', [AdminCustomerController::class,'renter'])->name('customers.renter');
 
     Route::get('boats/guests', [AdminBoatController::class,'guests'])->name('boats.guests');
     Route::get('boatDates/invoice/{boatDate}', [AdminBoatDatesController::class, 'invoice'])->name('boatDates.invoice');
@@ -232,19 +232,19 @@ Route::group([
 	Route::get('config-saisonDates-guests', [AdminConfigSaisonDatesController::class,'guests'])->name('config-saisonDates-guests');
 	Route::get('config-saisonDates-customers', [AdminConfigSaisonDatesController::class,'customers'])->name('config-saisonDates-customers');
 
-	Route::resource('config-settings', AdminConfigSettingsController::class)->except(['show']);
-	Route::resource('config-offers', AdminConfigOfferController::class);
-	Route::resource('config-saisonDates', AdminConfigSaisonDatesController::class);
-	Route::resource('config-boatPrices', AdminConfigBoatPriceController::class);
-	Route::resource('config-dailyPrices', AdminConfigDailyPriceController::class);
-	Route::resource('config-priceComponents', AdminConfigPriceComponentController::class);
-	Route::resource('config-priceTypes', AdminConfigPriceTypeController::class);
-	Route::resource('config-services', AdminConfigServiceController::class);
-	Route::resource('config-entities', AdminConfigEntityController::class);
-	Route::resource('config-saisonRents', AdminConfigSaisonRentController::class);
-	Route::resource('config-saisonRentDates', AdminConfigSaisonRentDatesController::class);
-	Route::resource('config-holidays', AdminConfigHolidayController::class)->only(['index']);
-	Route::post('config-holidays/toggle/{configHoliday}', [AdminConfigHolidayController::class, 'toggle'])->name('holidays.toggle');
+	Route::resource('configSettings', AdminConfigSettingsController::class)->except(['show']);
+	Route::resource('configOffers', AdminConfigOfferController::class);
+	Route::resource('configSaisonDates', AdminConfigSaisonDatesController::class);
+	Route::resource('configBoatPrices', AdminConfigBoatPriceController::class);
+	Route::resource('configDailyPrices', AdminConfigDailyPriceController::class);
+	Route::resource('configPriceComponents', AdminConfigPriceComponentController::class);
+	Route::resource('configPriceTypes', AdminConfigPriceTypeController::class);
+	Route::resource('configServices', AdminConfigServiceController::class);
+	Route::resource('configEntities', AdminConfigEntityController::class);
+	Route::resource('configSaisonRents', AdminConfigSaisonRentController::class);
+	Route::resource('configSaisonRentDates', AdminConfigSaisonRentDatesController::class);
+	Route::resource('configHolidays', AdminConfigHolidayController::class)->only(['index']);
+	Route::post('configHolidays/toggle/{configHoliday}', [AdminConfigHolidayController::class, 'toggle'])->name('holidays.toggle');
 
 //    Route::get('rentals/sendInvoice/{houseboatDate}', [AdminRentalsController::class, 'sendInvoice'])->name('rentals.sendInvoice');
 //    Route::get('rentals/sendInvoice/{houseboatDate}', [AdminHouseboatRentalsController::class, 'sendInvoice'])->name('rentals.sendInvoice');

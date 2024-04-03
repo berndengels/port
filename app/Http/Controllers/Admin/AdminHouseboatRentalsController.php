@@ -9,4 +9,5 @@ class AdminHouseboatRentalsController extends AdminRentalsController
     protected $relationModel = Houseboat::class;
     protected string $relationName = 'houseboat';
     protected string $routeName = 'houseboatRentals';
+	protected string $customerType = 'houseboat';
 }

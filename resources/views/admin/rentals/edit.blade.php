@@ -33,6 +33,9 @@
 								@if('kilowatt' === $pc->key)
 									<x-form-input class="calc" id="kilowatt_value" name="kilowatt_value" type="number"
 												  min="0" step="0.1" value="0" label="Stromverbrauch in Kw"/>
+								@elseif('personen' === $pc->key)
+									<x-form-input class="calc" id="personen" name="personen" type="number"
+												  min="1" max="10" step="1" value="0" label="Anzahl Personen"/>
 								@endif
 							</div>
 						@endforeach

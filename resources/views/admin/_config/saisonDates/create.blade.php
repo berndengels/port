@@ -3,8 +3,8 @@
 
 @section('main')
 	<div>
-		<x-btn-back route="{{ route('admin.config-saisonDates.' . (isset($route) ? $route : 'index') ) }}"/>
-		<x-form method="post" :action="route('admin.config-saisonDates.store')" class="w-half mt-3">
+		<x-btn-back route="{{ route('admin.configSaisonDates.' . (isset($route) ? $route : 'index') ) }}"/>
+		<x-form method="post" :action="route('admin.configSaisonDates.store')" class="w-half mt-3">
 			<x-form-input id="name" name="name" label="Name" placeholder="Wie heißt die Saison?" required/>
 			<x-form-input type="date" id="from" name="from" min="{{ Carbon::today()->format('Y') }}-01-01"
 						  max="{{ Carbon::today()->addYear()->format('Y-m-d') }}" label="Von" required/>

@@ -6,11 +6,11 @@ use Illuminate\Support\Collection;
 use App\Libs\Prices\Rentals\Base;
 use App\Libs\Prices\Rentals\Kilowatt;
 use App\Libs\Prices\Rentals\RentalCleaning;
-use App\Libs\Prices\Traits\HasModel;
+use App\Libs\Prices\Traits\HasRentableModel;
 
 class RentablePrice extends PriceCalculator
 {
-    use HasModel;
+    use HasRentableModel;
 
     /**
      * @var int
@@ -23,9 +23,9 @@ class RentablePrice extends PriceCalculator
     public function params(): Collection
     {
         return collect([
+			'rental_cleaning',
             'kilowatt',
             'kilowatt_value',
-            'rental_cleaning',
         ]);
     }
 

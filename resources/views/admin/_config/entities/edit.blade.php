@@ -2,10 +2,10 @@
 
 @section('main')
 	<div>
-		<x-btn-back route="{{ route('admin.config.entities.index') }}"/>
-		<x-form method="post" :action="route('admin.config.entities.update', $entity)" class="w-half mt-3">
+		<x-btn-back route="{{ route('admin.configEntities.index') }}"/>
+		<x-form method="post" :action="route('admin.configEntities.update', $configEntity)" class="w-half mt-3">
 			@method('put')
-			@bind($entity)
+			@bind($configEntity)
 			<x-form-select
 					name="model"
 					label="Entity Model"

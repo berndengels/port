@@ -2,8 +2,8 @@
 
 @section('main')
 	<div>
-		<x-btn-back route="{{ route('admin.config.services.index') }}"/>
-		<x-form name="frm" method="post" :action="route('admin.config.services.store')" class="w-half mt-3">
+		<x-btn-back route="{{ route('admin.configServices.index') }}"/>
+		<x-form name="frm" method="post" :action="route('admin.configServices.store')" class="w-half mt-3">
 			<x-form-input name="name" label="Name" placeholder="Service Name" required/>
 			<x-form-input name="key" label="Key" class="mb-0 pb-0" placeholder="Key Name" required/>
 			<div class="mt-2">

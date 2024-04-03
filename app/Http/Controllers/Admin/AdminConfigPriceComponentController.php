@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ConfigPriceComponentRequest;
+use App\Http\Requests\StoreConfigPriceComponentRequest;
+use App\Http\Requests\UpdateConfigPriceComponentRequest;
 use App\Models\ConfigPriceComponent;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -17,21 +19,19 @@ class AdminConfigPriceComponentController extends AdminController
      */
     public function index()
     {
-        $data = ConfigPriceComponent::with(['entities','priceType','service'])
-            ->paginate($this->paginatorLimit)
-        ;
+        $data = ConfigPriceComponent::with(['entities','priceType','service'])->paginate($this->paginatorLimit);
         return view('admin._config.priceComponents.index', compact('data'));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param ConfigPriceComponent $priceComponent
+     * @param ConfigPriceComponent $configPriceComponent
      * @return Response
      */
-    public function show(ConfigPriceComponent $priceComponent)
+    public function show(ConfigPriceComponent $configPriceComponent)
     {
-        //
+        return view('admin._config.priceComponents.show', compact('configPriceComponent'));
     }
 
     /**
@@ -52,10 +52,10 @@ class AdminConfigPriceComponentController extends AdminController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  ConfigPriceComponentRequest  $request
+     * @param  StoreConfigPriceComponentRequest  $request
      * @return Response
      */
-    public function store(ConfigPriceComponentRequest $request)
+    public function store(StoreConfigPriceComponentRequest $request)
     {
         try {
             $validated = $request->validated();
@@ -65,7 +65,7 @@ class AdminConfigPriceComponentController extends AdminController
                 $priceComponent->entities()->sync($validated['entities']);
             }
 
-            return redirect()->route('admin.config.priceComponents.index')->with('success', 'Preis Komponente erfolgreich angelegt!');
+            return redirect()->route('admin.configPriceComponents.index')->with('success', 'Preis Komponente erfolgreich angelegt!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -74,13 +74,13 @@ class AdminConfigPriceComponentController extends AdminController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param ConfigPriceComponent $priceComponent
+     * @param ConfigPriceComponent $configPriceComponent
      * @return Response
      */
-    public function edit(ConfigPriceComponent $priceComponent)
+    public function edit(ConfigPriceComponent $configPriceComponent)
     {
         return view('admin._config.priceComponents.edit', [
-            'priceComponent'  => $priceComponent,
+            'configPriceComponent'  => $configPriceComponent,
             'optionsPriceComponents'  => $this->configPriceComponentRepository->options()->getSelectOptions(),
             'optionsEntityTypes' => $this->configEntityTypeRepository->options('model')->translate()->getSelectOptions(),
             'optionsPriceTypes' => $this->configPriceTypeRepository->options()->getSelectOptions(),
@@ -91,21 +91,21 @@ class AdminConfigPriceComponentController extends AdminController
     /**
      * Update the specified resource in storage.
      *
-     * @param  ConfigPriceComponentRequest  $request
-     * @param ConfigPriceComponent $priceComponent
+     * @param  UpdateConfigPriceComponentRequest  $request
+     * @param ConfigPriceComponent $configPriceComponent
      * @return Response
      */
-    public function update(ConfigPriceComponentRequest $request, ConfigPriceComponent $priceComponent)
+    public function update(UpdateConfigPriceComponentRequest $request, ConfigPriceComponent $configPriceComponent)
     {
         try {
             $validated = $request->validated();
-            $priceComponent->update($validated);
+			$configPriceComponent->update($validated);
 
             if($validated['entities']) {
-                $priceComponent->entities()->sync($validated['entities']);
+				$configPriceComponent->entities()->sync($validated['entities']);
             }
 
-            return redirect()->route('admin.config.priceComponents.index')->with('success', 'Preis Komponente erfolgreich bearbeitet!');
+            return redirect()->route('admin.configPriceComponents.index')->with('success', 'Preis Komponente erfolgreich bearbeitet!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -114,14 +114,14 @@ class AdminConfigPriceComponentController extends AdminController
     /**
      * Remove the specified resource from storage.
      *
-     * @param ConfigPriceComponent $priceComponent
+     * @param ConfigPriceComponent $configPriceComponent
      * @return Response
      */
-    public function destroy(ConfigPriceComponent $priceComponent)
+    public function destroy(ConfigPriceComponent $configPriceComponent)
     {
         try {
-            $priceComponent->delete();
-            return redirect()->route('admin.config.priceComponents.index')->with('success', 'Preis Komponente erfolgreich gelöscht!');
+			$configPriceComponent->delete();
+            return redirect()->route('admin.configPriceComponents.index')->with('success', 'Preis Komponente erfolgreich gelöscht!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }

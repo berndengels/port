@@ -4,7 +4,7 @@
 	<div>
 		<div class="index-header mt-3 p-0">
 			<div class="float-start">
-				<x-btn-create route="{{ route('admin.config.priceComponents.create') }}"/>
+				<x-btn-create route="{{ route('admin.configPriceComponents.create') }}"/>
 			</div>
 			<div class="float-end"></div>
 		</div>
@@ -29,7 +29,7 @@
 					<x-td field="key"/>
 					<x-td field="service.name"/>
 					<x-td field="unit_price" :append="['priceType.name']"/>
-					<x-action routePrefix="admin.config.priceComponents" edit delete/>
+					<x-action routePrefix="admin.configPriceComponents" edit delete/>
 					@endBindData
 				</tr>
 			@endforeach
@@ -63,12 +63,12 @@
                     <td>{{ $item->service?->name }}</td>
                     <td>{{ $item->priceType->name }}</td>
                     <td>
-                        <x-nav-link href="{{ route('admin.config.priceComponents.edit', $item) }}" icon="fas fa-edit" class="btn" title="Bearbeiten">
+                        <x-nav-link href="{{ route('admin.configPriceComponents.edit', $item) }}" icon="fas fa-edit" class="btn" title="Bearbeiten">
                             <span class="hidden md:visible">Edit</span>
                         </x-nav-link>
                     </td>
                     <td>
-                        <x-form action="{{ route('admin.config.priceComponents.destroy', $item) }}"
+                        <x-form action="{{ route('admin.configPriceComponents.destroy', $item) }}"
                                 class="m-0 p-0">
                             @method('delete')
 			<x-form-submit icon="fas fa-trash-alt" inline class="mt-0 btn-red delSoft">

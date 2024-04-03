@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\StoreHouseboatRequest;
+use App\Http\Requests\UpdateHouseboatRequest;
 use App\Models\Houseboat;
 use App\Http\Requests\HouseboatRequest;
 use Illuminate\Http\Response;
@@ -56,10 +58,10 @@ class AdminHouseboatController extends AdminController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  HouseboatRequest  $request
+     * @param  StoreHouseboatRequest  $request
      * @return Response
      */
-    public function store(HouseboatRequest $request)
+    public function store(StoreHouseboatRequest $request)
     {
         try {
             Houseboat::create($request->validated());
@@ -87,11 +89,11 @@ class AdminHouseboatController extends AdminController
     /**
      * Update the specified resource in storage.
      *
-     * @param  HouseboatRequest  $request
+     * @param  UpdateHouseboatRequest  $request
      * @param Houseboat $houseboat
      * @return Response
      */
-    public function update(HouseboatRequest $request, Houseboat $houseboat)
+    public function update(UpdateHouseboatRequest $request, Houseboat $houseboat)
     {
         try {
             $houseboat->update($request->validated());

@@ -4,7 +4,7 @@
 	<div>
 		<div class="index-header mt-3 p-0">
 			<div class="ms-0">
-				<x-btn-create route="{{ route('admin.config.saisonRentDates.create') }}"/>
+				<x-btn-create route="{{ route('admin.configSaisonRentDates.create') }}"/>
 			</div>
 			<div></div>
 		</div>
@@ -18,7 +18,7 @@
 					<x-td field="holiday"/>
 					<x-td field="from"/>
 					<x-td field="until"/>
-					<x-action routePrefix="admin.config.saisonRentDates" edit delete/>
+					<x-action routePrefix="admin.configSaisonRentDates" edit delete/>
 					@endBindData
 				</tr>
 			@endforeach

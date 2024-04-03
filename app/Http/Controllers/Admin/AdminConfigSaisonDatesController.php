@@ -40,14 +40,14 @@ class AdminConfigSaisonDatesController extends AdminController
     /**
      * Display the specified resource.
      *
-     * @param  ConfigSaisonDates  $saisonDate
+     * @param  ConfigSaisonDates  $configSaisonDate
      * @return Response
      */
-    public function show(ConfigSaisonDates $saisonDate)
+    public function show(ConfigSaisonDates $configSaisonDate)
     {
         $from = session()->get('from');
         $route = $from ? Str::plural($from) : 'index';
-        return view('admin._config.saisonDates.show', compact('saisonDate', 'route'));
+        return view('admin._config.saisonDates.show', compact('configSaisonDate', 'route'));
     }
 
     /**
@@ -74,7 +74,7 @@ class AdminConfigSaisonDatesController extends AdminController
         $route = $from ? Str::plural($from) : 'index';
         try {
             ConfigSaisonDates::create($request->validated());
-            return redirect()->route('admin.config-saisonDates.'.$route)->with('success', 'Saison erfolgreich angelegt!');
+            return redirect()->route('admin.configSaisonDates.'.$route)->with('success', 'Saison erfolgreich angelegt!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -83,30 +83,30 @@ class AdminConfigSaisonDatesController extends AdminController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  ConfigSaisonDates  $saisonDate
+     * @param  ConfigSaisonDates  $configSaisonDate
      * @return Response
      */
-    public function edit(ConfigSaisonDates $saisonDate)
+    public function edit(ConfigSaisonDates $configSaisonDate)
     {
         $from = session()->get('from');
         $route = $from ? Str::plural($from) : 'index';
-        return view('admin._config.saisonDates.edit', compact('saisonDate','route'));
+        return view('admin._config.saisonDates.edit', compact('configSaisonDate','route'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  ConfigSaisonDatesRequest  $request
-     * @param  ConfigSaisonDates  $saisonDate
+     * @param  ConfigSaisonDates  $configSaisonDate
      * @return Response
      */
-    public function update(ConfigSaisonDatesRequest $request, ConfigSaisonDates $saisonDate)
+    public function update(ConfigSaisonDatesRequest $request, ConfigSaisonDates $configSaisonDate)
     {
         $from = session()->get('from');
         $route = $from ? Str::plural($from) : 'index';
         try {
-            $saisonDate->update($request->validated());
-            return redirect()->route('admin.config-saisonDates.'.$route)->with('success', 'Saison erfolgreich bearbeitet!');
+			$configSaisonDate->update($request->validated());
+            return redirect()->route('admin.configSaisonDates.'.$route)->with('success', 'Saison erfolgreich bearbeitet!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -115,16 +115,16 @@ class AdminConfigSaisonDatesController extends AdminController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  ConfigSaisonDates  $saisonDate
+     * @param  ConfigSaisonDates  $configSaisonDate
      * @return Response
      */
-    public function destroy(ConfigSaisonDates $saisonDate)
+    public function destroy(ConfigSaisonDates $configSaisonDate)
     {
         $from = session()->get('from');
         $route = $from ? Str::plural($from) : 'index';
         try {
-            $saisonDate->delete();
-            return redirect()->route('admin.config-saisonDates.'.$route)->with('success', 'Saison erfolgreich gelöscht!');
+			$configSaisonDate->delete();
+            return redirect()->route('admin.configSaisonDates.'.$route)->with('success', 'Saison erfolgreich gelöscht!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }

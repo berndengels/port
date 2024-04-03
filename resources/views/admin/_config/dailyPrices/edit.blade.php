@@ -2,10 +2,10 @@
 
 @section('main')
 	<div>
-		<x-btn-back route="{{ route('admin.config.dailyPrices.index') }}"/>
-		<x-form method="post" :action="route('admin.config.dailyPrices.update', $dailyPrice)" class="w-half mt-3">
+		<x-btn-back route="{{ route('admin.configDailyPrices.index') }}"/>
+		<x-form method="post" :action="route('admin.configDailyPrices.update', $configDailyPrice)" class="w-half mt-3">
 			@method('put')
-			@bind($dailyPrice)
+			@bind($configDailyPrice)
 			<x-form-select id="model" name="model" label="Model" placeholder="Welche Model" :options="$optionsModel"
 						   required/>
 			<x-form-select id="saison_date_id" name="saison_date_id" label="Saison" placeholder="Welche Saison?"

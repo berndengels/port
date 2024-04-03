@@ -18,7 +18,7 @@ class Navbar {
                     $li = $a.parent('li'),
                     $collapse = $li.parent('ul').parent('div')
                 ;
-                console.info(currentRouteBase, route);
+//                console.info(currentRouteBase, route);
                 if(route && route === currentRouteBase) {
                     $li.addClass('active')
                     $collapse.removeClass('collapse')

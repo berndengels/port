@@ -28,6 +28,7 @@ import Draggable from "L@/Draggable";
 import MyCalendar from "L@/MyCalendar";
 import Fullscreen from "L@/Fullscreen";
 import Navbar from "L@/Navbar";
+import NavbarV2 from "L@/NavbarV2";
 import {createApp} from "vue"
 import store from "./vue/store"
 import mitt from 'mitt';
@@ -51,6 +52,7 @@ window.MyCalendar = new MyCalendar;
 window.MyDropzone = new MyDropzone;
 window.Fullscreen = new Fullscreen;
 window.Navbar  = new Navbar;
+window.NavbarV2  = new NavbarV2;
 
 $(document).ready(function () {
 	window.Draggable = new Draggable();

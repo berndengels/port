@@ -56,25 +56,25 @@ class AdminConfigSettingsController extends AdminController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param ConfigSetting $configPort
+     * @param ConfigSetting $configSetting
      * @return Response
      */
-    public function edit(ConfigSetting $setting)
+    public function edit(ConfigSetting $configSetting)
     {
-        return view('admin._config.settings.edit', compact('setting'));
+        return view('admin._config.settings.edit', compact('configSetting'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  UpdateConfigSettingsRequest  $request
-     * @param ConfigSetting $configPort
+     * @param ConfigSetting $configSetting
      * @return Response
      */
-    public function update(UpdateConfigSettingsRequest $request, ConfigSetting $setting)
+    public function update(UpdateConfigSettingsRequest $request, ConfigSetting $configSetting)
     {
         try {
-            $setting->update($request->validated());
+			$configSetting->update($request->validated());
             return redirect()->route('admin.config.settings.index')->with('success', 'Daten erfolgreich bearbeitet!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
@@ -84,13 +84,13 @@ class AdminConfigSettingsController extends AdminController
     /**
      * Remove the specified resource from storage.
      *
-     * @param ConfigSetting $configPort
+     * @param ConfigSetting $configSetting
      * @return Response
      */
-    public function destroy(ConfigSetting $setting)
+    public function destroy(ConfigSetting $configSetting)
     {
         try {
-            $setting->delete();
+			$configSetting->delete();
             return redirect()->route('admin.config.settings.index')->with('success', 'Daten erfolgreich gelöscht!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());

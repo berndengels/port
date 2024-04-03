@@ -2,8 +2,8 @@
 
 @section('main')
 	<div>
-		<x-btn-back route="{{ route('admin.config.entities.index') }}"/>
-		<x-form method="post" :action="route('admin.config.entities.store')" class="w-half mt-3">
+		<x-btn-back route="{{ route('admin.configEntities.index') }}"/>
+		<x-form method="post" :action="route('admin.configEntities.store')" class="w-half mt-3">
 			<x-form-select
 					name="model"
 					label="Entity Model"

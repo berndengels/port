@@ -2,11 +2,11 @@
 
 @section('main')
 	<div>
-		<x-btn-back route="{{ route('admin.config.priceComponents.index') }}"/>
-		<x-form method="post" :action="route('admin.config.priceComponents.update', $priceComponent)"
+		<x-btn-back route="{{ route('admin.configPriceComponents.index') }}"/>
+		<x-form method="post" :action="route('admin.configPriceComponents.update', $configPriceComponent)"
 				class="w-half mt-3">
 			@method('put')
-			@bind($priceComponent)
+			@bind($configPriceComponent)
 			<x-form-select id="entities" name="entities[]" label="Betrifft was" :options="$optionsEntityTypes"
 						   size="4" class="flexy" many-relation multiple required
 			/>

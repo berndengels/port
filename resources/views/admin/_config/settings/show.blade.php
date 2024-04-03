@@ -3,7 +3,7 @@
 @section('main')
 	@if(!$data)
 		<div class="container mt-4">
-			<x-btn-create route="{{ route('admin.config.settings.create') }}"/>
+			<x-btn-create route="{{ route('admin.configSettings.create') }}"/>
 		</div>
 
 	@else
@@ -65,8 +65,8 @@
 			</div>
 			<div class="row">
 				<div class="mt-3">
-					<x-btn-edit route="{{ route('admin.config.settings.edit', $data) }}"/>
-					<x-btn-delete route="{{ route('admin.config.settings.destroy', $data) }}"/>
+					<x-btn-edit route="{{ route('admin.configSettings.edit', $data) }}"/>
+					<x-btn-delete route="{{ route('admin.configSettings.destroy', $data) }}"/>
 				</div>
 			</div>
 		</div>

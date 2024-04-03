@@ -29,7 +29,7 @@ class AdminRentalsController extends RentableController
     protected array $years;
     protected array $monthsByYear;
     protected Collection $relationOptions;
-    protected string $customerType = 'renter';
+    protected string $customerType;
     protected Collection $customerOptions;
     protected $calendarDates;
     /**

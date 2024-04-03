@@ -7,16 +7,7 @@ use App\Models\Apartment;
 class UpdateApartmentRequest extends AdminRequest
 {
     protected $modelName = Apartment::class;
-
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize() : bool
-    {
-        return $this->auth->user()->can('write Apartment');
-    }
+	protected $permission = 'write Apartment';
 
     /**
      * Get the validation rules that apply to the request.
@@ -27,7 +18,7 @@ class UpdateApartmentRequest extends AdminRequest
     {
         return [
             'apartment_model_id'   => 'required',
-            'name'              => 'required|min:3|unique:apartments,name',
+            'name'              => 'required|min:3',
             'calendar_color'    => '',
         ];
     }

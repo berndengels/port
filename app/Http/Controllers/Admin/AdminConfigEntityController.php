@@ -37,12 +37,12 @@ class AdminConfigEntityController extends AdminController
     /**
      * Display the specified resource.
      *
-     * @param ConfigEntity $entity
+     * @param ConfigEntity $configEntity
      * @return Response
      */
-    public function show(ConfigEntity $entity)
+    public function show(ConfigEntity $configEntity)
     {
-        return view('admin._config.entities.show', compact('entity'));
+        return view('admin._config.entities.show', compact('configEntity'));
     }
 
     /**
@@ -70,7 +70,7 @@ class AdminConfigEntityController extends AdminController
             $entity = ConfigEntity::create($request->validated());
             $entity->priceComponents()->sync($request->validated()['priceComponents']);
 
-            return redirect()->route('admin.config.entities.index')->with('success', 'Entity erfolgreich angelegt!');
+            return redirect()->route('admin.configEntities.index')->with('success', 'Entity erfolgreich angelegt!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -79,14 +79,14 @@ class AdminConfigEntityController extends AdminController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param ConfigEntity $entity
+     * @param ConfigEntity $configEntity
      * @return Response
      */
-    public function edit(ConfigEntity $entity)
+    public function edit(ConfigEntity $configEntity)
     {
-        $entity->load('priceComponents')->get();
+		$configEntity->load('priceComponents')->get();
         return view('admin._config.entities.edit', [
-            'entity'  => $entity,
+            'configEntity'  => $configEntity,
             'modelOptions'  => $this->modelOptions,
             'optionsPriceComponents'  => $this->configPriceComponentRepository->options()->getSelectOptions(),
         ]);
@@ -96,15 +96,15 @@ class AdminConfigEntityController extends AdminController
      * Update the specified resource in storage.
      *
      * @param  UpdateConfigEntityRequest  $request
-     * @param ConfigEntity $entity
+     * @param ConfigEntity $configEntity
      * @return Response
      */
-    public function update(UpdateConfigEntityRequest $request, ConfigEntity $entity)
+    public function update(UpdateConfigEntityRequest $request, ConfigEntity $configEntity)
     {
         try {
-            $entity->update($request->validated());
-            $entity->priceComponents()->sync($request->validated()['priceComponents']);
-            return redirect()->route('admin.config.entities.index')->with('success', 'Entity erfolgreich bearbeitet!');
+			$configEntity->update($request->validated());
+			$configEntity->priceComponents()->sync($request->validated()['priceComponents']);
+            return redirect()->route('admin.configEntities.index')->with('success', 'Entity erfolgreich bearbeitet!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -113,14 +113,14 @@ class AdminConfigEntityController extends AdminController
     /**
      * Remove the specified resource from storage.
      *
-     * @param ConfigEntity $entity
+     * @param ConfigEntity $configEntity
      * @return Response
      */
-    public function destroy(ConfigEntity $entity)
+    public function destroy(ConfigEntity $configEntity)
     {
         try {
-            $entity->delete();
-            return redirect()->route('admin.config.entities.index')->with('success', 'Entity erfolgreich gelöscht!');
+			$configEntity->delete();
+            return redirect()->route('admin.configEntities.index')->with('success', 'Entity erfolgreich gelöscht!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }

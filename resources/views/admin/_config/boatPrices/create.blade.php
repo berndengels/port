@@ -2,8 +2,8 @@
 
 @section('main')
 	<div>
-		<x-btn-back route="{{ route('admin.config.boatPrices.index') }}"/>
-		<x-form method="post" :action="route('admin.config.boatPrices.store')" class="w-half mt-3">
+		<x-btn-back route="{{ route('admin.configBoatPrices.index') }}"/>
+		<x-form method="post" :action="route('admin.configBoatPrices.store')" class="w-half mt-3">
 			<x-form-input id="name" name="name" label="Name" placeholder="Name" required/>
 			<x-form-select id="saison_date_id" name="saison_date_id" label="Saison" placeholder="Welche Saison?"
 						   :options="$optionsSaisonDates" required/>
