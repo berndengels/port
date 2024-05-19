@@ -12,9 +12,9 @@
 			@endcan
 			<x-form-select name="type" label="Typ" :options="$customerTypes" :default="$type" required/>
 			<x-form-input name="name" label="Name" required/>
-			<x-form-input type="email" name="email" label="Email" required/>
-			<x-form-input type="password" name="password" label="Passwort" required/>
-			<x-form-input type="password" name="password_confirmation" label="Passwort wiederholen" required/>
+			<x-form-input type="email" name="email" label="Email"/>
+			<x-form-input type="password" name="password" label="Passwort"/>
+			<x-form-input type="password" name="password_confirmation" label="Passwort wiederholen"/>
 			<x-form-input name="fon" type="tel" label="Telefon"/>
 			<x-form-input name="city" label="Ort"/>
 			<x-form-input name="postcode" label="PLZ"/>

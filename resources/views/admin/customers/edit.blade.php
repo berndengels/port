@@ -17,11 +17,10 @@
 			@endcan
 			<x-form-select name="type" label="Typ" :options="$customerTypes" required/>
 			<x-form-input name="name" label="Name" required/>
-			<x-form-input type="email" name="email" label="Email" required/>
+			<x-form-input type="email" name="email" label="Email"/>
 			<x-form-input type="password" name="password" label="Passwort" :bind="false" autocomplete="off" readonly
 						  onfocus="this.removeAttribute('readonly');"/>
 			<x-form-input type="password" name="password_confirmation" label="Passwort wiederholen" autocomplete="off"/>
-
 			<x-form-input name="fon" type="tel" label="Telefon"/>
 			<x-form-input name="city" label="Ort"/>
 			<x-form-input name="postcode" label="PLZ"/>

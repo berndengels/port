@@ -28,7 +28,8 @@ class CustomerRequest extends AdminRequest
         $rules = [
             'name'              => 'required|min:3',
             'email'             => $this->getId() ? '' : 'nullable|email|unique:customers,email',
-            'password'          => !$this->getId() ? 'required|alpha_num|between:6,20|confirmed' : 'nullable|alpha_num|between:6,20|required_if:confirmed,null',
+//            'password'          => !$this->getId() ? 'required|alpha_num|between:6,20|confirmed' : 'nullable|alpha_num|between:6,20|required_if:confirmed,null',
+			'password'          => 'nullable|alpha_num|between:6,20|required_if:confirmed,null',
             'type'              => '',
             'confirmed'         => '',
             'confirmed_old'     => '',
