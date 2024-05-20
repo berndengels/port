@@ -13,6 +13,7 @@ class AdminCustomerController extends AdminController
 {
     protected $customerTypes;
     protected $customerTypeOptions;
+	protected $roles;
     /**
      * Guard used for admin user
      *
@@ -26,6 +27,7 @@ class AdminCustomerController extends AdminController
         //        $this->middleware(['auth:admin','auth:customer']);
         $this->customerTypeOptions = config('port.main.customer.typeOptions');
         $this->customerTypes = collect($this->customerTypeOptions)->map(fn ($v, $k) => $k);
+		$this->roles = $this->roleRepository->setGuardName('customer')->options()->translate()->getSelectOptions();
     }
 
     public function index()
@@ -62,6 +64,7 @@ class AdminCustomerController extends AdminController
     {
         $from = session()->get('from');
         $route = $from ? Str::plural($from) : 'index';
+
         return view('admin.customers.show', compact('customer', 'route'));
     }
 
@@ -85,8 +88,9 @@ class AdminCustomerController extends AdminController
             default:
                 break;
         }
+
         return view('admin.customers.create', [
-            'roles' => $this->roleRepository->setGuardName('customer')->options()->translate()->getSelectOptions(),
+            'roles' => $this->roles,
             'type'  => $type,
             'route' => $route,
             'role'  => $role,
@@ -127,7 +131,7 @@ class AdminCustomerController extends AdminController
         $from = session()->get('from');
         $route = $from ? Str::plural($from) : 'index';
         $customer->load('roles');
-        $roles = $this->roleRepository->setGuardName('customer')->options()->getSelectOptions();
+        $roles = $this->roles;
         $customerTypes = $this->customerTypeOptions;
         $customer->password = null;
         $confirmed = $customer->confirmed;
