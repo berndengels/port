@@ -3,6 +3,7 @@ namespace App\Providers;
 
 use App\Events\OnStart;
 use App\Repositories\ConfigSettingsRepository;
+use App\View\Components\Dropzone;
 use App\View\Components\SumPrice;
 use Exception;
 use Carbon\Carbon;
@@ -114,6 +115,7 @@ class AppServiceProvider extends ServiceProvider
             'public-top-navbar' => PublicTopNavbar::class,
             'public-bottom-navbar' => PublicBottomNavbar::class,
             'sum-price'         => SumPrice::class,
+			'dropzone'          => Dropzone::class,
         ]);
         try {
             $settings = ConfigSettingsRepository::getFirst();

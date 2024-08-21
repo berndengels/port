@@ -14,15 +14,13 @@
 			<x-form-input name="peak_season_price" type="number" step="1" min="1" label="Preis Hauptsaison" required/>
 			<x-form-input name="mid_season_price" type="number" step="1" min="1" label="Preis Zwischensaison" required/>
 			<x-form-input name="low_season_price" type="number" step="1" min="1" label="Preis Nebensaison" required/>
-			<x-form-textarea name="description" label="Beschreibung" required/>
+			<x-form-textarea name="description" label="Beschreibung" required />
 			@endbind
-			@can('ImageUpload')
-				<div class="row">
-					<div class="col-12">
-						<x-dropzone name="image" />
-					</div>
+			<div class="row">
+				<div class="col-12">
+					<x-dropzone name="image" />
 				</div>
-			@endcan
+			</div>
 			<div class="mt-2">
 				<x-form-submit class="btn btn-secondary" icon="fas fa-save">Speichern</x-form-submit>
 			</div>

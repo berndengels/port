@@ -3,7 +3,6 @@ import { Dropzone } from "dropzone";
 class MyDropzone {
 	create(selector = '#dropzone', paramName = 'image', model_type, model_id, uploadURL = null, files = null) {
 		Dropzone.autoDiscover = false;
-
 		const dropzone = new Dropzone(selector, {
 					url: uploadURL,
 					paramName: paramName,
@@ -44,6 +43,7 @@ class MyDropzone {
 				dropzone.displayExistingFile(item, item.url)
 			});
 		}
+
 		return dropzone;
 	}
 }
