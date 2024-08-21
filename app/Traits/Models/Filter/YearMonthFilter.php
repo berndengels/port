@@ -25,14 +25,16 @@ trait YearMonthFilter
             ? (static::class)::whereHasMorph('rentable', $morphRelation)
             : (static::class)::query();
 
-        $query->selectRaw("DISTINCT MONTH(`from`) month, DATE_FORMAT(`from`, '%M', 'de_DE') monthname, YEAR(`from`) year");
+        $query->selectRaw("DISTINCT MONTH(`from`) month, DATE_FORMAT(`from`, '%M') monthname, YEAR(`from`) year");
 
         if($from) {
             $query->whereDate('from', '>=', $from);
         }
+
         if($until) {
             $query->whereDate('until', '<=', $until);
         }
+
         return $query
             ->orderBy('year')
             ->orderBy('month');
@@ -40,7 +42,7 @@ trait YearMonthFilter
 
     public static function getMonthsByYearsOptions(string|array $morphRelation = null, $from = null, $until = null)
     {
-        $data = self::getMonthsByYears($morphRelation, $from, $until)->get();
+        $data = self::getMonthsByYears(morphRelation: $morphRelation, from: $from, until: $until)->get();
         if($data) {
             $result = [];
             foreach($data as $date) {

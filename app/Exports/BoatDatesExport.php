@@ -25,7 +25,7 @@ class BoatDatesExport extends ExcelExport implements WithMapping, WithColumnForm
     {
         return [
             $row->boat->name,
-            $row->saison,
+            __($row->modus),
             $row->from->format('d.m.Y'),
             $row->until->format('d.m.Y'),
             $row->price,

@@ -45,5 +45,7 @@
 	"permanent": "Resident",
 	"renter": "Renter",
 	"guest": "Caravans",
-	"customer": "Boats"
+	"customer": "Boats",
+	"summer": "Summer",
+	"winter": "Winter storage"
 }

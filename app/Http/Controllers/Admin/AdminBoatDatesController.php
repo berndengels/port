@@ -91,6 +91,7 @@ class AdminBoatDatesController extends AdminController
         if(!$from && $firstDate) {
             $from = $firstDate;
         }
+
         if(!$until && $lastDate) {
             $until = $lastDate;
         }
@@ -98,15 +99,16 @@ class AdminBoatDatesController extends AdminController
         if($saison) {
             $query->whereModus($saison);
         }
+
 		if($boat) {
 			$query->whereBoatId($boat);
 		}
 
         $query->datesBetween($from, $until);
 
-        $paginated  = $query->paginate($this->paginatorLimit);
-        $priceTotal = $query->get()->sum(fn ($item) => $item->price);
-        $queryString = $request->only(['boat','year','from','until','sort']);
+        $paginated  	= $query->paginate($this->paginatorLimit);
+        $priceTotal 	= $query->get()->sum(fn ($item) => $item->price);
+        $queryString	= $request->only(['boat','year','from','until','sort']);
 
         return view('admin.boatDates.index', [
             'data'          => $paginated,
