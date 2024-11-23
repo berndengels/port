@@ -57,7 +57,7 @@ export default {
 					const option = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'}
 				},
 				initialView: 'dayGridMonth',
-				contentHeight: '400px',
+				contentHeight: '500px',
 				selectable: true,
 				selectOverlap: true,
 				locale: 'de',
@@ -88,8 +88,7 @@ export default {
 				data[r] = {name: r, val: this.filter[r]};
 			}
 			try {
-				this.options.events = this.dates
-					.filter(el => el.relation === data[el.relation]['name'] && true === data[el.relation]['val']);
+				this.options.events = this.dates.filter(el => el.relation === data[el.relation]['name'] && true === data[el.relation]['val']);
 			} catch (e) {
 			}
 		}

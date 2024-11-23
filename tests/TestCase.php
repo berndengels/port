@@ -52,7 +52,7 @@ abstract class TestCase extends BaseTestCase
     }
 
     protected function getUser() {
-        return AdminUser::whereName('Bernd Engels')->first();
+        return AdminUser::whereEmail('engels@f50.de')->first();
     }
 
     protected function getCustomer() {

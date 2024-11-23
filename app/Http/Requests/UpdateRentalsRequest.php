@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Requests\AdminRequest;
+namespace App\Http\Requests;
 
 class UpdateRentalsRequest extends AdminRequest
 {

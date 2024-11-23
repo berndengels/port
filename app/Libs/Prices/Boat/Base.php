@@ -27,13 +27,16 @@ class Base extends Main implements IDailyPrice
                 case 'summer':
                     $from = $days ? new Carbon($days->getStartDate()) : static::$saisonStart;
                     $until = $days ? new Carbon($days->getEndDate()) : static::$saisonEnd;
+
                     return $this->getSaisonPrice($from, $until);
                 case 'winter':
                     $from = $days ? new Carbon($days->getStartDate()) : static::$winterStart;
                     $until = $days ? new Carbon($days->getEndDate()) : static::$winterEnd;
+
                     return $this->getWinterPrice($from, $until);
             }
         }
+
         return new Price();
     }
 

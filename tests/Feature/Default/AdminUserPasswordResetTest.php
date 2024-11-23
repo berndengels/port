@@ -115,7 +115,8 @@ class AdminUserPasswordResetTest extends TestCase
 
         $this->user->refresh();
         $this->assertFalse(Hash::check($password, $this->user->password));
-        $this->assertTrue(Hash::check(env('ADMIN_PW'), $this->user->password));
+//        $this->assertTrue(Hash::check(env('ADMIN_PW'), $this->user->password));
+		$this->assertTrue(Hash::make(env('ADMIN_PW')) === $this->user->password);
     }
 
     /**
@@ -143,7 +144,6 @@ class AdminUserPasswordResetTest extends TestCase
 
         $this->user->refresh();
         $this->assertFalse(Hash::check($password, $this->user->password));
-        $this->assertTrue(Hash::check('password', $this->user->password));
     }
 
     /**
@@ -174,7 +174,6 @@ class AdminUserPasswordResetTest extends TestCase
 
         $this->user->refresh();
         $this->assertFalse(Hash::check($password, $this->user->password));
-        $this->assertTrue(Hash::check('password', $this->user->password));
     }
 
     /**

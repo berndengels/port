@@ -119,6 +119,7 @@ abstract class PriceCalculator
 				$args['rentable'] = $this->model;
             }
             $obj = new $class(...$args);
+
 			return $obj;
         }
 		catch(PriceObjectException $e) {

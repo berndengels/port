@@ -442,25 +442,3 @@ form {
 		}
 	}
 }
-
-/*
-.calendar {
-    min-height: 400px;
-    @include media('>tablet') {
-        .fc {
-            .fc-header-toolbar {
-                .fc-button {
-                    padding: 0.1em 0.2em;
-                    font-size: 0.7rem !important;
-                }
-                h2.fc-toolbar-title {
-                    font-size: 1.0rem  !important;
-                }
-            }
-            table {
-                font-size: 0.7rem !important;
-            }
-        }
-    }
-}
-*/
