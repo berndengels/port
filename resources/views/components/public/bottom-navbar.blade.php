@@ -19,7 +19,7 @@
 				</a>
 			</li>
 			<li class="nav-item align-middle" title="Kontakt-Anfrage">
-				<a class="nav-link" href="{{ route('public.documentation') }}">
+				<a class="nav-link" href="{{ route('public.documentation').'?'.time() }}">
 					<i class="fas fa-at"></i>
 					<span class="d-none d-md-inline-block ms-1">Dokumentation</span>
 				</a>
