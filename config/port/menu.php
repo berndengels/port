@@ -277,7 +277,7 @@ return [
                         'permissions'   => ['read BoatDates','write BoatDates'],
                         'text'  => 'Dauer Liegeplätze',
                         'title' => 'Dauer Liegeplätze',
-                        'icon'  => null,
+						'icon'  => 'fas fa-ship',
                         'route' => 'admin.boatDates.index',
 						'segment' => 'boatDates',
                         'hide_on_mobile' => true,

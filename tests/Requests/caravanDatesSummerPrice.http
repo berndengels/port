@@ -1,12 +1,12 @@
 ### Send request with dynamic variables in request's body
-POST https://port.test/api/price/caravanDates
+PUT https://port.test/api/price/caravanDates
 Content-Type: application/json
 X-Requested-With: XMLHttpRequest
 Accept: application/json
 
 {
     "caravan": 2,
-    "from": "2023-05-30",
+    "from": "2023-06-01",
 	"until": "2023-06-2",
 	"persons": 2,
 	"electric": true,

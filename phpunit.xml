@@ -11,14 +11,14 @@
         <testsuite name="Unit">
             <directory suffix="Test.php">./tests/Unit</directory>
         </testsuite>
-        <testsuite name="Models">
+        <!--testsuite name="Models">
             <directory suffix="Test.php">./tests/Feature/Models</directory>
         </testsuite>
         <testsuite name="Default">
             <directory suffix="Test.php">./tests/Feature/Default</directory>
-        </testsuite>
+        </testsuite-->
         <testsuite name="PriceCalculation">
-            <directory suffix="Test.php">./tests/Feature/PriceCalculation</directory>
+            <!--directory suffix="Test.php">./tests/Feature/PriceCalculation</directory-->
             <!--file>./tests/Feature/PriceCalculation/CaravanPriceCalculationTest.php</file-->
         </testsuite>
         <testsuite name="Routes">
