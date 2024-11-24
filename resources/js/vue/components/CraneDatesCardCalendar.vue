@@ -55,6 +55,10 @@
 									        @click="handleStore(craneDate)">
 										Anlegen
 									</button>
+									<div class="form-check d-inline-block float-end me-3">
+										<input class="" type="checkbox" id="notify" v-model="craneDate.notify" value="1">
+										<label class="form-check-label ms-1" for="notify">Kunde benachrichtigen</label>
+									</div>
 								</div>
 								<div v-else>
 									<button class="btn btn-sm btn-primary" role="button"
@@ -64,6 +68,10 @@
 									<button class="btn btn-sm btn-danger ms-3" role="button"
 									        @click="handleDestroy(craneDate)">Löschen
 									</button>
+									<div class="form-check d-inline-block float-end me-3">
+										<input class="" type="checkbox" id="notify" v-model="craneDate.notify" value="1">
+										<label class="form-check-label ms-1" for="notify">Kunde benachrichtigen</label>
+									</div>
 								</div>
 							</div>
 						</form>
@@ -100,7 +108,8 @@ export default {
 				cranable_type: null,
 				cranable_id: null,
 				crane_date: null,
-				crane_time: null
+				crane_time: null,
+				notify: false,
 			},
 		}
 	},

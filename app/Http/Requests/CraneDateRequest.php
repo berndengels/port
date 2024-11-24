@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 class CraneDateRequest extends AdminRequest
 {
 	protected $permission = 'write CraneDate';
-
+	protected $booleanFields = ['notify'];
 	protected function prepareForValidation()
 	{
 		parent::prepareForValidation();
@@ -26,6 +26,7 @@ class CraneDateRequest extends AdminRequest
 			'date' => '',
             'crane_date' => 'required:date',
             'crane_time' => 'required',
+			'notify'	=> '',
         ];
     }
 }

@@ -86,8 +86,7 @@ class Customer extends Authenticatable
     	Notifiable,
     	ThrottlesLogins,
     	UseBooleanIcon,
-		HasApiTokens,
-		HasPersonName;
+		HasApiTokens;
 
     protected $table = 'customers';
     protected $guard_name = 'customer';

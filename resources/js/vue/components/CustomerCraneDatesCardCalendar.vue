@@ -93,7 +93,8 @@ export default {
 				cranable_type: null,
 				cranable_id: null,
 				crane_date: null,
-				crane_time: null
+				crane_time: null,
+				notify: false,
 			},
 		}
 	},

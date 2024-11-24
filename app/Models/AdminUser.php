@@ -77,8 +77,7 @@ class AdminUser extends Authenticatable
         ThrottlesLogins,
         Dispatchable,
         ClearCache,
-        HasApiTokens,
-		HasPersonName;
+        HasApiTokens;
 
     protected $table = 'admin_users';
     protected $guard_name = 'admin';

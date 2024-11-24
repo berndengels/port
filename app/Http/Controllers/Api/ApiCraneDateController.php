@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Customer;
 use App\Notifications\AdminCraneDateRequest;
 use Carbon\Carbon;
 use App\Models\AdminUser;
@@ -32,14 +33,15 @@ class ApiCraneDateController extends Controller
      *
      * @return Response
      */
-    public function index()
+    public function index(Request $request)
     {
-		$response = null;
-		$query = CraneDate::with(['cranable'])->orderBy('crane_date');
+		$admin		= $request->user('admin');
+		$customer	= $request->user('customer');
+		$response	= null;
+		$query		= CraneDate::with(['cranable'])->orderBy('crane_date');
 
-		if(auth('admin')->check()) {
-			$data = $query->get();
-			$data = CraneDatesResource::collection($data);
+		if($admin) {
+			$data = CraneDatesResource::collection($query->get());
 			$response = [
 				'dates' => $data,
 				'customerDates' => null,
@@ -48,13 +50,9 @@ class ApiCraneDateController extends Controller
 				'boats'	=> null,
 			];
 		}
-		elseif(auth('customer')->check()) {
-			$customer = auth('customer')->user();
+		elseif($customer) {
 			$type = $this->cranableTypes[$customer->type] ?? null;
-
-			$now = Carbon::now();
-			$data = $query->whereDate('date', '>=', $now)->get();
-			$data = CraneDatesResource::collection($data);
+			$data = CraneDatesResource::collection($query->get());
 
 			$response = [
 				'dates' => $data,
@@ -88,11 +86,12 @@ class ApiCraneDateController extends Controller
     public function store(StoreCraneDateRequest $request)
     {
         try {
+			$validated = $request->validated();
 			$customer = $request->user('customer');
 			$admin = $request->user('admin');
-			$craneDate = CraneDate::create($request->validated());
+			$craneDate = CraneDate::create($validated);
 
-			if($admin && $craneDate->customer) {
+			if($admin && $craneDate->customer && $validated['notify']) {
 				$craneDate->customer->notify(new AdminCraneDateRequest($craneDate, __FUNCTION__));
 			}
 
@@ -120,12 +119,13 @@ class ApiCraneDateController extends Controller
     public function update(UpdateCraneDateRequest $request, CraneDate $craneDate)
     {
         try {
-            $craneDate->update($request->validated());
+			$validated = $request->validated();
+            $craneDate->update($validated);
 			$craneDate = $craneDate->refresh();
 			$customer = $request->user('customer');
 			$admin = $request->user('admin');
 
-			if($admin && $craneDate->customer) {
+			if($admin && $craneDate->customer && $validated['notify']) {
 				$craneDate->customer->notify(new AdminCraneDateRequest($craneDate, __FUNCTION__));
 			}
 

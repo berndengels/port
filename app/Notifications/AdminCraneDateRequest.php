@@ -46,7 +46,6 @@ class AdminCraneDateRequest extends Notification
 		$header = $this->getHeaderByMode();
         return (new AdminMailMessage())
 			->line($header)
-			->line('Thank you for using our application!')
 			->action('Krane-Termin Anfrage', route('admin.craneDates.index'))
 			->line('Datum: ' . $this->craneDate->date->isoFormat('dddd D.M.Y'))
 			->line('Zeit: ' . $this->craneDate->date->format('H.i'))
@@ -83,13 +82,10 @@ class AdminCraneDateRequest extends Notification
 		switch ($this->mode) {
 			case 'store':
 				return 'Neue Kran-Termin-Anfrage.';
-				break;
 			case 'update':
 				return 'Kran-Termin-Anfrage wurde geändert.';
-				break;
 			case 'destroy':
 				return 'Kran-Termin-Anfrage gelöscht.';
-				break;
 		}
 	}
 	/**
