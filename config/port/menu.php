@@ -284,16 +284,6 @@ return [
                         'help'  => null,
                     ],
                     [
-                        'permissions'   => ['read CraneDate', 'write CraneDate'],
-                        'text'  => 'Krantermine',
-                        'title' => 'Krantermine',
-                        'icon'  => 'fas fa-gear',
-                        'route' => 'admin.craneDates.index',
-						'segment' => 'craneDates',
-                        'hide_on_mobile' => false,
-                        'help'  => null,
-                    ],
-                    [
                         'permissions'   => ['read ConfigSaisonDates'],
                         'text'  => 'Saison-Daten',
                         'title' => 'Saison-Daten',
@@ -311,6 +301,16 @@ return [
                 'hide_on_mobile' => false,
                 'help'  => null,
                 'items' => [
+					[
+						'permissions'   => ['read CraneDate', 'write CraneDate'],
+						'text'  => 'Krantermine',
+						'title' => 'Krantermine',
+						'icon'  => 'fas fa-gear',
+						'route' => 'admin.craneDates.index',
+						'segment' => 'craneDates',
+						'hide_on_mobile' => false,
+						'help'  => null,
+					],
                     [
                         'permissions'   => ['read ServiceRequest', 'write ServiceRequest'],
                         'text'  => 'Service Anfragen',

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Notifications\AdminCraneDateRequest;
 use Carbon\Carbon;
 use App\Models\AdminUser;
 use App\Models\CraneDate;
@@ -88,7 +89,12 @@ class ApiCraneDateController extends Controller
     {
         try {
 			$customer = $request->user('customer');
+			$admin = $request->user('admin');
 			$craneDate = CraneDate::create($request->validated());
+
+			if($admin && $craneDate->customer) {
+				$craneDate->customer->notify(new AdminCraneDateRequest($craneDate, __FUNCTION__));
+			}
 
 			if($customer) {
 				$user = AdminUser::whereEmail(config('port.main.master.email'))->first();
@@ -117,6 +123,11 @@ class ApiCraneDateController extends Controller
             $craneDate->update($request->validated());
 			$craneDate = $craneDate->refresh();
 			$customer = $request->user('customer');
+			$admin = $request->user('admin');
+
+			if($admin && $craneDate->customer) {
+				$craneDate->customer->notify(new AdminCraneDateRequest($craneDate, __FUNCTION__));
+			}
 
 			if($customer) {
 				$user = AdminUser::whereEmail(config('port.main.master.email'))->first();
@@ -143,6 +154,11 @@ class ApiCraneDateController extends Controller
         try {
             $data = $craneDate;
 			$customer = $request->user('customer');
+			$admin = $request->user('admin');
+
+			if($admin && $craneDate->customer) {
+				$craneDate->customer->notify(new AdminCraneDateRequest($craneDate, __FUNCTION__));
+			}
 
 			if($customer) {
 				$user = AdminUser::whereEmail(config('port.main.master.email'))->first();
@@ -150,6 +166,7 @@ class ApiCraneDateController extends Controller
 			}
 
             $craneDate->delete();
+
             return response()->json([
 				'craneDate'  => new CraneDatesResource($data),
                 'success' => "Krantermin erfolgreich gelöscht!"
@@ -162,7 +179,6 @@ class ApiCraneDateController extends Controller
     public function cranable(Request $request)
     {
         $cranableType = $request->post('cranable_type');
-		$cranableId = $request->post('cranable_id');
 
 		if(auth('admin')->check()) {
 			$data = $cranableType::orderBy('name')->get()->map(fn($k) => ['id' => $k->id, 'name' => $k->name]);

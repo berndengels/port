@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Mail\AdminMailMessage;
 use App\Models\CraneDate;
 use Illuminate\Bus\Queueable;
 //use Illuminate\Contracts\Queue\ShouldQueue;
@@ -32,7 +33,6 @@ class AdminCraneDateRequest extends Notification
     public function via(object $notifiable)
     {
         return $notifiable->fon ? ['vonage'] : ['mail'];
-//        return ['vonage'];
     }
 
     /**
@@ -44,7 +44,7 @@ class AdminCraneDateRequest extends Notification
     public function toMail($notifiable)
     {
 		$header = $this->getHeaderByMode();
-        return (new MailMessage)
+        return (new AdminMailMessage())
 			->line($header)
 			->line('Thank you for using our application!')
 			->action('Krane-Termin Anfrage', route('admin.craneDates.index'))

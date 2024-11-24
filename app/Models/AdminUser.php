@@ -2,6 +2,7 @@
 namespace App\Models;
 
 use App\Notifications\CustomerCraneDateRequest;
+use App\Traits\Models\HasPersonName;
 use Database\Factories\AdminUserFactory;
 use Eloquent;
 use App\Traits\Models\ClearCache;
@@ -76,7 +77,8 @@ class AdminUser extends Authenticatable
         ThrottlesLogins,
         Dispatchable,
         ClearCache,
-        HasApiTokens;
+        HasApiTokens,
+		HasPersonName;
 
     protected $table = 'admin_users';
     protected $guard_name = 'admin';

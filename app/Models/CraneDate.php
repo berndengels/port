@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Eloquent;
 use App\Casts\Time;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\Models\HasCustomer;
@@ -53,13 +54,17 @@ class CraneDate extends Model
         return $this->morphTo();
     }
 
-	public function customer()
+	protected function customer(): Attribute
 	{
-		return app($this->cranable_type)::find($this->cranable_id)->first()->customer;
+		return Attribute::make(
+			get: fn () => $this->boat->customer ?? null
+		);
 	}
 
-	public function boat()
+	public function boat(): Attribute
 	{
-		return app($this->cranable_type)::find($this->cranable_id)->first();
+		return Attribute::make(
+			get: fn () => app($this->cranable_type)::find($this->cranable_id)->first()
+		);
 	}
 }

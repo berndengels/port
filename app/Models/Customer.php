@@ -1,6 +1,7 @@
 <?php
 namespace App\Models;
 
+use App\Traits\Models\HasPersonName;
 use Eloquent;
 use App\Libs\AppCache;
 use App\Traits\Models\UseBooleanIcon;
@@ -85,7 +86,8 @@ class Customer extends Authenticatable
     	Notifiable,
     	ThrottlesLogins,
     	UseBooleanIcon,
-		HasApiTokens;
+		HasApiTokens,
+		HasPersonName;
 
     protected $table = 'customers';
     protected $guard_name = 'customer';
