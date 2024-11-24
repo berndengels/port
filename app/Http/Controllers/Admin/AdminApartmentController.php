@@ -10,12 +10,13 @@ use Illuminate\Http\Response;
 
 class AdminApartmentController extends AdminController
 {
-	private $modelOptions;
+	private $models;
 
 	public function __construct()
 	{
 		parent::__construct();
-		$this->modelOptions = ApartmentModel::select('id','name')->orderBy('name')->get()->keyBy('id')->map->name;
+		$this->models  = $this->apartmentModelRepository->options()->getSelectOptions();
+//		$this->models = ApartmentModel::select('id','name')->orderBy('name')->get()->keyBy('id')->map->name;
 	}
 
 	/**
@@ -48,7 +49,7 @@ class AdminApartmentController extends AdminController
     public function create()
     {
         return view('admin.apartments.create', [
-			'modelOptions' => $this->modelOptions,
+			'models' => $this->models,
 		]);
     }
 
@@ -78,7 +79,7 @@ class AdminApartmentController extends AdminController
     {
         return view('admin.apartments.edit', [
 			'apartment'	=> $apartment,
-			'modelOptions' => $this->modelOptions,
+			'models' => $this->models,
 		]);
     }
 

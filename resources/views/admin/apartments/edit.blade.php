@@ -7,7 +7,7 @@
 			@method('put')
 			@bind($apartment)
 			<x-form-input name="name" label="Name" placeholder="Apartment Name" required/>
-			<x-form-select name="apartment_model_id" label="Modell" :options="$modelOptions" required/>
+			<x-form-select name="apartment_model_id" label="Modell" :options="$models" required/>
 			<x-form-input name="calendar_color" type="color" label="Calender Farbe"/>
 			@endbind
 			<div class="mt-2">

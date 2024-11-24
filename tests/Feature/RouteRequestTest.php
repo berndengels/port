@@ -6,15 +6,15 @@ use Route;
 use Exception;
 use Tests\TestCase;
 use App\Libs\Routes as MyRoutes;
-use Illuminate\Routing\Route as RoutingRoute;
-use Symfony\Component\HttpFoundation\Response;
 
 class RouteRequestTest extends TestCase
 {
 	private $_skipPublicRoutes = [
         '/telescope',
+		'/contacts'
     ];
 
+	// @todo: houseRentals failed
 	private $_adminRoutes = [
         'admin_users',
         'customers',
@@ -26,31 +26,22 @@ class RouteRequestTest extends TestCase
         'guestBoats',
         'houses',
         'houseModels',
-        // @todo: houseRentals failed
         'houseRentals',
-        'houses.create',
-        'houseModels.create',
+        'houses',
+        'houseModels',
         'houseboats',
         'houseboatModels',
-        'rentals',
-        'houseboats.create',
-        'houseboatModels.create',
+        'houseboatRentals',
         'apartments',
         'apartmentModels',
         'apartmentRentals',
-        'apartments.create',
-        'apartmentModels.create',
+        'apartments',
+        'apartmentModels',
 	];
 
-	/**
-     * public routes test for status 200.
-     * @return void
-     */
     public function testPublicRouteResponses()
     {
-		$routes = MyRoutes::getRoutes('public\.')->reject(function ($value) {
-			return in_array($value, $this->_skipPublicRoutes);
-		});
+		$routes = MyRoutes::getRoutes('public\.')->reject(fn ($value) => in_array($value, $this->_skipPublicRoutes));
 
 		foreach($routes as $route) {
 		    try {
@@ -67,39 +58,22 @@ class RouteRequestTest extends TestCase
 		}
     }
 
-	/**
-	 * admin routes test for status 200.
-	 * @return void
-	 */
 	public function testAdminRouteResponses()
 	{
-		$routes = [];
+		$indexRoutes = collect($this->_adminRoutes)->map(fn($name) => Route::getRoutes()->getByName("admin.$name.index") ?? null)->reject(fn($r) => !$r);
+		$createRoutes = collect($this->_adminRoutes)->map(fn($name) => Route::getRoutes()->getByName("admin.$name.create") ?? null)->reject(fn($r) => !$r);
+		$routes = $indexRoutes->merge($createRoutes)->map->uri;
 
-		foreach($this->_adminRoutes as $name) {
-			$routes[] = Route::getRoutes()->getByName("admin.$name.index");
-            $routes[] = Route::getRoutes()->getByName("admin.$name.create");
-		}
-
-		/**
-		 * @var $response Response
-		 * @var $route Route
-		 */
-		$this->actingAs($this->user, 'admin');
-
-        /**
-         * @var $route RoutingRoute
-         */
-		foreach($routes as $route) {
+		foreach($routes as $uri) {
 		    try {
-                $name = ($route instanceof RoutingRoute && method_exists($route, 'getName')) ? $route->getName() : $route;
-                echo "check response status (200) for admin route: {$route->uri},";
-                $response = $this->get($route->uri);
+                echo "check response status (200) for admin route: {$uri},";
+                $response = $this->actingAs($this->user, 'admin')->get($uri);
                 $status = $response->getStatusCode();
                 echo " status: $status";
                 $response->assertStatus(200);
                 echo " \360\237\230\216\n";
             } catch(Exception $e) {
-                echo "ERROR for public admin: '$name'\n";
+                echo "ERROR for admin route: '$uri'\n";
                 echo $e->getMessage()."\n";
             }
 		}

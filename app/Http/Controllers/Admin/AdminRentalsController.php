@@ -24,7 +24,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
-class AdminRentalsController extends RentableController
+abstract class AdminRentalsController extends RentableController
 {
     protected array $years;
     protected array $monthsByYear;

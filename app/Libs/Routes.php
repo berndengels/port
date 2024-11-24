@@ -20,9 +20,7 @@ class Routes
 		$routes = collect(Route::getRoutes()->getRoutesByName());
 
         if( $prefix ) {
-			$routes = $routes->reject(function ($value, $key) use ($prefix) {
-				return !preg_match("#$prefix#", $key);
-			});
+			$routes = $routes->reject(fn ($value, $key) => !preg_match("#$prefix#", $key));
 		}
 
 		foreach($routes as $r) {
