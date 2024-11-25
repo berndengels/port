@@ -32,7 +32,7 @@ class AdminConfigSettingsController extends AdminController
     public function create()
     {
         if(ConfigSetting::first()) {
-            return redirect()->route('admin.config.settings.index')->with('error', 'Daten wurden bereits angelegt!');
+            return redirect()->route('admin.configSettings.index')->with('error', 'Daten wurden bereits angelegt!');
         }
         return view('admin._config.settings.create');
     }
@@ -47,7 +47,7 @@ class AdminConfigSettingsController extends AdminController
     {
         try {
             ConfigSetting::create($request->validated());
-            return redirect()->route('admin.config.settings.index')->with('success', 'Daten erfolgreich angelegt!');
+            return redirect()->route('admin.configSettings.index')->with('success', 'Daten erfolgreich angelegt!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -75,7 +75,7 @@ class AdminConfigSettingsController extends AdminController
     {
         try {
 			$configSetting->update($request->validated());
-            return redirect()->route('admin.config.settings.index')->with('success', 'Daten erfolgreich bearbeitet!');
+            return redirect()->route('admin.configSettings.index')->with('success', 'Daten erfolgreich bearbeitet!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -91,7 +91,7 @@ class AdminConfigSettingsController extends AdminController
     {
         try {
 			$configSetting->delete();
-            return redirect()->route('admin.config.settings.index')->with('success', 'Daten erfolgreich gelöscht!');
+            return redirect()->route('admin.configSettings.index')->with('success', 'Daten erfolgreich gelöscht!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());
         }
