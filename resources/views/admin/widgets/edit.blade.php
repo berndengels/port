@@ -1,15 +1,7 @@
 @extends('layouts.main')
 
-@push('styles')
-	<link rel="stylesheet" type="text/css" href="{{ asset('froala-editor/css/froala_editor.pkgd.min.css') }}"/>
-	<link rel="stylesheet" type="text/css" href="{{ asset('froala-editor/css/third_party/font_awesome.min.css') }}"/>
-	<link rel="stylesheet" type="text/css" href="{{ asset('froala-editor/css/plugins/code_view.min.css') }}"/>
-@endpush
-
 @push('scripts')
-	<script src="{{ asset('froala-editor/js/froala_editor.pkgd.min.js') }}" type="text/javascript"></script>
-	<script src="{{ asset('froala-editor/js/plugins/file.min.js') }}"></script>
-	<script src="{{ asset('froala-editor/js/third_party/font_awesome.min.js') }}"></script>
+	<script type="module" src="{{ asset('tinymce/tinymce.min.js') }}"></script>
 @endpush
 
 @section('main')

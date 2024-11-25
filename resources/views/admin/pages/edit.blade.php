@@ -1,10 +1,7 @@
 @extends('layouts.main')
 
-@push('styles')
-	<link rel="stylesheet" href="{{ asset('froala-editor/css/froala_editor.pkgd.min.css') }}">
-@endpush
 @push('scripts')
-	<script src="{{ asset('froala-editor/js/froala_editor.pkgd.min.js') }}"></script>
+	<script type="module" src="{{ asset('tinymce/tinymce.min.js') }}"></script>
 @endpush
 
 @section('main')

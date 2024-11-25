@@ -11,7 +11,7 @@ mix.autoload({
 	})
 	.copy('node_modules/tinymce', 'public/tinymce')
 	.copy('node_modules/@fortawesome/fontawesome-free/webfonts', 'public/webfonts')
-	.copy('node_modules/froala-editor', 'public/froala-editor')
+	.copy('node_modules/tinymce', 'public/tinymce')
 	.copy('node_modules/dropzone/dist', 'public/dropzone')
 	.copy('resources/js/vendor/jquery.mobile/jquery.mobile-1.4.5.js', 'public/jquery-mobile')
 	.copy('resources/js/vendor/jquery.mobile/jquery.mobile-1.4.5.css', 'public/jquery-mobile')
