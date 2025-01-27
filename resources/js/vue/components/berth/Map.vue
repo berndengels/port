@@ -76,8 +76,11 @@ export default {
 				tileSize: 512,
 				maxZoom: this.maxZoom,
 				zoomOffset: -1,
-				id: 'mapbox/satellite-streets-v11',
+//				id: 'mapbox/satellite-streets-v11',
+				id: 'mapbox/satellite-v9',
+//				style: 'mapbox://styles/mapbox/satellite-v9',
 			};
+
 			var oImage = null;
 			if (this.mainImage) {
 				oImage = this.imageOverlay();
@@ -95,6 +98,7 @@ export default {
 			}
 
 			L.control.layers(baseLayers).addTo(this.map);
+
 			if (this.data) {
 				this.setDataOverlay(this.data);
 			}

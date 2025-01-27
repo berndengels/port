@@ -101,17 +101,17 @@ $(document).ready(function () {
 		craneDates =  document.getElementById('craneDates');
 	switch (true) {
 		case $(adminDashboard).is(":visible"):
-			app = createApp(AdminDashboard).use(store);
+			app = createApp(AdminDashboard, {...adminDashboard.dataset}).use(store);
 			app.config.globalProperties.emitter = emitter;
 			app.mount(adminDashboard);
 			break;
 		case $(adminBerths).is(":visible"):
-			app = createApp(AdminBerths).use(store);
+			app = createApp(AdminBerths, {...adminBerths.dataset}).use(store);
 			app.config.globalProperties.emitter = emitter;
 			app.mount(adminBerths);
 			break
 		case $(craneDates).is(":visible"):
-			app = createApp(CraneDates).use(store);
+			app = createApp(CraneDates, {...CraneDates.dataset}).use(store);
 			app.config.globalProperties.emitter = emitter;
 			app.mount(craneDates);
 			break

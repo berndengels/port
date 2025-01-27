@@ -7,7 +7,7 @@
 					type="checkbox"
 					id="enabled"
 					class="form-check-input"
-					v-model="item.enabled"
+					v-model="selected.enabled"
 				/>
 				<label class="form-check-label ms-2" for="enabled">Aktiv</label>
 			</div>
@@ -17,7 +17,7 @@
 					<select
 						id="dock_id"
 						class="form-select form-select-sm d-inline-block"
-						v-model="item.dock_id"
+						v-model="selected.dock_id"
 					>
 						<optgroup v-if="docks && docks.length > 0">
 							<option
@@ -36,7 +36,7 @@
 					<select
 						id="berth_category_id"
 						class="form-select form-select-sm d-inline-block"
-						v-model="item.berth_category_id"
+						v-model="selected.berth_category_id"
 					>
 						<optgroup v-if="categories && categories.length > 0">
 							<option
@@ -51,20 +51,20 @@
 			</div>
 			<div class="row">
 				<label class="col-auto form-label" for="number">Nummer</label>
-				<input class="col-auto form-input" type="number" id="number" v-model="item.number" min="1" step="1"/>
+				<input class="col-auto form-input" type="number" id="number" v-model="selected.number" min="1" step="1"/>
 			</div>
 
 			<div class="row">
 				<label class="col-auto form-label" for="width">Breite</label>
-				<input class="col-auto form-input" type="number" id="width" v-model="item.width" min="1" step="0.1"/>
+				<input class="col-auto form-input" type="number" id="width" v-model="selected.width" min="1" step="0.1"/>
 			</div>
 			<div class="row">
 				<label class="col-auto form-label" for="number">Länge</label>
-				<input class="col-auto form-input" type="number" id="length" v-model="item.length" min="1" step="0.1"/>
+				<input class="col-auto form-input" type="number" id="length" v-model="selected.length" min="1" step="0.1"/>
 			</div>
 			<div class="row">
 				<label class="col-auto form-label" for="number">Tagespreis</label>
-				<input class="col-auto form-input" type="number" id="daily_price" v-model="item.daily_price" min="1"
+				<input class="col-auto form-input" type="number" id="daily_price" v-model="selected.daily_price" min="1"
 					   step="1"/>
 			</div>
 			<div class="mt-2">
@@ -88,14 +88,6 @@ import MyButton from "v@/components/form/MyButton";
 export default {
 	name: "EditBerth",
 	components: {MyButton},
-	data() {
-		return {
-			item: {}
-		}
-	},
-	mounted() {
-		this.item = {...this.selected};
-	},
 	computed: {
 		...mapGetters({
 			docks: "berth/docks",

@@ -229,6 +229,7 @@ abstract class AdminRentalsController extends RentableController
             $validator  = Validator::make($request->all(), $rules, $request->messages());
             $validator->validate();
             $rental->update($request->validated());
+
             return redirect()->route('admin.'.$this->routeName.'.index')->with('success', 'Buchung erfolgreich bearbeitet!');
         } catch(Exception $e) {
             return back()->with('error', $e->getMessage());

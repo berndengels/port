@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Resources\BerthResource;
 use App\Models\Berth;
 use App\Http\Requests\StoreBerthRequest;
 use App\Http\Requests\UpdateBerthRequest;
@@ -28,12 +29,7 @@ class AdminBerthController extends AdminController
      */
     public function index()
     {
-        $data = Berth::orderBy('number')->get();
-        $data = json_encode($data);
-        return view('admin.berths.vue-index', [
-            'data'  => $data,
-            'dockOptions'   => $this->dockOptions,
-        ]);
+        return view('admin.berths.vue-index');
     }
 
     /**

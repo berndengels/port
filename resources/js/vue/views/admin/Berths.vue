@@ -4,9 +4,9 @@
 			<PulseLoader :size="loaderSize" :color="loaderColor" />
 		</div-->
 		<div>
-			<Map @showEditForm="handleEditForm"/>
-			<EditBerth v-if="selected" @showEditForm="handleEditForm"/>
-			<Table @showEditForm="handleEditForm"/>
+			<Map @showEditForm="handleEditForm" />
+			<EditBerth v-if="selected" @showEditForm="handleEditForm" />
+			<Table @showEditForm="handleEditForm" />
 		</div>
 	</div>
 </template>
