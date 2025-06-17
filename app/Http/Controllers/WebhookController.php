@@ -12,12 +12,17 @@ class WebhookController extends Controller
 	public function ep(Request $request)
 	{
 		$content = $request->getContent();
+		$data	= json_decode($content);
 		$signatur = $request->header(config('port.main.webhook.header'));
 		$hash = hash_hmac('sha256', $content, config('port.main.webhook.secret'));
 
+//		\File::put(storage_path('logs/data.json'), print_r($data, true));
+
 		$data = [
-			'url'		=> $request->url(),
+			'object_id'	=> $request->post('id'),
 			'name'		=> $request->post('name'),
+			'action'	=> $data->action,
+			'url'		=> $request->url(),
 			'headers'	=> $request->headers,
 			'payload'	=> $content,
 //					'exception'	=> null,
@@ -32,7 +37,7 @@ class WebhookController extends Controller
 				Log::channel('webhook')->error($e->getMessage());
 			}
 		} else {
-			Log::channel('webhook')->error('no valid signatur: expect: '.$hash.', given: '. $signatur);
+			Log::channel('webhook')->error('no valid signatur');
 		}
 	}
 }
