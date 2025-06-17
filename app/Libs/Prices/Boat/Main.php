@@ -3,9 +3,6 @@ namespace App\Libs\Prices\Boat;
 
 use Carbon\Carbon;
 use App\Models\Boat;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
-use App\Models\ConfigEntity;
 use App\Models\ConfigBoatPrice;
 use App\Libs\Prices\MainPriceItem;
 use Illuminate\Support\Collection;

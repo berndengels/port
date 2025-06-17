@@ -19,7 +19,7 @@ class AdminConfigPriceComponentController extends AdminController
      */
     public function index()
     {
-        $data = ConfigPriceComponent::with(['entities','priceType','service'])->paginate($this->paginatorLimit);
+        $data = ConfigPriceComponent::with(['entities','priceType','service','unitRangeType'])->paginate($this->paginatorLimit);
         return view('admin._config.priceComponents.index', compact('data'));
     }
 
@@ -46,6 +46,7 @@ class AdminConfigPriceComponentController extends AdminController
             'optionsEntityTypes' => $this->configEntityTypeRepository->options('model')->translate()->getSelectOptions(),
             'optionsPriceTypes' => $this->configPriceTypeRepository->options()->getSelectOptions(),
             'optionsServices' => $this->configServiceRepository->options()->getSelectOptions()->prepend('Bitte wählen', null),
+			'optionsUnitRangeTypes' => $this->configUnitRangeTypeRepository->options()->getSelectOptions()->prepend('Bitte wählen', null),
         ]);
     }
 
@@ -85,6 +86,7 @@ class AdminConfigPriceComponentController extends AdminController
             'optionsEntityTypes' => $this->configEntityTypeRepository->options('model')->translate()->getSelectOptions(),
             'optionsPriceTypes' => $this->configPriceTypeRepository->options()->getSelectOptions(),
             'optionsServices' => $this->configServiceRepository->options()->getSelectOptions()->prepend('Bitte wählen', null),
+			'optionsUnitRangeTypes' => $this->configUnitRangeTypeRepository->options()->getSelectOptions()->prepend('Bitte wählen', null),
         ]);
     }
 

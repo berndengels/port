@@ -14,6 +14,13 @@
 						   :options="$optionsServices"/>
 			<x-form-select id="price_type_id" name="price_type_id" label="Preis Typ" :options="$optionsPriceTypes"
 						   required/>
+			<x-form-select id="config_unit_range_type_id" name="config_unit_range_type_id" label="UnitRange Typ" :options="$optionsUnitRangeTypes"/>
+			<x-form-input type="number" min="0" step="0.1" id="unit_from" name="unit_from"
+						  label="Ab Einheit"
+						  placeholder="Gilt ab entsprechnder Einheit"/>
+			<x-form-input type="number" min="0" step="0.1" id="unit_until" name="unit_until"
+						  label="Bis Einheit"
+						  placeholder="Gilt bis entsprechnder Einheit"/>
 			<x-form-input id="name" name="name" label="Name" placeholder="Name der Preis Komponente" required/>
 			<x-form-input
 					id="key" name="key" label="Key" required/>

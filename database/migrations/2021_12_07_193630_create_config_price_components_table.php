@@ -17,6 +17,9 @@ class CreateConfigPriceComponentsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('price_type_id')->index('price_type_id');
             $table->unsignedInteger('config_service_id')->nullable()->index('config_service_id');
+			$table->unsignedInteger('config_unit_range_type_id')->nullable()->index('config_unit_range_type_id');
+			$table->decimal('unit_from', 10)->unsigned()->nullable();
+			$table->decimal('unit_until', 10)->unsigned()->nullable();
             $table->string('name', 50)->default('');
             $table->string('key', 50)->default('');
             $table->unsignedTinyInteger('unit_inclusive')->nullable();

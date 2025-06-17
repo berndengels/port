@@ -53,4 +53,8 @@ return [
             ],
         ],
     ],
+	'webhook'	=> [
+		'header'	=> env('EP_WEBHOOK_HEADER_NAME'),
+		'secret'	=> env('EP_WEBHOOK_CLIENT_SECRET'),
+	],
 ];

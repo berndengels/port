@@ -76,6 +76,7 @@ use App\Http\Controllers\Admin\AdminHolydayController;
 use App\Http\Controllers\Admin\AdminAccessLogController;
 use App\Http\Controllers\CraneDateController;
 use App\Http\Controllers\TestController;
+use App\Http\Controllers\WebhookController;
 
 Auth::routes();
 
@@ -91,6 +92,8 @@ Route::get('', function() {
     }
 });
 
+//Route::webhooks('webhooks');
+
 Route::group([
     'as'  => 'public.',
 ],function () {
@@ -102,6 +105,7 @@ Route::group([
     Route::get('rentals/reservation', fn() => view('public.rentals.index'))->name('rentals.reservation');
 	Route::get('documentation', fn() => response()->download(base_path('docs').'/doku-portm.pdf'))->name('documentation');
     Route::resource('contacts', ContactController::class)->only(['show','create','store']);
+	Route::post('webhooks', [WebhookController::class,'ep'])->name('webhooks');
 });
 /*
 Route::group([

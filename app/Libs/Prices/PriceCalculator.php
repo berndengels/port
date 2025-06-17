@@ -92,10 +92,10 @@ abstract class PriceCalculator
                 }
             }
             $cParams = $rClass->getConstructor()->getParameters();
+
             /**
              * @var $pNames Collection
              */
-
 			foreach ($cParams as $p) {
 				$name = $p->getName();
 //				$type = $p->getType();

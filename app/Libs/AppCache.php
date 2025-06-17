@@ -67,7 +67,10 @@ class AppCache
     public const KEY_OPTIONS_PRICE_TYPE = 'options.priceType';
     public const KEY_OPTIONS_DATA_PRICE_TYPE = 'options.data.priceType';
 
-    public const KEY_OPTIONS_MATERIAL = 'options.material';
+	public const KEY_OPTIONS_UNIT_RANGE_TYPE = 'options.unitRangeType';
+	public const KEY_OPTIONS_DATA_UNIT_RANGE_TYPE = 'options.data.unitRangeType';
+
+	public const KEY_OPTIONS_MATERIAL = 'options.material';
     public const KEY_OPTIONS_DATA_MATERIAL = 'options.data.material';
 
     public const KEY_OPTIONS_MATERIAL_CATEGORY = 'options.materialCategory';

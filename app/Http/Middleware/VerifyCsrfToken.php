@@ -17,5 +17,6 @@ class VerifyCsrfToken extends Middleware
         '/admin/upload/image/*',
         '/livewire/*',
 		'/api/*',
+		'webhooks',
     ];
 }

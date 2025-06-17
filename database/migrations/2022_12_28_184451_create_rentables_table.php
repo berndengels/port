@@ -20,7 +20,7 @@ class CreateRentablesTable extends Migration
             $table->date('from');
             $table->date('until');
             $table->unsignedInteger('price')->nullable()->index('price');
-            $table->longText('prices')->nullable()->index();
+            $table->longText('prices')->nullable();
             $table->unsignedTinyInteger('is_paid')->default(0)->index('is_paid');
             $table->index(['from', 'until'], 'from');
             $table->index(['rentable_id', 'rentable_type'], 'rentable');

@@ -1,20 +1,20 @@
 <?php
 namespace App\Models;
 
+use Database\Factories\BoatFactory;
 use Eloquent;
 use App\Libs\AppCache;
 use App\Traits\Models\IsPriceable;
 use App\Libs\Calculations\Boat\Area;
-use Database\Factories\BoatFactory;
 use App\Traits\Models\ClearCache;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Kyslik\ColumnSortable\Sortable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 /**
@@ -35,21 +35,21 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
  * @property string|null $length_waterline
  * @property string|null $length_keel
  * @property string|null $home_port
- * @property-read \App\Models\Berth|null $berth
- * @property-read Collection<int, \App\Models\CraneDate> $craneDates
+ * @property-read Berth|null $berth
+ * @property-read Collection<int, CraneDate> $craneDates
  * @property-read int|null $crane_dates_count
- * @property-read \App\Models\Customer $customer
- * @property-read Collection<int, \App\Models\BoatDates> $dates
+ * @property-read Customer $customer
+ * @property-read Collection<int, BoatDates> $dates
  * @property-read int|null $dates_count
  * @property-read mixed $board_area
  * @property-read mixed $underwater_area
- * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \App\Models\Media> $media
+ * @property-read MediaCollection<int, \App\Models\Media> $media
  * @property-read int|null $media_count
- * @property-read Collection<int, \App\Models\ConfigBoatPrice> $prices
+ * @property-read Collection<int, ConfigBoatPrice> $prices
  * @property-read int|null $prices_count
- * @property-read Collection<int, \App\Models\ServiceRequest> $serviceRequests
+ * @property-read Collection<int, ServiceRequest> $serviceRequests
  * @property-read int|null $service_requests_count
- * @method static \Database\Factories\BoatFactory factory($count = null, $state = [])
+ * @method static BoatFactory factory($count = null, $state = [])
  * @method static Builder|Boat newModelQuery()
  * @method static Builder|Boat newQuery()
  * @method static Builder|Boat query()

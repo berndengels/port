@@ -9,7 +9,7 @@
 			<div class="float-end"></div>
 		</div>
 		{{ $data->links() }}
-		<x-table :items="$data" :fields="['Betrifft','Name','Key','Service','Preis in €']" hasActions isSmall>
+		<x-table :items="$data" :fields="['Betrifft','Name','Key','Service','Preis pro Einheit','RangeUnit','Ab','Bis','Preis in €']" hasActions isSmall>
 			@foreach($data as $item)
 				<tr>
 					@bindData($item)
@@ -28,6 +28,10 @@
 					</td>
 					<x-td field="key"/>
 					<x-td field="service.name"/>
+					<x-td field="priceType.name"/>
+					<x-td field="unitRangeType.name"/>
+					<x-td field="unit_from" :append="['unitRangeType.name']"/>
+					<x-td field="unit_until" :append="['unitRangeType.name']"/>
 					<x-td field="unit_price" :append="['priceType.name']"/>
 					<x-action routePrefix="admin.configPriceComponents" edit delete/>
 					@endBindData

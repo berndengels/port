@@ -13,6 +13,7 @@ use App\Repositories\ConfigPriceComponentRepository;
 use App\Repositories\ConfigSaisonRentDatesRepository;
 use App\Repositories\ConfigSaisonRentRepository;
 use App\Repositories\ConfigServiceRepository;
+use App\Repositories\ConfigUnitRangeTypeRepository;
 use App\Repositories\GuestBoatsRepository;
 use App\Repositories\BoatRepository;
 use App\Repositories\CaravanRepository;
@@ -56,6 +57,7 @@ class Controller extends BaseController
     protected $configPriceComponentRepository;
     protected $configEntityTypeRepository;
     protected $configPriceTypeRepository;
+	protected $configUnitRangeTypeRepository;
     protected $configSaisonDatesRepository;
     protected $configSaisonRentRepository;
     protected $configSaisonRentDatesRepository;
@@ -106,6 +108,7 @@ class Controller extends BaseController
         $this->configSettings                   = config('settings');
         $this->useTax                           = $this->configSettings?->use_tax ?? null;
         $this->tax                              = $this->configSettings?->tax ?? null;
+		$this->configUnitRangeTypeRepository	= new ConfigUnitRangeTypeRepository();
         $this->configOffers                     = (new ConfigOffersRepository())
             ->options(where: ['enabled' => true])
             ->getSelectOptionsData()
