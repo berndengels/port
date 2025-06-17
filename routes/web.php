@@ -105,7 +105,7 @@ Route::group([
     Route::get('rentals/reservation', fn() => view('public.rentals.index'))->name('rentals.reservation');
 	Route::get('documentation', fn() => response()->download(base_path('docs').'/doku-portm.pdf'))->name('documentation');
     Route::resource('contacts', ContactController::class)->only(['show','create','store']);
-	Route::post('webhooks', [WebhookController::class,'ep'])->name('webhooks');
+  	Route::post('webhooks', [WebhookController::class,'ep'])->name('webhooks');
 });
 /*
 Route::group([

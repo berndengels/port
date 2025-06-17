@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Libs\EpWebhookResponse;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Log;
-use Spatie\WebhookClient\Events\InvalidWebhookSignatureEvent;
 use Spatie\WebhookClient\Models\WebhookCall;
 
 class WebhookController extends Controller
@@ -18,24 +15,24 @@ class WebhookController extends Controller
 		$signatur = $request->header(config('port.main.webhook.header'));
 		$hash = hash_hmac('sha256', $content, config('port.main.webhook.secret'));
 
+		$data = [
+			'url'		=> $request->url(),
+			'name'		=> $request->post('name'),
+			'headers'	=> $request->headers,
+			'payload'	=> $content,
+//					'exception'	=> null,
+		];
+
 		if($signatur === $hash) {
-			$data = [
-				'url'	=> $request->fullUrl(),
-				'name'	=> $request->post('name'),
-				'headers'	=> $request->headers,
-				'payload'	=> $content,
-				'exception'	=> null,
-			];
-			$data = WebhookCall::create($data);
 			try {
-				return (new EpWebhookResponse())->respondToValidWebhook($request);
+				WebhookCall::create($data);
+//				Log::channel('webhook')->info('signatur is valid');
 			}
 			catch (Exception $e) {
 				Log::channel('webhook')->error($e->getMessage());
 			}
-//			return response()->json($data);
 		} else {
-			Event::dispatch(InvalidWebhookSignatureEvent::class);
+			Log::channel('webhook')->error('no valid signatur: expect: '.$hash.', given: '. $signatur);
 		}
 	}
 }
