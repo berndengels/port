@@ -1,5 +1,7 @@
 <?php
 
+use App\Jobs\ProcessEpWebhookJob;
+use App\Models\EpWebhookCall;
 use App\Libs\EpWebhookResponse;
 use Spatie\WebhookClient\Models\WebhookCall;
 use Spatie\WebhookClient\SignatureValidator\DefaultSignatureValidator;
@@ -42,7 +44,8 @@ return [
              * The classname of the model to be used to store webhook calls. The class should
              * be equal or extend Spatie\WebhookClient\Models\WebhookCall.
              */
-            'webhook_model' => WebhookCall::class,
+//            'webhook_model' => WebhookCall::class,
+			'webhook_model' => EpWebhookCall::class,
             /*
              * In this array, you can pass the headers that should be stored on
              * the webhook call model when a webhook comes in.
@@ -55,8 +58,8 @@ return [
              *
              * This should be set to a class that extends \Spatie\WebhookClient\Jobs\ProcessWebhookJob.
              */
-//            'process_webhook_job' => \App\Jobs\ProcessEpWebhookJob::class,
-			'process_webhook_job' => '',
+            'process_webhook_job' => ProcessEpWebhookJob::class,
+//			'process_webhook_job' => '',
         ],
     ],
     /*
