@@ -17,9 +17,6 @@ class EpWebhookCall extends WebhookCall
 		$data	= json_decode($content);
 		$properties = config('webhook-client.configs')[0];
 		$properties['name'] = $request->post('name');
-
-//		\File::put(storage_path('logs/properties.json'), print_r($properties, true));
-
 		$headers = self::headersToStore(new WebhookConfig($properties), $request);
 
 		return self::create([

@@ -13,7 +13,7 @@ use App\Http\Controllers\Api\ApiCraneDateController;
 use App\Http\Controllers\Api\ApiBoatController;
 use App\Http\Controllers\Api\ApiGuestBoatController;
 use App\Http\Controllers\Api\ApiMediaController;
-
+use App\Http\Controllers\Api\ApiWebhookClientController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -127,3 +127,10 @@ if(!app()->environment('production')) {
         Route::match(['post','put'],'rentalDates', [AdminPriceController::class, 'calculateRentalPrices'])->name('rentalDates');
     });
 }
+
+Route::group([
+	'prefix'    => 'webhooks',
+//	'middleware' => ['auth:sanctum'],
+], function () {
+	Route::resource('ep_webhook_calls',ApiWebhookClientController::class)->only(['index','show']);
+});
