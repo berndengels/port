@@ -20,7 +20,6 @@ class WebhookController extends Controller
 		if($signatur === $hash) {
 			try {
 				EpWebhookCall::store($request);
-//				Log::channel('webhook')->info('signatur is valid');
 			}
 			catch (Exception $e) {
 				$msg = $e->getFile().' ('.$e->getLine().'): '.$e->getMessage().' code: '.$e->getCode();
